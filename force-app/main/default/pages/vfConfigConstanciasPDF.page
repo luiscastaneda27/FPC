@@ -1,0 +1,30 @@
+<apex:page >
+    <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.Menu_Public, 'menu.css')}" media="screen"/>
+    <apex:sectionHeader title="Configuración de Constancias"/>          
+    <div id="menu">
+        <ul>     
+            <li><a href="/{!URLFOR($ObjectType.Constancia__c)}">Constancias<br/><span>Click para ver / configurar las constancias</span></a></li>
+        </ul>
+        <ul>     
+            <li><a href="/apex/vfAsignacionConstancias">Asignación de Constancias<br/><span>Click para asignar las constancias</span></a></li>
+        </ul>        
+    </div>
+    
+    <apex:sectionHeader title="Productos y Subproductos"/>          
+    <div id="menu">
+        <ul>     
+            <li><a href="/{!URLFOR($ObjectType.Producto__c)}">Productos<br/><span>Click para ver / configurar los Productos</span></a></li>
+        </ul>
+        <ul>     
+            <li><a href="/{!URLFOR($ObjectType.Subproducto__c)}">Subproductos<br/><span>Click para ver / configurar los Subproductos</span></a></li>
+        </ul>        
+    </div>
+    
+    <apex:sectionHeader title="Direccion"/>          
+    <div id="menu">
+        <ul>     
+            <li><a href="/{!URLFOR($ObjectType.Colonia__c)}">Colonias<br/><span>Click para ver / configurar las colonias</span></a></li>
+        </ul>        
+    </div>
+    
+</apex:page>

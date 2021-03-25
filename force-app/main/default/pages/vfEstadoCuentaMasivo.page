@@ -1,0 +1,188 @@
+<apex:page extensions="controladorEstadoCuentaMasivo" standardController="Account" title="Estado de Cuenta Historico PDF" renderAs="PDF" applyBodyTag="false" sidebar="false" showHeader="false">
+	<head>
+          <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,600italic,700italic,800,800italic' rel='stylesheet' type='text/css' />
+        
+        <style> 
+            @page { 
+            	margin-top: 3cm;
+            	margin-bottom: 3cm;
+            	margin-left: 2cm;
+            	margin-right: 2cm;
+            }
+                                   
+            
+           	
+            table {
+              border-collapse: collapse;
+            }
+           .saltoPagina{
+                page-break-after: always;
+            }
+            .logo {
+            	margin-left: 150px;
+            	
+            	left:0px;
+                position: running(logo);
+            }
+            div.footerR {
+                display: block;
+                text-align: left;
+                position: running(footerR);
+            }
+            @page {
+                @top-left {
+            		margin
+                    content: element(logo)
+                }
+            }
+            @page {
+                @top-left {
+                    content: element(footerR)
+                }
+            }
+            .logos {
+            	display:block;
+            	top: 0px;
+            	margin-left:63%;
+            	width: 200px;
+            }
+            td {
+            	font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;
+            }
+            .table_green td.total {
+                text-align: right;
+                padding-right: 20px
+            }
+            .table_green {
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+                font-family: 'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;
+                margin-bottom: 20px;
+            }
+            .table_green {
+                border-top: solid #0f4f9e 1px;
+                border-bottom: solid #0f4f9e 1px;
+                border-left: solid #0f4f9e 1px;
+                -moz-border-radius: 20px;
+                -webkit-border-radius: 20px;
+                border-radius: 20px;
+            }
+            .table_green td {
+                border-right: 1px solid #0f4f9e;
+                border-bottom: 1px solid #0f4f9e;
+            }
+            .table_green th {
+                border-bottom: 1px solid #0f4f9e;
+            }
+            .table_green td:first-child, .table th:first-child {
+                border-left: none;
+            }
+            .table_green th:first-child {
+                -moz-border-radius: 20px 0 0 0;
+                -webkit-border-radius: 20px 0 0 0;
+                border-radius: 20px 0 0 0;
+            }
+            .table_green th:last-child {
+                -moz-border-radius: 0 20px 0 0;
+                -webkit-border-radius: 0 20px 0 0;
+                border-radius: 0 20px 0 0;
+            }
+            .table_green tr:last-child td:first-child {
+                -moz-border-radius: 0 0 0 20px;
+                -webkit-border-radius: 0 0 0 20px;
+                border-radius: 0 0 0 20px;
+            }
+            .table_green tr:last-child td:last-child {
+                -moz-border-radius: 0 0 20px 0;
+                -webkit-border-radius: 0 0 20px 0;
+                border-radius: 0 0 20px 0;
+            }
+            .table_green th {
+                background: #54868e;
+                color: #ffffff;
+                padding: 5px 10px;
+                text-align: left;
+                font-size: 13px
+            }
+            .table_green .bottom {
+                background: #e4902d;
+            }
+            .table_green .bottom td {
+                color: #fff;
+                border-bottom: 0
+            }
+            .table_green td {
+                padding: 5px 10px;
+                font-size: 13px;
+                color: #0f4f9e
+            }
+        </style>
+        
+    </head>
+    <body>
+        <apex:form >
+            <apex:repeat value="{!cuentas}" var="itemCuen" rendered="{!nombreCorrecto}" >
+                
+                
+                <div style="font-size:10px;margin: 0; padding: 0;" class="footerR">
+                    <table styleClass="tabla2" style="width: 100%;">
+                        <tr>
+                            <td style="font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;color:#0f4f9e;" >A la fecha: </td>
+                            <td style="width: 50%;color:#0f4f9e;">{!itemCuen.fecha} </td>
+                            <td  rowspan="3"><apex:image styleClass="logos" url="{!URLFOR($Resource.LogoFPC)}"/></td>
+                        </tr>
+                        <tr>
+                            <td style="color:#0f4f9e;"> Nombre del cliente:</td>
+                            <td style="color:#0f4f9e;"> {!itemCuen.nombreCliente}</td>
+                        </tr>
+                        <tr>
+                            <td style="color:#0f4f9e;">No. de cliente:</td>
+                            <td style="color:#0f4f9e;">{!itemCuen.numeroCliente}</td>
+                        </tr>
+                    </table>
+                </div>
+                <tr>
+                    <td align="center" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:20px; font-weight:600;">DETALLE DE MOVIMIENTOS</td>
+                </tr>
+                <apex:repeat value="{!itemCuen.movimientos}" var="item">
+                    <tr style="border: 1px !important;">
+                        <td>
+                            <table class="table_green" width="650" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <th colspan="3" scope="col">Fondo Voluntario - Pensión {!IF(item.moneda = 'LPS', 'Lempiras', 'Dólares')}</th>
+                                    <th colspan="2" scope="col">No. de Cuenta: {!item.cuenta} </th>
+                                </tr>
+                                <tr align="center">
+                                    <td style="border-left: 1px solid #0f4f9e" scope="col">Fecha</td>
+                                    <td scope="col">Transacción</td>
+                                    <td scope="col">Personal</td>
+                                    <td style="border-right: 3px double #0f4f9e" scope="col">Patronal</td>
+                                    <td scope="col">Total</td>
+                                </tr>
+                                <apex:repeat value="{!item.transacciones}" var="transacciones" >
+                                    <tr>
+                                        <td style="border-left: 1px solid #0f4f9e"> {!transacciones.fecha}</td>
+                                        <td> {!transacciones.descripcionTransaccion} </td>
+                                        <td align="right"> {!transacciones.aportePersonal} </td>
+                                        <td align="right" style="border-right: 3px double #0f4f9e"> {!transacciones.aportePatronal} </td>
+                                        <td align="right"> {!transacciones.aporteTotal} </td>
+                                    </tr>
+                                </apex:repeat>
+                                <tr class="bottom">
+                                    <td style="border-left: 1px solid #0f4f9e" class="total" colspan="2">Total</td>
+                                    <td align="right"> {!item.totalPersonal} </td>
+                                    <td align="right" style="border-right: 3px double #0f4f9e"> {!item.totalPatronal} </td>
+                                    <td align="right"> {!item.granTotal} </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                <div style="{!itemCuen.saltoPagina}" />
+            </apex:repeat>
+            <apex:outputText rendered="{!!nombreCorrecto}" style="font-size:15px;" > LA EMRRESA NO CONTIENE EL MISMO NOMBRE QUE EN SYSDE </apex:outputText>
+        </apex:form>
+
+    </body>
+</apex:page>

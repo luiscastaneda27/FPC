@@ -1,0 +1,467 @@
+<apex:page cache="false" expires="0" controller="Controlleraprobarfechaaporte" sidebar="false" showHeader="false" 
+    applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+       <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Aprobar Fecha de Aporte</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+      <apex:stylesheet value="http://www.w3.org/1999/xlink"/>
+      <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />  
+ 
+        <!-- Import the Design System style sheet -->
+        <apex:slds />  
+        
+        <style>
+         html, body{
+                background-color: #F2F2F2;
+            }
+            #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+            }
+            #MenuFormularioPrincipal {
+                position: relative;
+                width: 100%;
+                float: left;
+            }
+            #drop{
+                border:2px dashed #bbb;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:20pt bold,"Vollkorn";color:#bbb
+            }
+            .slds-scope {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+            #b64data{
+                width:100%;
+            }
+            .columna1 {
+                  float:left; 
+                  width:200px;              
+                  padding-left:50px;
+                  padding-top:15px;
+            }
+            .columna2 {
+                  padding-top:15px;  
+                  margin-left:210px;
+                  padding-right:15px;                         
+            }
+            
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Aceptar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+            }
+            .Cancelar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+            }
+            
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            
+         </style>
+        
+   </head>  
+   <body>
+    <div class="slds-scope">
+        
+        
+              
+    <apex:form >
+        <!--apex:actionFunction action="{!MuestraTabla}" name="MuestraTabla"/-->
+        
+      
+        <div id="container">
+            <article class="slds-card slds-theme_default" style="border:0;">
+        
+               <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                 
+                 <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                    
+                        <div class="slds-media__figure">
+                      
+                            </div>
+                            <div class="slds-media__body" >
+                                <h2>
+                                    <br/>
+                                    <span class="slds-text-heading_medium"> FICOHSA PENSIONES/ PANTALLA APORTE INDIVIDUAL </span>
+                                    <br/>
+                                </h2>
+                            </div>
+                            
+                            <div style="text-align:right;padding-right:3%;">
+                                <h2>
+                                  <br/>
+                                    <span class="slds-text-heading_medium" style="color:#42C4DD;"> {!usuario}</span> 
+                                 <br/>
+                                </h2>
+                            </div>
+                     </header>
+                    </div>
+              </article>
+        </div>
+ 
+         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+        
+        <center>               
+            <div class="container" >
+                  
+            <header class="slds-modal__header" style="width:1200px; margin-left:1px;">  
+                       <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                        <apex:image value="{!$Resource.LogoFPC}"/>
+                       </figure>
+            </header>
+               
+                <div id="Resumen" style="width:1200px;">
+                   <h3 class="Row">
+                       <strong>  Aprobación de Actualización y Eliminación de Fecha de Aportación </strong>
+                       <span></span>
+                   </h3>
+                </div>
+                <br/>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width:1200px; margin-left: 1px;">
+                     <table width = "900" style="text-align: center;">
+                         <tr>
+                           <td width="450">
+                               <br/>
+
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                                        <abbr class="slds-required" title="required"></abbr> Fecha de Aporte
+                               </label>
+                               <apex:input disabled="true" type="date" id="fechaporte"  styleclass="slds-input"  style="height:10px; width:160px; margin-left:71px;" value="{!fechaporte}">
+                                    
+                               </apex:input>
+                              <br/>
+                              <br/>
+                           </td>
+                            <td width = "450">
+                                <br/>
+                                <label class= "slds-form-element__label" for= "inputSaample" style= "margin-left: 5px;">
+                                 <abrr class = "slds-requered" title= "requerid"></abrr> Nombre del cliente
+                                </label>
+                             <apex:inputText disabled="true" id="nombre" styleclass="slds-input"  style="height:10px; width:340px; margin-left:30px;"  value="{!nombre}" />
+                             <br/>
+                             <br/>
+                            </td> 
+                         </tr>  
+                        <tr>
+                           <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                                        <abbr class="slds-required" title="required"></abbr> Cuentas Pendientes 
+                                   <br/> de Aprobación
+                               </label>
+                               <apex:selectList size="1" styleClass="slds-select" disabled="false" value="{!buscacuenta}"
+                                                 style="height:2px; width:160px; margin-left:50px; ">
+                                    <apex:actionSupport event="onchange" action="{!mostrarTabla}"/>
+                                    
+                                 <apex:selectOptions value="{!opcionesCuentas}" ></apex:selectOptions> 
+                              </apex:selectList>
+                               <br/>
+                               <br/>
+                               <br/>
+                            </td>
+                  
+                            
+                            <td width="450">
+                             <label class="slds-form-element__label" for="inputSample"  style="margin-left:2px;" >
+                                        <abbr class="slds-required" title="required"></abbr> Moneda de la Cuenta
+                               </label>
+                                 <apex:inputField styleclass="slds-input" html-disabled="true"  id="tipMOneda" value="{!TipMoneda.Tipo_Moneda__c}" style="height:10px; width:170px; margin-left:18px;"/>
+                                <br/> 
+                               <br/>
+                            </td>    
+                         </tr>
+                         <tr>
+                            <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                                        <abbr class="slds-required" title="required"></abbr>Producto
+                               </label>
+                              <apex:selectList size="1" styleClass="slds-select" disabled="true" value="{!pcproducto}" style="height:10px; width:200px; margin-left:110px; ">
+                                 <apex:selectOptions value="{!opciones}" ></apex:selectOptions> 
+                              </apex:selectList>
+                               <br/>        
+                            </td>
+                             
+                             <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:5px;" >
+                                        <abbr class="slds-required" title="required"></abbr>Sub Producto
+                               </label>
+                                <apex:selectList size="1" styleClass="slds-select" disabled="true"  value="{!pcsubproducto}" style="height:10px; width:455px; margin-left:60px;" >
+                                 <apex:selectOptions value="{!opcionSubproducto}" ></apex:selectOptions> 
+                                </apex:selectList>
+                               <br/>        
+                            </td>
+                         </tr>
+                      </table>
+                    
+                     <br/>
+                        <apex:outputPanel rendered="{!MuestraTabla}"  style="width:1200px; margin-left:35px; "> 
+                          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: left;width:1000px; margin-left: 1px;">
+                          <span class="slds-text-heading--small slds-p-vertical--left" style="text-align: right;width:1100px; "> Total: {!tama}</span> 
+                          </div>    
+                        <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListData}" var="item">                             
+                                
+                            <apex:column headerValue="Numero de Movimiento" >
+                                    <apex:outputText value="{!item.NoMovimiento__c}" />
+                                </apex:column>
+                            <apex:column headerValue="Tipo de Saldo" >
+                                    <apex:outputText value="{!item.Tiposaldo__c}" />
+                                </apex:column> 
+                            <apex:column headerValue="Monto de Pago" >
+                                    <apex:outputText value="{!item.Montopago__c}" />
+                                </apex:column>    
+                            <apex:column headerValue="Descripcion" >
+                                    <apex:outputText value="{!item.Descripcion__c}" />
+                                </apex:column>
+                            <apex:column headerValue="Accion" >
+                                    <apex:outputText value="{!item.Accion__c}" style="color:{!if(item.Accion__c = 'Eliminar', 'red', 'blue')} " />
+                              </apex:column>
+                            <apex:column headerValue="Observaciones" >
+                                    <apex:outputText value="{!item.Obsevaciones__c}" />
+                                </apex:column>
+                            <apex:column headerValue="Nueva Fecha" >
+                                 <!--apex:outputText value="{0,date,MM'/'dd'/'yyyy}"-->
+                                <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                    <apex:param value="{!item.Nuevafecha__c}"/>
+                                </apex:outputText>
+                                <apex:param value="1"/>
+                                </apex:column>  
+                            <apex:column headerValue="Referencia" >
+                                <apex:commandLink action="{!MostrarImagen}" >  
+                                    <apex:image value="{!$Resource.Lupa}" width="40" height="40"/>
+                                    <apex:param name="referencia" value="{!item.num_doc__c}" AssignTo="{!ID_Referencia}"/>
+                                </apex:commandLink>  
+                                </apex:column>
+                            
+                            <apex:column headerValue="Denegar" >
+                                   <apex:commandLink action="{!mostrarDenegar}" > 
+                                        <apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
+                                        <apex:param name="denegar" value="{!item.num_doc__c}" assignTo="{!num_doc}"/>
+                                   </apex:commandLink>
+                                </apex:column>
+                            <apex:column headerValue="Aprobar" >
+                                <apex:commandLink action="{!Aprobar}" > 
+                                   <apex:image value="{!$Resource.Acep}" width="40" height="40"/>
+                                    <apex:param name="aprobar1" value="{!item.num_doc__c}" assignTo="{!num_doc}" />
+                                    <apex:param name="aprobar2" value="{!item.Accion__c}" assignTo="{!accion}" />
+                                    <apex:param name="aprobar3" value="{!item.Nuevafecha__c}" assignTo="{!nuevafecha}" />
+                                </apex:commandLink>
+                            </apex:column>
+                            
+                         </apex:dataTable>       
+                    </apex:outputPanel>
+                     <br/>
+                </div>
+                <!--Mostrar Modal Denegacion-->
+                                <div class="slds-scope"  >  
+                                    <apex:outputPanel rendered="{!DenegarVentana}"> 
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                            <div class="slds-modal__container">
+                                                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                                                
+                                                <header class="slds-modal__header">
+                                                    
+                                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Denegar Gestion del Aporte</h1>                    
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                    <div class="slds-form-element__row slds-text-align_center">
+                                                        <div class="slds-form-element slds-size_1-of-1">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__group slds-text-align_left">
+                                                        <div class="slds-form-element__row slds-text-align_left">
+                                                            <label class="slds-form-element__label"> Cuenta </label> <br/>
+                                                            <apex:inputText disabled="true" value="{!buscacuenta}" styleclass="slds-input"   style="height:9px; width:170px; margin-left:1px; "/>
+                                                            <br/>
+                                                            
+                                                            <label class="slds-form-element__label"> Motivo </label> <br/>
+                                                            <apex:inputTextarea styleclass="slds-input"   value="{!Motivo}"  />        
+                                                            
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                <footer class="slds-modal__footer">
+                                                    <apex:commandButton value="Salir" action="{!popDenegarSalir}" styleClass="slds-button slds-button_neutral" />
+                                                    <apex:commandButton value="Denegar"   action="{!Denegar}"  styleClass="slds-button slds-button_neutral">
+                                                        
+                                                    </apex:commandButton>
+                                                    
+                                                    
+                                                </footer>
+                                                
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                        
+                                    </apex:outputPanel> 
+                                </div> 
+                         <!--Mostrar Modal VerImagen-->
+                             <div class="slds-scope" >  
+                                    <apex:outputPanel rendered="{!DenegarImagen}"> 
+                                        
+                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                            <div class="slds-modal__container">
+                                                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                                                
+                                                <header class="slds-modal__header">
+                                                    
+                                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Comprobante</h1>                   
+                                                </header>
+                                                <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                    <div class="slds-form-element__row slds-text-align_center">
+                                                        <div class="slds-form-element slds-size_1-of-1">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__group slds-text-align_center">
+                                                        <div class="slds-form-element__row slds-text-align_center">
+                                                            
+                                                            <!--   <apex:image value="data:image/Png;base64,{!DesconvertirImagen}" width="800px" height="400px"/>
+--> <apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
+                                                            
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                <footer class="slds-modal__footer">
+                                                    
+                                                    <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
+                                                    
+                                                </footer>
+                                                
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                        
+                                    </apex:outputPanel> 
+                                </div>
+                  <footer class="slds-modal__footer" style= "width:1200px; margin-left: 1px;">
+                    <apex:commandButton style="margin-left: 560px; "  value="Actualizar Pantalla"  styleClass="slds-button slds-button--brand" action="{!Cancelar}" />&nbsp;
+                      
+                      <!-- <apex:commandButton style="margin-left: 5px;" id="Actualizar" action="{!Actualizar}" value="Actualizar"  styleClass="Aceptar" /> 
+                  -->
+                </footer>
+                </div>
+        
+    </center>
+     <div class="slds-grid slds-grid--align-center">
+         <p class="slds-col">&copy;2020 Todos los derechos reservados | Ficohsa Pensiones y Cesantías</p>                                        
+     </div>  
+
+    </apex:form>   
+   
+       </div>
+       
+       <!--
+          <input id="inputFileToLoad" type="file" /> 
+          <input type="button"  value="hola" onclick="encodeImageFileAsURL()"  />
+          <textarea rows="4" cols="50" id="divDynamicarea" ></textarea  >
+       -->
+       </body>
+  </html>  
+</apex:page>

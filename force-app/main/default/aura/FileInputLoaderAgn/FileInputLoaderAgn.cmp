@@ -1,0 +1,35 @@
+<aura:component controller="UploadFileControllerAGN">
+    <aura:attribute name="numeroCuenta" type="string"/>
+    <aura:attribute name="titulo" type="string"/>
+    <aura:attribute name="link" type="string"/>
+    <aura:attribute name="existe" type="boolean" default="true"/>
+    <aura:attribute name="spiner" type="boolean" default="true"/>
+    <aura:attribute name="progress" type="Integer" default="0"/>
+    <aura:attribute name="fileName" type="String" default="Sin archivo seleccionado.." />
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <div style="position:relative;margin-around:4em;">
+        <aura:if isTrue="{!v.spiner}">
+            <lightning:progressBar value="{! v.progress }" />
+            <lightning:spinner alternativeText="Loading" size="large" />
+        </aura:if>
+        <aura:if isTrue="{!v.existe}">
+            <div style="margin-right:3em;"> 
+                <lightning:input aura:id="fileId" accept="pdf/pdf, .pdf,image/jpeg,image/png,image/bmp" onchange="{!c.handleFilesChange}" type="file" name="file" label="{!v.titulo}" multiple="false"/>
+                <div class="slds-text-body_small slds-text-color_error">
+                    {!v.fileName}            
+                </div>        
+            </div>
+            <div>
+                <button id="botonIMG1" disabled="{!if(v.fileName!='Sin archivo seleccionado..',false,true)}" class="slds-button slds-button_brand" onclick="{!c.doSave}">Guardar</button>
+            </div>
+            <aura:set attribute="else">
+                <div>
+                    <a href="{!v.link}" target="_blank">{!v.titulo}</a>
+                </div>
+                <div>
+                    <lightning:button label="Actualizar documento" variant="brand" onclick="{!c.actualizar}"/>
+                </div>               
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

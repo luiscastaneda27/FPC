@@ -1,0 +1,96 @@
+<apex:page contentType="application/vnd.ms-excel#Empleados.xls" readOnly="true" controller="generarPersonal2" >
+   <meta charset="utf-8" />
+    <table  Class="slds-table slds-table--bordered " >
+				<thead>
+                	<tr>
+                    	
+                      <th scope="col" >
+                          <div class="slds-truncate" id="nuevos" title="Tipo de Identificación"><strong>Tipo de Identificación</strong></div>
+				      </th>
+                      <th scope="col"  >
+                          <div class="slds-truncate" id="nuevos" title="Identificación"><strong>Identificación</strong></div>
+				      </th>
+                      <th scope="col">
+                          <div class="slds-truncate" id="nuevos" title="Nombres"><strong>Nombres</strong></div>
+				      </th>
+                      <th scope="col">
+                          <div class="slds-truncate" id="nuevos" title="Apellidos"><strong>Apellidos</strong></div>
+				      </th>
+                      <th scope="col">
+                          <div class="slds-truncate" id="nuevos" title="Genero"><strong>Genero</strong></div>
+				      </th>
+                      <th scope="col">
+                          <div class="slds-truncate" id="nuevos" title="Estado Civil"><strong>Estado Civil</strong></div>
+				      </th>
+                      <th scope="col" >
+                          <div class="slds-truncate" id="nuevos" title="Fecha Nacimiento"><strong>Fecha Nacimiento</strong></div>
+				      </th>
+                      <th scope="col" >
+                          <div class="slds-truncate" id="nuevos" title="Moneda"><strong><center>Moneda</center> </strong></div>
+				      </th>
+                      <th scope="col" >
+                          <div class="slds-truncate" id="nuevos" title="Salario"><strong>Salario</strong></div>
+				      </th>
+                     
+                    </tr>
+                </thead>
+                <body>
+                    <apex:repeat value="{!listEmpleados}" var="item">
+                    <tr>
+                    	
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.Tipo_Identificacion__c}"/> 
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputText value="&nbsp;{!item.Empleado2__r.Identificacion__c}"/> 
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.FirstName}"/>	
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.LastName}"/>	
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.Sexo__c}"/> 	
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.Estado_Civil__pc}"/>	
+                        </td>
+                        
+                        <td>
+                        	<apex:OutputField value="{!item.Empleado2__r.PersonBirthDate}"/>
+                        </td>
+                        
+                        <td>
+                        	<apex:outputField value="{!item.currencyIsoCode}"/>
+                        </td>
+                        
+                        <td style="text-align:right;">
+                        	<apex:outputField value="{!item.Salario__c}"/> 
+                        </td>
+                        
+                    </tr>
+                    
+                   </apex:repeat>   
+                    <tr>
+                    	<td colspan="10" style="text-align:right;">
+                        	<strong>Total</strong>
+                        </td>
+                        
+                        <td style="text-align:right;">
+                        	<strong><apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!total}" /></apex:outputText></strong>
+                        </td>
+                        
+                       
+                    </tr>
+              </body>
+                
+                 
+                                                                                              
+                    </table> 
+</apex:page>

@@ -1,0 +1,187 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
+    title="Ficohsa FPC" cache="false" expires="0" controller="ControllerRetirosAproba" showQuickActionVfHeader="false" id="page"> 
+<apex:slds />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Ficohsa</title>
+            <meta name="viewport" content="width=dehttps://cs77.salesforce.com/_ui/common/apex/debug/ApexCSIPage#vice-width, initial-scale=1" />
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS221, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+        </head> 
+         
+   <body>
+    <apex:form id="ubic1">
+        <div class="slds-scope">
+        <br/>
+            <div class="slds-path-coach">
+                <div class="slds-grid">
+                <div class="slds-tabs--path" role="application">
+                  <ul class="slds-tabs--path__nav" role="tablist"></ul>
+                </div>
+              </div>
+         <center>
+                   <figure class="row justify-content-center" style="  text-align: center; width: 85%; ">
+                    <apex:image value="{!$Resource.LogoFPC}" style="height:90px; width:400px;"  />
+                   </figure>
+                </center>
+             <br/>
+                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture slds-align--absolute-center" />
+                    <div id="content-path-1" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1">    
+                    <br/>
+
+       </div>
+      
+            <!--fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;">
+        <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
+                            Lista de Retiros
+                        </legend-->
+        
+             <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1">   
+                <apex:outputPanel style="width:1200px; margin-left:35px; "> 
+                 
+                <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
+                            Lista de Retiros por Aprobar
+                </legend>
+        <div style="height:50px;background-color: #F2F2F2;">
+                  <br/>
+                  <br/>
+           
+        </div>
+        
+        
+        <div style="width:100%; overflow-x:scroll; height: 100%">
+            
+       
+        <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+            <thead>
+             
+                <tr class="slds-text-heading--label ">
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Referencia"><strong>No.</strong></div>
+                  </th> 
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Referencia"><strong>No. Referencia</strong></div>
+                  </th>  
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Cuenta"><strong>Nombre Cliente</strong></div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha Sysde"><strong>Cuenta</strong></div>
+                  </th>
+                    <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Salesforce"><strong>Monto Salesforce</strong> </div>
+                    </th>
+                     <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Sysde"><strong>Monto Sysde</strong> </div>
+                    </th>
+                     <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Total"><strong>Monto Total</strong> </div>
+                    </th>
+                    <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Forma Pago"><strong>Forma Pago</strong> </div>
+                    </th>
+                    <!--th scope="col">
+                        <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
+                    </th-->
+                    <th scope="col">
+                        <div class="slds-truncate" title="Aprobar"><strong>Rechazar</strong></div>
+                    </th>
+                      
+                    
+                </tr>
+          </thead>
+          <tbody>
+          
+              <apex:repeat value="{!ListSeleccionado}" var="item">
+              
+               <!--SON 7 <TD> los que se colocaran aqui para que muestre al final los dos botones de aceptar o denegar-->
+               <tr>
+                   <td scope="row" data-label="Cuenta" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                            {!item.No__c}
+                        </div>
+               </td>
+               <td scope="row" data-label="Cuenta" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                            {!item.Numero_Referencia__c}
+                        </div>
+               </td> 
+                   <td scope="row" data-label="Cuenta" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                            {!item.Nombre_Cliente__c}
+                        </div>
+               </td> 
+                <td scope="row" data-label="Moneda" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                        {!item.Cuenta__c}
+                        </div>
+               </td>    
+                   
+               <td scope="row" data-label="Monto" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                          {!item.Monto_Salesforce__c}
+                        </div>
+               </td>  
+                   
+               <td scope="row" data-label="Tipo Saldo" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                        {!item.Monto_Sysde__c}
+                        </div>
+               </td>  
+               <td scope="row" data-label="Tipo Saldo" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                        {!item.monto_total__c}
+                        </div>
+               </td>      
+                   
+               <td scope="row" data-label="Forma Pago" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                         {!item.Forma_Pago__c}
+                        </div>
+               </td>      
+               <!--td  style= "text-align: center;">
+                     
+                    <div >
+                      
+                     <apex:commandLink action="{!AprobarRetiro}" >  
+                         <apex:image value="{!$Resource.Acep}" width="40" height="40"/>
+                         <apex:param value="{!item.Numero_Referencia__c}" AssignTo="{!Num_CodReferencia}"  name="APV1APROBACION" /> 
+                     </apex:commandLink>   
+                    </div>
+                      
+              </td-->
+                 <td style= "text-align: center;">
+                    
+                      <div class="slds-scope">    
+                        <apex:commandLink action="{!Eliminar}" >
+                              <apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
+                              <apex:param value="{!item.Numero_Referencia__c}" AssignTo="{!Num_CodReferencia}"  name="APV2DENEGACION" />                                 
+                        </apex:commandLink>      
+                     </div>
+                       
+                   
+                </td>
+              </tr>
+            </apex:repeat>
+        </tbody>
+        </table>
+              </div>
+         
+       <br/>
+     <apex:commandButton styleClass="slds-button slds-button--brand" style=" margin-left: 560px; " value="Aprobar Retiros" action="{!AprobarRetiro}" />
+    
+               
+                    </apex:outputPanel>
+                 </div>
+                <!--/fieldset-->
+        </div>
+        </div>
+      </apex:form>   
+   
+       
+       </body>
+    
+  </html>  
+</apex:page>

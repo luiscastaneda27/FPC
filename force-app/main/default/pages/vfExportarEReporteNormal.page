@@ -1,0 +1,194 @@
+<apex:page contentType="application/vnd.ms-excel#{!totalplanilla.name}.xls" readOnly="true"  controller="controladorVerPlanillaNormal">
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Salesforce Lightning Design System Trailhead Module</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+ 
+    <style>
+        html, body {
+           background: #FFF;
+        }  
+        #topMenuZonaTransaccional {
+            position: relative;
+            width: 80%;
+            float: left;
+            left: 10%;
+        }
+        table {
+                font-size: 12px;
+                width: 100%;
+                color: #555;
+                border: 0px solid black;
+                    border-collapse: collapse;
+                padding: 8px;
+                text-align: left;
+                line-height: 1.42857143;
+                vertical-align: top;
+                border-top: 1px solid #ddd;
+                border-spacing: 0px;
+                -webkit-border-horizontal-spacing: 0;
+                -webkit-border-vertical-spacing: 0px;  
+                margin-bottom: 20px;
+                border: none;
+            } 
+        table.claseTablaDatos {
+            border-collapse: collapse;
+            cellspacing:10px;
+            cellpadding:10px;
+        }
+        table.claseTablaDatos th, table.claseTablaDatos td {
+            border-bottom: 1px solid #ddd;
+        }
+        table.claseTablaDatos tr:nth-child(even) {background-color: #FFFFFF}
+    </style>
+</head>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds-scope">
+    <br/>
+    
+    
+    <apex:form > 
+        
+        
+         <apex:outputPanel rendered="{!activarmodal}">
+            <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+              <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    
+                 <fieldset class="slds-form-element">
+                     <div class="slds-form slds-form_compound slds-align--absolute-left">      
+                     <div class="slds-form-element__group">
+                              <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-6">
+                                    <label class="slds-form-element__label"><b><apex:outputField value="{!totalplanilla.name}"/> </b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_2-of-6">
+                                    <label class="slds-form-element__label"><b> Total Empleados:<apex:outputField value="{!totalplanilla.Cantidad_empleados__c}"/> </b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_3-of-6">
+                                    <label class="slds-form-element__label"><b> Aportes Obligatorios: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!totalplanilla.Total_obligatorios__c}" /></apex:outputText></b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_4-of-6">
+                                    <label class="slds-form-element__label"><b> Aportes Voluntarios: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!totalplanilla.Total_voluntarios__c}" /></apex:outputText> </b></label>
+                                  
+                                </div>
+                               <div class="slds-form-element slds-size_5-of-6">
+                                    <label class="slds-form-element__label"><b> Total Planilla: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!totalplanilla.Total__c}" /></apex:outputText> </b></label>
+                                  
+                                </div>
+                               
+                                  
+                                
+                              </div>
+                            </div>
+                     </div>                      
+                                           
+                                            
+                             
+                           </fieldset>
+                </div>
+                <div class="slds-modal__content">
+                    <table class="slds-table slds-table_bordered slds-table_col-bordered" >
+                      <thead>
+                       <tr class="slds-text-title_caps">
+                            <th scope="col" colspan="3" style="text-align:center;">
+                            <div class="slds-truncate" title="Empleado"><strong>Empleado</strong></div>
+                          </th>
+                            
+                          <th scope="col" colspan="3" style="text-align:center;">
+                            <div class="slds-truncate" title="Aportes Oblogatorios"><strong>Aportes Oblogatorios</strong></div>
+                          </th>
+                            
+                          <th scope="col" colspan="2" style="text-align:center;">
+                            <div class="slds-truncate" title="Aportes Voluntarios"><strong>Aportes Voluntarios</strong></div>
+                          </th>
+                           </tr>                          
+                        <tr class="slds-text-title_caps">
+                            <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Num Identidad"><strong>Num Identidad</strong></div>
+                          </th>
+                            
+                          <th scope="col" colspan="2">
+                            <div class="slds-truncate" title="Empleado"><strong>Empleado</strong></div>
+                          </th>
+                            
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Patronal"><strong>Patronal</strong></div>
+                          </th>
+                            
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Empleado"><strong>Empleado</strong></div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Reserva Laboral"><strong>Reserva Laboral</strong></div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Patronal"><strong>Patronal</strong></div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                              <div class="slds-truncate" title="Empleado"><strong>Empleado</strong></div>
+                          </th>
+                            
+                          
+                            
+                        </tr>
+                      </thead>
+              <tbody>
+                 <apex:repeat value="{!listEmpleados}" var="item">
+                     <tr>
+                         
+                         <td colspan="1"><apex:outputText value="&nbsp;{!item.empleado2__r.Identificacion__c}"/> </td>
+                         <td colspan="2"><apex:outputField value="{!item.empleado2__r.name}"/></td>
+                         <td colspan="1" style="text-align:right;"><apex:outputField value="{!item.Aporte_Patrono_obligatorio__c}"/></td>
+                         <td colspan="1" style="text-align:right;"><apex:outputField value="{!item.Aporte_Empleado_Obligatorio__c}"/></td>
+                         <td colspan="1" style="text-align:right;"><apex:outputField value="{!item.Reserva_Laboral__c}"/></td>
+                         <td colspan="1" style="text-align:right;"><apex:outputField value="{!item.Aporte_Patrono_Voluntario__c}"/></td>
+                         <td colspan="1" style="text-align:right;"><apex:outputField value="{!item.Aporte_Empleado_Voluntario__c}"/></td> 
+                      
+                     </tr>
+                  </apex:repeat> 
+                  <tr>
+                         
+                         
+                         <td colspan="3" style="text-align:right;"><strong>Total</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong>{!totalplanilla.TA_Patrono_obligatorio__c}</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong>{!totalplanilla.TA_Empleado_Obligatorio__c}</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong>{!totalplanilla.Total_Reserva_Laboral2__c}</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong>{!totalplanilla.TA_Patrono_Voluntario__c}</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong>{!totalplanilla.TA_Empleado_Voluntario__c}</strong></td> 
+                      
+                     </tr>
+                  
+                   
+                  
+              </tbody>
+            </table>
+                </div>
+              </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </apex:outputPanel>  
+        
+        
+        
+        
+    </apex:form>
+    </div>
+</body>
+</html>
+    
+</apex:page>

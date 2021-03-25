@@ -1,0 +1,210 @@
+<apex:page contentType="application/vnd.ms-excel#PlanillaIHSS.xls" readOnly="true"  controller="controladorReportes" action="{!verPlanilla}">
+
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Salesforce Lightning Design System Trailhead Module</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+
+	<style>
+		html, body {
+           background: #FFF;
+        }  
+		#topMenuZonaTransaccional {
+		    position: relative;
+		    width: 80%;
+		    float: left;
+            left: 10%;
+		}
+		table {
+                font-size: 12px;
+                width: 100%;
+                color: #555;
+             	border: 0px solid black;
+    				border-collapse: collapse;
+             	padding: 8px;
+             	text-align: left;
+             	line-height: 1.42857143;
+                vertical-align: top;
+                border-top: 1px solid #ddd;
+             	border-spacing: 0px;
+                -webkit-border-horizontal-spacing: 0;
+                -webkit-border-vertical-spacing: 0px;  
+             	margin-bottom: 20px;
+             	border: none;
+            } 
+        table.claseTablaDatos {
+            border-collapse: collapse;
+         	cellspacing:10px;
+         	cellpadding:10px;
+        }
+        table.claseTablaDatos th, table.claseTablaDatos td {
+            border-bottom: 1px solid #ddd;
+        }
+        table.claseTablaDatos tr:nth-child(even) {background-color: #FFFFFF}
+	</style>
+</head>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds-scope">
+  	<br/>
+  	
+  	
+  	<apex:form > 
+        
+  		
+         <apex:outputPanel rendered="{!activarmodalIHSS}">
+	        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+	          <div class="slds-modal__container">
+	            <div class="slds-modal__header"> 
+                 <fieldset class="slds-form-element">
+                     <div class="slds-form slds-form_compound slds-align--absolute-left">      
+                     <div class="slds-form-element__group">
+                              <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-6">
+                                    <label class="slds-form-element__label"><b>Planilla IHSS </b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_2-of-6">
+                                    <label class="slds-form-element__label"><b> Aportes Maternidad:<apex:outputField value="{!TotalPlanillaIHSS.Aporte_Empleado_Maternidad__c}"/> </b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_3-of-6">
+                                    <label class="slds-form-element__label"><b> Aportes IVM: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!TotalPlanillaIHSS.Aporte_Empleado_SS__c}" /></apex:outputText></b></label>
+                                  
+                                </div>
+                                  <div class="slds-form-element slds-size_4-of-6">
+                                    <label class="slds-form-element__label"><b> Aportes Riesgo Profecional: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!TotalPlanillaIHSS.Total_Riesgo_Profecional_Patronal__c}" /></apex:outputText> </b></label>
+                                  
+                                </div>
+                               <div class="slds-form-element slds-size_5-of-6">
+                                    <label class="slds-form-element__label"><b> Total Planilla: <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!TotalPlanillaIHSS.Salario__c}" /></apex:outputText> </b></label>
+                                  
+                                </div>
+                               <div class="slds-form-element slds-size_6-of-6">
+                                  
+                                </div>   
+                                  
+                                
+                              </div>
+                            </div>
+                     </div>                      
+                                           
+                                            
+                             
+                           </fieldset>
+
+	            </div>
+	            <div class="slds-modal__content">
+	                <table class="slds-table slds-table_bordered slds-table_col-bordered" >
+                      <thead>
+                        <tr class="slds-text-title_caps">
+			      			<th scope="col" colspan="3" style="text-align:center;">
+                            <div class="slds-truncate" title="Empleado">Empleado</div>
+                          </th>
+                            <th scope="col" colspan="2" style="text-align:center;">
+                            <div class="slds-truncate" title="Empleado">Cambio</div>
+                          </th>
+                            
+                          <th scope="col" colspan="2" style="text-align:center;">
+                            <div class="slds-truncate" title="Aportes Oblogatorios">Aportes Maternidad</div>
+                          </th>
+                            
+                          <th scope="col" colspan="2" style="text-align:center;">
+                            <div class="slds-truncate" title="Aportes Voluntarios">Aportes IVM</div>
+                          </th>
+                            <th scope="col" colspan="1" style="text-align:center;">
+                            <div class="slds-truncate" title="Aportes Voluntarios">Aportes Riesgo</div>
+                          </th>
+                           </tr>   
+                          
+                          
+                          
+                          
+                        <tr class="slds-text-title_caps">
+			      			<th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Num Identidad">Num Identidad</div>
+                          </th>
+                            
+                          <th scope="col" colspan="2">
+                            <div class="slds-truncate" title="Empleado">Nombre</div>
+                          </th>
+                            <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Empleado">Fecha</div>
+                          </th>
+                            
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Patronal">Tipo</div>
+                          </th>
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Patronal">Patronal</div>
+                          </th>
+                            
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Empleado">Empleado</div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Patronal">Patronal</div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Empleado">Empleado</div>
+                          </th>
+                          
+                          <th scope="col" colspan="1">
+                            <div class="slds-truncate" title="Profecional">Profecional</div>
+                          </th>
+                         
+                            
+                        </tr>
+                      </thead>
+              <tbody>
+                
+                  
+                          
+                  <apex:repeat value="{!listEmpleadosIHSS}" var="item">
+                     <tr>
+                         <td colspan="1"><apex:outputtext value="&nbsp;{!item.Identidad__c}"/></td>
+                         <td colspan="2"><apex:outputField value="{!item.Primer_Nombre__c}"/> &nbsp;<apex:outputField value="{!item.Primer_Apellido__c}"/></td>
+                         <td> <apex:outputField value="{!item.Fecha_Cambio__c}"/>   </td>
+                         <td><apex:outputField value="{!item.Tipo_Cambio__c}"/></td>
+                          
+                         <td style="text-align:right;"><apex:outputField value="{!item.planilla__r.Aporte_Patronal_Maternidad__c}"/></td>
+                         <td style="text-align:right;"><apex:outputField value="{!item.planilla__r.Aporte_Empleado_Maternidad__c}"/></td>  
+                         <td style="text-align:right;"><apex:outputField value="{!item.Planilla__r.Aporte_Patrono_SS__c}"/></td>
+                         <td style="text-align:right;"><apex:outputField value="{!item.planilla__r.Aporte_Empleado_SS__c}"/></td>
+                         <td style="text-align:right;"><apex:outputField value="{!item.planilla__r.Riesgo_Profecional_Patronal__c}"/></td>
+                     </tr>
+                  </apex:repeat> 
+                   <tr>
+                         
+                         <td colspan="5" style="text-align:right;"><strong>Total</strong></td>
+                         <td colspan="1" style="text-align:right;"><strong><apex:outputField value="{!TotalPlanillaIHSS.Total_Aporte_Patronal_Maternidad__c}"/></strong></td>
+                         <td colspan="1" style="text-align:right;"><strong><apex:outputField value="{!TotalPlanillaIHSS.Total_Aporte_Empleado_Maternidad__c}"/></strong></td>
+                         <td colspan="1" style="text-align:right;"><strong><apex:outputField value="{!TotalPlanillaIHSS.Total_Aporte_Patrono_SS__c}"/></strong></td>
+                         <td colspan="1" style="text-align:right;"><strong><apex:outputField value="{!TotalPlanillaIHSS.Total_Aporte_Empleado_SS__c}"/></strong></td>
+                         <td colspan="1" style="text-align:right;"><strong><apex:outputField value="{!TotalPlanillaIHSS.Total_Riesgo_Profecional_Patronal__c}"/></strong></td> 
+                      
+                     </tr>
+              </tbody>
+            </table>
+	            </div>
+	          </div>
+	        </div>
+	        <div class="slds-backdrop slds-backdrop--open"></div>
+	    </apex:outputPanel>
+        
+        
+        
+  	</apex:form>
+	</div>
+</body>
+</html>
+	
+</apex:page>

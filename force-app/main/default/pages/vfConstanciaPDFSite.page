@@ -1,0 +1,96 @@
+<apex:page standardController="Case" extensions="controllerConstanciaPdf" renderAs="PDF" showHeader="false" applyBodyTag="false" cache="false">
+    <head>
+        <apex:includeScript value="{!URLFOR($Resource.jQuery)}"/>
+        <style> 
+            @page {
+                size:8.5in 11in; 
+                margin-top:{!margen}; 
+                margin-bottom:1.5cm; 
+                margin-left:2cm;
+                margin-right:2cm; 
+            }
+                                   
+            /*table, th, td{ border: 1px solid black; }*/ 
+            table {border-collapse:collapse;}
+            table {width:100%;}
+            table {font-size: 12px;}
+            th {text-align:center;height:35px;}
+            td {text-align:left;padding:5px;height:25px;vertical-align:bottom;}
+            /*table, td, th { border:1px solid black;}*/
+            th {background-color:white;color:black;}
+           
+           .saltoPagina{
+                page-break-after: always;
+            }
+            .logo {
+                position: running(logo);
+            }
+            .imagenLado {
+                position: running(imagenLado);
+            }
+            .imagenFooter{
+                position: running(imagenFooter);
+                color:#0056B2;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 600;
+            }
+            
+            @page {
+                @top-left {
+                    content: element(logo)
+                }
+            }
+            @page {
+                @right-top {
+                    content: element(imagenLado)
+                }
+            }
+            @page {
+                @bottom-right {
+                    content: element(imagenFooter)
+                }
+            }
+            
+        </style>
+        
+    </head>
+    <body>
+        
+        <apex:form > 
+            <apex:image value="{!URLFOR($Resource.logo1)}" width="175px"  rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
+            <!--apex:image styleClass="imagenLado" value="{!URLFOR($Resource.mebreteright)}" rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
+            <<apex:image styleClass="imagenFooter" value="{!URLFOR($Resource.mebretefooter )}" rendered="{!case.Embajadas__c == null}"/-->
+            <table  style="width:100%; display:{!if(mostrarMenbrete, 'block;','none;')}">
+                <tr>
+                    <td style="width:75%; " valign="top" >
+                    </td>
+                    <td style="width:25%;" valign="top" >
+                       <font style="color:#0f64bc; font-size:10px; font: bold 10px Meiryo, sans-serif;"> Pensiones y Cesatías</font>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Tegucigalpa,</font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Edificio Ficohsa Payaquí,</font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Ave. San Juan Bosco</font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">4to. piso</font><br/><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">San Pedro Sula,</font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Edificio Ficohsa</font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Ave. Circunvalación, 5 y 6 calle<!--, S.O.--></font><br/>
+                        <font style="color:#b1afa9; font-size:10px; font-weight: bold;">5to. piso</font><br/><br/>
+                        <font style="color:#b1afa9; font-size:10px;font-weight: bold;">PBX: 2275-2400</font>
+                        <!--apex:image value="{!URLFOR($Resource.mebreteright)}" height="130px;" rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/-->
+                    </td>
+                </tr>
+            </table>
+            <table class="imagenFooter" style="width:100%; display:{!if(mostrarMenbrete, 'block;','none;')}">
+                <tr>
+                    <td style="width:100%"></td>
+                    <td><apex:outputText rendered="{!mostrarMenbrete}">www.ficohsapensiones.com</apex:outputText> </td>
+                </tr>
+            </table>
+            <apex:outputPanel >
+                <apex:pageBlock >
+                    <apex:outputText escape="false" value="{!html}" />
+                </apex:pageBlock>
+            </apex:outputPanel>       
+        </apex:form>   
+        
+    </body>
+</apex:page>

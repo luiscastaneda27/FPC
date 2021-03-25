@@ -1,0 +1,219 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf" controller="formularioIdentificacion_PDF_CONT">
+    <head>
+        <style>
+            @page {
+                size: 8.5in 14in;
+                margin-left: 2.5cm;
+                margin-right: 2.5cm;
+            }
+            
+            
+            div > table > tr > td{
+                border: 1px solid black;
+                height: 30px;
+            }
+            
+            table > tr > td{
+                height: 30px;
+            }
+            .p{
+             text-align : justify;
+             font-family: Arial;
+             font-size:15px;
+             
+            }
+            table {
+            width: 100%;
+            }
+            .p2{
+            text-align: left;
+             font-family: Arial;
+             font-size:15px;
+             
+            }
+            .p3{
+            text-align : left;
+             font-family: Arial;
+             font-size:15px;
+             
+            }
+            
+            .logo{
+                position: absolute;
+                width: 15%;
+                height: 14%;
+                top: 0px;
+                left: 0px;
+                Z-index:-100;   
+            }
+            
+            .titulo{
+                position: absolute;                
+                text-align:center;
+                top: 10px;
+                left: 250px;
+                Z-index:-100;
+            }
+            
+            .barraP{
+            background-color: black;
+            height : 3px; 
+            }
+            
+            .barraS{
+            background-color: black;
+            display: table;
+            height:200px;
+            }
+            
+            .text1{
+            position: absolute; 
+            text-align: center; 
+            height : 1px; 
+            width : 600px; 
+            right: 0px;
+            }
+            
+            .text2{
+            position: absolute; 
+            text-align: right; 
+            height : 20px; 
+            width : 550px; 
+            right: 28px;
+            line-height: 2.0em;
+            }
+            
+            .text3{
+            position: absolute; 
+            text-align: left; 
+            height : 20px; 
+            width : 750px; 
+            right: 0px;
+            }
+            
+            .containerP{
+            width:100%; 
+            height:50px; 
+            background-color: #cdd0d6; 
+            }
+            
+            .camp1{
+            background-color: #5370aa; 
+            width : 25%;
+            height: 40px; 
+            display: inline; 
+            }
+            
+            .camp2{
+            background-color: #a85932; 
+            width : 25%;
+            height: 40px; 
+            display: inline;
+            }
+                      .camp3{
+            background-color: #6fa036; 
+            width : 25%;
+            height: 40px; 
+            display: inline;
+            }
+                      .camp4{
+            background-color: #5370aa; 
+            width : 25%;
+            height: 40px;
+            display: inline;
+            }
+            
+            #tableCentr {
+             text-align:center; 
+            }
+            
+            #ufila{
+            width:6%;
+            text-align:center;
+            }
+            
+            #textBar{
+            color:#ffffff; 
+            display: table-cell;
+            vertical-align: middle;
+            }
+        </style>    
+    </head>
+    <!--div class="logo">
+        <apex:image value="{!$Resource.logofico}" width="150"/>
+    </div-->
+    <br/>
+    <div class="text1">   
+        <H5>RENUNCIA COMO CONSECUENCIA DEL CUMPLIMIENTO DE FATCA - WAIVER <br/><br/>
+        FICOHSA PENSIONES Y CESANTIAS S.A.</H5>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <div class="text2">
+       
+        <div class="p">
+        <p>Debido a las obligaciones establecidas en el Foreing Account Tax Complianca Act
+            (FACTA), el Acuerdo suscrito entre el gobierno de Estados Unidos y el Gobierno de la 
+            República de Honduras para Mejorar el Cumplimiento Tributario Internacional y para
+            Implementar el FATCA, (en adelante el Acuerdo) y adicionalmente cualquier otra
+            regulación debidamnete promulgada por autoridades competentes y asumidas por
+            FICOHSA PENSIONES Y CESANTIAS S.A., el titular mediante la firma de este documento
+            acepta y autoriza a FICOHSA PENSIONES Y CESANTIAS S.A., para que según lo dispuesto
+            en el FATCA, el Acuerdo y la normativa aplicable reporte transfiera toda información
+            sobre el cuentahabiente y sus cuentas a las autoridades competentes para así cumplir
+            con sus oblicaciones y responsabilidades FATCA.</p><br/><br/>
+        <p>Enterado de lo anterior, el titular renuncia expresamente a ejercer cualquier acción legal
+            y de otro tipo en contra de FICOHSA PENSIONES Y CESANTIAS S.A., y autoriza a FICOHSA
+            PENSIONES Y CESANTIAS S.A., para levantar el secreto bancario exclusivamente
+            para (manteniéndose dicho secreto para cualquier otro efecto a menos de que sea
+            expresa y previamente comunicado al titular) revelar y transferir incluso al extranjero
+            información personal de acceso restringido exigido por FATCA, el Acuerdo y la normativa
+            aplicable.</p><br/><br/>
+        <p>Como condición para establecer o mantener cuentas o cualquier instrumento u 
+            obligación con FICOHSA PENSIONES Y CESANTIAS S.A., el titular se compromete a
+            proporcionar oportunamente toda información que FICOHSA PENSIONES Y CESANTIAS
+            S.A. pueda requerir en el tiempo y forma establecida por FICOHSA PENSIONES Y
+            CESANTIAS S.A, para cumplir debidamente con FATCA, el Acuerdo y la normativa
+            aplicable.</p><br/><br/><br/><br/><br/><br/>
+        <p>Específicamente el titular: (i) acepta que cualquier obstrucción, falta de diligencia o
+            falsedad en la información suministrada o cualquier sanción respecto al tiempo o la
+            forma de suplir la información facultará a FICOHSA PENSIONES Y CESANTIAS S.A. para
+            terminar los contratos y obligaciones mantenidas con el titular, sin necesidad de
+            notificación previa ni responsabilidad alguna para FICOHSA PENSIONES Y CESANTIAS
+            S.A. o bien cerrar, bloquear o transferir dichas cuentas u obligaciones; (ii) se obliga
+            incondicionalmente a mantener a FICOHSA PENSIONES Y CESANTIAS S.A. (incluyendo
+            sus empleados, asesores, representante legal y apoderados, directores, y accionistas,
+            todo su personal y personas relacionadas) totalmente indemnes en contra de cualquier
+            daño o perjuicio derivado del incumplimiento de esta obligación (iii) se compromete a
+            informar inmediatamente por escrito a FICOHSA PENSIONES Y CESANTIAS S.A. en caso de
+            darse algún cambio relevante a la información proporcionada.</p><br/>
+        </div>
+        <div class="p2">
+        Nombre del Titular
+        <div style="border-bottom:1px solid black;width:427px;display:inline-block;">
+            <!--Nombre Completo-->{!info.pcprimernombre}&nbsp;{!info.pcsegundonombre}&nbsp;{!info.pcprimerapellido}&nbsp;{!info.pcsegundoapellido}
+        </div><br/><br/>
+        Nombre de la Empresa
+        <div style="border-bottom:1px solid black;width:402px;display:inline-block;">
+            <!--Nombre Completo-->{!info.pcNombreempl}
+        </div><br/><br/>
+        Identificador de Contribuyente<br/>
+            de EE.UU. (si es estadounidense)
+        <div style="border-bottom:1px solid black;width:335px;display:inline-block;">
+            <!--Nombre Completo-->{!info.NumeroID_Fiscal_EEUU}
+        </div><br/><br/>
+        Número de Cuenta
+        <div style="border-bottom:1px solid black;width:425px;display:inline-block;">
+            <!--nocuenta-->{!cuenta}
+        </div><br/><br/>
+        Fecha
+        <div style="border-bottom:1px solid black;width:500px;display:inline-block;">
+            <!--Nombre Completo-->{!suscripcionDia}/{!suscripcionMes}/{!suscripcionAnio}
+        </div><br/><br/>
+        </div>
+        
+        <div class="p2">
+        <p>Firma del Titular ___________________________________________________________</p><br/>
+    </div>
+     </div>
+    
+</apex:page>

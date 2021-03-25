@@ -1,0 +1,109 @@
+<apex:page standardController="PreVenta__c" extensions="extensionPreVenta">
+    <apex:sectionHeader title="Modificación de PreVenta" 
+        subtitle="{!if(PreVenta__c.id = null, 'Nueva Preventa', if(PreVenta__c.Company__c != null, PreVenta__c.Company__c, PreVenta__c.Name))}"/>
+    <apex:form >
+        <apex:pageBlock title="Modificar PreVenta">
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Guardar"/>
+                <apex:commandButton action="{!quickSave}" value="Guardar y nueva"/>
+                <apex:commandButton action="{!cancel}" value="Cancelar"/>
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel rendered="{!natural}">
+                <apex:pageBlockSection columns="2" title="Información de la preventa">
+                    <apex:inputField value="{!PreVenta__c.FirstName__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.ownerId}"/>
+                    <apex:inputField value="{!PreVenta__c.LastName__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Status__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Tipo_Identificacion__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Phone__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Identificacion__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.LeadSource__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Email__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Telefono_actual__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Departamento__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Motivo_Contacto__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Monto_inicial_probable__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Fecha_tentativa_de_cierre__c}"/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2" title="Información laboral">
+                    <apex:inputField value="{!PreVenta__c.Nombre_Empresa__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Telefono_Trabajo__c}"/>                
+                    <apex:inputField value="{!PreVenta__c.Extension__c}"/>                              
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2" title="Descripción">
+                    <apex:inputField value="{!PreVenta__c.Referido_por__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Correo_de_Empleado_Ficohsa__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Canal_que_Refiere__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Description__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Agencia_Refiere__c}"/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2" title="Información del sistema">
+                    <apex:outputField value="{!PreVenta__c.recordTypeId}"/>                                              
+                </apex:pageBlockSection>
+            
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!!natural}">
+                <apex:pageBlockSection columns="2" title="Información de la preventa">
+                    <apex:inputField value="{!PreVenta__c.Company__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.ownerId}"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.Nombre_Comercial__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Status__c}"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.Tipo_Identificacion__c}"/>
+                    <apex:inputField value="{!PreVenta__c.FirstName__c}"/>
+                                      
+                    <apex:inputField value="{!PreVenta__c.Identificacion__c}"/>
+                    <apex:inputField value="{!PreVenta__c.LastName__c}"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.LeadSource__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Cargo_Actual__c}" required="true"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.Telefono_actual__c}" required="true"/>
+                    <apex:inputField value="{!PreVenta__c.Phone__c}" required="true"/>
+              
+                    <apex:inputField value="{!PreVenta__c.Extension__c}"/>                    
+                    <apex:inputField value="{!PreVenta__c.Email__c}" required="true"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.Motivo_Contacto__c}"/>
+                    <apex:inputField value="{!PreVenta__c.Ejecutivo_Banco_Ficohsa__c}"/>
+                    
+                </apex:pageBlockSection>
+                    
+                <apex:pageBlockSection columns="2" title="Información de la empresa">
+                    <apex:inputField value="{!PreVenta__c.Industry__c}" required="true"/>                   
+                    <apex:inputField value="{!PreVenta__c.NumberOfEmployees__c}" required="true"/>
+                    
+                    <apex:inputField value="{!PreVenta__c.Tipo_Empresa__c}" required="true"/>   
+                                                                                 
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2" title="Información de dirección">
+                     <apex:inputField value="{!PreVenta__c.Calle_Trabajo__c}"/>                     
+                     <apex:inputField value="{!PreVenta__c.City__c}"/> 
+                    
+                    <apex:inputField value="{!PreVenta__c.State__c}"/>                                   
+                    <apex:inputField value="{!PreVenta__c.Country__c}"/>              
+                                              
+                </apex:pageBlockSection>
+                
+                
+                <apex:pageBlockSection columns="2" title="Información del sistema">
+                    <apex:outputField value="{!PreVenta__c.recordTypeId}"/>                                              
+                </apex:pageBlockSection>
+                
+            </apex:outputPanel>
+            
+            <!-- apex:pageBlockSection columns="2" title="Opcional">
+                <apex:inputField value="{!PreVenta__c.useDefaultRule}"/>                                              
+            </apex:pageBlockSection -->
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

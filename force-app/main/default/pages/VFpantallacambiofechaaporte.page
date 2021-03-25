@@ -1,0 +1,389 @@
+<apex:page cache="false" expires="0" controller="Controllercambiofechaaporte" sidebar="false" showHeader="false" 
+	applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	<head>
+	   <meta charset="utf-8" />
+	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+	  <title>Fecha de Aporte</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+      <apex:stylesheet value="http://www.w3.org/1999/xlink"/>
+	  <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />  
+ 
+	  	<!-- Import the Design System style sheet -->
+	 	<apex:slds />  
+        
+        <style>
+         html, body{
+            	background-color: #F2F2F2;
+            }
+			#topMenuZonaTransaccional {
+			    position: relative;
+		    	width: 100%;
+		    	float: left;
+			}
+            #MenuFormularioPrincipal {
+			    position: relative;
+		    	width: 100%;
+		    	float: left;
+			}
+	        #drop{
+	            border:2px dashed #bbb;
+	            -moz-border-radius:5px;
+	            -webkit-border-radius:5px;
+	            border-radius:5px;
+	            padding:25px;
+	            text-align:center;
+	            font:20pt bold,"Vollkorn";color:#bbb
+	        }
+            .slds-scope {
+    			font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+	        #b64data{
+	            width:100%;
+	        }
+	        .columna1 {
+	              float:left; 
+	              width:200px;              
+	              padding-left:50px;
+	              padding-top:15px;
+	        }
+	        .columna2 {
+	              padding-top:15px;  
+	              margin-left:210px;
+	              padding-right:15px;                         
+	        }
+	        
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Aceptar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            
+            .Eliminar{    
+            font-weight: bolder !important;
+            height: 24px;
+            color:red;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f71c1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 5px;
+            padding: 5px 6px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 24px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            .Cancelar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            
+         </style>
+        
+   </head>  
+   <body>
+    <div class="slds-scope">
+        
+        
+              
+    <apex:form >
+        <!--apex:actionFunction action="{!MuestraTabla}" name="MuestraTabla"/-->
+        
+      
+        <div id="container">
+            <article class="slds-card slds-theme_default" style="border:0;">
+        
+               <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                 
+                 <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                    
+                        <div class="slds-media__figure">
+                      
+                            </div>
+                            <div class="slds-media__body" >
+                                <h2>
+                                    <br/>
+                                    <span class="slds-text-heading_medium"> FICOHSA PENSIONES/ PANTALLA APORTE INDIVIDUAL </span>
+                                    <br/>
+                                </h2>
+                            </div>
+                            
+                     		<div style="text-align:right;padding-right:3%;">
+                                <h2>
+                                  <br/>
+                                    <span class="slds-text-heading_medium" style="color:#42C4DD;"> {!usuario}</span> 
+                                 <br/>
+                                </h2>
+                            </div>
+                     </header>
+ 					</div>
+			  </article>
+		</div>
+ 
+         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+		
+        <center>               
+       	    <div class="container" >
+			      
+            <header class="slds-modal__header" style="width:1200px; margin-left:1px;">	
+                       <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                        <apex:image value="{!$Resource.LogoFPC}"/>
+                       </figure>
+            </header>
+               
+                <div id="Resumen" style="width:1200px;">
+                   <h3 class="Row">
+                       <strong>  Cambio de Fecha de Aportación </strong>
+                       <span></span>
+                   </h3>
+          		</div>
+                <br/>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width:1200px; margin-left: 1px;">
+                     <table width = "900" style="text-align: center;">
+                         <tr>
+                           <td width="450">
+                               <br/>
+
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                           				<abbr class="slds-required" title="required"></abbr> Fecha de Aporte
+                       	       </label>
+                               <apex:input type="date" onkeypress="return isNumberKey(event)"  styleclass="slds-input"  style="height:10px; width:160px; margin-left:71px;"  value="{!fechaporte}" />
+                              <br/>
+                              <br/>
+                           </td>
+                            <td width = "450">
+                                <br/>
+                                <label class= "slds-form-element__label" for= "inputSaample" style= "margin-left: 5px;">
+                                 <abrr class = "slds-requered" title= "requerid"></abrr> Nombre del cliente
+                                </label>
+                             <apex:inputText disabled="true" id="nombre" styleclass="slds-input"  style="height:10px; width:340px; margin-left:30px;"  value="{!nombre}" />
+                         	 <br/>
+                         	 <br/>
+                            </td> 
+                         </tr>  
+                      	<tr>
+                           <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                           				<abbr class="slds-required" title="required"></abbr> Cuenta
+                               </label>
+							   <apex:inputText onkeypress="return isNumberKey(event)" id="codCuenta" styleclass="slds-input"  style="height:10px; width:160px; margin-left:120px;"  value="{!codCuenta}" />
+                               <apex:commandButton style="margin-left: 5px;" id="Buscar" action="{!Busca}" value="Buscar"  styleClass="Aceptar" />
+                               <br/> 
+                               <br/>
+                            </td>
+                  
+                            
+                            <td width="450">
+                             <label class="slds-form-element__label" for="inputSample"  style="margin-left:2px;" >
+                           				<abbr class="slds-required" title="required"></abbr> Moneda de la Cuenta
+                               </label>
+                                 <apex:inputField styleclass="slds-input" html-disabled="true" list="ca" id="tipMOneda" value="{!TipMoneda.Tipo_Moneda__c}" style="height:10px; width:170px; margin-left:18px;"/>
+                                <br/> 
+                               <br/>
+                            </td>    
+                         </tr>
+                         <tr>
+                            <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
+                           				<abbr class="slds-required" title="required"></abbr>Producto
+                               </label>
+							  <apex:selectList size="1" styleClass="slds-select" disabled="true" value="{!pcproducto}" style="height:10px; width:200px; margin-left:110px; ">
+                                 <apex:selectOptions value="{!opciones}" ></apex:selectOptions> 
+                              </apex:selectList>
+                               <br/> 		
+                            </td>
+                             
+                             <td width="450">
+                               <label class="slds-form-element__label" for="inputSample"  style="margin-left:5px;" >
+                           				<abbr class="slds-required" title="required"></abbr>Sub Producto
+                               </label>
+							    <apex:selectList size="1" styleClass="slds-select" disabled="true"  value="{!pcsubproducto}" style="height:10px; width:455px; margin-left:60px;" >
+                                 <apex:selectOptions value="{!opcionSubproducto}" ></apex:selectOptions> 
+                                </apex:selectList>
+                               <br/> 		
+                            </td>
+                         </tr>
+                      </table>
+                    
+                     <br/>
+                        <apex:outputPanel id="actList" rendered="{!MuestraTabla}"  style="width:1200px; margin-left:35px; "> 
+                          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: left;width:1000px; margin-left: 1px;">
+                          <span class="slds-text-heading--small slds-p-vertical--left" style="text-align: right;width:1100px; "> Total: {!tama}</span> 
+                          </div>	
+                        <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListFechaAct}" var="item">
+                             
+                    			<apex:column style="text-align: center;" headerValue="Numero de movimiento" >
+                                    <apex:outputText value="{!item.nummov}" />
+                   				</apex:column>                         
+                    			<apex:column style="text-align: center;" headerValue="Tipo de saldo" >
+                        		<apex:outputText value="{!item.tSaldo}" />
+                   				</apex:column>
+                            
+                   				<apex:column style="text-align: center;" headerValue="Monto de pago" >
+                        		<apex:outputText value="{!item.montoPago}" />
+                   				</apex:column>
+                   				<apex:column style="text-align: center;" headerValue="Descripción" >
+                        		<apex:outputText value="{!item.descrip}" />
+                   				</apex:column>  
+                    			<apex:column style="text-align: center;" headerValue="Nueva Fecha" >
+                                <div>   
+                        		<apex:input type="date" id="nuevafecha" value="{!item.nuevafecha}"  styleclass="slds-input" style="height:30px; width:160px; margin-left:10px;"/>
+                        		</div> 
+                         		</apex:column>  
+                    			
+                            <apex:column style="text-align: center;" headerValue="Subir Archivo" >
+                                  <apex:inputFile id="referencia" value="{!item.referenciaImg}">
+                                </apex:inputFile>
+                   				</apex:column>
+                            	<apex:column style="text-align: center;" headerValue="Observaciones">
+                     				<apex:inputtext id="observaciones" value="{!item.observaciones}" styleclass="slds-input" style="height:30px; width:160px; margin-left:10px;"/>
+                                </apex:column>
+                             <apex:column style="text-align: center; " headerValue="Eliminar" >
+                          		 <apex:commandLink action="{!Eliminar}" >
+                               		<apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
+                               		<apex:param name="eliminar4" value="{!item.num_doc}" assignTo="{!obsEliminar}"/>
+                                    
+                                 </apex:commandLink>   
+                             </apex:column> 
+                            </apex:dataTable>       
+                    </apex:outputPanel>
+                     <br/>
+				</div>
+			      <footer class="slds-modal__footer" style= "width:1200px; margin-left: 1px;">
+			      	<apex:commandButton style="margin-right: 2px; "  value="Cancelar"  styleClass="Cancelar" action="{!Cancelar}" />&nbsp;
+			       <apex:commandButton style="margin-left: 5px;" id="Actualizar" action="{!Actualizar}" value="Actualizar"  styleClass="Aceptar" />	
+                  </footer>
+			    </div>
+		
+	</center>
+	 <div class="slds-grid slds-grid--align-center">
+		 <p class="slds-col">&copy;2020 Todos los derechos reservados | Ficohsa Pensiones y Cesantías</p>                                        
+	 </div>        
+    </apex:form>   
+   
+       </div>
+       <!--
+          <input id="inputFileToLoad" type="file" /> 
+          <input type="button"  value="hola" onclick="encodeImageFileAsURL()"  />
+          <textarea rows="4" cols="50" id="divDynamicarea" ></textarea	>
+       -->
+       </body>
+  </html>  
+</apex:page>

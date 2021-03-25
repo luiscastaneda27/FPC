@@ -1,0 +1,201 @@
+<apex:page title="Ficohsa FPC" standardController="Usuario_Portal_Empresarial__c" extensions="ControladorCrearUsuario" showheader="false" sidebar="false" cache="false" expires="0"
+    applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+
+	
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title> Nuevo Usuario Portal </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+
+	<style>
+		html, body {
+           background: #FFF;
+        }  
+          
+		#topMenuZonaTransaccional {
+		    position: relative;
+		    width: 80%;
+		    float: left;
+            left: 10%;
+		}
+		
+	</style>
+</head>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  	<div class="slds-scope">
+  	<br/><br/>
+  	<apex:form >
+        <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+        		<apex:image value="{!$Resource.LogoFPC}"/>
+        </figure>
+  		
+  		<fieldset class="slds-box slds-align--absolute-center slds-container--medium">
+            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+      			<div class="slds-form slds-form_compound">
+				    <fieldset class="slds-form-element">
+				      <legend class="slds-form-element slds-form-element__label">Nuevo Usuario Portal Empresarial</legend>
+                        
+                     <!----------------------------------SELECCIONAR LA EMPRESA  Y ESCRIBIR LA IDENTIFICACIÓN-------------------------------------------------->   
+				     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label class="slds-form-element__label"> Seleccione una empresa </label><br/>
+				            <apex:selectList styleclass="slds-select" value="{!Codigo_Unico_Banco}" size="1" >
+                            		<apex:selectOptions value="{!options}"/> 
+                   			</apex:selectList>
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-2">
+				           <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label class="slds-form-element__label"> Identificación </label>
+				            <apex:inputText styleclass="slds-select"  value="{!Num_Identidad}" OnKeyPress="return CampoNumero(event, this)" />
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-2">
+                            <br/>
+				           <apex:commandButton value="Buscar" action="{!Buscarusuario}" styleClass="slds-button slds-button--brand" />
+				         </div>
+				        </div>
+				      </div>
+				         </div>
+				        </div>
+				      </div>
+                       
+                        
+                        <!----------------------------------ESCRIBIR NOMBRE Y APELLIDO-------------------------------------------------->
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label class="slds-form-element__label"> Nombre </label>
+				            <apex:inputtext styleclass="slds-select" value="{!Nombre}"  />
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-2">
+				            <label class="slds-form-element__label"> Apellidos </label><br/>
+				            <apex:inputText styleclass="slds-select" value="{!Apellido}"  size="13"/>
+				          </div>
+				        </div>
+				      </div>
+				      
+                      <!----------------------------------ESCRIBIR COOREO-------------------------------------------------->
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label class="slds-form-element__label"> Correo </label>
+				            <apex:inputtext styleclass="slds-select" value="{!Correo}"/>
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-2">
+				            <label class="slds-form-element__label">  </label><br/>
+				          </div>
+				        </div>
+				      </div>  
+                        
+                        
+                      <!----------------------------------SELECCIONAR PERMISOS-------------------------------------------------->
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-3">
+				            <label class="slds-form-element__label"> Activo</label>
+                              <apex:inputCheckbox styleClass="slds-checkbox" label="Activo" value="{!Activo}" />
+                              
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label">Cargar / Generar Planillas</label>
+                            <apex:inputCheckbox label="Cargar / Generar Planillas" value="{!Planillas}" />
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label"> Nuevo Personal </label>
+                            <apex:inputCheckbox value="{!NuevoPersonal}" />
+				          </div>
+				        </div>
+				      </div>  
+                        
+                      <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-3">
+				            <label class="slds-form-element__label">Nuevos Salarios</label>
+				            <apex:inputCheckbox label="Activo" value="{!NuevosSalarios}" />
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label">Aprobación de Planilla</label>
+                            <apex:inputCheckbox label="Cargar / Generar Planillas" value="{!AprobacionPlanilla}" />
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label"> Planilla Seguro Social</label>
+                            <apex:inputCheckbox label="Planilla Seguro Social" value="{!Planillass}" />
+				          </div>
+				        </div>
+				      </div> 
+                        
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-3">
+				            <label class="slds-form-element__label">Calculo de pilares</label>
+				            <apex:inputCheckbox label="Activo" value="{!Pilares}" />
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label">Reportes</label>
+                            <apex:inputCheckbox label="Cargar / Generar Planillas" value="{!Reportes}" />
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-3">
+				            <label class="slds-form-element__label">Administración de usuarios</label>
+                            <apex:inputCheckbox label="Nuevo Personal" value="{!Usuarios}" />
+				          </div>
+				        </div>
+				      </div> 
+				      
+                        
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-3">
+				           <label class="slds-form-element__label">Aprobación de usuarios</label>
+                            <apex:inputCheckbox value="{!AprobacionUsuario}" />
+				          </div>
+				          <div class="slds-form-element slds-size_2-of-3">
+				           <apex:commandButton value="Salir" action="{!regresar}" styleClass="slds-button slds-button--brand" />
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-3">
+				            <div class="slds-button-group" role="group">
+				          		<apex:commandButton value="Guardar" action="{!crearUsuario}" styleClass="slds-button slds-button--brand" />
+				            </div>
+				          </div>
+				        </div>
+				      </div> 
+				     						      
+			      </fieldset>
+	    		</div>
+    		</fieldset> 
+   	</apex:form>	
+	</div>
+  	
+ </body>
+ </html>
+ <script>
+       function CampoNumero(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{12}$/
+           return !(regexp.test(field.value))
+           }
+            // .
+            if (key == 46) {
+            if (field.value == "") return false
+             regexp = /^[0-9]+$/
+              return regexp.test(field.value)
+              }
+               // other key
+              return false
+             }
+   
+        </script>
+</apex:page>

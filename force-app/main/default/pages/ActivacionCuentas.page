@@ -1,0 +1,633 @@
+<apex:page cache="false" expires="0" controller="ActivaciondeCuentas" sidebar="false" showHeader="false" 
+	applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="es">
+	<head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+	  <title>Activación/Inactivación de Cuentas</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+	  <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
+    
+	  	<!-- Import the Design System style sheet -->
+	 	<apex:slds />  
+	    <style>
+            html, body{
+            	background-color: #F2F2F2;
+            }
+			#topMenuZonaTransaccional {
+			    position: relative;
+		    	width: 100%;
+		    	float: left;
+			}
+	        #drop{
+	            border:2px dashed #bbb;
+	            -moz-border-radius:5px;
+	            -webkit-border-radius:5px;
+	            border-radius:5px;
+	            padding:25px;
+	            text-align:center;
+	            font:20pt bold,"Vollkorn";color:#bbb
+	        }
+            .slds-scope {
+    			font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+	        #b64data{
+	            width:100%;
+	        }
+	        .columna1 {
+	              float:left; 
+	              width:200px;              
+	              padding-left:50px;
+	              padding-top:15px;
+	        }
+	        .columna2 {
+	              padding-top:15px;  
+	              margin-left:210px;
+	              padding-right:15px;                         
+	        }
+	        
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Confirmar{    
+            font-weight: bolder !important;
+            
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            
+            
+	    </style>
+   </head> 
+   <body>
+   		<div class="slds-scope">
+	    	<apex:form id="ubic1">
+           
+                <apex:actionFunction action="{!VerPlanilla}" name="VerPlanilla"/>               
+                 
+                 <!-- agregado 10042019 -->
+                <!--<apex:actionFunction action="{!EliminarContenidoLimp}" name="EliminarContenidoLimp"/>  
+                -->
+                <apex:actionFunction action="{!Limpiar}" name="Limpiar"/>
+                <apex:actionFunction action="{!ModificarContenido}" name="ModificarContenido"/>
+                <apex:actionFunction action="{!ValidarContenido}" name="ValidarContenido"/>
+                <apex:actionFunction action="{!VerContenido}" name="VerContenido"/>
+                                            
+               
+             <div id="topMenuZonaTransaccional">
+                
+     			<article class="slds-card slds-theme_default" style="border:0;">
+                    <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                        
+                         <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:240px;">
+                            <div class="slds-media__body" >
+                                <h2>
+                                    <figure class="row justify-content-center" style="  text-align: center; width: 85%; ">
+                                     <apex:image value="{!$Resource.LogoFPC}" style="height:90px; width:400px;"  />
+                                    </figure>                                                                        
+                                </h2>                                
+                            </div>
+                            <div style="text-align:right;padding-right:3%;">
+                                <h2>
+                                    <span class="slds-text-heading_medium" style="color:#42C4DD;"> {!usuario} </span>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+               <div>
+                  <apex:Messages globalOnly="true" id="msj"  styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+               </div>
+                <div>
+                     <h2>                        
+                         <span style="margin-left: 15px;" class="slds-text-heading_medium"> REGISTRADOR ACTIVACIÓN/INACTIVACIÓN DE CUENTAS </span>
+                                   
+                      </h2>
+                     <br/>
+                    <span style="margin-left:15px; font-size:20px" class="slds-text-heading_medium">Total Carga: {!total}</span>   
+                    
+                   <!--
+                    <apex:commandButton value="Borrar" action=""  onclick="eliminar()"/>
+                    -->
+                </div>
+                    &nbsp;
+                       
+                <div id="Resumen" >
+                    <h3 class="Row">                  		 
+                        
+                   		<input type="button" Class="Confirmar" name="btn_abrir" id="btn_abrir" value="Cargar Archivo" 
+                                            onclick="mostrarseccion();" Style="height:100%;font-size:12px" />
+                       
+                        <apex:outputPanel rendered="{!EnviarDatos}">
+                            &nbsp;
+                        <input type="button" Class="Confirmar"  id="btn_processFile1" 
+                               name="btn_processFile1" value="enviar"  onclick="VerContenido();" style="font-size:12px" />                          
+                        </apex:outputPanel>           
+                        
+                        <input type="button" Class="Confirmar" name="btn_abrir" id="btn_abrir" value="Limpiar" 
+                               onclick="Limpiar();" Style="height:100%;font-size:12px" />  
+                        
+                        <!--<input type="button" Class="Confirmar" name="btn_abrir" id="btn_abrir" value="Eliminar" 
+                               onclick="EliminarContenidoLimp();" Style="height:100%;font-size:11px" />-->  
+                        
+                        <apex:outputPanel rendered="{!Modificar}">
+                             &nbsp;   
+                        <input type="button" Class="Confirmar"  id="btn_processFile1" 
+                               name="btn_processFile1" value="Modificar" onclick="ModificarContenido();" style="font-size:12px"/>
+                           
+                        <!--<input type="button" Class="Confirmar"  id="btn_processFile1" 
+                               name="btn_processFile1" value="Validar" onclick="ValidarContenido();" style="font-size:12px"/>-->
+                         </apex:outputPanel> 
+                            
+                         <apex:outputPanel rendered="{!valida}">
+                             &nbsp;   
+                        <input type="button" Class="Confirmar"  id="btn_processFile1" 
+                               name="btn_processFile1" value="Validar" onclick="ValidarContenido();" style="font-size:12px"/>   
+                        </apex:outputPanel>                        
+                        
+                        <!--      <input type="button" Class="Confirmar" name="btn_abrir" id="btn_afiliar" value="Afiliar T24"  onclick="Afiliar();" Style="height:100%; " />
+                    -->
+					<br/>
+                   </h3> 
+                    <br/>
+          		 </div>
+                        <br/>
+                    <!-- ventana para cargar el excel  -->         
+                        <article class="slds-card slds-theme_default" style="border:0; display:none;" id='cargar'>     			
+                            <div class="slds-card__header slds-grid"  >
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__body"> 
+                                        <div id="drop">Arrastre su archivo excel con su planilla 
+                                            <img id="imgLoad" hidden="true" name="imgLoad" src="{!URLFOR($Resource.gifLoad)}" width="60px" heigth="60px" /> 
+                                        </div>
+                                    </div>
+                                </header>
+                                
+                            </div>
+                            <footer class="slds-card__footer"> 
+                                <div class="slds-no-flex">
+                                 <!--   <input type="button" Class="Confirmar"  id="btn_processFile2" hidden="hidden" 
+                                           name="btn_processFile2" value="Afiliar"  onclick="" /> -->
+                                    &nbsp;
+                                    <input type="button" Class="Confirmar"  id="btn_processFile1" hidden="hidden" 
+                                           name="btn_processFile1" value="Ver Archivo"  onclick="VerPlanilla()" style="font-size:12px" />
+                                    &nbsp;
+                                    <input type="button" id="btn_processFile" Class="Confirmar" hidden="hidden"
+                                           name="btn_processFile" value="Procesar Archivo"  onclick="SubirArchivo();" style="font-size:12px"/>
+                                  
+                                </div>
+                            </footer>
+                        </article>
+                </article>
+            
+                </div>
+            <br/><br/><br/>
+                
+                <div style="height:50px;background-color: #F2F2F2;">
+			      <br/>
+                  <br/>
+                </div>
+                
+                  <br/>
+                  <br/>
+                
+     <!--Muestra el excel -->  
+           <apex:outputPanel rendered="true" >    
+                                                    
+                   <strong></strong>
+                   <span>
+                   </span>
+            
+<!---------------------div    --------->
+         
+                   
+       <div style="width:100%;overflow:scroll; height:400px">
+           
+		<div style="width:100%; ">
+           <center> <font style="font-family: 'Open Sans Light',Helvetica,Arial,sans-serif; font-size:15px;"></font></center>
+            <apex:outputPanel rendered="{!mostrarTabla}">
+            <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                   style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+                
+                <!--******************encabezado de la tabla************************-->
+			<thead>
+                 <th scope="col">
+				        <div class="slds-truncate" title="ID"><strong>ID</strong></div>
+				      </th>
+                  <th scope="col">
+                          <div class="slds-truncate" title="No.CUENTA"><strong>No.CUENTA</strong></div>
+				      </th>
+				      <th scope="col">
+				        <div class="slds-truncate" title="No.Identidad"><strong>No.Identidad</strong></div>
+				      </th>
+                      <th scope="col" >
+				      <div class="slds-truncate" title="Cliente"><strong>Cliente</strong></div>
+                      </th>
+                      <th scope="col" >
+				      <div class="slds-truncate" title="Empresa"><strong>Empresa</strong></div>
+                      </th>
+                      <th scope="col" >
+				      <div class="slds-truncate" title="Asesor"><strong>Asesor</strong></div>
+                      </th>
+				      <th scope="col">
+				        <div class="slds-truncate" title="Estado Actual"><strong>Estado Actual</strong></div>
+				      </th>
+				      <th scope="col">
+				        <div class="slds-truncate" title="Causa Actual"><strong>Causa Actual</strong></div>
+				      </th>
+				        <th scope="col" >
+				        <div class="slds-truncate" title="Estado Nuevo"><strong>Estado Nuevo</strong></div>
+                        </th>
+                        <th scope="col" >
+				        <div class="slds-truncate" title="Causa Nueva"><strong>Causa Nueva</strong></div>
+                        </th>
+                        <th scope="col" >
+				        <div class="slds-truncate" title="Observación"><strong>Observación</strong></div>
+                        </th>
+		  		</thead>
+				  <tbody id="Cuerpo" > 
+                   
+                     <apex:repeat value="{!Activacion}" var="item">
+                         
+                      <tr>
+                      <td data-label="Number">
+			          		<div class="" >{!item.Identificador_CargaA__c}</div>
+			          </td>  
+                      <td data-label="Number">
+			          	  <div class="" style="display:none" >{!item.NoCuenta__c}</div>
+                          <apex:inputField id="nomb1" style="display:" value="{!item.NoCuenta__c}"> </apex:inputField>  
+			          </td>
+                      <td data-label="Number">
+			          	  <div class="" style="display:none"> {!item.noIdentidad__c} </div>
+                          <apex:inputField id="nomb2" style="display:" value="{!item.noIdentidad__c}"> </apex:inputField>
+			          </td>                      
+                       <td data-label="Number">
+			          		<div class="" > {!item.Cliente__c} </div>
+			          </td>
+                      <td data-label="Number">
+			          		<div class="" > {!item.Empresa__c} </div>
+			          </td>   
+                      <td data-label="Number">
+			          		<div class="" > {!item.Asesor__c} </div>
+			          </td>  
+                       <td data-label="Number">
+			          	<div class="" style="display:none">{!item.EstadoActual__c}</div>
+                        <apex:inputField id="nomb3" style="display:" value="{!item.EstadoActual__c}"> </apex:inputField>
+			          </td>                       
+                       <td data-label="Number">
+			          	<div class="" style="display:none">{!item.Causa__c}</div>
+                        <apex:inputField id="nomb4" style="display:" value="{!item.Causa__c}"> </apex:inputField>
+                           
+			          </td>                          
+                      <td data-label="Number">
+			              <div class="" style="display:none" >{!item.EstadoNuevo__c}</div>
+                          <apex:inputField id="nomb5" style="display:" value="{!item.EstadoNuevo__c}"> </apex:inputField>
+			          </td>  
+                      <td data-label="Number">
+			          	   <div class="" style="display:none" >{!item.CausaNuevo__c}</div>
+                           <apex:inputField id="nomb6" style="display:" value="{!item.CausaNuevo__c}"> </apex:inputField>
+			          </td>
+                          
+                      <td data-label="Number">
+			          		<div class="" >{!item.Situaci_n__c}</div>
+			          </td>
+                          
+                         </tr>
+             
+           </apex:repeat> 
+                                  
+                  </tbody>
+  			</table>
+            </apex:outputPanel>
+             </div>  
+           </div>  
+            <!---------fin div --------->
+            
+           </apex:outputPanel>     
+  		</apex:form>
+          
+    		</div>
+
+        </body>
+
+
+     <script type="text/javascript">
+        
+        var outputData = "";
+        var empresa = "UserPru"; //getUrlVars()['hytrd'];
+        var agus = "";
+        
+        function eliminar(){
+         var list = document.getElementById("Cuerpo");
+        while (list.hasChildNodes()) {
+            list.removeChild(list.firstChild);
+        }
+        }
+        
+        function SubirArchivo(){
+            $('#imgLoad').removeAttr('hidden');
+             
+            Visualforce.remoting.Manager.invokeAction(
+                 '{!$RemoteAction.ActivaciondeCuentas.SUbirInformacion}',
+                 outputData,empresa,agus,
+                
+                function(result, event){
+                    if (event.status) {
+                        
+                       alert(result.ERROR);
+                       
+                        $('#tblErrors').append('');
+                        $.each(result.listError, function(index, value){
+                            $('#tblErrors').append('<tr><td>' + value + '</td></tr>');
+                        });
+                        
+                        if(result.ERROR.indexOf('Se Insertaron') != -1){
+                             $('#btn_processFile').attr('hidden', 'hidden');                                  
+                             $('#imgLoad').attr('hidden', 'hidden');
+                             
+                        }else{
+                            $('#btn_processFile').attr('hidden', 'hidden');                                  
+                            $('#imgLoad').attr('hidden', 'hidden');
+                            $('#btn_processFile1').removeAttr('hidden'); 
+                             
+                        }                       
+                    }
+                }, 
+                {escape: true},
+                {timeout: 60000}
+            );
+           div = document.getElementById('carga');
+            div.style.display = 'none';
+            //document.getElementById('btn_abrir').disabled=true;
+            btn=document.getElementById('btn_abrir');
+           	btn.style.display = 'none';
+        }          
+    
+        function Afiliar(){
+            $('#imgLoad').removeAttr('hidden');
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ActivaciondeCuentas.SUbirInformacion}',
+                outputData,empresa,agus,
+                
+                function(result, event){
+                    if (event.status) {
+                        
+                       alert(result.ERROR);
+                       
+                        $('#tblErrors').append('');
+                        $.each(result.listError, function(index, value){
+                            $('#tblErrors').append('<tr><td>' + value + '</td></tr>');
+                        });
+                        
+                        if(result.ERROR.indexOf('Se Insertaron') != -1){
+                             $('#btn_processFile').attr('hidden', 'hidden');                                  
+                             $('#imgLoad').attr('hidden', 'hidden');
+                             
+                        }else{
+                            $('#btn_processFile').attr('hidden', 'hidden');                                  
+                            $('#imgLoad').attr('hidden', 'hidden');
+                            $('#btn_processFile1').removeAttr('hidden'); 
+                             
+                        }                        
+                    }
+                }, 
+                {escape: true},
+                {timeout: 60000}
+            );
+        }
+        
+        function getUrlVars(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++){
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+       
+         
+        function mostrarseccion() {
+            article = document.getElementById('cargar');
+            article.style.display = '';
+        }
+        function mostrarcontenedor() {
+            div = document.getElementById('carga');
+            div.style.display = '';
+        }
+        
+        function ocultarBoton() {
+        btn=document.getElementById('btn_abrir');
+        btn.style.display = 'none';
+		}
+        
+    </script>    
+    <script>
+        
+        //API for Process Excel
+        function xlsxworker(data, cb) {
+           
+            var worker = new Worker("{!URLFOR($Resource.xlsx, 'xlsxworker.js')}");
+            worker.onmessage = function(e) {
+                switch(e.data.t) {
+                    case 'ready': break;
+                    case 'e': console.error(e.data.d);
+                    case 'xlsx': cb(JSON.parse(e.data.d)); break;
+                }
+            };
+            var arr = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
+            worker.postMessage(arr);
+        }
+        
+        function get_radio_value( radioName ) {
+            var radios = document.getElementsByName( radioName );
+            for( var i = 0; i < radios.length; i++ ) {
+                if( radios[i].checked ) {
+                    return radios[i].value;
+                }
+            }
+        }
+        
+        function to_json(workbook) {
+            var result = {};
+            workbook.SheetNames.forEach(function(sheetName) {
+                var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                if(roa.length > 0){
+                    result[sheetName] = roa;
+                }
+            });
+            return result;
+        }
+        
+        function to_csv(workbook) {
+            var result = [];
+            workbook.SheetNames.forEach(function(sheetName) {
+                var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+                if(csv.length > 0){
+                    //result.push("SHEET: " + sheetName);
+                    //result.push("");
+                    result.push(csv);
+                }
+            });
+            return result.join("\n");
+        }
+        
+        function to_formulae(workbook) {
+            var result = [];
+            workbook.SheetNames.forEach(function(sheetName) {
+                var formulae = XLSX.utils.get_formulae(workbook.Sheets[sheetName]);
+                if(formulae.length > 0){
+                    result.push("SHEET: " + sheetName);
+                    result.push("");
+                    result.push(formulae.join("\n"));
+                }
+            });
+            return result.join("\n");
+        }
+        
+        var tarea = document.getElementById('b64data');
+        function b64it() {
+            var wb = XLSX.read(tarea.value, {type: 'base64'});
+            process_wb(wb);
+        }
+        
+        function process_wb(wb) {           
+            switch(get_radio_value("format")) {
+                case "json":
+                    outputData = JSON.stringify(to_json(wb), 2, 2);  
+                    if(outputData != ''){
+                        $('#btn_processFile').removeAttr('hidden'); 
+                        $('#btn_processFile2').removeAttr('hidden'); 
+                    }                  
+                    break;
+                case "form":
+                    outputData = to_formulae(wb);
+                    break; 
+                default:
+                    outputData = to_csv(wb);
+                    if(outputData != ''){
+                        $('#btn_processFile').removeAttr('hidden');
+                        $('#btn_processFile2').removeAttr('hidden');
+                        $('#imgLoad').attr('hidden', 'hidden');
+                    }
+                    break;
+            }
+            if(out.innerText === undefined) 
+            		out.textContent = outputData;
+            else 
+            		out.innerText = outputData;
+        }
+        
+        var drop = document.getElementById('drop');
+        function handleDrop(e) {
+            $('#imgLoad').removeAttr('hidden');
+            e.stopPropagation();
+            e.preventDefault();
+            var files = e.dataTransfer.files;
+            var i,f;
+            for (i = 0, f = files[i]; i != files.length; ++i) {
+                var reader = new FileReader();
+                var name = f.name;
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    if(typeof Worker !== 'undefined') {
+                        xlsxworker(data, process_wb);
+                    } else {
+                        //var wb = XLSX.read(data, {type: 'binary'});
+                        var arr = String.fromCharCode.apply(null, new Uint8Array(data));
+                        var wb = XLSX.read(btoa(arr), {type: 'base64'});
+                        process_wb(wb);
+                    }
+                };
+                //reader.readAsBinaryString(f);
+                reader.readAsArrayBuffer(f);
+                
+            }
+        }
+        
+        function handleDragover(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        }
+        
+        if(drop.addEventListener) {
+            drop.addEventListener('dragenter', handleDragover, false);
+            drop.addEventListener('dragover', handleDragover, false);
+            drop.addEventListener('drop', handleDrop, false);
+        }        
+        
+    </script>
+   
+      
+    
+  </html>  
+</apex:page>

@@ -1,0 +1,16 @@
+<apex:page renderAs="pdf" showHeader="false" sidebar="false" ApplyHtmlTag="false" applyBodyTag="false" >
+    <head>
+    <style>
+    @page {
+        size:8.27in 11.70in;
+        margin-top: -8px;
+        margin-bottom: -8px;
+        margin-left: -8px;
+        margin-right: -8px;
+        };
+    </style>
+    </head>
+        <img src="{!URLFOR($Resource.empresarial1)}"  height=" 100%" width=" 100%" />
+        <img src="{!URLFOR($Resource.empresarial2)}"  height=" 100%" width=" 100%" />
+
+</apex:page>

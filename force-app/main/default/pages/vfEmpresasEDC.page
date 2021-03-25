@@ -1,0 +1,38 @@
+<apex:page standardController="account" extensions="ExtensionEmpresasEDC"  title="Imprimir EDC"  lightningStylesheets="true" showheader="false" sidebar="false" cache="false" expires="0"
+           standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyHtmlTag="false" applyBodyTag="false" >    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:slds />
+            
+        </head>
+        <body>
+            
+            <apex:form id="theForm">
+                <div class="slds-scope"> 
+                <br/>
+                <apex:pageBlock >
+                    <apex:pageMessages />
+                    <apex:pageBlockSection columns="1" title="Empresión de EDC Masivo" >
+                    	<apex:outputText >Seleccione una Empresa</apex:outputText>
+                        <apex:selectList value="{!nombreEmpresa}" styleClass="slds-input" size="1"  >
+                            <apex:selectOptions value="{!Empresas}" ></apex:selectOptions>                        
+                        </apex:selectList>
+                        
+                        <apex:outputPanel >
+                            <footer class="slds-modal__footer">
+                                <apex:commandLink target="_blank" action="{!ImprimirEDC}" value="Imprimir" styleClass="slds-button slds-button--brand" />                    
+                            </footer>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                    
+                </apex:pageBlock>
+                
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

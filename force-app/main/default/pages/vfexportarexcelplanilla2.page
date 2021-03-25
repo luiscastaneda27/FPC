@@ -1,0 +1,112 @@
+<apex:page readOnly="true"  controller="ControladorExportarEPlanilla" contentType="application/vnd.ms-excel#{!Planilla.name}.xls" action="{!CArgarPlanilla}" >
+    <meta charset="utf-8" />
+    <!--  contentType="application/vnd.ms-excel#{!uncontenido.Planilla__r.name}.xls"    -->
+    <apex:form >
+        <apex:dataTable value="{!Planilla}" var="item">
+            <apex:column >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column headerValue="Empleado" >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+          <apex:column >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column headerValue="Aportes Obligatorios" >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column headerValue="Aportes" >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            <apex:column headerValue="Aportes Voluntarios" >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+        </apex:dataTable>  
+     <apex:dataTable value="{!Contenidoplanilla}" var="item">
+        <apex:column headerValue="Identificación"  >
+           <apex:outputText styleclass="slds-input" value="&nbsp;{!Item.Empleado2__r.Identificacion__c}"/>
+         </apex:column>
+         <apex:column headerValue="Nombres" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Empleado2__r.FirstName}"/>
+         </apex:column>
+         <apex:column headerValue="Apellidos" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Empleado2__r.lastName}"/>
+         </apex:column>
+         <apex:column headerValue="Salario" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Salario__c}"/>
+         </apex:column>
+         <apex:column headerValue="Patronal" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_obligatorio__c}"/>
+         </apex:column>
+         <apex:column headerValue="Empleado" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Obligatorio__c}"/>
+         </apex:column>
+         <apex:column headerValue="Reserva Laboral" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Reserva_Laboral__c}"/>
+         </apex:column>
+         <apex:column headerValue="Patronal" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_Voluntario__c}"/> 
+         </apex:column>
+         <apex:column headerValue="Patronal Extraordinario" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_Extraordinario__c}"/> 
+         </apex:column>
+         <apex:column headerValue="Empleado" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Voluntario__c}"/> 
+         </apex:column>
+         <apex:column headerValue="Empleado Extraordinario" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Extraordinario__c}"/> 
+         </apex:column>
+         <apex:column headerValue="Seguro Vida" >
+           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Seguro_de_Vida__c}"/> 
+         </apex:column>
+        </apex:dataTable>
+        
+        <apex:dataTable value="{!planilla}" var="item">
+            <apex:column >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            
+            <apex:column >
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            
+          <apex:column headerValue="Total">
+           <apex:outputText styleclass="slds-input" value="&nbsp;"/>
+         </apex:column>
+            
+            <apex:column headerValue="{!planilla.TA_Salarios__c}">
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Patrono_obligatorio__c}">
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Empleado_Obligatorio__c}" >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.Total_Reserva_Laboral2__c}" >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Patrono_Voluntario__c}">
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Patrono_Extraordinario__c}">
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Empleado_Voluntario__c}" >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Empleado_Extraordinario__c}" >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+            <apex:column headerValue="{!planilla.TA_Seguro_de_Vida__c}" >
+           <apex:outputText styleclass="slds-input" value=""/>
+         </apex:column>
+        </apex:dataTable>
+    </apex:form>
+</apex:page>

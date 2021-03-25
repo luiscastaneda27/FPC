@@ -1,0 +1,367 @@
+<apex:page cache="false" expires="0" controller="ControllerPantallaConsultaRezagos"  sidebar="false" showHeader="false" 
+           applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>FICOHSA PENSIONES</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+            
+            <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />  
+            
+            <style>
+                html, body{
+                background-color: #F2F2F2;
+                }
+                #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+                }
+                #drop{
+                border:2px dashed #bbb;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:20pt bold,"Vollkorn";color:#bbb
+                }
+                .slds-scope {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+                #b64data{
+                width:100%;
+                }
+                .columna1 {
+                float:left; 
+                width:200px;              
+                padding-left:50px;
+                padding-top:15px;
+                }
+                .columna2 {
+                padding-top:15px;  
+                margin-left:210px;
+                padding-right:15px;                         
+                }
+                
+                #Resumen{
+                margin:0 0 0 0;
+                }
+                #Resumen .Row{
+                width:100%;
+                height:30px;
+                float:left;
+                background:#42c4dd;
+                padding:0px 10px;
+                
+                box-sizing:border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                }
+                #Resumen .Row STRONG{
+                width:60%;
+                float:left;
+                font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-weight:normal;
+                color:#FFF;
+                }
+                #Resumen .Row SPAN{
+                width:40%;
+                float:right;
+                font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-variant:normal;
+                text-align:right;
+                text-transform:uppercase;
+                color:#FFF;
+                }
+                
+                .Aceptar{    
+                font-weight: bolder !important;
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: 	all 0.2s ease;
+                -o-transition: 		all 0.2s ease;
+                transition: 		all 0.2s ease;
+                }
+                .Cancelar{    
+                font-weight: bolder !important;
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: 	all 0.2s ease;
+                -o-transition: 		all 0.2s ease;
+                transition: 		all 0.2s ease;
+                }
+                
+                .Confirmar:hover{
+                background-color:#fff;
+                color: #f78d1c !important;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                }
+                
+                
+                <!--STYLE PARA MENSAJES-->
+                
+                
+            </style>
+            
+        </head> 
+        
+        <body>
+            <div class="slds-scope">
+                <apex:form id="theForm"> 
+                    <apex:actionStatus id="status">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
+                            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 45px;">
+                                    <img src="http://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1570731998000/load_gif" style="float: left; margin: 8px; width: 25px;" />
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    
+                    <div id="topMenuZonaTransaccional">
+                        <article class="slds-card slds-theme_default" style="border:0;">
+                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                            <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                                    <div class="slds-media__figure">
+                                        <h2>
+                                            <br/>
+                                            <span class="slds-text-heading_medium"> FICOHSA PENSIONES/ PANTALLA APLICA REZAGOS </span>
+                                            <br/>
+                                        </h2>
+                                    </div>
+                                    <div class="slds-media__body" >
+                                        <br/><br/>
+                                    </div>
+                                    <div style="text-align:right;padding-right:3%;">
+                                        <h2>
+                                            <br/>
+                                            <span class="slds-text-heading_medium" style="color:#42C4DD;"> {!usuario}</span> 
+                                            <br/>
+                                        </h2>
+                                    </div>
+                                </header>
+                                <div style="height:50px;background-color: #F2F2F2;">
+                                    <br/><br/>
+                                </div>
+                                
+                            </div>
+                        </article>
+                    </div>
+
+                    <div id="Resumen">
+                        <h3 class="Row">
+                            <strong>  LISTA DE REZAGOS </strong><span>Total: {!Total}</span>
+                        </h3>
+                    </div>
+                    
+                    <div style="height:50px;background-color: #F2F2F2;">
+                        <br/><br/>
+                    </div>
+                    
+                    <div style="width:100%; overflow-x:scroll; height: 100%">
+                        
+                        <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                               style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+                            <thead>        
+                                <tr class="slds-text-heading--label">
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Tipo Moneda"><strong>Monto Rezago</strong></div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha Del Deposito"><strong>Fondo</strong></div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Del Deposito"><strong>Codigo Referencia</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Tipo Del Saldo"><strong>Fecha Deposito</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Forma Pago"><strong>Codigo Moneda</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Codigo Referencia"><strong>Descripcion</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Codigo Referencia Rezago"><strong>Descripcion Nota</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Aplica Comision"><strong>Usuario Ingresa Rezago</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Oficial"><strong>Codigo Banco</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Compra Dolar"><strong>Agencia Banco</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Rezago"><strong>Asesor</strong> </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!MuestraRezagos}" var="item">
+                                    <tr>
+                                        <td scope="row" data-label="Moneda" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                                <apex:outputText >{!item.Monto}</apex:outputText>
+                                            </div>
+                                        </td>  
+                                        <td scope="row" data-label="Fecha Deposito" style= "text-align: center;">
+                                            <div class="slds-truncate" >
+                                                <apex:outputText >{!item.Fondo}</apex:outputText>
+                                            </div>
+                                        </td>      
+                                        <td scope="row" data-label="Monto" style= "text-align: center;">
+                                            <div class="slds-truncate" >
+                                                <apex:outputText >{!item.Cod_referencia}</apex:outputText>
+                                            </div>
+                                        </td>  
+                                        <td scope="row" data-label="Tipo Saldo" style= "text-align: center;">
+                                            <div class="slds-truncate" >
+                                                <apex:outputText >{!item.FechaDeposito}</apex:outputText>
+                                            </div>
+                                        </td>  
+                                        <td scope="row" data-label="Forma Pago" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                                <apex:outputText value="{!IF((item.Moneda=='HNL'),'Lempiras','Dolares')}" />
+                                            </div>
+                                        </td> 
+                                        <td scope="row" data-label="Codigo Referencia" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                                <apex:outputText >{!item.Descripcion}</apex:outputText>
+                                            </div>
+                                        </td> 
+                                        <td scope="row" data-label="Codigo Referencia Rezago" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                        		<apex:outputText escape="false" >{!item.DescripcionNota}</apex:outputText>        
+                                            </div>
+                                        </td>
+                                        <td scope="row" data-label="Aplica Comision" style= "text-align: center;">
+                                            <div class="slds-truncate" >
+                                                <apex:outputText >{!item.Usu_ing_Rezago}</apex:outputText>
+                                            </div>
+                                        </td> 
+                                        <td scope="row" data-label="Aplica Comision" style= "text-align: center;">
+                                            <div class="slds-truncate" >
+                                                <apex:outputText >{!item.Cod_banco}</apex:outputText>
+                                            </div>
+                                        </td>                                        
+                                        <td scope="row" data-label="Oficial Negocio" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                                <apex:outputText >{!item.Agn_banco}</apex:outputText>
+                                            </div>
+                                        </td>
+                                        <td scope="row" data-label="Oficial Negocio" style= "text-align: center;">
+                                            <div class="slds-truncate" > 
+                                                <apex:outputText >{!item.Asesor}</apex:outputText>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div id="pqr" style="Display:inline;">
+                        <apex:commandLink action="{!Aplicar}" status="status" reRender="theForm">  
+                            <apex:commandButton style="width: 200px; color:#fff; height: 40px;position: relative;background: #42c4dd;" value="Aplicar Rezagos" reRender="theForm" oncomplete="DisableButton();" /> 
+                        </apex:commandLink>
+                    </div>
+                    <div id="pqr2" style="Display:inline;">
+                        <apex:commandLink status="status" reRender="theForm">  
+                            <apex:commandButton style="width: 200px; color:#fff; height: 40px;position: relative;background: #42c4dd;" value="Recargar" reRender="theForm" onclick="Clean();" /> 
+                        </apex:commandLink>
+                    </div>
+                    <!--Fin-->
+                    
+                </apex:form>
+            </div>
+        </body>
+        <script type="text/javascript">
+        function DisableButton(){
+            var x = document.getElementById("pqr");
+            var xx = document.getElementById("pqr2");
+            x.style.display = "none";
+            xx.style.display = "none";
+            alert('Aplicando Rezagos, Espere Por Favor...');
+        }
+        function Clean(){
+            window.location.reload(1);
+            alert('Recargando Pagina \n Espere Por Favor...');
+        }
+        /*function reload(){
+            var x = document.getElementById("pqr");
+            x.style.display = "none";
+        }*/
+        </script>
+    </html>  
+</apex:page>

@@ -1,0 +1,504 @@
+<apex:page cache="false" expires="0" controller="ControladorCargarPersonal" sidebar="false" showHeader="false" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+   <head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+	  <title>Agregar Personal</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+	  <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
+    
+	  	<!-- Import the Design System style sheet -->
+	 	<apex:slds />  
+	    <style>
+            html, body{
+				background-color: #F2F2F2;
+			}
+			#topMenuZonaTransaccional {
+			    position: relative;
+		    	width: 100%;
+		    	float: left;
+			}
+	        #drop{
+	            border:2px dashed #bbb;
+	            -moz-border-radius:5px;
+	            -webkit-border-radius:5px;
+	            border-radius:5px;
+	            padding:25px;
+	            text-align:center;
+	            font:20pt bold,"Vollkorn";color:#bbb
+	        }
+            .slds-scope {
+    			font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+	        #b64data{
+	            width:100%;
+	        }
+	        .columna1 {
+	              float:left; 
+	              width:200px;              
+	              padding-left:50px;
+	              padding-top:15px;
+	        }
+	        .columna2 {
+	              padding-top:15px;  
+	              margin-left:210px;
+	              padding-right:15px;                         
+	        }
+	        
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Confirmar{    
+            font-weight: bolder !important;
+            
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            
+	    </style>
+        </head>
+        <body>
+            
+        <div class="slds-scope">
+    	<apex:form >
+        <apex:actionFunction action="{!VerArchivo}" name="VerArchivo"/>
+        <div id="topMenuZonaTransaccional">
+            <apex:Messages id="msj" styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+     		<article class="slds-card slds-theme_default" style="border:0;">
+                <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                        
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                        <div class="slds-media__figure">
+                            
+                        </div>
+                        <div class="slds-media__body" >
+                            <h2>
+                                <br/>
+                                <span class="slds-text-heading_medium"> {!Nombre_Empresa} / Cargar Personal</span>
+                                <br/>
+                            </h2>
+                            
+                        </div>
+                        <div style="text-align:right;padding-right:3%;">
+                            <h2>
+                                <br/>
+                                <span class="slds-text-heading_medium"> {!totalempleados}</span>
+                                <br/>
+                            </h2>
+                        </div>
+                    </header>
+                    
+                    <div style="height:50px;background-color: #F2F2F2;">
+                        <br/>
+                        <br/>
+                    </div>
+                </div>
+			  
+             <apex:outputPanel rendered="{!MostrarBotones}" >
+       
+                 <div id="Resumen">
+                     <h3 class="Row">
+                         <strong>Carga de Archivo</strong>
+                         <span>
+                         </span>
+                     </h3>
+                 </div>
+                 <br/>
+        	
+                 <article class="slds-card slds-theme_default" style="border:0;">     			
+                     <div class="slds-card__header slds-grid">
+                         <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                             <div class="slds-media__body"> 
+                                 <div id="drop">Arrastre su archivo Excel con sus nuevos empleados
+                                     <img id="imgLoad" hidden="hidden" name="imgLoad" src="{!URLFOR($Resource.gifLoad)}" width="60px" heigth="60px" /> 
+                                 </div>
+                             </div>
+                         </header>
+                         <div class="slds-no-flex">
+                             
+                             
+                         </div>
+                     </div>
+                     
+                     <footer class="slds-card__footer"> 
+                         <div class="slds-no-flex">
+                             <input type="button" Class="Confirmar"  id="btn_processFile1" hidden="hidden" 
+                                    name="btn_processFile1" value="Ver Archivo"  onclick="VerArchivo();" />
+                             &nbsp;
+                             <input type="button" id="btn_processFile" Class="Confirmar" hidden="hidden"
+                                    name="btn_processFile" value="Procesar Archivo"  onclick="SubirInformacion();"/>
+                             
+                         </div>
+                     </footer>
+                     
+                 </article>
+  		
+                </apex:outputPanel>
+            </article>
+            
+        </div>	
+        
+        <apex:outputPanel rendered="{!Mostrartabla}">
+        
+            <footer class="slds-card__footer" style="width:100%;padding-bottom:5px;background-color: #FFFFFF;">
+               <table style="width:100%;">
+                   <tr>
+                       <td style="text-align:right;">
+                           <br/>                           
+            			   <apex:commandButton styleClass="Confirmar"  action="{!NuevaCarga}"  value="Cargar Nuevamente"/>&nbsp;
+                           <apex:commandButton styleClass="Confirmar" rendered="{!mostrarguardar}" action="{!GuardarEmpleados}"  value="Guardar"/>&nbsp;
+                       </td>
+                   </tr>
+               </table>
+               <br/>
+           </footer>
+           
+           <div id="Resumen">
+               <h3 class="Row">
+                   <strong>Lista de Personal</strong>
+                   <span>
+                   </span>
+               </h3>
+           </div>
+            
+         	<footer class="slds-card__footer" style="width:100%;text-align:right;margin: 0 0 0 0;padding: 0 0 0 0;background-color: #FFFFFF;">
+                <br/>
+               <apex:commandButton value="Anterior" action="{!anterior}" rendered="{!mostrarBotonesp}" disabled="{!mostrarANterior}" styleClass="Confirmar" />&nbsp;
+                        <apex:commandButton value="Siguiente" action="{!siguiente}"  rendered="{!mostrarBotonesp}" disabled="{!mostrarSiguiente}"   styleClass="Confirmar" />
+               <br/>
+           </footer>	
+            
+        <table class="slds-table slds-table_striped slds-table_bordered slds-table_col-bordered" >
+      <thead>
+        <tr class="slds-text-title_caps">
+           <th scope="col">
+               <div class="slds-truncate" title="RTN"><strong>Tipo de Identificación</strong></div>
+          </th>
+             <th scope="col">
+                 <div class="slds-truncate" title="N° Patronal"><strong>Num Identidad</strong></div>
+          </th>
+            <th scope="col">
+            <div class="slds-truncate" title="Planilla" ><strong>Nombres</strong></div>
+          </th>
+            
+         
+          <th scope="col">
+            <div class="slds-truncate" title="Apellidos"><strong>Apellidos</strong></div>
+          </th>
+          
+          <th scope="col">
+            <div class="slds-truncate" title="Genero"><strong>Genero</strong></div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Estado Civil"><strong>Estado Civil</strong></div>
+          </th>
+             <th scope="col">
+            <div class="slds-truncate" title="Tipo de cuenta"><strong>Tipo de cuenta</strong></div>
+          </th>
+          <th scope="col">
+              <div class="slds-truncate" title="Fecha cambio"><strong>Salario</strong></div>
+          </th>
+           
+         
+          </tr>
+      </thead>
+  <tbody>
+     
+     <apex:repeat value="{!empleados_temporales_Repetidos}" var="Item">
+      	<tr >
+         <td > <div class="slds-truncate">{!Item.Tipo_Identificacion__c}</div></td>
+         <td style="background-color:red; color:white;"><div class="slds-truncate">{!Item.Identidad__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Primer_Nombre__c}</div></td>
+        
+         <td><div class="slds-truncate">{!Item.Primer_Apellido__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Genero__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Estado_Civil__c}</div></td>
+         <td><div class="slds-truncate">{!Item.tipo_Cuenta__c}</div></td>
+         <td style="text-align:right;"><div class="slds-truncate">{!Item.Salario__c}</div></td>
+         
+         </tr>
+      </apex:repeat> 
+       <apex:repeat value="{!Mempleados_temporales_Nuevos}" var="Item">
+      	<tr>
+            <td ><div class="slds-truncate">{!Item.Tipo_Identificacion__c}</div></td>
+         <td style="background-color:green; color:white;"><div class="slds-truncate">{!Item.Identidad__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Primer_Nombre__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Primer_Apellido__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Genero__c}</div></td>
+         <td><div class="slds-truncate">{!Item.Estado_Civil__c}</div></td>
+         <td><div class="slds-truncate">{!Item.tipo_Cuenta__c}</div></td>
+         <td style="text-align:right;"><div class="slds-truncate">{!Item.Salario__c}</div></td>
+         
+         </tr>
+      </apex:repeat> 
+      <tr>
+           
+         <td style="text-align:right;" colspan="7"><div class="slds-truncate"><strong>Total</strong></div></td>
+         <td style="text-align:right;"><div class="slds-truncate"><strong>{!Total}</strong></div></td>
+         
+         </tr>
+   </tbody>
+  
+</table>
+            
+        </apex:outputPanel>
+        
+    </apex:form>
+            </div>
+     </body>
+    </html>
+     <script type="text/javascript">
+
+        var outputData = "";
+    	var empresa = getUrlVars()['Eldudhdhyudb'];
+    	function SubirInformacion(){
+            $('#imgLoad').removeAttr('hidden');
+            if(empresa==null || empresa=='')
+            {
+                empresa='No';
+            }
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.ControladorCargarPersonal.SubirInformacion}',
+                outputData,empresa,
+                
+                function(result, event){ 
+                    if (event.status) {
+                        alert(result.ERROR);
+                        $('#tblErrors').append('');
+                        $.each(result.listError, function(index, value){
+                            $('#tblErrors').append('<tr><td>' + value + '</td></tr>');
+                        });
+                        
+                        if(result.ERROR.indexOf('Se Insertaron') != -1){
+                             $('#btn_processFile').attr('hidden', 'hidden');                                  
+                             $('#imgLoad').attr('hidden', 'hidden');
+                        }else{
+                            $('#btn_processFile').attr('hidden', 'hidden');                                  
+                            $('#imgLoad').attr('hidden', 'hidden');
+							$('#btn_processFile1').removeAttr('hidden');                            
+                        }                        
+                    }else if (event.type === 'exception') {                        
+                        event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                    }else {
+                        //document.getElementById("responseErrors").innerHTML = event.message;
+                    }
+                }, 
+                {escape: true},
+                {timeout: 60000}
+            );
+        }       
+    
+                                    
+       
+    function getUrlVars(){
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++){
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+    </script>    
+    <script>
+        //API for Process Excel
+        function xlsxworker(data, cb) {
+           
+            var worker = new Worker("{!URLFOR($Resource.xlsx, 'xlsxworker.js')}");
+            worker.onmessage = function(e) {
+                switch(e.data.t) {
+                    case 'ready': break;
+                    case 'e': console.error(e.data.d);
+                    case 'xlsx': cb(JSON.parse(e.data.d)); break;
+                }
+            };
+            var arr = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
+            worker.postMessage(arr);
+        }
+        
+        function get_radio_value( radioName ) {
+            var radios = document.getElementsByName( radioName );
+            for( var i = 0; i < radios.length; i++ ) {
+                if( radios[i].checked ) {
+                    return radios[i].value;
+                }
+            }
+        }
+        
+        function to_json(workbook) {
+            var result = {};
+            workbook.SheetNames.forEach(function(sheetName) {
+                var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                if(roa.length > 0){
+                    result[sheetName] = roa;
+                }
+            });
+            return result;
+        }
+        
+        function to_csv(workbook) {
+            var result = [];
+            workbook.SheetNames.forEach(function(sheetName) {
+                var csv = XLSX.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+                if(csv.length > 0){
+                    //result.push("SHEET: " + sheetName);
+                    //result.push("");
+                    result.push(csv);
+                }
+            });
+            return result.join("\n");
+        }
+        
+        function to_formulae(workbook) {
+            var result = [];
+            workbook.SheetNames.forEach(function(sheetName) {
+                var formulae = XLSX.utils.get_formulae(workbook.Sheets[sheetName]);
+                if(formulae.length > 0){
+                    result.push("SHEET: " + sheetName);
+                    result.push("");
+                    result.push(formulae.join("\n"));
+                }
+            });
+            return result.join("\n");
+        }
+        
+        var tarea = document.getElementById('b64data');
+        function b64it() {
+            var wb = XLSX.read(tarea.value, {type: 'base64'});
+            process_wb(wb);
+        }
+        
+        function process_wb(wb) {           
+            switch(get_radio_value("format")) {
+                case "json":
+                    outputData = JSON.stringify(to_json(wb), 2, 2);  
+                    if(outputData != ''){
+                        $('#btn_processFile').removeAttr('hidden'); 
+                    }                  
+                    break;
+                case "form":
+                    outputData = to_formulae(wb);
+                    break; 
+                default:
+                    outputData = to_csv(wb);
+                    if(outputData != ''){
+                        $('#btn_processFile').removeAttr('hidden'); 
+                        $('#imgLoad').attr('hidden', 'hidden');
+                    }
+                    break;
+            }
+            if(out.innerText === undefined) out.textContent = outputData;
+            else out.innerText = outputData;
+        }
+        
+        var drop = document.getElementById('drop');
+        function handleDrop(e) {
+            $('#imgLoad').removeAttr('hidden');
+            e.stopPropagation();
+            e.preventDefault();
+            var files = e.dataTransfer.files;
+            var i,f;
+            for (i = 0, f = files[i]; i != files.length; ++i) {
+                var reader = new FileReader();
+                var name = f.name;
+                reader.onload = function(e) {
+                    var data = e.target.result;
+                    if(typeof Worker !== 'undefined') {
+                        xlsxworker(data, process_wb);
+                    } else {
+                        //var wb = XLSX.read(data, {type: 'binary'});
+                        var arr = String.fromCharCode.apply(null, new Uint8Array(data));
+                        var wb = XLSX.read(btoa(arr), {type: 'base64'});
+                        process_wb(wb);
+                    }
+                };
+                //reader.readAsBinaryString(f);
+                reader.readAsArrayBuffer(f);
+            }
+        }
+        
+        function handleDragover(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'copy';
+        }
+        
+        if(drop.addEventListener) {
+            drop.addEventListener('dragenter', handleDragover, false);
+            drop.addEventListener('dragover', handleDragover, false);
+            drop.addEventListener('drop', handleDrop, false);
+        }        
+        
+    </script>
+        
+</apex:page>

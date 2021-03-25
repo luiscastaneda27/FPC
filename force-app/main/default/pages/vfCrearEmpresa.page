@@ -1,0 +1,306 @@
+<apex:page title="Ficohsa FPC" Controller="controladoCrearEmpresa" showheader="false" sidebar="false" cache="false" expires="0"
+    applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+
+	
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title> Empresas </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+
+	<style>
+		html, body {
+           background: #FFF;
+        }  
+          
+		#topMenuZonaTransaccional {
+		    position: relative;
+		    width: 80%;
+		    float: left;
+            left: 10%;
+		}
+		
+	</style>
+</head>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  	<div class="slds-scope">
+  	<br/><br/>
+  	<apex:form >
+        <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+        		<apex:image value="{!$Resource.LogoFPC}"/>
+        </figure>
+  		
+  		<fieldset class="slds-box slds-align--absolute-center slds-container--medium">
+      			<div class="slds-form slds-form_compound">
+				    <fieldset class="slds-form-element">
+				      <legend class="slds-form-element slds-form-element__label"><font style="font-size:30px;">Empresas</font></legend>
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-1">
+				            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+                   			
+				          </div>
+				        </div>
+				      </div>
+                        
+                        
+                        
+                        
+                     <!----------------------------------SELECCIONAR El RUBRO Y LA EMPRESA-------------------------------------------------->   
+				     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row"> 
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label class="slds-form-element__label"> Seleccione un Rubro </label><br/>
+				            <apex:selectList styleclass="slds-select" value="{!id_rubro}" size="1" onchange="LLenarDatosRubros();">
+                            		<apex:selectOptions value="{!options}"/> 
+                   			</apex:selectList>
+				          </div>
+                          <div class="slds-form-element slds-size_2-of-2">
+				          	<label>Seleccione una Empresa</label><br/>
+                          <apex:selectList value="{!id_Empresa}" styleclass="slds-select" size="1" >
+                            <apex:selectOptions value="{!options2}"/> 
+                            <apex:actionSupport action="{!LLenardatosEmpresa}" event="onchange" />
+                        </apex:selectList>	
+				         </div>
+				        </div>
+				      </div>
+                      
+                        <font style="font-size:20px;">Ley obligatoria de Pensiones</font>
+                          
+				     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>Salario Base Pilar Complementario</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Salario_Base_Pilar_Complementario__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	<label>Salario Techo Reserva Laboral </label> <br/>
+                     		<apex:inputField styleclass="slds-select" value="{!empresa.Salario_Base_Reserva_Laboral__c}" OnKeyPress="return CampoNumero(event, this)" /> 		
+				         </div>
+				        </div>
+				      </div> 
+                        
+                        
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>% Pilar Comprementario Patrono</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.PAPCE__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	<label>% Pilar Comprementario Trabajador </label> <br/>
+                     		<apex:inputField styleclass="slds-select" value="{!empresa.PAPCT__c}" OnKeyPress="return CampoNumero(event, this)" /> 		
+				         </div>
+				        </div>
+				      </div>    
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>%  Aportación Reserva laboral</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Porcentaje_de_Aportaciones_Reserva_Labor__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	 		
+				         </div>
+				        </div>
+				      </div>    
+				    
+                     <font style="font-size:20px;">IHSS</font>
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>Salario Base IVM</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Salario_Base_Seguro_Social__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	 		
+				         </div>
+				        </div>
+				      </div> 
+                        
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>% Aporortaciones Patronal IVM</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Porc_Apor_SSoc_Empleador_IVM__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	<label>% Aportaciones Empleado IVM</label> <br/>
+                     		<apex:inputField styleclass="slds-select" value="{!empresa.Porc_Apor_SSoc_Empleado_IVM__c}" OnKeyPress="return CampoNumero(event, this)" /> 		
+				         </div>
+				        </div>
+				      </div>  
+                       <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>Salario Base Maternidad</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Salario_Base_Seguro_Social_Mater__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	 		
+				         </div>
+				        </div>
+				      </div>  
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>%  Aportaciones Patronal Maternidad</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Porc_Apor_SSoc_Empleador_Mater__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	 <label>%  Aportaciones Empleado Maternidad</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Porc_Apor_SSoc_Empleado_Mater__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>		
+				         </div>
+				        </div>
+				      </div> 
+                        <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-2">
+				            <label>Salario Base Riesgo Profecional</label><br/>
+                        	<apex:inputField styleclass="slds-select" value="{!empresa.Salario_Base_Seguro_Social_RP__c}" OnKeyPress="return CampoNumero(event, this)" /><br/>
+                         </div>
+                         
+                         <div class="slds-form-element slds-size_2-of-2">
+				         	<label>% Aportaciones Riesgo Profecional </label> <br/>
+                     		<apex:inputField styleclass="slds-select" value="{!empresa.Riesgo_Profecional_Patronal__c}" OnKeyPress="return CampoNumero(event, this)" /> 		
+				         </div>
+				        </div>
+				      </div> 
+                     <div class="slds-form-element__group">
+				        <div class="slds-form-element__row">
+				          <div class="slds-form-element slds-size_1-of-1">
+				            
+                        	<apex:commandButton value="Actualizar Cuentas" action="{!actpop}" styleClass="slds-select slds-button slds-button--brand" />
+                         </div>
+                         
+				        </div>
+                        
+				      </div>  
+			      </fieldset>
+	    		</div>
+    		</fieldset> 
+        <br/>
+        <center>
+        	<!--apex:commandButton value="Guardar"   styleClass="slds-button slds-button--brand" /-->
+			<apex:commandButton value="Actualizar" action="{!Modificar}"  styleClass="slds-button slds-button--brand" /> 
+            <apex:commandButton value="Salir" action="{!regresar}" styleClass="slds-button slds-button--brand" />
+                       
+        </center>
+        <!--apex:actionFunction action="{!LLenardatos}" name="LLenardatos"/-->
+        <apex:actionFunction action="{!LLenarDatosRubros}" name="LLenarDatosRubros"/>
+         
+        <apex:outputPanel rendered="{!popcuentas}" >
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			    <div class="slds-modal__container">
+			      <header class="slds-modal__header" >	
+                   <apex:commandLink action="{!Cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+				     <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+				       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+				     </svg>
+				     <span class="slds-assistive-text">Cerrar</span>
+	   			</apex:commandLink> 
+                      <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+                     <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Cuentas colectivas</h1>
+                      <h4 ><font style="font-style:oblique; font:size:15px;">{!Nombre_empresa}</font></h4>
+                    
+      			  </header>
+			        <div class="slds-modal__content slds-p-around_medium ">
+                      
+                      <div class="slds-form slds-form_compound slds-align--absolute-left">
+                          <fieldset class="slds-form-element">
+                            <div class="slds-form-element__group">
+                              <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                  <label class="slds-form-element__label">Escriba el numero de cuenta:</label>
+                                  <apex:inputText styleclass="slds-select" value="{!codigoCuenta}" OnKeyPress="return CampoNumero(event, this)" />
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <label class="slds-form-element__label">Seleccione el tipo de cuenta</label><br/>
+                                  <apex:inputField styleclass="slds-select" value="{!cuentas.Tipo_Cuenta__c}" />
+                               </div>
+                                
+                              </div>
+                            </div>
+                                            
+                             <div class="slds-form-element__group slds-text-align_center">
+                              <div class="slds-form-element__row slds-text-align_center">
+                                <div class="slds-form-element slds-size_1-of-1">
+                                		<apex:commandButton value="Guardar" action="{!GuardarCuentas}"  styleClass="slds-button slds-button--brand " style="width: 600px;"/> 
+                                </div>
+                              </div>
+                            </div>               
+                            
+                              <div class="slds-form-element__group">
+                              <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                	<apex:selectList styleclass="slds-select" value="{!id_cuenta}" size="1" >
+                            		<apex:selectOptions value="{!cuentasEmpresa}"/> 
+                   			       </apex:selectList>  
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <apex:commandButton value="Eliminar" action="{!ELiminarCuentas}"  styleClass="slds-button slds-button--brand " />
+                               </div>
+                                
+                              </div>
+                            </div>
+                             
+                           </fieldset>
+                        </div>                         
+                    </div>
+			    </div>
+            </section>
+		 	<div class="slds-backdrop slds-backdrop_open"></div>
+			</apex:outputPanel>
+   	</apex:form>	
+	</div>
+  	
+ </body>
+ </html>
+ <script>
+       function CampoNumero(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{10}$/
+           return !(regexp.test(field.value))
+           }
+            // .
+            if (key == 46) {
+            if (field.value == "") return false
+             regexp = /^[0-9]+$/
+              return regexp.test(field.value)
+              }
+               // other key
+              return false
+             }
+    function CampoNumeroRTN(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{13}$/
+           return !(regexp.test(field.value))
+           }
+            
+              return false
+             }
+        </script>
+</apex:page>

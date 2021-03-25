@@ -1,0 +1,419 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
+    title="Ficohsa FPC" cache="false" expires="0" controller="ContraladorCrearusuario2">
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Administración de personal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Import the Design System style sheet -->
+  <apex:slds />
+
+    <style>
+        html, body{
+            background-color: #F2F2F2;
+        }
+        #topMenuZonaTransaccional {
+            position: relative;
+            width: 100%;
+            float: left;
+        }
+        .Confirmar{    
+            font-weight: bolder !important;
+        
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+                color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+         
+                -webkit-appearance: button;
+               -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+         
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+         }
+        .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+             -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
+        
+        .ConfirmarSecond{    
+            font-weight: bolder !important;
+        
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium solid;
+            font-weight: bold;
+            position: relative;
+            background-color:#fff;
+            color: #f78d1c !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+         
+                -webkit-appearance: button;
+               -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+         
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+        }
+        
+        
+        #Resumen{
+        margin:20px 0 0 0;
+        }
+        #Resumen .Row{
+        width:100%;
+        height:30px;
+        float:left;
+        background:#42c4dd;
+        padding:0px 10px;
+        
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        }
+        #Resumen .Row STRONG{
+        width:60%;
+        float:left;
+        font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+        font-size:14px;
+        line-height:30px;
+        font-weight:normal;
+        color:#FFF;
+        }
+        #Resumen .Row SPAN{
+        width:40%;
+        float:right;
+        font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+        font-size:14px;
+        line-height:30px;
+        font-variant:normal;
+        text-align:right;
+        text-transform:uppercase;
+        color:#FFF;
+        }
+        
+    </style>
+</head>
+<body>
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds-scope">
+    
+    <apex:form > 
+        <div id="topMenuZonaTransaccional">
+            <article class="slds-card slds-theme_default" style="border:0;">
+             <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                  <div class="slds-media__figure">
+                      
+                  </div>
+                  <div class="slds-media__body" >
+                    <h2>
+                        <br/>
+                        <span class="slds-text-heading_medium"> {!nombre_empresa} / Administración de Usuarios</span>
+                        <br/>
+                        
+                    </h2>
+                      
+                  </div>
+                </header>
+                  
+                <div style="height:50px;background-color: #F2F2F2;">
+                  <br/>
+                  <br/>
+                </div>
+                    
+              </div>
+                <footer class="slds-card__footer" style="width:100%;padding-bottom:5px;">
+                    <table style="width:100%;">
+                    <tr>
+                        <!-----style="text-align:center;"------>
+                        
+                    <td style="text-align:right">
+                        <br/>
+                    <apex:commandButton value="Cambiar Mi Contraseña" action="{!verCambioContrasena}" styleClass="Confirmar" />&nbsp;
+                  <apex:commandButton value="Nuevo Usuario" action="{!ActivarModalCrearusuario}" styleClass="Confirmar" rendered="{!MostrarNuevousuario}" />
+                    
+                   <br/>
+                    </td>
+                    </tr>
+                    </table>
+                </footer>
+            </article>
+        </div>
+       
+            <apex:outputPanel rendered="{!MostrarNuevousuario}">
+                
+               
+                
+                <div id="Resumen">
+                <h3 class="Row">
+                    <strong>Usuarios Actuales</strong>
+                    <span>
+                    </span>
+                </h3>
+                </div>
+                <br/>
+        
+                              
+        
+            <apex:DataTable value="{!listUsuarios}" var="item" styleClass="slds-table slds-table--bordered" >
+                
+                 <apex:column rendered="{!MostrarNuevousuario}">
+                        <apex:commandLink value="Modificar" action="{!ActivarModalModificarusuario}">
+                        <apex:param value="{!item.Usuario__r.Identidad__c}" AssignTo="{!Num_identidad}" name="APV2" />                                 
+                    </apex:commandLink>  
+                 </apex:column>
+                 <apex:column headerValue="Identificación">
+                        <apex:outputfield value="{!item.Usuario__r.Identidad__c}" />   
+                 </apex:column>
+                 <apex:column headerValue="Nombre">
+                        <apex:outputfield value="{!item.Usuario__r.name}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Apellido">
+                        <apex:outputfield value="{!item.Usuario__r.Apellidos__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Activo">
+                        <apex:outputfield value="{!item.Activo__c}"/>   
+                 </apex:column>
+                <!-------Cargar / Generar Planillas----------->
+                 <apex:column headerValue=" Planillas">
+                        <apex:outputfield value="{!item.Cargar_Generar_Planilla__c}"/>   
+                 </apex:column>
+                <!-------Nuevo Personal----------->
+                 <apex:column headerValue="Personal">
+                        <apex:outputfield value="{!item.Nuevo_Personal__c}"/>   
+                 </apex:column>
+                <!-------Nuevo Salarios----------->
+                 <apex:column headerValue="Salarios">
+                        <apex:outputfield value="{!item.Nuevos_Salarios__c}"/>   
+                 </apex:column>
+                <!-------Aprobación de planilla----------->
+                 <apex:column headerValue="Aprobar planilla">
+                        <apex:outputfield value="{!item.Aceptar_Planilla__c}" />   
+                 </apex:column> 
+                <!-------Planilla Seguro Social----------->
+                 <apex:column headerValue="Planilla IHSS">
+                        <apex:outputfield value="{!item.Planilla_Seguro_Social__c}"/>   
+                 </apex:column>  
+                 <apex:column headerValue="Calculo de Pilares">
+                        <apex:outputfield value="{!item.Calculo_De_Pilares__c}"/>   
+                 </apex:column> 
+                 <apex:column headerValue="Reportes">
+                        <apex:outputfield value="{!item.Reportes__c}"/>   
+                 </apex:column>
+                <!-------Crear / Modificar Usuarios----------->
+                 <apex:column headerValue="Usuarios">
+                        <apex:outputfield value="{!item.Crear_Usuarios__c}"/>   
+                 </apex:column>
+                <!-------Aprobación de Usuarios----------->
+                <apex:column headerValue="Aprobar Usuarios">
+                        <apex:outputfield value="{!item.Aprobacion_Usuarios__c}"/>   
+                 </apex:column>
+               </apex:DataTable> 
+                         
+                         
+        <br/><br/>  
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!Autorizacionusuario}">
+            
+        <div id="Resumen">
+                <h3 class="Row">
+                    <strong>Aprobaciones Pendientes</strong>
+                    <span>
+                    </span>
+                </h3>
+                </div>
+                <br/>
+                        <apex:DataTable value="{!listAprobacionesPendientes}" var="item" styleClass="slds-table slds-table--bordered ">
+                
+                 <apex:column headerValue="Identificación">
+                        <apex:outputfield value="{!item.Usuario__r.Identidad__c}" />   
+                 </apex:column>
+                 <apex:column headerValue="Nombre">
+                        <apex:outputfield value="{!item.Usuario__r.name}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Apellido">
+                        <apex:outputfield value="{!item.Usuario__r.Apellidos__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Activo">
+                        <apex:outputfield value="{!item.Activo__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Planillas">
+                        <apex:outputfield value="{!item.Cargar_Generar_Planilla__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Personal">
+                        <apex:outputfield value="{!item.Nuevo_Personal__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Salarios">
+                        <apex:outputfield value="{!item.Nuevos_Salarios__c}"/>   
+                 </apex:column>
+                 <apex:column headerValue="Aprobar planilla">
+                        <apex:outputfield value="{!item.Aceptar_Planilla__c}" />   
+                 </apex:column> 
+                 <apex:column headerValue="Planilla IHSS">
+                        <apex:outputfield value="{!item.Planilla_Seguro_Social__c}"/>   
+                 </apex:column>  
+                 <apex:column headerValue="Calculo de Pilares">
+                        <apex:outputfield value="{!item.Calculo_De_Pilares__c}"/>   
+                 </apex:column> 
+                 <apex:column headerValue="Reportes">
+                        <apex:outputfield value="{!item.Reportes__c}"/>   
+                 </apex:column>  
+                 <apex:column headerValue="Usuarios">
+                        <apex:outputfield value="{!item.Crear_Usuarios__c}"/>   
+                 </apex:column>
+                <apex:column headerValue="Aprobar Usuarios">
+                        <apex:outputfield value="{!item.Aprobacion_Usuarios__c}"/>   
+                 </apex:column>
+                
+                <apex:column headerValue="Aceptar"> 
+                        <div class="slds-scope">
+                             <apex:commandLink value="Aceptar"  action="{!Aprobar}">  
+                            <apex:param value="{!Item.Usuario__r.Identidad__c}" AssignTo="{!Num_Identidad}" name="CambioTasa" /> </apex:commandLink>
+                     </div>   
+                 </apex:column>
+                            
+                 <apex:column headerValue="Denegar">
+                         <div class="slds-scope">
+                             <apex:commandLink value="Denegar"  action="{!Denegar}">  
+                            <apex:param value="{!Item.Usuario__r.Identidad__c}" AssignTo="{!Num_Identidad}" name="CambioTasa" /> </apex:commandLink>
+                     </div>  
+                 </apex:column>
+               </apex:DataTable> 
+              
+        </apex:outputPanel>
+       
+        <apex:outputPanel rendered="{!popModificar}">
+            <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+              <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <apex:commandLink action="{!Cancelar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                     <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                     </svg>
+                     <span class="slds-assistive-text">Cerrar</span>
+                </apex:commandLink>  
+                </div>
+                <div class="slds-modal__content">
+                    <iframe src="/planillas{!URL_Pagina}" scrolling="false" style="border:none;" width="100%" height="700"/>
+                    <!-- iframe src="https://fpc.secure.force.com/planillas/vfNuevoUsuario" scrolling="false" style="border:none;" width="100%" height="700"/ -->
+                </div>
+              </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!popCambioContrasena}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                  <header class="slds-modal__header">                   
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Cambio de Contraseña</h2>
+                    </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;" />
+                        
+                        <div class="slds-form slds-form_horizontal">
+                          <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="input-id-01">Escriba su contraseña actual:</label>
+                            <div class="slds-form-element__control">
+                              <apex:inputSecret value="{!contrasenaActual}" id="input-id-01" styleclass="slds-input"/>
+                            </div>
+                          </div>
+                          <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="input-id-02">Escriba su nueva contraseña</label>
+                            <div class="slds-form-element__control">
+                              <apex:inputSecret value="{!contrasenaNueva}" id="input-id-02" styleclass="slds-input"/>
+                            </div>
+                          </div>
+                          <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="input-id-03">Escriba nuevamente su contraseña</label>
+                            <div class="slds-form-element__control">
+                              <apex:inputSecret value="{!contrasenaRepetida}" id="input-id-03" styleclass="slds-input"/>
+                            </div>
+                          </div>
+                      </div>
+                        
+                    </div>
+                  <footer class="slds-modal__footer">
+                    <apex:commandButton value="Cancelar" action="{!Cancelar}"  styleClass="Confirmar" />&nbsp;
+                    <apex:commandButton value="Cambiar" action="{!cambiarContrasena}" styleClass="Confirmar" />                 
+                  </footer>
+                </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open"></div>
+        </apex:outputPanel>
+        
+                
+    </apex:form>
+  
+        
+        
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->
+
+</body>
+</html>
+    <script>
+       function CampoNumero(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{10}$/
+           return !(regexp.test(field.value))
+           }
+            // .
+            if (key == 46) {
+            if (field.value == "") return false
+             regexp = /^[0-9]+$/
+              return regexp.test(field.value)
+              }
+               // other key
+              return false
+             }
+    
+        </script> 
+</apex:page>

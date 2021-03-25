@@ -1,0 +1,288 @@
+<apex:page showHeader="false" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf" controller="formularioIdentificacion_PDF_CONT">
+    <head>
+        <style>
+            @page {
+                size: 8.5in 14in;
+                margin-top:    0.3in;
+                margin-bottom: 0.2in;
+                margin-left:   0.2in;
+                margin-right:  0.2in;
+            }
+            
+            body{
+                font-size: 70%;
+                font-family: sans-serif;
+            }
+            
+            table, th, td, tr{
+                border-collapse: collapse;
+            }
+            
+            th{
+                background-color: black;
+                color: white;
+                text-align: center;
+            }
+            
+            div > table > tr > td{
+                border: 1px solid black;
+                height: 30px;
+            }
+            
+            table > tr > td{
+                height: 30px;
+            }
+            .p{
+             text-align : justify;
+             font-family: Arial;
+             font-size:15px;
+             
+            }
+            .p2{
+             font-family: Arial;
+             font-size:15px;
+             
+            }
+            
+            .logo{
+                position: absolute;
+                width: 15%;
+                height: 14%;
+                top: 0px;
+                left: 0px;
+                Z-index:-100;   
+            }
+            
+            .titulo{
+                position: absolute;                
+                text-align:center;
+                top: 10px;
+                left: 250px;
+                Z-index:-100;
+            }
+            
+            .barraP{
+            background-color: black;
+            height : 3px; 
+            }
+            
+            .barraS{
+            background-color: black;
+            display: table;
+            height:200px;
+            }
+            
+            .text1{
+            position: absolute; 
+            text-align: right; 
+            height : 20px; 
+            width : 400px; 
+            right: 0px;
+            }
+            
+            .text2{
+            position: absolute; 
+            text-align: left; 
+            height : 20px; 
+            width : 750px; 
+            right: 0px;
+            }
+            
+            .containerP{
+            width:100%; 
+            height:50px; 
+            background-color: #cdd0d6; 
+            }
+            
+            .camp1{
+            background-color: #5370aa; 
+            width : 25%;
+            height: 40px; 
+            display: inline; 
+            }
+            
+            .camp2{
+            background-color: #a85932; 
+            width : 25%;
+            height: 40px; 
+            display: inline;
+            }
+                      .camp3{
+            background-color: #6fa036; 
+            width : 25%;
+            height: 40px; 
+            display: inline;
+            }
+                      .camp4{
+            background-color: #5370aa; 
+            width : 25%;
+            height: 40px;
+            display: inline;
+            }
+            
+            #tableCentr {
+             text-align:center; 
+            }
+            
+            #ufila{
+            width:6%;
+            text-align:center;
+            }
+            
+            #textBar{
+            color:#ffffff; 
+            display: table-cell;
+            vertical-align: middle;
+            }
+        </style>    
+    </head>
+    <br/> 
+    <div class="logo">
+        <br/> <br/> 
+        <apex:image value="{!$Resource.logofico}" width="150"/>
+    </div>
+    <br/> 
+    <div class="text1">
+        <H3>AUTO CERTIFICACIÓN FATCA - PERSONAS NATURALES</H3>
+        <H2>PENSIONES Y CESANTÍAS</H2>
+    </div>
+    <br/><br/><br/><br/><br/>
+    <div class="barraP"></div>
+    <div class="text1">
+        <p>Utilice este documento para certificar su estatus del Capítulo 4 (Estatus FATCA)</p>
+    </div>
+    <br/><br/><br/><br/><br/><br/>
+    <div class="text2">
+        <H3>I. DATOS PERSONALES</H3>
+        <br/>
+        <div class="p2"> 
+           1. Código de Cliente &nbsp;
+        <div style="border-bottom:1px solid black;width:610px;display:inline-block;">
+        <!--Código de Cliente-->{!info.pc_codCuenta}
+        </div><br/><br/>
+           2. Nombre Completo &nbsp;
+        <div style="border-bottom:1px solid black;width:605px;display:inline-block;">
+        <!--Nombre Completo-->{!info.pcprimernombre}&nbsp;{!info.pcsegundonombre}&nbsp;{!info.pcprimerapellido}&nbsp;{!info.pcsegundoapellido}
+        </div><br/><br/>
+          3. Identificación &nbsp;
+        <div style="border-bottom:1px solid black;width:635px;display:inline-block;">
+        <!--Identificación-->{!info.pcnroid}
+        </div><br/><br/>
+          4. Nacionalidad(es)/ Ciudadanía(s) &nbsp;
+        <div style="border-bottom:1px solid black;width:520px;display:inline-block;">
+        <!--Nacionalidad(es)/ Ciudadanía(s)-->{!nac}&nbsp;{!info.pcnacionalidad2}&nbsp;{!info.pcnacionalidad3}
+        </div><br/><br/>
+          5. ¿Posee más de una nacionalidad? 
+         <!--preguntar por el campo? -->
+         Si<font></font>
+            <apex:outputPanel rendered="{!if(nacionalidades>1,false,true)}">
+            <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!if(nacionalidades>1,true,false)}">
+            <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+         No<font></font>
+            <apex:outputPanel rendered="{!if(nacionalidades<=1,false,true)}">
+                <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!if(nacionalidades<=1,true,false)}">
+                <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+         <!--preguntar por el campo? fin-->
+        &nbsp;
+        País &nbsp;
+        <div style="border-bottom:1px solid black;width:390px;display:inline-block;">
+        <!--¿Posee más de una nacionalidad?País{!info.pccodpais}-->{!pais}
+        </div><br/><br/>
+          6. Lugar de Nacimiento &nbsp;
+        <div style="border-bottom:1px solid black;width:590px;display:inline-block;">
+        <!--Lugar de Nacimiento-->{!info.pdLugarNacimientoCN}
+        </div><br/><br/>
+          7. Dirección de Domicilio &nbsp;
+        <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
+        <!--Dirección de Domicilio{!info.pcDeptoCN}&nbsp;{!info.pcMunicipioCN}&nbsp;{!info.pcColoniaCN}&nbsp;{!info.pcCalleDetalleCN}-->{!depto}&nbsp;{!mun}&nbsp;{!col}&nbsp;{!dir}
+        </div><br/><br/>
+          8. Teléfono de Residencia &nbsp;
+            <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
+        <!--Teléfono de Residencia {!info.pcTelefonoCN}-->{!telD}
+        </div><br/><br/>
+        </div>
+        <br/>   <br/>    
+        <H3>II. DATOS DE CONTRIBUYENTE FISCAL</H3>
+        <br/>
+        <div class="p2">
+        1. ¿Es residente de Estados Unidos? 
+         Si<font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente=='N'||info.ES_Residente==null||info.ES_Residente==' '}">
+            <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente=='S'}">
+            <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+         No<font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente=='S'||info.ES_Residente==null||info.ES_Residente==' '}">
+                <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente=='N'}">
+                <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+        <p>2. ¿Es residente para Efectos Migratorios en los Estados Unidos?
+         Si<font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente_EfectosMi=='N'||info.ES_Residente==null||info.ES_Residente_EfectosMi==' '}">
+            <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente_EfectosMi=='S'}">
+            <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+         No<font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente_EfectosMi=='S'||info.ES_Residente_EfectosMi==null||info.ES_Residente_EfectosMi==' '}">
+                <img src="/img/checkbox_unchecked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+            <apex:outputPanel rendered="{!info.ES_Residente_EfectosMi=='N'}">
+                <img src="/img/checkbox_checked.gif"/>
+            </apex:outputPanel>
+            <font></font>
+        </p>  
+        3. País de Residencia para Efectos Fiscales:
+        <div style="border-bottom:1px solid black;width:470px;display:inline-block;">
+        <!--País de Residencia para Efectos Fiscales-->{!info.pccodpais}
+        </div><br/><br/>
+        4. Número de Identificación Fiscal de los Estados Unidos (TIN)
+        <div style="border-bottom:1px solid black;width:350px;display:inline-block;">
+        <!--Número de Identificación Fiscal de los Estados Unidos (TIN)-->{!info.NumeroID_Fiscal_EEUU}
+        </div><br/><br/>
+        5. Número de Identificación Fiscal de otro país
+        <div style="border-bottom:1px solid black;width:450px;display:inline-block;">
+        <!--Número de Identificación Fiscal de otro país-->{!info.NumeroID_Fiscal_OtroPais}
+        </div><br/><br/><br/> 
+        </div>
+        <div class="p">
+        <p>Por este medio, declaro que la información de este formulario es completa, correcta y fehaciente. Asimismo, me
+            comprometo a poner en conocimiento de la institución financiera y confeccionar una nueva auto-certificación en un
+            plazo máximo de treinta días en caso de que cualquier información contenida se vea desactualizada, incompleta o
+            incorrecta. Me doy por enterado(a) que esta información es requerida por el Código de Renta Interna de los Estados
+            Unidos, la reglamentación dispuesta por la Comisión Nacional de Bancos y Seguros (CNBS) y demás normativa conexa.</p>
+        </div>
+        <div class="p2">
+        <br/>
+        <p>
+            <font></font><img src="/img/checkbox_unchecked.gif"/><font></font>
+            He leído y aceptado comprehensivamente este documento
+        </p>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <p>Firma de Cliente_________________________________________Fecha__________________________________</p>
+    </div>
+     </div>
+    
+</apex:page>

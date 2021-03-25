@@ -1,0 +1,180 @@
+<apex:page readOnly="true"  controller="controladorReporteSeguimiento"  contentType="{!NombreExcel}" >
+    <meta charset="utf-8" />
+    <apex:form >
+        
+        
+        <apex:dataTable styleClass="slds-table slds-table_bordered slds-table_col-bordered"  value="{!listReporte}" var="item">
+            
+            <apex:column headerValue="Primer Nombre">
+                <apex:outputField value="{!item.Name}" />
+            </apex:column>
+            
+            <apex:column headerValue="Segundo Nombre">
+                <apex:outputField value="{!item.Segundo_Nombre__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Primer Apellido">
+                <apex:outputField value="{!item.Primer_Apellido__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Segundo Apellido">
+                <apex:outputField value="{!item.Segundo_Apellido__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Tipo de Identificación" >
+                <apex:outputField value="{!item.Tipo_Identificacion__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Identificación" >
+                <apex:outputField value="{!item.Identificacion__c}" />
+            </apex:column>
+            
+            
+            
+            <apex:column headerValue="Estado" >
+                <apex:outputField value="{!item.Estado__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Tipo afiliación" >
+                <apex:outputField value="{!item.Tipo_Afiliacion__c}" />
+            </apex:column>
+            
+            <!---COLUMNAS NUEVAS-->
+            
+            <apex:column headerValue="Formulario Completo" >
+                <apex:outputField value="{!item.Formulario_Completo__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Tienen ID" >
+                <apex:outputField value="{!item.Tiene_Id__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="RTN" >
+                <apex:outputField value="{!item.RTN__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="FATCA" >
+                <apex:outputField value="{!item.FATCA__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="WAIVER" >
+                <apex:outputField value="{!item.WAIVER__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="PEP" >
+                <apex:outputField value="{!item.PEP__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Procedencia" >
+                <apex:outputField value="{!item.Procedencia__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Addendum" >
+                <apex:outputField value="{!item.Addendum__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Tipo de Fondo" >
+                <apex:outputField value="{!item.Tipo_Fondo__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Sub Producto" >
+                <apex:outputField value="{!item.Subproducto__r.name}" />
+            </apex:column>
+            
+            <apex:column headerValue="Producto" >
+                <apex:outputField value="{!item.Subproducto__r.producto__r.name}" />
+            </apex:column>
+            
+            <apex:column headerValue="Nombre Empresa" >
+                <apex:outputField value="{!item.empresa__r.name}" />
+            </apex:column>
+            
+            <apex:column headerValue="Reporte de Calidad" >
+                <apex:outputField value="{!item.Reporte_Calidad__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Comentarios" >
+                <apex:outputField value="{!item.Comentarios__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Asesor Comercial" >
+                <apex:outputField value="{!item.Asesor_Comercial__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Código Asesor Comercial" >
+                <apex:outputField value="{!item.Codigo_Asesor_Comercial__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Fecha de Envío Memo" >
+                <apex:outputField value="{!item.Fecha_Envio_Memo__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Oficial SAC" >
+                <apex:outputField value="{!item.Oficial_SAC__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Código Oficial SAC" >
+                <apex:outputField value="{!item.Codigo_Oficial_SAC__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Expediente Completo" >
+                <apex:outputField value="{!item.Expediente_Completo__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Número de Cliente" >
+                <apex:outputField value="{!item.Numero_de_Cliente__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Número de Contrato" >
+                <apex:outputField value="{!item.Numero_de_Contrato__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Número de Cuenta" >
+                <apex:outputField value="{!item.Numero_Cuenta__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Aportación HNL" >
+                <apex:outputField value="{!item.Aportacion_HNL__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Aportación USD" >
+                <apex:outputField value="{!item.Aportacion_USD__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Seguro HNL" >
+                <apex:outputField value="{!item.Seguro_HNL__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Seguro USD" >
+                <apex:outputField value="{!item.Seguro_USD__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Periodicidad" >
+                <apex:outputField value="{!item.Periodicidad__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Fecha Inicio Aporte" >
+                <apex:outputField value="{!item.Fecha_Inicio_Aporte__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Forma de Pago" >
+                <apex:outputField value="{!item.Forma_Pago__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Fecha de Validación" >
+                <apex:outputField value="{!item.Fecha_Validacion__c}" />
+            </apex:column>
+            
+            <apex:column headerValue="Aplica CS" >
+                <apex:outputField value="{!item.Aplica_CS__c}" />
+            </apex:column>
+            
+            
+            
+            
+        </apex:dataTable>
+        
+        
+        
+    </apex:form>
+</apex:page>

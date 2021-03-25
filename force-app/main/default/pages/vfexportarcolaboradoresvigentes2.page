@@ -1,0 +1,43 @@
+<apex:page controller="controladorExportarExcelColavoradores" contentType="application/vnd.ms-excel#Colaboradores_Vigentes.xls" readOnly="true">
+     <meta charset="utf-8" />
+    <apex:form >
+    
+     <apex:dataTable value="{!listClientes2}" var="item">
+         <apex:column headerValue="Tipo de Identificación" >
+         		<apex:OutputText value="{!item.Tipo_Identificacion}"/>
+         </apex:column>
+         
+         <apex:column headerValue="Identificación" >
+         		<apex:OutputText value="&nbsp;{!item.Identificacion}"/> 
+         </apex:column>
+         
+          <apex:column headerValue="Nombres" >
+         		<apex:OutputText value="{!item.FirstName}"/>
+         </apex:column>
+         
+         <apex:column headerValue="Apellidos" >
+         		<apex:OutputText value="{!item.lastName}"/>
+         </apex:column>
+         
+          <apex:column headerValue="Estado Civil" >
+         		<apex:OutputText value="{!item.Estado_Civil}"/>	
+         </apex:column>
+         
+          <apex:column headerValue="Fecha Nacimiento" >
+         		<apex:OutputText value="{!item.Mostarfecha}"/>
+         </apex:column>
+         
+          <apex:column headerValue="Salario" >
+            <apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!item.Salario}" /></apex:outputText>
+         		
+         </apex:column>
+         
+        </apex:dataTable>
+				
+    
+    </apex:form>
+    
+    
+    
+    
+</apex:page>

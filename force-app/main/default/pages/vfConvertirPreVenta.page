@@ -1,0 +1,46 @@
+<apex:page standardController="PreVenta__c" extensions="extensionPreVenta" docType="html-5.0">
+    <apex:sectionHeader title="Convertir PreVenta" 
+        subtitle="{!PreVenta__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="Convertir">
+            
+           
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!convert}" value="Convertir"/>
+                <apex:commandButton action="{!cancel}" value="Salir"/>
+                
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel >
+                
+                <apex:pageBlockSection columns="2" title="Información de las preventas" rendered="{!if(PreVenta__c.RecordType.DeveloperName = 'Natural' , true, false)}">
+                    <apex:outputField value="{!PreVenta__c.ownerId}"/> <br/>
+                   <apex:selectList value="{!clientes}" Label="Cliente" size="1">
+                    <apex:selectOptions value="{!items}"/>
+                   </apex:selectList>    
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="2" title="Información de las preventas.." rendered="{!if(PreVenta__c.RecordType.DeveloperName = 'Juridico' , true, false)}">
+                    <apex:outputField value="{!PreVenta__c.ownerId}"/> <br/>
+                     <apex:outputField value="{!PreVenta__c.Company__c}"/> <br/>
+                   <apex:selectList value="{!clientes}" Label="Cliente" size="1">
+                    <apex:selectOptions value="{!itemsDos}"/>
+                   </apex:selectList>    
+                </apex:pageBlockSection>
+                
+                
+                <apex:pageBlockSection columns="2" title="Información de Tareas">
+                      <apex:inputField value="{!PreVenta__c.Convertir_Tarea__c}" required="true"/> <br/> 
+                      <apex:inputField value="{!PreVenta__c.Convertir_Fecha_Vencimiento__c}" required="true"/> <br/>
+                      <apex:inputField value="{!PreVenta__c.Convertir_Comentario__c}"/> <br/>
+                </apex:pageBlockSection>
+             
+            </apex:outputPanel>
+            
+            
+            
+         
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

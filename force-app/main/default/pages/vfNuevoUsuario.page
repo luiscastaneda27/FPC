@@ -1,0 +1,317 @@
+<apex:page title="Ficohsa FPC" controller="ControladorUsuarios" showheader="false" sidebar="false" cache="false" expires="0"
+    applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+         
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>Ficohsa Pensiones y Cesantías</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <apex:stylesheet value="{!URLFOR($Resource.SLDS221, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+        <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+        <apex:includeScript value="https://code.jquery.com/jquery-3.1.1.slim.min.js"/>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"/>
+        <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"/>
+        <apex:slds />  
+         <style>
+             html,
+             body {
+             	background: #F2F2F2;
+             }          
+             #topMenuZonaTransaccional {
+             position: relative;
+             width: 100%;
+             float: left;
+             }
+             
+             #Resumen{
+             margin:20px 0 0 0;
+             }
+             #Resumen .Row{
+             width:100%;
+             height:30px;
+             float:left;
+             background:#42c4dd;
+             padding:0px 10px;
+             
+             box-sizing:border-box;
+             -moz-box-sizing:border-box;
+             -webkit-box-sizing:border-box;
+             }
+             #Resumen .Row STRONG{
+             width:60%;
+             float:left;
+             font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+             font-size:14px;
+             line-height:30px;
+             font-weight:normal;
+             color:#FFF;
+             }
+             #Resumen .Row SPAN{
+             width:40%;
+             float:right;
+             font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+             font-size:14px;
+             line-height:30px;
+             font-variant:normal;
+             text-align:right;
+             text-transform:uppercase;
+             color:#FFF;
+             }
+             
+             .Confirmar{    
+            font-weight: bolder !important;
+        
+            height: 28px;
+            color:white;
+            cursor: pointer;
+         	border: medium none;
+            font-weight: bold;
+			position: relative;
+            background-color: #f78d1c;
+        		color: #FFFFFF !important;
+         	font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+		    margin: 15px 0 0;
+		    text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+         
+        		-webkit-appearance: button;
+               -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+         
+         	box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+         }
+        .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+             -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+        }
+        
+        .Confirmar:disabled{    
+            font-weight: bolder !important;
+        
+            height: 28px;
+            color:white;
+            cursor: pointer;
+         	border: medium solid;
+            font-weight: bold;
+			position: relative;
+            background-color:#fff;
+        	color: #f78d1c !important;
+         	font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+		    margin: 15px 0 0;
+		    text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+         
+        		-webkit-appearance: button;
+               -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+         
+         	box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+        }
+        
+        .ConfirmarSecond{    
+            font-weight: bolder !important;
+        
+            height: 28px;
+            color:white;
+            cursor: pointer;
+         	border: medium solid;
+            font-weight: bold;
+			position: relative;
+            background-color:#fff;
+        	color: #f78d1c !important;
+         	font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+		    margin: 15px 0 0;
+		    text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+         
+        		-webkit-appearance: button;
+               -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+         
+         	box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+        }
+        </style>
+        
+        </head>
+        <Body>  
+            <apex:form >
+                <div class="slds-scope" style="width:95%;margin-left:2.5%;">
+                    
+                    
+                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight:bold;"/>
+               
+                
+                
+                <apex:pageBlock >  
+                    <div>
+                        <div>
+                            <div id="topMenuZonaTransaccional">
+                                <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                                        <div class="slds-media__figure">
+                                            
+                                        </div>
+                                        <div class="slds-media__body" >
+                                            <h2>
+                                                <br/>
+                                                <span class="slds-text-heading_medium">{!Nombre_Empresa} / {!NombreP}</span>
+                                                <br/>
+                                            </h2>
+                                        </div>
+                                    </header>
+                                    
+                                    <div style="height:50px;background-color: #F2F2F2;">
+                                        <br/>
+                                        <br/>
+                                    </div>
+                                </div>
+                                
+                                
+                                    <form class="form-horizontal" >
+                                        <div id="Resumen" style="margin-top:0px;">
+                                            <h3 class="Row">
+                                                <strong>Datos de Usuario</strong>
+                                                <span>
+                                                </span>
+                                            </h3>
+                                        </div>
+                                        
+                                        <div style="background-color: white; padding: 5px 5px 5px 5px;">
+                                            
+                                            <apex:pageBlockSection columns="1">
+                                                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                                                <apex:inputText label="Identificación" value="{!Num_Identidad}" required="{!Ridentidad}" OnKeyPress="return CampoNumero(event, this)" size="13" disabled="{!MostrarIdent}" />
+                                                
+                                                <apex:inputText label="Nombre" required="{!RNombre}" value="{!Nombre}"  size="13"/>
+                                                
+                                                <apex:inputText label="Apellido" value="{!Apellido}" required="{!RApellido}"  size="13"/>  
+                                                
+                                                <apex:inputText label="Correo" value="{!correovf}" required="{!RCorreo}" size="13" />  
+                                                
+                                            </apex:pageBlockSection>
+                                            
+                                            <apex:pageBlockSection columns="3">
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label"> Activo</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Activo" value="{!Activo}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label"> Cargar / Generar Planillas</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Cargar / Generar Planillas" value="{!Planillas}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label"> Nuevo Personal</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="NuevoPersonal" value="{!NuevoPersonal}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label"> Nuevos Salarios</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Nuevos Salarios" value="{!NuevosSalarios}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Planilla Seguro Social</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Planilla Seguro Social" value="{!PlanillaSS}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label"> Calculo de Pilares</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Calculo de Pilares" value="{!Pilares}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Reportes</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Reportes" value="{!Reportes}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Aprobación de planilla</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!AprobacionPlanilla}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Crear / Modificar Usuarios</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Crear / Modificar Usuarios" value="{!Usuarios}" />
+                                                </apex:pageBlockSectionItem>
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Aprobación de Usuarios</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!AprobacionUsuario}" />
+                                                </apex:pageBlockSectionItem> 
+                                                <apex:pageBlockSectionItem rendered="{!bloqueado}">
+                                                    <label class="slds-form-element__label">Desbloquear</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!bloqueado}" />
+                                                </apex:pageBlockSectionItem> 
+                                            </apex:pageBlockSection>
+                                        </div>
+                                    </form>
+                                	<footer class="slds-card__footer" style="width:100%;padding-bottom:5px;">
+                                        <table style="width:100%;">
+                                            <tr>
+                                                
+                                                <td style="text-align:right;">
+                                                    <br/>
+                                                    <apex:commandButton styleClass="Confirmar" rendered="{!Mguardar}" value="Guardar" action="{!autorizacionCrearusuario}" />&nbsp;
+                                    				<apex:commandButton styleClass="Confirmar" rendered="{!MActualizar}" value="Actualizar"  action="{!autorizacionActualizarusuario}" />&nbsp;
+                                                    
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                </footer>
+                                </div>
+                        </div>
+                    </div>
+                    
+                </apex:pageBlock>
+                <apex:actionFunction action="{!LLenarDatos}" name="LLenarDatos" />
+                </div>
+            </apex:form>
+        </Body>
+    </html>
+       <script>
+       function CampoNumero(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{12}$/
+           return !(regexp.test(field.value))
+           }
+              return false
+             }
+        </script>   
+</apex:page>

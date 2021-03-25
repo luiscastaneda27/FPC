@@ -1,0 +1,724 @@
+<apex:page renderAs="pdf" applyBodyTag="false" applyHtmlTag="false" showHeader="false" standardController="Opportunity" extensions="extensionSplitdeNombre">
+
+    <head>
+        <style>
+            @page {
+                size: 8.5in 13.92in;
+                margin-top:    0.1in;
+                margin-bottom: 0.1in;
+                margin-left:   0.1in;
+                margin-right:  0.1in;
+            }
+            
+            body{
+                font-size: 50%;
+                font-family: sans-serif;
+            }
+             
+            table, th, td, tr{
+                border-collapse: collapse;
+                border: hidden white;
+            }
+            
+            .tablaNombre{
+                border-collapse: collapse;
+                border: 0px;
+            }
+            
+            .cajaNombre{
+                position:absolute;
+                z-index:10;
+                left: 83px;
+                top: 154px;
+            }
+            
+            .cajaApellido{
+                position:absolute;
+                z-index:10;
+                left: 520px;
+                top: 154px;
+                
+                width: 800px;
+                height: 200px;
+            }
+            
+            th{
+                background-color: black;
+                color: white;
+                text-align: center;
+            }
+            
+            div > table > tr > td{
+                border: 1px solid black;
+                height: 23px;
+            }
+            
+            table > tr > td{
+                height: 14px; 
+            }
+            
+            .saltoPagina{
+                 page-break-after: always;
+             }
+             
+        </style>    
+    </head>
+    
+    
+    <!-- Esto muestra el primer nombre y segundo nombre, extraidos del controlador que dividie el string de nombre  -->
+    <div class="cajaNombre">
+        <table>
+            <tr>
+                <apex:repeat value="{!splitString}" var="s">
+                  <td class="tablaNombre" width="252"><b>{!s}</b></td>
+                </apex:repeat>
+            </tr>
+        </table>
+    </div>
+   
+    <div class="cajaApellido">
+        <table>
+            <tr>
+                <apex:repeat value="{!splitApellido}" var="a">
+                    <td class="tablaNombre" width="208"><b>{!a}</b></td>
+                </apex:repeat>
+            </tr>
+        </table>
+    </div>
+    
+    <!--------------------------------------------------------------------------------------------------------->
+    <!-------------------------------------- P R I M E R A   P A G I N A -------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------->
+    
+    <apex:image value="{!$Resource.headerPDF}" width="100%" height="110%"/><br/><br/>
+    
+    
+    <!------------------- TABLA 1 ------------------->
+    
+    <table border="1" style="width:100%;">
+        <tr>
+            <td width="33%" height="20px"> YO: <b>{!opportunity.Account.Name}</b></td>
+            <td colspan="2">SOLICITO INCORPORARME A LA ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A. (FICOHSA PENSIONES Y CESANTÍAS).</td>
+        </tr>
+        <tr>
+            <td width="33%">FECHA DE SOLICITUD: <b><apex:outputfield value="{!Opportunity.CloseDate}"/></b></td>
+            <td style="border-right: 2px solid black; border-left: 2px solid black;"> &nbsp; TIPO DE FONDO: <b>{!opportunity.Tipo_fondo__c}</b> </td>
+            <td> &nbsp; FECHA DE INCORPORACIÓN: DÍA <b>{!DAY(opportunity.Fecha_incorporacion__c)}</b> MES <b>{!MONTH(opportunity.Fecha_incorporacion__c)}</b> AÑO <b>{!YEAR(opportunity.Fecha_incorporacion__c)}</b></td>            
+        </tr>
+        <tr>
+            <td ></td>
+            <td style="border-right: 2px solid black; border-left: 2px solid black;"> &nbsp; TIPO DE MONEDA: <b>{!opportunity.Tipo_moneda__c}</b></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>FIRMA DEL SOLICITANTE: _______________________________</td>
+            <td style="border-right: 2px solid black; border-left: 2px solid black;"></td>
+            <td> &nbsp; NO. DE CUENTA: <b>{!opportunity.Numero_Cuenta__c}</b></td>            
+        </tr>
+    </table> <br/>
+    
+    <!------------------- TABLA 2 (INFORMACIÓN DEL AFILIADO) ------------------->
+    
+    <table border="1" style="width:100%;">   
+        <tr>
+            <th colspan="4">INFORMACIÓN DEL AFILIADO</th>            
+        </tr>     
+        <tr>
+            <td>PRIMER NOMBRE: </td>
+            <td>SEGUNDO NOMBRE: </td>
+            <td>PRIMER APELLIDO: </td>
+            <td>SEGUNDO APELLIDO:</td>
+        </tr>
+        <tr>
+            <td colspan="2">TIPO DE IDENTIFICACIÓN: <b>{!Opportunity.Account.Tipo_Identificacion__c}</b></td>
+            <td>NÚMERO DE IDENTIFICACIÓN: <b>{!Opportunity.Account.identificacion__c}</b></td>
+            <td>SEXO: <b>{!opportunity.account.Sexo__c}</b> </td>            
+        </tr>
+        <tr>
+            <td>NACIONALIDAD: <b>{!opportunity.Account.Nacionalidad__pc}</b></td>
+            <td colspan="2">PROFESIÓN / OCUPACIÓN / OFICIO: <b>{!opportunity.account.Profesion_Ocupacion__pc}</b></td>
+            <td>FECHA DE NACIMIENTO:  <b>{!DAY(opportunity.account.PersonBirthdate)}/{!MONTH(opportunity.account.PersonBirthdate)}/{!YEAR(opportunity.account.PersonBirthdate)}</b></td>            
+        </tr>
+        <tr>
+            <td colspan="2">LUGAR DE NACIMIENTO: <b>{!opportunity.account.Lugar_Nacimiento__c}</b></td>
+            <td>TELÉFONO DOMICILIO: <b>{!opportunity.account.Phone}</b></td>
+            <td>CELULAR: <b>{!opportunity.account.celular__c}</b></td>            
+        </tr>
+        <tr>
+            <td colspan="2">ESTADO CIVIL: <b>{!opportunity.account.Estado_Civil__pc}</b></td>
+            <td colspan="2">NOMBRE DEL CÓNYUGE: <b>{!opportunity.account.Nombre_Conyugue__pc}</b></td>       
+        </tr>
+        <tr>
+            <td colspan="2">DIRECCIÓN DE DOMICILIO: <b>{!opportunity.account.Colonia_Residencia__c}, {!opportunity.account.Calle_Residencia__c}, {!opportunity.account.Numero_Casa_Residencia__c}</b></td>
+            <td colspan="2">PUNTO DE REFERENCIA: <b>{!opportunity.account.Punto_Referencia_Residencia__c}</b></td>       
+        </tr>
+        <tr>
+            <td>CIUDAD:<b> {!opportunity.account.Ciudad_Residencia__c}</b></td>
+            <td>PAIS: <b> {!opportunity.account.Pais_Residencia__c}</b></td>
+            <td colspan="2">CORREO ELECTRÓNICO: <b>{!opportunity.account.PersonEmail}</b></td>            
+        </tr>
+    </table>
+    
+    <!------------------- TABLA 3 ------------------->
+    
+    <table border="1" width="100%">
+        <tr align="center">
+            <td width="10%">REFERENCIAS PERSONALES:</td>
+            <td> <b>{!opportunity.account.nombre1__c}</b></td>
+            <td> </td>
+            <td> <b>{!opportunity.account.telefono1__c}</b></td>
+            <td> </td>
+            <td> <b>{!opportunity.account.nombre2__c}</b></td>
+            <td> </td>
+            <td> <b>{!opportunity.account.telefono2__c}</b></td>
+        </tr>        
+        <tr align="center">
+            <td width="10%"> </td>
+            <td style="border-top: 1px solid black;">1. NOMBRE</td>
+            <td> </td>
+            <td style="border-top: 1px solid black;">1. TELÉFONO</td>
+            <td> </td>
+            <td style="border-top: 1px solid black;">2. NOMBRE</td>
+            <td> </td>
+            <td style="border-top: 1px solid black;">2. TELÉFONO</td>
+        </tr>
+    </table> <br/>
+    
+    <!------------------- TABLA 4 (ACTIVIDAD ECONÓMICA O FUENTE DE INGRESOS) ------------------->
+        
+    <table border="1" style="width:100%;">        
+        <tr>
+            <th colspan="2">ACTIVIDAD ECONÓMICA O FUENTE DE INGRESOS</th>            
+        </tr>
+        <tr>
+            <td>TIPO DE TRABAJADOR:<b>{!opportunity.account.Tipo_trabajador__c}</b></td>
+            <td>NOMBRE DE LA EMPRESA: <b>{!opportunity.account.Nombre_empresa__c}</b></td>
+        </tr>
+        <tr>
+            <td>TIPO DE EMPRESA:<b>{!opportunity.account.Tipo_empresa__c}</b></td>
+            <td>GIRO DE LA EMPRESA: <b>{!opportunity.account.Industry}</b></td>
+        </tr>
+        <tr>
+            <td>FECHA DE INGRESO A LA EMPRESA: <b>{!DAY(opportunity.account.Fecha_ingreso_Empresa__pc)}/{!MONTH(opportunity.account.Fecha_ingreso_Empresa__pc)}/{!YEAR(opportunity.account.Fecha_ingreso_Empresa__pc)}</b></td>
+            <td>CARGO ACTUAL: <b>{!opportunity.account.Cargo_desempena__pc}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">SALARIO MENSUAL (APLICA SOLO PARA EMPLEADOS):<b>{!opportunity.account.Rango_Ingresos_Mensual__c}</b></td>
+        </tr>
+        <tr>
+            <td colspan="2">VOLUMEN DE INGRESOS (APLICA SOLO PARA PROFESIONAL INDEPENDIENTE Y COMERCIANTE INDIVIDUAL): <b>{!opportunity.account.Volumen_Ventas__c}</b></td>
+        </tr>
+    </table><br/>
+    <table>
+        <tr>
+        <td colspan="2" style="text-align: justify;">DECLARO EXPRESAMENTE QUE TANTO MÍ ACTIVIDAD, MÍ PROFESIÓN U OFICIO ES LÍCITA Y LA EJERZO DENTRO DE LOS MARCOS LEGALES Y LOS RECURSOS QUE POSEO NO PROVENIEN DE UNA ACTIVIDAD ILÍCITA CONTEMPLADA 
+EN EL CÓDIGO PENAL DE HONDURAS, NI CUALQUIER OTRA LEY VIGENTE EN EL PAÍS. ACEPTO QUE DE DEMOSTRARSE FALSO MÍ TESTIMONIO EN LA INFORMACIÓN AQUÍ PRESENTADA FICOHSA PENSIONES Y CESANTÍAS ESTÁ 
+FACULTADA A DAR POR TERMINADO EL PRESENTE CONTRATO DE AFILIACIÓN, SIN QUE ESTO IMPLIQUE RESPONSABILIDAD ALGUNA PARA ELLA DE MÍ PARTE.</td>
+        </tr>
+    </table><br/>
+        
+    <!-------------------TABLA 5 (INFORMACIÓN DEL EMPLEADOR O NEGOCIO PROPIO) ------------------->
+    
+    <table border="1" width="100%">
+        <tr>
+            <th colspan="4">INFORMACIÓN DEL EMPLEADOR O NEGOCIO PROPIO</th>
+        </tr>
+        <tr>            
+            <td colspan="3" width="60%">DIRECCIÓN: <b>{!opportunity.Account.BillingStreet} {!opportunity.Account.BillingCity} {!opportunity.Account.BillingState} {!opportunity.Account.BillingCountry} {!opportunity.Account.BillingPostalCode}</b></td>
+            <td>PUNTO DE REFERENCIA: <b>{!opportunity.Account.Punto_Referencia_Trabajo__c }</b></td>
+        </tr>
+        <tr>
+            <td width="25%">TELÉFONO DE OFICINA: <b>{!opportunity.Account.Telefono_Oficina__c}</b></td>
+            <td width="20%">EXTENSIÓN: <b>{!opportunity.Account.Extension_Oficina__c}</b></td>
+            <td>FAX: <b>{!opportunity.Account.Fax_Oficina__c}</b></td>
+            <td>CORREO ELECTRÓNICO: <b>{!opportunity.Account.Correo_Electronico_Oficina__c}</b></td>
+        </tr>
+    </table><br/>
+    
+    <!------------------- TABLA 6 ------------------->
+    
+    <div class="tabla1">
+        <table border="1" width="100%">
+            <tr>
+                <th width="33%" colspan="2">FONDO INDIVIDUAL DE PENSIÓN</th>
+                <td style="border-top: hidden; border-bottom: hidden;"></td>
+                <th width="33%" colspan="2">FONDO INDIVIDUAL CON APORTE EMPRESARIAL</th>
+                <td style="border-top: hidden; border-bottom: hidden;"></td>
+                <th width="33%" colspan="2">FONDO INDIVIDUAL DE CESANTÍA</th>
+            </tr>
+            <tr style="font-size:80%;">
+                <td width="15%">MONTO DE APORTE DEL EMPLEADO</td>
+                <td>
+                    <!--No hay campo-->
+                    <!--En lempiras --> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL LPS')}"/></b>
+                    <!--En lempiras --> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL $')}"/></b>
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td width="15%">SALARIO PARA APORTAR:</td>
+                <td>
+                    <!--No hay campo-->
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.Salario_Mensual__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL LPS')}"/></b>
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.Salario_Mensual__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL $')}"/></b>                    
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td width="15%">MONTO DE APORTE DEL EMPLEADO</td>
+                <td>                
+                    <!--No hay campo-->
+                    <!--En lempiras--> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'CESANTIAS LPS')}"/></b>
+                    <!--En lempiras--> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'CESANTÍAS $.')}"/></b>
+                </td>
+            </tr>
+            <tr style="font-size:80%;">
+                <td>MONTO DE APORTE DEL PROFESIONAL INDEPENDIENTE O COMERCIANTE INDIVIDUAL</td>
+                <td>
+                    <!--No hay campo-->
+                    <!--En lempiras--> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL LPS')}"/></b>
+                    <!--En lempiras--> <b><apex:outputText value="" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL $')}"/></b>
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td>% SALARIO APORTE TRABAJADOR:</td>
+                <td>                    
+                    <!--No hay campo-->
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.Porcentaje_Salario_aporte_trabajador__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL LPS')}"/></b>
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.Porcentaje_Salario_aporte_trabajador__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL $')}"/></b>                
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td >MONTO DE APORTE DEL PROFESIONAL INDEPENDIENTE O COMERCIANTE INDIVIDUAL</td>
+                <td></td>
+            </tr>
+            <tr style="font-size:80%;">
+                <td>FRECUENCIA DEL APORTE:</td>
+                <td>
+                    <!--No hay campo-->
+                    <!--En lempiras--> <b><apex:outputText value="{!opportunity.Frecuencia_Pago__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL LPS')}"/></b>
+                    <!--En lempiras--> <b><apex:outputText value="{!opportunity.Frecuencia_Pago__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES INDIVIDUAL $')}"/></b>
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td>% SALARIO APORTE EMPLEADOR:</td>
+                <td>                   
+                    <!--No hay campo-->
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.porcentaje_Salario_aporte_empleador__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL LPS')}"/></b>
+                    <!--En lempiras --> <b><apex:outputText value="{!Opportunity.porcentaje_Salario_aporte_empleador__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'PENSIONES EMPRESARIAL $')}"/></b>                
+                </td>
+                <td style="border-bottom: hidden;"></td>
+                <td>FRECUENCIA DEL APORTE:</td>
+                <td>                                    
+                    <!--No hay campo-->
+                    <!--En lempiras--> <b><apex:outputText value="{!opportunity.Frecuencia_Pago__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'CESANTIAS LPS')}"/></b>
+                    <!--En lempiras--> <b><apex:outputText value="{!opportunity.Frecuencia_Pago__c}" rendered="{!CONTAINS(Opportunity.producto__r.name, 'CESANTÍAS $.')}"/></b>
+                </td>
+            </tr>
+        </table>    
+    </div>
+    
+    <!------------------- TABLA 7 (CONVENIO DE PAGO DE APORTACIÓN) ------------------->
+    
+    <div>
+        <table border="1" width="100%">
+            <tr>
+                <th colspan="5">CONVENIO DE PAGO DE APORTACIÓN</th>
+            </tr>
+            <tr>
+                <td>TARJETA DE CRÉDITO: <b><apex:outputText value=" Si" rendered="{!Opportunity.Tarjeta_Credito__c}"/><apex:outputText value=" No" rendered="{!NOT(Opportunity.Tarjeta_Credito__c)}"/></b></td>
+                <td colspan="3">NÚMERO DE TARJETA: <b>{!Opportunity.Numero_tarjeta__c} </b></td>
+                <td>FECHA DE APORTE: DIA <b>{!fLOOR(opportunity.Fecha_Aporte_Credito__c)}</b> DE CADA MES</td>
+            </tr>
+            <tr>
+                <td>DÉBITO A CUENTA BANCARIA: <b><apex:outputText value=" Si" rendered="{!Opportunity.Debito_cuenta_bancaria__c}"/><apex:outputText value=" No" rendered="{!NOT(Opportunity.Debito_cuenta_bancaria__c)}"/></b></td>
+                <td> TIPO DE CUENTA: <b>{!opportunity.Tipo_Cuenta__c}</b></td>
+                <td>NÚMERO DE CUENTA: <b>{!opportunity.Numero_Cuenta__c}</b></td>
+                <td>FECHA DE APORTE: DIA <b>{!fLOOR(opportunity.Fecha_Aporte_Debito__c)}</b> DE CADA MES</td>
+                <td>TIPO: <b>{!opportunity.Tipo__c}</b></td>
+            </tr>
+        </table><br/>
+    </div>
+    <table>
+        <tr>
+            <td style="text-align:justify;">POR MEDIO DE LA PRESENTE AUTORIZO A F ICOHSA P ENSIONES Y C ESANTIAS QUE REALICE EL CARGO DE LA CANTIDAD CONVENIDA PARA CUBRIR EL APORTE Y LA PRIMA DE SEGURO VOLUNTARIO, DE ACUERDO A LO 
+SOLICITADO EN ESTE FORMULARIO. ME RESERVO EL DERECHO A REVOCAR LA AUTORIZACIÓN PARA DICHO CARGO EN CUALQUIER MOMENTO Y ME OBLIGO A ACTUALIZAR DE INMEDIATO TODO CAMBIO RELACIONADO AL 
+MEDIO DE APORTACIÓN MEDIANTE AVISO ESCRITO AL CONTRATANTE.</td>
+        </tr>
+    </table>
+    
+    <!------------------- TABLA 8 (INFORMACIÓN SEGURO DE VIDA) ------------------->
+    
+    <div>        
+        <table border="1" width="100%">
+            <tr>
+                <th colspan="2">INFORMACIÓN SEGURO DE VIDA</th>
+            </tr>
+            <tr>
+                <td style="font-size: 95%;" colspan="2">
+                    * NOTA: EN CASO DE SOLICITAR ESTE PRODUCTO FAVOR COMPLETAR LA INFORMACIÓN QUE A CONTINUACIÓN SE LE SOLICITA.
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2" width="8%">
+                    Seguro de Vida:
+                    <b>
+                        <apex:outputText value=" Si" rendered="{!Opportunity.Seguro_Vida__c}"/>
+                        <apex:outputText value=" No" rendered="{!NOT(Opportunity.Seguro_Vida__c)}"/>
+                    </b>
+                </td>
+                <td>
+                    EXPRESO MI DESEO DE CONTRATAR UN SEGURO DE VIDA VOLUNTARIO CON UNA SUMA ASEGURADA DE <b> {!Opportunity.Seguro__r.suma_asegurada__c}</b>  CONTRATADO POR FICOHSA PENSIONES Y CESANTÍAS, POR LO CUAL PAGARÉ ADICIONALMENTE LA CANTIDAD MENSUAL DE <b> {!Opportunity.Seguro__r.Prima_Mensual__c}</b> EN CONCEPTO DE PRIMA DE SEGURO.
+                </td>
+            </tr>                  
+        </table>
+    </div>
+    <br/>
+    <table>
+        <tr>
+            <td style="text-align:justify;">DECLARACIÓN DEL ASEGURADO: QUE LA ACTIVIDAD A LA QUE ME DEDICO ES LÍCITA Y NORMAL Y NO GENERA RIESGO O PELIGRO INMINENTE PARA MI VIDA Y QUE A LA FECHA DE SUSCRIBIR ESTE SEGURO GOZO DE BUENA 
+SALUD Y NO ESTOY INCAPACITADO, QUE NO PADEZCO NI HE PADECIDO DE AFECCIONES CRÓNICAS O GRAVES EN MI SALUD. AUTORIZO POR ESTE MEDIO A LOS MÉDICOS, LABORATORIOS, CLÍNICAS U HOSPITALES Y 
+CUALQUIER OTRO CENTRO MÉDICO QUE ME HAYA ATENDIDO EN LA RECUPERACIÓN DE MI SALUD, PARA QUE SUMINISTRE A FICOHSA SEGUROS, LA INFORMACIÓN QUE ESTÁ REQUIERA EN RELACIÓN A ESTE SEGURO, 
+RELEVÁNDOLOS DE CUALQUIER PROHIBICIÓN LEGAL QUE EXISTIERA SOBRE REVELACIÓN DE DATOS CON RESPECTO A MI PERSONA. EL PROPONENTE HA TOMADO CONOCIMIENTO DE SU DERECHO A DECIDIR SOBRE LA 
+CONTRATACIÓN DE LOS SEGUROS Y A LA LIBRE ELECCIÓN DE LA INSTITUCIÓN ASEGURADORA.</td>
+        </tr>
+        <tr>
+            <td style="text-align:justify;"><b>IMPORTANTE:</b> LA COBERTURA ES INMEDIATA EN CASO DE ACCIDENTE. SE ESTABLECE PERÍODO DE ESPERA DE UN AÑO, CONTADO A PARTIR DE LA FECHA DE INGRESO DEL ASEGURADO A LA PÓLIZA PARA LAS COBERTURAS DE 
+MUERTE E INVALIDEZ OCASIONADAS POR LAS SIGUIENTES ENFERMEDADES: CUALQUIER TIPO DE CÁNCER, VIH SIDA, ENFERMEDADES RENALES Y/O HEPÁTICAS CRÓNICAS, ENFERMEDADES CARDIOVASCULARES, LUPUS 
+ERITOMATOSO SISTEMÁTICO, EVENTO CEREBROVASCULAR, INFARTO CEREBRAL, HEMORRAGIA CEREBRAL, EMBOLIA DESDE FUENTE EXTRACRANEAL, EPOC(ENFERMEDAD PULMONAR OBSTRUCTIVA CRÓNICA). </td>
+        </tr>
+    </table>
+    <br/>
+    
+    <!------------------- TABLA 9 (INFORMACIÓN DE BENEFICIARIOS) ------------------->
+    
+    <div>
+        <table width="100%">
+            <tr>
+                <th colspan="8">INFORMACIÓN DE BENEFICIARIOS</th>
+            </tr>
+            <tr>
+                <td>PRIMER NOMBRE</td>
+                <td>SEGUNDO NOMBRE</td>
+                <td>PRIMER APELLIDO</td>
+                <td>SEGUNDO APELLIDO</td>
+                <td>PARENTESCO</td>
+                <td>IDENTIDAD</td>
+                <td>FECHA DE NACIMIENTO</td>
+                <td width="10%">%</td>
+            </tr>
+            <apex:repeat value="{!Opportunity.Beneficiarios__r}" var="b">
+                <tr>
+                    <td><apex:outputText value="{!b.Primer_Nombre__c}"/></td>
+                    <td><apex:outputText value="{!b.Segundo_Nombre__c}"/></td>
+                    <td><apex:outputText value="{!b.Primer_Apellido__c}"/></td>
+                    <td><apex:outputText value="{!b.Segundo_Apellido__c}"/></td>
+                    <td><apex:outputText value="{!b.Parentesco__c}"/></td>
+                    <td><apex:outputText value="{!b.Identidad__c}"/></td>
+                    <td><apex:outputText value="{!DAY(b.Fecha_Nacimiento__c)}"/>/<apex:outputText value="{!MONTH(b.Fecha_Nacimiento__c)}"/>/<apex:outputText value="{!YEAR(b.Fecha_Nacimiento__c)}"/></td>
+                    <td><apex:outputText value="{!b.Porcentaje__c}"/></td>
+                </tr>
+            </apex:repeat>
+        </table>
+    </div>
+    
+    <table width="100%">
+        <tr>
+            <td align="right">100%</td>
+        </tr>
+    </table>
+    
+    <!------------------- TABLA 10 (SU DIRECCION DE CONTACTO PRINCIPAL ES) ------------------->
+    
+    
+    <table width="100%">
+        <tr>
+            <th colspan="5">SU DIRECCION DE CONTACTO PRINCIPAL ES:</th>
+        </tr>
+        <tr>
+            <td>Su Dirección de contacto principal es: <b>{!Opportunity.account.Direccion_contacto_principal__c} </b></td>                
+            <td></td>                
+            <td></td>                
+            <td></td>                
+            <td>OTRA DIRECCIÓN: <br/><b> {!Opportunity.account.Otra_direccion__c}</b></td>
+        </tr>
+    </table>
+    <br/>
+    
+    <!------------------- TABLA 11 (PARA USO EXCLUSIVO DE LA ADMINISTRADORA) ------------------->
+
+    <table width="100%">
+        <tr>
+            <th colspan="2">PARA USO EXCLUSIVO DE LA ADMINISTRADORA</th>
+        </tr>
+        <tr align="right">
+            <td width="50%">AGENCIA:_____________________________________________________</td>                
+            <td>ZONA DE AGENCIA:_____________________________________________________</td>
+        </tr>            
+        <tr align="right">
+            <td>OFICIAL QUE REALIZA LA AFILIACIÓN:_____________________________________________________</td>                
+            <td>CODIGO DE OFICIAL FPC:_____________________________________________________</td>
+        </tr>
+        <tr align="right">
+            <td>PERSONA QUE REFIERE:_____________________________________________________</td>                
+            <td>CODIGO DE EMPLEADO:_____________________________________________________</td>
+        </tr>
+        <tr align="right">
+            <td>CANAL / ÁREA QUE REFIERE:_____________________________________________________</td>                
+            <td></td>
+        </tr>
+    </table>
+    
+    <br/><br/><br/><br/><br/><br/><br/>
+    
+    <table width="100%">
+        <tr  align="center">
+            <td>_________________________________________________________________</td>
+            <td></td>
+            <td>_________________________________________________________________</td>
+        </tr>
+        <tr  align="center">
+            <td>FIRMA DEL AFILIADO</td>
+            <td></td>
+            <td>FIRMA Y SELLO AUTORIZADO FICOHSA PENSIONES Y CESANTÍAS</td>
+        </tr>
+    </table>
+    
+    <div class="saltoPagina"></div>
+    
+    <!--------------------------------------------------------------------------------------------------------->
+    <!-------------------------------------- S E G U N D A   P A G I N A -------------------------------------->
+    <!--------------------------------------------------------------------------------------------------------->
+    
+    <apex:image value="{!$Resource.headerPDF}" width="100%" height="110%"/><br/><br/>
+    
+    <h2 style="text-align: center">CONTRATO DE ADMINISTRACIÓN DE FONDO DE PENSIONES <br/> CONDICIONES GENERALES</h2>
+    
+    <!------------------- TABLA 2.1 ------------------->
+    
+    <div>
+    <table border="1" width="100%">
+        <tr>
+            <td width="50%" style="text-align: justify; vertical-align: text-top; padding: 5px;">
+            
+Nosotros, <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A. 
+(FICOHSA PENSIONES Y CESANTÍAS)</b> en adelante denominado simplemente 
+como <b>LA ADMINISTRADORA</b>, del domicilio de Tegucigalpa, M.D.C. y la persona 
+que suscribe este contrato, en adelante denominada como <b>EL AFILIADO</b> con las 
+generales y del domicilio allí indicados, ambos de acuerdo con su contenido, 
+aceptan sujetarse a los siguientes términos y condiciones: <b>PRIMERA</b>.Por el 
+presente contrato <b>EL AFILIADO</b> se obliga a entregar a <b>LA ADMINISTRADORA</b>
+aportes económicos mensuales, para que <b>LA ADMINISTRADORA</b> los invierta en 
+los rubros que esta última determine atendiendo condiciones de seguridad y 
+rendimiento, así como de conformidad a las disposiciones legales que al efecto 
+apliquen y cuyos rendimientos deberán ser acreditados a su favor en una cuenta de 
+individual a nombre del afiliado, denominada CUENTA DE CAPITALIZACIÓN 
+INDIVIDUAL. <b>SEGUNDA</b>.El beneficiario del presente contrato es <b>EL AFILIADO</b>.
+Así mismo en caso de muerte de <b>EL AFILIADO</b> antes de la fecha prevista para la 
+entrega de la pensión, la misma será pagada, dentro de los términos más adelante 
+señalados, al beneficiario(s) designado(s) por <b>EL AFILIADO</b>. <b>TERCERA</b>. Para los 
+efectos de este contrato, las partes entienden que la CUENTA DE 
+CAPITALIZACIÓN INDIVIDUAL está compuesta por las cantidades aportadas por 
+<b>EL AFILIADO</b>,los rendimientos que provengan de las inversiones realizadas, 
+menos los gastos por Administración, las primas de seguro si las hubiere, los gastos 
+que se deriven de la administración propiamente, de retiros anticipados u otros 
+aplicables y/o establecidos de acuerdo con la normativas y leyes vigentes. 
+<b>CUARTA</b>.Como vigencia del presente Contrato, las partes convienen un periodo 
+mínimo de 7 años, durante los cuales <b>EL AFILIADO</b> realizará aportaciones a su 
+CUENTA DE CAPITALIZACION INDIVIDUAL de acuerdo a lo definido en la Solicitud 
+y Contrato de Afiliación. <b>QUINTA</b>. <b>EL AFILIADO</b> en cualquier momento podrá 
+incrementar sus aportes, así como efectuar aportes adicionales a su fondo de 
+pensión. Los aportes los hará <b>EL AFILIADO</b>, sin necesidad de requerimiento, a 
+través de los canales que <b>LA ADMINISTRADORA</b> le indique. <b>SEXTA</b>.El dinero así 
+recibido, lo invertirá <b>LA ADMINISTRADORA</b> por cuenta del AFILIADO, en la 
+forma que estime conveniente para dar cumplimiento a las obligaciones que 
+asumen en este contrato siempre atendiendo a factores de rentabilidad y 
+seguridad. La inversión podrá efectuarla y sin que la enumeración sea limitativa, en 
+toda clase de títulos de crédito, valores e instrumentos públicos o privados, en otros 
+fondos de inversión y/o podrá depositarla en cuentas bancarias, bajo el entendido 
+que <b>LA ADMINISTRADORA</b> los invertirá en valores que a juicio de la misma 
+ofrezcan la mayor seguridad y rentabilidad. <b>SEPTIMA</b>. <b>LA ADMINISTRADORA</b> 
+llevará la CUENTA DE CAPITALIZACION INDIVIDUAL, en forma separada de 
+cualesquiera otras cuentas de <b>LA ADMINISTRADORA</b> que no correspondan al 
+presente contrato.  <b>OCTAVA</b>.En cumplimiento de este contrato,  LA 
+ADMINISTRADORAse obliga ante <b>EL AFILIADO</b> a entregarle la pensión a que 
+tenga derecho, cuando llegue una edad de jubilación, temprana a los 60 años, 
+normal a los 65 años o tardía a los 70 años, tomando en consideración el valor en su 
+CUENTA DE CAPITALIZACION INDIVIDUAL. La pensión la recibirá <b>EL AFILIADO</b> a 
+partir de la fecha que se establezca como “la fecha de retiro”, en cualquiera de las 
+modalidades que <b>LA ADMINISTRADORA</b> le ofrezca y el afiliado elija. <b>NOVENA</b>. 
+<b>LA ADMINISTRADORA</b> pondrá a disposición de <b>EL AFILIADO</b>, varias modalidades 
+alternativas para el cumplimiento del pago de la pensión convenida, entre las cuales 
+al menos, estarán las siguientes: a) Opción Primera. Pensión de Pago Único; Bajo 
+esta opción el Afiliado recibe el valor total acumulado en su CUENTA DE 
+CAPITALIZACION INDIVIDUAL hasta la fecha de su retiro; en un solo y único pago, 
+con el cual queda finiquitada la obligación de pago de pensión al Afiliado por parte 
+de <b>LA ADMINISTRADORA</b>; b) Opción Segunda. Retiro Programado: En esta opción 
+el afiliado decide retirar el valor total acumulado en su CUENTA DE 
+CAPITALIZACION INDIVIDUAL hasta la fecha de su retiro, en cuotas mensuales, 
+por el número de meses que resten del periodo de renta seleccionado por EL 
+AFILIADO, bajo este esquema la CUENTA DE CAPITALIZACION INDIVIDUAL 
+continuará devengando rendimientos sobre su saldo, los que se capitalizarán 
+mensualmente. En cualquier momento <b>LA ADMINISTRADORA</b> podrá poner a 
+disposición de los afiliados, nuevas opciones para el pago de la pensión entre las 
+cuales el afiliado podrá escoger libremente. <b>DECIMA</b>. A la firma del presente 
+contrato, <b>EL AFILIADO</b> y <b>LA ADMINISTRADORA</b> opta por la opción definida en la 
+Solicitud y Contrato de Afiliación. Durante el periodo de aportaciones y hasta la 
+fecha de retiro inclusive, <b>EL AFILIADO</b> puede elegir otra opción, siempre mediando 
+la aprobación previa de <b>LA ADMINISTRADORA</b>. El cambio lo deberá informar por 
+escrito y surtirá efecto hasta transcurridos treinta (30) días a partir de la fecha en 
+que <b>LA ADMINISTRADORA</b> haya recibido la comunicación, período durante el 
+cual, <b>LA ADMINISTRADORA</b> podrá dar su aprobación al cambio o formular 
+cualquier objeción que pudiera tener.  <b>DECIMA PRIMERA</b>. LA 
+ADMINISTRADORAentregará la pensión periódicamente, de acuerdo la moneda 
+del Fondo en que se realicen las aportaciones de acuerdo a lo definido por EL 
+AFILIADO en la Solicitud y Contrato de Afiliación, únicamente al AFILIADOo a su 
+apoderado o representante legal, designado de conformidad con la ley, o en su 
+defecto a los beneficiarios debidamente designados por <b>EL AFILIADO</b> o en su caso 
+a sus herederos. La entrega de la pensión la hará <b>LA ADMINISTRADORA</b> a través 
+de los canales dispuestos para sus clientes a elección de <b>EL AFILIADO</b>, lo cual 
+deberá notificar por escrito a <b>LA ADMINISTRADORA</b> con el fin de que esté 
+disponible en las fechas convenidas. <b>DECIMA SEGUNDA</b>.Todos los años durante 
+el mes de enero y comenzando a partir del año siguiente al que se empiece a recibir 
+la pensión,  <b>EL AFILIADO</b> deberá demostrar a <b>LA ADMINISTRADORA</b> su 
+sobrevivencia ya sea mediante declaración jurada debidamente autenticada o acta 
+notarial o cualquier otro documento o prueba, suficiente para tales efectos, a juicio 
+de  <b>LA ADMINISTRADORA</b>. <b>DECIMA TERCERA</b>. <b>EL AFILIADO</b> y LA 
+ADMINISTRADORA convienen en que los rendimientos del fondo de pensión se 
+calcularán mensualmente y podrán variar durante el plazo del contrato; en todo 
+caso,  <b>LA ADMINISTRADORA</b> no garantiza al AFILIADOun rendimiento 
+determinado. Los rendimientos se empezarán a computar a partir del día siguiente 
+hábil en que <b>LA ADMINISTRADORA</b> reciba los aportes. En caso de que el aporte se 
+haga por medio de cheque, quedara sujeto a la condición de que se haga efectivo, 
+de conformidad a lo dispuesto en el Artículo 959 del Código de Comercio. <b>DECIMA 
+CUARTA</b>. <b>LA ADMINISTRADORA</b> enviará a <b>EL AFILIADO</b> estados de cuenta 
+trimestral Si transcurridos treinta días de enviado el estado de cuenta no se recibe 
+ninguna notificación escrita por parte delAFILIADO, se dará por aceptado el 
+contenido del mismo.  <b>DECIMA QUINTA</b>. <b>EL AFILIADO</b> autoriza a  LA 
+ADMINISTRADORApara deducir mensualmente de la cuenta de capitalización 
+individual el importe del cargo convenido en concepto de comisión ordinaria de 
+conformidad al artículo 10 y 11 de la Ley del Régimen Opcional Complementario 
+para la Administración de Fondos Privados de Pensiones y debidamente indicada en 
+el presente contrato, la cual se pacta de la siguiente manera: a) Para el Fondo de 
+            </td>
+
+
+            <td style="text-align: justify; padding: 5px;">Pensión en Lempiras una Comisión Mixta compuesta por un __% calculada sobre el 
+valor de los aportes más un ___% anual calculado diariamente y cobrada 
+mensualmente sobre el saldo acumulado en la CUENTA DE CAPITALIZACION 
+INDIVIDUAL; b) Para el Fondo de Pensión en dólares una Comisión Mixta 
+compuesta por un __% calculada sobre el valor de los aportes más un ___% anual 
+calculado diariamente y cobrada mensualmente sobre el saldo acumulado en la 
+CUENTA DE CAPITALIZACION INDIVIDUAL; c) Para el Fondo Individual de 
+Cesantías en lempiras una Comisión Mixta compuesta por un __% calculada sobre el 
+valor de los aportes más un ___% anual calculado diariamente y cobrada 
+mensualmente sobre el saldo acumulado; d) Para el Fondo Individual de Cesantías 
+en dólares una Comisión Mixta compuesta por un __% calculada sobre el valor de los 
+aportes más un ___% anual calculado diariamente y cobrada mensualmente sobre el 
+saldo acumulado;, Estas comisiones ordinarias no podrán exceder el tres por ciento 
+(3%) sobre el valor del ingreso mínimo cotizable de conformidad a lo establecido en 
+el Artículo 11, numeral 1) de la precitada Ley. <span style="text-align: left;">Los cargos por concepto de comisiones 
+podrán ser modificados por parte de LA ADMINISTRADORA previa notificación a EL 
+AFILIADO, por lo menos con treinta (30) días de anticipación.</span> <br/><br/>
+La notificación que LA ADMINISTRADORA realice a EL AFILIADO podrán ser 
+mediante avisos escritos al domicilio de EL AFILIADO o dirección establecida en 
+éste contrato o comunicados en radio, o televisión, o periódicos, o mensajes 
+electrónicos o avisos en las oficinas de <b>LA ADMINISTRADORA</b> o en su página Web 
+<b>DECIMA SEXTA</b>.En caso de que <b>EL AFILIADO</b> optara por redimir anticipadamente 
+el valor de la pensión, es decir previo al término de la vigencia establecida en el 
+presente contrato con respecto a los cargos por redención anticipada y desde ahora 
+reconoce a favor de <b>LA ADMINISTRADORA</b>,un cargo que se le calculará en 
+consideración del tiempo transcurrido en años desde la fecha de este contrato y la 
+fecha de la redención anticipada como sigue:
+
+<h4 style="text-align:center;">COMISIÓN POR RETIRO ANTICIPADO</h4>
+
+    <div>
+        <table width="100%">
+            <tr align="center">
+                <td>Entre 0 y 1</td>
+                <td>Entre 1 y 3</td>
+                <td>Entre 3 y 5</td>
+                <td>Entre 5 y 7</td>
+                <td>De 7 en adelante</td>
+            </tr>
+            <tr align="center">
+                <td>25%</td>
+                <td>20%</td>
+                <td>15%</td>
+                <td>10%</td>
+                <td>0%</td>
+            </tr>
+        </table>
+    </div><br/><br/>
+
+El cargo se calculará sobre el valor de la redención y <b>LA ADMINISTRADORA</b> lo 
+descontará al efectuar la liquidación que corresponda, a lo que <b>EL AFILIADO</b> desde 
+ahora da su expreso consentimiento. La entrega del monto de la redención 
+anticipada la podrá efectuar <b>LA ADMINISTRADORA</b> dentro de los treinta días 
+siguientes a la fecha en que se solicita la redención, asimismo <b>LA ADMINISTRADORA</b> podrá unilateralmente terminar el contrato sin ninguna 
+responsabilidad cuando así lo considere por decisión administrativa, debiendo para 
+tal efecto bastar una notificación hecha a <b>EL AFILIADO</b> para que pueda retirar el 
+saldo a la fecha de terminación. <b>DECIMA SEPTIMA</b>. <b>EL AFILIADO</b>,en todo caso, 
+deberá cubrir los impuestos que pudiera causar el retiro anticipado del fondo y 
+declararlos a la entidad correspondiente. <b>DECIMA OCTAVA</b>.Si <b>EL AFILIADO</b>
+falleciere antes de la fecha de retiro, <b>LA ADMINISTRADORA</b> entregará al o los 
+beneficiario nombrados en la Solicitud y Contrato de Afiliación, o en su defecto a 
+los herederos legalmente declarados, el fondo de pensión y si el beneficiario 
+hubiere fallecido la entrega se hará a los legítimos herederos del <b>AFILIADO</b>. No 
+obstante, el beneficiario podrá optar por continuar con el plan de pensiones a que 
+se refiere este contrato, suscribiendo los documentos necesarios para tal efecto. 
+<b>DECIMA NOVENA.</b>EL AFILIADO designa por este acto a los siguientes 
+beneficiario (s) los cuales establece en la Solicitud y Contrato de Afiliación, 
+reservándose el derecho a modificar tal designación durante la vigencia de este 
+contrato. Para ello se obliga a dar aviso por escrito por lo menos con treinta días de 
+anticipación a le fecha efectiva del cambio a <b>LA ADMINISTRADORA</b>, quien dentro 
+de ese plazo y comenzando a contar desde la fecha de recibo de la notificación, 
+efectuará el cambio solicitado. <b>VIGESIMA</b>. Si <b>EL AFILIADO</b> dejare de efectuar los 
+aportes aquí convenidos, al cumplirse la fecha de retiro o de su fallecimiento 
+recibirá de <b>LA ADMINISTRADORA</b> la pensión que corresponda tomando en 
+cuenta únicamente el valor de su CUENTA DE CAPITALIZACIÓN INDIVIDUAL a esa 
+fecha. No obstante  <b>EL AFILIADO</b> podrá reiniciar los aportes en cualquier 
+momento. <b>VIGESIMA PRIMERA.</b> <b>EL AFILIADO</b> y <b>LA ADMINISTRADORA</b>
+convienen en los siguientes pactos accesorios:
+
+<span style="text-align: left;">
+    <br/><br/>
+    a) Para resolución de controversias sobre la aplicación de las disposiciones 
+    contenidas en el presente contrato, ambas partes renuncian al fuero de su 
+    domicilio y se someten al Juzgado de Letras de lo Civil de Francisco Morazán<br/><br/>
+    b) La dirección que <b>EL AFILIADO</b> señala para recibir notificaciones relacionadas 
+    con el contrato es la que está indicada en la Solicitud y Contrato de Afiliación<br/><br/>
+    c) La dirección que <b>LA ADMINISTRADORA</b> señala para recibir notificaciones sobre 
+    el contrato es Edificio Grupo Financiero Ficohsa, Colonia Payaquí, Avenida San 
+    Juan Bosco, media cuadra arriba del Instituto Salesiano San Miguel, Tegucigalpa, 
+    Honduras.
+    <br/><br/>
+</span>
+
+
+Tanto <b>EL AFILIADO</b> como <b>LA ADMINISTRADORA</b> se obligan a dar aviso de 
+cualquier cambio de dirección, bajo el entendido de que si no lo hicieren se tendrán 
+como bien hechas las notificaciones que se le hagan en las direcciones antes 
+indicadas.  <b>VIGESIMA SEGUNDA</b>. <b>EL AFILIADO</b> y <b>LA ADMINISTRADORA</b>
+convienen que este contrato podrá ser modificado si el Banco Central de Honduras 
+o la Comisión Nacional de Bancos y Seguros dictaran alguna resolución o el Estado 
+emitiera alguna ley que modifique la estructura legal de este contrato o establezca 
+condiciones que determinen la imposición de cargas tributarias que pudieran ser 
+aplicables al presente contrato y que incidan en la rentabilidad del fondo o en su 
+estructura jurídica. <b>VIGESIMA TERCERA. CONTRATACION OPCIONAL DE 
+SEGURO DE VIDA</b>: <b>EL AFILIADO</b> podrá optar por contratar un Seguro de Vida, el 
+cual cubrirá el beneficio de una Pensión por Incapacidad Total y Permanente para el 
+Afiliado, fallecimiento y el pago de Pensión de sobrevivencia para los beneficiarios. 
+Conforme a la suma asegurada previamente seleccionada por <b>EL AFILIADO</b>, según 
+su aporte mensual. Es entendido y convenido que <b>LA ADMINISTRADORA</b> actúa 
+únicamente como intermediaria en la suscripción de las coberturas, por lo tanto la 
+procedencia de cualquier indemnización será determinada por la Compañía de 
+Seguros Contratada y el Afiliado queda en el entendido que perderá su cobertura en 
+el momento que interrumpa los aportes mensuales pactados. <b>VIGESIMA CUARTA</b>. 
+<b>EL AFILIADO</b> y <b>LA ADMINISTRADORA</b> en lo que a cada parte concierne, aceptan 
+el presente contrato de administración de fondo de pensiones y ambas partes 
+firman en la Ciudad del domicilio indicado y en la fecha que corresponde a la 
+Solicitud y Contrato de Afiliación. 
+
+
+</td>
+</tr>
+</table>
+</div>
+    
+    
+</apex:page>

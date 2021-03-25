@@ -1,0 +1,10 @@
+<apex:page sidebar="false" showHeader="false">
+    <apex:form >  
+        <table width="100%" border="0">
+            <tr> <td height="50px"/> </tr>
+            <tr>                      
+                <td align="center"> <c:subirArchivo ></c:subirArchivo> </td>
+            </tr>
+        </table>     
+    </apex:form>
+</apex:page>

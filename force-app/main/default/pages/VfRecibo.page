@@ -1,0 +1,84 @@
+<apex:page renderAs="PDF" sidebar="false" cache="false" Controller="controladorRecibo">
+    <apex:form >
+
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+	<tbody>
+		<tr>
+			<td colspan="1" rowspan="1" style="width:15%">
+			<p><apex:image value="{!$Resource.LogoFPC}" style="height:30px; width:150px" /></p>
+            </td>
+		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" style="text-align:center">
+                <p><span style="font-family:Arial,Helvetica,sans-serif; font-size:18px"><strong> Ficohsa Pensiones y Cesantías 	<br/>		
+                    Pago de Planillas de Pensiones		
+            </strong></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<table align="center" border="1" cellpadding="0" cellspacing="0" class="table" style="width:80%">
+	<tbody>
+		<tr>
+			<td colspan="4" rowspan="1" valign="top" bgcolor="#f2f2f2"><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Nombre de la Empresa</strong></span></span></td>
+			<td colspan="4" rowspan="1" bgcolor="#f2f2f2"><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>&nbsp;&nbsp;{!Planilla.Empresa2__r.name}</strong></span></span></td>
+		
+        </tr>       
+        <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>RTN</strong></span></span></td> 
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>&nbsp;&nbsp;{!Planilla.Empresa2__r.Identificacion__c}</strong></span></span></td>
+		
+        </tr>
+         <tr>
+			<td colspan="4" rowspan="1" valign="top" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Número de la Planilla</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>&nbsp;&nbsp;{!Planilla.name}</strong></span></span></td>
+		
+        </tr>
+        <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Fecha de Generación de la Planilla</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong><apex:outputField value="{!Planilla.Fecha__c}" /></strong></span></span></td>
+		
+        </tr>
+        <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Aportaciones del Mes de </strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong><apex:outputField value="{!Planilla.Mes_Aporte__c}"/></strong></span></span></td>
+		
+        </tr>
+        <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Moneda de la Planilla</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong>{!Planilla.CurrencyIsoCode}</strong></span></span></td>
+		
+        </tr>
+        <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>No de Empleados en la Planilla</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong><apex:outputField value="{!Planilla.Cantidad_empleados__c}" /></strong></span></span></td>
+		
+        </tr>
+		 
+         <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Aportaciones Voluntarias</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong>{!moneda}<apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!Planilla.Total_voluntarios__c}" /></apex:outputText>{!mensaje}</strong></span></span></td>
+		
+        </tr>
+         <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Aportaciones Obligatorias</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong>{!moneda}<apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!Planilla.Total_obligatorios__c}" /></apex:outputText>{!mensaje}</strong></span></span></td>
+		
+        </tr>
+         <tr>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Monto Total de la Planilla</strong></span></span></td>
+			<td colspan="4" rowspan="1" ><span style="font-size:11px"><span style="font-family:Arial,Helvetica,sans-serif">&nbsp;&nbsp;<strong>{!moneda}<apex:outputText value="{0, number, ###,###,##0.00}"> <apex:param value="{!Planilla.Total__c}" /></apex:outputText>{!mensaje}</strong></span></span></td>
+		
+        </tr>
+         <tr>
+              <td colspan="8" rowspan="1" align="center"><span style="font-family:Arial,Helvetica,sans-serif; font-size:18px; text-align:center;"> Para crédito a la Cuenta {!Cuenta} de 	<br/>	Ficohsa Pensiones y Cesantías	</span></td>
+			
+        </tr>
+             
+	</tbody>
+</table>
+
+    
+   </apex:form>
+</apex:page>

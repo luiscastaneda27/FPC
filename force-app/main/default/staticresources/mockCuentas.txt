@@ -1,0 +1,1 @@
+[{"cliente":"160574","cuenta":"34037","producto":"01","subProducto":"FI010","cuentaColectiva":"33101","fondo":"101"}]

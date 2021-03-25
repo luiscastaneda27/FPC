@@ -1,0 +1,325 @@
+<apex:page title="Afiliación Individual" lightningStylesheets="true"  controller="controladorAfiliacionFicopen"
+           tabStyle="account" sidebar="false" cache="false" id="page" showHeader="false" docType="html-5.0">
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+            
+            <style>
+                
+                
+            </style>
+        </head>
+        <body>
+            
+            <apex:form id="theForm">
+                
+                
+                    <apex:actionStatus id="status">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                &nbsp;
+                            </div>
+                            
+                            <div role="status" class="slds-spinner slds-spinner_large">
+                                <span class="slds-assistive-text">Por Favor Espere...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <div style="text-align : center; font-size:25px; color:#53c7dc; font-weight:bold;">
+                        Afiliación de Clientes Ficopen
+                    </div>
+                    <br/><br/>
+                <apex:pageBlock id="idPageBlock" >
+                    <apex:pageMessages />
+                    <apex:pageBlockSection rendered="{!listAfiliaciones.size !=0}" title="Afiliciones Pendientes" columns="1">
+                        <apex:outputPanel >
+                            <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
+                                
+                                    <tr >
+                                         <td scope="col" colspan="1">
+                                            Enviar
+                                        </td >
+                                        <td scope="col" colspan="1">
+                                            Primer Nombre
+                                        </td >
+                                        <td scope="col" colspan="1">
+                                            Segundo Nombre
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Primer Apellido
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Segundo Apellido
+                                        </td>
+                                       
+                                        <td scope="col" colspan="1">
+                                            Identificación
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            
+                                        </td>
+                                         <td scope="col" colspan="1">
+                                            
+                                        </td>
+                                        
+                                    </tr>
+                                <tbody>
+                                    <apex:repeat value="{!listAfiliaciones}" var="item">
+                                        <tr>
+                                            <td>
+                                            	<apex:inputField value="{!item.Enviar_Sac__c}" rendered="{!AND(item.Espediente_Completo__c ='S', item.name !=null)}" >
+                                                    <apex:actionSupport action="{!haySeleccionado}" reRender="theForm" event="onchange" status="status" />
+                                                </apex:inputField>
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.name}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Segundo_Nombre__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Primer_Apellido__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Segundo_Apellido__c}" />
+                                            </td>
+                                           
+                                            <td>
+                                                <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:commandLink action="{!editar}" value="Editar"  reRender="theForm" status="status" >
+                                                    <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
+                                                </apex:commandLink>
+                                                
+                                            </td>
+                                            <td>
+                                                <apex:commandLink action="{!SelectPopEliminar}" value="Eliminar" reRender="theForm" status="status" >
+                                                    <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
+                                                </apex:commandLink>
+                                            </td>
+                                            
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                            <footer class="slds-modal__footer">
+                                <apex:commandButton status="status" reRender="idPageBlock" style="margin-right:8px;"  styleClass="slds-button slds-button--brand" rendered="{!haySeleccionado}"  value="Enviar" action="{!enviar}"  >
+                                </apex:commandButton>
+                            </footer>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                    
+                   <apex:pageBlockSection title="Nueva Afiliación" columns="2">
+                    	<apex:inputField value="{!Afiliacion.name}" />
+                       <apex:inputField value="{!Afiliacion.Segundo_Nombre__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.Primer_Apellido__c}" />
+                       <apex:inputField value="{!Afiliacion.Segundo_Apellido__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.Tipo_Identificacion__c}" />
+                       <apex:inputField value="{!Afiliacion.Identificacion__c}" >
+                           <apex:actionSupport action="{!ValidacionIdentidad}" reRender="theForm" event="onchange" status="status" />
+                       </apex:inputField>
+                       
+                       <apex:inputField value="{!Afiliacion.Tiene_Id__c}" />
+                       <apex:inputField value="{!Afiliacion.RTN__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.FATCA__c}" />
+                       <apex:inputField value="{!Afiliacion.WAIVER__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.PEP__c}" />
+                       <apex:inputField value="{!Afiliacion.Procedencia__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.Addendum__c}" />
+                       <apex:outputText ></apex:outputText>
+                       
+                       <apex:inputText label="Buscar Empresa" value="{!buscarEmpresa}" >
+                            <apex:actionSupport event="onchange" action="{!BuscarEmpresa}" status="status" reRender="idPageBlock" />
+                       </apex:inputText>
+                       <apex:outputField value="{!Afiliacion.Empresa__c}" /> 
+                           
+                        <!--apex:inputText label="Buscar SubProducto" value="{!buscarSubProducto}" >
+                            <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
+                       </apex:inputText>
+                       <apex:outputText /-->
+                       
+                       
+                       <apex:outputField value="{!Afiliacion.Subproducto__c}" />
+                            <!--apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
+                       </apex:inputField>
+                       <apex:outputPanel>
+                           <apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
+                               <apex:selectOptions value="{!listSubProductos}" />
+                               <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
+                           </apex:selectList>
+                       </apex:outputPanel-->
+                       <apex:outputField value="{!producto.name}"  />
+                       
+                      <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
+                      <apex:outputField value="{!Afiliacion.Reporte_Calidad__c}" />
+                       
+                       
+                       
+                       <!--apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
+                       <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/-->
+                       
+                       <apex:outputField value="{!Afiliacion.Oficial_SAC__c}" title="Oficial"/>
+                       <apex:outputField value="{!Afiliacion.Codigo_Oficial_SAC__c}" title="Código Oficial"/>
+                       
+                       
+                       <!--apex:inputField value="{!Afiliacion.Formulario_Completo__c}" /-->
+                       
+                       <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" >
+                            <apex:actionSupport event="onchange" action="{!accionvacia}" status="status" reRender="idPageBlock" />
+                       </apex:inputField>
+                       <apex:inputField value="{!afiliacion.Espediente_Completo__c}" />
+                       
+                       <apex:inputField value="{!Afiliacion.Comentarios__c}" />
+                       
+                    </apex:pageBlockSection>
+                    <footer class="slds-modal__footer">
+                        <!--apex:commandButton status="status"  reRender="idPageBlock" style="margin-right:8px;" rendered="{Afiliacion}"  value="Nuevo" action="{!ProcesoAprobacionFInanciamiento}"  /-->
+                        <apex:commandButton status="status" reRender="idPageBlock" rendered="{!Afiliacion.Formulario_Completo__c !=null}" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!Guardar}"  />
+                    </footer>
+                    
+                    
+                    
+                    
+                    <apex:outputPanel rendered="{!popEliminar}"  >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header" >
+                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Eliminar Afiliación</h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium ">
+                                    <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                        <fieldset class="slds-form-element">
+                                            
+                                            <div class="slds-modal__content slds-p-around--medium">
+                                                <h3 class="slds-text-heading_medium slds-hyphenate">¿Esta seguro de eliminar a {!nombreAfiiacion}?   </h3>  
+                                                
+                                            </div>
+                                            
+                                            <footer class="slds-modal__footer">
+                                                <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="slds-button slds-button--brand" />
+                                                <apex:commandButton value="Eliminar" action="{!EliminarAfiliacion}" styleClass="slds-button slds-button--destructive " />                    
+                                            </footer>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{!popSubProducto}"  >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header" >
+                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Seleccione un Sub Producto</h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium ">
+                                    <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                        <fieldset class="slds-form-element">
+                                            
+                                            <div class="slds-modal__content slds-p-around--medium">
+                                               <table width="100%" >
+                                                   <apex:repeat value="{!listPopup}" var="item" >
+                                                       <tr>
+                                                           <td style="width:10%;">
+                                                               <apex:inputCheckbox value="{!item.seleccionado}" >
+                                                                   <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!SelectSubProductoPop}" >
+                                                                       <apex:param value="{!item.id}" assignTo="{!afiliacion.Subproducto__c}" name="SUBP" />
+                                                                   </apex:actionSupport>
+                                                               </apex:inputCheckbox>
+                                                           </td>
+                                                           <td style="width:90%;">
+                                                               <apex:outputText value="{!item.name}" />
+                                                           </td>
+                                                           
+                                                       </tr>
+                                                   </apex:repeat>
+                                                </table>
+                                                   
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{!popEmpresas}"  >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header" >
+                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Seleccione una Empresa</h1>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium ">
+                                    <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                        <fieldset class="slds-form-element">
+                                            
+                                            <div class="slds-modal__content slds-p-around--medium">
+                                               <table width="100%" >
+                                                   <apex:repeat value="{!listPopup}" var="item" >
+                                                       <tr>
+                                                           <td style="width:10%;">
+                                                               <apex:inputCheckbox value="{!item.seleccionado}" >
+                                                                   <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!cerrar}" >
+                                                                       <apex:param value="{!item.id}" assignTo="{!afiliacion.empresa__c}" name="SUBPEm" />
+                                                                   </apex:actionSupport>
+                                                               </apex:inputCheckbox>
+                                                           </td>
+                                                           <td style="width:90%;">
+                                                               <apex:outputText value="{!item.name}" />
+                                                           </td>
+                                                           
+                                                       </tr>
+                                                   </apex:repeat>
+                                                </table>
+                                                   
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>
+                    
+                   
+                    
+                </apex:pageBlock>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>
