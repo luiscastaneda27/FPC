@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RETIROS_nuevo_monto_de_retiro</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Retiros&apos;, ISBLANK(Monto_retirar__c), ISPICKVAL(Tipo_retiro__c,&apos;Parcial&apos;))</errorConditionFormula>
+    <errorDisplayField>Monto_retirar__c</errorDisplayField>
+    <errorMessage>Debes establecer un monto de retiro</errorMessage>
+</ValidationRule>

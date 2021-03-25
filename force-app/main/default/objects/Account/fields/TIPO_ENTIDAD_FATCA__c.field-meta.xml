@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TIPO_ENTIDAD_FATCA__c</fullName>
+    <description>TIPO ENTIDAD PARA FATCA JURIDICO</description>
+    <externalId>false</externalId>
+    <label>TIPO ENTIDAD FATCA JURI|</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1</fullName>
+                <default>false</default>
+                <label>Persona Jurídica sin Dueños Sustanciales de EEUU.</label>
+            </value>
+            <value>
+                <fullName>2</fullName>
+                <default>false</default>
+                <label>Persona Jurídica con Dueños Sustanciales de EEUU.</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Persona Jurídica de EEUU Especificada.</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Pass Through</label>
+            </value>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>Disregarded</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

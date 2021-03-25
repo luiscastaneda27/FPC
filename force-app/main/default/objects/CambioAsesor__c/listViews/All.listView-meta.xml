@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Identificador_Carga__c</columns>
+    <columns>NoCuenta__c</columns>
+    <columns>Usuario__c</columns>
+    <columns>Estado__c</columns>
+    <columns>Fecha_Inclusion_Carga__c</columns>
+    <columns>Asesor_Actual__c</columns>
+    <columns>Nombre_Asesor_actual__c</columns>
+    <columns>Asesor_Nuevo__c</columns>
+    <columns>Nombre_asesor_nuevo__c</columns>
+    <columns>UPDATEDBY_USER</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>Situaci_n__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Todos</label>
+</ListView>

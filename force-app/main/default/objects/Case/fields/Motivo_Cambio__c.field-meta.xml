@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_Cambio__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo del caso</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aceptación de Nueva Promoción</fullName>
+                <default>false</default>
+                <label>Aceptación de Nueva Promoción</label>
+            </value>
+            <value>
+                <fullName>A solicitud del cliente</fullName>
+                <default>false</default>
+                <label>A solicitud del cliente</label>
+            </value>
+            <value>
+                <fullName>Cambio de Patrono</fullName>
+                <default>true</default>
+                <label>Cambio de Patrono</label>
+            </value>
+            <value>
+                <fullName>Error en la Afiliación</fullName>
+                <default>false</default>
+                <label>Error en la Afiliación</label>
+            </value>
+            <value>
+                <fullName>Retención</fullName>
+                <default>false</default>
+                <label>Retención</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ADA_nuevo_medio_aporte_cuenta</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Aumento_Disminucion_Aportes&apos;, ISBLANK(N_Cuenta_Bancaria__c),OR(ISPICKVAL( Tipo_Operacion__c , &apos;A5&apos;),ISPICKVAL( Tipo_Operacion__c , &apos;A6&apos;)))</errorConditionFormula>
+    <errorDisplayField>N_Cuenta_Bancaria__c</errorDisplayField>
+    <errorMessage>Debes establecer un # de cuenta o tarjeta</errorMessage>
+</ValidationRule>

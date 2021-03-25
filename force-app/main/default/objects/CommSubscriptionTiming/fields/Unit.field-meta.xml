@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unit</fullName>
+    <inlineHelpText>La unidad de tiempo que funciona con Compensación para determinar la cronología de comunicación.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Frecuencia_Pago__c</fullName>
+    <externalId>false</externalId>
+    <label>Frecuencia Pago</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Anual</fullName>
+                <default>false</default>
+                <label>Anual</label>
+            </value>
+            <value>
+                <fullName>Bimensual</fullName>
+                <default>false</default>
+                <label>Bimensual</label>
+            </value>
+            <value>
+                <fullName>Mensual</fullName>
+                <default>false</default>
+                <label>Mensual</label>
+            </value>
+            <value>
+                <fullName>Semanal</fullName>
+                <default>false</default>
+                <label>Semanal</label>
+            </value>
+            <value>
+                <fullName>Semestre</fullName>
+                <default>false</default>
+                <label>Semestre</label>
+            </value>
+            <value>
+                <fullName>Trimestral</fullName>
+                <default>false</default>
+                <label>Trimestral</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

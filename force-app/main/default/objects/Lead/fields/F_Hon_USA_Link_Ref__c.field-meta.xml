@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>F_Hon_USA_Link_Ref__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Asignación automática a Usuarios si viene desde el formulario de Hondureños USA Link Referidos.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Asignación automática a Usuarios si viene desde el formulario de Hondureños USA Link Referidos.</inlineHelpText>
+    <label>¿Hondureños USA Link Referidos?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

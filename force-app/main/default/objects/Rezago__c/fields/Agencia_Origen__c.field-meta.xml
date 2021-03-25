@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agencia_Origen__c</fullName>
+    <description>Detalle de la agencia donde fue realizado el deposito, detallado en el estado de cuenta.</description>
+    <externalId>false</externalId>
+    <label>Agencia Origen</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

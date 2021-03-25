@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Monto_ACH_Patrono__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( AND ( TEXT ( Forma_Retiro__c ) == &apos;ACH&apos;, TEXT ( Moneda_cuenta__c ) = &apos;HNL&apos; ),  $CustomMetadata.Configuracion_Cobro__mdt.ACH.Monto__c, IF ( AND ( TEXT ( Forma_Retiro__c ) == &apos;ACH&apos;, TEXT ( Moneda_cuenta__c ) = &apos;USD&apos; ), $CustomMetadata.Configuracion_Cobro__mdt.ACH.Monto_dolar__c, 0 ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Monto ACH Patrono</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

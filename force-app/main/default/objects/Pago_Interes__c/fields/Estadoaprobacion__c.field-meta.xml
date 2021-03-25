@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Estadoaprobacion__c</fullName>
+    <description>ESTADO APROBACIÓN: estado en el que se encuentra el proceso del pago</description>
+    <externalId>false</externalId>
+    <inlineHelpText>ESTADO APROBACIÓN: estado en el que se encuentra el proceso del pago</inlineHelpText>
+    <label>Estadoaprobacion</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

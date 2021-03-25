@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Offset</fullName>
+    <inlineHelpText>La cantidad de tiempo antes o después de un evento o día específico de la semana que debe comunicar con el punto de contacto. Establezca la unidad de tiempo en Unidad. Por ejemplo, si establece Unidad como &quot;Semana&quot; y Compensación como &quot;-4&quot;, se comunicará con el punto de contacto cuatro semanas antes del evento. Si establece Compensación como &quot;4&quot; se comunicará con el punto de contacto cuatro semanas después del evento. Si establece Unidad como &quot;Día de la semana&quot; y Desplazamiento como &quot;1&quot;, se comunicará con el punto de contacto el lunes. Si establece Compensación como &quot;7&quot;·se comunicará con el punto de contacto el domingo.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

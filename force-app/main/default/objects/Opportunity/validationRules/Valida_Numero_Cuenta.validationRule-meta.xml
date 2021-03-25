@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valida_Numero_Cuenta</fullName>
+    <active>true</active>
+    <description>Si el campo debito directo es marcado tire una alerta</description>
+    <errorConditionFormula>Debito_Directo__c  &amp;&amp; ( ISBLANK(Numero_Cuenta__c)   ||  ISNULL(Numero_Cuenta__c))</errorConditionFormula>
+    <errorDisplayField>Numero_Cuenta__c</errorDisplayField>
+    <errorMessage>Favor ingresar el numero de cuenta a realizar el debito.</errorMessage>
+</ValidationRule>

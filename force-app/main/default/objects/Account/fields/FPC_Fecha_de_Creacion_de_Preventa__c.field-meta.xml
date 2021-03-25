@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FPC_Fecha_de_Creacion_de_Preventa__c</fullName>
+    <description>Fecha de creación de preventa</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Fecha de creación de preventa</inlineHelpText>
+    <label>Fecha de Creación de Preventa</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

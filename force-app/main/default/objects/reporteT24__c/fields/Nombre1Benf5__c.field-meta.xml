@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nombre1Benf5__c</fullName>
+    <description>.Se guarda solo el primer nombre del quinto beneficiario y es un campo obligatorio</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Se ingresa solo el primer nombre del quinto beneficiario y es un campo obligatorio</inlineHelpText>
+    <label>Nombre1Benf5</label>
+    <length>40</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

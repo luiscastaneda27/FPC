@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EstadoActual__c</fullName>
+    <description>Muestra si el estado de cuenta está activa o inactiva.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>A si está activa y I si está inactiva.</inlineHelpText>
+    <label>EstadoActual</label>
+    <length>2</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ADA_nuevo_fecha_aporte</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Aumento_Disminucion_Aportes&apos;, ISBLANK(Nueva_fecha_aporte__c), ISPICKVAL( Tipo_Operacion__c , &apos;A4&apos;))</errorConditionFormula>
+    <errorDisplayField>Nueva_fecha_aporte__c</errorDisplayField>
+    <errorMessage>Debes establecer una nueva fecha de aporte</errorMessage>
+</ValidationRule>

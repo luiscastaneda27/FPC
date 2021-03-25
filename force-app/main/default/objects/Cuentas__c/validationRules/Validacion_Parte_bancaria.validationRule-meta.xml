@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validacion_Parte_bancaria</fullName>
+    <active>true</active>
+    <errorConditionFormula>If(Retiro_Saldos_Patronales__c &amp;&amp; OR(If(Text(Tipo_Politica_Retiro_Saldo_Patronal__c) = null ,true, false), If(Text(Tipo_Cuenta__c) = null ,true, false), If(Text(Tipo_Cuenta__c)=&apos;1&apos; &amp;&amp; OR(ISBLANK(Cuenta__c), TEXT(Tipo_Cuenta_bancaria__c) = NULL,TEXT(Banco__c) = NULL),true, false), If(Text(Tipo_Cuenta__c)=&apos;2&apos; &amp;&amp; ISBLANK(Cuenta__c),true, false)),true, false)</errorConditionFormula>
+    <errorMessage>Falta Información en la sección de la parte bancaria del retiro patronal</errorMessage>
+</ValidationRule>

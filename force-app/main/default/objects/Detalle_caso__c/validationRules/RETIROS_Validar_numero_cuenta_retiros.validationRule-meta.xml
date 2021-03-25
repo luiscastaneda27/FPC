@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RETIROS_Validar_numero_cuenta_retiros</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Retiros&apos;, ISBLANK(N_Cuenta_Bancaria__c),  Cabeza_retiro__c,  OR(ISPICKVAL(Forma_Retiro__c,&apos;Credito a Cuenta Ficohsa&apos;), ISPICKVAL(Forma_Retiro__c,&apos;Transferencia ACH&apos;)))</errorConditionFormula>
+    <errorDisplayField>N_Cuenta_Bancaria__c</errorDisplayField>
+    <errorMessage>Debes establecer un número de cuenta</errorMessage>
+</ValidationRule>

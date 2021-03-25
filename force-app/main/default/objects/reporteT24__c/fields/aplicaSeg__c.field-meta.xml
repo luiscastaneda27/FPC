@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>aplicaSeg__c</fullName>
+    <description>Se guarda si el empleado aplica a seguro</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Se ingresa s si aplica a seguro y  n sino aplica</inlineHelpText>
+    <label>aplicaSeg</label>
+    <length>1</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

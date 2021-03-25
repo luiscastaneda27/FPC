@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Llenar_motivo_de_rechazo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISPICKVAL(Status, &apos;Rechazado&apos;), ISPICKVAL(Motivo_rechazo__c, &apos;&apos;))</errorConditionFormula>
+    <errorDisplayField>Motivo_rechazo__c</errorDisplayField>
+    <errorMessage>Debes seleccionar un motivo de rechazo</errorMessage>
+</ValidationRule>

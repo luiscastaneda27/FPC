@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>promotor__c</fullName>
+    <description>Se guarda el código del promotor que atiende la afiliacio</description>
+    <externalId>false</externalId>
+    <inlineHelpText>se ingresa el código del  promotor</inlineHelpText>
+    <label>promotor</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

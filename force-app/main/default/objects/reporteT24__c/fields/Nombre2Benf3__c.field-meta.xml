@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nombre2Benf3__c</fullName>
+    <description>Se guarda el segundo nombre del tercer beneficiario siempre y cuando tenga el beneficiario dicho nombre</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Solo se ingresa el  segundo nombre siempre y cuando exista , siendo opcional.</inlineHelpText>
+    <label>Nombre2Benf3</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

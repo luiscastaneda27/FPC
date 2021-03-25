@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FPC_Asunto__c</fullName>
+    <externalId>false</externalId>
+    <label>Asunto</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Reposición Carnet</fullName>
+                <default>false</default>
+                <label>Reposición de Carnet</label>
+            </value>
+            <value>
+                <fullName>Problemas Sitio Transaccional</fullName>
+                <default>false</default>
+                <label>Problemas Sitio Transaccional</label>
+            </value>
+            <value>
+                <fullName>Problemas en la Aplicación Móvil</fullName>
+                <default>false</default>
+                <label>Problemas en la Aplicación Móvil</label>
+            </value>
+            <value>
+                <fullName>Problemas Interbanca</fullName>
+                <default>false</default>
+                <label>Problemas Interbanca</label>
+            </value>
+            <value>
+                <fullName>Retiro Manual</fullName>
+                <default>false</default>
+                <label>Retiro Manual</label>
+            </value>
+            <value>
+                <fullName>Consulta Seguro Vida</fullName>
+                <default>false</default>
+                <label>Consulta Seguro de Vida</label>
+            </value>
+            <value>
+                <fullName>No se Realizó Aporte</fullName>
+                <default>false</default>
+                <label>No se Realizó Aporte</label>
+            </value>
+            <value>
+                <fullName>Problemas Caja Banco</fullName>
+                <default>false</default>
+                <label>Problemas Caja Banco</label>
+            </value>
+            <value>
+                <fullName>Actualización Información</fullName>
+                <default>false</default>
+                <label>Actualización Información</label>
+            </value>
+            <value>
+                <fullName>Modificación Aportes</fullName>
+                <default>false</default>
+                <label>Modificación Aportes</label>
+            </value>
+            <value>
+                <fullName>Estado Cuenta</fullName>
+                <default>false</default>
+                <label>Estado Cuenta</label>
+            </value>
+            <value>
+                <fullName>Constancia</fullName>
+                <default>false</default>
+                <label>Constancia</label>
+            </value>
+            <value>
+                <fullName>Reversiones</fullName>
+                <default>false</default>
+                <label>Reversiones</label>
+            </value>
+            <value>
+                <fullName>Varios Débitos</fullName>
+                <default>false</default>
+                <label>Varios Débitos</label>
+            </value>
+            <value>
+                <fullName>Consulta Proceso Retiro</fullName>
+                <default>false</default>
+                <label>Consulta Proceso Retiro</label>
+            </value>
+            <value>
+                <fullName>Consulta Préstamos</fullName>
+                <default>false</default>
+                <label>Consulta Préstamos</label>
+            </value>
+            <value>
+                <fullName>Consulta Cuenta</fullName>
+                <default>false</default>
+                <label>Consulta Cuenta</label>
+            </value>
+            <value>
+                <fullName>Consulta de correo electrónico</fullName>
+                <default>false</default>
+                <label>Consulta de correo electrónico</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

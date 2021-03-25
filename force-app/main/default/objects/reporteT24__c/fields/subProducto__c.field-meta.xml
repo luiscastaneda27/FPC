@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>subProducto__c</fullName>
+    <description>Se guarda el código del  subproducto que se inscribe el empleado</description>
+    <externalId>false</externalId>
+    <inlineHelpText>se escribe exclusivamente el código del subproducto solicitado</inlineHelpText>
+    <label>subProducto</label>
+    <length>100</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

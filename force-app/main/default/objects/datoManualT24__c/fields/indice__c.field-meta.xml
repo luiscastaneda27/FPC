@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>indice__c</fullName>
+    <description>as</description>
+    <displayFormat>{000000}</displayFormat>
+    <externalId>false</externalId>
+    <inlineHelpText>as</inlineHelpText>
+    <label>indice</label>
+    <trackTrending>false</trackTrending>
+    <type>AutoNumber</type>
+</CustomField>

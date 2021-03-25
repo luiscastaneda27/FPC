@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Apellido2Ref2__c</fullName>
+    <description>Se guarda el segundo apellido del segundo referido  siempre y cuando este tenga</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Se  escribirá solo el  segundo apellido si existe</inlineHelpText>
+    <label>Apellido2Ref2</label>
+    <length>15</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

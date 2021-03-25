@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nombre1Benf2__c</fullName>
+    <description>Es el primer nombre del segundo beneficiario es un campo obligatorio.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Se escribe solamente el primer nombre de cada afiliado siendo este un campo obligatorio.</inlineHelpText>
+    <label>Nombre1Benf2</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

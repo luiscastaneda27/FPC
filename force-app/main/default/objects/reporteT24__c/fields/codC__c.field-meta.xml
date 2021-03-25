@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>codC__c</fullName>
+    <description>Se guarda el código de la  ciudad de origen del empleado</description>
+    <externalId>false</externalId>
+    <inlineHelpText>se escribe solo el código de la ciudad.</inlineHelpText>
+    <label>codCiudad</label>
+    <length>10</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

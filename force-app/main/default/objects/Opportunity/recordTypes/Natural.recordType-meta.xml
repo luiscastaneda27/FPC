@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Natural</fullName>
+    <active>true</active>
+    <businessProcess>FPC Ficohsa</businessProcess>
+    <label>Natural</label>
+    <picklistValues>
+        <picklist>Duracion_Contrato__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Cerrado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maximo Previsto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Por Confirmar</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Frecuencia_Pago__c</picklist>
+        <values>
+            <fullName>Anual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bimensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semanal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semestre</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trimestral</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Agencia FPC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agencias Banco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agencias Seguros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agencias Tarjetas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Asesor Financiero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BASE EMPRESAS FAMILIARES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Center USA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Célula Banca Corporativa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Célula Banca Empresarial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Célula Institucionales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ficohsa Express</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ficohsa Seguros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ficohsa Tarjeta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Migración</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proteccion Integral 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proteccion Integral 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proveedores</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Top Planilla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Metodo_Pago__c</picklist>
+        <values>
+            <fullName>Cheque</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Credito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Debito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Efectivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nomina</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_fondo__c</picklist>
+        <values>
+            <fullName>Fondo de cesantía</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fondo de pensión</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_moneda__c</picklist>
+        <values>
+            <fullName>En Dólares</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>En Lempiras</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Cliente Existente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente Nuevo</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+</RecordType>

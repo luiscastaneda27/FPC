@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prospectos_Centro_Sur</fullName>
+    <booleanFilter>1</booleanFilter>
+    <columns>FULL_NAME</columns>
+    <columns>Funcion_Propietario__c</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Funcion_Propietario__c</field>
+        <operation>contains</operation>
+        <value>Asesor Financiero Zona Centro-Sur</value>
+    </filters>
+    <label>Prospectos Centro-Sur</label>
+    <sharedTo>
+        <role>Sub_Gerente_Comercial_Zona_Centro_Sur</role>
+    </sharedTo>
+</ListView>

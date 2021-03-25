@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Identificador_CargaA__c</columns>
+    <columns>NoCuenta__c</columns>
+    <columns>noIdentidad__c</columns>
+    <columns>Usuario__c</columns>
+    <columns>Estado__c</columns>
+    <columns>Causa__c</columns>
+    <columns>CausaNuevo__c</columns>
+    <columns>EstadoActual__c</columns>
+    <columns>EstadoNuevo__c</columns>
+    <columns>Fecha_CargaA__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>NoCuenta__c</field>
+        <operation>equals</operation>
+        <value>78729</value>
+    </filters>
+    <label>Todos</label>
+</ListView>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Estado2__c</fullName>
+    <externalId>false</externalId>
+    <label>Estado</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Nueva</fullName>
+                <default>false</default>
+                <label>Nueva</label>
+            </value>
+            <value>
+                <fullName>Pendiente Aprobación Interna</fullName>
+                <default>false</default>
+                <label>Pendiente Aprobación Interna</label>
+            </value>
+            <value>
+                <fullName>Aprobada</fullName>
+                <default>false</default>
+                <label>Aprobada</label>
+            </value>
+            <value>
+                <fullName>Pendiente Aprobación Ficohsa</fullName>
+                <default>false</default>
+                <label>Pendiente Aprobación Ficohsa</label>
+            </value>
+            <value>
+                <fullName>Cerrada</fullName>
+                <default>false</default>
+                <label>Cerrada</label>
+            </value>
+            <value>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+                <label>Cancelado</label>
+            </value>
+            <value>
+                <fullName>Error con Sysde</fullName>
+                <default>false</default>
+                <label>Error con Sysde</label>
+            </value>
+            <value>
+                <fullName>Denegada Ficohsa</fullName>
+                <default>false</default>
+                <label>Denegada Ficohsa</label>
+            </value>
+            <value>
+                <fullName>Denegada</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Denegada</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

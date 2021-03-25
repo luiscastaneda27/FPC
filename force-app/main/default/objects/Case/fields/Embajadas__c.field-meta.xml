@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Embajadas__c</fullName>
+    <externalId>false</externalId>
+    <label>Embajadas</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Constancia__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Consulado de Belice</fullName>
+                <default>false</default>
+                <label>Consulado de Belice</label>
+            </value>
+            <value>
+                <fullName>Consulado de Canadá</fullName>
+                <default>false</default>
+                <label>Consulado de Canadá</label>
+            </value>
+            <value>
+                <fullName>Consulado de Holanda-Países Bajos</fullName>
+                <default>false</default>
+                <label>Consulado de Holanda-Países Bajos</label>
+            </value>
+            <value>
+                <fullName>Consulado de Noruega</fullName>
+                <default>false</default>
+                <label>Consulado de Noruega</label>
+            </value>
+            <value>
+                <fullName>Consulado de Portugal</fullName>
+                <default>false</default>
+                <label>Consulado de Portugal</label>
+            </value>
+            <value>
+                <fullName>Consulado de Tailandia</fullName>
+                <default>false</default>
+                <label>Consulado de Tailandia</label>
+            </value>
+            <value>
+                <fullName>Embajada de Alemania</fullName>
+                <default>false</default>
+                <label>Embajada de Alemania</label>
+            </value>
+            <value>
+                <fullName>Embajada de Argentina</fullName>
+                <default>false</default>
+                <label>Embajada de Argentina</label>
+            </value>
+            <value>
+                <fullName>Embajada de Brasil</fullName>
+                <default>false</default>
+                <label>Embajada de Brasil</label>
+            </value>
+            <value>
+                <fullName>Embajada de Chile</fullName>
+                <default>false</default>
+                <label>Embajada de Chile</label>
+            </value>
+            <value>
+                <fullName>Embajada de China</fullName>
+                <default>false</default>
+                <label>Embajada de China</label>
+            </value>
+            <value>
+                <fullName>Embajada de Colombia</fullName>
+                <default>false</default>
+                <label>Embajada de Colombia</label>
+            </value>
+            <value>
+                <fullName>Embajada de Costa Rica</fullName>
+                <default>false</default>
+                <label>Embajada de Costa Rica</label>
+            </value>
+            <value>
+                <fullName>Embajada de Cuba</fullName>
+                <default>false</default>
+                <label>Embajada de Cuba</label>
+            </value>
+            <value>
+                <fullName>Embajada de Ecuador</fullName>
+                <default>false</default>
+                <label>Embajada de Ecuador</label>
+            </value>
+            <value>
+                <fullName>Embajada de El Salvador</fullName>
+                <default>false</default>
+                <label>Embajada de El Salvador</label>
+            </value>
+            <value>
+                <fullName>Embajada de España</fullName>
+                <default>false</default>
+                <label>Embajada de España</label>
+            </value>
+            <value>
+                <fullName>Embajada de Francia</fullName>
+                <default>false</default>
+                <label>Embajada de Francia</label>
+            </value>
+            <value>
+                <fullName>Embajada de Guatemala</fullName>
+                <default>false</default>
+                <label>Embajada de Guatemala</label>
+            </value>
+            <value>
+                <fullName>Embajada de Italia</fullName>
+                <default>false</default>
+                <label>Embajada de Italia</label>
+            </value>
+            <value>
+                <fullName>Embajada de la Rep. Dominicana</fullName>
+                <default>false</default>
+                <label>Embajada de la Rep. Dominicana</label>
+            </value>
+            <value>
+                <fullName>Embajada de La Santa Sede</fullName>
+                <default>false</default>
+                <label>Embajada de La Santa Sede</label>
+            </value>
+            <value>
+                <fullName>Embajada de la Soberana Orden Militar Hospitalaria de Malta</fullName>
+                <default>false</default>
+                <label>Embajada de la Soberana Orden Militar Hospitalaria de Malta</label>
+            </value>
+            <value>
+                <fullName>Embajada del Japón</fullName>
+                <default>false</default>
+                <label>Embajada del Japón</label>
+            </value>
+            <value>
+                <fullName>Embajada de los Estados Unidos de América (USA)</fullName>
+                <default>false</default>
+                <label>Embajada de los Estados Unidos de América (USA)</label>
+            </value>
+            <value>
+                <fullName>Embajada de México</fullName>
+                <default>false</default>
+                <label>Embajada de México</label>
+            </value>
+            <value>
+                <fullName>Embajada de Nicaragua</fullName>
+                <default>false</default>
+                <label>Embajada de Nicaragua</label>
+            </value>
+            <value>
+                <fullName>Embajada de Panamá</fullName>
+                <default>false</default>
+                <label>Embajada de Panamá</label>
+            </value>
+            <value>
+                <fullName>Embajada de Perú</fullName>
+                <default>false</default>
+                <label>Embajada de Perú</label>
+            </value>
+            <value>
+                <fullName>Embajada de Suecia</fullName>
+                <default>false</default>
+                <label>Embajada de Suecia</label>
+            </value>
+            <value>
+                <fullName>Embajada de Venezuela</fullName>
+                <default>false</default>
+                <label>Embajada de Venezuela</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Belice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Canadá</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Holanda-Países Bajos</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Noruega</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Portugal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Consulado de Tailandia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Alemania</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Argentina</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Brasil</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Chile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de China</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Colombia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Costa Rica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Cuba</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Ecuador</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de El Salvador</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de España</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Francia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Guatemala</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Italia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de la Rep. Dominicana</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de La Santa Sede</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de la Soberana Orden Militar Hospitalaria de Malta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada del Japón</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de los Estados Unidos de América (USA)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de México</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Nicaragua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Panamá</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Perú</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Suecia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A4</controllingFieldValue>
+            <valueName>Embajada de Venezuela</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Codigo_Referencia__c</columns>
+    <columns>Estado_Aporte__c</columns>
+    <columns>Periodo_Aporte__c</columns>
+    <columns>cuenta__c</columns>
+    <columns>Monto_Deposito__c</columns>
+    <columns>Fecha_Deposito__c</columns>
+    <columns>Tipo_SaldoN__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>Oficial_de_negocios__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Todos</label>
+</ListView>

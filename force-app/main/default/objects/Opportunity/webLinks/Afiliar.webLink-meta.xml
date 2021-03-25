@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Afiliar</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Afiliar</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/apex.js&quot;)} 
+if (confirm(&apos;Esta seguro que quiere Afiliar este cliente.&apos;)) {
+var resultado = sforce.apex.execute(&quot;ProcesosSACWS&quot;, &quot;Afiliar&quot;, {Ido : &apos;{!Opportunity.Id}&apos;}); 
+
+
+var evaluar = resultado.toString(); 
+if (evaluar.indexOf(&apos;ERROR&apos;) ==-1){ 
+window.location = null; 
+window.location.href = resultado; 
+} 
+else { 
+alert(evaluar); 
+}
+}</url>
+</WebLink>

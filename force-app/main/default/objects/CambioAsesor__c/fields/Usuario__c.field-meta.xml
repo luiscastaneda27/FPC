@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Usuario__c</fullName>
+    <description>Usuario para pantalla Cambio de Asesor</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Para definir el usuario que realiza la carga.</inlineHelpText>
+    <label>Usuario</label>
+    <length>50</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

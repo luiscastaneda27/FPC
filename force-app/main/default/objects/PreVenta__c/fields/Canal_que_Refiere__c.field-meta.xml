@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Canal_que_Refiere__c</fullName>
+    <externalId>false</externalId>
+    <label>Canal que Refiere</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Banca de Empresas</fullName>
+                <default>false</default>
+                <label>Banca de Empresas</label>
+            </value>
+            <value>
+                <fullName>Banca Privada</fullName>
+                <default>false</default>
+                <label>Banca Privada</label>
+            </value>
+            <value>
+                <fullName>Agencias</fullName>
+                <default>false</default>
+                <label>Agencias</label>
+            </value>
+            <value>
+                <fullName>Ficohsa Seguros</fullName>
+                <default>false</default>
+                <label>Ficohsa Seguros</label>
+            </value>
+            <value>
+                <fullName>Banca Emprendedor</fullName>
+                <default>false</default>
+                <label>Banca Emprendedor</label>
+            </value>
+            <value>
+                <fullName>Alcance</fullName>
+                <default>false</default>
+                <label>Alcance</label>
+            </value>
+            <value>
+                <fullName>Otros</fullName>
+                <default>false</default>
+                <label>Otros</label>
+            </value>
+            <value>
+                <fullName>Banca Hipotecaria</fullName>
+                <default>false</default>
+                <label>Banca Hipotecaria</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

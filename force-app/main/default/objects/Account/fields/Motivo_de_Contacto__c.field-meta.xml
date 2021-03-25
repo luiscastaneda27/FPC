@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo_de_Contacto__c</fullName>
+    <externalId>false</externalId>
+    <label>Nombre de Campaña</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Asesoría Producto Empresarial</fullName>
+                <default>false</default>
+                <label>Asesoría Producto Empresarial</label>
+            </value>
+            <value>
+                <fullName>Asesoría Producto Individual</fullName>
+                <default>false</default>
+                <label>Asesoría Producto Individual</label>
+            </value>
+            <value>
+                <fullName>BONO SEPT GFF</fullName>
+                <default>false</default>
+                <label>BONO SEPT GFF</label>
+            </value>
+            <value>
+                <fullName>Campaña HTML</fullName>
+                <default>false</default>
+                <label>Campaña HTML</label>
+            </value>
+            <value>
+                <fullName>Inicio de Año 2019</fullName>
+                <default>false</default>
+                <label>Inicio de Año 2019</label>
+            </value>
+            <value>
+                <fullName>Queja</fullName>
+                <default>false</default>
+                <label>Queja</label>
+            </value>
+            <value>
+                <fullName>Referido</fullName>
+                <default>false</default>
+                <label>Referido</label>
+            </value>
+            <value>
+                <fullName>Solicitud Gestión</fullName>
+                <default>false</default>
+                <label>Solicitud Gestión</label>
+            </value>
+            <value>
+                <fullName>Sugerencia</fullName>
+                <default>false</default>
+                <label>Sugerencia</label>
+            </value>
+            <value>
+                <fullName>BONO MARZO GFF</fullName>
+                <default>false</default>
+                <label>BONO MARZO GFF</label>
+            </value>
+            <value>
+                <fullName>Facebook 2019</fullName>
+                <default>false</default>
+                <label>Facebook 2019</label>
+            </value>
+            <value>
+                <fullName>CAMPAÑA INSTITUCIONAL 2019</fullName>
+                <default>false</default>
+                <label>CAMPAÑA INSTITUCIONAL 2019</label>
+            </value>
+            <value>
+                <fullName>Referido Call Center</fullName>
+                <default>false</default>
+                <label>Referido Call Center</label>
+            </value>
+            <value>
+                <fullName>Referido Medios Electronicos</fullName>
+                <default>false</default>
+                <label>Referido Medios Electronicos</label>
+            </value>
+            <value>
+                <fullName>Referido Call USA</fullName>
+                <default>false</default>
+                <label>Referido Call USA</label>
+            </value>
+            <value>
+                <fullName>Referido Medios Electrónicos USA</fullName>
+                <default>false</default>
+                <label>Referido Medios Electrónicos USA</label>
+            </value>
+            <value>
+                <fullName>PROTECCIÓN INTEGRAL REDES</fullName>
+                <default>false</default>
+                <label>PROTECCIÓN INTEGRAL REDES</label>
+            </value>
+            <value>
+                <fullName>AGUINALDO 2019</fullName>
+                <default>false</default>
+                <label>AGUINALDO 2019</label>
+            </value>
+            <value>
+                <fullName>Hondureños en el Extranjero</fullName>
+                <default>false</default>
+                <label>Hondureños en el Extranjero</label>
+            </value>
+            <value>
+                <fullName>Campaña Institucional 2021</fullName>
+                <default>false</default>
+                <label>Campaña Institucional 2021</label>
+            </value>
+            <value>
+                <fullName>AGUINALDO 2018</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AGUINALDO 2018</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

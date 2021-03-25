@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rubro__c</fullName>
+    <externalId>false</externalId>
+    <label>Rubro</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Supermercado</fullName>
+                <default>false</default>
+                <label>Supermercado</label>
+            </value>
+            <value>
+                <fullName>Restaurante</fullName>
+                <default>false</default>
+                <label>Restaurante</label>
+            </value>
+            <value>
+                <fullName>Salud y Belleza</fullName>
+                <default>false</default>
+                <label>Salud y Belleza</label>
+            </value>
+            <value>
+                <fullName>Entretenimiento</fullName>
+                <default>false</default>
+                <label>Entretenimiento</label>
+            </value>
+            <value>
+                <fullName>Tiendas y Hogar</fullName>
+                <default>false</default>
+                <label>Tiendas y Hogar</label>
+            </value>
+            <value>
+                <fullName>Turismo</fullName>
+                <default>false</default>
+                <label>Turismo</label>
+            </value>
+            <value>
+                <fullName>Automotriz</fullName>
+                <default>false</default>
+                <label>Automotriz</label>
+            </value>
+            <value>
+                <fullName>Promociones y Eventos  Especiales</fullName>
+                <default>false</default>
+                <label>Promociones y Eventos  Especiales</label>
+            </value>
+            <value>
+                <fullName>Educación</fullName>
+                <default>false</default>
+                <label>Educación</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

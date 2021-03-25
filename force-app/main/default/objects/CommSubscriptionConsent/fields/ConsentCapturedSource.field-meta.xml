@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConsentCapturedSource</fullName>
+    <inlineHelpText>Origen desde donde se capturó el consentimiento. Por ejemplo, usuario@ejemplo.com o www.ejemplo.com.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

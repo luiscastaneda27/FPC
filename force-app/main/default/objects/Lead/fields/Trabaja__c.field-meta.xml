@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Trabaja__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Información sobre si cliente trabaja o no.</description>
+    <externalId>false</externalId>
+    <label>Trabaja</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

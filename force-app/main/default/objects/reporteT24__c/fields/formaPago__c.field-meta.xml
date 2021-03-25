@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>formaPago__c</fullName>
+    <description>Se guarda la forma que se pagan las coutas</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Se ingresa el código correspondiente a la forma en el cual se pagara la cuota</inlineHelpText>
+    <label>formaPago</label>
+    <length>3</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
