@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>05</label>
+    <protected>false</protected>
+    <values>
+        <field>Compra_Dolar__c</field>
+        <value xsi:type="xsd:string">N</value>
+    </values>
+    <values>
+        <field>Cuenta_Debito__c</field>
+        <value xsi:type="xsd:string">21112003</value>
+    </values>
+    <values>
+        <field>Cuenta__c</field>
+        <value xsi:type="xsd:string">C</value>
+    </values>
+    <values>
+        <field>Descripcion__c</field>
+        <value xsi:type="xsd:string">Aporte por retiro de cuenta cuentax  fecha retiro fechax</value>
+    </values>
+    <values>
+        <field>Fondo__c</field>
+        <value xsi:type="xsd:string">113</value>
+    </values>
+    <values>
+        <field>Id_Banco__c</field>
+        <value xsi:type="xsd:string">2</value>
+    </values>
+    <values>
+        <field>Moneda__c</field>
+        <value xsi:type="xsd:string">Lempiras</value>
+    </values>
+    <values>
+        <field>Sub_Aplicacion__c</field>
+        <value xsi:type="xsd:string">60</value>
+    </values>
+    <values>
+        <field>Tipo_Nota__c</field>
+        <value xsi:type="xsd:string">Debito</value>
+    </values>
+    <values>
+        <field>Tipo_Transaccion__c</field>
+        <value xsi:type="xsd:string">53</value>
+    </values>
+</CustomMetadata>

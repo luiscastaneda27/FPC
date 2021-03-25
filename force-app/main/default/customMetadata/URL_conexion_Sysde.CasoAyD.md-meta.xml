@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>CasoAyD</label>
+    <protected>false</protected>
+    <values>
+        <field>Correo_electronico__c</field>
+        <value xsi:type="xsd:string">olga.antunez@ficohsa.com</value>
+    </values>
+    <values>
+        <field>Dirigido_a__c</field>
+        <value xsi:type="xsd:string">Olga Antunez</value>
+    </values>
+    <values>
+        <field>URL__c</field>
+        <value xsi:type="xsd:string">https://fpc.secure.force.com/aprobarCasos/vfAprobarCasos?Id=</value>
+    </values>
+</CustomMetadata>
