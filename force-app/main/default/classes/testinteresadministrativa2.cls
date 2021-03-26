@@ -12,7 +12,7 @@ public class testinteresadministrativa2 {
          g.ach = ''; 
     	 g.ck = '';
          g.Datos=null;
-         g.hy = '';
+         //g.hy = '';
          g.Respuesta = '';
          g.vc_CAPITALSI = '';
          g.vc_CobrarTSPsi = '';
@@ -67,10 +67,16 @@ public class testinteresadministrativa2 {
          g.InteresesEspecificos = null;
    		 g.ListBeneficiarios = null;
     	 g.beneficiarioUnico = null;
-
+		
+         ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = '12345', Cuenta__c = '12345');
+         upsert a Cuenta__c;
+         
          ControllerAdministracionIntereses gaa = new ControllerAdministracionIntereses();
 		 gaa.FechInicioPago = date.valueof(Datetime.now()).addDays(1);
          gaa.Guardar(); 
+         gaa.nombreArchivo = 'test';
+         gaa.insertFIle(Blob.valueOf('test'), gaa.nombreArchivo, a.Id);
+         gaa.insertFIle(null, gaa.nombreArchivo, a.Id);
          
          ControllerAdministracionIntereses gur = new ControllerAdministracionIntereses();
 		 gur.Forma_Pago = 'AR';
@@ -231,6 +237,10 @@ public class testinteresadministrativa2 {
          img.codigo = 32;
          img.imagen = 'sdas';
          img.mensaje = 'holaaaa';
+         
+         Blob file = Blob.valueOf('test');
+         
+         
      }
 
 

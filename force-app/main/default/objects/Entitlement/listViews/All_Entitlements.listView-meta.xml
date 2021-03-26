@@ -5,6 +5,7 @@
     <columns>ACCOUNT.NAME</columns>
     <columns>ENTITLEMENT.STARTDATE</columns>
     <columns>ENTITLEMENT.ENDDATE</columns>
+    <columns>SLA.NAME</columns>
     <columns>ENTITLEMENT.STATUS</columns>
     <filterScope>Everything</filterScope>
     <label>Todas las asignaciones</label>

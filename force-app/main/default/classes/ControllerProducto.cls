@@ -4039,7 +4039,7 @@ public class ControllerProducto {
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
                         //updateCase.createAccount(pctipoid, pcnroid, val2, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, Cuenta20.Tipo_Fondo__c, Cuenta20.Frecuencia_Aportacion__c, pcformapago, pccuentapago, DiaMes.Dias_Mes__c);    
-                    	/*FieldsBankManagement fields = new FieldsBankManagement();
+                    	FieldsBankManagement fields = new FieldsBankManagement();
                         fields.pctipoid = pctipoid;
                         fields.pcnroid = pcnroid;
                         fields.cuenta = val2;
@@ -4054,7 +4054,7 @@ public class ControllerProducto {
                         fields.diaPago = DiaMes.Dias_Mes__c;
                         list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
                         fieldsList.add(fields);
-                        UpdateCase.createRecord(fieldsList);*/
+                        UpdateCase.createRecord(fieldsList);
                     }
                     
                     final PageReference target = new

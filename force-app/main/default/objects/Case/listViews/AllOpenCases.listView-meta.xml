@@ -9,9 +9,9 @@
     <columns>CASES.RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.STATUS</field>
+        <field>CASES.CREATED_DATE</field>
         <operation>equals</operation>
-        <value>Nuevo</value>
+        <value>TODAY</value>
     </filters>
     <label>Todos los casos abiertos</label>
 </ListView>

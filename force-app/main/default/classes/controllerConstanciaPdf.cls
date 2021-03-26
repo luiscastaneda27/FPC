@@ -420,7 +420,9 @@ public class controllerConstanciaPdf{
             if(casoTratar.Mostrar_Saldo_a_la_fecha__c || test.isRunningTest()) {
                 for(classSaldos item : saldosAlaFecha.saldos) {
                     if(item.tipoSaldo == '10' || item.tipoSaldo == '11') {
+                        system.debug(item.montoSaldo +' ----- '+item.montoSaldo.replace(',',''));
                         saldoFecha += decimal.valueOf(item.montoSaldo.replace(',',''));
+                        system.debug('saldoFecha: '+saldoFecha);
                     }
                 }
                 if(casoTratar.Desea_ver_tasa_de_cambio__c ||test.isRunningTest()){
@@ -442,7 +444,7 @@ public class controllerConstanciaPdf{
                     tr = 'Con un saldo personal a la fecha de <strong>'+mon+' '+formatonumero(cambio)+'</strong>';
                     
                 }else{
-                    if(casoTratar.CurrencyIsoCode !=detallesCaso[0].cuenta__r.CurrencyIsoCode){
+                    if(casoTratar.CurrencyIsoCode != detallesCaso[0].cuenta__r.CurrencyIsoCode){
                         TasaCambio.ValorDolar p = new TasaCambio.ValorDolar();
                         p.fecha=date.today();
                         if(test.isRunningTest()){

@@ -82,6 +82,7 @@ public class EnvioCorreosEDC {
                 correo.setHtmlBody(cuerpo);
                 correo.setSubject('Estado de cuenta.');
                 String[] toAddresses = new String[] {item.emailCliente};
+                    system.debug('Correo: '+item.emailCliente);
                 correo.setToAddresses(toAddresses);  
                 correo.setOrgWideEmailAddressId(owea.get(0).Id);
                 correo.setTargetObjectId(mapContacto.get(item.identidad));

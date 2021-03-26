@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://fpc.secure.force.com/aprobarCasos/vfAprobarCasos?Id=</value>
+        <value xsi:type="xsd:string">https://stagefpc-fpc.cs43.force.com/aprobarCasos/vfAprobarCasos?Id=</value>
     </values>
 </CustomMetadata>

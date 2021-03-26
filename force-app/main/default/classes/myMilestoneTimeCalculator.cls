@@ -1,6 +1,6 @@
 global class myMilestoneTimeCalculator implements Support.MilestoneTriggerTimeCalculator { 
     global Integer calculateMilestoneTriggerTime(String caseId, String milestoneTypeId) {
-    	Case c = [SELECT Id,RecordTypeId,RecordType.Name,Type,/*1*/Lugar_Nacimiento__c,Nacionalidad__c,Estado_Civil__c,Correo_Electronico__c,Telefono_Casa__c,Telefono_Movil__c,Telefono_Trabajo__c/*1*/,/*2*/Nombre_Cliente__c,Segundo_nombre__c,Apellidos__c,Segundo_apellido__c,Tipo_Identificacion__c,Identificacion__c,Sexo__c,Fecha_Nacimiento__c/*2*//*Otros*/,FPC_Asunto__c/*Otros*/,Status,Constancia__c,Es_primer_prestamo__c FROM Case WHERE Id=:caseId];
+    	Case c = [SELECT Id,RecordTypeId,RecordType.Name,Type,Lugar_Nacimiento__c,Nacionalidad__c,Estado_Civil__c,Correo_Electronico__c,Telefono_Casa__c,Telefono_Movil__c,Telefono_Trabajo__c/*1*/,/*2*/Nombre_Cliente__c,Segundo_nombre__c,Apellidos__c,Segundo_apellido__c,Tipo_Identificacion__c,Identificacion__c,Sexo__c,Fecha_Nacimiento__c/*2*//*Otros*/,FPC_Asunto__c/*Otros*/,Status,Constancia__c,Es_primer_prestamo__c FROM Case WHERE Id=:caseId];
         MilestoneType mt = [SELECT Name FROM MilestoneType WHERE Id=:milestoneTypeId];        
         //Obteniendo valores de los SLA's
         List<SLA_gestion__mdt> servicio = [Select Id,MasterLabel,DeveloperName,Tiempo__c From SLA_gestion__mdt Order By MasterLabel]; 

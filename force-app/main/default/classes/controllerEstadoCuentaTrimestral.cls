@@ -78,16 +78,12 @@ public class controllerEstadoCuentaTrimestral {
                 }
                 
             }
-            for(integer j=0; j<listCuentas.size(); j++)
-            {
-                for(integer i=0; i<listCuentas[j].cuentas.size(); i++)
-                {
-                    if(listCuentas[j].cuentas[i].moneda=='LEMPIRAS')
-                    {
+            for(integer j=0; j<listCuentas.size(); j++){
+                for(integer i=0; i<listCuentas[j].cuentas.size(); i++){
+                    if(listCuentas[j].cuentas[i].moneda=='LEMPIRAS') {
                         mostrarHNL=true;
                     }
-                    if(listCuentas[j].cuentas[i].moneda=='DOLARES')
-                    {
+                    if(listCuentas[j].cuentas[i].moneda=='DOLARES'){
                         mostrarUSD=true;
                     }
                 }

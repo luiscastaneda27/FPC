@@ -1,8 +1,7 @@
 trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
     if (Trigger.isUpdate) {
         if (Trigger.isAfter) {
-            if (!System.isFuture()) { 
-                               
+            if (!System.isFuture()) {             
                 DateTime completionDate = System.now(); 
                 List<Id> updateCases = new List<Id>();
                 
@@ -31,7 +30,9 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 }     
                 
                 List<Case> lstCase = new List<Case>{};
-                lstCase = [Select Id, Status, AccountId, Finalizar_SLA__c, Recordtype.Name, RecordType.DeveloperName from Case Where Id =: caso Limit 1];   
+                lstCase = [Select Id, Status, AccountId, Account.Name, Account.Identificacion__c, ParentId, Finalizar_SLA__c, Recordtype.Name, RecordType.DeveloperName, DAU_aprobacion__c, Respuesta_desde_Sysde__c, DAU_Identidad__c, Tipo_de_Operacion__c, DAU_llamarSalesforceTarjeta__c, Respuesta_SF_Tarjetas__c from Case Where Id =: caso Limit 1];   
+                List<Detalle_caso__c> lstDetCase = new List<Detalle_caso__c>{};
+                lstDetCase = [Select Id, DAU_Borrar_Cuotas__c, Cuenta__r.Forma_Aportacion__c From Detalle_caso__c Where Caso__c =: lstCase[0].Id];
                 
                 for (Case c : Trigger.new) {                                                                        
                     //Requiere aprobación de exoneración
@@ -84,6 +85,82 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 }  
                 //End send Email Assigned Case 
                 
+                //Inicio Creando caso de Cancelación de aporte por retiro total 
+                System.debug('lstCase: '+lstCase); 
+                If(lstCase[0].Recordtype.Name == 'Retiros') {
+                    List<Detalle_caso__c> dc = [Select Id,Caso__c,Tipo_retiro__c,Cuenta__c From Detalle_caso__c Where Caso__c =: lstCase[0].Id and Tipo_retiro__c = '52']; 
+                    if(!dc.isEmpty()) {
+                        List<Cuentas__c> cuentac = [Select Id,Forma_Aportacion__c From Cuentas__c Where Id =: dc[0].Cuenta__c Limit 1];
+                        if(!cuentac.isEmpty()) {
+                            if(cuentac[0].Forma_Aportacion__c == 'AH' || cuentac[0].Forma_Aportacion__c == 'CK' || cuentac[0].Forma_Aportacion__c == 'TA') {
+                                List<Case> casoNew = new List<Case>();
+                                String RecordTypeId = [Select Id From RecordType Where SobjectType = 'Case' and Name = 'Modificación de aportes'].Id;
+                                for(Case c : lstCase){        
+                                    if(c.Status == 'Cerrado') {
+                                        casoNew.add(new Case(No_Aplica_SLA__c = true,Origin = 'Agencias FPC',Reason = 'Otro', ParentId = lstCase[0].Id,AccountId = lstCase[0].AccountId,RecordTypeId = RecordTypeId,Status = 'Cerrado',Type = 'Solicitud',Priority = 'Media',Subject = 'Cancelación de Aporte por Retiro Total'));
+                                    }
+                                }
+                                if(!casoNew.isEmpty()) {
+                                    insert casoNew;                   
+                                    List<Id> detail = new List<Id>();
+                                    detail.add(casoNew[0].Id);
+                                    if(detail != null && caso != null) {
+                                        updateCase.createDetail(detail, caso); 
+                                    }    
+                                }    
+                            }
+                        }
+                    }
+                }    
+                //Fin Creando caso de Cancelación de aporte por retiro total 
+                
+                if(/*lstCase[0].DAU_llamarSalesforceTarjeta__c == true && */(lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null && lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
+                    String Identidad = lstCase[0].DAU_Identidad__c;
+        			System.debug('Identidad1: '+Identidad.substring(0,13));
+                    String Titular;
+                    If(lstCase[0].Account.Identificacion__c <> Identidad) {
+                    	Titular = 'No';	    
+                    } else {
+                        Titular = 'Si';
+                    }
+                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
+                    if(!detailCase.isEmpty()) { 
+                    	Salesforce_Tarjetas.processCase(caso,'ADI',Titular,lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
+                    }    
+                }
+                
+                if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
+                    lstCase[0].DAU_aprobacion__c = false; 
+                    update lstCase;
+                }
+                                
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
+                    String Identidad = lstCase[0].DAU_Identidad__c;
+                    String Titular = '';
+                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
+                    if(!detailCase.isEmpty()) { 
+                    	Salesforce_Tarjetas.processCase(caso,'DEC',Titular,'','');
+                    }    
+                } 
+                
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A4' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
+                    String Identidad = lstCase[0].DAU_Identidad__c;
+                    String Titular = '';
+                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
+                    if(!detailCase.isEmpty()) { 
+                    	Salesforce_Tarjetas.processCase(caso,'MOD',Titular,'','');
+                    }    
+                } 
+                
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
+                    String Identidad = lstCase[0].DAU_Identidad__c;
+                    String Titular = '';
+                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
+                    if(!detailCase.isEmpty()) { 
+                    	Salesforce_Tarjetas.processCase(caso,'DEC',Titular,'','');
+                    }    
+                }
+                
             }
         }
     }
@@ -94,12 +171,19 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 for(Case c : Trigger.new) {
                     if(c.Id != null)
                     caseId.add(c.Id);
-                }      
-                updateCase.processCasePortalAuto(caseId); 
-                
+                    if(c.Owner.Profile.Name == 'PortalAutoGestion Perfil') {
+                		updateCase.processCasePortalAuto(caseId);
+                    }    
+                }   
+               
                 //Start send autoresponse Email to Case (The client exist)
-                List<Case> casos = [Select id,CaseNumber,RecordTypeId,RecordType.Name,Correo_Electronico__c,Type,Subject,ownerId,Status,SuppliedEmail,Identificacion__c,AccountId,Account.Identificacion__c From Case Where Id =: caseId];
+                List<Case> casos = [Select id,CaseNumber,Tipo_de_Operacion__c,ParentId,DAU_aprobacion__c,RecordTypeId,RecordType.Name,Correo_Electronico__c,Type,Subject,ownerId,Status,SuppliedEmail,Identificacion__c,AccountId,Account.Identificacion__c From Case Where Id =: caseId];
                 //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web'];
+                
+                if(casos[0].Tipo_de_Operacion__c == 'A7' && casos[0].ParentId <> '' && casos[0].DAU_aprobacion__c == true) {
+                    casos[0].DAU_aprobacion__c = false; 
+                    update casos;
+                }
                 
                 if(casos[0].RecordType.Name == 'Email to Case' && casos[0].AccountId != null) {                                    
                     //Start send email
@@ -107,6 +191,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Auto-respuesta'];            
                     String htmlBody = lstEmailTemplates[0].HtmlValue; System.debug('htmlBody: '+htmlBody);
                     htmlBody = htmlBody.replace('idCaso=', 'idCaso='+casos[0].Id); 
+                    htmlBody = htmlBody.replace('[getLinkPortal]', ClaseUtil.urlSysde('PortalAutoGestion'));
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setTemplateId(lstEmailTemplates[0].Id);
                     mail.setSaveAsActivity(false);
@@ -128,6 +213,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Auto-respuesta'];            
                     String htmlBody = lstEmailTemplates[0].HtmlValue; System.debug('htmlBody: '+htmlBody);
                     htmlBody = htmlBody.replace('idCaso=', 'idCaso='+casos[0].Id); 
+                    htmlBody = htmlBody.replace('[getLinkPortal]', ClaseUtil.urlSysde('PortalAutoGestion'));
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setTemplateId(lstEmailTemplates[0].Id);
                     mail.setSaveAsActivity(false);

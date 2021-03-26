@@ -36,7 +36,7 @@ public class ControllerAdministracionIntereses {
     
     //Imagen/Comprobante
     public blob Comprobante {get;set;} /*En esta variable se cargara una imagen*/
-    public string hy{get;set;}
+    //public string hy{get;set;}
     /*No esta en uso*/
     //public string Moneda {get;set;}
     //public string Total_Fondo {get;set;}
@@ -130,11 +130,16 @@ public class ControllerAdministracionIntereses {
     public List<classPagoInteresesReg> ListIntDenegados {get;set;}
     public List<classPagoInteresesReg> ListRegUsuario {get;set;}
     
+    //VARIABLE AÑADIDOS POR INTELLECT
+    public classPagoInteresesFPC pagoInteres{get;set;}
+    
     /*CONSTRUCTOR*/
     public ControllerAdministracionIntereses(){
         FechaActual = date.today();
         anio = date.today().year();
         Usuario = ApexPages.currentPage().getParameters().get('hytrd');
+        //usuario = 'HN17575';
+        pagoInteres = new classPagoInteresesFPC();
         ActivaFechPago = true;
         /*Activar areas*/
         ActivarMonto = true;
@@ -226,6 +231,8 @@ public class ControllerAdministracionIntereses {
     }
     
     public void Cancelar(){
+        pagoInteres = new classPagoInteresesFPC();
+        comprobante = null;
         /*Variables en USO*/
         Cuenta = null;
         MostrarVentanaRegistro();
@@ -320,7 +327,7 @@ public class ControllerAdministracionIntereses {
     } 
     public void Modificar(){
         try{
-        if(EstadoCuenta == 'I'){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Cuenta Inactiva'));
+        if(EstadoCuenta == 'I' ){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Cuenta Inactiva'));
         }else if(Codigocausa == '02'){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA NO APORTANTE.'));
         }else if(Codigocausa == '03' ){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA LIQUIDADA.'));
         }else if(Codigocausa == '04'){  ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA POR DESICION ADMINISTRATIVA.'));
@@ -347,9 +354,10 @@ public class ControllerAdministracionIntereses {
                       /*ENVIO IMAGEN */
                       ControllerAPIPagoIntereses.classImagenReferencia imagenComp = new ControllerAPIPagoIntereses.classImagenReferencia(); 
                       imagenComp.Referencia = Cuenta;
+                      Blob File = Comprobante;
                       if (Comprobante != null)
                       { 
-                          hy = EncodingUtil.base64Encode(Comprobante);  
+                          String hy = EncodingUtil.base64Encode(Comprobante);  
                           //system.debug('Imagen_a_Enviar' + hy); 
                           imagenComp.Imagen = hy;
                           
@@ -482,8 +490,9 @@ public class ControllerAdministracionIntereses {
                           ClassInteres.pagocheque=0;
                       }
                       
-                      
-                      
+                      String cuenta = ClassInteres.Cuenta;  
+                      ClassInteres.estadoAprobacion = pagoInteres.estadoAprobacion == 'A' ? 'R': pagoInteres.estadoAprobacion;
+					  ClassInteres.ultUsuCaso = usuario;                      
                       
                       String resultado2 = ControllerAPIPagoIntereses.MODIFICARINFO(ClassInteres);
                       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado2));
@@ -491,7 +500,14 @@ public class ControllerAdministracionIntereses {
                       //Respuesta=ControllerAPIPagoIntereses.InsertarInfo_de_Pago(ClassInteres);
                       BitacoraModificar(ClassInteres);
                       Cancelar();
-                      
+                      comprobante = null;
+                      if(resultado2.contains('"MODIFICADO CORRECTAMENTE"') && file!= null){
+                          ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta);
+                          upsert a Cuenta__c;
+                          Boolean flag = insertFIle (file, nombreArchivo, a.Id);
+                          file = null;
+                          nombreArchivo = null;
+                      }
                   } 
         }Catch(Exception e){
             system.debug('Error al modificar: ' + e.getMessage());
@@ -507,7 +523,7 @@ public class ControllerAdministracionIntereses {
         ActivaGuardar = false;
     }    
     public void Guardar(){
-        if(EstadoCuenta == 'I'){  ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Cuenta Inactiva'));
+        if(EstadoCuenta == 'I' ){  ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Cuenta Inactiva'));
         }else if(Codigocausa == '02'){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA NO APORTANTE.'));
         }else if(Codigocausa == '03' ){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA LIQUIDADA.'));
         }else if(Codigocausa == '04'){ ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'¡¡ALERTA!! CUENTA INACTIVA POR DESICION ADMINISTRATIVA.'));
@@ -688,13 +704,13 @@ public class ControllerAdministracionIntereses {
                       
                       //}
                       /*ENVIO IMAGEN */
-                      ControllerAPIPagoIntereses.classImagenReferencia imagenComp = new ControllerAPIPagoIntereses.classImagenReferencia(); 
-                      imagenComp.Referencia = Cuenta;
-                      if (Comprobante != null) { hy = EncodingUtil.base64Encode(Comprobante); imagenComp.Imagen = hy;
-                          
-                          //system.debug('Imagen_a_Enviar_fabrisio--'+' ' + imagenComp); 
-                          //ControllerAPIPagoIntereses.GuardarImagen(imagenComp);
-                      }
+            ControllerAPIPagoIntereses.classImagenReferencia imagenComp = new ControllerAPIPagoIntereses.classImagenReferencia(); 
+            imagenComp.Referencia = Cuenta;
+            String hy;
+            if (Comprobante != null) { hy = EncodingUtil.base64Encode(Comprobante); imagenComp.Imagen = hy;
+                                      
+                                      
+                                     }
                       ControllerAPIPagoIntereses.GuardarImagen(imagenComp);
                       //fin de imagen
                       
@@ -702,22 +718,59 @@ public class ControllerAdministracionIntereses {
                       ClassInteres.pc_Imagen = hy;
                       ClassInteres.EstadoAprobacion = 'R';//15
                       ClassInteres.Fec_inclusion = datetime.now().addHours(-6);
-                      
+                      Blob File = Comprobante;
                       if (Comprobante != null){  hy = EncodingUtil.base64Encode(Comprobante);  
                           //pata.pc_Imagen = hy;
                           system.debug('ImagenConvertida'+' --- '+ hy);
                       }
-                      
-                      String resultado2 = ControllerAPIPagoIntereses.INSERTAINFO(ClassInteres);
-                      ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado2));
-                      system.debug('Datos_a_Enviar--' + ClassInteres); 
+            String cuenta = ClassInteres.Cuenta;  
+            ClassInteres.estadoAprobacion = pagoInteres.estadoAprobacion == 'A' ? 'R' : pagoInteres.estadoAprobacion;
+            ClassInteres.ultUsuCaso = usuario; 
+            String resultado2 = ControllerAPIPagoIntereses.INSERTAINFO(ClassInteres);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado2));
+            system.debug('Datos_a_Enviar--' + ClassInteres); 
+            
                       //Respuesta=ControllerAPIPagoIntereses.InsertarInfo_de_Pago(ClassInteres);
                       BitacoraRegistro(ClassInteres);
+            	
                       Cancelar();
-                      
-                  } 
+            
+            //PARTE ANADIDA POR INTELLECT
+            if(resultado2.contains('"REGISTRADO CORRECTAMENTE"') && file!= null){
+                ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta);
+                upsert a Cuenta__c;
+                Boolean flag = insertFIle (file, nombreArchivo, a.Id);
+                nombreArchivo = null;
+            }
+            //FIN ANADIDO POR INTELLECT
+            
+        } 
         
-    }   //fin del procedimiento guardar   
+    }   //fin del procedimiento guardar  
+    public String nombreArchivo {get;set;}
+    public Boolean insertFIle(Blob fileBody, String fileName, String recordId){
+        try{
+            System.debug('fileName: '+fileName +' ------ recordId: '+recordId);
+            ContentVersion cv = new ContentVersion();
+            cv.ContentLocation = 'S';
+            cv.ContentDocumentId = null;
+            cv.VersionData = fileBody; 
+            cv.Title = fileName; 
+            cv.PathOnClient = fileName; 
+            insert cv;
+            ContentDocumentLink cdl = new ContentDocumentLink();
+            cdl.ContentDocumentId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
+            cdl.LinkedEntityId = recordId; 
+            cdl.ShareType = 'V';
+            insert cdl;
+            system.debug('Éxitoso');
+            return true;
+        }catch(Exception ex){
+             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, 'Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber()));
+            system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
+            return false;
+        }
+    }
     
     public void BitacoraModificar(classPagoInteresesFPC Interes){
         classBitacora bitacora = new classBitacora();
@@ -752,82 +805,39 @@ public class ControllerAdministracionIntereses {
         //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado2));
         system.debug('Bitacora--' + bitacora); 
         
-    }
-    /*
-    public pageReference correo(){
-        try{
-             classPagoInteresesFPC claseEnviom = new classPagoInteresesFPC();
-             classPagoInteresesFPC fcsdss = ControllerAPIPagoIntereses.AlertaDenegados(Cuenta);
-            
-            if(fcsdss.idbitacora !=null  ){
-                 /*list<ControllerAPIConstanct.classCorreosAniversario> resultado = new list<ControllerAPIConstanct.classCorreosAniversario>();
-        		resultado = ControllerAPIConstanct.GetCorreosAniversarioM();
-        		system.debug('listado de correos: '+resultado);
-        
-        		Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
-        		if (resultado.size() > 0)
-                {
-                   for(integer i=0; i<resultado.size(); i++)
-                   {
-                    if(resultado[i].V_FO_Correo != '@' || resultado[i].V_FO_Correo != 'NOTIENE@.HN')
-                    {
-                        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
-                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
-                        
-                        mail.setHtmlBody( 
-                                           '<img src="https://ficohsafpc--pensiones--c.cs77.content.force.com/servlet/servlet.ImageServer?id=0150t0000009TTD&oid=00D0t000000Cogc&lastMod=1531428570000" WIDTH=700 HEIGHT=900/>'
-                                        );
-                        mail.setSubject('Te felicitamos por pensar en tu futuro' + '' + +' Estimad@'+  resultado[i].V_NOMBRE + ' ' + resultado[i].V_APELLIDO);
-                        String[] toAddresses = new String[] {'wendy.alvarado@ficohsa.com'};
-                		mail.setToAddresses(toAddresses);
-                        //mail.setToAddresses(new String[] {resultado[i].V_FO_Correo});
-                        mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                        mail.setSaveAsActivity(true);
-                        listCorreo.add(mail);
-                        Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-                        system.debug('Correos enviados correctamente: '+results);
-                        system.debug('ListaCorreoAenviar' + listCorreo);
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
-                    }
-               	  }
-               }*/
-                
-                
-                /*
-                String queryCorreo = 'Select Cuerpo__c From ConstanContact__mdt Where DeveloperName = '; 
-                queryCorreo += '\'Correo_Bienvenida\'';
-                ConstanContact__mdt cuerpoCorreo = dataBase.query(queryCorreo);
-                String cuerpo = cuerpoCorreo.Cuerpo__c;
-            	//Se enviara el correo a las personas con el correo nuevo
-                Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
-                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
-        		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();                 
-                mail.setHtmlBody(cuerpo);
-                mail.setSubject('Te felicitamos por pensar en tu futuro' + '' + +' Estimad@ '+  '' + pcprimernombre + ' ' + pcprimerapellido);
-                //String[] toAddresses = new String[] {pcmail};              
-                String[] toAddresses = new String[] {'wendy.alvarado@ficohsa.com','carlos.escoto@ficohsa.com','luis.castaneda@intellectsystem.net'};
-                mail.setToAddresses(toAddresses);
-                mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                mail.setSaveAsActivity(true);
-                listCorreo.add(mail);
-                Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-           		system.debug('Correos enviados correctamente: '+results);
-        		system.debug('Email:' + pcmail+' EnvioCorreo:'+listCorreo);
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
-}
+    }   
+    public void asignarPagoInteres(classPagoInteresesFPC fcsds){
+        if(fcsds != null){
+            pagoInteres = fcsds;
+            pagoInteres.estadoAprobacion = pagoInteres.estadoAprobacion != 'null' ? pagoInteres.estadoAprobacion : null;
+            pagoInteres.ultPagoView = pagoInteres.ultPago != 'null' && pagoInteres.ultPago != null ? Decimal.valueOf(pagoInteres.ultPago) * -1 : null;
+            pagoInteres.usuarioRegis = pagoInteres.usuarioRegis != 'null' ? pagoInteres.usuarioRegis : null;
+            pagoInteres.NombreCompleto = pagoInteres.NombreCompleto != 'null' ? pagoInteres.NombreCompleto : null;
+            pagoInteres.ultUsuCaso = pagoInteres.ultUsuCaso != 'null' ? pagoInteres.ultUsuCaso : null;
+            pagoInteres.ultFec_inclusion = null;
+            if(fcsds.ultFec_inclusion != null && fcsds.ultFec_inclusion.year() > 2000){
+                pagoInteres.ultFec_inclusion = fcsds.ultFec_inclusion;
             }
-            
-        }catch(Exception e)
-    	{
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
-     	}
-       return null;
-    }*/
+            if(pagoInteres.usuarioRegis != null || pagoInteres.ultUsuCaso != null){
+                for(Usuarios_de_Pantallas__c item: 
+                    [Select Name, Apellido__C,Usuario__c from Usuarios_de_Pantallas__c  
+                     Where Usuario__C =: pagoInteres.usuarioRegis Or Usuario__c =:pagoInteres.ultUsuCaso limit 2]){
+                         if(pagoInteres.usuarioRegis == item.Usuario__c && pagoInteres.usuarioRegis != null){
+                             pagoInteres.usuarioRegis = item.Name +' '+item.Apellido__c + ' - '+ pagoInteres.usuarioRegis;
+                         }
+                         if(pagoInteres.ultUsuCaso == item.Usuario__c && pagoInteres.ultUsuCaso != null){
+                             pagoInteres.ultUsuCaso = item.Name +' '+item.Apellido__c + ' - '+ pagoInteres.ultUsuCaso;
+                         }
+                         
+                     }
+            }
+        }
         
+    }
     
-    public void BuscarInfor()
-    {
+    public void BuscarInfor(){
         try{
+            pagoInteres = new classPagoInteresesFPC();
             string temporal = Cuenta;
             Cancelar();
             ActivaModificar(); 
@@ -835,6 +845,7 @@ public class ControllerAdministracionIntereses {
             //string temporal = Cuenta;
             classPagoInteresesFPC claseEnvio = new classPagoInteresesFPC();
             classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta2(Cuenta);
+            asignarPagoInteres(fcsd);
             //classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta(Cuenta);  
              
             if(fcsd.NombreCompleto != null){
@@ -866,7 +877,7 @@ public class ControllerAdministracionIntereses {
                 EstadoAprobacion = fcsd.EstadoAprobacion;
                 Forma_Pago = fcsd.Formadepago;
                 
-                if (fcsd.Montodepago == 'null'){
+                if (fcsd.Montodepago == 'null' || fcsd.Montodepago == null){
                     Monto_pago = null;
                 }else{
                     Monto_pago = decimal.valueOf(fcsd.Montodepago);
@@ -951,14 +962,18 @@ public class ControllerAdministracionIntereses {
                     
                 }
                 //Tipo_Pago = 'Fijo'; Tipo_Pago = 'Calculado';  
-               	FechInicioPago = date.valueof(fcsd.FechInicioPago).addDays(1);
+                FechInicioPago = fcsd.FechInicioPago != null ? date.valueof(fcsd.FechInicioPago).addDays(1) : null;
                 Cuenta = temporal; 
-            		} else if (Cuenta == temporal ) {  Cancelar(); ActivaModificar();
+            } else if (Cuenta == temporal ) {  
+                Cancelar(); ActivaModificar();
                 Cuenta = temporal;
-                //system.debug(fcsds);
                 classPagoInteresesFPC fcsds = ControllerAPIPagoIntereses.BuscarCuenta(Cuenta);
+                asignarPagoInteres(fcsds);
                 //classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta(Cuenta);  
-                system.debug(fcsds);
+                system.debug('Respuesta buscar Cuenta: '+fcsds);
+                if(fcsds != null){
+                    
+                }
                 if(fcsds.NombreCompleto != null){
                     if(fcsds.EstadoCuenta == 'I'){
                         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'CUENTA INACTIVA'));
@@ -1070,237 +1085,7 @@ public class ControllerAdministracionIntereses {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
         }
     } 
-    /*
-public void BuscarInfor()
-{
-try{
-string temporal = Cuenta;
-Cancelar();
-ActivaModificar();
-Cuenta = temporal;
-//string temporal = Cuenta;
-classPagoInteresesFPC claseEnvio = new classPagoInteresesFPC();
-classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta2(Cuenta);
 
-if(fcsd.NombreCompleto != null){
-if(fcsd.EstadoCuenta == 'I'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'CUENTA INACTIVA'));
-}else if(fcsd.Codigocausa == '02' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! CUENTA INACTIVA NO APORTANTE.'));
-}else if(fcsd.Codigocausa == '03'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! CUENTA INACTIVA LIQUIDADA.'));
-}else if(fcsd.Codigocausa == '04'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! NO PROCEDE POR DECISIÓN ADMINISTRATIVA.'));
-}else if(fcsd.Codigocausa == '05' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! FONDO PIGNORADO POR PRÉSTAMO.'));
-}else if(fcsd.Codigocausa == '06' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'FONDO PIGNORADO POR FIANZA.'));
-}else if(fcsd.Codigocausa == '07' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'PROSPECTO.'));
-}
-
-NombreCompleto = fcsd.NombreCompleto;
-Identidad = fcsd.Identidad;
-TipoFondo = fcsd.TipoFondo;
-EstadoCuenta = fcsd.EstadoCuenta;
-CausaDescripcion = fcsd.CausaDescripcion;
-Codigocausa = fcsd.Codigocausa;
-Moneda = fcsd.Moneda;
-if(fcsd.Moneda == '01' || fcsd.Moneda == '03'){
-Mostrar_Moneda = 'Lempiras';
-}else if(fcsd.Moneda == '02' || fcsd.Moneda == '04'){
-Mostrar_Moneda = 'Dolares';
-}else if(fcsd.Moneda == '05'){Mostrar_Moneda = 'Euros';}else{Mostrar_Moneda = null;}
-
-EstadoAprobacion = fcsd.EstadoAprobacion;
-Forma_Pago = fcsd.Formadepago;
-Monto_pago = fcsd.Montodepago;
-Tipo_Pago = fcsd.Tipodepago;
-Diadepagos = fcsd.Diadepago;
-TiposdeBancos();
-TiposdeCuentas();
-//Ajuste=fcsd.Ajuste;
-
-if (fcsd.Ajuste == 'null')
-{
-}else{
-Ajuste=fcsd.Ajuste;
-}
-
-if (fcsd.CantidadPignorada =='null' )
-{  
-}
-
-if (fcsd.TotalFondo =='null' )
-{  
-}
-
-
-if(EstadoAprobacion != null){
-DesactivaModificar();
-if(Tipo_Pago == 'Calculado'){
-BloqueaCALCULADO = false;
-BloqueaFIJO = true;
-CALCULADO_SI = true;
-ActivarMonto = true;
-ActivaAjuste = false;
-ActivaDiadePago = false;
-ActivaFormadePago = false;
-ActivaBanco = false;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}else if(Tipo_Pago == 'Fijo'){
-BloqueaCALCULADO = true;
-BloqueaFIJO = false;
-FIJO_SI = true;
-ActivarMonto = false;
-ActivaDiadePago = false;
-ActivaFormadePago = false;
-}
-if(Forma_Pago == 'CK' || Forma_Pago == 'EF'){
-ActivaBanco = true;
-ActivaCuentaBanco = true;
-ActivaTipoCuenta = true;
-}else if(Forma_Pago == 'AH'){
-ActivaBanco = true;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}else if(Forma_Pago == 'ACH'){
-ActivaBanco = false;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}
-Nombre_Banco = fcsd.Bancos;
-Cuenta_Banco = fcsd.NoCuenta;
-Tipo_Cuenta = fcsd.TipodeCuenta;
-
-}
-//Tipo_Pago = 'Fijo'; Tipo_Pago = 'Calculado';  
-
-Cuenta = temporal;	
-} else if (Cuenta == temporal)
-{
-string temporales = Cuenta;
-Cancelar();
-ActivaModificar();
-Cuenta = temporales;
-//string temporal = Cuenta;
-classPagoInteresesFPC claseEnvioo = new classPagoInteresesFPC();
-//classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta2(Cuenta);
-classPagoInteresesFPC fcsds = ControllerAPIPagoIntereses.BuscarCuenta(Cuenta) ;
-
-if(fcsd.NombreCompleto != null){
-if(fcsds.EstadoCuenta == 'I'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'CUENTA INACTIVA'));
-}else if(fcsds.Codigocausa == '02' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! CUENTA INACTIVA NO APORTANTE.'));
-}else if(fcsds.Codigocausa == '03'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! CUENTA INACTIVA LIQUIDADA.'));
-}else if(fcsds.Codigocausa == '04'){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! NO PROCEDE POR DECISIÓN ADMINISTRATIVA.'));
-}else if(fcsds.Codigocausa == '05' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'¡¡ALERTA!! FONDO PIGNORADO POR PRÉSTAMO.'));
-}else if(fcsds.Codigocausa == '06' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'FONDO PIGNORADO POR FIANZA.'));
-}else if(fcsds.Codigocausa == '07' ){
-ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'PROSPECTO.'));
-}
-
-NombreCompleto = fcsds.NombreCompleto;
-Identidad = fcsds.Identidad;
-TipoFondo = fcsds.TipoFondo;
-EstadoCuenta = fcsds.EstadoCuenta;
-CausaDescripcion = fcsds.CausaDescripcion;
-Codigocausa = fcsds.Codigocausa;
-Moneda = fcsds.Moneda;
-if(fcsds.Moneda == '01' || fcsds.Moneda == '03'){
-Mostrar_Moneda = 'Lempiras';
-}else if(fcsds.Moneda == '02' || fcsds.Moneda == '04'){
-Mostrar_Moneda = 'Dolares';
-}else if(fcsd.Moneda == '05'){Mostrar_Moneda = 'Euros';}else{Mostrar_Moneda = null;}
-
-EstadoAprobacion = fcsds.EstadoAprobacion;
-Forma_Pago = fcsds.Formadepago;
-Monto_pago = fcsds.Montodepago;
-Tipo_Pago = fcsds.Tipodepago;
-Diadepagos = fcsds.Diadepago;
-TiposdeBancos();
-TiposdeCuentas();
-//Ajuste=fcsd.Ajuste;
-/*
-if (fcsds.Ajuste == 'null')
-{
-}else{
-Ajuste=fcsd.Ajuste;
-}
-
-if (fcsd.CantidadPignorada =='null' )
-{  
-}
-
-if (fcsd.TotalFondo =='null' )
-{  
-}
-
-
-if(EstadoAprobacion != null){
-DesactivaModificar();
-if(Tipo_Pago == 'Calculado'){
-BloqueaCALCULADO = false;
-BloqueaFIJO = true;
-CALCULADO_SI = true;
-ActivarMonto = true;
-ActivaAjuste = false;
-ActivaDiadePago = false;
-ActivaFormadePago = false;
-ActivaBanco = false;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}else if(Tipo_Pago == 'Fijo'){
-BloqueaCALCULADO = true;
-BloqueaFIJO = false;
-FIJO_SI = true;
-ActivarMonto = false;
-ActivaDiadePago = false;
-ActivaFormadePago = false;
-}
-if(Forma_Pago == 'CK' || Forma_Pago == 'EF'){
-ActivaBanco = true;
-ActivaCuentaBanco = true;
-ActivaTipoCuenta = true;
-}else if(Forma_Pago == 'AH'){
-ActivaBanco = true;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}else if(Forma_Pago == 'ACH'){
-ActivaBanco = false;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}
-Nombre_Banco = fcsds.Bancos;
-Cuenta_Banco = fcsds.NoCuenta;
-Tipo_Cuenta = fcsds.TipodeCuenta;
-
-}
-//Tipo_Pago = 'Fijo'; Tipo_Pago = 'Calculado';  
-
-Cuenta = temporal;
-}
-
-//fin del if secundario
-else
-{
-ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cuenta no encontrada'));	    
-}     
-} 
-}
-Catch(Exception e){
-system.debug('Error al buscar: ' + e.getMessage());
-ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
-}
-} 
-
-*/  
     
     public void eleccionsi(){
         if (CAPITAL_SI = true)
@@ -1661,31 +1446,6 @@ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNum
         ActivaTipoCuenta = true;
         
     }
-    /*
-public void MostrarCamposFormPago(){
-if(Forma_Pago == 'ACH')// || Forma_Pago == 'AH')
-{
-TiposdeBancos();
-TiposdeCuentas();
-ActivaBanco = false;
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;
-}
-else if(Forma_Pago == 'AH'){
-TiposdeBancos();
-TiposdeCuentas();
-ActivaBanco = true;
-ListBancos = null;
-Nombre_Banco = 'FICOHSA';
-ActivaCuentaBanco = false;
-ActivaTipoCuenta = false;             
-}
-else{
-VaciarFormaPago();
-}
-
-}  
-*/  
     public void MostrarCamposFormPago(){
         if(Forma_Pago == 'AH' ) { TiposdeBancos(); 
            TiposdeCuentas(); 

@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://fpc.secure.force.com/UsuariosFPC/resource/1578345573000/Archivo_Carga_Comercial?</value>
+        <value xsi:type="xsd:string">https://stagefpc-fpc.cs43.force.com/UsuariosFPC/resource/1578345573000/Archivo_Carga_Comercial?</value>
     </values>
 </CustomMetadata>

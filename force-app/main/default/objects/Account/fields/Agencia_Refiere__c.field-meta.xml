@@ -17,6 +17,11 @@
                 <label>AGENCIA MALL LAS AMERICAS</label>
             </value>
             <value>
+                <fullName>125400000000</fullName>
+                <default>false</default>
+                <label>AGENCIA PLAZA 105</label>
+            </value>
+            <value>
                 <fullName>125200000000</fullName>
                 <default>false</default>
                 <label>AGN. PASEO JUAN PABLO</label>
@@ -425,17 +430,6 @@
                 <fullName>117100000000</fullName>
                 <default>false</default>
                 <label>VTN DIUNSA SUPERSTORE SPS</label>
-            </value>
-            <value>
-                <fullName>122400000000</fullName>
-                <default>false</default>
-                <label>AGN L.C. SIGUATEPEQUE SGA</label>
-            </value>
-            <value>
-                <fullName>125400000000</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>AGENCIA PLAZA 105</label>
             </value>
             <value>
                 <fullName>01</fullName>

@@ -28,6 +28,8 @@ public class classPagoInteresesReg {
     	public string Variable { get; set; }
         public string LEE_ERRORES { get; set; }
         public string P_ERROR { get; set; }
+    
+    public Boolean tieneArchivoSF { get; set; }
  		/*Variables en USO*/
 
 }

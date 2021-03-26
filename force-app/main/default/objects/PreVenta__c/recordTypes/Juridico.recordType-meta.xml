@@ -186,10 +186,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>122400000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>122700000000</fullName>
             <default>false</default>
         </values>
@@ -215,6 +211,10 @@
         </values>
         <values>
             <fullName>125200000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>125400000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -278,10 +278,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>131900000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>132000000000</fullName>
             <default>false</default>
         </values>
@@ -326,7 +322,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>139000000000</fullName>
+            <fullName>13900000000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1044,10 +1040,6 @@
         </values>
         <values>
             <fullName>Asesoría Producto Individual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Campaña Institucional 2021</fullName>
             <default>false</default>
         </values>
         <values>

@@ -1,89 +1,5 @@
 public class AFPCCasos {     
     
-    
-   /* public static SolicitudCaso getCaso(String IdCaso) {
-        SolicitudCaso envio = new SolicitudCaso();
-        try{
-            envio.solicitudExitosa = true;
-            envio.caso = new Case();
-            envio.error = null;
-            String query = 'Select CaseNumber,Id,';
-            Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
-            for(Schema.SObjectField sfield : fieldMap.Values()){
-                schema.describefieldresult dfield = sfield.getDescribe();
-                String field = dfield.getname();
-                if(field.contains('__c')){
-                    query += field+',';
-                }
-            }
-            query = query.substring(0, query.length()-1);
-            
-            query += ' from Case where id=\''+idCaso+'\'';
-            envio.consulta = query;
-            Http http = new Http();
-            HttpRequest request = new HttpRequest();
-            String url = claseUtilPlanillas.urlSysde('Casos');
-            request.setEndpoint(url);
-            request.setMethod('POST');
-            String username = 'luis.castaneda@intellectsystem.net.fpc';
-            String password = 'Lenriquecd27.#*';
-            
-            Blob headerValue = Blob.valueOf(username + ':' + password);
-            String authorizationHeader = 'BASIC ' +
-                EncodingUtil.base64Encode(headerValue);
-            request.setHeader('Authorization', authorizationHeader);
-            request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-            String cons = json.serialize(envio);
-            system.debug('Mandamos: '+cons);
-            envio = new SolicitudCaso();
-            request.setBody(cons);
-            HttpResponse response =new HttpResponse();
-            response = http.send(request); 
-           
-            String body = response.getBody();
-            system.debug('Respuesta: '+body);
-            envio = (SolicitudCaso)System.JSON.deserialize(body, SolicitudCaso.class);
-        }catch(Exception ex){
-            envio.error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
-            envio.caso = new case();
-            envio.solicitudExitosa= false;
-            system.debug('Error: '+ex.getMessage()+', Error: '+ex.getLineNumber());
-        }
-        return envio;
-    }
-    
-    public static SolicitudCaso queryCustom(String consulta) {
-         SolicitudCaso envio = new SolicitudCaso();
-        try{
-            envio.solicitudExitosa = true;
-            envio.caso = new Case();
-            envio.error = null;
-            envio.consulta = consulta;
-            Http http = new Http();
-            HttpRequest request = new HttpRequest();
-            String url = claseUtilPlanillas.urlSysde('Casos');
-            request.setEndpoint(url);
-            request.setMethod('POST');
-            request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-            String cons = json.serialize(envio);
-            system.debug('Mandamos: '+cons);
-            envio = new SolicitudCaso();
-            request.setBody(cons);
-            HttpResponse response =new HttpResponse();
-            response = http.send(request); 
-           
-            String body = response.getBody();
-            system.debug('Respuesta: '+body);
-            envio = (SolicitudCaso)System.JSON.deserialize(body, SolicitudCaso.class);
-        }catch(Exception ex){
-            envio.error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
-            envio.caso = new case();
-            envio.solicitudExitosa= false;
-            system.debug('Error: '+ex.getMessage()+', Error: '+ex.getLineNumber());
-        }
-        return envio;
-    }*/
-    
     public static SolicitudCaso envioAprobacion(String idCaso, String proceso) {
          SolicitudCaso envio = new SolicitudCaso();
         try{
@@ -93,6 +9,7 @@ public class AFPCCasos {
             String url = claseUtilPlanillas.urlSysde('Casos');
             request.setEndpoint(url +'/'+ idCaso+'/'+proceso);
             request.setMethod('GET');
+            system.debug(Label.RestCasoSUser + ':' + Label.RestCasoSPassword);
             Blob headerValue = Blob.valueOf(Label.RestCasoSUser + ':' + Label.RestCasoSPassword);
             String authorizationHeader = 'BASIC ' +
                 EncodingUtil.base64Encode(headerValue);
@@ -113,9 +30,10 @@ public class AFPCCasos {
             system.debug('Respuesta: '+body);
             envio = (SolicitudCaso)System.JSON.deserialize(body, SolicitudCaso.class);
         }catch(Exception ex){
-            envio.error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
+            String error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
+            envio.error = error;
             envio.solicitudExitosa= false;
-            system.debug('Error: '+ex.getMessage()+', Error: '+ex.getLineNumber());
+            system.debug(error);
         }
         return envio;
     }
@@ -130,7 +48,7 @@ public class AFPCCasos {
             HttpRequest request = new HttpRequest();
             String url = claseUtilPlanillas.urlSysde('Casos');
             request.setEndpoint(url);
-            system.debug('Id Sesión: '+UserInfo.getSessionId());
+            system.debug(Label.RestCasoSUser + ':' + Label.RestCasoSPassword);
             request.setMethod('POST');
             Blob headerValue = Blob.valueOf(Label.RestCasoSUser + ':' + Label.RestCasoSPassword);
             String authorizationHeader = 'BASIC ' +
@@ -155,10 +73,11 @@ public class AFPCCasos {
             system.debug('Respuesta: '+body);
             envio = (SolicitudCaso)System.JSON.deserialize(body, SolicitudCaso.class);
         }catch(Exception ex){
-            envio.error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
+            String error = 'Error: '+ex.getMessage()+', Error: '+ex.getLineNumber();
+            envio.error = error;
             envio.caso = caso;
             envio.solicitudExitosa= false;
-            system.debug('Error: '+ex.getMessage()+', Error: '+ex.getLineNumber());
+            system.debug(error);
         }
         return envio;
     }

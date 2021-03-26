@@ -1,4 +1,4 @@
-public class ControladorMenuPlanillas {
+public without sharing class ControladorMenuPlanillas {
     
     
     public string Cargar_Planilla{get;set;}

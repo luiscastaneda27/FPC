@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DAU_No_Cuenta__c</fullName>
+    <description>Número de cuenta que devuelve el servicio de validación de Identidad.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Número de cuenta que devuelve el servicio de validación de Identidad.</inlineHelpText>
+    <label>DAU_No.Cuenta</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DAU_llamarSalesforceTarjeta__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Bandera para ejecutar el servicio de Salesforce Tarjeta.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Bandera para ejecutar el servicio de Salesforce Tarjeta.</inlineHelpText>
+    <label>DAU_llamarSalesforceTarjeta</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

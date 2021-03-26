@@ -376,10 +376,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>122400000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>122700000000</fullName>
             <default>false</default>
         </values>
@@ -405,6 +401,10 @@
         </values>
         <values>
             <fullName>125200000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>125400000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -515,10 +515,6 @@
     <picklistValues>
         <picklist>Asesor_Agn__c</picklist>
         <values>
-            <fullName>HN18973</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN19320</fullName>
             <default>false</default>
         </values>
@@ -598,10 +594,6 @@
     <picklistValues>
         <picklist>Asesor__c</picklist>
         <values>
-            <fullName>HN18973</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN19320</fullName>
             <default>false</default>
         </values>
@@ -655,18 +647,6 @@
         </values>
         <values>
             <fullName>HN24735</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25900</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25947</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25948</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5585,10 +5565,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Campaña Institucional 2021</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Facebook 2019</fullName>
             <default>false</default>
         </values>
@@ -8853,10 +8829,6 @@
         </values>
         <values>
             <fullName>21</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>271</fullName>
             <default>false</default>
         </values>
         <values>

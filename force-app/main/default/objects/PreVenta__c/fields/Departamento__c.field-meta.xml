@@ -11,74 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>ALABAMA</fullName>
+                <fullName>Francisco Morazan</fullName>
                 <default>false</default>
-                <label>ALABAMA</label>
-            </value>
-            <value>
-                <fullName>ALASKA</fullName>
-                <default>false</default>
-                <label>ALASKA</label>
-            </value>
-            <value>
-                <fullName>ARIZONA</fullName>
-                <default>false</default>
-                <label>ARIZONA</label>
-            </value>
-            <value>
-                <fullName>ARKANSAS</fullName>
-                <default>false</default>
-                <label>ARKANSAS</label>
-            </value>
-            <value>
-                <fullName>Atlantida</fullName>
-                <default>false</default>
-                <label>Atlantida</label>
-            </value>
-            <value>
-                <fullName>CALIFORNIA</fullName>
-                <default>false</default>
-                <label>CALIFORNIA</label>
-            </value>
-            <value>
-                <fullName>CAROLINA DEL NORTE</fullName>
-                <default>false</default>
-                <label>CAROLINA DEL NORTE</label>
-            </value>
-            <value>
-                <fullName>CAROLINA DEL SUR</fullName>
-                <default>false</default>
-                <label>CAROLINA DEL SUR</label>
-            </value>
-            <value>
-                <fullName>Choluteca</fullName>
-                <default>false</default>
-                <label>Choluteca</label>
-            </value>
-            <value>
-                <fullName>Colon</fullName>
-                <default>false</default>
-                <label>Colon</label>
-            </value>
-            <value>
-                <fullName>COLORADO</fullName>
-                <default>false</default>
-                <label>COLORADO</label>
-            </value>
-            <value>
-                <fullName>Comayagua</fullName>
-                <default>false</default>
-                <label>Comayagua</label>
-            </value>
-            <value>
-                <fullName>CONNETICUT</fullName>
-                <default>false</default>
-                <label>CONNETICUT</label>
-            </value>
-            <value>
-                <fullName>Copan</fullName>
-                <default>false</default>
-                <label>Copan</label>
+                <label>Francisco Morazan</label>
             </value>
             <value>
                 <fullName>Cortes</fullName>
@@ -86,94 +21,9 @@
                 <label>Cortes</label>
             </value>
             <value>
-                <fullName>DAKOTA DEL NORTE</fullName>
+                <fullName>Comayagua</fullName>
                 <default>false</default>
-                <label>DAKOTA DEL NORTE</label>
-            </value>
-            <value>
-                <fullName>DAKOTA DEL SUR</fullName>
-                <default>false</default>
-                <label>DAKOTA DEL SUR</label>
-            </value>
-            <value>
-                <fullName>DELAWARE</fullName>
-                <default>false</default>
-                <label>DELAWARE</label>
-            </value>
-            <value>
-                <fullName>El Paraiso</fullName>
-                <default>false</default>
-                <label>El Paraiso</label>
-            </value>
-            <value>
-                <fullName>FLORIDA</fullName>
-                <default>false</default>
-                <label>FLORIDA</label>
-            </value>
-            <value>
-                <fullName>Francisco Morazan</fullName>
-                <default>false</default>
-                <label>Francisco Morazan</label>
-            </value>
-            <value>
-                <fullName>GEORGIA</fullName>
-                <default>false</default>
-                <label>GEORGIA</label>
-            </value>
-            <value>
-                <fullName>Gracias a Dios</fullName>
-                <default>false</default>
-                <label>Gracias a Dios</label>
-            </value>
-            <value>
-                <fullName>HAWAII</fullName>
-                <default>false</default>
-                <label>HAWAII</label>
-            </value>
-            <value>
-                <fullName>IDAHO</fullName>
-                <default>false</default>
-                <label>IDAHO</label>
-            </value>
-            <value>
-                <fullName>ILLINOIS</fullName>
-                <default>false</default>
-                <label>ILLINOIS</label>
-            </value>
-            <value>
-                <fullName>INDIANA</fullName>
-                <default>false</default>
-                <label>INDIANA</label>
-            </value>
-            <value>
-                <fullName>Intibuca</fullName>
-                <default>false</default>
-                <label>Intibuca</label>
-            </value>
-            <value>
-                <fullName>IOWA</fullName>
-                <default>false</default>
-                <label>IOWA</label>
-            </value>
-            <value>
-                <fullName>Islas de la Bahia</fullName>
-                <default>false</default>
-                <label>Islas de la Bahia</label>
-            </value>
-            <value>
-                <fullName>KANSAS</fullName>
-                <default>false</default>
-                <label>KANSAS</label>
-            </value>
-            <value>
-                <fullName>KENTUCKY</fullName>
-                <default>false</default>
-                <label>KENTUCKY</label>
-            </value>
-            <value>
-                <fullName>La Paz</fullName>
-                <default>false</default>
-                <label>La Paz</label>
+                <label>Comayagua</label>
             </value>
             <value>
                 <fullName>Lempira</fullName>
@@ -181,24 +31,79 @@
                 <label>Lempira</label>
             </value>
             <value>
-                <fullName>LUISIANA</fullName>
+                <fullName>Intibuca</fullName>
                 <default>false</default>
-                <label>LUISIANA</label>
+                <label>Intibuca</label>
             </value>
             <value>
-                <fullName>MAINE</fullName>
+                <fullName>La Paz</fullName>
                 <default>false</default>
-                <label>MAINE</label>
+                <label>La Paz</label>
             </value>
             <value>
-                <fullName>MARYLAND</fullName>
+                <fullName>Valle</fullName>
                 <default>false</default>
-                <label>MARYLAND</label>
+                <label>Valle</label>
             </value>
             <value>
-                <fullName>MASSACHUSETTS</fullName>
+                <fullName>Choluteca</fullName>
                 <default>false</default>
-                <label>MASSACHUSETTS</label>
+                <label>Choluteca</label>
+            </value>
+            <value>
+                <fullName>El Paraiso</fullName>
+                <default>false</default>
+                <label>El Paraiso</label>
+            </value>
+            <value>
+                <fullName>Olancho</fullName>
+                <default>false</default>
+                <label>Olancho</label>
+            </value>
+            <value>
+                <fullName>Ocotepeque</fullName>
+                <default>false</default>
+                <label>Ocotepeque</label>
+            </value>
+            <value>
+                <fullName>Copan</fullName>
+                <default>false</default>
+                <label>Copan</label>
+            </value>
+            <value>
+                <fullName>Santa Barbara</fullName>
+                <default>false</default>
+                <label>Santa Barbara</label>
+            </value>
+            <value>
+                <fullName>Yoro</fullName>
+                <default>false</default>
+                <label>Yoro</label>
+            </value>
+            <value>
+                <fullName>Atlantida</fullName>
+                <default>false</default>
+                <label>Atlantida</label>
+            </value>
+            <value>
+                <fullName>Colon</fullName>
+                <default>false</default>
+                <label>Colon</label>
+            </value>
+            <value>
+                <fullName>Gracias a Dios</fullName>
+                <default>false</default>
+                <label>Gracias a Dios</label>
+            </value>
+            <value>
+                <fullName>Islas de la Bahia</fullName>
+                <default>false</default>
+                <label>Islas de la Bahia</label>
+            </value>
+            <value>
+                <fullName>N/A</fullName>
+                <default>false</default>
+                <label>N/A</label>
             </value>
             <value>
                 <fullName>MICHIGAN</fullName>
@@ -224,11 +129,6 @@
                 <fullName>MONTANA</fullName>
                 <default>false</default>
                 <label>MONTANA</label>
-            </value>
-            <value>
-                <fullName>N/A</fullName>
-                <default>false</default>
-                <label>N/A</label>
             </value>
             <value>
                 <fullName>NEBRASKA</fullName>
@@ -261,11 +161,6 @@
                 <label>NUEVO MEXICO</label>
             </value>
             <value>
-                <fullName>Ocotepeque</fullName>
-                <default>false</default>
-                <label>Ocotepeque</label>
-            </value>
-            <value>
                 <fullName>OHIO</fullName>
                 <default>false</default>
                 <label>OHIO</label>
@@ -274,11 +169,6 @@
                 <fullName>OKLAHOMA</fullName>
                 <default>false</default>
                 <label>OKLAHOMA</label>
-            </value>
-            <value>
-                <fullName>Olancho</fullName>
-                <default>false</default>
-                <label>Olancho</label>
             </value>
             <value>
                 <fullName>OREGÓN</fullName>
@@ -296,11 +186,6 @@
                 <label>RHODE ISLAND</label>
             </value>
             <value>
-                <fullName>Santa Barbara</fullName>
-                <default>false</default>
-                <label>Santa Barbara</label>
-            </value>
-            <value>
                 <fullName>TENNESSEE</fullName>
                 <default>false</default>
                 <label>TENNESSEE</label>
@@ -314,11 +199,6 @@
                 <fullName>UTAH</fullName>
                 <default>false</default>
                 <label>UTAH</label>
-            </value>
-            <value>
-                <fullName>Valle</fullName>
-                <default>false</default>
-                <label>Valle</label>
             </value>
             <value>
                 <fullName>VERMONT</fullName>
@@ -351,9 +231,129 @@
                 <label>WYOMING</label>
             </value>
             <value>
-                <fullName>Yoro</fullName>
+                <fullName>ALABAMA</fullName>
                 <default>false</default>
-                <label>Yoro</label>
+                <label>ALABAMA</label>
+            </value>
+            <value>
+                <fullName>ALASKA</fullName>
+                <default>false</default>
+                <label>ALASKA</label>
+            </value>
+            <value>
+                <fullName>ARIZONA</fullName>
+                <default>false</default>
+                <label>ARIZONA</label>
+            </value>
+            <value>
+                <fullName>ARKANSAS</fullName>
+                <default>false</default>
+                <label>ARKANSAS</label>
+            </value>
+            <value>
+                <fullName>CALIFORNIA</fullName>
+                <default>false</default>
+                <label>CALIFORNIA</label>
+            </value>
+            <value>
+                <fullName>CAROLINA DEL NORTE</fullName>
+                <default>false</default>
+                <label>CAROLINA DEL NORTE</label>
+            </value>
+            <value>
+                <fullName>CAROLINA DEL SUR</fullName>
+                <default>false</default>
+                <label>CAROLINA DEL SUR</label>
+            </value>
+            <value>
+                <fullName>COLORADO</fullName>
+                <default>false</default>
+                <label>COLORADO</label>
+            </value>
+            <value>
+                <fullName>CONNETICUT</fullName>
+                <default>false</default>
+                <label>CONNETICUT</label>
+            </value>
+            <value>
+                <fullName>DAKOTA DEL NORTE</fullName>
+                <default>false</default>
+                <label>DAKOTA DEL NORTE</label>
+            </value>
+            <value>
+                <fullName>DAKOTA DEL SUR</fullName>
+                <default>false</default>
+                <label>DAKOTA DEL SUR</label>
+            </value>
+            <value>
+                <fullName>DELAWARE</fullName>
+                <default>false</default>
+                <label>DELAWARE</label>
+            </value>
+            <value>
+                <fullName>FLORIDA</fullName>
+                <default>false</default>
+                <label>FLORIDA</label>
+            </value>
+            <value>
+                <fullName>GEORGIA</fullName>
+                <default>false</default>
+                <label>GEORGIA</label>
+            </value>
+            <value>
+                <fullName>HAWAII</fullName>
+                <default>false</default>
+                <label>HAWAII</label>
+            </value>
+            <value>
+                <fullName>IDAHO</fullName>
+                <default>false</default>
+                <label>IDAHO</label>
+            </value>
+            <value>
+                <fullName>ILLINOIS</fullName>
+                <default>false</default>
+                <label>ILLINOIS</label>
+            </value>
+            <value>
+                <fullName>INDIANA</fullName>
+                <default>false</default>
+                <label>INDIANA</label>
+            </value>
+            <value>
+                <fullName>IOWA</fullName>
+                <default>false</default>
+                <label>IOWA</label>
+            </value>
+            <value>
+                <fullName>KANSAS</fullName>
+                <default>false</default>
+                <label>KANSAS</label>
+            </value>
+            <value>
+                <fullName>KENTUCKY</fullName>
+                <default>false</default>
+                <label>KENTUCKY</label>
+            </value>
+            <value>
+                <fullName>LUISIANA</fullName>
+                <default>false</default>
+                <label>LUISIANA</label>
+            </value>
+            <value>
+                <fullName>MAINE</fullName>
+                <default>false</default>
+                <label>MAINE</label>
+            </value>
+            <value>
+                <fullName>MARYLAND</fullName>
+                <default>false</default>
+                <label>MARYLAND</label>
+            </value>
+            <value>
+                <fullName>MASSACHUSETTS</fullName>
+                <default>false</default>
+                <label>MASSACHUSETTS</label>
             </value>
         </valueSetDefinition>
     </valueSet>

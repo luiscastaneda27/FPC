@@ -44,6 +44,12 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Case.Enviar_aprobacion_AD__c</field>
+            <operation>equals</operation>
+            <value>Verdadero</value>
+        </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType</field>
             <operation>equals</operation>
@@ -55,9 +61,19 @@
             <value>Falso</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Enviar_aprobacion_AD__c</field>
+            <field>Case.Archivo_Adjunto__c</field>
             <operation>equals</operation>
             <value>Verdadero</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Viene_Portal_Autogestion__c</field>
+            <operation>equals</operation>
+            <value>Falso</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DAU_aprobacion__c</field>
+            <operation>equals</operation>
+            <value>Falso</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>

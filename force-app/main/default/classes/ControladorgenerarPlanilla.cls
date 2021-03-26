@@ -1,4 +1,4 @@
-public class ControladorgenerarPlanilla {  
+public without sharing class ControladorgenerarPlanilla {  
     public list<Empresa_x_Empleado__c> listEmpleadosEmpresa{get;set;}
     public Usuario_X_Empresa__c usuarioEmpresa{get;set;}
     
@@ -1268,7 +1268,10 @@ idsalesforce= contenidoplanilla[jj].id;
             }
             system.debug('Contenido Paola1: '+ idContenido+' '+esAPV);
             if(esAPV){
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
+               
+               listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
+               
+                
                 NombreAporte='Aportes Voluntario Patronal';
                 if(listCuentasPlanilla.size()>0){
                     popCuentasAPV = true;

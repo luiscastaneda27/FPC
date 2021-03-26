@@ -12,14 +12,8 @@ public class ControllerPantallaConsultaRezagos {
     public ClientesRez AplicaRez{get;set;}
     
     public ControllerPantallaConsultaRezagos(){
-        try{
-            Usuario =  ApexPages.currentPage().getParameters().get('hytrd');
-            llenartabla();
-        }        
-        Catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
-        }
-		
+		Usuario =  ApexPages.currentPage().getParameters().get('hytrd');
+        llenartabla();
     }
     
     public void llenartabla(){

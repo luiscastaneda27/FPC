@@ -159,7 +159,7 @@
         <label>Nombre de Colonias_U</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Colonias (Otras)</pluralLabel>
+    <pluralLabel>Colonias</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

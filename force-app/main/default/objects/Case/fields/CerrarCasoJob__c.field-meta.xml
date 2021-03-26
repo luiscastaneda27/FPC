@@ -3,7 +3,7 @@
     <fullName>CerrarCasoJob__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Cerrar Caso Job</label>
+    <label>Cerrar Caso con Job</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

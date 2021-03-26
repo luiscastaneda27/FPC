@@ -179,7 +179,17 @@ public class controllerLoginEmpresarial {
         }
         return null;
     }
-    
-    
+    Planilla__c p;
+    public void test(){
+        try{
+            if (p == null){
+                p = new Planilla__c();
+            }
+            upsert p;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,p.Id)); 
+        }Catch(Exception e){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));   
+        }
+    } 
    
 }

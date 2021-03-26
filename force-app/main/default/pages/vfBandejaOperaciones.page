@@ -674,6 +674,15 @@
                                                     </table>
                                                     <br/>
                                                     <footer class="slds-modal__footer">
+                                                        <apex:actionStatus id="mySaveStatus1">
+                                                            <apex:facet name="stop">
+                                                                <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!guardar}"  value="Verificar"
+                                                                                    disabled="false" rerender="theForm" status="mySaveStatus1"/>
+                                                            </apex:facet>
+                                                            <apex:facet name="start">
+                                                                <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus1" value="Validando..." disabled="true"/>
+                                                            </apex:facet>
+                                                        </apex:actionStatus>                  
                                                         <apex:commandButton status="status" reRender="theForm" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!guardar}"  />
                                                     </footer>
                                                     

@@ -17,6 +17,11 @@
                 <label>AGENCIA MALL LAS AMERICAS</label>
             </value>
             <value>
+                <fullName>125400000000</fullName>
+                <default>false</default>
+                <label>AGENCIA PLAZA 105</label>
+            </value>
+            <value>
                 <fullName>125200000000</fullName>
                 <default>false</default>
                 <label>AGN. PASEO JUAN PABLO</label>
@@ -435,12 +440,6 @@
                 <fullName>131900000000</fullName>
                 <default>false</default>
                 <label>AGN INJUPEM TGU</label>
-            </value>
-            <value>
-                <fullName>125400000000</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>AGENCIA PLAZA 105</label>
             </value>
             <value>
                 <fullName>01</fullName>

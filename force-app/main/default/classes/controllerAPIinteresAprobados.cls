@@ -9,8 +9,6 @@ public class controllerAPIinteresAprobados {
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);
 		request.setEndpoint(url + 'api/pagaInteres');
-		
-        
 		String respuesta = '';
 		system.debug('Entro al REST del EDC');
 		try{
@@ -22,9 +20,6 @@ public class controllerAPIinteresAprobados {
 			request.setBody(cons);	
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            
-            
-            
             system.debug(respuesta);      
             system.debug('debuggRespuesta' +''+ respuesta); 
 		}catch(System.CalloutException e){
@@ -129,51 +124,6 @@ public class controllerAPIinteresAprobados {
 		return fcsd;   
     }//Normal Registrados Con estado/sin estado
     //METODO POR FECHA DE REGISTRO
-    /*
-    public static classAdmInteres TraerRegistrados() {
-        
-        Http http = new Http();
-		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
-		request.setMethod('GET');
-		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-		request.setTimeout(120000);
-        
-        string fecha = fecha_registro.year()+'-'+fecha_registro.month()+'-'+fecha_registro.day();
-        system.debug('Fecha' + fecha);
-        
-        request.setEndpoint(url + 'api/TraerRegistrados/'+ fecha);
-        
-		classAdmInteres fcsd= new classAdmInteres();
-        list<classPagoInteresesReg> bene = new list<classPagoInteresesReg>();
-		string respuesta = '';
-		system.debug('Entro al REST del EDC');
-		try{
-
-			HttpResponse response = http.send(request);
-	    	respuesta = response.getBody();
-            
-            //fcsd = respuesta.split(',');
-            system.debug('debuggRespuesta' +''+ respuesta); 
-            
-            if (response.getStatusCode() == 200) 
-           {
-                
-	            fcsd = (classAdmInteres)System.JSON.deserialize(response.getBody(), classAdmInteres.class);
-               
-           }
-            
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage()+'   '+e.getLineNumber());
-	
-        }Catch(Exception e){
-			system.debug(e.getMessage()+'   '+e.getLineNumber());	
-		} 
-        
-        system.debug('debuggAPI' +' '+ fcsd);
-		return fcsd;   
-    }
-    */
     public static classAdmInteres TRAE_DENEGADOS() {        
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -185,13 +135,10 @@ public class controllerAPIinteresAprobados {
         
 		classAdmInteres jfsf= new classAdmInteres();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC'+jfsf);
 		try{
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            
-            //fcsd = respuesta.split(',');
             system.debug(respuesta); 
             if (response.getStatusCode() == 200) {
 	            jfsf = (classAdmInteres)System.JSON.deserialize(response.getBody(), classAdmInteres.class);         

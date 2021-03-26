@@ -4,11 +4,11 @@
     <columns>OBJECT_ID</columns>
     <columns>NAME</columns>
     <columns>Codigo__c</columns>
-    <columns>Tipo__c</columns>
+    <columns>Tipo_Fondo__c</columns>
     <columns>TipoProducto__c</columns>
+    <columns>Tipo__c</columns>
     <columns>CURRENCY_ISO_CODE</columns>
     <columns>Producto__c</columns>
-    <columns>Tipo_Fondo__c</columns>
     <columns>Comisi_n_por_Aporte__c</columns>
     <columns>Comisi_n_Sobre_Saldo__c</columns>
     <filterScope>Everything</filterScope>

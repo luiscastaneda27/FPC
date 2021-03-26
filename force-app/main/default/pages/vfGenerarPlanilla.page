@@ -198,10 +198,10 @@
                                   <apex:actionSupport event="onchange" action="{!cambiarPlanilla}"/>
                               </apex:selectList>
                           </div>
-                          <div class="slds-form-element slds-size_1-of-2">
-                            <label class="slds-form-element__label" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"> Empresa </label><br/>
-                            <apex:outputField styleclass="slds-input" value="{!usuarioEmpresa.Empresa2__r.Name}"  />
-                          </div>
+                            <div class="slds-form-element slds-size_1-of-2">
+                                <label class="slds-form-element__label" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"> Empresa </label><br/>
+                                <apex:outputField styleclass="slds-input" value="{!usuarioEmpresa.Empresa2__r.Name}"  />
+                            </div>
                           
                         </div>
                       </div>
@@ -612,7 +612,7 @@
                                 <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto" rendered="{!esAEV}">
-                                <apex:inputField value="{!item.Valor_Monto__c}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputText value="{!item.Valor_Monto__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column> 
                           
                         </apex:DataTable> 
@@ -620,7 +620,7 @@
                   </div>
                   <footer class="slds-modal__footer">
                     <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Confirmar" />&nbsp;
-                    <apex:commandButton value="Aceptar"  action="{!aceptarCuentas}" styleClass="Confirmar" disabled="{!Disponibleguardar}" />                   
+                    <apex:commandButton value="Aceptar2"  action="{!aceptarCuentas}" styleClass="Confirmar" disabled="{!Disponibleguardar}" />                   
                   </footer>
                 </div>
           </section>

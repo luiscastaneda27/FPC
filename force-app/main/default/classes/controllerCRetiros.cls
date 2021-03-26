@@ -1,24 +1,30 @@
 public class controllerCRetiros {
     public date fecha_retiro {get;set;}
     public datetime fechaSysdeRetiros {get;set;}
+    public datetime fechaMostrar {get;set;}
     public boolean mostrarTablaRetiros {get;Set;}
     public boolean mostrarTablaRetirosC {get;Set;}
     public boolean mostrarTablaRetirosP {get;Set;}
     public boolean mostrarTablaRetirosI {get;Set;}
+    public boolean mostrarTablaRetirosB {get;Set;}
+    public cuadreRetiros retirosSf{get;set;}
     public List<cuadreRetiros> ListPagos {get;set;}
     public List<cuadreRetirosC> ListPagosC {get;set;}
     public List<cuadreRetirosP> ListPagosP {get;set;}
     public List<cuadreRetirosI> ListPagosI {get;set;}
+    public List<cuadreRetirosB> ListPagosB {get;set;}
     public string fecha {get;set;}
     public string Num_CodReferencia {get;set;}
     public string Id {get;set;}
     public List<Retiro_Aprobacion__c> ListPagosConciliados {get;set;}
     public List<Retiro_Aprobacion__c> ListPagosConciliadosP {get;set;}
     public List<Retiro_Aprobacion__c> ListPagosConciliadosI {get;set;}
+    public List<Retiro_Aprobacion__c> ListPagosConciliadosB {get;set;}
     public List<Retiro_Aprobacion__c> ListEnvioTotal {get;set;}
     public List<Retiro_Aprobacion__c> ListEnvioRepetidos {get;set;}
     public List<Retiro_Aprobacion__c> ListEnvioRepetidosP {get;set;}
     public List<Retiro_Aprobacion__c> ListEnvioRepetidosI {get;set;}
+    public List<Retiro_Aprobacion__c> ListEnvioRepetidosB {get;set;}
     public List<string> ListaEnvioRefere {get;set;}
     
     public date fecha2{get;set;} 
@@ -27,32 +33,117 @@ public class controllerCRetiros {
     {
         try{	
             classCRetiros claseEnvio = new classCRetiros();
-            classCRetiros fcsd = controllerApiCRetiros.conciliaRetiros(fecha_retiro);
+            claseEnvio.fecha = fecha_retiro;
+            classCRetiros fcsd = controllerApiCRetiros.guardarCliente(fecha_retiro);
+            //classCRetiros fcsd = controllerApiCRetiros.conciliaRetiros(fecha_retiro);
             ListPagosConciliados = new List<Retiro_Aprobacion__c>();
             ListPagosConciliadosP = new List<Retiro_Aprobacion__c>();
             ListPagosConciliadosI = new List<Retiro_Aprobacion__c>();
-            
-            system.debug('ListaConciliados: '+ ListPagosConciliados);
-            system.debug('Respuestaaaaaaa: '+fcsd);
-            
-            if (fcsd.fechaSysdeRetiros != null)
+            ListPagosConciliadosB = new List<Retiro_Aprobacion__c>();        
+                
+            list<Case> varCaso = [Select id, Fecha_Sysde__c, CaseNumber, Account.name From Case where Fecha_Sysde__c =:fecha_retiro];
+
+            if (fcsd.ListPagos.size() != 0 || fcsd.ListPagosC.size() != 0  || fcsd.ListPagosB.size() != 0  || fcsd.ListPagosI.size() != 0  || fcsd.ListPagosP.size() != 0  || varCaso.size() != 0 )
             {
-                fecha2=date.valueOf(fcsd.fechaSysdeRetiros.year()+'-'+fcsd.fechaSysdeRetiros.month()+'-'+fcsd.fechaSysdeRetiros.day());
-                //fecha3=date.valueOf(fcsd.fechaSysdeRetiros.day()+'/'+fcsd.fechaSysdeRetiros.month()+'/'+fcsd.fechaSysdeRetiros.year());
-                delete ([select Numero_Referencia__c, AprobacionM__c, Cuenta__c,Fecha_Sysde__c 
+               delete ([select Numero_Referencia__c, AprobacionM__c, Cuenta__c,Fecha_Sysde__c 
                   from Retiro_Aprobacion__c  
                   where AprobacionM__c = null]);
+                
+                String varCasoSysde; 
+                map<String, Detalle_caso__c>  mapCase = new map<String, Detalle_caso__c>();
+                list<String> listCasos = new list<String>();
+                for(Integer i = 0; i < fcsd.ListPagos.size(); i++)
+                {
+                    if(fcsd.ListPagos[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysde = '00'+ string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagos[i].numeroCaso >= 1000000 || fcsd.ListPagos[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysde = '0'+ string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }else{
+                        varCasoSysde = string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }
+                    System.debug('varCasoSysde. ' + varCasoSysde);
+                    listCasos.add(varCasoSysde);
+                }
+                
+                list<Detalle_caso__c> recListC =[select id, Saldo_retirar__c, Porcentaje_Saldo_Patronal__c, Porcentaje_Saldo_Patronal_Ext__c, Cabeza_retiro__c, caso__r.CaseNumber from Detalle_caso__c where Cabeza_retiro__c = true and caso__r.CaseNumber in :listCasos];        
+                for (Detalle_caso__c item:recListC){
+                    System.debug('item sera ' + item.caso__r.CaseNumber);
+                    mapCase.put(item.caso__r.CaseNumber,item); 
+                } 
                 
                 if (fcsd.ListPagos != null) 
                 {
                     mostrarTablaRetiros = true;
                 }
+                
                 ListPagos = fcsd.ListPagos;
+               
+                system.debug('lo que esta en la lista: '+varCaso);
+                if (varCaso != null){
+                    for(integer i=0; i<varCaso.size(); i++)
+                    { 
+                        retirosSf = new cuadreRetiros();
+                        retirosSf.referencia = 'No registrado en SYSDE';
+                        retirosSf.nombreCliente = varCaso[i].Account.name;
+                        retirosSf.numeroCaso = decimal.valueOf(varCaso[i].CaseNumber);
+                        retirosSf.codCuenta = '-';
+                        retirosSf.monMovimto = 0;
+                        retirosSf.monRetirar = 0;
+                        retirosSf.fPago = '-';
+                        retirosSf.fecSYSDE = '-';
+                        retirosSf.comparacion = '-';
+                        retirosSf.comparaNeto = '-';
+                        retirosSf.comparaFecha = 0;
+                        
+                        ListPagos.add(retirosSf);
+                    }
+                }
+                
                 Integer y = 1;
+               // String varCasoSysde; 
                 for(Integer i = 0; i < ListPagos.size(); i++)
                 {
                     ListPagos[i].index = y;
                     y++;
+                    System.debug('numeroCasoListaSysde :' +  String.valueOf(ListPagos[i].numeroCaso));
+                    if(fcsd.ListPagos[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysde = '00'+ string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagos[i].numeroCaso >= 1000000 || fcsd.ListPagos[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysde = '0'+ string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }else{
+                        varCasoSysde = string.valueOf(fcsd.ListPagos[i].numeroCaso);
+                        
+                    }
+                    Detalle_caso__c saldoPatronal = mapCase.get(String.valueOf(varCasoSysde));
+                 
+                    if(saldoPatronal!= null)
+                    {
+                    ListPagos[i].porcentaje = saldoPatronal.Porcentaje_Saldo_Patronal__c != null ?  saldoPatronal.Porcentaje_Saldo_Patronal__c : 0;
+                    }else{
+                         ListPagos[i].porcentaje = 0;
+                    }
+                    
+                    if (fcsd.ListPagos[i].comparacion != '0'){
+                        fcsd.ListPagos[i].comparacion = 'No';
+                    }
+                    else{
+                        fcsd.ListPagos[i].comparacion = 'Si';
+                    }
+                    if (fcsd.ListPagos[i].comparaNeto != '0'){
+                        fcsd.ListPagos[i].comparaNeto = 'No';
+                    }
+                    else{
+                        fcsd.ListPagos[i].comparaNeto = 'Si';
+                    }
                 }
                 
                 //patronales
@@ -60,8 +151,8 @@ public class controllerCRetiros {
                 {
                     mostrarTablaRetirosP = true;
                 }
-                
                 ListPagosP = fcsd.ListPagosP;
+                
                 Integer z = 1;
                 for(Integer i = 0; i < ListPagosP.size(); i++)
                 {
@@ -94,6 +185,7 @@ public class controllerCRetiros {
                 for(integer i=0; i<fcsd.ListPagosP.size(); i++)
                 {
                     Retiro_Aprobacion__c p = new Retiro_Aprobacion__c();
+                    //"30-JAN-20"
                     p.Numero_Caso__c = string.valueOf(fcsd.ListPagosP[i].numeroCaso);
                     p.Numero_Referencia__c = fcsd.ListPagosP[i].referencia;
                     p.Cuenta__c =  fcsd.ListPagosP[i].codCuenta;
@@ -110,8 +202,12 @@ public class controllerCRetiros {
                         fcsd.ListPagosP[i].monUSD = fcsd.ListPagosP[i].monTotal;
                     }
                     p.Monto_Salesforce__c =  string.valueOf(fcsd.ListPagosP[i].monRetirar);
-                    p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosC[i].fecSYSDE.addHours(6));
-                    p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosP[i].fecSYSDE.addHours(6)); 
+                    p.Fecha_SalesForce__c = convertStringDate(fcsd.ListPagosP[i].fecSYSDE);
+                    system.debug('como viene la fecha: '+(fcsd.ListPagosP[i].fecSYSDE));
+                    system.debug('como convierte la fecha: '+convertStringDate(string.valueOf(fcsd.ListPagosP[i].fecSYSDE)));
+                    fechaMostrar = date.valueOf(convertStringDate(fcsd.ListPagosP[i].fecSYSDE));
+                    p.Fecha_SalesForce__c =  date.valueOf(convertStringDate(fcsd.ListPagosP[i].fecSYSDE));
+                    p.Fecha_Sysde__c = date.valueOf(convertStringDate(fcsd.ListPagosP[i].fecSYSDE)); 
                     p.tasa_seguridad_poblacional__c = string.valueOf(fcsd.ListPagosP[i].tsp);
                     p.transferencia_ACH__c = string.valueOf(fcsd.ListPagosP[i].ach);
                     p.cheque__c = string.valueOf(fcsd.ListPagosP[i].ck);
@@ -130,7 +226,33 @@ public class controllerCRetiros {
                 {
                     insert ListPagosConciliadosP;
                 }
-                //
+                //Conciliados
+                String varCasoSysdeC; 
+                map<String, Detalle_caso__c>  mapCaseC = new map<String, Detalle_caso__c>();
+                list<String> listCasosC = new list<String>();
+                for(Integer i = 0; i < fcsd.ListPagosC.size(); i++)
+                {
+                    if(fcsd.ListPagosC[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysdeC = '00'+ string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagosC[i].numeroCaso >= 1000000 || fcsd.ListPagosC[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysdeC = '0'+ string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+      
+                    }else{
+                        varCasoSysdeC = string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+        
+                    }
+                    System.debug('varCasoSysdeC. ' + varCasoSysdeC);
+                    listCasosC.add(varCasoSysdeC);
+                }
+                
+                list<Detalle_caso__c> recListCC =[select id, Saldo_retirar__c, Porcentaje_Saldo_Patronal__c, Porcentaje_Saldo_Patronal_Ext__c, Cabeza_retiro__c, caso__r.CaseNumber from Detalle_caso__c where Cabeza_retiro__c = true and caso__r.CaseNumber in :listCasosC];        
+                for (Detalle_caso__c item:recListCC){
+                    System.debug('item sera ' + item.caso__r.CaseNumber);
+                    mapCaseC.put(item.caso__r.CaseNumber,item); 
+                } 
                 if (fcsd.ListPagosC != null) 
                 {
                     mostrarTablaRetirosC = true;
@@ -141,6 +263,27 @@ public class controllerCRetiros {
                 {
                     ListPagosC[i].index = x;
                     x++;
+                    System.debug('numeroCasoListaSysde :' +  String.valueOf(ListPagosC[i].numeroCaso));
+                    if(fcsd.ListPagosC[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysdeC = '00'+ string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagos[i].numeroCaso >= 1000000 || fcsd.ListPagosC[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysdeC = '0'+ string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+                        
+                    }else{
+                        varCasoSysdeC = string.valueOf(fcsd.ListPagosC[i].numeroCaso);
+                        
+                    }
+                    Detalle_caso__c saldoPatronalC = mapCaseC.get(String.valueOf(varCasoSysdeC));
+                 
+                    if(saldoPatronalC!= null)
+                    {
+                    ListPagosC[i].porcentaje = saldoPatronalC.Porcentaje_Saldo_Patronal__c != null ?  saldoPatronalC.Porcentaje_Saldo_Patronal__c : 0;
+                    }else{
+                         ListPagosC[i].porcentaje = 0;
+                    }
                 }
                 ListEnvioRepetidos = [select Numero_Referencia__c
                                       from Retiro_Aprobacion__c where AprobacionM__c != 'Y' ];
@@ -166,8 +309,11 @@ public class controllerCRetiros {
                     Retiro_Aprobacion__c p = new Retiro_Aprobacion__c();
                     p.Cuenta__c =  fcsd.ListPagosC[i].codCuenta;
                     p.Forma_Pago__c = fcsd.ListPagosC[i].fPago;
-                    p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosC[i].fecSYSDE.addHours(6));
-                    p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosC[i].fecMovimto.addHours(6)); 
+                    p.Fecha_SalesForce__c =  date.valueOf(convertStringDate(fcsd.ListPagosC[i].fecMovimto));
+                    p.Fecha_Sysde__c = date.valueOf(convertStringDate(fcsd.ListPagosC[i].fecSYSDE));
+                    fechaMostrar = date.valueOf(convertStringDate(fcsd.ListPagosC[i].fecSYSDE));
+                    //p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosC[i].fecSYSDE.addHours(6));
+                    //p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosC[i].fecMovimto.addHours(6)); 
                     p.Monto_Sysde__c = string.valueOf(fcsd.ListPagosC[i].monMovimto);
                     p.Monto_Salesforce__c =  string.valueOf(fcsd.ListPagosC[i].monRetirar);
                     p.Numero_Referencia__c = fcsd.ListPagosC[i].referencia;
@@ -202,6 +348,130 @@ public class controllerCRetiros {
                 if (ListPagosConciliados.size() > 0)
                 {
                     insert ListPagosConciliados;
+                }
+                //Beneficiarios y Terceros
+                String varCasoSysdeB; 
+                map<String, Detalle_caso__c>  mapCaseB = new map<String, Detalle_caso__c>();
+                list<String> listCasosB = new list<String>();
+                for(Integer i = 0; i < fcsd.ListPagosB.size(); i++)
+                {
+                    if(fcsd.ListPagosB[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysdeB = '00'+ string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagosB[i].numeroCaso >= 1000000 || fcsd.ListPagosB[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysdeB = '0'+ string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+      
+                    }else{
+                        varCasoSysdeB = string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+        
+                    }
+                    System.debug('varCasoSysdeB. ' + varCasoSysdeB);
+                    listCasosB.add(varCasoSysdeB);
+                }
+                
+                list<Detalle_caso__c> recListCB =[select id, Saldo_retirar__c, Porcentaje_Saldo_Patronal__c, Porcentaje_Saldo_Patronal_Ext__c, Cabeza_retiro__c, caso__r.CaseNumber from Detalle_caso__c where Cabeza_retiro__c = true and caso__r.CaseNumber in :listCasosB];        
+                for (Detalle_caso__c item:recListCB){
+                    System.debug('item sera ' + item.caso__r.CaseNumber);
+                    mapCaseB.put(item.caso__r.CaseNumber,item); 
+                } 
+                if (fcsd.ListPagosB != null) 
+                {
+                    mostrarTablaRetirosB = true;
+                }
+                ListPagosB = fcsd.ListPagosB;
+                Integer xb = 1;
+                for(Integer i = 0; i < ListPagosB.size(); i++)
+                {
+                    ListPagosB[i].index = xb;
+                    xb++;
+                    System.debug('numeroCasoListaSysde :' +  String.valueOf(ListPagosB[i].numeroCaso));
+                    if(fcsd.ListPagosB[i].numeroCaso <= 999999)
+                    {
+                        varCasoSysdeB = '00'+ string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+                        
+                    }else if(fcsd.ListPagosB[i].numeroCaso >= 1000000 || fcsd.ListPagosB[i].numeroCaso <= 9999999 )
+                    {
+                        varCasoSysdeB = '0'+ string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+                        
+                    }else{
+                        varCasoSysdeB = string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+                        
+                    }
+                    Detalle_caso__c saldoPatronalB = mapCaseB.get(String.valueOf(varCasoSysdeC));
+                 
+                    if(saldoPatronalB!= null)
+                    {
+                    ListPagosB[i].porcentaje = saldoPatronalB.Porcentaje_Saldo_Patronal__c != null ?  saldoPatronalB.Porcentaje_Saldo_Patronal__c : 0;
+                    }else{
+                         ListPagosB[i].porcentaje = 0;
+                    }
+                }
+                ListEnvioRepetidosB = [select Numero_Referencia__c
+                                      from Retiro_Aprobacion__c where AprobacionM__c != 'Y' ];
+                
+                system.debug('Lista 1: '+ListEnvioRepetidosB.size());
+                system.debug('Lista 2: '+ListPagosB.size());
+                for(integer w=0; w<ListEnvioRepetidosB.size(); w++)
+                {
+                    integer pos=null;
+                    for(integer i=0; i<ListPagosB.size(); i++)
+                    {
+                        if(ListPagosB[i].referencia == ListEnvioRepetidosB[w].Numero_Referencia__c)   
+                        {
+                            pos=i;
+                        }
+                    }
+                    
+                    if(pos!=null){ListPagosB.remove(pos);}
+                }   
+                
+                for(integer i=0; i<fcsd.ListPagosB.size(); i++)
+                {
+                    Retiro_Aprobacion__c p = new Retiro_Aprobacion__c();
+                    p.Cuenta__c =  fcsd.ListPagosB[i].codCuenta;
+                    p.Forma_Pago__c = fcsd.ListPagosB[i].fPago;
+                    p.Fecha_SalesForce__c =  date.valueOf(convertStringDate(fcsd.ListPagosB[i].fecMovimto));
+                    p.Fecha_Sysde__c = date.valueOf(convertStringDate(fcsd.ListPagosB[i].fecSYSDE));
+                    fechaMostrar = date.valueOf(convertStringDate(fcsd.ListPagosB[i].fecSYSDE));
+                    //p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosC[i].fecSYSDE.addHours(6));
+                    //p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosC[i].fecMovimto.addHours(6)); 
+                    p.Monto_Sysde__c = string.valueOf(fcsd.ListPagosB[i].monMovimto);
+                    p.Monto_Salesforce__c =  string.valueOf(fcsd.ListPagosB[i].monRetirar);
+                    p.Numero_Referencia__c = fcsd.ListPagosB[i].referencia;
+                    p.Numero_Referencia__c = fcsd.ListPagosB[i].referencia;
+                    p.cuenta_bancaria__c = fcsd.ListPagosB[i].cuentaBancaria;
+                    p.cuenta_Destino__c = fcsd.ListPagosB[i].cuentaDestino;
+                    p.monto_total__c = string.valueOf(fcsd.ListPagosB[i].monTotal);
+                    p.banco_destino__c = fcsd.ListPagosB[i].bancoDestino;
+                    p.tipo_cuenta__c = fcsd.ListPagosB[i].tCuenta;
+                    p.moneda__c = fcsd.ListPagosB[i].moneda;
+                    if (fcsd.ListPagosB[i].moneda == 'HNL')
+                    {
+                        p.Monto_HNL__c = string.valueOf(fcsd.ListPagosB[i].monTotal);
+                        fcsd.ListPagosB[i].monHNL = fcsd.ListPagosB[i].monTotal;
+                    }
+                    else
+                    {
+                        p.Monto_USD__c = string.valueOf(fcsd.ListPagosB[i].monTotal);
+                        fcsd.ListPagosB[i].monUSD = fcsd.ListPagosB[i].monTotal;
+                    }
+                    p.tasa_seguridad_poblacional__c = string.valueOf(fcsd.ListPagosB[i].tsp);
+                    p.transferencia_ACH__c = string.valueOf(fcsd.ListPagosB[i].ach);
+                    p.cheque__c = string.valueOf(fcsd.ListPagosB[i].ck);
+                    p.Nombre_Cliente__c = string.valueOf(fcsd.ListPagosB[i].nombreCliente);
+                    p.Nombre_Propietario__c = string.valueOf(fcsd.ListPagosB[i].nombrePropietario);
+                    p.Numero_Caso__c = string.valueOf(fcsd.ListPagosB[i].numeroCaso);
+                    p.Monto_Patronal_Cliente__c = string.valueOf(fcsd.ListPagosB[i].montoPatronalCte);
+                    p.Tipo_Pago__c = 'B';
+                    
+                    ListPagosConciliadosB.add(p);
+                }     
+                
+                if (ListPagosConciliadosB.size() > 0)
+                {
+                    insert ListPagosConciliadosB;
                 }
                 
                 //Intereses
@@ -240,8 +510,11 @@ public class controllerCRetiros {
                     Retiro_Aprobacion__c p = new Retiro_Aprobacion__c();
                     p.Cuenta__c =  fcsd.ListPagosI[i].codCuenta;
                     p.Forma_Pago__c = fcsd.ListPagosI[i].fPago;
-                    p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosI[i].fecSYSDE.addHours(6));
-                    p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosI[i].fecMovimto.addHours(6)); 
+                    p.Fecha_SalesForce__c =  date.valueOf(convertStringDate(fcsd.ListPagosI[i].fecMovimto));
+                    p.Fecha_Sysde__c = date.valueOf(convertStringDate(fcsd.ListPagosI[i].fecSYSDE));
+                    fechaMostrar = date.valueOf(convertStringDate(fcsd.ListPagosI[i].fecSYSDE));
+                    //p.Fecha_SalesForce__c =  date.valueOf(fcsd.ListPagosI[i].fecSYSDE.addHours(6));
+                    //p.Fecha_Sysde__c = date.valueOf(fcsd.ListPagosI[i].fecMovimto.addHours(6)); 
                     p.Monto_Sysde__c = string.valueOf(fcsd.ListPagosI[i].monMovimto);
                     p.Monto_Salesforce__c =  string.valueOf(fcsd.ListPagosI[i].monRetirar);
                     p.Numero_Referencia__c = fcsd.ListPagosI[i].referencia;
@@ -289,6 +562,47 @@ public class controllerCRetiros {
         }
     }
     
+    public static Date convertStringDate(String stringDate){
+        try{
+            list<String> separador = stringDate.split('-');
+            Date fecha = date.valueOf(dateTime.newInstance(integer.valueOf(separador[2])+ (integer.valueOf(separador[2]) > (date.today().year() - 2000) ? 1900 :2000), MesLetras(separador[1]), integer.valueOf(separador[0])));
+            return fecha;
+        }catch(Exception ex){
+            return convertStringDateOther(stringDate);
+        }
+        
+    }
+    public static Date convertStringDateOther(String stringDate){
+        try{
+            list<String> separador = stringDate.split('/');
+            Date fecha = date.valueOf(dateTime.newInstance(integer.valueOf(separador[2])+ (integer.valueOf(separador[2]) > (date.today().year() - 2000) ? 1900 :2000),integer.valueOf(separador[1]) , integer.valueOf(separador[0])));
+            return fecha;
+        }catch(Exception ex){
+            return null;
+        }
+        
+    }
+    public static integer MesLetras (string mes){
+        integer respuesta ;
+        try{
+            if(mes=='JAN' || mes=='ENE'){respuesta = 1;}
+            if(mes=='FEB'){respuesta = 2;}
+            if(mes=='MAR'){respuesta = 3;}
+            if(mes=='APR' || mes=='ABR'){respuesta = 4;}
+            if(mes=='MAY' ){respuesta = 5;}
+            if(mes=='JUN' ){respuesta = 6;}
+            if(mes=='JUL' ){respuesta = 7;}
+            if(mes=='AUG' || mes=='AGO'){respuesta = 8;}
+            if(mes=='SEP' ){respuesta = 9;}
+            if(mes=='OCT' ){respuesta = 10;}
+            if(mes=='NOV' ){respuesta = 11;}
+            if(mes=='DEC' || mes=='DIC'){respuesta = 12;}
+            
+        }catch(exception ex){
+            system.debug('error: '+ex.getMessage()+ 'Error: '+ex.getLineNumber()+', parametro: '+mes);
+        }
+        return respuesta;
+    }
     ///Envio aprobacion 
     public void envioAprobacion()
     {
@@ -436,6 +750,53 @@ public class controllerCRetiros {
         } 
     }
     
+    public void envioAprobacionB()
+    {
+        try{
+            Retiro_Aprobacion__c ne = [select Numero_Referencia__c, Nombre_Cliente__c
+                                       from Retiro_Aprobacion__c limit 1];
+            
+            if (ne.Numero_Referencia__c == Num_CodReferencia)
+            {
+                
+                integer pas;
+                for(integer i=0; i<ListPagosB.size(); i++)
+                {
+                    
+                    if(ListPagosB[i].referencia == Num_CodReferencia)   
+                    {
+                        pas=i;
+                    }
+                    
+                }
+                ListPagosB.remove(pas);
+            }
+            else
+            {
+                list<Retiro_Aprobacion__c> modifi = new list<Retiro_Aprobacion__c> ();
+                modifi = [select Numero_Referencia__c, Nombre_Cliente__c, AprobacionM__c,id from Retiro_Aprobacion__c where Numero_Referencia__c =: Num_CodReferencia];
+                
+                if(modifi.size()>0){modifi[0].AprobacionM__c = 'S';}
+                update modifi;
+                
+                integer pas;
+                for(integer i=0; i<ListPagosB.size(); i++)
+                {
+                    
+                    if(ListPagosB[i].referencia == Num_CodReferencia)   
+                    {
+                        pas=i;
+                    }
+                    
+                }
+                
+                ListPagosB.remove(pas);
+            }
+            
+        }catch(Exception ex){
+            
+        } 
+    }
     //Borrar Registros 
     public void Eliminar()
     {
@@ -535,6 +896,42 @@ public class controllerCRetiros {
             }
             update pao;
             ListPagosI.clear();
+        }
+    	catch(Exception e)
+        {
+            system.debug('error: '+ e.getMessage()+', linea: '+ e.getLineNumber());
+        }     
+    }
+    
+    public void enviarListaTotalB()
+    {
+        try{
+            ListEnvioRepetidosB = [select Numero_Referencia__c
+                                  from Retiro_Aprobacion__c where AprobacionM__c = null and Tipo_Pago__c = 'B'];
+            
+            list<Retiro_Aprobacion__c> pao = new list<Retiro_Aprobacion__c>();
+            list<string> listNumeroReferencia = new list<string>();
+            
+            
+            for(integer k=0; k<ListPagosB.size(); k++)
+            {
+                listNumeroReferencia.add(ListPagosB[k].referencia);
+            }
+            pao = [select Numero_Referencia__c, AprobacionM__c,id 
+                  from Retiro_Aprobacion__c where Numero_Referencia__c in: listNumeroReferencia ];
+            
+            for(integer k=0; k<ListPagosB.size(); k++)
+            {
+                for(integer w=0; w<ListEnvioRepetidosB.size(); w++)
+                {
+                    if(pao[w].Numero_Referencia__c == ListPagosB[k].referencia)
+                    {
+                        pao[w].AprobacionM__c = 'S';
+                    }
+                } 
+            }
+            update pao;
+            ListPagosB.clear();
         }
     	catch(Exception e)
         {

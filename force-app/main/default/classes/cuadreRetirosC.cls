@@ -14,8 +14,8 @@ public with sharing class cuadreRetirosC {
     public Decimal monTotal { get; set; }
     public Decimal monHNL { get; set; }
     public Decimal monUSD { get; set; }
-    public DateTime fecSYSDE { get; set; }
-    public DateTime fecMovimto { get; set; }
+    public string fecSYSDE { get; set; }
+    public string fecMovimto { get; set; }
     public Decimal comparacion { get; set; }
     public Decimal comparaFecha { get; set; }
     public string cuentaBancaria { get; set; }
@@ -23,13 +23,16 @@ public with sharing class cuadreRetirosC {
     public string bancoDestino { get; set; }
     public string tCuenta { get; set; }
     public string moneda { get; set; }
+    public Decimal montoPignorado { get; set; }
+    public Decimal porcentaje { get; set; }
     public Integer index { get; set; }
     
 
     public cuadreRetirosC(string referencia, string codCuenta, string nombreCliente, string idCliente,Decimal numeroCaso, string fPago, 
                           Decimal monMovimto, Decimal monRetirar, Decimal montoPatronalCte, Decimal tsp, Decimal ach, Decimal ck, Decimal monTotal,
-                          Decimal monHNL, Decimal monUSD, DateTime fecSYSDE, DateTime fecMovimto, Decimal comparacion,  Decimal comparaFecha,
-                          string cuentaBancaria, string cuentaDestino, string bancoDestino, string tCuenta, string moneda, Integer index)
+                          Decimal monHNL, Decimal monUSD, string fecSYSDE, string fecMovimto, Decimal comparacion,  Decimal comparaFecha,
+                          string cuentaBancaria, string cuentaDestino, string bancoDestino, string tCuenta, string moneda, Decimal montoPignorado,
+                          Decimal porcentaje, Integer index)
     {
         //ListPagosC =new List<ListPagosC>();
         
@@ -55,6 +58,8 @@ public with sharing class cuadreRetirosC {
             this.bancoDestino = bancoDestino;
             this.tCuenta = tCuenta;
             this.moneda = moneda;
+        	this.montoPignorado = montoPignorado;
+        	this.porcentaje = porcentaje;
         	this.index = index;
         	//this.totalR = sum.(monTotal);
         

@@ -100,11 +100,6 @@
                 <default>false</default>
                 <label>Aguinaldo2020</label>
             </value>
-            <value>
-                <fullName>Campaña Institucional 2021</fullName>
-                <default>false</default>
-                <label>CAMPAÑA INSTITUCIONAL 2021</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

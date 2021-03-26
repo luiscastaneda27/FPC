@@ -208,7 +208,7 @@
         </div><br/><br/>
           8. Teléfono de Residencia &nbsp;
             <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
-        <!--Teléfono de Residencia {!info.pcTelefonoCN}-->{!telD}
+                <!--Teléfono de Residencia {!info.pcTelefonoCN}-->{!telD} /{!telTrab}/{!telRes}
         </div><br/><br/>
         </div>
         <br/>   <br/>    

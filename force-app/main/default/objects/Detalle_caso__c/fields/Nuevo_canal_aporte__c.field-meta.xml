@@ -9,7 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <controllingField>Tipo_Operacion__c</controllingField>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
@@ -25,7 +24,12 @@
             <value>
                 <fullName>TA</fullName>
                 <default>false</default>
-                <label>Debito a Tarjeta de Crédito</label>
+                <label>Debito a Tarjeta de Crédito Ficohsa</label>
+            </value>
+            <value>
+                <fullName>TAOB</fullName>
+                <default>false</default>
+                <label>Debito a Tarjeta de Crédito Otros Bancos</label>
             </value>
             <value>
                 <fullName>IT</fullName>
@@ -50,10 +54,12 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
             <valueName>AH</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
             <valueName>TA</valueName>
         </valueSettings>
         <valueSettings>
@@ -67,6 +73,10 @@
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
             <valueName>TL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A8</controllingFieldValue>
+            <valueName>TAOB</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

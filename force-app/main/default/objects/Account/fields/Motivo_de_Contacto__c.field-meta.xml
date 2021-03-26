@@ -107,11 +107,6 @@
                 <label>Hondureños en el Extranjero</label>
             </value>
             <value>
-                <fullName>Campaña Institucional 2021</fullName>
-                <default>false</default>
-                <label>Campaña Institucional 2021</label>
-            </value>
-            <value>
                 <fullName>AGUINALDO 2018</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

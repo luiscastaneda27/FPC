@@ -9,7 +9,6 @@
     <columns>Fecha_Deposito__c</columns>
     <columns>Tipo_SaldoN__c</columns>
     <columns>LAST_UPDATE</columns>
-    <columns>Oficial_de_negocios__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

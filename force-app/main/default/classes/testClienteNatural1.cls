@@ -23,7 +23,7 @@ public class testClienteNatural1 {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+        //cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
@@ -157,7 +157,7 @@ public class testClienteNatural1 {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+        //cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
@@ -605,7 +605,7 @@ public class testClienteNatural1 {
         p.disbotBene = false;
         p.fechaBeneficiarioConti = null;
         p.ParentescoConti = '';
-    	p.mostrarTablaConti = false;
+    	//p.mostrarTablaConti = false;
     	p.mostrarTablaModificarConti = false;
     	p.Num_CodigoConti = '';
         p.NO_APLICASEGURO();

@@ -3,6 +3,14 @@ public class testIntereses {
 	static testMethod void Controller_AprobacionPagoInteres()
      {
          //test.startTest();
+         ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = '12345', Cuenta__c = '12345');
+         upsert a Cuenta__c;
+         
+         ControllerAdministracionIntereses gaa = new ControllerAdministracionIntereses();
+         gaa.insertFIle(Blob.valueOf('test'), 'test', a.Id);
+         gaa.insertFIle(Blob.valueOf('test2'), 'test2', a.Id);
+         
+         
          Controller_AprobacionPagoInteres p = new Controller_AprobacionPagoInteres();
          p.mostrarRegistrados=true;
          p.mostrarBtnAPROBAR=true;
@@ -82,6 +90,10 @@ public class testIntereses {
          p.listS = null;
          p.ListIntRegistrados = null;
          p.CuentaAprobadoD = '';
+         String body = '[ { "Cuenta": "12345", "NombreCompleto": "NICOLE  ZAPATA AGUILAR", "Identidad": "0801-1992-20733", "TipoFondo": "101", "CausaDescripcion": "AFILIACION POR SOLICITUD", "Cod_Causa": null, "EstadoCuenta": "A", "Tipodepago": "Fijo", "Montodepago": "200", "Ajuste": null, "Diadepago": "12", "Formadepago": "CK", "Bancos": null, "NoCuenta": null, "TipodeCuenta": null, "EstadoAprobacion": "R", "Id_pagointeres": 4546, "TotalFondo": null, "CantidadPignorada": null, "Moneda": null, "fechadeRegistro": "2021-03-11T10:53:20", "fechadeActivacion": null, "LEE_ERRORES": null, "P_ERROR": null } ]';
+         p.ListIntRegistrados = (List<classPagoInteresesReg>)System.JSON.deserialize(body, List<classPagoInteresesReg>.class);  
+         p.MuestraRegistrados();
+         
          p.MostrarVentanaDenegacionu();
          p.MostrarVentanaDenegacion();
          p.Aprobar();

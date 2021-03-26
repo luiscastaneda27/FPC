@@ -116,11 +116,6 @@
                 <default>false</default>
                 <label>Turistico</label>
             </value>
-            <value>
-                <fullName>271</fullName>
-                <default>false</default>
-                <label>OTRA ACT DEL SERVICIO ALIMENTACION</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

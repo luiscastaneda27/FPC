@@ -80,7 +80,7 @@ public class aSysdeReporteCalidad {
            
             HttpRequest request = new HttpRequest();
             String url = claseUtilPlanillas.urlSysde('Test'); 
-            //url='http://190.5.68.49:9090/';
+            url='http://190.5.68.49:9090/';
             request.setEndpoint(url + 'api/clientes/reportes');
             request.setMethod('POST');
             request.setBody(cons);
