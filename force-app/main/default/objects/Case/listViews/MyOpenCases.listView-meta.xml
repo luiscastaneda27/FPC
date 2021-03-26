@@ -12,7 +12,7 @@
     <filters>
         <field>CASES.STATUS</field>
         <operation>equals</operation>
-        <value>Nuevo,Devuelto,Rechazado,Esperando Documentación</value>
+        <value>Nuevo,Devuelto,Rechazado</value>
     </filters>
     <label>Mis Casos Abiertos</label>
 </ListView>

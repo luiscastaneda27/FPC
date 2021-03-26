@@ -555,7 +555,7 @@
                   </table></td>
               </tr -->
               <tr>
-                <td height="20">&nbsp;</td>
+                <td height="20"> </td>
               </tr>
               
               <apex:repeat value="{!listCuentas}" var="linea">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Por_Defecto_Tel__c</fullName>
+    <fullName>Por_defecto_tel__c</fullName>
     <externalId>false</externalId>
-    <label>Por_Defecto_Tel</label>
+    <label>Por defecto tel</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -19,7 +19,7 @@
             <value>
                 <fullName>N</fullName>
                 <default>false</default>
-                <label>NO</label>
+                <label>No</label>
             </value>
         </valueSetDefinition>
     </valueSet>

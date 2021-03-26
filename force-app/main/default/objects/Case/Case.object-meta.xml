@@ -184,8 +184,8 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>ServicesCaseRecordPage</content>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>Caso_P_gina_de_registro4</content>
         <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>

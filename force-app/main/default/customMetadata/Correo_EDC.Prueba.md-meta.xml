@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Prueba</label>
+    <protected>false</protected>
+    <values>
+        <field>Cuerpo__c</field>
+        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt; 
+&lt;head&gt; 
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt; 
+&lt;title&gt;Documento sin título&lt;/title&gt; 
+&lt;style&gt; 
+element.style { 
+ position: relative; padding: 1rem; text-align: left; margin-left:16.7rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 15px; 
+} 
+&lt;/style&gt; 
+
+&lt;/head&gt; 
+
+&lt;body&gt; 
+
+&lt;div class=&quot;row&quot; style=&quot;margin:0;padding:0;&quot; align=&quot;center&quot;&gt; 
+ &lt;div class=&quot;col-lg-12&quot;&gt; 
+ &lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576556772000/Plantilla_header&quot;/&gt; 
+ &lt;/div&gt; 
+ &lt;div class=&quot;texto-encima&quot; style=&quot;position: relative; padding: 1rem; text-align: left; margin-left:16.7rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 15px;&quot;&gt;Estimad@, getDestinatario&lt;/div&gt; 
+ &lt;div class=&quot;col-lg-12&quot;&gt; 
+ &lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576556754000/Plantilla_Body&quot;/&gt; 
+ &lt;/div&gt; 
+ &lt;div class=&quot;col-lg-12&quot; style=&quot;top:-10px;&quot;&gt; 
+ &lt;a href=&quot;http://www.ficohsaimagencorporativa.com/2018/pdfs/Pensiones/guiadeuso.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576173359000/Plantilla_Boton&quot; style=&quot;width:15%;&quot; /&gt;&lt;/a&gt; 
+ &lt;/div&gt;&lt;br/&gt; 
+&lt;/div&gt; 
+
+&lt;/body&gt; 
+&lt;/html&gt;</value>
+    </values>
+</CustomMetadata>

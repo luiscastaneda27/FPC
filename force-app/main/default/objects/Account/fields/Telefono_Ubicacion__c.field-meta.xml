@@ -14,12 +14,12 @@
             <value>
                 <fullName>C</fullName>
                 <default>false</default>
-                <label>CASA</label>
+                <label>Casa</label>
             </value>
             <value>
                 <fullName>T</fullName>
                 <default>false</default>
-                <label>TRABAJO</label>
+                <label>Trabajo</label>
             </value>
         </valueSetDefinition>
     </valueSet>

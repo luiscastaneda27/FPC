@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>sector_n__c</fullName>
     <externalId>false</externalId>
-    <label>sector_n</label>
+    <label>Giro de la Empresa</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -115,11 +115,6 @@
                 <fullName>12</fullName>
                 <default>false</default>
                 <label>Turistico</label>
-            </value>
-            <value>
-                <fullName>271</fullName>
-                <default>false</default>
-                <label>OTRA ACT DEL SERVICIO ALIMENTACION</label>
             </value>
         </valueSetDefinition>
     </valueSet>

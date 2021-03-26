@@ -7,11 +7,13 @@
     <columns>ACCOUNT.PHONE1</columns>
     <columns>ACCOUNT.TYPE</columns>
     <columns>CORE.USERS.ALIAS</columns>
+    <columns>ACCOUNT.RECORDTYPE</columns>
+    <columns>ACCOUNT.CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>ACCOUNT.CREATED_DATE</field>
-        <operation>equals</operation>
-        <value>3/11/2020 12:00 AM</value>
+        <operation>greaterThan</operation>
+        <value>2/10/2020 12:00 AM</value>
     </filters>
     <label>Nuevos de esta semana</label>
 </ListView>

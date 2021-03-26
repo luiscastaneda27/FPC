@@ -1,5 +1,5 @@
 public class controllerApiCRetiros {
-    public static classCRetiros conciliaRetiros(Date fecha_retiro) {
+/*public static classCRetiros conciliaRetiros(Date fecha_retiro) {
         
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -50,8 +50,61 @@ public class controllerApiCRetiros {
         
         system.debug('debuggAPI' +' '+ fcsd);
 		return fcsd;   
-    }
+    }*/	    
+    
+	public static classCRetiros guardarCliente(date fecha_retiro) {
+        
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');		
+		request.setMethod('POST');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+		request.setEndpoint(url + 'api/conciliaRetiros/generaR');
+		classCRetiros fcsd= new classCRetiros();
+		String respuesta = '';
+		system.debug('Entro al REST del EDC');
+		try{
+						
+			classJson envio = new classJson();
+            classCRetiros claseEnvio = new classCRetiros();
+            claseEnvio.fecha = fecha_retiro;
+			envio.contenido = JSON.serialize(claseEnvio);
+			String cons = 'contenido=' + envio.contenido;
+			system.debug(cons);		
+			request.setBody(cons);	
+			//HttpResponse response = http.send(request);
+	    	//respuesta = response.getBody();
+            system.debug(respuesta); 
+            HttpResponse response;// = http.send(request);
+            if(test.isRunningTest())
+            {
+               	respuesta = '{"ListPagos":[{"referencia":"22655B1","nombreCliente":"HAROLES ANDRES GEADAH DONAIRE","numeroCaso":"655","codCuenta":"51600","monMovimto":"40000","monRetirar":"6321.16","fPago":"EF","fecMovimto":"26-MAY-20","fecSYSDE":"26-MAY-20","comparacion":"1","montoNetoSysde":"39960","montoNetoSF":"26281.16","comparaNeto":"1","comparaFecha":"0","montoPignorado":"16300"},{"referencia":"22655B","nombreCliente":"ROSA MARIA AGUILAR MARTINEZ","numeroCaso":"654","codCuenta":"51600","monMovimto":"40000","monRetirar":"6321.16","fPago":"EF","fecMovimto":"26-MAY-20","fecSYSDE":"26-MAY-20","comparacion":"1","montoNetoSysde":"39960","montoNetoSF":"26281.16","comparaNeto":"1","comparaFecha":"0","montoPignorado":"16300"}],"ListPagosC":[{"referencia":"22722","numeroCaso":"501524","nombreCliente":"RAUL EDUARDO MENDOZA PALMA","codCuenta":"94939","fPago":"EF","monMovimto":"1000","monRetirar":"1000","montoPatronalCte":"0","tsp":"2","ach":"0","ck":"0","monTotal":"998","fecSYSDE":"26-MAY-20","fecMovimto":"26-MAY-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200002019441","cuentaDestino":"","bancoDestino":"","tCuenta":"","moneda":"HNL","montoPignorado":"0"},{"referencia":"22667","numeroCaso":"501110","nombreCliente":"CINTYA DOMITILA ALCANTARA GIRON","codCuenta":"25587","fPago":"EF","monMovimto":"1052","monRetirar":"1052","montoPatronalCte":"0","tsp":"4","ach":"0","ck":"0","monTotal":"1048","fecSYSDE":"26-MAY-20","fecMovimto":"26-MAY-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200002019441","cuentaDestino":"","bancoDestino":"","tCuenta":"","moneda":"HNL","montoPignorado":"0"}],"ListPagosB":[{"referencia":"22743B","numeroCaso":"0000000710","nombreCliente":"YAMY LETICIA RAUDALES MALDONADO","nombrePropietario":"AELJANDRO JOSE FLORES HERNANDEZ","codCuenta":"77419","fPago":"EF","monMovimto":"1200","monRetirar":"600","montoPatronalCte":"0","tsp":"2","ach":"0","ck":"0","monTotal":"598","fecSYSDE":"30-JAN-20","fecMovimto":"30-JAN-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200002019441","cuentaDestino":"","bancoDestino":"","tCuenta":"","moneda":"","montoPignorado":"0"},{"referencia":"22743B1","numeroCaso":"0000000711","nombreCliente":"ANDRES RAUL RAUDALES MALDONADO","nombrePropietario":"AELJANDRO JOSE FLORES HERNANDEZ","codCuenta":"77419","fPago":"EF","monMovimto":"1200","monRetirar":"600","montoPatronalCte":"0","tsp":"2","ach":"0","ck":"0","monTotal":"598","fecSYSDE":"30-JAN-20","fecMovimto":"30-JAN-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200002019441","cuentaDestino":"","bancoDestino":"","tCuenta":"","moneda":"","montoPignorado":"0"}],"ListPagosI":[{"referencia":"22509","numeroCaso":"1287","nombreCliente":"MARTINEZ PERDOMO LIGIA MARIA","codCuenta":"90001","fPago":"ACH","monMovimto":"5300","monRetirar":"5300","montoPatronalCte":"0","tsp":"0","ach":"35","ck":"0","monTotal":"5265","fecSYSDE":"28-JAN-20","fecMovimto":"28-JAN-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200005556658","cuentaDestino":"1221160298","bancoDestino":"30","tCuenta":"Savings","moneda":"HNL","montoPignorado":"0"},{"referencia":"22518","numeroCaso":"1296","nombreCliente":"MOLINA CRUZ OLGA ZULEMA","codCuenta":"87530","fPago":"ACH","monMovimto":"2485674.29","monRetirar":"2485674.29","montoPatronalCte":"0","tsp":"0","ach":"35","ck":"0","monTotal":"2485639.29","fecSYSDE":"28-JAN-20","fecMovimto":"28-JAN-20","comparacion":"0","comparaFecha":"0","cuentaBancaria":"200002019441","cuentaDestino":"104207352","bancoDestino":"24","tCuenta":"Savings","moneda":"HNL","montoPignorado":"0"}],"ListPagosP":[{"referencia":"22663P","numeroCaso":"501060","nombreCliente":"","codCuenta":"51600","fPago":"AH","monRetirar":"4925.66","tsp":"10","ach":"0","ck":"0","monTotal":"4915.66","fecSYSDE":"26-MAY-20","moneda":"HNL","cuentaBancaria":"200002019441","cuentaDestino":"54785","bancoDestino":"28","tCuenta":""},{"referencia":"22664P","numeroCaso":"501075","nombreCliente":"CASH LOGISTICS S.A. DE C.V.","codCuenta":"38260","fPago":"AH","monRetirar":"1772.435284","tsp":"4","ach":"0","ck":"0","monTotal":"1768.435284","fecSYSDE":"26-MAY-20","moneda":"HNL","cuentaBancaria":"200002019441","cuentaDestino":"001101367316","bancoDestino":"28","tCuenta":""}]}';
+                fcsd = (classCRetiros)System.JSON.deserialize(respuesta, classCRetiros.class);
+            }
+            
+            else{
+                response = http.send(request);
+            }
+	    	respuesta = response.getBody();
+            
+            //fcsd = respuesta.split(',');
+            system.debug('debuggRespuesta' +''+ respuesta); 
+            
+            if (response.getStatusCode() == 200) 
+           {
+                
+	            fcsd = (classCRetiros)System.JSON.deserialize(response.getBody(), classCRetiros.class);
+               
+           }
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage());
 	
+        }Catch(Exception e){
+			system.debug(e.getMessage());	
+		} 
+		return fcsd;   
+    }    
     
     public static String pagaRetiros(cuadreRetirosC2 claseEnvio) {
         
@@ -88,9 +141,6 @@ public class controllerApiCRetiros {
 		} 
 		return respuesta;   
     }
-    
-    
-    
     ///LISTA 
     /*
       public static String pagaRetiros (cuadreRetirosC2 claseEnvio) {
@@ -144,16 +194,10 @@ public class controllerApiCRetiros {
 		return resultado;   
     }
     
-    */
-    
+    */   
      public class classResPagoRetiros
     {
         public string mensaje { get; set; }
         public string codReferencia { get; set; }
-
-    }
-
-	
-    
-    
+    }  
 }

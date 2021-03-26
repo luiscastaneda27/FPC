@@ -31,11 +31,6 @@
                 <default>false</default>
                 <label>Patronal Extraordinario</label>
             </value>
-            <value>
-                <fullName>18</fullName>
-                <default>false</default>
-                <label>Seguro de Vida</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

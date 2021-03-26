@@ -123,22 +123,34 @@ public class ControllerRetirosAproba {
             Retiro_Aprobacion__c na = [select Numero_Referencia__c
                                        from Retiro_Aprobacion__c limit 1];
             
+            system.debug('na: '+na);
+            
             if (na.Numero_Referencia__c == Num_CodReferencia)
             {
+                system.debug('entro a if: '+Num_CodReferencia);
                 integer pos;
                 for(integer i=0; i<ListSeleccionado.size(); i++)
                 {
-                    
+                    system.debug('seleccionado: '+ListSeleccionado[i].Numero_Referencia__c);
                     if(ListSeleccionado[i].Numero_Referencia__c == Num_CodReferencia)   
                     {
                         pos=i;
+                        system.debug('pos: '+pos);
+                        ListSeleccionado[i].AprobacionM__c = '';
                     }
-                    
+                   /* for(Retiro_Aprobacion__c acct :acctList){
+                acct.AprobacionM__c = 'Y';
+            
                 }
+            
+            update acctList;*/
+                }
+                update ListSeleccionado;
                 ListSeleccionado.remove(pos);
             }
             else
             {
+                system.debug('entro a else');
                 list<Retiro_Aprobacion__c> modifi = new list<Retiro_Aprobacion__c> ();
                 modifi = [select Numero_Referencia__c, AprobacionM__c,id from Retiro_Aprobacion__c where Numero_Referencia__c =: Num_CodReferencia ];
                 

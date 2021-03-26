@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>AGUINALDO 2018</fullName>
+                <default>false</default>
+                <label>AGUINALDO 2018</label>
+            </value>
+            <value>
                 <fullName>Asesoría Producto Empresarial</fullName>
                 <default>false</default>
                 <label>Asesoría Producto Empresarial</label>
@@ -90,32 +95,6 @@
                 <fullName>Referido Medios Electrónicos USA</fullName>
                 <default>false</default>
                 <label>Referido Medios Electrónicos USA</label>
-            </value>
-            <value>
-                <fullName>PROTECCIÓN INTEGRAL REDES</fullName>
-                <default>false</default>
-                <label>PROTECCIÓN INTEGRAL REDES</label>
-            </value>
-            <value>
-                <fullName>AGUINALDO 2019</fullName>
-                <default>false</default>
-                <label>AGUINALDO 2019</label>
-            </value>
-            <value>
-                <fullName>Hondureños en el Extranjero</fullName>
-                <default>false</default>
-                <label>Hondureños en el Extranjero</label>
-            </value>
-            <value>
-                <fullName>Campaña Institucional 2021</fullName>
-                <default>false</default>
-                <label>Campaña Institucional 2021</label>
-            </value>
-            <value>
-                <fullName>AGUINALDO 2018</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>AGUINALDO 2018</label>
             </value>
         </valueSetDefinition>
     </valueSet>

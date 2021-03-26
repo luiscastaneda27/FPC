@@ -24,16 +24,15 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
         <criteriaItems>
             <field>Case.Enviar_a_aprobacion__c</field>
             <operation>equals</operation>
             <value>Verdadero</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Aprobado__c</field>
+            <field>Case.Archivo_Adjunto__c</field>
             <operation>equals</operation>
-            <value>Falso</value>
+            <value>Verdadero</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType</field>
@@ -46,9 +45,9 @@
             <value>P1</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Archivo_Adjunto__c</field>
+            <field>Case.Aprobado__c</field>
             <operation>equals</operation>
-            <value>Verdadero</value>
+            <value>Falso</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
@@ -61,7 +60,7 @@
             <type>Alert</type>
         </action>
         <action>
-            <name>Esperando_Documentacion</name>
+            <name>Esperando_documentacion</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>
@@ -84,7 +83,7 @@
         </action>
     </initialSubmissionActions>
     <label>Constancia de Pignoración</label>
-    <processOrder>5</processOrder>
+    <processOrder>6</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

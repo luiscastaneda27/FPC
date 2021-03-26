@@ -7,6 +7,8 @@ trigger TR_TrasladarProspecto on Lead (after insert) {
     for (Lead sc: System.Trigger.new) {
         
         //if (sc.LeadSource == 'Web')
+        //{
+            
             Preventa__c obj = new PreVenta__c (
                 
                 Referido_por__c = sc.Referido_por__c,
@@ -16,9 +18,6 @@ trigger TR_TrasladarProspecto on Lead (after insert) {
                 Cliente_Localizable__c = sc.Cliente_Localizable__c,
                 CurrencyIsoCode = sc.CurrencyIsoCode,
                 Departamento__c = sc.Departamento__c,
-               // if(Motivo_Contacto__c = 'Hondureños en el Extranjero')
-               //Para que inserte en preventa la identidad
-                Identificacion__c = sc.Identificacion__c,                               
                 Email__c = sc.Email,
                 LeadSource__c = sc.LeadSource,
                 Name = sc.Name,

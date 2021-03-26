@@ -13,29 +13,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>S</fullName>
+                <fullName>Soltero/a</fullName>
                 <default>false</default>
                 <label>Soltero/a</label>
             </value>
             <value>
-                <fullName>C</fullName>
+                <fullName>Casado/a</fullName>
                 <default>false</default>
                 <label>Casado/a</label>
             </value>
             <value>
-                <fullName>D</fullName>
+                <fullName>Divorciado/a</fullName>
                 <default>false</default>
                 <label>Divorciado/a</label>
             </value>
             <value>
-                <fullName>V</fullName>
+                <fullName>Viudo/a</fullName>
                 <default>false</default>
                 <label>Viudo/a</label>
-            </value>
-            <value>
-                <fullName>U</fullName>
-                <default>false</default>
-                <label>Unión Libre</label>
             </value>
             <value>
                 <fullName>Comprometido/a</fullName>

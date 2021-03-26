@@ -10,7 +10,6 @@ public class aFPCCasosCallouts {
             }
             Datetime fecha = Datetime.now();
             fecha = fecha.addHours(Integer.valueOf(Label.HorasServicioCasos));
-            //fecha = fecha.addMinutes(-10);
             String acron = fecha.second()+' '+fecha.minute()+' '+fecha.hour()+' '+fecha.day()+' '+fecha.month()+' ? '+fecha.year();
             System.schedule('Job Casos', acron, new JobCasos());
             if(!solicitud.solicitudExitosa || test.isRunningTest()){

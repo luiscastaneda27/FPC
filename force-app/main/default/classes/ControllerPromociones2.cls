@@ -27,7 +27,7 @@ public class ControllerPromociones2 {
         usuario = Apexpages.currentPage().getParameters().get('usuario');
         natural = [Select id From RecordType Where sObjectType = 'Lead' AND DeveloperName = 'Natural' Limit 1];
         pop3=true;
-        candidato.Motivo_Contacto__c = 'PROTECCIÓN INTEGRAL REDES';
+        candidato.Motivo_Contacto__c = 'CAMPAÑA INSTITUCIONAL 2019';
          
         //candidato.Identificacion__c = v1;
         //candidato.Motivo_Contacto__c = apexpages.;
@@ -222,7 +222,7 @@ public class ControllerPromociones2 {
         candidato.Email = NULL;
         candidato.Telefono_Trabajo__c = NULL;
         candidato.Phone = NULL;
-        candidato.Motivo_Contacto__c = 'PROTECCIÓN INTEGRAL REDES';
+        candidato.Motivo_Contacto__c = 'CAMPAÑA INSTITUCIONAL 2019';
         candidato.Departamento__c  = 'N/A';    
         
     }

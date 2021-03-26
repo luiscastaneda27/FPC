@@ -1,5 +1,4 @@
 public class controllerApiClienteNatural {
-    
     public static String guardarCliente(ClienteNaturales claseEnvio) {
         
         Http http = new Http();
@@ -30,6 +29,8 @@ public class controllerApiClienteNatural {
 		} 
 		return respuesta;   
     }
+    
+
     
     public static String actualizaCliente(NaturalActualizar claseEnvio) {
         
@@ -144,9 +145,7 @@ public class controllerApiClienteNatural {
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            
-            //fcsd = respuesta.split(',');
-            system.debug(respuesta); 
+            system.debug('Resultado: '+respuesta); 
             if (response.getStatusCode() == 200) {
 	            fcsd = (classListas)System.JSON.deserialize(response.getBody(), classListas.class);         
 	        }
@@ -248,7 +247,7 @@ public class controllerApiClienteNatural {
 	    	respuesta = response.getBody();
             
             //fcsd = respuesta.split(',');
-            system.debug('debuggRespuesta' +''+ respuesta); 
+            system.debug('debuggRespuesta: ' + respuesta); 
             
             if (response.getStatusCode() == 200) 
            {
@@ -266,6 +265,45 @@ public class controllerApiClienteNatural {
         
         system.debug('debuggAPI' +' '+ fcsd);
 		return fcsd;   
+    }
+    
+    public static String ConsultaInfoClientePDF(String pc_codCuenta) {
+        
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');		
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+        request.setEndpoint(url + 'api/ConsultaInfoClienteC/'+ pc_codCuenta);
+		ClienteNaturales fcsd= new ClienteNaturales();
+        list<beneficiario> bene = new list<beneficiario>();
+		string respuesta = '';
+		system.debug('Entro al REST del EDC');
+		try{
+
+			HttpResponse response = http.send(request);
+	    	respuesta = response.getBody();
+            
+            //fcsd = respuesta.split(',');
+            system.debug('debuggRespuesta' +''+ respuesta); 
+            
+            if (response.getStatusCode() == 200) 
+           {
+                
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
+               
+           }
+            
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage()+'   '+e.getLineNumber());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage()+'   '+e.getLineNumber());	
+		} 
+        
+        system.debug('debuggAPI' +' '+ fcsd);
+		return respuesta;   
     }
     
     public class classRespuestaAportesCuenta{
@@ -340,7 +378,7 @@ public class controllerApiClienteNatural {
             if (response.getStatusCode() == 200) 
             {
                 
-                PruebaMenu prueba23= new PruebaMenu();
+               // PruebaMenu prueba23= new PruebaMenu();
                 resultado = (list<classRespuestaMenu>)JSON.deserialize(response.getBody(), list<classRespuestaMenu>.class);
                 system.debug('ConversionResultadoPrueba2' + resultado);
              
@@ -354,4 +392,40 @@ public class controllerApiClienteNatural {
          
 		return resultado;   
     }
+    
+      public static ClienteNaturales codClienteConsulta(string codCuenta) {
+        
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');		
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+		request.setEndpoint(url + 'api/muestraCodCliente/'+ codCuenta);
+		ClienteNaturales fcsd= new ClienteNaturales();
+		string respuesta = '';
+		system.debug('Entro al REST del EDC');
+		try{
+
+			HttpResponse response = http.send(request);
+	    	respuesta = response.getBody();
+            
+            //fcsd = respuesta.split(',');
+            system.debug(respuesta); 
+            if (response.getStatusCode() == 200) {
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);         
+	        }
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage());	
+		} 
+         system.debug('debuggAPICO' +' '+ fcsd);
+		 return fcsd;   
+    }
+    
+    
+    
+    
 }

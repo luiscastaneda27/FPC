@@ -161,30 +161,6 @@ public class TestControllerPantJuridProduc {
         jur.pcnumeroidsocc='0601199210849';
         jur.buscarSocio();
         JUR.socioUnicoTIN.PCNumeroID_TIN=  '0601199210849';  
-        jur.ong_osSI();
-        jur.ong_Noseleccionado();
-        jur.ong_NO();
-        jur.ong_Noseleccion();
-        jur.contrastist_siSelec();
-        jur.contrastist_noSelec();
-        jur.contrastist_SelecNO();
-        jur.contrastist_SelecNOno();  
-        jur.ValorNombreTabla = '';
-        jur.GuardarListaClienteONG();  
-        jur.EliminarClienteONG();
-        jur.ActualizaListONG();
-        jur.NumbDILTable = ''; 
-        jur.guardarListaDili();
-        jur.EliminarDIL();
-        jur.ActualizaListDili();
-        jur.EmpresaMercaSIselec();
-        jur.EmpresaMercaSInoselec();    
-        jur.EmpresaMercaNOselec();
-        jur.EmpresaMercaNOnoselec();
-        jur.PersonaUSASIselect();
-        jur.PersonaUSASInoselect();
-        jur.PersonaUSANOselect();
-        jur.PersonaUSANOnoselect();    
             
         jur.ENTIDADSI=true;
             jur.Fatca2=true;
@@ -238,7 +214,7 @@ public class TestControllerPantJuridProduc {
 
 	jur.OcultaTerSI_1 =false;  
     jur.OcultaTerNO_2 =false; 
-   // jur.valorsiONG =true;
+    jur.valorsiONG =true;
     //Variables Cargo publico
     jur.OcultaCarSI  =false;  
     jur.OcultaCarNO  =false;  

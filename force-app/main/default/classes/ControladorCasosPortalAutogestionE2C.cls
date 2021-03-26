@@ -76,6 +76,7 @@ public class ControladorCasosPortalAutogestionE2C {
             idCliente2 = currentRecord.Identificacion__c;   
             System.debug('idCliente2: '+idCliente2);  
         }
+        
         //Fin Generando el Token por Oficial SAC y desde el portal de Agencias/Call Center.
     }
         
@@ -86,6 +87,13 @@ public class ControladorCasosPortalAutogestionE2C {
         }
     }
     
+    public String UrlHost { 
+        get { if(this.UrlHost == Null || this.UrlHost == '')  { 
+            this.UrlHost = 'https://' + ApexPages.currentPage().getHeaders().get('Host') + ApexPages.currentPage().getUrl(); 
+        } 
+            return this.UrlHost; 
+        } set;
+    }
     
     public ControladorCasosPortalAutogestionE2C() { 
         try { 
@@ -130,10 +138,12 @@ public class ControladorCasosPortalAutogestionE2C {
             
             contrato = new Contrato_Aceptado__c();
                
-            
+            if(Site.getBaseUrl() != Null || Site.getBaseUrl() != '') { 
+                this.UrlHost = Site.getBaseUrl(); 
+            } 
             
             cliente = new account();
-                
+            System.debug('idCliente: '+idCliente);    
             if(idCliente != '') {
                 cliente = [select id, name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__c, Departamento_Residencia2__c from account where identificacion__C =:idCliente limit 1];
                 contrato.Cliente__c = cliente.id; contrato.Acepto_Condiciones_de_Portal_Autogestion__C = true; 
@@ -150,10 +160,10 @@ public class ControladorCasosPortalAutogestionE2C {
                 showLogin = true;
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'Navegadores recomendados Google Chrome y Firefox Mozilla'));
             } else if(idCliente == null && caso01[0].RecordType.Name != 'Email to Case') { 
-            	showCaseComplete = true; 
+                showCaseComplete = true; 
                 showLogin = false;
             } else {
-            	ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero se ha producido un error inesperado'));
+                ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero se ha producido un error inesperado'));
             }                
         }
     }
@@ -459,108 +469,105 @@ public class ControladorCasosPortalAutogestionE2C {
     // Fin de Validacion de Token 
     
     public void UpdateTypeCase() {
-        try{
-            List<Usuarios_para_asignacion_Casos_SAC__c> updateUserAsigna = new List<Usuarios_para_asignacion_Casos_SAC__c>();
-            Boolean updateUserAsig = false; 
+        
+        List<Usuarios_para_asignacion_Casos_SAC__c> updateUserAsigna = new List<Usuarios_para_asignacion_Casos_SAC__c>();
+        Boolean updateUserAsig = false; 
+        
+        if (noRecibeToken == True && numCel.length() == 8) { 
+                    
+            List<RecordType> rt2 = [Select Id, Name, DeveloperName From RecordType Where DeveloperName = 'Actualizacion_informacion']; 
+            SolicitudCaso solicitud = AFPCCasos.upsertCaso(caso01[0]);
+            List<Account> cuenta = [Select Id,Name,Identificacion__c,PersonEmail,Owner.Zona__c From Account where Identificacion__c =: idCliente2]; 
+            List<Account> cuenta2 = [Select Id,Name,Identificacion__c,PersonEmail,Owner.Zona__c From Account where PersonEmail =: emailCliente]; 
+            //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web']; 
+            caso01[0].Correo_Electronico__c = emailCliente; 
+            caso01[0].Identificacion__c = idCliente2; 
+            caso01[0].RecordTypeId = rt2[0].Id; 
+            caso01[0].Type = 'Solicitud'; 
+            caso01[0].Subject = rt2[0].Name; 
+            caso01[0].Telefono_Movil__c = numCel;
             
-            if (noRecibeToken && numCel.length() == 8 && !test.isRunningTest()) { 
-                
-                List<RecordType> rt2 = [Select Id, Name, DeveloperName From RecordType Where DeveloperName = 'Actualizacion_informacion']; 
-                SolicitudCaso solicitud = AFPCCasos.upsertCaso(caso01[0]);
-                List<Account> cuenta = [Select Id,Name,Identificacion__c,PersonEmail,Owner.Zona__c From Account where Identificacion__c =: idCliente2]; 
-                List<Account> cuenta2 = [Select Id,Name,Identificacion__c,PersonEmail,Owner.Zona__c From Account where PersonEmail =: emailCliente]; 
-                //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web']; 
-                caso01[0].Correo_Electronico__c = emailCliente; 
-                caso01[0].Identificacion__c = idCliente2; 
-                caso01[0].RecordTypeId = rt2[0].Id; 
-                caso01[0].Type = 'Solicitud'; 
-                caso01[0].Subject = rt2[0].Name; 
-                caso01[0].Telefono_Movil__c = numCel;
-                
-                String zonaVal; 
-                if(!cuenta.isEmpty()) { 
-                    if(cuenta[0].Owner.Zona__c == 'San Pedro Sula') { 
-                        zonaVal = '1'; 
-                    } else if(cuenta[0].Owner.Zona__c == 'Tegucigalpa') { 
-                        zonaVal = '2'; 
-                    } else { 
-                        zonaVal = '3'; 
-                    } 
-                } if(!cuenta2.isEmpty()) { 
-                    if(cuenta2[0].Owner.Zona__c == 'San Pedro Sula') { 
-                        zonaVal = '1'; 
-                    } else if(cuenta2[0].Owner.Zona__c == 'Tegucigalpa') { 
-                        zonaVal = '2'; 
-                    } else { 
-                        zonaVal = '3'; 
-                    } 
-                }
-                
-                List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
-                if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
-                    for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
-                        upac.Ultimo_Caso_Asignado__c = System.now(); 
-                        updateUserAsigna.add(upac); 
-                    }
-                    updateUserAsig = true;
-                    //update updateUserAsigna; 
+            String zonaVal; 
+            if(!cuenta.isEmpty()) { 
+                if(cuenta[0].Owner.Zona__c == 'San Pedro Sula') { 
+                    zonaVal = '1'; 
+                } else if(cuenta[0].Owner.Zona__c == 'Tegucigalpa') { 
+                    zonaVal = '2'; 
+                } else { 
+                    zonaVal = '3'; 
                 } 
-                
-                OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com']; 
-                List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>(); 
-                Messaging.SingleEmailMessage mail01 = new Messaging.SingleEmailMessage(); 
-                mail01.setToAddresses(new String[] {usuarioAsigna[0].usuario__r.email}); 
-                mail01.setSubject('Asiganción de nuevo caso No. ' + caso01[0].CaseNumber); 
-                mail01.setPlainTextBody('Buen día, se notifica que se ha asignado nuevo caso (' + caso01[0].CaseNumber + ') del portal autogestión. \n\nMuchas gracias'); 
-                mail01.setOrgWideEmailAddressId(owea.get(0).Id); 
-                MessageList.add(mail01); 
-                //Messaging.sendEmail(MessageList,false);
-                
-                caso01[0].ownerId = usuarioAsigna[0].usuario__c; 
-                //update caso;
-                solicitud = new SolicitudCaso();
-                solicitud = AFPCCasos.upsertCaso(caso01[0]);
-                if(solicitud.solicitudExitosa) {
-                    caso01[0] = solicitud.caso;    
-                } else {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error444:' + solicitud.error));     
+            } if(!cuenta2.isEmpty()) { 
+                if(cuenta2[0].Owner.Zona__c == 'San Pedro Sula') { 
+                    zonaVal = '1'; 
+                } else if(cuenta2[0].Owner.Zona__c == 'Tegucigalpa') { 
+                    zonaVal = '2'; 
+                } else { 
+                    zonaVal = '3'; 
                 } 
-                
-                Messaging.sendEmail(MessageList,false);
-                
-                styleButton = 'display:none;'; 
-                styleMsgAceptar = 'display:none;'; 
-                styleDiv = 'display:none;'; 
-                styleIngresaToken = 'display:none;';
-                
-                List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Email Datos Inválidos']; 
-                String htmlBody = lstEmailTemplates[0].HtmlValue; 
-                System.debug('htmlBody: '+htmlBody); 
-                htmlBody = htmlBody.replace('[XXXX]', caso01[0].CaseNumber); 
-                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
-                mail.setTemplateId(lstEmailTemplates[0].Id); 
-                mail.setSaveAsActivity(false); 
-                mail.setSubject('Datos Inválidos al intentar crear el caso: '+caso01[0].CaseNumber); 
-                /*mail.setTargetObjectId(usuario[0].Id);*/ 
-                mail.setHtmlBody(htmlBody); 
-                mail.setOrgWideEmailAddressId(owea.get(0).Id); 
-                mail.setToAddresses(new String[] {caso01[0].SuppliedEmail}); 
-                if(!test.isRunningTest()) {
-                    Messaging.SendEmailResult[] resultMail = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail }); 
-                }    
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Su solicitud no ha podido ser procesada. Favor verificar su correo electrónico.'));    
-                
-                if(updateUserAsig) {
-                    update updateUserAsigna;
-                }
-                
-            } else { 
-                noRecibeToken = false; 
-                styleNumCel = 'display:block;'; 
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Digite un número de Celular válido'));    
             }
-        }catch(Exception ex){
             
+            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+            if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
+                for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
+                    upac.Ultimo_Caso_Asignado__c = System.now(); 
+                    updateUserAsigna.add(upac); 
+                }
+                updateUserAsig = true;
+                //update updateUserAsigna; 
+            } 
+            
+            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com']; 
+            List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>(); 
+            Messaging.SingleEmailMessage mail01 = new Messaging.SingleEmailMessage(); 
+            mail01.setToAddresses(new String[] {usuarioAsigna[0].usuario__r.email}); 
+            mail01.setSubject('Asiganción de nuevo caso No. ' + caso01[0].CaseNumber); 
+            mail01.setPlainTextBody('Buen día, se notifica que se ha asignado nuevo caso (' + caso01[0].CaseNumber + ') del portal autogestión. \n\nMuchas gracias'); 
+            mail01.setOrgWideEmailAddressId(owea.get(0).Id); 
+            MessageList.add(mail01); 
+            //Messaging.sendEmail(MessageList,false);
+            
+            caso01[0].ownerId = usuarioAsigna[0].usuario__c; 
+            //update caso;
+            solicitud = new SolicitudCaso();
+            solicitud = AFPCCasos.upsertCaso(caso01[0]);
+            if(solicitud.solicitudExitosa) {
+                caso01[0] = solicitud.caso;    
+            } else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error444:' + solicitud.error));     
+            } 
+            
+            Messaging.sendEmail(MessageList,false);
+            
+            styleButton = 'display:none;'; 
+            styleMsgAceptar = 'display:none;'; 
+            styleDiv = 'display:none;'; 
+            styleIngresaToken = 'display:none;';
+                            
+            List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Email Datos Inválidos']; 
+            String htmlBody = lstEmailTemplates[0].HtmlValue; 
+            System.debug('htmlBody: '+htmlBody); 
+            htmlBody = htmlBody.replace('[XXXX]', caso01[0].CaseNumber); 
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
+            mail.setTemplateId(lstEmailTemplates[0].Id); 
+            mail.setSaveAsActivity(false); 
+            mail.setSubject('Datos Inválidos al intentar crear el caso: '+caso01[0].CaseNumber); 
+            /*mail.setTargetObjectId(usuario[0].Id);*/ 
+            mail.setHtmlBody(htmlBody); 
+            mail.setOrgWideEmailAddressId(owea.get(0).Id); 
+            mail.setToAddresses(new String[] {caso01[0].SuppliedEmail}); 
+            if(!test.isRunningTest()) {
+                Messaging.SendEmailResult[] resultMail = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail }); 
+            }    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Su solicitud no ha podido ser procesada. Favor verificar su correo electrónico.'));    
+        
+            if(updateUserAsig) {
+                update updateUserAsigna;
+            }
+            
+        } else { 
+            noRecibeToken = false; 
+            styleNumCel = 'display:block;'; 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,'Digite un número de Celular válido'));    
         }
     }
     
@@ -672,8 +679,14 @@ public class ControladorCasosPortalAutogestionE2C {
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
                 cuenta = [Select Colectiva__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
-                          Forma_Aportacion__c, Tipo_Fondo__c
+                          Forma_Aportacion__c, Tipo_Fondo__c,Codigo__c
                           from cuentas__c where id = :idCuenta]; 
+                if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
+                    idCuenta = '--';
+                    Cuenta = new cuentas__C();
+                    return;
+                }
                 currencyAccountSelected = cuenta.CurrencyIsoCode; 
                 caso.CurrencyIsoCode = cuenta.CurrencyIsoCode; 
                 for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' and developerName =: recordType Order By name ASC]) { 
@@ -729,10 +742,14 @@ public class ControladorCasosPortalAutogestionE2C {
             system.debug('Error: ' + ex.getMessage()+'Linea: '+ex.getLineNumber());
         } 
     }
-    
     public String codigoVeficacion{get;set;}
     public String inputCodigoVeficacion{get;set;}
     public Boolean popVerificacionCodigo { get; set; }
+    
+    public void reenviarCodigo(){
+        enviarCorreo();
+        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Código enviado nuevamente.'));
+    }
     
     public Boolean validacionTelefono(String phone){
         if(phone == null || (phone != null && phone.trim().length() == 9)){
@@ -740,10 +757,7 @@ public class ControladorCasosPortalAutogestionE2C {
         }
         return false;
     }
-    public void reenviarCodigo(){
-        enviarCorreo();
-        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Código enviado nuevamente.'));
-    }
+    
     public void verificarCodigo(){
         if(codigoVeficacion == inputCodigoVeficacion){
             guardar();
@@ -812,7 +826,7 @@ public class ControladorCasosPortalAutogestionE2C {
                        caso.Telefono_Movil__c = caso.Telefono_Movil__c != null ? caso.Telefono_Movil__c.replace('-', '') : null;
                        caso.Telefono_Trabajo__c = caso.Telefono_Trabajo__c != null ? caso.Telefono_Trabajo__c.replace('-', '') : null;
                    }
-               } else if(cTipoCaso.otros && caso.Description == null) {
+               }else if(cTipoCaso.otros && caso.Description == null) {
                    hayError = true;
                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por favor escriba una breve descripción de la gestión'));
                } else if(cTipoCaso.constancias || ctipoCaso.estadoCuenta) {
@@ -850,9 +864,9 @@ public class ControladorCasosPortalAutogestionE2C {
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){ 
                     hayerror = true; 
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=14 && detalleCaso.Nueva_fecha_aporte__c.day() !=26){ 
+                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){ 
                     hayerror = true; 
-                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (14 ó 26) de cada mes')));
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
                 else if(detallecaso.Tipo_Operacion__c == 'A5' && detalleCaso.Inicio_Fecha_Aporte__c < datetemp){ 
                     hayerror = true; 
@@ -928,32 +942,55 @@ public class ControladorCasosPortalAutogestionE2C {
                     insertDetalle = true; 
                 } 
                 if(cTipoCaso.aumDisAporte && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' || cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3')) { 
-                    if(cTipoCaso.aumDisAporte) { 
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
-                    	p.Ultimo_Caso_Asignado__c = System.now(); 
-                    	updateUsuarioAsigna = true;
-                    } 
-                    caso.ownerId = p.usuario__C;
-   
-                    caso.Aprobado__c = false; 
-                    caso.Enviar_aprobacion_AD__c = true; 
-                    //update caso;
-                    solicitud = new SolicitudCaso();
-                    solicitud = AFPCCasos.upsertCaso(caso);
-                    if(solicitud.solicitudExitosa) {
-                        caso = solicitud.caso;    
-                    } else {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error123:' + solicitud.error));     
-                    } 
-                    Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); 
-                    req1.setObjectId(caso.id); 
-                    req1.setProcessDefinitionNameOrId('AumentoDisminucion'); 
-                    if(!test.isRunningTest()){
-                        Approval.ProcessResult result = Approval.process(req1); 
+                    if(detallecaso.Tipo_Operacion__c=='A1' || detallecaso.Tipo_Operacion__c=='A4') {
+                        caso.DAU_aprobacion__c = false;
+                        caso.Status = 'Cerrado';
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada.'));
+                        } else {
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                            inicio();
+                            return;
+                        }
+                    } else {        
+                        if(cTipoCaso.aumDisAporte) { 
+                            p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                            p.Ultimo_Caso_Asignado__c = System.now(); 
+                            updateUsuarioAsigna = true;
+                        } 
+                        
+                        //if(cTipoCaso.aumDisAporte && detalleCaso.Tipo_Operacion__c == 'A2' && detalleCaso.Cuenta__r.CurrencyIsoCode == 'HNL' && detalleCaso.Nuevo_monto_aporte__c >= Double.ValueOf(Label.DAU_Disminucion_aporte_HNL)) {
+                            //caso.Archivo_Adjunto__c = true;
+                            //caso.DAU_aprobacion__c = false;
+                        /*} else if(cTipoCaso.aumDisAporte && detalleCaso.Tipo_Operacion__c == 'A2' && detalleCaso.Cuenta__r.CurrencyIsoCode == 'USD' && detalleCaso.Nuevo_monto_aporte__c >= Double.ValueOf(Label.DAU_Disminucion_aporte_USD)) {
+                            caso.Archivo_Adjunto__c = true;
+                            caso.DAU_aprobacion__c = false;    
+                        }*/
+                        
+                        caso.ownerId = p.usuario__C;
+       
+                        caso.Aprobado__c = false; 
+                        caso.Enviar_aprobacion_AD__c = true; 
+                        //update caso;
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa) {
+                            caso = solicitud.caso;    
+                        } else {
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error123:' + solicitud.error));     
+                        } 
+                        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); 
+                        req1.setObjectId(caso.id); 
+                        req1.setProcessDefinitionNameOrId('AumentoDisminucion'); 
+                        if(!test.isRunningTest()){
+                            Approval.ProcessResult result = Approval.process(req1); 
+                        }
+                        disabledSelect = true; 
+                        disabledSelect2 = true; 
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); 
                     }
-                    disabledSelect = true; 
-                    disabledSelect2 = true; 
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); 
                 } else if(cTipoCaso.constancias && Caso.Constancia__c == 'A6') { 
                     if(Caso.Monto_compromiso_aporte__c <= 0) { 
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Monto del aporte no puede ser negativo ni igual a 0')); 
@@ -1064,10 +1101,10 @@ public class ControladorCasosPortalAutogestionE2C {
     
     public void cerrar() { 
         showLogin = false; 
-        urlPagina = null; 
+        urlPagina = null;
         popVerificacionCodigo = false;
-        List<Case> caso = [Select id,RecordType.Name From Case Where CaseNumber =: casoCliente]; 
-        if(!test.isRunningTest() && caso[0].RecordType.Name != 'Email to Case') { 
+        Case caso = [Select id,RecordType.Name From Case Where CaseNumber =: casoCliente]; 
+        if(!test.isRunningTest() && caso.RecordType.Name != 'Email to Case') { 
             showCaseComplete = true; 
         }
     }
@@ -1266,12 +1303,7 @@ public class ControladorCasosPortalAutogestionE2C {
             envio.contenido = JSON.serialize(claseEnvio); 
             String cons = 'contenido=' + envio.contenido; 
             request.setBody(cons); 
-            HttpResponse response =new HttpResponse(); 
-            if(!test.isRunningTest()) { 
-                response = http.send(request); 
-            } else { 
-                response.setStatusCode(200); 
-            }
+            HttpResponse response = http.send(request); 
             if(response.getStatusCode() == 200) { 
                 Case p = new case(id = idCaso, Estado_de_Cuenta_Historico__c = response.getBody()); 
                 //update p; 

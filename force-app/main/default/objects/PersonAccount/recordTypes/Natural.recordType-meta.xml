@@ -200,10 +200,6 @@
     <picklistValues>
         <picklist>Agencia_Refiere__c</picklist>
         <values>
-            <fullName>000000000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>110000000000</fullName>
             <default>false</default>
         </values>
@@ -213,10 +209,6 @@
         </values>
         <values>
             <fullName>110200000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>110300000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -237,10 +229,6 @@
         </values>
         <values>
             <fullName>111100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>111111111111</fullName>
             <default>false</default>
         </values>
         <values>
@@ -384,10 +372,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>122400000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>122700000000</fullName>
             <default>false</default>
         </values>
@@ -413,6 +397,10 @@
         </values>
         <values>
             <fullName>125200000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>125400000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -504,10 +492,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>136100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>136500000000</fullName>
             <default>false</default>
         </values>
@@ -523,99 +507,15 @@
             <fullName>138100000000</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>138300000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>138500000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>138800000000</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Asesor_Agn__c</picklist>
-        <values>
-            <fullName>HN18973</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19320</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>HN19331</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HN19332</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19334</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19336</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19337</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19962</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19964</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN21645</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN21892</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN22061</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN22258</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN22396</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24493</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24668</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24669</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24687</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24735</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25900</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -654,19 +554,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN18973</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN19320</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HN19331</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN21645</fullName>
             <default>false</default>
         </values>
         <values>
@@ -707,38 +599,6 @@
         </values>
         <values>
             <fullName>HN23483</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24493</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24668</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24669</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24687</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24735</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25900</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25947</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25948</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5388,11 +5248,11 @@
     <picklistValues>
         <picklist>Estado_Civil__pc</picklist>
         <values>
-            <fullName>C</fullName>
+            <fullName>Casado</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>S</fullName>
+            <fullName>Soltero</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5675,6 +5535,10 @@
     <picklistValues>
         <picklist>Motivo_de_Contacto__c</picklist>
         <values>
+            <fullName>AGUINALDO 2018</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Asesoría Producto Empresarial</fullName>
             <default>false</default>
         </values>
@@ -5699,23 +5563,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Campaña Institucional 2021</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Facebook 2019</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Hondureños en el Extranjero</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Inicio de Año 2019</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PROTECCIÓN INTEGRAL REDES</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6119,7 +5971,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Por_Defecto_Tel__c</picklist>
+        <picklist>Por_Defecto__c</picklist>
         <values>
             <fullName>N</fullName>
             <default>false</default>
@@ -6130,7 +5982,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Por_Defecto__c</picklist>
+        <picklist>Por_defecto_tel__c</picklist>
         <values>
             <fullName>N</fullName>
             <default>false</default>
@@ -7327,17 +7179,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Tipo_Direccion__c</picklist>
-        <values>
-            <fullName>C</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>T</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Tipo_Empresa__c</picklist>
         <values>
             <fullName>N</fullName>
@@ -7379,10 +7220,6 @@
         </values>
         <values>
             <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7558,6 +7395,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Tipo_direccion__c</picklist>
+        <values>
+            <fullName>C</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Tipo_saldo__c</picklist>
         <values>
             <fullName>10</fullName>
@@ -7706,10 +7554,6 @@
         </values>
         <values>
             <fullName>21</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>271</fullName>
             <default>false</default>
         </values>
         <values>

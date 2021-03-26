@@ -2,7 +2,7 @@ public class classClientes {
     public String tipoRegistro { get; set; }
     public Boolean activo { get; set; }
     // PERSONAL
-
+    
     public String nombreCliente { get; set; }
     public String apellidoCliente { get; set; }
     public String tipoIdentidad { get; set; }
@@ -55,7 +55,7 @@ public class classClientes {
     public String promocional2 { get; set; }
     public String promocional3 { get; set; }
     public String descripcion { get; set; }
-
+    
     // EMPRESARIAL
     public String nombreComercial { get; set; }
     public String rtn { get; set; }
@@ -93,8 +93,8 @@ public class classClientes {
     public Decimal totalMontoAporteL { get; set; }
     public Decimal totalMontoAporteD { get; set; }
     public List<classCuentas> cuentas { get; set; }
-
- 
+    
+    
     public class classCuentas
     {
         public String cliente { get; set; }
@@ -115,8 +115,8 @@ public class classClientes {
         public String matrizComision { get; set; }
         public List<classBeneficiarios> beneficiarios { get; set; }
     }
-
- 
+    
+    
     public class classBeneficiarios
     {
         public String cuenta { get; set; }
@@ -135,4 +135,63 @@ public class classClientes {
         public String telefono { get; set; }
         public String direccion { get; set; }        
     }
+    
+    /*
+classClientes a = new classClientes();
+
+a.tipoRegistro ='a';
+a.activo =true;
+a.nombreCliente ='a';
+a.apellidoCliente ='a';
+a.tipoIdentidad ='a';
+a.identificacion ='a';
+a.sexo ='a';
+a.estadoCivil ='a';
+a.nombreConyugue ='a';
+a.telefonoDomicilio ='a';
+a.telefonoCelular ='a';
+a.correoElectronico ='a';
+a.nacionalidad ='a';
+a.lugarNacimiento ='a';
+a.numeroDependientes =3;
+a.profesionOcupacionOficio ='a';
+a.fechaNacimiento ='a';
+a.notificarCorreo =false;
+a.numeroCliente ='a';
+a.asesorCliente ='a';
+a.antiguedad ='a';
+a.coloniaBarrioResidencia ='a';
+a.calleAvenidaResidencia ='a';
+a.numeroCasaResidencia ='a';
+a.puntoReferenciaResidencia ='a';
+a.ciudadResidencia ='a';
+a.paisResidencia ='a';
+a.coloniaBarrioTrabajo ='a';
+a.calleAvenidaTrabajo ='a';
+a.numeroCasaTrabajo ='a';
+a.puntoReferenciaTrabajo ='a';
+a.ciudadTrabajo ='a';
+a.paisTrabajo ='a';
+a.tipoTrabajador ='a';
+a.tipoEmpresa ='a';
+a.giroEmpresa ='a';
+a.cargoActual ='a';
+a.fechaIngresoEmpresa ='a';
+a.rangoSalarial ='a';
+a.telefonoOficina ='a';
+a.extensionOficina =324;
+a.correoElectronicoOficina ='a';
+a.r1NombreCompleto ='a';
+a.r1Telefono ='a';
+a.r2NombreCompleto ='a';
+a.r2Telefono ='a';
+a.pep =true;
+a.fatca =false;
+a.campana ='a';
+a.carnet =true;
+a.promocional1 ='a';
+a.promocional2 ='a';
+a.promocional3 ='a';
+a.descripcion ='a';     
+*/
 }

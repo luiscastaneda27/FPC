@@ -1,0 +1,28 @@
+<apex:page lightningStylesheets="true" controller="clasePrueba">
+     <apex:form id="ubic1"  >
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
+                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 18% 45%">
+                            <img src="http://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1570731998000/load_gif" style="float: left; margin: 7% 57%; width: 45px;" />
+                            <div style="display: inline-block; padding: 2px; background-color: #fff; width: 250px;">
+                                
+                                <abbr style="float: left; margin: 8px; width: 250px;">Procesando espere un momento....</abbr>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+         
+         <apex:pageBlock id="variable1" >
+             <apex:pageBlockSection title="prueba" columns="2" id="variable" >
+                 <apex:outputText title="var1" value="{!var1}" />
+                 <apex:outputText title="var2" value="{!var2}"/>
+             </apex:pageBlockSection>
+             <apex:pageBlockSection title="prueba1" columns="2" id="variable3" >
+                 <apex:outputText title="var3" value="{!var3}" />
+                 <apex:outputText title="var4" value="{!var4}"/>
+             </apex:pageBlockSection>
+         </apex:pageBlock>
+         <apex:commandButton value="Guardar" action="{!Guardar}" reRender="variable1" />
+    </apex:form>
+</apex:page>

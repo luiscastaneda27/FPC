@@ -66,11 +66,6 @@
                 <default>false</default>
                 <label>Tio(a)</label>
             </value>
-            <value>
-                <fullName>3</fullName>
-                <default>false</default>
-                <label>Cuñado(a)</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

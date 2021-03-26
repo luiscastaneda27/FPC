@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Correo_electronico_empleado__c</fullName>
+    <fullName>Correo_Electronico_Empleado__c</fullName>
     <externalId>false</externalId>
     <label>Correo Electronico Empleado</label>
     <required>false</required>

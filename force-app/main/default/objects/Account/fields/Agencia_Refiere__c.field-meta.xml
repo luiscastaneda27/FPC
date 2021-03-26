@@ -17,6 +17,11 @@
                 <label>AGENCIA MALL LAS AMERICAS</label>
             </value>
             <value>
+                <fullName>125400000000</fullName>
+                <default>false</default>
+                <label>AGENCIA PLAZA 105</label>
+            </value>
+            <value>
                 <fullName>125200000000</fullName>
                 <default>false</default>
                 <label>AGN. PASEO JUAN PABLO</label>
@@ -45,11 +50,6 @@
                 <fullName>114800000000</fullName>
                 <default>false</default>
                 <label>AGN-ATB SATELITE SPS</label>
-            </value>
-            <value>
-                <fullName>110300000000</fullName>
-                <default>false</default>
-                <label>AGN AUTOBANCO BLVD MORAZAN</label>
             </value>
             <value>
                 <fullName>133100000000</fullName>
@@ -125,11 +125,6 @@
                 <fullName>135900000000</fullName>
                 <default>false</default>
                 <label>AGN DIUNSA PEDREGAL SPS</label>
-            </value>
-            <value>
-                <fullName>136100000000</fullName>
-                <default>false</default>
-                <label>AGN DIUNSA PROCERES TGU</label>
             </value>
             <value>
                 <fullName>112000000000</fullName>
@@ -282,19 +277,9 @@
                 <label>AGN PLAZA SAN CARLOS BLVD. MZN. TGU</label>
             </value>
             <value>
-                <fullName>138500000000</fullName>
-                <default>false</default>
-                <label>AGN PLAZA SANTA ROSA</label>
-            </value>
-            <value>
                 <fullName>125900000000</fullName>
                 <default>false</default>
                 <label>AGN PLAZA TORONJAL CBA</label>
-            </value>
-            <value>
-                <fullName>138300000000</fullName>
-                <default>false</default>
-                <label>AGN PLAZA VILLANUEVA</label>
             </value>
             <value>
                 <fullName>132000000000</fullName>
@@ -407,35 +392,9 @@
                 <label>AGN ZIP BUENA VISTA SPS</label>
             </value>
             <value>
-                <fullName>138800000000</fullName>
-                <default>false</default>
-                <label>AGN ZONAL BELEN 2 TGU</label>
-            </value>
-            <value>
-                <fullName>111111111111</fullName>
-                <default>false</default>
-                <label>FPC SPS</label>
-            </value>
-            <value>
-                <fullName>000000000000</fullName>
-                <default>false</default>
-                <label>FPC TGU</label>
-            </value>
-            <value>
                 <fullName>117100000000</fullName>
                 <default>false</default>
                 <label>VTN DIUNSA SUPERSTORE SPS</label>
-            </value>
-            <value>
-                <fullName>122400000000</fullName>
-                <default>false</default>
-                <label>AGN L.C. SIGUATEPEQUE SGA</label>
-            </value>
-            <value>
-                <fullName>125400000000</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>AGENCIA PLAZA 105</label>
             </value>
             <value>
                 <fullName>01</fullName>

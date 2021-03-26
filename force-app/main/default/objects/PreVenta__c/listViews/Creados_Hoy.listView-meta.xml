@@ -5,17 +5,11 @@
     <columns>Company__c</columns>
     <columns>Motivo_Contacto__c</columns>
     <columns>CREATED_DATE</columns>
-    <columns>Canal_que_Refiere__c</columns>
-    <columns>LeadSource__c</columns>
-    <columns>OWNER.FIRST_NAME</columns>
-    <columns>Round_Robin_ID_Norte__c</columns>
-    <columns>Round_Robin_ID_Centro__c</columns>
-    <columns>OWNER.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>LAST_UPDATE</field>
         <operation>equals</operation>
-        <value>10/29/2019 12:00 AM</value>
+        <value>1/30/2019 12:00 AM</value>
     </filters>
     <label>Creados Hoy</label>
 </ListView>

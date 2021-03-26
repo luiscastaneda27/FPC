@@ -25,7 +25,12 @@
             <value>
                 <fullName>TA</fullName>
                 <default>false</default>
-                <label>Debito a Tarjeta de Crédito</label>
+                <label>Debito a Tarjeta de Crédito Ficohsa</label>
+            </value>
+            <value>
+                <fullName>TAOB</fullName>
+                <default>false</default>
+                <label>Debito a Tarjeta de Crédito Otros Bancos</label>
             </value>
             <value>
                 <fullName>IT</fullName>
@@ -50,11 +55,18 @@
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
             <valueName>AH</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
             <valueName>TA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
+            <valueName>TAOB</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>

@@ -156,34 +156,47 @@ paso2Cuerpo = 'slds-show';
             
             classAdmInteres claseRecibida = new classAdmInteres();
             classAdmInteres AdmInteres = controllerAPIinteresAprobados.TraerRegistrados();
-            
+            list<String> listIds = new list<String>();
             ListIntRegistrados = AdmInteres.ListIntRegistrados;
             
             for(integer i=0; i<ListIntRegistrados.size(); i++){
                 DateTime dT = ListIntRegistrados[i].fechadeRegistro;
                 fecha = string.valueOf(string.valueOf(dT.year())+'-'+string.valueOf(dT.month())+'-'+string.valueOf(dT.day()));
-                ListIntRegistrados[i].LEE_ERRORES = null;
                 ListIntRegistrados[i].LEE_ERRORES = fecha;
+                listIds.add(String.valueOf(Integer.valueOf( ListIntRegistrados[i].Id_pagointeres )));
             }
-            
+            Map<String, String> mapObjectFiles = new Map<String, String>();
+            List<String> ListObjct = new List<String>();
+            for(ObjectoReferenciaArchivos__c item: [Select Id, Name From ObjectoReferenciaArchivos__c Where Name in :listIds]){
+                mapObjectFiles.put(item.Name, item.Id);
+                ListObjct.add(item.Id);
+            }
+            Map<String, String> mapFiles = new Map<String, String>();
+            for(ContentDocumentLink item :  [Select Id,LinkedEntityId From ContentDocumentLink Where LinkedEntityId in :ListObjct ]){
+                mapFiles.put(item.LinkedEntityId, item.LinkedEntityId);
+            }
+            for(integer i=0; i<ListIntRegistrados.size(); i++){
+                String idPagoInteres = String.valueOf(Integer.valueOf( ListIntRegistrados[i].Id_pagointeres ));
+                ListIntRegistrados[i].tieneArchivoSF = mapFiles.ContainsKey(mapObjectFiles.get(idPagoInteres));
+            }
             Control = ListIntRegistrados.size();
             if(Control>0){ mostrarRegistrados = true;
-            }else{
-                ApexPages.addMessage(
-                    new ApexPages.Message(
-                        ApexPages.Severity.ERROR,'NO HAY REGISTRADOS: ')); } 
+                         }else{
+                             ApexPages.addMessage(
+                                 new ApexPages.Message(
+                                     ApexPages.Severity.ERROR,'NO HAY REGISTRADOS: ')); } 
         }Catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
         }
     }//
     public string CuentaAprobadoD {get;set;}
-    
+    public string IdPagoInteresesFIle {get;set;}
     public void Aprobar(){
         try{
             classAdmInteres_2 EnvioInteres = new classAdmInteres_2 ();
             
             listS = new List<classPagoInteresesRegA>();
-            
+            String cuenta;
             for(integer i=0; i<ListIntRegistrados.size(); i++){
                 if(ListIntRegistrados[i].Id_pagointeres == Decimal.valueOf(ID_Referencia)){
                     classPagoInteresesRegA RA = new classPagoInteresesRegA();
@@ -191,6 +204,7 @@ paso2Cuerpo = 'slds-show';
                     RA.EstadoAprobacion = 'A';
                     RA.fechadeActivacion = datetime.now();
                     CuentaAprobadoD = RA.Cuenta;
+                    cuenta = RA.Cuenta;
                     listS.add(RA);
                     Bitacora(RA);
                    
@@ -203,6 +217,7 @@ paso2Cuerpo = 'slds-show';
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             MuestraRegistrados();
             EnvioCorreoAprobado();
+            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c = :cuenta ]);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, 'PAGO DE INTERESES APROBADO'));
         }catch(Exception e){ 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
@@ -422,9 +437,11 @@ paso2Cuerpo = 'slds-show';
             classAdmInteres_2 EnvioInteres = new classAdmInteres_2 ();
             
             listS = new List<classPagoInteresesRegA>();
-            
-            for(integer i=0; i<ListIntRegistrados.size(); i++){ classPagoInteresesRegA RA = new classPagoInteresesRegA();
+            List<String> listIds = new List<String>();
+            for(integer i=0; i<ListIntRegistrados.size(); i++){ 
+                classPagoInteresesRegA RA = new classPagoInteresesRegA();
                 RA = Cambio_de_clase(ListIntRegistrados[i]);
+                listIds.add(ListIntRegistrados[i].Cuenta);                                           
                 RA.EstadoAprobacion = 'A';
                 RA.fechadeActivacion = datetime.now();
                 listS.add(RA);
@@ -435,6 +452,7 @@ paso2Cuerpo = 'slds-show';
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             
             MuestraRegistrados(); 
+            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c in :listIds ]);
         }catch(Exception e){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
         }
     }
@@ -460,23 +478,42 @@ paso2Cuerpo = 'slds-show';
         system.debug('Bitacora--' + bitacora); 
         
     }
-    
-    public void MostrarImagen(){    
-        
-        try
-        {                 
+    Public String pngId {get;set;}
+    public PageReference MostrarImagen(){    
+        try{  
+            pngId = null;
+            if(IdPagoInteresesFIle != null){
+                Integer p = Integer.valueOf(IdPagoInteresesFIle);
+                list<String> listIdAcc = new list<String>();
+                Integer count = 0;
+                for(ObjectoReferenciaArchivos__c item: [Select Id From ObjectoReferenciaArchivos__c Where Name = :String.valueOf(p)]){
+                    listIdAcc.add(item.Id);
+                    
+                }
+                String nameFile;
+                String IdFile;
+                for(ContentDocumentLink item :  [Select Id,ContentDocumentId,ContentDocument.Title From ContentDocumentLink Where LinkedEntityId in :listIdAcc  ]){
+                    count++;
+                    IdFile = item.ContentDocumentId;
+                    nameFile = item.ContentDocument.Title;
+                    
+                }
+                if(count == 1 && nameFile.toUpperCase().contains('PNG')){
+                    pngId = nameFile;
+                }else if(count > 1){
+                    return new PageReference('/'+listIdAcc[0]);
+                }
+            }  
             DenegarImagen = true; 
             ControllerAPIPagoIntereses.classRespuestaImagen wer =  new ControllerAPIPagoIntereses.classRespuestaImagen();
             wer = ControllerAPIPagoIntereses.TraerImagenBD(ID_Referencia); 
             Ver_Imagen = wer.imagen;
             system.debug('Imagen ' + Ver_Imagen);
-        }
-        catch(exception e)
-        {
-            system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
+        } catch(exception e){
+            system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber()+' ---- '+IdPagoInteresesFIle);
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ha ocurrido un error!'+ e.getMessage() + ' Linea: ' + e.getLineNumber()));
         }      
-        
+        return null;
     } 
     public void popSalirImagen(){DenegarImagen = false;}
     public classPagoInteresesRegA Cambio_de_clase(classPagoInteresesReg ListIntRegistrado){

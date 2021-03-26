@@ -67,26 +67,6 @@
     <picklistValues>
         <picklist>Subject</picklist>
         <values>
-            <fullName>AGN - Gestiones</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AGN - Solicitud y completación de expedientes</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AGN- Clientes revisados para ofertar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AGN- Propuestas enviadas</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AGN- Proyecciones enviadas</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Correo - Actualizaciones de Ley</fullName>
             <default>false</default>
         </values>
@@ -96,14 +76,6 @@
         </values>
         <values>
             <fullName>Correo - Envío de Propuesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo - Envío de Propuesta Protección Integral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo - Envío de de proyecciones</fullName>
             <default>false</default>
         </values>
         <values>
@@ -119,19 +91,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Correo - Introductorio a pensiones</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Correo - Reporte de Devolución de Aportes Patronales</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Correo - Seguimiento de Propuesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo - Seguimiento de Propuesta Protección Integral</fullName>
             <default>false</default>
         </values>
         <values>
@@ -143,38 +107,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Correo Envío de Propuesta Fondo Empresarial de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo Introductorio a Fondo de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo Seguimiento de Propuesta  Fondo Empresarial de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Correo- envío de documentación de afiliación</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestión Rechazo T%2FC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestión Retención por Retiro de Aportes</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestión Rezagos empresariales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestión Segundos aportes</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Histórico</fullName>
             <default>false</default>
         </values>
@@ -183,23 +115,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Llamada - Introductoria a pensiones</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada - Presentación de Propuesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada - Presentación de Propuesta Protección integral</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Llamada - Seguimiento a Propuesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada - Seguimiento a Propuesta Protección Integral</fullName>
             <default>false</default>
         </values>
         <values>
@@ -208,30 +124,6 @@
         </values>
         <values>
             <fullName>Llamada - Solicitud de Cita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada Introductoria Fondo de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada No concretada</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada Presentación de Propuesta Fondo de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Llamada Seguimiento a Propuesta Fondo Empresarial de Cesantía</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recaudo concretado</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Resumen reunión de célula</fullName>
             <default>false</default>
         </values>
         <values>

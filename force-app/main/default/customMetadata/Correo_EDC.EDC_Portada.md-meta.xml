@@ -19,11 +19,11 @@ img {    border: 0;    -ms-interpolation-mode: bicubic;}
 .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {    line-height: 100%;}
 .MsoNormal {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, sans-serif !important;}
 p {    margin: 0 !important;    padding: 0 !important;}
-.images {    display: block !important;    width: 100% !important;}.button td, .button 
+.images {    display: block !important;    width: 100% !important;}.button td, .button
 a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, sans-serif !important;}
 .button a:hover {    text-decoration: none !important;}
-.background {     background: #ffffff; /* Old browsers */    background: -moz-radial-gradient(center, ellipse cover, #ffffff 50%, #d1f0fb 100%); 
- background: -webkit-radial-gradient(center, ellipse cover, #ffffff 50%, #d1f0fb 100%); 
+.background {     background: #ffffff; /* Old browsers */    background: -moz-radial-gradient(center, ellipse cover, #ffffff 50%, #d1f0fb 100%);
+ background: -webkit-radial-gradient(center, ellipse cover, #ffffff 50%, #d1f0fb 100%);
    background: radial-gradient(ellipse at center, #ffffff 50%, #d1f0fb 100%);
    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=&apos;#ffffff&apos;, endColorstr=&apos;#d1f0fb&apos;, GradientType=1 ); }
    @media only screen and (max-width:640px) {body {    width: auto !important;}table[class=display-width] {    width: 100% !important;}table[class=table-hidden] {    display: none !important;}#brdr {    border-right: 0 !important;}td[class=&quot;height-hidden&quot;] {    display: none !important;}td[class=&quot;height60&quot;] {    height: 60px !important;}td[class=&quot;height30&quot;] {    height: 30px !important;}td[class=&quot;choose&quot;] {    padding: 0 30px !important;}.pricing {    width: 282px !important;}} @media only screen and (max-width:480px) {table[class=display-width] table {    width: 100% !important;}table[class=display-width] .button-width .button {    width: auto !important;}td[class=&quot;height-hidden&quot;] {    display: none !important;}td[class=&quot;height-hidden-menu&quot;] {    display: none !important;}table[class=display-width] table[class=&quot;pricing&quot;] {    width: 282px !important;}} @media only screen and (max-width:350px) {table[class=display-width] table[class=&quot;pricing&quot;] {    width: 100% !important;}}&lt;/style&gt;
@@ -41,7 +41,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
             &lt;/td&gt;
          &lt;/tr&gt;
       &lt;/table&gt;
-      &lt;!-- VIEW IN BROWSER ENDS --&gt; 
+      &lt;!-- VIEW IN BROWSER ENDS --&gt;
       &lt;table align=&quot;center&quot; bgcolor=&quot;#ffffff&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
          &lt;tr&gt;
             &lt;td align=&quot;center&quot;&gt;
@@ -112,7 +112,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                                   &lt;td width=&quot;233&quot; scope=&quot;col&quot;&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; float: right; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:17px; font-weight:700;&quot;&gt;&lt;img src=&quot;https://fpc.secure.force.com/estadosCuenta/resource/1578421431000/Descarga_EDC&quot; /&gt;&lt;/span&gt;&lt;/td&gt;
                                                                   &lt;td style=&quot;padding-left: 10px&quot; width=&quot;367&quot; scope=&quot;col&quot;&gt;
                                                                      &lt;p&gt;Descarga aquí &lt;/p&gt;
-                                                                     &lt;a href=&quot;https://fpc.secure.force.com/estadosCuenta/vfEstadoDeCuenta?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
+                                                                     &lt;a href=&quot;http://fpc-fpc.cs40.force.com/estadosCuenta/vfEstadoDeCuenta?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
                                                                         &lt;p&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:20px; font-weight:700;&quot;&gt;                                TU ESTADO DE CUENTA&lt;/span&gt;                            &lt;/p&gt;
                                                                      &lt;/a&gt;
                                                                   &lt;/td&gt;
@@ -186,8 +186,8 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                                                  &lt;td align=&quot;center&quot; style=&quot;color:#666666;&quot;&gt;
                                                                                     &lt;table align=&quot;center&quot; bgcolor=&quot;#42c4dc&quot; class=&quot;button&quot; style=&quot; border-radius:5px;  width:95%&quot;&gt;
                                                                                        &lt;tr&gt;
-                                                                                          &lt;td align=&quot;center&quot; class=&quot;MsoNormal&quot; style=&quot;color:#ffffff; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:13px; font-weight:700; padding:6px 12px 6px 12px; 
-                                                                                             border-radius:10px;&quot;&gt;                                       &lt;a href=&quot;https://fpc.secure.force.com/estadosCuenta/vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; style=&quot;color:#ffffff; text-decoration:none;&quot; target=&quot;_blank&quot;  &gt;Detalle&lt;br /&gt;                                          movimientos                                          &lt;/a&gt;                                        &lt;/td&gt;
+                                                                                          &lt;td align=&quot;center&quot; class=&quot;MsoNormal&quot; style=&quot;color:#ffffff; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:13px; font-weight:700; padding:6px 12px 6px 12px;
+                                                                                             border-radius:10px;&quot;&gt;                                       &lt;a href=&quot;http://fpc-fpc.cs40.force.com/estadosCuenta/vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; style=&quot;color:#ffffff; text-decoration:none;&quot; target=&quot;_blank&quot;  &gt;Detalle&lt;br /&gt;                                          movimientos                                          &lt;/a&gt;                                        &lt;/td&gt;
                                                                                        &lt;/tr&gt;
                                                                                     &lt;/table&gt;
                                                                                  &lt;/td&gt;

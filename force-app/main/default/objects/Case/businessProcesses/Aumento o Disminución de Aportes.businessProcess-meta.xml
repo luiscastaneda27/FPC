@@ -15,6 +15,10 @@
         <default>true</default>
     </values>
     <values>
+        <fullName>Pendiente de aprobación</fullName>
+        <default>false</default>
+    </values>
+    <values>
         <fullName>Rechazado</fullName>
         <default>false</default>
     </values>

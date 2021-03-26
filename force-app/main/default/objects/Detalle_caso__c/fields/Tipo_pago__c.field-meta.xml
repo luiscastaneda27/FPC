@@ -17,14 +17,14 @@
                 <label>Pago normal</label>
             </value>
             <value>
-                <fullName>T</fullName>
-                <default>false</default>
-                <label>Pago a terceros</label>
-            </value>
-            <value>
                 <fullName>B</fullName>
                 <default>false</default>
                 <label>Pago a beneficiarios</label>
+            </value>
+            <value>
+                <fullName>T</fullName>
+                <default>false</default>
+                <label>Pago a terceros</label>
             </value>
             <value>
                 <fullName>R</fullName>

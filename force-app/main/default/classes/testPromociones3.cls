@@ -1,4 +1,4 @@
-@isTest(seeAllData = true)
+@isTest
 public class testPromociones3 
 {
    static testMethod void ControllerPromociones3()
@@ -7,13 +7,10 @@ public class testPromociones3
         insert aa;
         
         Account ba = new Account(Identificacion__c='123',Name='adasd', Cliente_Unico_Banco__C='1896'  );
-        insert ba;   
+        insert ba;        
       
         test.startTest();
         ControllerPromociones3 pro =  new ControllerPromociones3();
-       
-        List<SelectOption> selOpts = pro.getPaises();
-        List<SelectOption> selOpts2 = pro.getDepart();
         
         pro.candidato = new Lead();
         

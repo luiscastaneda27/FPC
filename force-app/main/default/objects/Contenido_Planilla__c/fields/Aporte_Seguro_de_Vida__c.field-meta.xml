@@ -3,7 +3,7 @@
     <fullName>Aporte_Seguro_de_Vida__c</fullName>
     <externalId>false</externalId>
     <label>Aporte Seguro de Vida</label>
-    <precision>18</precision>
+    <precision>12</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

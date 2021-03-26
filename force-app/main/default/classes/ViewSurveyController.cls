@@ -34,13 +34,11 @@ global virtual without sharing class ViewSurveyController {
     public Boolean thankYouRendered{get;set;}
     public List<String> newOrder {get;set;}
     
-    public Survey__c survey {get;set;}
-    
     /* Retrieves the list of questions, the survey name, after retrieving the 
        necessary parameters from the url.
     */
  //------------------------------------------------------------------------------// 
-    public ViewSurveyController() {
+    public ViewSurveyController(ApexPages.StandardController stdController) {
         // Get url parameters
         surveyId = Apexpages.currentPage().getParameters().get('id');
         caseId   = Apexpages.currentPage().getParameters().get('caId');
@@ -49,7 +47,6 @@ global virtual without sharing class ViewSurveyController {
         if(caseId ==null || caseId.length()<15){
             caseId = 'none';
         }
-        survey = [Select Hide_Survey_Name__c,Survey_Header__c,Name from Survey__c Where Id =:surveyId];
         if(contactId ==null || contactId.length()<15){
             contactId = 'none';
         }           

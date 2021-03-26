@@ -1,0 +1,260 @@
+<apex:page cache="false" expires="0" controller="ControllerReportEmailStatuses" sidebar="false" showHeader="false" 
+    applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Generar Reporte</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"/>
+        <apex:includeScript value="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"/>
+    
+        <!-- Import the Design System style sheet -->
+        <apex:slds />  
+        <style>
+         html, body{
+                background-color: #F2F2F2;
+            }
+            #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+            }
+            #drop{
+                border:2px dashed #bbb;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:20pt bold,"Vollkorn";color:#bbb
+            }
+            .slds-scope {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+            #b64data{
+                width:70%;
+            }
+            .columna1 {
+                  float:left; 
+                  width:200px;              
+                  padding-left:50px;
+                  padding-top:15px;
+            }
+            .columna2 {
+                  padding-top:15px;  
+                  margin-left:210px;
+                  padding-right:15px;                         
+            }
+            
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Aceptar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+            }
+            .Cancelar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
+            }
+            
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            .table {
+            table-layout:fixed;
+            }
+            
+            .table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            }
+         </style>
+   </head> 
+   <body>
+        <apex:form >
+            <apex:actionFunction name="load" status="loading" rerender="theForm"/>
+        </apex:form>
+        <div class="slds-scope">
+            <apex:form id="theForm" >
+            <div id="topMenuZonaTransaccional">
+                <article class="slds-card slds-theme_default" style="border:0;">
+                    <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                        
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                            <div class="slds-media__figure">
+                      
+                            </div>
+                            <div class="slds-media__body" >
+                                <h2>
+                                    <br/>
+                                    <span class="slds-text-heading_medium"> FICOHSA PENSIONES / Generar Reporte</span>
+                                    <br/>
+                                </h2>
+                            </div>
+                        </header>
+                        
+                        <div style="height:50px;background-color: #F2F2F2;">
+                            <br/>
+                            <br/>
+                        </div>
+                        
+                    </div>
+                    
+                    <apex:outputPanel >
+                        
+                       <br/>
+                        
+                        <article class="slds-card slds-theme_default" style="border:0;">                
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__body"> 
+                                        <div id='drop' >
+                                            <img id="imgLoad" hidden="hidden" name="imgLoad" src="{!URLFOR($Resource.gifLoad)}" width="60px" heigth="60px" />
+                                            <div id="pqr" style="Display:inline;">    
+                                                <p>Ingrese las Fechas del Reporte</p><br/>
+                                                Desde: <apex:input type="date" value="{!DateStart}" required="true" style="border-radius:10px;" />                                                        
+                                                Hasta: <apex:input type="date" value="{!DateEnd}" required="true" style="border-radius:10px;" /><br/><br/>
+                                                <h3 class="Row">
+                                                    <apex:commandLink action="{!GenerarReporte}" status="status">  
+                                                        <apex:commandButton style="width: 250px; color:#fff; height: 40px;position: relative;background: #42c4dd;" onclick="handleDrop();" value="Generar Reporte" />
+                                                    </apex:commandLink>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                            </div>
+                        </article>
+                        <br/>
+                        <br/>
+                    </apex:outputPanel>
+                </article>
+            
+                </div>
+                <br/><br/><br/>
+                <center style="position:relative; z-index:9999; top:230px;">
+                    <apex:actionStatus id="loading">
+                        <apex:facet name="start">
+                            <div class="demo-only" style="height: 0rem;">
+                                <div role="status" class="slds-spinner slds-spinner_medium">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                        </apex:facet>
+                        <apex:facet name="stop"></apex:facet>                
+                    </apex:actionStatus>
+                </center> 
+            </apex:form>
+       </div>
+        </body>
+        <script>        
+        function handleDrop() {
+            var x = document.getElementById("pqr");
+            x.style.display = "none";
+            $('#imgLoad').removeAttr('hidden');
+            setTimeout(function(){
+                alert('Reporte generado Exitosamente');
+                window.location.reload(1);
+            }, 5000);
+        }      
+        </script>
+  </html>  
+</apex:page>

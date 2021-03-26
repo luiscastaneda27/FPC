@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Aporte_Empleado_Extraordinario__c</fullName>
     <externalId>false</externalId>
-    <label>Aporte_Empleado_Extraordinario</label>
-    <precision>18</precision>
+    <label>Aporte Empleado Extraordinario</label>
+    <precision>12</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

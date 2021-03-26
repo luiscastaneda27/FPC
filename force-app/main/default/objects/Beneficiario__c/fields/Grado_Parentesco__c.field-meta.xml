@@ -3,9 +3,37 @@
     <fullName>Grado_Parentesco__c</fullName>
     <externalId>false</externalId>
     <label>Grado de Parentesco</label>
-    <length>40</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1</fullName>
+                <default>false</default>
+                <label>Primer Grado</label>
+            </value>
+            <value>
+                <fullName>2</fullName>
+                <default>false</default>
+                <label>Segundo Grado</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Tercer Grado</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Cuarto Grado</label>
+            </value>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>Quinto Grado</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

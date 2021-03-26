@@ -154,7 +154,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Masculine</gender>
-    <label>Departamento</label>
+    <label>Departamento 2</label>
     <nameField>
         <label>Nombre Departamento</label>
         <type>Text</type>

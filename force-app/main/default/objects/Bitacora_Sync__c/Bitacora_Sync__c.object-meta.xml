@@ -156,18 +156,12 @@
     <gender>Feminine</gender>
     <label>Bitacora Sync</label>
     <nameField>
-        <displayFormat>BTSY-{0000000000}</displayFormat>
+        <displayFormat>Sync - {00000000}</displayFormat>
         <label>Correlativo</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Bitacoras_Sync</pluralLabel>
-    <searchLayouts>
-        <customTabListAdditionalFields>Fecha__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Resultado__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>OWNER.FIRST_NAME</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Resultado__c</lookupDialogsAdditionalFields>
-        <searchResultsAdditionalFields>Resultado__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <pluralLabel>Bitacoras Sync</pluralLabel>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

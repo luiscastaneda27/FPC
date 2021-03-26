@@ -1,5 +1,5 @@
 <apex:page standardController="Case" extensions="extensionCasoDetalle" title="Ficohsa FPC" showheader="false" sidebar="false" cache="false" expires="0"
-           standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyHtmlTag="false" applyBodyTag="false" action="{!actualizarSaldoPatronalCons}">
+           standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyHtmlTag="false" applyBodyTag="false">
     
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
         <head>
@@ -14,156 +14,37 @@
             <script src="/soap/ajax/28.0/connection.js" type="text/javascript"></script>
             <script>
             sforce.connection.sessionId = '{!$Api.Session_ID}';
-            var caseId = '{!Case.Id}';  
-             
-            $(document).ready( function () { 
+            var caseId = '{!Case.Id}'; 
             
-                updateMontoChequePatrono(); 
-                updateTipoPago(); 
-                updateSaldo(); 
-
-                var result = sforce.connection.query("Select Sum(Monto_retirar__c) suma from Detalle_caso__c Where Caso__c = '"+caseId+"' and Tipo_retiro__c = ''");
-                var records = result.getArray("records"); //alert(records[0].suma);             
-                if(records[0].suma != null) {
-                    var valRetiro = parseFloat(records[0].suma); //alert(valRetiro.toFixed(2));
-                    //var montoaRetirar = $("[id$='montoaRetirar']").val(valRetiro.toFixed(2));
-                }               
-                
-                //Inicio pago a beneficiarios / terceros - Tipo de pago
-                //$("[id$='tipoPago']").val("0");
-                var e = document.querySelectorAll('[id$="tipoPago"]')[0];
-                if (e && !e[0].value) {e.remove(0);} 
-                //Fin pago a beneficiarios / terceros - Tipo de pago
-                
-                var result2 = sforce.connection.query("Select Id from Detalle_caso__c Where Caso__c = '"+caseId+"'");
-                var records2 = result2.getArray("records"); //alert('resultado: ' +records2[0].Id);             
-                if(records2[0].Id != null) {
-                    var x = document.getElementById("pagosBT");
-                    if (records2[0].Id == null) {
-                        x.style.display = "none";
-                    } else {
-                        x.style.display = "block";
-                    }
-                }
-                            
-                var patronalExtraOrdi = $("[id$='patronalExtraOrdi']").val();
-                //$("[id$='montopatExt']").val(patronalExtraOrdi);
-                
-                var montopatExt = $("[id$='montopatExt']").val();
-                var porcenpatExt = $("[id$='porcenpatExt']").val(); 
-                var nuevoPorc = (montopatExt/patronalExtraOrdi)*100; 
-                if(isNaN(nuevoPorc)) { //var value = 0;
-                    $("[id$='porcenpatExt']").val(value.toFixed(2));                 
-                } else {
-                    $("[id$='porcenpatExt']").val(nuevoPorc.toFixed(2)); 
-                }
-                var montoRetiro = $("[id$='montoRetiro']").val(); 
-                //Actualizar monto bruto a retirar
-                var montopatOr = $("[id$='montopatOr']").val(); var montopatOr2 = montopatOr.replace(/,/g, ""); 
-                var montoTotalidad =  parseFloat(montopatOr2) + parseFloat(montopatExt);  //alert(montoTotalidad);                                         
-                //Fin actualizar monto bruto a retirar            
-                             
-            });
             $(document).keydown(function(objEvent) {
                 if (objEvent.keyCode == 9) {  //tab pressed
                     objEvent.preventDefault(); // stops its action
                 }
-            })
-            function recalculateAmountPO() {
-                var patronalOrdi = $("[id$='patronalOrdi']").val();
-                var montopatOr = $("[id$='montopatOr']").val(); 
-                var porcenpatOr = $("[id$='porcenpatOr']").val();
-                var nuevoMonto = (patronalOrdi*(porcenpatOr/100));
-                //alert(nuevoMonto.toFixed(2));
-                $("[id$='montopatOr']").val(nuevoMonto.toFixed(2)); //alert(nuevoMonto);
-            }
-            function recalculatePorcentajePO() {
-                var patronalOrdi = $("[id$='patronalOrdi']").val();
-                var montopatOr = $("[id$='montopatOr']").val();
-                var porcenpatOr = $("[id$='porcenpatOr']").val();
-                var nuevoPorcentaje = ((montopatOr/patronalOrdi)*100);
-                //alert(nuevoPorcentaje.toFixed(2));
-                $("[id$='porcenpatOr']").val(nuevoPorcentaje.toFixed(2));
-            }
-            function recalculateAmountPE() {
-                var patronalExtraOrdi = $("[id$='patronalExtraOrdi']").val();
-                var montopatExt = $("[id$='montopatExt']").val();
-                var porcenpatExt = $("[id$='porcenpatExt']").val();
-                var nuevoMonto2 = (patronalExtraOrdi*(porcenpatExt/100));
-                $("[id$='montopatExt']").val(nuevoMonto2.toFixed(2));
-            }
-            function recalculatePorcentajePE() {
-                var patronalExtraOrdi = $("[id$='patronalExtraOrdi']").val();
-                var montopatExt = $("[id$='montopatExt']").val();
-                var porcenpatExt = $("[id$='porcenpatExt']").val();
-                var nuevoPorcentaje2 = ((montopatExt/patronalExtraOrdi)*100);
-                if(patronalExtraOrdi != 0) {
-                    $("[id$='porcenpatExt']").val(nuevoPorcentaje2.toFixed(2));    
-                }   
-            } 
-            function updateSaldo() {
-                var result3 = sforce.connection.query("Select Id,Monto_Saldo_Patronal__c,Saldo_Restante_Cuenta_Cliente__c,Tipo_retiro__c,Monto_Bruto_Retirar_Empresa__c,Monto_bruto_retirar__c from Detalle_caso__c Where Caso__c = '"+caseId+"' and Tipo_retiro__c != null and Caso__r.Status != 'Cerrado'");  //alert(result3);
-                var records3 = result3.getArray("records");   
-                var patronalOrdi = $("[id$='patronalOrdi']").val(); //alert(patronalOrdi);
-                var montopatOr = $("[id$='montopatOr']").val(); //alert(montopatOr); 
-                var montopatOr2 = montopatOr.split(',').join(''); //alert(montopatOr2); 
-                var valorPat = parseFloat(patronalOrdi) - (parseFloat(montopatOr2)).toFixed(2); //alert(valorPat);        
-                if(records3[0].Id != null) {
-                    var saldoRestante = 0;
-                    if(records3[0].Tipo_retiro__c == '51') {
-                        var saldoRestante = records3[0].Monto_Saldo_Patronal__c - records3[0].Monto_bruto_retirar__c;
-                    } 
-                    if(records3[0].Tipo_retiro__c == '51' && records3[0].Monto_Saldo_Patronal__c == 0) {
-                        saldoRestante = 0;
+            });
+            function process() {   
+                        
+                var CanalAporte= $('[id$=CanalAporte]').val();
+                //alert(CanalAporte);                   
+                var e = document.querySelectorAll('[id$="Frecuencia"]')[0];
+
+                if(CanalAporte == 'TA') {                   
+                    if (e && !e[0].value) {
+                        e.remove(1);
                     }
-                    try {
-                        var updateDetalle = new sforce.SObject("Detalle_caso__c");
-                        updateDetalle.Id = records3[0].Id;
-                        //updateDetalle.Saldo_Restante_Cuenta_Cliente__c= parseFloat(valorPat.toFixed(2)); 
-                        updateDetalle.Saldo_Restante_Cuenta_Cliente__c =  saldoRestante.toFixed(2);   
-                        result = sforce.connection.update([updateDetalle]);                        
-                        //alert('Datos Actualizados '+result[0].id); 
-                        //console.log(result);
-                    } catch(err) {
-                        alert(err);
-                    }
-                }
-            }
-            function updateTipoPago() {
-                var tipoPago = $("[id$='tipoPago']").val(); //alert(tipoPago);
-                var result4 = sforce.connection.query("Select Id,Tipo_pago__c from Detalle_caso__c Where Caso__c = '"+caseId+"' and Tipo_retiro__c != null and Caso__r.Status != 'Cerrado'");  //alert(result4);
-                var records4 = result4.getArray("records");                         
-                if(records4[0].Id != null && records4[0].Tipo_pago__c == null) {                    
-                    try {
-                        var updateDetalle = new sforce.SObject("Detalle_caso__c");
-                        updateDetalle.Id = records4[0].Id; 
-                        if(tipoPago == 'N') {
-                            updateDetalle.Tipo_pago__c = 'N';   
-                        }
-                        result4 = sforce.connection.update([updateDetalle]);                        
-                        //alert('Datos Actualizados '+result4[0].id); 
-                        //console.log(result);
-                    } catch(err) {
-                        alert(err);
-                    }
-                }
-            } 
-            function updateMontoChequePatrono() {
-                var result5 = sforce.connection.query("Select Id,Monto_cheque__c,Monto_Cheque_Patrono__c,Cargar_cargos_Empleados__c from Detalle_caso__c Where Caso__c = '"+caseId+"' and Tipo_retiro__c != null and Cargar_cargos_Empleados__c = true");  //alert(result4);
-                var records5 = result5.getArray("records");                         
-                if(records5[0].Id != null) {                    
-                    try {
-                        var updateDetalle = new sforce.SObject("Detalle_caso__c");
-                        updateDetalle.Id = records5[0].Id; 
-                        updateDetalle.Monto_Cheque_Patrono__c = records5[0].Monto_cheque__c;
-                        result5 = sforce.connection.update([updateDetalle]);                        
-                        //alert('Datos Actualizados '+result5[0].id); 
-                        //console.log(result);
-                    } catch(err) {
-                        alert(err);
-                    }
-                }
-            }           
+                    $('select.removePicklistValue option[value=1]').remove(); $('select.removePicklistValue option[value=2]').remove(); $('select.removePicklistValue option[value=3]').remove(); $('select.removePicklistValue option[value=4]').remove(); $('select.removePicklistValue option[value=5]').remove();
+                    $('select.removePicklistValue option[value=6]').remove(); $('select.removePicklistValue option[value=7]').remove(); $('select.removePicklistValue option[value=8]').remove(); $('select.removePicklistValue option[value=9]').remove(); $('select.removePicklistValue option[value=10]').remove(); 
+                    $('select.removePicklistValue option[value=11]').remove(); $('select.removePicklistValue option[value=12]').remove(); $('select.removePicklistValue option[value=13]').remove(); 
+                    $('select.removePicklistValue option[value=15]').remove(); $('select.removePicklistValue option[value=16]').remove(); $('select.removePicklistValue option[value=17]').remove(); 
+                    $('select.removePicklistValue option[value=18]').remove(); $('select.removePicklistValue option[value=19]').remove(); $('select.removePicklistValue option[value=20]').remove();   
+                    $('select.removePicklistValue option[value=21]').remove(); $('select.removePicklistValue option[value=22]').remove(); $('select.removePicklistValue option[value=23]').remove(); 
+                    $('select.removePicklistValue option[value=24]').remove(); $('select.removePicklistValue option[value=25]').remove();    
+                    $('select.removePicklistValue option[value=27]').remove(); $('select.removePicklistValue option[value=28]').remove(); $('select.removePicklistValue option[value=29]').remove(); $('select.removePicklistValue option[value=30]').remove(); $('select.removePicklistValue option[value=31]').remove();   
+                }                            
+            }            
+                                    
+            $(document).ready( function () {
+                process();
+            }); 
             </script>
 
             <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
@@ -242,7 +123,6 @@
                 <apex:actionFunction name="callAction" reRender="yourText" action="{!changeFlag}">
                     <apex:param value="" name="flagValue"/>
                 </apex:actionFunction>
-                <apex:actionPoller rendered="{!detalleCasoActualizado}" reRender="theForm"  action="{!actualizardetalleCaso}" interval="5" />
                 <apex:actionFunction action="{!buscarSubPro}" name="searchFunction" />
                 <apex:actionFunction action="{!buscarCuentaC}" name="searchFunction2" />
                  <apex:actionStatus id="status">
@@ -263,7 +143,7 @@
                     
                     <fieldset class="slds-box slds-align--absolute-center slds-container--medium">
                        
-                        <apex:outputPanel rendered="{!!cTipoCaso.retiros}">
+                        <apex:outputPanel >
                             <fieldset class="slds-form--compound ">
                                 <div class="slds-form-element__group">
                                     <div class="slds-form-element__row">
@@ -271,10 +151,9 @@
                                         <div class="slds-form-element slds-size--1-of-2">
                                             
                                             <label class="slds-form-element__label" >Cuenta</label>
-                                            <apex:selectList rendered="{!!cTipoCaso.reversiones}" value="{!idCuenta}" id="idCuenta2" styleclass="slds-select" size="1">
+                                            <apex:selectList rendered="{!!cTipoCaso.reversiones}" value="{!idCuenta}" id="idCuenta2" styleclass="slds-select cuentaDetalle" size="1">
                                                 <apex:selectOptions value="{!listCuentas}" />
                                                 <apex:actionSupport event="onchange" action="{!selecCuenta}" rendered="{!cTipoCaso.subProducto}"/>
-                                                <apex:actionSupport event="onchange" action="{!selecCuentaRetiros}" reRender="theForm" status="status"  rendered="{!cTipoCaso.retiros}"/>
                                                 <!--apex:actionSupport immediate="true" event="onchange" action="{!MonedaCuenta}" rendered="{!cTipoCaso.reversiones}"/-->
                                             </apex:selectList>
                                             <apex:selectList rendered="{!cTipoCaso.reversiones}" value="{!idCuenta}" id="idCuenta" styleclass="slds-select" size="1">
@@ -283,7 +162,7 @@
                                             </apex:selectList>
                                         </div>
                                         
-                                        <div class="slds-form-element slds-size--2-of-2">
+                                        <div class="slds-form-element slds-size--2-of-2"> 
                                             <br/>
                                             <label class="slds-form-element__label" >
                                                 <apex:outputLabel rendered="{!cTipoCaso.reversiones}">Moneda: {!monedaCuenta} </apex:outputLabel>
@@ -491,18 +370,51 @@
                                                 <apex:actionSupport event="onchange" action="{!accionVacia}"/>
                                             </apex:inputField> 
                                             
+                                            <!-- apex:outputPanel rendered="{!If((detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}" -->
+                                            <!-- <apex:outputpanel rendered="{!AND(detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Inicio_Fecha_Aporte__c == null)}">
+                                                <label class="slds-form-element__label" >
+                                                    Fechas disponibles
+                                                </label>
+                                                <div class="slds-form-element slds-size--2-of-2">
+                                                    <apex:selectList styleclass="slds-input" value="{!DAU_Cambio_de_Fecha}" size="1"> 
+                                                        <apex:selectOptions value="{!CambioFechaOptions}" /> 
+                                                        <apex:actionSupport action="{!setCambioFecha}" event="onchange" reRender="dateField"/>    
+                                                    </apex:selectList>
+                                                </div> 
+                                            </apex:outputPanel> -->
+                                            
                                             <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A5',detalleCaso.Tipo_Operacion__c = 'A6',
-                                                                        detalleCaso.Tipo_Operacion__c = 'A3')}">
+                                                                        detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Frecuencia</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Frecuencia__c}" />
+                                                <apex:inputField id="Frecuencia" styleclass="slds-input" value="{!detalleCaso.Frecuencia__c}" />
                                             </apex:outputpanel> 
                                             
-                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6',
-                                                                        AND(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">
+                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                                <label class="slds-form-element__label" >
+                                                    <abbr class="slds-required" title="required">*</abbr>Día de pago</label>
+                                                <apex:inputField id="DiaPago" styleclass="slds-input removePicklistValue" value="{!detalleCaso.DAU_Dia_de_pago__c}" />
+                                            </apex:outputpanel> 
+                                                                                        
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8',
+                                                                        AND(detalleCaso.Tipo_Operacion__c = 'A3'))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>POS</label>
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.POS__c}" /> 
+                                            </apex:outputPanel> 
+                                            
+                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB')}">
+                                                <label class="slds-form-element__label" >
+                                                    <abbr class="slds-required" title="required">*</abbr>Tipo de Tarjeta</label>
+                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" /> 
+                                            </apex:outputPanel>
+                                            
+                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB')}">
+                                                <label class="slds-form-element__label" >
+                                                    <abbr class="slds-required" title="required">*</abbr>Banco</label>
+                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Banco__c}" /> 
                                             </apex:outputPanel>
                                         </div>
                                         <div class="slds-form-element slds-size--2-of-2">
@@ -512,39 +424,85 @@
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.Nuevo_monto_aporte__c}" />
                                             </apex:outputPanel>
                                             
-                                            <apex:outputPanel rendered="{!If(detalleCaso.Tipo_Operacion__c = 'A3',true,false)}">
+                                            <apex:outputPanel rendered="{!If((detalleCaso.Tipo_Operacion__c = 'A3' || detalleCaso.Tipo_Operacion__c = 'A8'),true,false)}">
                                                 <label class="slds-form-element__label">
                                                     <abbr class="slds-required" title="required">*</abbr>Nuevo canal de aporte</label><br/>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Nuevo_canal_aporte__c}" >
+                                                <apex:inputField id="CanalAporte" styleclass="slds-input" value="{!detalleCaso.Nuevo_canal_aporte__c}">
                                                     <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
                                                 </apex:inputField>  
                                             </apex:outputPanel> 
                                             
-                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A5',detalleCaso.Tipo_Operacion__c = 'A6',
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A5',detalleCaso.Tipo_Operacion__c = 'A6',detalleCaso.Tipo_Operacion__c = 'A8',
                                                                         AND(detalleCaso.Tipo_Operacion__c = 'A3', 
-                                                                        OR(detalleCaso.Nuevo_canal_aporte__c = 'AH', detalleCaso.Nuevo_canal_aporte__c = 'TA')))}">
+                                                                        OR(detalleCaso.Nuevo_canal_aporte__c = 'AH', detalleCaso.Nuevo_canal_aporte__c = 'TA', detalleCaso.Nuevo_canal_aporte__c = 'TAOB')))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr># Cuenta / Tarjeta</label>
                                                 <apex:inputText styleclass="slds-input" value="{!detalleCaso.N_Cuenta_Bancaria__c}" /> 
-                                            </apex:outputPanel>                                   
+                                            </apex:outputPanel>                             
                                             
-                                            <apex:outputPanel rendered="{!If(detalleCaso.Tipo_Operacion__c = 'A4',true,false)}">
+                                            <apex:outputPanel id="dateField" rendered="{!If(detalleCaso.Tipo_Operacion__c = 'A4',true,false)}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Nueva fecha de aporte</label>
                                                 <!-- apex:input type="date" value="{!FechaAporte}" styleclass="slds-input" -->
-                                                <apex:inputField type="date" styleclass="slds-input" value="{!detalleCaso.Nueva_fecha_aporte__c}" showDatePicker="true" />
+                                                <div> <!-- style="{!Nueva_fecha_aporte}" -->
+                                                    <apex:inputField type="date" styleclass="slds-input" value="{!detalleCaso.Nueva_fecha_aporte__c}" showDatePicker="false"/>
+                                                </div>
                                             </apex:outputPanel>
                                             
                                             
-                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6',
-                                                                        AND(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">                                     
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr>Fecha de vencimiento</label>
+                                            <apex:outputpanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8', detalleCaso.Tipo_Operacion__c = 'A3'), 
+                                                                        AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA',detalleCaso.Nuevo_canal_aporte__c = 'TAOB')))}">                                     
+                                                <label class="slds-form-element__label">
+                                                  <abbr class="slds-required" title="required">*</abbr>Fecha de vencimiento
+                                                </label>                                              
                                                 <div>
-                                                    <apex:inputField value="{!detalleCaso.Mes__c}" />
-                                                    <apex:inputField value="{!detalleCaso.Ano_tarjeta__c}" />
+                                                  <ul class="slds-grid slds-wrap slds-grid_pull-padded">
+                                                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+                                                      <article class="slds-tile slds-media slds-hint-parent"> 
+                                                        <div class="slds-media__body">
+                                                          <div class="slds-tile__detail">
+                                                            <apex:inputField styleClass="slds-input" value="{!detalleCaso.Mes__c}" /> 
+                                                          </div>
+                                                        </div>
+                                                      </article>
+                                                    </li>
+                                                    <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2">
+                                                      <article class="slds-tile slds-media slds-hint-parent">
+                                                        <div class="slds-media__body">
+                                                          <div class="slds-tile__detail">
+                                                            <apex:inputField styleClass="slds-input" value="{!detalleCaso.Ano_tarjeta__c}" />
+                                                          </div>
+                                                        </div>
+                                                      </article>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                            </apex:outputpanel>  
+                                            
+                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB')}">
+                                                <label class="slds-form-element__label">
+                                                    <abbr class="slds-required" title="required">*</abbr>Nombre Tarjeta Habiente</label>
+                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" /> 
+                                            </apex:outputPanel> 
+                                            
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                                <label class="slds-form-element__label">
+                                                    <abbr class="slds-required" title="required">*</abbr>Monto Débito</label>
+                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Nuevo_monto_aporte__c}" /> 
+                                            </apex:outputPanel>     
+                                            
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A6',detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                                <div class="slds-form-element slds-size--2-of-2">
+                                                    <label class="slds-form-element__label">
+                                                       <apex:outputLabel ><abbr class="slds-required" title="required">*</abbr>Borrar cuotas pendientes</apex:outputLabel>
+                                                    </label>
+                                                </div>
+                                                <div>
+                                                    <apex:inputField id="tipoPago" style="width: 100% !important;" styleclass="slds-input" value="{!detalleCaso.DAU_Borrar_Cuotas__c}">
+                                                    </apex:inputField>
                                                 </div>  
-                                            </apex:outputpanel>                                                                         
+                                            </apex:outputPanel>                                                                 
                                             
                                         </div>
                                     </div>
@@ -554,7 +512,7 @@
                                             <div class="slds-form-element slds-size--1-of-2">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Fecha de Inicio de Aporte</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Inicio_Fecha_Aporte__c}"  /> 
+                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" showDatePicker="false"/> 
                                             </div>
                                             <div class="slds-form-element slds-size--2-of-2" />
                                         </div>
@@ -630,575 +588,7 @@
                             </fieldset>                                                       
                         </apex:outputpanel>
                         
-                        
-                        <!-- RETIROS -->
-                        <apex:outputpanel rendered="{!cTipoCaso.retiros}"> 
-                            <!--apex:commandButton value="Prueba" action="{!prueba1}" /-->
-                            <fieldset class="slds-form--compound ">
-                                <div class="slds-form-element__group">
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >Cuenta</label>
-                                            <apex:selectList value="{!idCuenta}" id="idCuentaRetiros" styleclass="slds-select" size="1">
-                                                <apex:selectOptions value="{!listCuentas}" />
-                                                <apex:actionSupport event="onchange" action="{!selecCuentaRetiros}" reRender="theForm" status="status"  rendered="{!cTipoCaso.retiros}"/>
-                                            </apex:selectList>                                       
-                                        </div>
-                                        <div class="slds-form-element slds-size--2-of-2"> 
-                                            <label class="slds-form-element__label" >
-                                                <abbr class="slds-required" title="required">*</abbr>Tipo de retiro</label>
-                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Tipo_retiro__c}">
-                                                <apex:actionSupport event="onchange" action="{!selecTipoRetiro}"/>
-                                            </apex:inputField>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >
-                                                Comisión por retiro anticipado</label>
-                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Comision_Retiro_Anticipado__c}"/> 
-                                            <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_comision_retiro__c}" />
-                                        </div>
-                                        <div class="slds-form-element slds-size--2-of-2">
-                                            <label class="slds-form-element__label" > Cliente quiere capital semilla</label>
-                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cliente_quiere_capital_semilla__c}" >
-                                                <apex:actionSupport event="onchange" action="{!selecTipoRetiro}"/>
-                                            </apex:inputField> 
-                                        </div>
-                                    </div>
-                                    
-                                    <!--apex:outputPanel rendered="{!detallecaso.Cobrar_empleado_sigue_laborando__c}"--> 
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" > Cliente sigue laborando</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cliente_sigue_Laborando__c}" /> 
-                                            </div>
-                                            
-                                            <div class="slds-form-element slds-size--2-of-2">                                                                                                                     
-                                            </div>
-                                        </div>
-                                    <!--/apex:outputPanel-->
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-1">
-                                            <h3 class="slds-section-title--divider">POLITICAS</h3>  
-                                        </div>
-                                    </div>  
-                                    <apex:outputPanel rendered="{!AND(!detalleCaso.Cobro_Individual_CRA__c,!detalleCaso.Cobro_Saldo_Minimo_CRA__c)}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">                                       
-                                                <label class="slds-form-element__label" >Comisión por retiro anticipado</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Comision_retiro_anticipado_empresa__c}" />                     
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <label class="slds-form-element__label" >% de Comisión por retiro anticipado</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Porcentaje_comision__c}"/>                                                                                                    
-                                            </div>
-                                        </div> 
-                                    </apex:outputPanel>
-                                    <apex:outputPanel rendered="{!OR(detalleCaso.Cobro_Individual_CRA__c, true)}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">                                       
-                                                <label class="slds-form-element__label" >Cobro Individual CRA</label><br/>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cobro_Individual_CRA__c}" />                     
-                                            </div>
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >% CRA individual</label><br/>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Porcentaje_CRA_Individual__c}"/>                                                                                                    
-                                            </div>
-                                        </div> 
-                                    </apex:outputPanel>
-                                   
-                                    <apex:outputPanel rendered="{!detalleCaso.Monto_Saldo_Minimo_CRA__c !=null}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">                                       
-                                                <label class="slds-form-element__label" >Cobro Saldo Minimo CRA</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Cobro_Saldo_Minimo_CRA__c }" />                     
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <label class="slds-form-element__label" >Monto Saldo minimo CRA</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_Saldo_Minimo_CRA__c}"/>                                                                                                    
-                                            </div>
-                                        </div> 
-                                    </apex:outputPanel>
-                                    
-                                    <!--apex:outputPanel rendered="{!If(cuentaCliente.Cuenta_colectiva2__c != null,true,false)}"-->
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">   
-                                                <label class="slds-form-element__label" >Cobro si empleado sigue laborando</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Cobrar_empleado_sigue_laborando__c}"/>
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <apex:outputPanel rendered="{!If(cuentaCliente.Cuenta_colectiva2__c != null,true,false)}">
-                                                    <label class="slds-form-element__label">
-                                                        Permitir Retiro de Saldos Patronales</label><br/>
-                                                    <apex:outputField styleclass="slds-input" value="{!detalleCaso.Permitir_Retiro_Saldos_Patronales__c}" /> 
-                                                </apex:outputPanel> 
-                                            </div>
-                                        </div>     
-                                    <!--/apex:outputPanel-->  
-                                    
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >Exoneracion 3ra Edad</label>
-                                            <apex:outputField styleclass="slds-input" value="{!detalleCaso.Exoneracion_3ra_Edad__c}" /> 
-                                            <!--:outputText  value="{!anosCliente} Años" /--> 
-                                        </div>
-                                        
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >Edad</label><br/>
-                                            <apex:outputText value="{!anosCliente} Años" /> 
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-1">
-                                            <h3 class="slds-section-title--divider">FORMA DE RETIRO</h3>    
-                                        </div>
-                                    </div>  
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >
-                                                <abbr class="slds-required" title="required">*</abbr>Forma de retiro</label>
-                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Forma_Retiro__c}">
-                                                <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
-                                            </apex:inputField>   
-                                        </div>
-                                        <div class="slds-form-element slds-size--2-of-2">
-                                            <div>
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" title="required">*</abbr>Cobro de TSP</label><br/>
-                                                <div>
-                                                    <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cobro_TSP__c}" />
-                                                    <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_TSP__c}" />    
-                                                </div>
-                                            </div>
-                                            <apex:outputPanel rendered="{!If(detalleCaso.Forma_Retiro__c = 'CK',true,false)}">
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" title="required">*</abbr>Cobro de Cheque</label><br/>
-                                                <div>
-                                                    <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cobro_Cheque__c}" />
-                                                    <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_cheque__c}" /> 
-                                                </div>                                              
-                                            </apex:outputPanel>                                       
-                                        </div>
-                                    </div>
-                                    
-                                    <apex:outputPanel rendered="{!OR(detalleCaso.Forma_Retiro__c = 'AH',detalleCaso.Forma_Retiro__c = 'ACH')}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr>Cuenta Origen</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cuenta_destino__c}" />
-                                            </div> 
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                
-                                            </div>                                  
-                                        </div>
-                                        
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" title="required">*</abbr>Tipo de cuenta</label><br/>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Tipo_Cuenta__c}"/> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr>Moneda de la cuenta</label>
-                                                <apex:inputText styleclass="slds-input" value="{!detalleCaso.currencyIsoCode}" /> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr># Cuenta Destino</label>
-                                                <apex:inputText styleclass="slds-input" value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2" >
-                                                <label class="slds-form-element__label" />
-                                                <div>
-                                                    <apex:commandButton rendered="{!detalleCaso.Forma_Retiro__c == 'AH'}" value="Verificar" action="{!verPropietarioCuenta}" 
-                                                                        styleClass="slds-button slds-button--success"/>  
-                                                </div> 
-                                            </div>
-                                        </div>
-                                        
-                                        <apex:outputPanel rendered="{!detalleCaso.Forma_Retiro__c == 'AH'}">
-                                            <div class="slds-form-element__row">
-                                                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
-                                                    <span class="slds-assistive-text">info</span>
-                                                    <span class="slds-icon_container slds-icon-utility-user slds-m-right_x-small" title="Description of icon when needed">
-                                                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
-                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#user"></use>
-                                                        </svg>
-                                                    </span>
-                                                    <apex:outputField styleclass="slds-input" value="{!detalleCaso.Propietario_cuenta__c}" />
-                                                </div>
-                                            </div>
-                                        </apex:outputPanel>
-                                    </apex:outputPanel>
-                                    
-                                    <apex:outputPanel rendered="{!detalleCaso.Forma_Retiro__c = 'ACH'}">    
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr>Banco</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.Banco__c}"/> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">                                       
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" title="required">*</abbr>Cobro de ACH</label><br/>
-                                                <div>
-                                                    <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cobro_ACH__c}" /> 
-                                                    <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_ACH__c}" />    
-                                                </div>                                                               
-                                            </div>
-                                        </div>                              
-                                    </apex:outputPanel>
-                                    <apex:outputPanel rendered="{!detalleCaso.Permitir_Retiro_Saldos_Patronales__c}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                <h3 class="slds-section-title--divider">POLITICAS APORTES PATRONALES</h3>  
-                                            </div>
-                                        </div>  
-                                        
-                                        <apex:outputPanel rendered="{!detalleCaso.Tipo_Politica_Retiro_Saldo_Patronal__c='1'}" >
-                                            <div class="slds-form-element__row">
-                                                <div class="slds-form-element slds-size--1-of-2">
-                                                    <label class="slds-form-element__label" >
-                                                        <abbr class="slds-required"></abbr>Fecha de Ingreso a la Empresa</label><br/>
-                                                    <apex:outputField rendered="{!case.status !='Nuevo'}"  styleclass="slds-input" value="{!detalleCaso.Fecha_Ingreso_Empresa__c}"/> 
-                                                    <apex:inputField type="date" rendered="{!case.status ='Nuevo'}" styleclass="slds-input" value="{!detalleCaso.Fecha_Ingreso_Empresa__c}">
-                                                        <apex:actionSupport action="{!calculoSaldoPatronales}" rendered="{!detalleCaso.Fecha_Despido_Empresa__c != null}" reRender="theForm" status="status" event="onchange" />
-                                                    </apex:inputField>                                                    
-                                                </div>
-                                                <div class="slds-form-element slds-size--1-of-2">                                       
-                                                    <label class="slds-form-element__label">
-                                                        <abbr class="slds-required" ></abbr>Fecha de Despido de la Empresa</label><br/>
-                                                    <apex:inputField type="date"  rendered="{!case.status ='Nuevo'}" styleclass="slds-input"  value="{!detalleCaso.Fecha_Despido_Empresa__c}" >
-                                                        <apex:actionSupport action="{!calculoSaldoPatronales}" oncomplete="bloquearCampos();" reRender="theForm" status="status" event="onchange" />
-                                                    </apex:inputField>
-                                                    <apex:outputField rendered="{!case.status !='Nuevo'}" styleclass="slds-input"  value="{!detalleCaso.Fecha_Despido_Empresa__c}" />
-                                                    
-                                                </div>
-                                            </div> 
-                                        </apex:outputPanel>
-                                        
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" > Monto Sldo Patronal Ordinario</label><br/>
-                                                <!-- apex:inputField styleclass="slds-input" id="montopatOr" value="{!detalleCaso.Monto_Saldo_Patronal__c}" onchange="recalculatePorcentajePO();"/ -->
-                                                <apex:inputField styleclass="slds-input" id="montopatOr" value="{!detalleCaso.Monto_Saldo_Patronal__c}">
-                                                    <apex:actionSupport action="{!calculoSaldoPatronales2}" reRender="theForm" status="status" event="onchange" onsubmit="recalculatePorcentajePO();" />
-                                                </apex:inputField> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--1-of-2">                                       
-                                                <label class="slds-form-element__label">% Saldo Patronal Ordinario</label><br/>
-                                                <!-- apex:inputField styleclass="slds-input" id="porcenpatOr" value="{!detalleCaso.Porcentaje_Saldo_Patronal__c}" onchange="recalculateAmountPO();"/ -->
-                                                <apex:inputField styleclass="slds-input" id="porcenpatOr" value="{!detalleCaso.Porcentaje_Saldo_Patronal__c}">
-                                                    <apex:actionSupport action="{!calculoSaldoPatronales2}" reRender="theForm" status="status" event="onchange" onsubmit="recalculateAmountPO();" />
-                                                </apex:inputField>   
-                                                <!-- apex:inputText styleClass="slds-input" value="{!detalleCaso02.Monto_saldo__c}" id="patronalOrdi"/ --> 
-                                                <apex:inputText styleClass="slds-hidden" value="{!montoPatOrd}" id="patronalOrdi"/>  
-                                                <!-- apex:inputText styleClass="slds-input" value="{!montoBrutoRetiro}" id="montoBrutoRetiro"/ -->
-                                                <apex:inputText styleClass="slds-hidden" value="{!montoaRetirar}" id="montoaRetirar"/>                                                          
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" > Monto Sldo Patronal Extraordinario</label><br/>
-                                                <!-- apex:inputField styleclass="slds-input" id="montopatExt" value="{!detalleCaso.Monto_Saldo_Patronal_Ext__c}" onchange="recalculatePorcentajePE();"/ -->
-                                                <apex:inputField styleclass="slds-input" id="montopatExt" value="{!detalleCaso.Monto_Saldo_Patronal_Ext__c}">
-                                                    <apex:actionSupport action="{!calculoSaldoPatronales2}" reRender="theForm" status="status" event="onchange" onsubmit="recalculatePorcentajePE();" />
-                                                </apex:inputField> 
-                                                <!-- apex:inputText styleClass="slds-input" value="{!detalleCaso03.Monto_saldo__c}" id="patronalExtraOrdi"/ -->
-                                                <apex:inputText styleClass="slds-hidden" value="{!montoPatExtOrd}" id="patronalExtraOrdi"/>
-                                                <!-- apex:inputText styleClass="slds-input" value="{!detalleCaso04.Monto_Bruto_Retirar_Empresa__c}" id="montoRetiro"/ -->
-                                            </div>
-                                            <div class="slds-form-element slds-size--1-of-2">                                       
-                                                <label class="slds-form-element__label">% Saldo Patronal Extraordinario</label><br/>
-                                                <!-- apex:inputField styleclass="slds-input" id="porcenpatExt" value="{!detalleCaso.Porcentaje_Saldo_Patronal_Ext__c}" onchange="recalculateAmountPE();"/ -->
-                                                <apex:inputField styleclass="slds-input" id="porcenpatExt" value="{!detalleCaso.Porcentaje_Saldo_Patronal_Ext__c}">
-                                                    <apex:actionSupport action="{!calculoSaldoPatronales2}" reRender="theForm" status="status" event="onchange" onsubmit="recalculateAmountPE();" />
-                                                </apex:inputField>                                                                                                             
-                                            </div>
-                                        </div>
-
-                                    </apex:outputPanel>
-
-                                    <!--apex:outputPanel rendered="{!detalleCaso.saldo_prestamo__C != null}"-->
-                                     <apex:outputPanel rendered="{!if(detalleCaso.Monto_Pignorado__c != 0,if(detalleCaso.Monto_Pignorado__c != null,true,false),false)}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                <h3 class="slds-section-title--divider">PRESTAMO                                        
-                                                </h3>   
-                                            </div>
-                                        </div>    
-                                        
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required"></abbr>Monto Pignorado</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_Pignorado__c}"/> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">                                       
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" ></abbr>Saldo del Prestamo</label><br/>
-                                                <div>
-                                                    <apex:inputField rendered="{!or(case.status='Nuevo',case.status='Pendiente de aprobación')}" styleclass="slds-input"  value="{!detalleCaso.Saldo_Prestamo__c}" >
-                                                        <apex:actionSupport action="{!ModificarSaldoPrestamo}" event="onchange" reRender="theForm" status="status" />
-                                                    </apex:inputField>
-                                                    <apex:outputField rendered="{!IF(case.status !='Nuevo',if(case.status !='Pendiente de aprobación',true,false),false)}" styleclass="slds-input"  value="{!detalleCaso.Saldo_Prestamo__c}" />
-                                                </div>                                                               
-                                            </div>
-                                        </div>                              
-                                    </apex:outputPanel>
-                                    <apex:outputPanel id="idsubProductos" rendered="{!AND(case.status !='Pendiente de aprobación',case.status !='Pendiente segunda aprobación')}">
-                                    <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                
-                                                <h3 class="slds-section-title--divider"><!--apex:outputPanel> <apex:inputField styleclass="slds-input" value="{!detalleCaso.Aplica_Cambio_Sub_Producto_desde_Retiros__c}" >  
-                                                        <apex:actionSupport action="{!accionVacia2}" event="onchange"  />
-                                                    </apex:inputField></apex:outputPanel-->CAMBIO DE SUB-PRODUCTO       
-                                                    <apex:inputField style="width:100px;height:30px;" value="{!detalleCaso.Aplica_Cambio_Sub_Producto_desde_Retiros__c}" >  
-                                                        <apex:actionSupport action="{!accionVacia2}" event="onchange"  />
-                                                    </apex:inputField>
-                                                    
-                                                </h3>   
-                                            </div>
-                                        </div>  
-                                    
-                                    <!--apex:outputpanel-->
-                                    <apex:outputpanel rendered="{!detalleCaso.Aplica_Cambio_Sub_Producto_desde_Retiros__c}"> 
-                                        <fieldset class="slds-form--compound ">
-                                            <div class="slds-form-element__group">
-                                                
-                                                <div class="slds-form-element__row">
-                                                    <div class="slds-form-element slds-size--1-of-2">
-                                                        <label class="slds-form-element__label" >
-                                                           Motivo del Caso</label><br/>
-                                                        Retención
-                                                    </div>
-                                                    <div class="slds-form-element slds-size--2-of-2">
-                                                        <!--label class="slds-form-element__label">Producto</label><br/ >
-                                                        <apex:outputField styleclass="slds-input" value="{!cuentaCliente.Producto__r.Name}" /--> 
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="slds-form-element__row">
-                                                    <div class="slds-form-element slds-size--1-of-2">
-                                                        <label class="slds-form-element__label" >
-                                                            <abbr class="slds-required" title="required">*</abbr>Acción</label><br/>
-                                                        <apex:inputField styleclass="slds-input" value="{!detalleCaso.Accion__c}"><!-- required="true"-->
-                                                            <apex:actionSupport event="onchange" action="{!accionSubproducto}"/>
-                                                        </apex:inputField> 
-                                                    </div>
-                                                    <div class="slds-form-element slds-size--2-of-2">
-                                                        <label class="slds-form-element__label">Producto</label><br/ >
-                                                        <apex:outputField rendered="{!detalleCaso.Producto_Anterior__c =null}" styleclass="slds-input" value="{!cuentaCliente.Producto__r.Name}" /> 
-                                                        <apex:outputField rendered="{!detalleCaso.Producto_Anterior__c !=null}" styleclass="slds-input" value="{!detalleCaso.Producto_Anterior__c}" /> 
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="slds-form-element__row">
-                                                    <div class="slds-form-element slds-size--1-of-2">
-                                                        <label class="slds-form-element__label" >Cuenta Colectiva</label><br/>
-                                                        <apex:outputField rendered="{!OR(Caso.status !='Cerrado', detalleCaso.Detalle_Cuenta_colectiva__c =null)}" styleclass="slds-input" value="{!cuentaCliente.Detalle_Cuenta_colectiva__c}" /> 
-                                                        <apex:outputField rendered="{!AND(Caso.status ='Cerrado', detalleCaso.Detalle_Cuenta_colectiva__c !=null)}" styleclass="slds-input" value="{!detalleCaso.Detalle_Cuenta_colectiva__c}" /> 
-                                                    </div>
-                                                    <div class="slds-form-element slds-size--2-of-2">
-                                                        <apex:outputPanel rendered="{!if(detalleCaso.Accion__c = 'A1',true,false)}">
-                                                            <label class="slds-form-element__label">Nueva Cuenta colectiva</label><br/>
-                                                            <div class="slds-input-has-icon slds-input-has-icon--right">                                   
-                                                                <apex:commandLink action="{!buscarCuentaC}">
-                                                                    <svg class="slds-input__icon" aria-hidden="true">                                            
-                                                                        <use xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>                                           
-                                                                    </svg>
-                                                                </apex:commandLink>
-                                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Detalle_Cuenta_colectiva__c}" />
-                                                            </div>  
-                                                        </apex:outputPanel>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="slds-form-element__row">
-                                                    <div class="slds-form-element slds-size--1-of-2">
-                                                        <label class="slds-form-element__label" >Subproducto</label><br/>
-                                                        <!--apex:outputField styleclass="slds-input" value="{!cuentaCliente.Detalle_Subproducto__c}" /--> 
-                                                        <apex:outputField rendered="{!OR(Caso.status !='Cerrado', detalleCaso.Detalle_subproducto2__c =null)}" styleclass="slds-input" value="{!cuentaCliente.Detalle_Subproducto__c}" /> 
-                                                        <apex:outputField rendered="{!AND(Caso.status ='Cerrado', detalleCaso.Detalle_subproducto2__c !=null)}" styleclass="slds-input" value="{!detalleCaso.Detalle_subproducto2__c}" />
-                                                    </div>
-                                                    <div class="slds-form-element slds-size--2-of-2">
-                                                        <label class="slds-form-element__label">Nuevo Subproducto</label><br/>
-                                                        <div class="slds-input-has-icon slds-input-has-icon--right">                                   
-                                                            <apex:commandLink action="{!buscarSubPro}" rendered="{!detalleCaso.Accion__c != 'A1'}" >
-                                                                <svg class="slds-input__icon" aria-hidden="true">                                            
-                                                                    <use xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#search')}"></use>                                           
-                                                                </svg>
-                                                            </apex:commandLink>
-                                                            <apex:outputField styleclass="slds-input" value="{!detalleCaso.Detalle_subproducto__c}" />
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </fieldset>                                                       
-                                    </apex:outputpanel>
-                                    </apex:outputPanel>
-                                    
-                                        
-                                        <!-- <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required"></abbr>Monto Pignorado</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_Pignorado__c}"/> 
-                                            </div>
-                                            <div class="slds-form-element slds-size--2-of-2">                                       
-                                                <label class="slds-form-element__label">
-                                                    <abbr class="slds-required" ></abbr>Saldo del Prestamo</label><br/>
-                                                <div>
-                                                    <apex:inputField rendered="{!or(case.status='Nuevo',case.status='Pendiente de aprobación')}" styleclass="slds-input"  value="{!detalleCaso.Saldo_Prestamo__c}" >
-                                                        <apex:actionSupport action="{!ModificarSaldoPrestamo}" event="onchange" reRender="theForm" status="status" />
-                                                    </apex:inputField>
-                                                    <apex:outputField rendered="{!IF(case.status !='Nuevo',if(case.status !='Pendiente de aprobación',true,false),false)}" styleclass="slds-input"  value="{!detalleCaso.Saldo_Prestamo__c}" />
-                                                </div>                                                               
-                                            </div>
-                                        </div> -->          
-                                    
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-1">
-                                            <h3 class="slds-section-title--divider">SALDOS A RETIRAR                                        
-                                            </h3>   
-                                        </div>
-                                    </div>                                              
-                                    <apex:DataTable value="{!cuentasCaso}" id="idtableSaldos" var="item" styleClass="slds-table slds-table--bordered">
-                                        <apex:column headerValue="Saldo">
-                                            <apex:OutputField value="{!item.Saldo_retirar__c}"/>                                                                                                           
-                                        </apex:column>  
-                                        <apex:column headerValue="Monto del Saldo">
-                                            <apex:OutputField value="{!item.Monto_saldo__c}"/>                                                                                                         
-                                        </apex:column>  
-                                        <apex:column headerValue="Monto a retirar" rendered="{!detalleCaso.Tipo_retiro__c == '51'}">
-                                            <!-- apex:inputField value="{!item.Monto_retirar__c}" 
-                                                             rendered="{!OR(AND(item.Saldo_retirar__c = '12', detalleCaso.Permitir_Retiro_Saldos_Patronales__c),
-                                                                       AND(item.Saldo_retirar__c != '12', item.Saldo_retirar__c != '13'))}" >
-                                                <apex:actionSupport rendered="{!OR(AND(item.Saldo_retirar__c = '12', detalleCaso.Permitir_Retiro_Saldos_Patronales__c))}"
-                                                                    action="{!ValidacionSaldoPatronales}" event="onchange" reRender="theForm" status="status" >
-                                                    <apex:param assignTo="{!tipoSaldo}" value="{!item.Saldo_retirar__c}" name="Validaciones" />
-                                                </apex:actionSupport>
-                                            </apex:inputField -->
-                                            <apex:inputField value="{!item.Monto_retirar__c}">
-                                                <apex:actionSupport rendered="{!OR(AND(item.Saldo_retirar__c = '12', detalleCaso.Permitir_Retiro_Saldos_Patronales__c),item.Saldo_retirar__c = '13')}"
-                                                                    action="{!ValidacionSaldoPatronales}" event="onchange" reRender="idtableSaldos" status="status" >
-                                                    <apex:param assignTo="{!tipoSaldo}" value="{!item.Saldo_retirar__c}" name="Validaciones" />
-                                                </apex:actionSupport>
-                                            </apex:inputField>
-                                            
-                                            <!-- apex:outputField value="{!item.Monto_retirar__c}" 
-                                                              rendered="{!OR(AND(item.Saldo_retirar__c = '12', !detalleCaso.Permitir_Retiro_Saldos_Patronales__c),item.Saldo_retirar__c == '13')}" / -->                                                                                                            
-                                        </apex:column>                                                                              
-                                    </apex:DataTable> 
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >Saldo total de la cuenta</label><br/>
-                                            <apex:OutputField value="{!detalleCaso.Saldo_total__c}"/>
-                                        </div>
-                                        <div class="slds-form-element slds-size--2-of-2">                                       
-                                            <label class="slds-form-element__label">Monto bruto a retirar</label><br/>
-                                            <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_bruto_retirar__c}" />                                                                   
-                                        </div>
-                                    </div>  
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label" >Comisiones y cargos </label><br/>
-                                            <apex:OutputField value="{!detalleCaso.Monto_total_comisiones_recargos__c}"/>
-                                        </div>
-                                        <div class="slds-form-element slds-size--2-of-2">                                       
-                                            <label class="slds-form-element__label" >Monto neto a retirar</label><br/>
-                                            <apex:OutputField value="{!detalleCaso.Monto_total_retirar__c}"/>                                                                
-                                        </div>
-                                    </div>
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label">Exonerado en este caso</label><br/>
-                                            <apex:outputField styleclass="slds-input" value="{!detalleCaso.Exonerado__c}" />
-                                        </div> 
-                                        <div class="slds-form-element slds-size--1-of-2">
-                                            <label class="slds-form-element__label">Monto exonerado al día de hoy</label><br/>
-                                            <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
-                                                <span class="slds-assistive-text">info</span>
-                                                <span class="slds-icon_container slds-icon-utility-user slds-m-right_x-small" />
-                                                <!-- apex:outputField styleclass="slds-input" value="{!detalleCaso.Total_exonerado__c}" / -->
-                                                <apex:outputText value="HNL{0, number, ###,###,##0.##}">
-                                                    <apex:param value="{!detalleCaso.Total_exonerado__c}" />
-                                                </apex:outputText>
-                                                
-                                            </div>
-                                        </div>                                                              
-                                    </div>
-                                    
-                                    <apex:outputPanel rendered="{!detalleCaso.Se_lleva_Parte_Patronal__c}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                <h3 class="slds-section-title--divider">RETIRO PARTE PATRONAL                                        
-                                                </h3>   
-                                            </div>
-                                        </div>  
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label">Monto Bruto a retirar</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_Bruto_Retirar_Empresa__c}" />
-                                            </div> 
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                <label class="slds-form-element__label">Monto neto a retirar</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Monto_Neto_Retirar_Empresa__c}" />
-                                            </div>                                                              
-                                        </div>
-                                        
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-2">
-                                                <label class="slds-form-element__label">Comisiones y cargos</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!detalleCaso.Total_Cargos_Empresa__c}" />
-                                            </div> 
-                                            <div class="slds-form-element slds-size--2-of-2">
-                                                 <label class="slds-form-element__label">Forma de Pago</label><br/>
-                                                <apex:outputField styleclass="slds-input" value="{!cuentaCliente.Cuenta_colectiva2__r.Tipo_Cuenta__c}" />
-                                            </div>                                                              
-                                        </div>
-                                        
-                                    </apex:outputPanel>
-                                    
-                                    <div id="pagosBT" style="{!pagosBT}">
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                <h3 class="slds-section-title--divider">PAGO A BENEFICIARIOS / TERCEROS</h3>  
-                                                <!-- apex:inputText styleClass="slds-INPUT" value="{!montoaRetirar}" id="montoaRetirar2"/ -->
-                                            </div>
-                                        </div> 
-                                        <div class="slds-form-element__row">
-                                            <div class="slds-form-element slds-size--1-of-1">
-                                                <abbr class="slds-required">*</abbr><label class="slds-form-element__label">Elija la opción</label><br/>
-                                                <!-- apex:inputField style="width: 5% !important;" styleclass="slds-input" value="{!detalleCaso.Pago_terceros__c}" / -->
-                                                <!-- <apex:inputField styleclass="slds-input" style="width: 5% !important;" value="{!detalleCaso.Pago_terceros__c}" >
-                                                    <apex:actionSupport event="onchange" action="{!verBeneficiarios2}"/>
-                                                </apex:inputField> -->                                            
-                                                <apex:inputField id="tipoPago" style="width: 100% !important;" styleclass="slds-input" value="{!detalleCaso.Tipo_pago__c}">
-                                                    <apex:actionSupport event="onchange" action="{!verBeneficiarios2}"/>
-                                                </apex:inputField>
-                                            </div>                                            
-                                        </div>
-                                        <div class="slds-form-element__row">
-                                            <apex:commandButton action="{!verBeneficiarios2}" styleClass="slds-button slds-button_brand" value="Ver Registros" id="theButton"/>
-                                            <!-- apex:commandButton action="{!verBeneficiarios2}" styleClass="slds-button slds-button_brand" value="Ver Registros">
-                                                <apex:param name="MS_Item" value="{!detalleCaso.Tipo_pago__c}" assignTo="{!detalleCaso.Tipo_pago__c}" />
-                                            </apex:commandButton -->
-                                        </div>
-                                    </div>                                  
-                                                                    
-                                </div>
-                            </fieldset>                 
-                        </apex:outputpanel>
-                        
-                        <!-- REVERSIONES -->
+                       <!-- REVERSIONES -->
                         <apex:outputpanel rendered="{!cTipoCaso.reversiones}">              
                             <fieldset class="slds-form--compound ">
                                 <div class="slds-form-element__group">
@@ -1241,7 +631,7 @@
                                                         
                                                     </div>
                                                 </div> 
-                                                <!--apex:outputPanel rendered="{!caso.mostrar_tasa_cambio__c ='Si'}" >
+                                                <!--apex:outputPanel rendered="{!caso.Mostrar_tasa_Cambio__c ='Si'}" >
                                                     <div class="slds-form-element__row">
                                                         <div class="slds-form-element slds-size--1-of-2">
                                                             <label class="slds-form-element__label">
@@ -1267,7 +657,7 @@
                                                
                                             </div>
                                         </div>
-                                        <apex:outputPanel rendered="{!caso.mostrar_tasa_cambio__c ='Si'}" >
+                                        <apex:outputPanel rendered="{!caso.Mostrar_tasa_Cambio__c ='Si'}" >
                                             <div class="slds-form-element__row">
                                                 <div class="slds-form-element slds-size--1-of-2">
                                                     Tipo de Transacción: {!IF(monedaCuenta = 'USD','Compra de Dólares','Venta de Dólares')}<br/>
@@ -1886,333 +1276,6 @@
                     </div>
                     </apex:outputPanel>
                                         
-                    <!-- Beneficiarios caso retiro 03/03/2020 -->
-                    <apex:outputPanel rendered="{!popBene2}">
-                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
-                            <div class="slds-modal__container">
-                                <div class="slds-modal__header">
-                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                                        </svg>
-                                        <span class="slds-assistive-text">Cerrar</span>
-                                    </apex:commandLink>  
-                                    
-                                    <div style="{!CASE($Profile.Name,"Operaciones",'display:none;',"Operaciones y Tecnologia",'display:none;','')}">
-                                        <apex:commandButton value="Agregar" action="{!addPagoBene}" styleClass="slds-button slds-button--brand" />
-                                        <apex:commandButton value="Siguiente" action="{!upsertBeneficiarios}" styleClass="slds-button slds-button--brand" />
-                                    </div>    
-                                    
-                                </div>
-                                <div class="slds-modal__content slds-p-around--medium">
-                                    <!-- <apex:pageBlock >
-                                        <apex:pageBlockTable value="{!listBeneficiarios}" var="item" >
-                                            <apex:column headerValue="Seleccionar">
-                                                <apex:inputField value="{!item.Casilla__c}"/>                           
-                                            </apex:column> 
-                                            <apex:column Value="{!item.Primer_Nombre__c}" />                
-                                            <apex:column Value="{!item.Segundo_Nombre__c}" />  
-                                            <apex:column Value="{!item.Primer_Apellido__c}" />  
-                                            <apex:column Value="{!item.Segundo_Apellido__c}" /> 
-                                            <apex:column Value="{!item.Identidad__c}" /> 
-                                            <apex:column Value="{!item.Parentesco__c}" /> 
-                                            <apex:column Value="{!item.Porcentaje__c}" /> 
-                                            <apex:column Value="{!item.Fecha_Nacimiento__c}" /> 
-                                            <apex:column Value="{!item.Sexo__c}" /> 
-                                            <apex:column Value="{!item.Pago_a_Tercero__c}" />
-                                        </apex:pageBlockTable> 
-                                    </apex:pageBlock> -->
-                                    
-                                    <apex:pageBlock id="popBeneficiarios"> 
-                                        <apex:variable var="rowNum" value="{!0}"  />         
-                                        <apex:pageMessages /> 
-                                        <apex:pageBlockTable value="{!listBeneficiarios}" var="item"> 
-                                            <apex:column headerValue="">
-                                                <apex:commandLink title="Eliminar" style="font-size:15px; font-weight:bold; text-align:center;color:red;" value="X" action="{!delRow}" reRender="popBeneficiarios" rendered="{!rowNum>=0}">
-                                                    <apex:param value="{!rowNum}" name="index" />
-                                                </apex:commandLink>
-                                                <apex:variable var="rowNum" value="{!rowNum+1}"/>    
-                                            </apex:column>
-                                            <apex:column headerValue="Primer Nombre"> 
-                                                <!-- apex:outputText value="{!item.Primer_nombre__c} {!item.Segundo_nombre__c} {!item.Primer_apellido__c} {!item.Segundo_apellido__c}"/ -->
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_Nombre__c}"/>
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Nombre"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_Nombre__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Primer Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_Apellido__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_Apellido__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Parentesco"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Parentesco__c}"/> 
-                                            </apex:column>
-                                            <!-- apex:column headerValue="Forma de Retiro"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Forma_Retiro__c}"/> 
-                                            </apex:column -->
-                                            <!-- apex:column headerValue="Sexo"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Sexo__c}"/> 
-                                            </apex:column> 
-                                            <!-- apex:column headerValue="Nombre del banco"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Nombre_del_banco__c}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue="Número de cuenta destino"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Numero_cuenta_destino__c}"/> 
-                                            </apex:column --> 
-                                            <!-- apex:column headerValue="Tipo de cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Tipo_cuenta__c}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue="Moneda de la cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Moneda_cuenta__c}"/> 
-                                            </apex:column> 
-                                            <!-- apex:column headerValue="Monto bruto"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_bruto__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Comisiones y cargos"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Comisiones_cargos__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Comisiones y cargos"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_neto_retirar__c}"/> 
-                                            </apex:column -->
-                                            <apex:column headerValue="Identidad"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Identidad__c}" required="true"/> 
-                                            </apex:column>
-                                            <!-- apex:column headerValue="Porcentaje" style="width:6%"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Porcentaje__c}"/> 
-                                            </apex:column -->
-                                        </apex:pageBlockTable> 
-                                    </apex:pageBlock> 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slds-backdrop slds-backdrop--open"></div>
-                    </apex:outputPanel>
-                    
-                    <apex:outputPanel rendered="{!popPagoBene}">
-                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
-                            <div class="slds-modal__container">
-                                <div class="slds-modal__header">
-                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                                        </svg>
-                                        <span class="slds-assistive-text">Cerrar</span>
-                                    </apex:commandLink>  
-                   
-                                    <apex:commandButton value="Guardar" action="{!upsertPagosBeneficiarios}" styleClass="slds-button slds-button--brand" />
-                                    
-                                </div>
-                                <div class="slds-modal__content slds-p-around--medium">
-                                <div class="scrolling-wrapper">
-                                    <apex:pageBlock id="pagosBenefi"> 
-                                        <apex:pageMessages /> 
-                                        <div style="text-align:right;">(*) Campos Requeridos</div>
-                                        <apex:pageBlockTable value="{!listPagosBeneficiarios}" var="item"> 
-                                            <!-- apex:column headerValue="Primer Nombre"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_nombre__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Nombre"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_nombre__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Primer Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_apellido__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_apellido__c}"/> 
-                                            </apex:column -->
-                                            <apex:column headerValue="Nombre Completo"> 
-                                                <apex:outputText value="{!item.Primer_nombre__c} {!item.Segundo_nombre__c} {!item.Primer_apellido__c} {!item.Segundo_apellido__c}"/>
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <!-- apex:column headerValue="¿Pago a Tercero?"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Pago_a_Tercero__c}"/> 
-                                            </apex:column -->
-                                            <apex:column headerValue="(*) Forma de Retiro"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Forma_Retiro__c}" id="formaRetiro"> 
-                                                    <apex:actionSupport event="onchange" rerender="pagosBenefi"/> 
-                                                </apex:inputField>  
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Nombre del banco"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Nombre_banco__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Número de cuenta destino"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Numero_cuenta_destino__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column> 
-                                            <apex:column headerValue="Tipo de cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Tipo_cuenta__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="(*) Moneda de la cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Moneda_cuenta__c}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="(*) Monto bruto"> 
-                                                <!-- abbr class="slds-required" title="required" aura:id="emailReq">*</abbr -->
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_bruto__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Porcentaje" style="width:6%"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Porcentaje__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Comisiones y cargos"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Comisiones_cargos__c}" style="pointer-events:none; background-color:grey;"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Monto Neto a Retirar"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_neto_retirar__c}" style="pointer-events:none; background-color:grey;"/> 
-                                            </apex:column>                                            
-                                        </apex:pageBlockTable> 
-                                    </apex:pageBlock>                                         
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slds-backdrop slds-backdrop--open"></div>
-                    </apex:outputPanel>
-                    
-                    <apex:outputPanel rendered="{!popPagoBene2}">
-                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
-                            <div class="slds-modal__container">
-                                <div class="slds-modal__header">
-                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                                        </svg>
-                                        <span class="slds-assistive-text">Cerrar</span>
-                                    </apex:commandLink>  
-                                    
-                                    <div style="{!CASE($Profile.Name,"Operaciones",'display:none;',"Operaciones y Tecnologia",'display:none;','')}">
-                                        <div class="slds-grid slds-grid--align-center" style="{!addRecords}" id="botonesBenTer">
-                                          <div><apex:commandButton value="Agregar" action="{!addPagoBene2}" styleClass="slds-button slds-button--brand" /></div>
-                                          <div><apex:commandButton value="Guardar" action="{!upsertPagosBeneficiarios}" styleClass="slds-button slds-button--brand" /></div>
-                                        </div>
-                                    </div>
-                                
-                                </div>
-                                <div class="slds-modal__content slds-p-around--medium">
-                                <div class="scrolling-wrapper">
-                                    <apex:pageBlock id="pagosBenefi2">
-                                        <apex:variable var="rowNum2" value="{!0}"  />  
-                                        <apex:pageMessages /> 
-                                        <div style="text-align:right;">(*) Campos Requeridos</div>
-                                        <apex:pageBlockTable value="{!listPagosBeneficiarios2}" var="item">
-                                            <apex:column headerValue="" rendered="{!CASE($Profile.Name,"Operaciones",'display:none;',"Operaciones y Tecnologia",'display:none;','')}">
-                                                <apex:commandLink title="Eliminar" style="font-size:15px; font-weight:bold; text-align:center;color:red;" value="X" action="{!delRow2}" reRender="pagosBenefi2" rendered="{!rowNum2>=0}">
-                                                    <apex:param value="{!rowNum2}" name="index2" />
-                                                </apex:commandLink>
-                                                <apex:variable var="rowNum2" value="{!rowNum2+1}"/>    
-                                            </apex:column> 
-                                            <apex:column headerValue="Primer Nombre"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_nombre__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Nombre"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_nombre__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Primer Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Primer_apellido__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Segundo Apellido"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Segundo_apellido__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="(*) Forma de Retiro"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Forma_Retiro__c}" id="formaRetiro"> 
-                                                    <apex:actionSupport event="onchange" rerender="pagosBenefi2"/> 
-                                                </apex:inputField>  
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Nombre del banco"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Nombre_banco__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Número de cuenta destino"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Numero_cuenta_destino__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Tipo de cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Tipo_cuenta__c}" style="{!CASE(item.Forma_Retiro__c,"EF",'pointer-events:none; background-color:grey;',"CK",'pointer-events:none; background-color:grey;','')}"/> 
-                                            </apex:column> 
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="(*) Moneda de la cuenta"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Moneda_cuenta__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column> 
-                                            <apex:column headerValue="(*) Monto bruto"> 
-                                                <!-- abbr class="slds-required" title="required" aura:id="emailReq">*</abbr -->
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_bruto__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Porcentaje" style="width:6%"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Porcentaje__c}"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Comisiones y cargos"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Comisiones_cargos__c}" style="pointer-events:none; background-color:grey;"/> 
-                                            </apex:column>
-                                            <apex:column headerValue=" "> 
-                                                   
-                                            </apex:column>
-                                            <apex:column headerValue="Monto Neto a Retirar"> 
-                                                <apex:inputField styleClass="slds-input" value="{!item.Monto_neto_retirar__c}" style="pointer-events:none; background-color:grey;"/> 
-                                            </apex:column>                                            
-                                        </apex:pageBlockTable> 
-                                    </apex:pageBlock>                                         
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slds-backdrop slds-backdrop--open"></div>
-                    </apex:outputPanel>
-                    <!-- Fin Beneficiarios caso retiro 03/03/2020 -->
                     
                 </div>
                 <apex:actionFunction name="Mostrar" action="{!Mostrar}" />

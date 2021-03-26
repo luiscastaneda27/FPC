@@ -9,14 +9,6 @@
     <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>astrid.rivera@ficohsa.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>cintya.alcantara@ficohsa.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
     <approvalPageFields>
         <field>CaseNumber</field>
         <field>Owner</field>
@@ -44,6 +36,12 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <criteriaItems>
+            <field>Case.Enviar_aprobacion_AD__c</field>
+            <operation>equals</operation>
+            <value>Verdadero</value>
+        </criteriaItems>
         <criteriaItems>
             <field>Case.RecordType</field>
             <operation>equals</operation>
@@ -55,9 +53,19 @@
             <value>Falso</value>
         </criteriaItems>
         <criteriaItems>
-            <field>Case.Enviar_aprobacion_AD__c</field>
+            <field>Case.Archivo_Adjunto__c</field>
             <operation>equals</operation>
             <value>Verdadero</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Viene_Portal_Autogestion__c</field>
+            <operation>equals</operation>
+            <value>Falso</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.DAU_aprobacion__c</field>
+            <operation>equals</operation>
+            <value>Falso</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
@@ -68,10 +76,6 @@
         <action>
             <name>Aprobado_verdadero</name>
             <type>FieldUpdate</type>
-        </action>
-        <action>
-            <name>Caso_aprobado_encuesta</name>
-            <type>Alert</type>
         </action>
         <action>
             <name>Caso_aprobado_interno</name>
@@ -97,7 +101,7 @@
         </action>
     </initialSubmissionActions>
     <label>AumentoDisminucion</label>
-    <processOrder>4</processOrder>
+    <processOrder>3</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

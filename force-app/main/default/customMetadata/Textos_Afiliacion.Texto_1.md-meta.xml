@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Texto 1</label>
+    <protected>false</protected>
+    <values>
+        <field>Descripcion__c</field>
+        <value xsi:type="xsd:string">&lt;p&gt;Adjuntar una foto suya con suya con su Tarjeta de identidad&lt;abbr class=&quot;slds-required&quot; title=&quot;required&quot;&gt;*&lt;/abbr&gt;&lt;/p&gt;
+                   &lt;apex:image id=&quot;theImage&quot; value=&quot;https://thumbs.dreamstime.com/b/icono-ejecutivo-joven-del-perfil-de-la-mujer-81933323.jpg&quot; width=&quot;130&quot; height=&quot;55&quot; alt=&quot;Selfie&quot;/&gt;
+                   Estaremos procesando la solicitud para la apertura de su Cuenta de Ahorro y nos pondremos en contacto con usted a través de correo electrónico para confirmale su número de cuenta en los próximos 3 días hábiles.
+                   &lt;br&gt;&lt;/br&gt;&lt;br&gt;&lt;/br&gt;
+                   Su cuenta quedará habilitada para su uso en nustros canales digitales como Interbanca y Sara para los cuales recibirá instrucciopones por medio del correo electrónico. Se desea realizar operaciones en caja u obtener una Tarjeta de Débito deberá visitar una agencia bancaria.</value>
+    </values>
+</CustomMetadata>

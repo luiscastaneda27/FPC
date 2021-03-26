@@ -243,7 +243,7 @@ public class ControllerProductoAgn
     Public Account NivelTRiesgo{get;set;}
     Public Account Departamento{get;set;}
     
-    //Public Account CanalVentaaConti{get;set;}
+    Public Account CanalVentaaConti{get;set;}
     Public Account CanalVentaa{get;set;}
     Public Account Gradop2{get;set;}
     Public Account Gradop3{get;set;}
@@ -418,9 +418,6 @@ public class ControllerProductoAgn
             llenarEmpresas();
             pcUsuarioCN =  ApexPages.currentPage().getParameters().get('hytrd');
             
-            AplicaSeguroSi();
-        	AplicaSeguroNo();
-            
             OcultarSeguroCampos = true;
             llenaTipoId();
             ///////
@@ -471,7 +468,7 @@ public class ControllerProductoAgn
             NivelTRiesgo = new Account();
 			NivelTDilegencia  = new Account();
             CanalVentaa = new Account();
-            //CanalVentaaConti = new Account();
+            CanalVentaaConti = new Account();
              Gradop2 = new Account();
              Gradop3 = new Account();
              Gradop4 = new Account();
@@ -1584,9 +1581,9 @@ public class ControllerProductoAgn
   
     // tABALA FUNCIONES
     public date fechaBeneficiario{get;set;}
-    //public decimal Distribucion {get; set;}
+    public decimal Distribucion {get; set;}
     public date fechaBeneficiarioC{get;set;}
-    //public decimal DistribucionC {get; set;}
+    public decimal DistribucionC {get; set;}
     public decimal extension {get; set;}
     public decimal num {get; set;}
     public decimal numConti {get; set;}
@@ -1605,6 +1602,7 @@ public class ControllerProductoAgn
             //beneficiarioUnico.Grado =  CanalVentaa.Grado_Familiar__c !=null ? integer.valueOf(CanalVentaa.Grado_Familiar__c):0;
             beneficiarioUnico.tipoBeneficiario = TipoBeneficiario.Tipo_Beneficiario__c;
             beneficiarioUnico.fechaNacimiento = fechaBeneficiario;
+            beneficiarioUnico.Distribucion = Distribucion;
             decimal total2= !test.isRunningTest() ? beneficiarioUnico.Distribucion : 0;
             
             if((beneficiarioUnico.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnico.genero == ' --Ninguno-- ' || beneficiarioUnico.primerNombre == '' || beneficiarioUnico.primerApellido == '' || beneficiarioUnico.Parentesco == ' --Ninguno-- ') && !test.isRunningTest())
@@ -1724,11 +1722,11 @@ public class ControllerProductoAgn
             beneficiarioUnicoC.tipoId=beneficiarioUnicoC.tipoId;
             beneficiarioUnicoC.genero= Cliente1Conti.Sexo__c;
             beneficiarioUnicoC.Parentesco = Parentesco1C;
-            //beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
+            beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
             //beneficiarioUnico.Grado =  CanalVentaa.Grado_Familiar__c !=null ? integer.valueOf(CanalVentaa.Grado_Familiar__c):0;
             beneficiarioUnicoC.tipoBeneficiario = TipoBeneficiarioConti.Tipo_Beneficiario__c;
             beneficiarioUnicoC.fechaNacimiento = fechaBeneficiarioC;
-            //beneficiarioUnicoC.Distribucion = DistribucionC;
+            beneficiarioUnicoC.Distribucion = DistribucionC;
             decimal total2C= !test.isRunningTest() ? beneficiarioUnicoC.Distribucion : 0;
             system.debug('datos beneficiarios contingencias: '+'tipo:'+beneficiarioUnicoC.tipoBeneficiario + ' genero: '+beneficiarioUnicoC.genero +' pNombre: '+beneficiarioUnicoC.primerNombre + ' pApellido: '+beneficiarioUnicoC.primerApellido + ' parentesco: '+beneficiarioUnicoC.Parentesco);
             if((beneficiarioUnicoC.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnicoC.genero == ' --Ninguno-- ' || beneficiarioUnicoC.primerNombre == '' || beneficiarioUnicoC.primerApellido == '' || beneficiarioUnicoC.Parentesco == ' --Ninguno-- ') && !test.isRunningTest())
@@ -1892,7 +1890,7 @@ public class ControllerProductoAgn
             system.debug('entro al catch '+e.getMessage()+' Linea: '+e.getLineNumber());
         }  
     }
-     PUBLIC VOID ModificarDC()
+    PUBLIC VOID ModificarDC()
     {
         try
         { 
@@ -1902,22 +1900,16 @@ public class ControllerProductoAgn
                 if(test.isRunningTest() || ListBeneficiariosC[i].idExterno == double.valueOf(Num_identidadProductoC) )   
                 {   
                     posi=i;
-                    system.debug('Nuevo debug: '+ListBeneficiariosC[i]);
-                    beneficiarioUnicoC.tipoId = ListBeneficiariosC[i].tipoId;
-                    beneficiarioUnicoC.numeroId = ListBeneficiariosC[i].numeroId;
+                    beneficiarioUnicoC.tipoId = ListBeneficiarios[i].tipoId;
+                    beneficiarioUnicoC.numeroId = ListBeneficiarios[i].numeroId;
                     TipoBeneficiarioConti.Tipo_Beneficiario__c = ListBeneficiariosC[i].tipoBeneficiario;
                     Cliente1Conti.Sexo__c = ListBeneficiariosC[i].genero;
-                    /*beneficiarioUnico.primerNombre = ListBeneficiariosC[i].primerNombre;
+                    beneficiarioUnico.primerNombre = ListBeneficiariosC[i].primerNombre;
                     beneficiarioUnico.segundoNombre = ListBeneficiariosC[i].segundoNombre; 
                     beneficiarioUnico.primerApellido =  ListBeneficiariosC[i].primerApellido;
-                    beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
-                    beneficiarioUnicoC.primerNombre = ListBeneficiariosC[i].primerNombre;
-                    beneficiarioUnicoC.segundoNombre = ListBeneficiariosC[i].segundoNombre; 
-                    beneficiarioUnicoC.primerApellido =  ListBeneficiariosC[i].primerApellido;
-                    beneficiarioUnicoC.segundoApellido =  ListBeneficiariosC[i].segundoApellido;
-                    Parentesco1C = ListBeneficiariosC[i].Parentesco != null ? String.valueOf(Integer.valueOf(ListBeneficiariosC[i].Parentesco)) : null  ;
-                    
-                    /*if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
+                    beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;
+                    Parentesco1C = ListBeneficiariosC[i].Parentesco ;
+                    if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '1';
                     }
@@ -1932,13 +1924,10 @@ public class ControllerProductoAgn
                     else
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '4';
-                    }   */   
-                    
-                    //CanalVentaa.Grado_Familiar__c = double.valueOf(ListBeneficiarios[i].Grado);
-                    beneficiarioUnicoC.fechaNacimiento = ListBeneficiariosC[i].fechanacimiento;
-                    beneficiarioUnicoC.Distribucion = ListBeneficiariosC[i].Distribucion;
-                    //DistribucionC = ListBeneficiariosC[i].Distribucion;
-                    beneficiarioUnicoC.idExterno = ListBeneficiariosC[i].idExterno;
+                    }      
+                    beneficiarioUnicoC.fechaNacimiento = fechaBeneficiarioC;
+                    beneficiarioUnicoC.Distribucion = ListBeneficiarios[i].Distribucion;
+                    beneficiarioUnicoC.idExterno = ListBeneficiarios[i].idExterno;
                 }
             }
             if(posi != null)
@@ -1946,9 +1935,7 @@ public class ControllerProductoAgn
                 ListBeneficiariosC.remove(posi);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificara El Beneficiario!'));
                 
-            }
-            
-            
+            }     
         }
         catch(exception e)
         {
@@ -4099,13 +4086,6 @@ public class ControllerProductoAgn
     public date fechaLabor{get;set;}
     public date fechaValida{get;set;}
     public date fechaSeguro{get;set;}
-    
-    public void AplicaSeguroSi(){
-        OcultarSeguroNO = false;
-    }
-    public void AplicaSeguroNo(){
-        pcaplicaseguro = false;
-    }
     
   
     //METODO EL CUAL ENVIARA TODA LA INFORMACION 

@@ -32,58 +32,58 @@
               </div>
                 <center>
                    <figure class="row justify-content-center" style="  text-align: center; width: 85%; ">
-                    <apex:image value="{!$Resource.LogoFPC}" style="height:90px; width:400px;"  />
+                   	<apex:image value="{!$Resource.LogoFPC}" style="height:90px; width:400px;"  />
                    </figure>
                 </center>
              <br/>
 
                 <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture slds-align--absolute-center" />
-                    <div id="content-path-1" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1">
-                        
-                            <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
-                                      Pantalla Afiliación Usuario Natural
+					<div id="content-path-1" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1">
+                		<fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;">
+                    		<legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
+                    				  Pantalla Afiliación Usuario Natural
                             </legend>
 
                        <table width = "900">
                              <tr>
-                                <td>
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Tipo de Usuario Individual
-                                    </label>                                                
-                                    <apex:selectList styleclass="slds-input" value="{!tipoUsuarioNatural}" style="height:9px; width:177px; margin-left: 5px;" size="1"  >
-                                    <apex:selectOptions value="{!NiveloOptions}" />
-                                    </apex:selectList>
-                                    <!--<apex:inputText styleclass="slds-input" required="true" style="height:9px; width:150px; margin-left: 10px;"/>-->
-                                    <br/>
-                                    <br/>
+                             	<td>
+                                	<label class="slds-form-element__label" for="inputSample">
+                                    	<abbr class="slds-required" title="required"></abbr> Tipo de Usuario Individual
+                                    </label>												
+                                  	<apex:selectList styleclass="slds-input" value="{!tipoUsuarioNatural}" style="height:9px; width:177px; margin-left: 5px;" size="1"  >
+									<apex:selectOptions value="{!NiveloOptions}" />
+									</apex:selectList>
+									<!--<apex:inputText styleclass="slds-input" required="true" style="height:9px; width:150px; margin-left: 10px;"/>-->
+									<br/>
+                                	<br/>
                                </td>
 
                                <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr>  PEP
-                                </label>
+                               	<label class="slds-form-element__label" for="inputSample">
+                             		<abbr class="slds-required" title="required"></abbr>  PEP
+                             	</label>
 
-                                <label class="slds-checkbox">
-                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!PEP}" id="PEP"  styleclass="slds-input"  />
-                                    <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
-                                </label>
+                             	<label class="slds-checkbox">
+                             		<apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!PEP}" id="PEP"  styleclass="slds-input"  />
+                             		<span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
+                             	</label>
 
-                                <label class="slds-form-element__label" for="inputSample" style = "margin-left:69px">
-                                    <abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
-                                </label>
+                             	<label class="slds-form-element__label" for="inputSample" style = "margin-left:69px">
+                             		<abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
+                             	</label>
 
-                                <label class="slds-checkbox">
-                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
-                                    <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-                                </label>
+                             	<label class="slds-checkbox">
+                             		<apex:inputcheckbox disabled="{!desCheckb}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
+                                	<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                             	</label>
 
-                                <label class="slds-form-element__label" for="inputSample" style = "margin-left:69px">
-                                    <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA
-                                </label>
+                             	<label class="slds-form-element__label" for="inputSample" style = "margin-left:69px">
+                             		<abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA
+                             	</label>
 
-                                <label class="slds-checkbox">
-                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="mosFT()" value="{!FATCA}" id="FATCA" styleclass="slds-input"  />
-                                    <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                             	<label class="slds-checkbox">
+                             		<apex:inputcheckbox disabled="{!desCheckb}" onclick="mosFT()" value="{!FATCA}" id="FATCA" styleclass="slds-input"  />
+                                	<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                             <script>
                                   
                                 function amlPop() {
@@ -105,7 +105,7 @@
                                     if (obvPep.checked) {
                                         bloqPep(); 
                                     } else {
-                                       unblock(); 
+                            		   unblock(); 
                                     }
                                 }
                                
@@ -119,7 +119,7 @@
                             
     function VencemientoFecha()
     {  
-        var care = document.getElementById('{!$Component.page.ubic1.tipoId}').value 
+    	var care = document.getElementById('{!$Component.page.ubic1.tipoId}').value 
         
         if (care == 4||care == 2)
         {    
@@ -140,7 +140,7 @@
                                                  return false; 
                                                  return true; }
         } 
-    
+	
     } //ULTIMO 
     </script>         
                                    </label>
@@ -149,100 +149,100 @@
                                    <apex:actionFunction action="{!mostPop}" name="mostPop"/>
                                    <apex:actionFunction action="{!desUn}" name="desUn"/>
                                    <apex:actionFunction action="{!contrUn}" name="contrUn"/>
-                                <br/>
-                                <br/>
-                                </td>
+                             	<br/>
+                          		<br/>
+                             	</td>
                              </tr>
                              <tr>
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Tipo de Id
-                                    </label>
+                           		<td width = "450">
+                                	<label class="slds-form-element__label" for="inputSample">
+                           				<abbr class="slds-required" title="required"></abbr> Tipo de Id
+                       				</label>
                                   <apex:selectList onclick="VencemientoFecha()" styleclass="slds-input" id="tipoId" size="1" value="{!tipoId}" style="height:9px; width:177px; margin-left:95px;  ">
-                                <apex:selectOptions value="{!listaTipoId}"/> 
+								<apex:selectOptions value="{!listaTipoId}"/> 
                               </apex:selectList>  
                                   
                                    <!--
                                   <apex:selectList size="1" styleClass="slds-select" value="{!pcproducto}" style="height:9px; width:177px; margin-left:95px;">
-                                            <apex:selectOptions value="{!opciones}" ></apex:selectOptions> 
+                             				<apex:selectOptions value="{!opciones}" ></apex:selectOptions> 
                                  </apex:selectList>
                                     -->
                                     
                                   <!--apex:inputField value="{!Cliente25.Tipo_Identificacion__c}" styleclass="slds-input"    style="height:9px; width:177px; margin-left:95px;  "  /-->
-                                    
+                               		
                                     <br/>
                                <br/>
                                 </td>
 
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Número de  Id
+                           		<td width = "450">
+                                	<label class="slds-form-element__label" for="inputSample">
+                                    	<abbr class="slds-required" title="required"></abbr> Número de 	Id
                                     </label>
-                                    <apex:inputText value="{!numeroId}" onkeyup="keyDet()" id="NumeroId" styleclass="slds-input" style="height:9px; width:175px; margin-left:65px; "/>
+                          			<apex:inputText value="{!numeroId}" onkeyup="keyDet()" id="NumeroId" styleclass="slds-input" style="height:9px; width:175px; margin-left:65px; "/>
                                    
-                                    <apex:commandButton value="Validar" action="{!validar}" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px "/>
+                                  	<apex:commandButton value="Validar" action="{!validar}" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px "/>
                                     
                                     <br/>
-                                  <br/>
-                                </td>
+                               	  <br/>
+                               	</td>
                               </tr>
 
-                             <tr>
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Primer Nombre
-                                    </label>
-                                    <apex:inputText value="{!primerNombre}" id="PrimerNombre" styleclass="slds-input"  style="height:9px; width:177px; margin-left:65px;  "/>
-                                <br/>
-                                <br/>
-                                </td>
+                           	 <tr>
+                           	  	<td width = "450">
+                           			<label class="slds-form-element__label" for="inputSample">
+                           				<abbr class="slds-required" title="required"></abbr> Primer Nombre
+                       				</label>
+                                	<apex:inputText value="{!primerNombre}" id="PrimerNombre" styleclass="slds-input"  style="height:9px; width:177px; margin-left:65px;  "/>
+                               	<br/>
+                               	<br/>
+                            	</td>
 
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Segundo Nombre
-                                    </label>
-                                    <apex:inputText value="{!segundoNombre}" id="SegundoNombre" styleclass="slds-input" style="height:9px; width:177px; margin-left:44px; "/>
-                                    <br/>
-                                    <br/>
-                                </td>
-                              </tr>
-
-                             <tr>
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Primer Apellido
-                                    </label>
-                                    <apex:inputText value="{!primerApellido}" id="PrimerApellido" styleclass="slds-input" style="height:9px; width:177px; margin-left:65px;  "/>
-                                    <br/>
-                                    <br/>
-                                </td>
-
-                                <td width = "450">
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Segundo Apellido
-                                    </label>
-                                    <apex:inputText value="{!segundoApellido}" id="SegundoApellido" styleclass="slds-input"  style="height:9px; width:177px; margin-left:44px; "/>
-                                    <br/>
-                                    <br/>
-                               </td>
-                              </tr>
+                           		<td width = "450">
+                           			<label class="slds-form-element__label" for="inputSample">
+                            			<abbr class="slds-required" title="required"></abbr> Segundo Nombre
+                            		</label>
+                          			<apex:inputText value="{!segundoNombre}" id="SegundoNombre" styleclass="slds-input" style="height:9px; width:177px; margin-left:44px; "/>
+                            		<br/>
+                            		<br/>
+                           		</td>
+                          	  </tr>
 
                              <tr>
-                                <td>
-                                    <label class="slds-form-element__label" for="inputSample">
-                                        <abbr class="slds-required" title="required"></abbr> Fecha de Nacimiento
-                                    </label>
+                          		<td width = "450">
+                           			<label class="slds-form-element__label" for="inputSample">
+                           				<abbr class="slds-required" title="required"></abbr> Primer Apellido
+                       				</label>
+                                	<apex:inputText value="{!primerApellido}" id="PrimerApellido" styleclass="slds-input" style="height:9px; width:177px; margin-left:65px;  "/>
+									<br/>
+                            		<br/>
+                          		</td>
+
+                           		<td width = "450">
+                           			<label class="slds-form-element__label" for="inputSample">
+                            			<abbr class="slds-required" title="required"></abbr> Segundo Apellido
+                            		</label>
+                          			<apex:inputText value="{!segundoApellido}" id="SegundoApellido" styleclass="slds-input"  style="height:9px; width:177px; margin-left:44px; "/>
+                           			<br/>
+                           			<br/>
+                           	   </td>
+                         	  </tr>
+
+                             <tr>
+                              	<td>
+                            		<label class="slds-form-element__label" for="inputSample">
+                                		<abbr class="slds-required" title="required"></abbr> Fecha de Nacimiento
+                                	</label>
                                 <apex:input type="date" value="{!fechaNacimiento2}" id="FechaNacimiento" styleclass="slds-input" style="height:9px; width:177px; margin-left:35px;"/>
-                                <br/>
-                                <br/>
+                         		<br/>
+                             	<br/>
                             </td>
                                   
                             <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Teléfono
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Teléfono
                                 </label>
                                 <apex:inputText value="{!telefono}" id="Telefono" styleclass="slds-input" style="height:9px; width:177px; margin-left: 92px; "/>
-                                <br/>
+                          		<br/>
                                 <br/>
                             </td>
 
@@ -252,24 +252,24 @@
                              <tr>
                             
                               <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> País
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> País
                                 </label>
-                                <apex:selectList size="1" styleClass="slds-select" value="{!pais}"  onchange="llenarNacionalidad();" style="float:right; width:45%; margin-right:37%">
-                                                            <apex:selectOptions value="{!opcionPais}"></apex:selectOptions>
+                                <apex:selectList size="1" styleClass="slds-select" value="{!pais}"  onchange="llenarNacionalidad();" style="float:right; width:45%; margin-right:15%">
+                             								<apex:selectOptions value="{!opcionPais}"></apex:selectOptions>
                                 </apex:selectList>
                                 <br/>
                                 <br/>
                             </td>
                             
                              <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Nacionalidad
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Nacionalidad
                                 </label>
-                                <apex:selectList size="1" styleClass="slds-select" value="{!nacionalidad}"  onchange="llenarDepartamento();" style="float:right; width:45%; margin-right:38%">
-                                                            <apex:selectOptions value="{!opcionNacionalidad}"></apex:selectOptions>
+                                <apex:selectList size="1" styleClass="slds-select" value="{!nacionalidad}"  onchange="llenarDepartamento();" style="float:right; width:45%; margin-right:19%">
+                             								<apex:selectOptions value="{!opcionNacionalidad}"></apex:selectOptions>
                              </apex:selectList>  
-                                <br/>
+                         		<br/>
                                 <br/>
                             </td>
                           
@@ -277,61 +277,61 @@
                            
                              <tr>
                             <td  width = "450">
-                            <label class="slds-form-element__label" for="inputSample">
-                                <abbr class="slds-required" title="required"></abbr> Departamento
+                           	<label class="slds-form-element__label" for="inputSample">
+                            	<abbr class="slds-required" title="required"></abbr> Departamento
                             </label>
-                             <apex:selectList size="1" styleClass="slds-select" value="{!departamento}" onchange="llenarMunicipio();" style="float:right; width:45%; margin-right:37%">
-                                                            <apex:selectOptions value="{!opcionDepartamento}"></apex:selectOptions>
+                             <apex:selectList size="1" styleClass="slds-select" value="{!departamento}" onchange="llenarMunicipio();" style="float:right; width:45%; margin-right:15%">
+                             								<apex:selectOptions value="{!opcionDepartamento}"></apex:selectOptions>
                              </apex:selectList>   
                                
                             
-                            <br/>
+                           	<br/>
                             <br/>
                            </td>
                             <td>
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Municipio
-                                </label>
-                             <apex:selectList size="1" styleClass="slds-select" value="{!municipio}" onchange="llenarColonia();" style="float:right; width:45%; margin-right:38%">
-                                    <apex:selectOptions value="{!opcionMunicipio}"></apex:selectOptions>
+                        		<label class="slds-form-element__label" for="inputSample">
+                            		<abbr class="slds-required" title="required"></abbr> Municipio
+                            	</label>
+                             <apex:selectList size="1" styleClass="slds-select" value="{!municipio}" onchange="llenarColonia();" style="float:right; width:45%; margin-right:19%">
+                             		<apex:selectOptions value="{!opcionMunicipio}"></apex:selectOptions>
                              </apex:selectList>   
-                                <br/>
-                                <br/>
-                            </td>
+                            	<br/>
+                            	<br/>
+                        	</td>
                                                     
-                        </tr>
+						</tr>
 
                              <tr>
                             <td  width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Colonia
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Colonia
                                 </label>
-                                <apex:selectList size="1" styleClass="slds-select" value="{!colonia}" style="height:9px; float:right; width:45%; margin-right:37%">
-                                    <apex:selectOptions value="{!opcionColonia}"></apex:selectOptions>
+                                <apex:selectList size="1" styleClass="slds-select" value="{!colonia}" style="height:9px; float:right; width:45%; margin-right:15%">
+                             		<apex:selectOptions value="{!opcionColonia}"></apex:selectOptions>
                              </apex:selectList>
                                 <apex:commandButton value="<" action="{!anterior}" disabled="{!mostrarAnterior}" rendered="{!mostrarBoton}" styleClass="slds-button slds-button--brand" style=" width:5x; margin-left:5px "/>
                                 <apex:commandButton value=">" action="{!siguiente}" disabled="{!mostrarSiguiente}" rendered="{!mostrarBoton}"  styleClass="slds-button slds-button--brand" style=" width:5x; margin-left:5px "/>
                                 <br/>
                                 <br/>
                            </td>
-                            
+                        	
 
-                            <td  width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> No. Domicilio
-                                </label>
-                                <apex:inputText value="{!noDomicilio}" id="NoDomicilio" styleclass="slds-input" style="height:9px; width:177px; margin-left: 65px;"/>
-                                <br/>
-                                <br/>
-                            </td>
+                        	<td  width = "450">
+                        		<label class="slds-form-element__label" for="inputSample">
+                            		<abbr class="slds-required" title="required"></abbr> No. Domicilio
+                            	</label>
+                            	<apex:inputText value="{!noDomicilio}" id="NoDomicilio" styleclass="slds-input" style="height:9px; width:177px; margin-left: 65px;"/>
+                        		<br/>
+                            	<br/>
+                        	</td>
                         </tr>
                       </table>
 
                       <table>
-                        <tr>
-                            <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Calle/Detalle
+						<tr>
+							<td width = "450">
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Calle/Detalle
                                 </label>
                                 <apex:inputText value="{!calleDetalle}" id="CalleDetalle" styleclass="slds-input" style="height:9px; width:585px; margin-left: 77px; "/>
                                 <br/>
@@ -340,59 +340,59 @@
                          </tr>
                        </table>
 
-                       <table>
-                        <tr>
-                            <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Procedencia de Fondos
+					   <table>
+					   	<tr>
+							<td width = "450">
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Procedencia de Fondos
                                 </label>
                                 <apex:inputText value="{!procedenciaFondos}" id="Procedenciafondos" styleclass="slds-input" style="height:9px; width:585px; margin-left: 20px;"/>
-                                <br/>
-                                <br/>
+								<br/>
+                            	<br/>
                             </td>
-                        </tr>
+						</tr>
                        </table>
 
                        <table>
-                        <tr>
-                            <td width = "450">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Nivel de Riesgo
+					   	<tr>
+                        	<td width = "450">
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Nivel de Riesgo
                                 </label>
-                                <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepSel" size="1" value="{!nivelRiesgo}" style="height:9px; width:170px; margin-left: 67px;" >
-                                <apex:selectOptions value="{!NivelRiesgoOptions}"/>
-                                </apex:selectList>
+                            	<apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepSel" size="1" value="{!nivelRiesgo}" style="height:9px; width:170px; margin-left: 67px;" >
+								<apex:selectOptions value="{!NivelRiesgoOptions}"/>
+								</apex:selectList>
                                 <!--<apex:inputText styleclass="slds-input" required="true" style="height:9px; width:150px; margin-left: 70px; "/>-->
-                                <br/>
+                        		<br/>
                                 <br/>
                             </td>
 
                             <td width = "490">
-                                <label class="slds-form-element__label" for="inputSample">
-                                    <abbr class="slds-required" title="required"></abbr> Debida Deligencia Aplicada
+                            	<label class="slds-form-element__label" for="inputSample">
+                                	<abbr class="slds-required" title="required"></abbr> Debida Deligencia Aplicada
                                 </label>
-                                <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepBlo" value="{!debidaDiligencviaAplicada}"  size="1" style="height:9px; width:170px; margin-left: 25px;" >
-                                <apex:selectOptions value="{!DeligenciaOptions}" />
-                                </apex:selectList>
+                              	<apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepBlo" value="{!debidaDiligencviaAplicada}"  size="1" style="height:9px; width:170px; margin-left: 7px;" >
+								<apex:selectOptions value="{!DeligenciaOptions}" />
+								</apex:selectList>
                                 <!--<apex:inputText styleclass="slds-input" required="true" style="height:9px; width:150px; margin-left: 7px;"/>-->
-                                <br/>
+                        		<br/>
                                 <br/>
                            </td>
                        </tr>
                       </table>
-                    
-                    <br/>
+                	</fieldset>
+					<br/>
                         
 <!-- Inicio popup -->                        
-            <div class="slds-scope">    
-            <apex:outputPanel rendered="{!actPop}"> 
-                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                    <div class="slds-modal__container">
+			<div class="slds-scope">	
+	      	<apex:outputPanel rendered="{!actPop}"> 
+		        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				    <div class="slds-modal__container">
                       <header class="slds-modal__header">
                       <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning"/>                         
-                        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">No se puede afiliar.</h1>                  
-                      </header>
-                      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+				      	<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">No se puede afiliar.</h1>			        
+	      			  </header>
+				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                               <div class="slds-form-element__row slds-text-align_center">
                                 <div class="slds-form-element slds-size_1-of-1">
                                    <h4>Este usuario no se puede registrar</h4>
@@ -403,79 +403,80 @@
                               <div class="slds-form-element__row slds-text-align_center">
                               </div>
                             </div> 
-                        </div>
-                      <footer class="slds-modal__footer">
-                        <apex:commandButton value="Salir" action="{!hidePop}" styleClass="slds-button slds-button_neutral" />
+			    		</div>
+				      <footer class="slds-modal__footer">
+				      	<apex:commandButton value="Salir" action="{!hidePop}" styleClass="slds-button slds-button_neutral" />
                         </footer>
 
-                    </div>
-              </section>
-              <div class="slds-backdrop slds-backdrop_open"></div>
-            </apex:outputPanel> 
+				    </div>
+			  </section>
+			  <div class="slds-backdrop slds-backdrop_open"></div>
+			</apex:outputPanel>	
        </div>
 
-                  
-                        <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
-                            Perfil de Vinculación
-                        </legend>
-                            <div class="outer" >
-                                <table width = "900" style="text-align: center;">
-                                    <tr>
-                                        <td width = "450">
-                                            <label class="slds-form-element__label" for="inputSample">
-                                                <abbr class="slds-required" title="required"></abbr> Número de  Identificación
-                                            </label>
+                    <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;">
+                    	<legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
+                      		Perfil de Vinculación
+                    	</legend>
+                    		<div class="outer" >
+                      			<table width = "900" style="text-align: center;">
+                          			<tr>
+                           				<td width = "450">
+                           					<label class="slds-form-element__label" for="inputSample">
+                           						<abbr class="slds-required" title="required"></abbr> Número de 	Identificación
+                       						</label>
                                             <apex:inputText value="{!numeroIdentificacion}" id="NumeroIdentifiacion" styleclass="slds-input" style="height:9px; width:170px; margin-left:15px;  "/>
-                                            <br/>
-                                            <br/>
-                                        </td>
+                           					<br/>
+                               				<br/>
+                              			</td>
 
                                         <td width = "450">
                                             <label class="slds-form-element__label" for="inputSample">
-                                                <abbr class="slds-required" title="required"></abbr> Número de Cuenta
+                                            	<abbr class="slds-required" title="required"></abbr> Número de Cuenta
                                             </label>
-                                            <apex:inputText value="{!numeroCuenta}" id="NumeroCuenta" styleclass="slds-input"  style="height:9px; width:170px; margin-left:50px; "/>
-                                            <br/>
-                                            <br/>
-                                        </td>
-                                    </tr>
+                          					<apex:inputText value="{!numeroCuenta}" id="NumeroCuenta" styleclass="slds-input"  style="height:9px; width:170px; margin-left:50px; "/>
+                              				<br/>
+                               				<br/>
+                              			</td>
+                          			</tr>
 
                                   <table>
-                                    <tr>
-                                        <td width = "450">
+                              		<tr>
+                          				<td width = "450">
                                             <label class="slds-form-element__label" for="inputSample">
-                                                <abbr class="slds-required" title="required"></abbr> Nombre Completo
+                                            	<abbr class="slds-required" title="required"></abbr> Nombre Completo
                                             </label>
-                                            <apex:inputText value="{!nombreCompleto}" id="NombreCompleto" styleclass="slds-input" style="height:9px; width:585px; margin-left:53px; "/>
+                          					<apex:inputText value="{!nombreCompleto}" id="NombreCompleto" styleclass="slds-input" style="height:9px; width:585px; margin-left:53px; "/>
                                             <br/>
-                                            <br/>
-                                            <br/>
-                                            <br/>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </table>
-                        </div>
+                                  			<br/>
+                                  			<br/>
+                                  			<br/>
+										</td>
+									</tr>
+                              	</table>
+                    		</table>
+						</div>
                         <div class="slds-form-element">
-                                <div class="row justify-content-center">
-                                    <apex:commandButton disabled="{!disbot}" value="Agregar" action="{!guardar}" styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:200px "/>
+                        		<div class="row justify-content-center">
+                  					<apex:commandButton disabled="{!disbot}" value="Agregar" action="{!guardar}" styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:200px "/>
                                     <apex:commandButton value="Buscar" action="{!buscar}" styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:50px "/>
                                     <apex:commandButton value="Cancelar" action="{!cancelar}" styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:52px "/>
                                     <!--<apex:commandButton value="Mostrar"  styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:52px "/>-->
                                      <apex:actionFunction action="{!desBtn}" name="desBtn"/>
                                  </div>
-                            </div>
-               
+                   			</div>
+                </fieldset>
+
                          
                 <br/>
                 <br/>
-                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture slds-align--absolute-center" />
+ 				<apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture slds-align--absolute-center" />
                 <br/>
                 <br/>
                 <br/>
               </div>
-            </div>
-        </div>
+			</div>
+		</div>
             <apex:actionFunction action="{!llenarDepartamento}" name="llenarDepartamento" />
             <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" />
             <apex:actionFunction action="{!llenarColonia}" name="llenarColonia" />

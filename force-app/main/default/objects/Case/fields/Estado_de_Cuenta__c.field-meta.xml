@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Estado_de_Cuenta__c</fullName>
+    <fullName>Estado_de_cuenta__c</fullName>
+    <description>Estado de Cuenta</description>
     <externalId>false</externalId>
-    <label>Estado_de_Cuenta</label>
-    <length>131072</length>
+    <inlineHelpText>Estado de Cuenta</inlineHelpText>
+    <label>Estado de cuenta</label>
+    <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

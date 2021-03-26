@@ -8,16 +8,11 @@
     <columns>CASES.PRIORITY</columns>
     <columns>CORE.USERS.ALIAS</columns>
     <columns>CASES.LAST_UPDATE_DATE_ONLY</columns>
-    <filterScope>Mine</filterScope>
+    <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.RECORDTYPE</field>
         <operation>equals</operation>
         <value>Case.Cambio_Subproducto</value>
-    </filters>
-    <filters>
-        <field>Agencia__c</field>
-        <operation>lessThan</operation>
-        <value>2020</value>
     </filters>
     <label>Subproducto</label>
 </ListView>

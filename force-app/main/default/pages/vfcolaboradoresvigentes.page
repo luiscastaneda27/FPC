@@ -1,490 +1,490 @@
 <apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
-    title="Ficohsa FPC" cache="false" expires="0" controller="controladorGenerarPersonal">
-
-<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>Administración de personal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <!-- Import the Design System style sheet -->
-  <apex:slds />
-
-    <style>
-        html, body{
-            background-color: #F2F2F2;
-        }
-        #topMenuZonaTransaccional {
-            position: relative;
-            width: 100%;
-            float: left;
-        }
-        .Confirmar{    
-            font-weight: bolder !important;
-        
-            height: 28px;
-            color:white;
-            cursor: pointer;
-            border: medium none;
-            font-weight: bold;
-            position: relative;
-            background-color: #f78d1c;
-                color: #FFFFFF !important;
-            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
-            font-size: 13px;
-            padding: 5px 10px;
-            margin: 15px 0 0;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 28px;
-         
-                -webkit-appearance: button;
-               -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            border-radius: 0px;
-         
-            box-sizing: border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
-        
-            -webkit-transition: all 0.2s ease;
-            -moz-transition:    all 0.2s ease;
-            -o-transition:      all 0.2s ease;
-            transition:         all 0.2s ease;
-         }
-        .Confirmar:hover{
-            background-color:#fff;
-            color: #f78d1c !important;
-             -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            border-radius: 0px;
-        }
-        
-        .ConfirmarSecond{    
-            font-weight: bolder !important;
-        
-            height: 28px;
-            color:white;
-            cursor: pointer;
-            border: medium solid;
-            font-weight: bold;
-            position: relative;
-            background-color:#fff;
-            color: #f78d1c !important;
-            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
-            font-size: 13px;
-            padding: 5px 10px;
-            margin: 15px 0 0;
-            text-transform: uppercase;
-            text-align: center;
-            line-height: 28px;
-         
-                -webkit-appearance: button;
-               -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            border-radius: 0px;
-         
-            box-sizing: border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
-        
-            -webkit-transition: all 0.2s ease;
-            -moz-transition:    all 0.2s ease;
-            -o-transition:      all 0.2s ease;
-            transition:         all 0.2s ease;
-        }
-        
-        
-        #Resumen{
-        margin:20px 0 0 0;
-        }
-        #Resumen .Row{
-        width:100%;
-        height:30px;
-        float:left;
-        background:#42c4dd;
-        padding:0px 10px;
-        
-        box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-        }
-        #Resumen .Row STRONG{
-        width:60%;
-        float:left;
-        font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
-        font-size:14px;
-        line-height:30px;
-        font-weight:normal;
-        color:#FFF;
-        }
-        #Resumen .Row SPAN{
-        width:40%;
-        float:right;
-        font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
-        font-size:14px;
-        line-height:30px;
-        font-variant:normal;
-        text-align:right;
-        text-transform:uppercase;
-        color:#FFF;
-        }
-        
-    </style>
-</head>
-<body>
-
-  <!-- REQUIRED SLDS WRAPPER -->
-  <div class="slds-scope">
+           title="Ficohsa FPC" cache="false" expires="0" controller="controladorGenerarPersonal">
     
-    <apex:form id="theForm"> 
-     <apex:actionStatus id="status">
-                <apex:facet name="start">
-                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
-                        &nbsp;
-                    </div>
-                    
-                    <div role="status" class="slds-spinner slds-spinner_large">
-                        <span class="slds-assistive-text">Por Favor Espere...</span>
-                        <div class="slds-spinner__dot-a"></div>
-                        <div class="slds-spinner__dot-b"></div>
-                    </div>
-                </apex:facet>
-            </apex:actionStatus>
-        <div id="topMenuZonaTransaccional">
-            <article class="slds-card slds-theme_default" style="border:0;">
-             <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
-                <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
-                <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
-                  <div class="slds-media__figure">
-                      
-                  </div>
-                  <div class="slds-media__body" >
-                    <h2>
-                        <br/>
-                        <span class="slds-text-heading_medium"> {!nombre_empresa} / Colaboradores Vigentes</span>
-                        <br/>
-                        <label class="slds-form-element__label">Total de Empleados:{!totalempleados} </label>
-                        <br/>
-                    </h2>
-                      
-                  </div>
-                </header>
-                  
-                <div style="height:50px;background-color: #F2F2F2;">
-                  <br/>
-                  <br/>
-                </div>
-                    
-              </div>
-                <footer class="slds-card__footer" style="width:100%;padding-bottom:5px;">
-                    <table style="width:100%;">
-                    <tr>
-                    <td style="text-align:left;">
-                    <label class="slds-form-element__label"> Buscar</label><Br/>
-                    <apex:inputText value="{!textoBusqueda}" />&nbsp;&nbsp;
-                    <apex:commandButton value="Buscar" action="{!BuscarEmpleado}"  styleClass="Confirmar" />
-                    &nbsp;&nbsp;
-                    </td>
-                    <td style="text-align:right;">
-                        <br/>
-                    <apex:commandButton value="Nuevo Empleado" reRender="theForm" status="status" action="{!mostrarNuevo}" styleClass="Confirmar" /> &nbsp;
-                    <apex:commandButton value="Guardar Cambios" reRender="theForm"  status="status" action="{!AgregarEMpleados}" styleClass="Confirmar" />&nbsp;
-                    <apex:commandButton value="Exportar Excel" action="{!ExportExcel}" styleClass="Confirmar" />&nbsp;
-                    <apex:commandButton value="Ver todos" reRender="theForm" status="status" action="{!vertodos}" rendered="{!mostrarVerTodos}" styleClass="Confirmar" />&nbsp;
-                    
-                   <br/>
-                    </td>
-                    </tr>
-                    </table>
-                </footer>
-            </article>
-        </div>
-        
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Administración de personal</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
             
-                <div id="Resumen">
-                <h3 class="Row">
-                    <strong>Colaboradores Vigentes</strong>
-                    <span>
-                    </span>
-                </h3>
-                </div>
-                <br/>
-        <footer class="slds-card__footer" style="width:100%;text-align:right;margin: 0 0 0 0;padding: 0 0 0 0;background-color: #FFFFFF;">
-           <apex:commandButton styleClass="Confirmar" reRender="theForm" status="status"  value="Anterior" action="{!anterior}"     disabled="{!mostrarANterior}" rendered="{!mostrarBotones}" />&nbsp;
-           <apex:commandButton styleClass="Confirmar" reRender="theForm" status="status" value="Siguiente" action="{!siguiente}" disabled="{!mostrarSiguiente}"  rendered="{!mostrarBotones}"  />&nbsp;
-            <br/> 
-        </footer>
-                            <table  Class="slds-table slds-table--bordered ">
-                <thead>
-                    <tr>
-                        <th scope="col"  >
-                          <div class="slds-truncate" id="nuevos" title="Eliminar"></div>
-                      </th>
-                     
-                      <th scope="col" >
-                          <div class="slds-truncate" id="nuevos" title="Tipo de Identificación"><strong>Tipo de Identificación</strong></div>
-                      </th>
-                      <th scope="col"  >
-                          <div class="slds-truncate" id="nuevos" title="Identificación"><strong>Identificación</strong></div>
-                      </th>
-                      <th scope="col">
-                          <div class="slds-truncate" id="nuevos" title="Nombres"><strong>Nombres</strong></div>
-                      </th>
-                      <th scope="col">
-                          <div class="slds-truncate" id="nuevos" title="Apellidos"><strong>Apellidos</strong></div>
-                      </th>
-                     
-                      <th scope="col">
-                          <div class="slds-truncate" id="nuevos" title="Estado Civil"><strong>Estado Civil</strong></div>
-                      </th>
-                      <th scope="col" >
-                          <div class="slds-truncate" id="nuevos" title="Fecha Nacimiento"><strong>Fecha Nacimiento</strong></div>
-                      </th>
-                      
-                      <th scope="col" >
-                          <div class="slds-truncate" id="nuevos" title="Salario"><strong>Salario</strong></div>
-                      </th>
-                     
-                    </tr>
-                </thead>
-                <body>
-                    <apex:repeat value="{!listClientes}" var="item">
-                    <tr>
-                        <td>
-                            <apex:commandLink value="Eliminar"  action="{!eliminar}">
-                                <apex:param value="{!item.Id}" AssignTo="{!idEmpleado}" name="APV" />                                 
-                            </apex:commandLink>  
-                        </td>
-                       
-                        
-                        <td>
-                            <apex:OutputText value="{!item.Tipo_Identificacion}"/> 
-                        </td>
-                        
-                        <td>
-                            <apex:OutputText value="{!item.Identificacion}"/> 
-                        </td>
-                        
-                        <td>
-                            <apex:OutputText value="{!item.FirstName}"/>    
-                        </td>
-                        
-                        <td>
-                            <apex:OutputText value="{!item.LastName}"/> 
-                        </td>
-                        
-                      
-                        
-                        <td>
-                            <apex:OutputText value="{!item.Estado_Civil}"/> 
-                        </td>
-                        
-                        <td>
-                            <apex:OutputText value="{!item.Mostarfecha}"/>
-                        </td>                        
-                                               
-                        <td>
-                            <apex:inputText value="{!item.Salario}" styleclass="slds-select" OnKeyPress="return CampoNumero(event, this)" style="width:50%;" /> 
-                        </td>
-                        
-                      
-                    </tr>
-                   </apex:repeat>  
-                    <tr>
-                        
-         
-           
-         <td style="text-align:right;" colspan="7"><div class="slds-truncate" ><strong>Total</strong> </div></td>
-         <td style="text-align:right;"><div class="slds-truncate" ><strong>{!Total}</strong> </div></td>
-         
-         
-                      
-                    </tr>
-              </body>
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+            
+            <style>
+                html, body{
+                background-color: #F2F2F2;
+                }
+                #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+                }
+                .Confirmar{    
+                font-weight: bolder !important;
                 
-                 
-                                                                                              
-                    </table> 
-        <apex:outputPanel rendered="{!popAgregar}" >
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                  <header class="slds-modal__header">                   
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Nuevo Empleado</h2>
-                     
-                    </header>
-                    
-                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
-                    
-                    <div class="slds-box slds-align--absolute-left slds-container_large">
-                        <div class="slds-form slds-form_compound">
-                            <fieldset class="slds-form-element">
-                              
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label">Tipo de identificación </label>
-                                    <apex:inputField styleclass="slds-input" value="{!empleado.Tipo_Identificacion__c}" />
-                                  </div>
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label"> Número de identificación </label>
-                                    <apex:inputText styleclass="slds-input" value="{!Num_identidad}" />
-                                  </div>
-                                  <div class="slds-form-element slds-size_2-of-2">
-                                    <label class="slds-form-element__label"> </label>
-                                    <div>
-                                    <apex:commandButton value="Buscar" action="{!buscar}" disabled="{!mostrarBuscar}" styleClass="Confirmar"  />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label"> Nombres </label>
-                                    <apex:inputText styleclass="slds-input" value="{!Nombre}"/>
-                                  </div>
-                                  <div class="slds-form-element slds-size_2-of-2">
-                                    <label class="slds-form-element__label"> Apellidos </label>
-                                    <apex:inputText styleclass="slds-input" value="{!Apellido}"/>
-                                  </div>
-                                </div>
-                              </div>
-                                
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label"> Genero </label>
-                                    <apex:inputField styleclass="slds-input" value="{!empleado.Sexo__c}"/>
-                                  </div>
-                                  <div class="slds-form-element slds-size_2-of-2">
-                                    <label class="slds-form-element__label"> Estado civil </label>
-                                    <apex:inputField styleclass="slds-input" value="{!empleado.Estado_Civil__pc}"/>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label"> Fecha de nacimiento </label>
-                                    <apex:inputField type="date" styleclass="slds-input" value="{!empleado.PersonBirthDate}" showDatePicker="true"/>
-                                  </div>
-                                  <div class="slds-form-element slds-size_2-of-2">
-                                    <label class="slds-form-element__label"> Tipo de aportación </label>
-                                    <apex:selectList styleclass="slds-select" size="1" value="{!tipoaportacion}" >
-                                        <apex:selectOptions value="{!aportaciones}" />
-                                    </apex:selectList>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                              <div class="slds-form-element__group">
-                                <div class="slds-form-element__row">
-                                  <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label"> Salario </label>
-                                    <apex:inputText styleclass="slds-input" value="{!salario}" OnKeyPress="return CampoNumero(event, this)"/>
-                                  </div>
-                                  <div class="slds-form-element slds-size_2-of-2">
-                                    <label class="slds-form-element__label"> Moneda </label>
-                                    <apex:inputField styleclass="slds-input" value="{!empleado.currencyIsoCode}"/>  
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </fieldset>
-                        </div>
-                        </div>
-                        </div>
-                  <footer class="slds-modal__footer">
-                    <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Confirmar" />&nbsp;
-                    <apex:commandButton value="Agregar" action="{!AgregarPersonal}" styleClass="Confirmar" />                   
-                  </footer>
-                </div>
-          </section>
-          <div class="slds-backdrop slds-backdrop_open"></div>
-        </apex:outputPanel>
-        <apex:outputPanel rendered="{!Pop_exportar}" >
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                  <header class="slds-modal__header">
-                  <apex:commandLink action="{!Cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
-                     <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                     </svg>
-                     <span class="slds-assistive-text">Cerrar</span>
-                </apex:commandLink> 
-                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> El archivo se descargo correctamente.</h2>
-                  </header>
-                    <div class="slds-modal__content" style="display:none;">
-                    <iframe id="contenido" src="{!url_pagina}" scrolling="false" style="border:none;" width="100%" height="700"/>
-                </div>
-                  <footer class="slds-modal__footer">
-                    <div class="slds-form slds-form_compound slds-align--absolute-right">
-                          <fieldset class="slds-form-element">
-                            <div class="slds-form-element__group">
-                              <div class="slds-form-element__row">
-                                <div class="slds-form-element slds-size_1-of-1">
-                                  <apex:commandButton value="Aceptar" action="{!cerrar}" styleClass="Confirmar" />  
-                                  
-                                </div>
-                                
-                              </div>
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                }
+                .Confirmar:hover{
+                background-color:#fff;
+                color: #f78d1c !important;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                }
+                
+                .ConfirmarSecond{    
+                font-weight: bolder !important;
+                
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium solid;
+                font-weight: bold;
+                position: relative;
+                background-color:#fff;
+                color: #f78d1c !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                }
+                
+                
+                #Resumen{
+                margin:20px 0 0 0;
+                }
+                #Resumen .Row{
+                width:100%;
+                height:30px;
+                float:left;
+                background:#42c4dd;
+                padding:0px 10px;
+                
+                box-sizing:border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                }
+                #Resumen .Row STRONG{
+                width:60%;
+                float:left;
+                font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-weight:normal;
+                color:#FFF;
+                }
+                #Resumen .Row SPAN{
+                width:40%;
+                float:right;
+                font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-variant:normal;
+                text-align:right;
+                text-transform:uppercase;
+                color:#FFF;
+                }
+                
+            </style>
+        </head>
+        <body>
+            
+            <!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-scope">
+                
+                <apex:form id="theForm"> 
+                    <apex:actionStatus id="status">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                &nbsp;
                             </div>
-                                          
-                                            
-                             
-                           </fieldset>
-                        </div>
+                            
+                            <div role="status" class="slds-spinner slds-spinner_large">
+                                <span class="slds-assistive-text">Por Favor Espere...</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <div id="topMenuZonaTransaccional">
+                        <article class="slds-card slds-theme_default" style="border:0;">
+                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                            <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                                    <div class="slds-media__figure">
+                                        
+                                    </div>
+                                    <div class="slds-media__body" >
+                                        <h2>
+                                            <br/>
+                                            <span class="slds-text-heading_medium"> {!nombre_empresa} / Colaboradores Vigentes</span>
+                                            <br/>
+                                            <label class="slds-form-element__label">Total de Empleados:{!totalempleados} </label>
+                                            <br/>
+                                        </h2>
+                                        
+                                    </div>
+                                </header>
                                 
-                  </footer>
-                </div>
-          </section>
-          <div class="slds-backdrop slds-backdrop_open"></div>
-        </apex:outputPanel>  
-        
+                                <div style="height:50px;background-color: #F2F2F2;">
+                                    <br/>
+                                    <br/>
+                                </div>
+                                
+                            </div>
+                            <footer class="slds-card__footer" style="width:100%;padding-bottom:5px;">
+                                <table style="width:100%;">
+                                    <tr>
+                                        <td style="text-align:left;">
+                                            <label class="slds-form-element__label"> Buscar</label><Br/>
+                                            <apex:inputText value="{!textoBusqueda}" />&nbsp;&nbsp;
+                                            <apex:commandButton value="Buscar" action="{!BuscarEmpleado}"  styleClass="Confirmar" />
+                                            &nbsp;&nbsp;
+                                        </td>
+                                        <td style="text-align:right;">
+                                            <br/>
+                                            <apex:commandButton value="Nuevo Empleado" reRender="theForm" status="status" action="{!mostrarNuevo}" styleClass="Confirmar" /> &nbsp;
+                                            <apex:commandButton value="Guardar Cambios" reRender="theForm"  status="status" action="{!AgregarEMpleados}" styleClass="Confirmar" />&nbsp;
+                                            <apex:commandButton value="Exportar Excel" action="{!ExportExcel}" styleClass="Confirmar" />&nbsp;
+                                            <apex:commandButton value="Ver todos" reRender="theForm" status="status" action="{!vertodos}" rendered="{!mostrarVerTodos}" styleClass="Confirmar" />&nbsp;
+                                            
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </footer>
+                        </article>
+                    </div>
+                    
+                    
+                    <div id="Resumen">
+                        <h3 class="Row">
+                            <strong>Colaboradores Vigentes</strong>
+                            <span>
+                            </span>
+                        </h3>
+                    </div>
+                    <br/>
+                    <footer class="slds-card__footer" style="width:100%;text-align:right;margin: 0 0 0 0;padding: 0 0 0 0;background-color: #FFFFFF;">
+                        <apex:commandButton styleClass="Confirmar" reRender="theForm" status="status"  value="Anterior" action="{!anterior}"     disabled="{!mostrarANterior}" rendered="{!mostrarBotones}" />&nbsp;
+                        <apex:commandButton styleClass="Confirmar" reRender="theForm" status="status" value="Siguiente" action="{!siguiente}" disabled="{!mostrarSiguiente}"  rendered="{!mostrarBotones}"  />&nbsp;
+                        <br/> 
+                    </footer>
+                    <table  Class="slds-table slds-table--bordered ">
+                        <thead>
+                            <tr>
+                                <th scope="col"  >
+                                    <div class="slds-truncate" id="nuevos" title="Eliminar"></div>
+                                </th>
+                                
+                                <th scope="col" >
+                                    <div class="slds-truncate" id="nuevos" title="Tipo de Identificación"><strong>Tipo de Identificación</strong></div>
+                                </th>
+                                <th scope="col"  >
+                                    <div class="slds-truncate" id="nuevos" title="Identificación"><strong>Identificación</strong></div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" id="nuevos" title="Nombres"><strong>Nombres</strong></div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" id="nuevos" title="Apellidos"><strong>Apellidos</strong></div>
+                                </th>
+                                
+                                <th scope="col">
+                                    <div class="slds-truncate" id="nuevos" title="Estado Civil"><strong>Estado Civil</strong></div>
+                                </th>
+                                <th scope="col" >
+                                    <div class="slds-truncate" id="nuevos" title="Fecha Nacimiento"><strong>Fecha Nacimiento</strong></div>
+                                </th>
+                                
+                                <th scope="col" >
+                                    <div class="slds-truncate" id="nuevos" title="Salario"><strong>Salario</strong></div>
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        <body>
+                            <apex:repeat value="{!listClientes}" var="item">
+                                <tr>
+                                    <td>
+                                        <apex:commandLink value="Eliminar"  action="{!eliminar}">
+                                            <apex:param value="{!item.Id}" AssignTo="{!idEmpleado}" name="APV" />                                 
+                                        </apex:commandLink>  
+                                    </td>
+                                    
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.Tipo_Identificacion}"/> 
+                                    </td>
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.Identificacion}"/> 
+                                    </td>
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.FirstName}"/>    
+                                    </td>
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.LastName}"/> 
+                                    </td>
+                                    
+                                    
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.Estado_Civil}"/> 
+                                    </td>
+                                    
+                                    <td>
+                                        <apex:OutputText value="{!item.Mostarfecha}"/>
+                                    </td>                        
+                                    
+                                    <td>
+                                        <apex:inputText value="{!item.Salario}" styleclass="slds-select" OnKeyPress="return CampoNumero(event, this)" style="width:50%;" /> 
+                                    </td>
+                                    
+                                    
+                                </tr>
+                            </apex:repeat>  
+                            <tr>
+                                
+                                
+                                
+                                <td style="text-align:right;" colspan="7"><div class="slds-truncate" ><strong>Total</strong> </div></td>
+                                <td style="text-align:right;"><div class="slds-truncate" ><strong>{!Total}</strong> </div></td>
+                                
+                                
+                                
+                            </tr>
+                        </body>
+                        
+                        
+                        
+                    </table> 
+                    <apex:outputPanel rendered="{!popAgregar}" >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">                   
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Nuevo Empleado</h2>
+                                    
+                                </header>
+                                
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                                    
+                                    <div class="slds-box slds-align--absolute-left slds-container_large">
+                                        <div class="slds-form slds-form_compound">
+                                            <fieldset class="slds-form-element">
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label">Tipo de identificación </label>
+                                                            <apex:inputField styleclass="slds-input" value="{!empleado.Tipo_Identificacion__c}" />
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label"> Número de identificación </label>
+                                                            <apex:inputText styleclass="slds-input" value="{!Num_identidad}" />
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_2-of-2">
+                                                            <label class="slds-form-element__label"> </label>
+                                                            <div>
+                                                                <apex:commandButton value="Buscar" action="{!buscar}" disabled="{!mostrarBuscar}" styleClass="Confirmar"  />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label"> Nombres </label>
+                                                            <apex:inputText styleclass="slds-input" value="{!Nombre}"/>
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_2-of-2">
+                                                            <label class="slds-form-element__label"> Apellidos </label>
+                                                            <apex:inputText styleclass="slds-input" value="{!Apellido}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label"> Genero </label>
+                                                            <apex:inputField styleclass="slds-input" value="{!empleado.Sexo__c}"/>
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_2-of-2">
+                                                            <label class="slds-form-element__label"> Estado civil </label>
+                                                            <apex:inputField styleclass="slds-input" value="{!empleado.Estado_Civil__pc}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label"> Fecha de nacimiento </label>
+                                                            <apex:inputField type="date" styleclass="slds-input" value="{!empleado.PersonBirthDate}" showDatePicker="true"/>
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_2-of-2">
+                                                            <label class="slds-form-element__label"> Tipo de aportación </label>
+                                                            <apex:selectList styleclass="slds-select" size="1" value="{!tipoaportacion}" >
+                                                                <apex:selectOptions value="{!aportaciones}" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size_1-of-2">
+                                                            <label class="slds-form-element__label"> Salario </label>
+                                                            <apex:inputText styleclass="slds-input" value="{!salario}" OnKeyPress="return CampoNumero(event, this)"/>
+                                                        </div>
+                                                        <div class="slds-form-element slds-size_2-of-2">
+                                                            <label class="slds-form-element__label"> Moneda </label>
+                                                            <apex:inputField styleclass="slds-input" value="{!empleado.currencyIsoCode}"/>  
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Confirmar" />&nbsp;
+                                    <apex:commandButton value="Agregar" action="{!AgregarPersonal}" styleClass="Confirmar" />                   
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!Pop_exportar}" >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <apex:commandLink action="{!Cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink> 
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> El archivo se descargo correctamente.</h2>
+                                </header>
+                                <div class="slds-modal__content" style="display:none;">
+                                    <iframe id="contenido" src="{!url_pagina}" scrolling="false" style="border:none;" width="100%" height="700"/>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <div class="slds-form slds-form_compound slds-align--absolute-right">
+                                        <fieldset class="slds-form-element">
+                                            <div class="slds-form-element__group">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-form-element slds-size_1-of-1">
+                                                        <apex:commandButton value="Aceptar" action="{!cerrar}" styleClass="Confirmar" />  
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            
+                                        </fieldset>
+                                    </div>
+                                    
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>  
+                    
+                    
+                </apex:form>
                 
-    </apex:form>
-  
-        
-        
-  </div>
-  <!-- / REQUIRED SLDS WRAPPER -->
-
-</body>
-</html>
+                
+                
+            </div>
+            <!-- / REQUIRED SLDS WRAPPER -->
+            
+        </body>
+    </html>
     <script>
-       function CampoNumero(e, field) {
+    function CampoNumero(e, field) {
         key = e.keyCode ? e.keyCode : e.which
-          // backspace
-          if (key == 8) return true
-           // 0-9
-           if (key > 47 && key < 58) {
-           if (field.value == "") return true
-           regexp = /.[0-9]{10}$/
-           return !(regexp.test(field.value))
-           }
-            // .
-            if (key == 46) {
+        // backspace
+        if (key == 8) return true
+        // 0-9
+        if (key > 47 && key < 58) {
+            if (field.value == "") return true
+            regexp = /.[0-9]{10}$/
+            return !(regexp.test(field.value))
+        }
+        // .
+        if (key == 46) {
             if (field.value == "") return false
-             regexp = /^[0-9]+$/
-              return regexp.test(field.value)
-              }
-               // other key
-              return false
-             }
+            regexp = /^[0-9]+$/
+            return regexp.test(field.value)
+        }
+        // other key
+        return false
+    }
     
-        </script> 
+    </script> 
 </apex:page>

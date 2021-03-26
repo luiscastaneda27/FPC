@@ -118,6 +118,7 @@ global class claseUtil{
                                            From URL_conexion_Sysde__mdt Where DeveloperName =:tipoCaso Limit 1];
             
             direcciones.add(URL.Correo_electronico__c);
+            //direcciones.add('luis.castaneda@intellectsystem.net');
             
             cuerpo = 'Buen día <br/><br/>';
             cuerpo += URL.Dirigido_a__c + '<br/>';
@@ -128,6 +129,7 @@ global class claseUtil{
             cuerpo += 'Ir a Caso';
             cuerpo += '</a><h3>';
             
+            
             system.debug(cuerpo);
             
             Messaging.singleEmailMessage email = new Messaging.singleEmailMessage();
@@ -136,19 +138,17 @@ global class claseUtil{
             email.setToAddresses(direcciones);
             email.setReplyTo(Caso.owner.email);
             email.setSenderDisplayName(Caso.Owner.Name);
-            email.setHtmlBody(cuerpo);
+            
             
             ApexPages.PageReference ref;
             Blob b = null;
             List<Messaging.Emailfileattachment> fileAttachments = new List<Messaging.Emailfileattachment>();
-            
             For(ContentDocumentLink item : 
                 [SELECT ContentDocument.LatestPublishedVersionId,ContentDocumentId,
                  ContentDocument.FileExtension,ContentDocument.Title 
                  FROM ContentDocumentLink WHERE LinkedEntityId =: Caso.id]){
                      
                      ref = new ApexPages.PageReference('/sfc/servlet.shepherd/version/download/' + item.ContentDocument.LatestPublishedVersionId);
-                     
                      if(!test.isRunningTest()){
                          b = ref.getContent();
                      }else{
@@ -161,6 +161,7 @@ global class claseUtil{
                      //efa.setContentType('.'+item.ContentDocument.FileExtension);
                      fileAttachments.add(efa);	
                  }
+            email.setHtmlBody(cuerpo);
             email.setFileAttachments(fileAttachments);
             listEmail.add(email); 
             
@@ -171,11 +172,7 @@ global class claseUtil{
         }       
     }
     
-    public static void metodoutil()
-    {
-        
-        
-    }
+    public static void metodoutil(){}
     
     
     

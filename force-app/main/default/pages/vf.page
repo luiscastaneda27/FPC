@@ -1,0 +1,16 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <apex:includeLightning />
+
+    <div id = "BcSecuritiesDiv"> </div>
+
+    <script>
+        $ Lightning.use ("c:ShowFilesAccount", función () {
+            $ Lightning.createComponent (" c:ShowFilesAccount",
+                    {},
+                    " BcSecuritiesDiv ",
+                    función (cmp) {
+                        console.log ('>>>>> La aplicación está alojada');
+                    } );
+        });
+    </script>
+</apex:page>

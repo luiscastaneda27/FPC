@@ -4,7 +4,7 @@
     <active>true</active>
     <errorConditionFormula>OR(
 AND(
-SuppliedEmail = &apos;ficohsapensiones@ficohsa.com&apos;,ISNEW()
+SuppliedEmail = &apos;joshuablandon123@gmail.com&apos;,ISNEW()
 ),
 AND( RecordType.DeveloperName != &apos;Email_to_Case&apos;, AccountId == Null, ISNEW())
 )</errorConditionFormula>

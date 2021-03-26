@@ -151,26 +151,6 @@
                 <default>false</default>
                 <label>Visita - Mantenimiento</label>
             </value>
-            <value>
-                <fullName>Cierre Plan Protección integral</fullName>
-                <default>false</default>
-                <label>Cierre Plan Protección integral</label>
-            </value>
-            <value>
-                <fullName>Cierre Fondo de Pensiones Individual</fullName>
-                <default>false</default>
-                <label>Cierre Fondo de Pensiones Individual</label>
-            </value>
-            <value>
-                <fullName>Cierre Fondo Empresarial</fullName>
-                <default>false</default>
-                <label>Cierre Fondo Empresarial</label>
-            </value>
-            <value>
-                <fullName>Cierre Fondo empresarial proyecto planilla</fullName>
-                <default>false</default>
-                <label>Cierre Fondo empresarial proyecto planilla</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -12,8 +12,8 @@ public with sharing class cuadreRetirosI {
     public Decimal ach { get; set; }
     public Decimal ck { get; set; }
     public Decimal monTotal { get; set; }
-    public DateTime fecSYSDE { get; set; }
-    public DateTime fecMovimto { get; set; }
+    public string fecSYSDE { get; set; }
+    public string fecMovimto { get; set; }
     public Decimal comparacion { get; set; }
     public Decimal comparaFecha { get; set; }
     public string cuentaBancaria { get; set; }
@@ -21,13 +21,14 @@ public with sharing class cuadreRetirosI {
     public string bancoDestino { get; set; }
     public string tCuenta { get; set; }
     public string moneda { get; set; }
+    public Decimal montoPignorado { get; set; }
     public Integer index { get; set; }
     
 
     public cuadreRetirosI(string referencia, string codCuenta, string nombreCliente, string idCliente,Decimal numeroCaso, string fPago, 
                           Decimal monMovimto, Decimal monRetirar, Decimal montoPatronalCte, Decimal tsp, Decimal ach, Decimal ck, Decimal monTotal, 
-                          DateTime fecSYSDE, DateTime fecMovimto, Decimal comparacion,  Decimal comparaFecha,string cuentaBancaria, string cuentaDestino, 
-                          string bancoDestino, string tCuenta, string moneda, Integer index)
+                          string fecSYSDE, string fecMovimto, Decimal comparacion,  Decimal comparaFecha,string cuentaBancaria, string cuentaDestino, 
+                          string bancoDestino, string tCuenta, string moneda, Decimal montoPignorado, Integer index)
     {
         //ListPagosC =new List<ListPagosC>();
         
@@ -53,6 +54,7 @@ public with sharing class cuadreRetirosI {
             this.bancoDestino = bancoDestino;
             this.tCuenta = tCuenta;
             this.moneda = moneda;
+        	this.montoPignorado = montoPignorado;
         	this.index = index;
         	//this.totalR = sum.(monTotal);
         

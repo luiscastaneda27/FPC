@@ -231,7 +231,7 @@ public class controladorCasoRetiros {
                         }
                         if(bandera3 || test.isRunningTest()){
                             for(integer j=0; j<saldos.saldos.size(); j++) {
-                            	mapSaldos.put(saldos.saldos[j].tipoSaldo, saldos.saldos[j].montoSaldo.replace(',',''));    
+                                mapSaldos.put(saldos.saldos[j].tipoSaldo, saldos.saldos[j].montoSaldo.replace(',',''));    
                             }
                             for(integer i=0; i<cuentasCaso.size(); i++){
                                 for(integer j=0; j<saldos.saldos.size(); j++) {
@@ -246,7 +246,7 @@ public class controladorCasoRetiros {
                         system.debug('Monto bruto 0: '+montoBrutoRetirar);
                         for(integer i=0; i<cuentasCaso.size(); i++){
                             if((cuentasCaso[i].Saldo_retirar__c == '12') && !detallecaso.Permitir_Retiro_Saldos_Patronales__c &&  cuentasCaso[i].Monto_retirar__c !=null && detalleCaso.cuenta__r.Cuenta_colectiva2__c !=null){
-                            	montoBrutoRetirar = montoBrutoRetirar - cuentasCaso[i].Monto_retirar__c;
+                                montoBrutoRetirar = montoBrutoRetirar - cuentasCaso[i].Monto_retirar__c;
                             }
                         }
                         if(detalleCaso.Se_lleva_Parte_Patronal__c){ montoBrutoRetirar += detalleCaso.Saldo_Restante_Cuenta_Cliente__c !=null ? detalleCaso.Saldo_Restante_Cuenta_Cliente__c:0;
@@ -592,7 +592,7 @@ public class controladorCasoRetiros {
             }
             mapSaldos = new Map<String,String>();
             for(integer j=0; j<saldos.saldos.size(); j++) {
-            	mapSaldos.put(saldos.saldos[j].tipoSaldo, saldos.saldos[j].montoSaldo.replace(',',''));    
+                mapSaldos.put(saldos.saldos[j].tipoSaldo, saldos.saldos[j].montoSaldo.replace(',',''));    
             }
             montoPatOrd = mapSaldos.containsKey('12') ? double.valueOf(mapSaldos.get('12')) : 0;
             montoPatExtOrd = mapSaldos.containsKey('13') ? double.valueOf(mapSaldos.get('13')) : 0;
@@ -812,7 +812,7 @@ public class controladorCasoRetiros {
         try{
             List<Pago_Beneficiario__c> pagosBenList = [SELECT Id FROM Pago_Beneficiario__c WHERE Caso__c =: Caso.Id and Detalle_caso__c =: detallecaso.Id];
             if(!pagosBenList.isEmpty()) {
-				if(detalleCaso.Tipo_pago__c == 'B') { tipoPB = false; verPagosBeneficiarios2(); popPagoBene2 = true;
+                if(detalleCaso.Tipo_pago__c == 'B') { tipoPB = false; verPagosBeneficiarios2(); popPagoBene2 = true;
                 } else if(detalleCaso.Tipo_pago__c == 'T') { verPagosBeneficiarios2(); popPagoBene2 = true;
                 }    
             } else {
@@ -835,7 +835,7 @@ public class controladorCasoRetiros {
                     }   
                     System.debug('Beneficiarios desde Sysde: '+listBeneficiarios);
                 } else {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' No se encontraron registros de Beneficiarios o Terceros en Sysde'));     
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' No se encontraron registros de Beneficiarios o Terceros en Sysde'));     
                 }
                 //Fin obteniendo Beneficiarios de Sysde
                 
@@ -846,7 +846,7 @@ public class controladorCasoRetiros {
                 } else if((!listBeneficiarios.isEmpty() || listBeneficiarios.size() == 0) && detalleCaso.Tipo_pago__c == 'N'){ 
                     popBene2 = false; 
                     if(!test.isRunningTest()) { listBeneficiarios.clear(); 
-					}                        
+                    }                        
                 } else{
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontraron registros de Beneficiarios o Terceros'));        
                 }  
@@ -1377,7 +1377,7 @@ public class controladorCasoRetiros {
                             }
                             if(cuentaCliente.Cuenta_colectiva2__r.Tipo_Cuenta__c=='1' || test.isRunningTest()){
                                 decimal milTSP = (detalleCaso.Monto_Bruto_Retirar_Empresa__c / 1000).round(System.RoundingMode.UP);
-                                decimal CalculoTSP = (milTSP *0);//(milTSP *2);
+                                decimal CalculoTSP = (milTSP *2);
                                 decimal montoACHv =0;
                                 if(cuentaCliente.Cuenta_colectiva2__r.Banco__c !='28'){
                                     montoACHv =  detalleCaso.Monto_ACH__c !=null ? detalleCaso.Monto_ACH__c :0;
@@ -1389,7 +1389,7 @@ public class controladorCasoRetiros {
                                 
                             } if(cuentaCliente.Cuenta_colectiva2__r.Tipo_Cuenta__c=='3' || test.isRunningTest()){
                                 decimal milTSP = (detalleCaso.Monto_Bruto_Retirar_Empresa__c / 1000).round(System.RoundingMode.UP);
-                                decimal CalculoTSP = (milTSP *0);//decimal CalculoTSP = (milTSP *2);
+                                decimal CalculoTSP = (milTSP *2);
                                 decimal montoChequev =detalleCaso.Monto_cheque__c !=null ? detalleCaso.Monto_cheque__c :0;
                                 detalleCaso.Monto_TSP_Patrono__c = CalculoTSP;
                                 detalleCaso.Monto_Cheque_Patrono__c = montoChequev;
@@ -1420,7 +1420,7 @@ public class controladorCasoRetiros {
                             milTSP = (((montoBrutoRetirar - csdc) * montoCambio) / 1000).round(System.RoundingMode.UP);                            
                         }
                         
-                        Decimal calculoTSP = ( milTSP * 0 ) / montoCambio;//( milTSP * 2 ) / montoCambio;
+                        Decimal calculoTSP = ( milTSP * 2 ) / montoCambio;
                         detalleCaso.Monto_TSP__c = calculoTSP;
                         
                         if(detalleCaso.Cobro_TSP__c){
@@ -1479,13 +1479,13 @@ public class controladorCasoRetiros {
                                     Caso.RA_limite_exonerado__c = true; 
                                 }
                                 if(!vienedeVisualforce) {
-                                	update Caso; 
+                                    update Caso; 
                                 }
                             }if((Caso.Requiere_aprobacion_exoneracion__c || test.isRunningTest()) && false){
                                 Caso.Requiere_aprobacion_exoneracion__c = false;
                                 Caso.RA_limite_exonerado__c = false;    
                                 if(!vienedeVisualforce) {
-                                	update Caso;
+                                    update Caso;
                                 }    
                             }
                         detalleFinal.add(detalleCaso);
@@ -1511,17 +1511,17 @@ public class controladorCasoRetiros {
                     }
                 }
                 if(saveTrue && !vienedeVisualforce) {
-                	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,'¡Se ha guardado correctamente!'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,'¡Se ha guardado correctamente!'));
                 }
                 if(!vienedeVisualforce) {
-                	mostrarGuardar = false;
+                    mostrarGuardar = false;
                 } 
                 vienedeVisualforce = false;
             }
             if(detallecaso.Id != Null) { 
                 if(detalleCaso.Cargar_cargos_Empleados__c == true && detalleCaso.Tipo_retiro__c != null ) {
                     System.debug('detalleCaso.Monto_cheque__c: '+detalleCaso.Monto_cheque__c);
-                	detalleCaso.Monto_Cheque_Patrono__c = detalleCaso.Monto_cheque__c; 
+                    detalleCaso.Monto_Cheque_Patrono__c = detalleCaso.Monto_cheque__c; 
                     update detalleCaso;
                 }
                 List<Detalle_caso__c> dc = [Select Monto_bruto_retirar__c From Detalle_caso__c Where Caso__c =: caso.id and Tipo_retiro__c = '51' Limit 1];              
@@ -1551,24 +1551,24 @@ public class controladorCasoRetiros {
         try{ 
             detalleCaso.Monto_Saldo_Patronal__c = montoPatOrd * (detalleCaso.Porcentaje_Saldo_Patronal__c/100);
             if(detalleCaso.Porcentaje_Saldo_Patronal_Ext__c == null) {
-            	detalleCaso.Monto_Saldo_Patronal_Ext__c = 0;
+                detalleCaso.Monto_Saldo_Patronal_Ext__c = 0;
                 detalleCaso.Porcentaje_Saldo_Patronal_Ext__c = 0;
             }
             detalleCaso.Monto_Saldo_Patronal_Ext__c = montoPatExtOrd * (detalleCaso.Porcentaje_Saldo_Patronal_Ext__c/100);
             
             for(Detalle_caso__c dc : cuentasCaso){       
-            	//if(dc.Tipo_Retiro__c == '51' /*&& dc.Saldo_retirar__c == '12'*/) {
+                //if(dc.Tipo_Retiro__c == '51' /*&& dc.Saldo_retirar__c == '12'*/) {
                 detalleCaso.Monto_Bruto_Retirar_Empresa__c = /*detalleCaso.Monto_Saldo_Patronal__c - dc.Monto_retirar__c*/montoPatOrd-detalleCaso.Monto_Saldo_Patronal__c;
                 //}                   
             }
-			
+            
             //Inicio actualizando Saldo Restante cliente
             if(detalleCaso.Monto_Saldo_Patronal__c == 0) {
-            	detalleCaso.Saldo_Restante_Cuenta_Cliente__c = 0; 
+                detalleCaso.Saldo_Restante_Cuenta_Cliente__c = 0; 
             } else {
                 System.debug('detalleCaso.Tipo_retiro__c: '+detalleCaso.Tipo_retiro__c);
                 if(detalleCaso.Tipo_retiro__c == '51') {
-                	detalleCaso.Saldo_Restante_Cuenta_Cliente__c = detalleCaso.Monto_Saldo_Patronal__c - detalleCaso.Monto_bruto_retirar__c;
+                    detalleCaso.Saldo_Restante_Cuenta_Cliente__c = detalleCaso.Monto_Saldo_Patronal__c - detalleCaso.Monto_bruto_retirar__c;
                 }    
             }
             //Inicio actualizando Saldo Restante cliente

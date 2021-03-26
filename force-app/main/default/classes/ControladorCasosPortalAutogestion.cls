@@ -1,4 +1,4 @@
-public without sharing class ControladorCasosPortalAutogestion {
+public without sharing class ControladorCasosPortalAutogestion{
     
     //Properties
     public claseTipoCaso cTipoCaso{get;set;}
@@ -24,7 +24,8 @@ public without sharing class ControladorCasosPortalAutogestion {
     public string ZonaSeleccionada { get; set; }
     public string currencyAccountSelected { get; private set; }
     public Cuentas__C Cuenta { get; set; }
-    Public list<contact> listContactos { get; set; }
+    
+    public Boolean popVerificacionCodigo { get; set; }
     
     SolicitudCaso solicitud;
     
@@ -54,8 +55,8 @@ public without sharing class ControladorCasosPortalAutogestion {
         try {
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
             system.debug('Parametro Recibido: '+idCLiente);
-            //idCliente = '0801199411013'; 
-            //idCliente='0801199512974';
+            idCliente = '0801199411013'; 
+            //idCliente='0801199220733';
             contrato = new Contrato_Aceptado__c();
             
             //Si el entorno actual es un site, se obtiene el url del site como tal.
@@ -64,11 +65,9 @@ public without sharing class ControladorCasosPortalAutogestion {
             }
             
             cliente = new account();
-            cliente = [select id, name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__C,
-                       Departamento_Residencia2__c
+            cliente = [select id, Name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__C,
+                       Departamento_Residencia2__c,PersonContactId
                        from account where identificacion__C =:idCliente limit 1];
-            listContactos = new list<contact> ();
-            listContactos = [select id from contact where name = :cliente.name and accountId = :cliente.id];
             
             contrato.Cliente__c = cliente.id;
             contrato.Acepto_Condiciones_de_Portal_Autogestion__C = true;
@@ -139,7 +138,7 @@ public without sharing class ControladorCasosPortalAutogestion {
             string etiquetaCuenta = '';
             cTipoCaso = new claseTipoCaso('Nada');
             for(Cuentas__c item: [Select id, codigo__c, Producto__r.Name, Detalle_Cuenta_colectiva__c from cuentas__c
-                                  where cliente__c = :cliente.id]) {
+                                  where cliente__c = :cliente.id ]) {
                                       etiquetaCuenta = item.Codigo__c + (item.Producto__r.Name != null ? (' - ' + item.Producto__r.Name) : '') + (item.Detalle_Cuenta_colectiva__c.trim() != '-' ? (' - ' + item.Detalle_Cuenta_colectiva__c) : '');
                                       listCuentas.add(new SelectOption(item.id, etiquetaCuenta));
                                   }
@@ -152,10 +151,7 @@ public without sharing class ControladorCasosPortalAutogestion {
             system.debug('Constructor corrio con exito');
         } catch(Exception ex) {
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-        } /*finally {
-detalleCaso.Inicio_Fecha_Aporte__c = Date.Today().addDays(3);
-detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
-}*/
+        } 
         
     }
     
@@ -206,9 +202,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 //Establece la divisa del caso al de la cuenta seleccionada
                 caso.CurrencyIsoCode = cuenta.CurrencyIsoCode;
                 
-                //Verifica si es cuenta colectiva
-                // esColectiva = cuenta.Colectiva__c;
-                // }
+                
                 
                 //boolean esColectiva = [Select Colectiva__c, CurrencyIsoCode from cuentas__c where id = :idCuenta].Colectiva__c;
                 for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' Order By name ASC]) {
@@ -266,16 +260,15 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             system.debug('Error: ' + ex.getMessage()+'Linea: '+ex.getLineNumber());
         } 
     }
-    public String codigoVeficacion{get;set;}
-    public String inputCodigoVeficacion{get;set;}
-    public Boolean popVerificacionCodigo { get; set; }
-    
     public Boolean validacionTelefono(String phone){
         if(phone == null || (phone != null && phone.trim().length() == 9)){
             return true;
         }
         return false;
     }
+    public String codigoVeficacion{get;set;}
+    public String inputCodigoVeficacion{get;set;}
+    
     public void reenviarCodigo(){
         enviarCorreo();
         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Código enviado nuevamente.'));
@@ -348,7 +341,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                        caso.Telefono_Movil__c = caso.Telefono_Movil__c != null ? caso.Telefono_Movil__c.replace('-', '') : null;
                        caso.Telefono_Trabajo__c = caso.Telefono_Trabajo__c != null ? caso.Telefono_Trabajo__c.replace('-', '') : null;
                    }
-               } else if(cTipoCaso.otros && caso.Description == null) {
+               }else if(cTipoCaso.otros && caso.Description == null) {
                    hayError = true;
                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por favor escriba una breve descripción de la gestión'));
                } else if(cTipoCaso.constancias || ctipoCaso.estadoCuenta) {
@@ -387,9 +380,9 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=14 && detalleCaso.Nueva_fecha_aporte__c.day() !=26){
+                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     hayerror = true;
-                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (14 ó 26) de cada mes')));
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
                 else if(detallecaso.Tipo_Operacion__c == 'A5' && detalleCaso.Inicio_Fecha_Aporte__c < datetemp){
                     hayerror = true;
@@ -410,14 +403,12 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             
             if(!hayError) {
                 caso.AccountId = cliente.id;
-                if(listContactos.size() > 0) {
-                    caso.ContactId = listContactos[0].id;
-                }
+                caso.ContactId = Cliente.PersonContactId;
                 
                 if(idTipoRegistro.length() > 2) {
                     caso.RecordTypeId = idTipoRegistro;
                 } else {
-                    caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].id;
+                    caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].Id;
                 }
                 caso.Viene_Portal_Autogestion__c = true; 
                 if(cTipoCaso.constancias || test.isRunningTest()){
@@ -455,7 +446,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 }
                 // system.debug('Antes de meterse: '+ cuenta.Forma_Aportacion__c);
                 if(cTipoCaso.aumDisAporte  && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' ||
-                                               cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3')) {
+                                               cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3') && detallecaso.Tipo_Operacion__c <> 'A1' && detallecaso.Tipo_Operacion__c <> 'A4' && detallecaso.Tipo_Operacion__c <> 'A6') {
                                                    caso.Aprobado__c = false;
                                                    caso.Enviar_aprobacion_AD__c = true;
                                                    solicitud = new SolicitudCaso();

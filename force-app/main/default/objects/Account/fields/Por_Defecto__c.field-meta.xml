@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Por_Defecto__c</fullName>
     <externalId>false</externalId>
-    <label>Por_Defecto</label>
+    <label>Por Defecto</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -14,12 +14,12 @@
             <value>
                 <fullName>S</fullName>
                 <default>false</default>
-                <label>SI</label>
+                <label>Si</label>
             </value>
             <value>
                 <fullName>N</fullName>
                 <default>false</default>
-                <label>NO</label>
+                <label>No</label>
             </value>
         </valueSetDefinition>
     </valueSet>

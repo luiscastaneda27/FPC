@@ -148,11 +148,11 @@
         </rejectBehavior>
         <rejectionActions>
             <action>
-                <name>A_devuelto</name>
+                <name>Aprobacion_falsa</name>
                 <type>FieldUpdate</type>
             </action>
             <action>
-                <name>Aprobacion_falsa</name>
+                <name>Primera_Aprobacion</name>
                 <type>FieldUpdate</type>
             </action>
         </rejectionActions>
@@ -196,7 +196,7 @@
         </action>
     </initialSubmissionActions>
     <label>Retiros 4</label>
-    <processOrder>5</processOrder>
+    <processOrder>6</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

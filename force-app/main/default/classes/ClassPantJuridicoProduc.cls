@@ -1,6 +1,5 @@
 public class ClassPantJuridicoProduc {
 
-    public string numtran {get;Set;} //Agregado 08/04/2020
     public string pcEst_cuenta {get;set;}
     public string pcCod_Causa {get;set;}
     public string pc_codCuenta {get;set;}

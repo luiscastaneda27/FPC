@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tipo_Direccion__c</fullName>
+    <fullName>Tipo_direccion__c</fullName>
     <externalId>false</externalId>
     <label>Tipo Direccion</label>
     <required>false</required>
@@ -14,12 +14,12 @@
             <value>
                 <fullName>T</fullName>
                 <default>false</default>
-                <label>TRABAJO</label>
+                <label>Trabajo</label>
             </value>
             <value>
                 <fullName>C</fullName>
                 <default>false</default>
-                <label>DOMICILIO</label>
+                <label>Domicilio</label>
             </value>
         </valueSetDefinition>
     </valueSet>

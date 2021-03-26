@@ -166,19 +166,19 @@
     <picklistValues>
         <picklist>Estado_Civil__c</picklist>
         <values>
-            <fullName>C</fullName>
+            <fullName>Casado%2Fa</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>D</fullName>
+            <fullName>Divorciado%2Fa</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>S</fullName>
+            <fullName>Soltero%2Fa</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>V</fullName>
+            <fullName>Viudo%2Fa</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -280,6 +280,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Mostrar_tasa_Cambio__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Motivo_Cambio__c</picklist>
         <values>
             <fullName>Aceptación de Nueva Promoción</fullName>
@@ -318,6 +329,285 @@
         </values>
         <values>
             <fullName>Número de tarjeta incompleta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nacionalidad__c</picklist>
+        <values>
+            <fullName>Afgano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alemán</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Argentino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Australiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boliviano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brasilero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camboyano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canadiense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chileno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colombiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coreano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costarricense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cubano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Danés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dominicano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ecuatoriano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Egipcio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Español</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estadounidense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estonio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Etiope</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filipino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finlandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Francés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Galés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Griego</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guatemalteco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haitiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hondureño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inglés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iraní</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iraquí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irlandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Israelí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Italiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Japonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jordano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laosiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letón</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marroquí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mexicano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neocelandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nicaragüense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noruego</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Panameño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paraguayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peruano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Polaco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portugués</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puertorriqueño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rumano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ruso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvadoreño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sueco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suizo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tailandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Taiwanes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ucraniano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uruguayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venezolano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vietnamita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Árabe</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -777,6 +1067,10 @@
             <fullName>A1</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>A2</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Tipo_Identificacion__c</picklist>
@@ -851,17 +1145,6 @@
         </values>
         <values>
             <fullName>Solicitud</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>mostrar_tasa_cambio__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

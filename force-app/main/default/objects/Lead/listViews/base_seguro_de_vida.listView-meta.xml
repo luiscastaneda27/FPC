@@ -8,11 +8,6 @@
     <columns>CORE.USERS.ALIAS</columns>
     <columns>Usuario_Referencia__c</columns>
     <columns>Ejecutivo_Negocios__c</columns>
-    <filterScope>Mine</filterScope>
-    <filters>
-        <field>Usuario_Referencia__c</field>
-        <operation>contains</operation>
-        <value>base seguro de vida</value>
-    </filters>
+    <filterScope>Everything</filterScope>
     <label>Mis Prospectos Creados Hoy</label>
 </ListView>

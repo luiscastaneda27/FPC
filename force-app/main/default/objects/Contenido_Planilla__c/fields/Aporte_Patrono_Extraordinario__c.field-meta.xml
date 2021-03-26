@@ -3,7 +3,7 @@
     <fullName>Aporte_Patrono_Extraordinario__c</fullName>
     <externalId>false</externalId>
     <label>Aporte Patrono Extraordinario</label>
-    <precision>18</precision>
+    <precision>12</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>

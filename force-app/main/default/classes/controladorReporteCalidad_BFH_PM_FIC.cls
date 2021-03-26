@@ -102,6 +102,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
             Oficial_X_Asesor__c asesor;
             for(aSysdeReporteCalidad.ConsultaCliente respuesta: listRespuesta){
                 if(respuesta.identificacion != null && !mapClientes.containsKey(respuesta.Identificacion.replace('-','')+respuesta.numCuenta)){
+                    String identificaicon = respuesta.Identificacion.replace('-','');
                     asesor = new Oficial_X_Asesor__c();
                     if(tipoPantalla=='BFK'){
                         asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();

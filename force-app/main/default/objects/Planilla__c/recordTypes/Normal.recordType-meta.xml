@@ -86,6 +86,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Rezago__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Tipo_planilla__c</picklist>
         <values>
             <fullName>Cargada</fullName>
@@ -93,17 +104,6 @@
         </values>
         <values>
             <fullName>Generada</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>rezago__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>S</fullName>
             <default>false</default>
         </values>
     </picklistValues>

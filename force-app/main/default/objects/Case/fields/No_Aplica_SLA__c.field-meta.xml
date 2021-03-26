@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Aplica_SLA__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo de bandera para validar que la gestión no posee SLA.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Campo de bandera para validar que la gestión no posee SLA.</inlineHelpText>
+    <label>No Aplica SLA</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

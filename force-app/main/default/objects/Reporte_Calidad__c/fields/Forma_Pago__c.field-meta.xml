@@ -41,6 +41,11 @@
                 <label>Tarjeta de Credito/Debito</label>
             </value>
             <value>
+                <fullName>TAOB</fullName>
+                <default>false</default>
+                <label>Tarjeta de Crédito/Debito otros Bancos</label>
+            </value>
+            <value>
                 <fullName>MV</fullName>
                 <default>false</default>
                 <label>Movil</label>

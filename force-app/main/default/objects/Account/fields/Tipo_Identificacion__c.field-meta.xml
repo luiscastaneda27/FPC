@@ -21,6 +21,11 @@
                 <label>CEDULA DE IDENTIDAD</label>
             </value>
             <value>
+                <fullName>20</fullName>
+                <default>false</default>
+                <label>OTROS</label>
+            </value>
+            <value>
                 <fullName>5</fullName>
                 <default>false</default>
                 <label>RTN</label>
@@ -29,6 +34,11 @@
                 <fullName>4</fullName>
                 <default>false</default>
                 <label>PASAPORTE</label>
+            </value>
+            <value>
+                <fullName>REGISTRO TRIBUTARIO NACIONAL</fullName>
+                <default>false</default>
+                <label>REGISTRO TRIBUTARIO NACIONAL</label>
             </value>
         </valueSetDefinition>
     </valueSet>

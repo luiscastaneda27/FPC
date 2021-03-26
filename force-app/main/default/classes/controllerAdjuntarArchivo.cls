@@ -55,10 +55,9 @@ public class controllerAdjuntarArchivo {
                       cdl.LinkedEntityId = Padre; // id del caso
                       cdl.ShareType = 'V';
                       insert cdl;
-                      
-                      
-                      
-                    guardado=true;
+                      cv = new ContentVersion();
+                      cdl = new ContentDocumentLink();
+                      guardado=true;
                       
                     insert myAttachment;
                     myAttachment.Body=null;

@@ -67,42 +67,51 @@
                 </legend>
                 
                 <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPagos}" var="item">
-                    <apex:column style="text-align: center;" headerValue="Número" >
+                    <apex:column style="text-align: center;" headerValue="Número"  >
                         <apex:outputText value="{!item.index}" />
                     </apex:column>
                     <apex:column style="text-align: center;" headerValue="Número Referencia" >
                         <apex:outputText value="{!item.referencia}" />
                     </apex:column>
-                   <apex:column headerValue="Número Caso" >
+                   <apex:column style="text-align: center;" headerValue="Número Caso" >
                         <apex:outputText value="{!item.numeroCaso}" />
                    </apex:column>
                     <apex:column headerValue="Nombre Cliente" >
                         <apex:outputText value="{!item.nombreCliente}" />
                    </apex:column>
-                    <apex:column headerValue="Código Cuenta" >
+                    <apex:column style="text-align: center;" headerValue="Código Cuenta" >
                         <apex:outputText value="{!item.codCuenta}" />
                    </apex:column>
-                   <apex:column headerValue="Monto SYSDE" >
+                   <apex:column style="text-align: center;" headerValue="Monto  Bruto SYSDE" >
                         <apex:outputText value="{!item.monMovimto}" />
                    </apex:column>
-                   <apex:column headerValue="Monto Salesforce" >
+                   <apex:column style="text-align: center;" headerValue="Monto Bruto Salesforce" >
                         <apex:outputText value="{!item.monRetirar}" />
                    </apex:column>
-                   <apex:column headerValue="Fecha SYSDE" >
-                       <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!item.fecMovimto}" /> </apex:outputText>
-                   </apex:column>
-                   <apex:column headerValue="Fecha Salesforce" >
-                       <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!item.fecSYSDE}" /> </apex:outputText> 
-                   </apex:column>
-                   <apex:column headerValue="Compara Monto" >
+                   <!--apex:column headerValue="Fecha Salesforce" >
+                       <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText> 
+                   </apex:column-->
+                   <apex:column style="text-align: center;" headerValue="Conciliado Valor Bruto" >
                         <apex:outputText value="{!item.comparacion}" />
                    </apex:column>
-                   <apex:column headerValue="Forma Pago" >
+                    <apex:column style="text-align: center;" headerValue="Monto Neto SYSDE" >
+                        <apex:outputText value="{!item.montoNetoSysde}" />
+                   </apex:column>
+                   <apex:column style="text-align: center;" headerValue="Monto Neto Salesforce" >
+                        <apex:outputText value="{!item.montoNetoSF}" />
+                   </apex:column>
+                   <apex:column style="text-align: center;" headerValue="Conciliado Valor Neto" >
+                        <apex:outputText value="{!item.comparaNeto}" />
+                   </apex:column>
+                   <apex:column style="text-align: center;" headerValue="Forma Pago" >
                         <apex:outputText value="{!item.fPago}" />
                    </apex:column>
-                   <apex:column headerValue="Compara Fecha" >
-                        <apex:outputText value="{!item.comparaFecha}" />
+                    <apex:column style="text-align: center;" headerValue="Fecha SYSDE" >
+                       <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText>
                    </apex:column>
+                   <!--apex:column headerValue="Compara Fecha" >
+                        <apex:outputText value="{!item.comparaFecha}" />
+                   </apex:column-->
               </apex:dataTable> 
               </fieldset>  
            </apex:outputPanel>
@@ -132,6 +141,9 @@
                     <apex:column headerValue="Código Cuenta" >
                         <apex:outputText value="{!itemC.codCuenta}" />
                    </apex:column>
+                   <apex:column headerValue="Monto Pignorado" >
+                        <apex:outputText value="{!itemC.montoPignorado}" />
+                   </apex:column>
                     <apex:column headerValue="Forma Pago" >
                         <apex:outputText value="{!itemC.fPago}" />
                    </apex:column>
@@ -141,6 +153,9 @@
                    <!--apex:column headerValue="Monto Salesforce" >
                         <apex:outputText value="{!itemC.monRetirar}" />
                    </apex:column-->
+                   <apex:column style="text-align: center;" headerValue="% Saldo Patronal" >
+                        <apex:outputText value="{!itemC.porcentaje}" />
+                   </apex:column>
                    <apex:column headerValue="Monto Cliente Patronal" >
                         <apex:outputText value="{!itemC.montoPatronalCte}" />
                    </apex:column>
@@ -159,8 +174,8 @@
                     <apex:column headerValue="Monto USD" >
                         <apex:outputText value="{!itemC.monUSD}" />
                    </apex:column>
-                    <apex:column headerValue="Fecha SYSDEe" >
-                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!itemC.fecSYSDE}" /> </apex:outputText> 
+                    <apex:column headerValue="Fecha SYSDE" >
+                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText> 
                    </apex:column>
                      <apex:column headerValue="Aprobar" >
                         <apex:commandLink action="{!envioAprobacion}" >  
@@ -172,6 +187,83 @@
               </fieldset>  
                     
                  <apex:commandButton styleClass="slds-button slds-button--brand" style=" margin-left: 560px; " value="Enviar Todo" action="{!enviarListaTotal}" />
+                    
+           </apex:outputPanel>
+          </div>
+                
+          <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1" >
+                <apex:outputPanel rendered="{!mostrarTablaRetirosB}"  style="width:1000px; margin-left:35px; "> 
+             <!-- -->
+                <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:1000px;">
+                <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
+                            Beneficiarios/Terceros 
+                </legend>
+                
+                <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPagosB}" var="itemB">
+                    <apex:column style="text-align: center;" headerValue="Número" >
+                        <apex:outputText value="{!itemB.index}" />
+                    </apex:column>
+                    <apex:column style="text-align: center;" headerValue="No. Referencia" >
+                        <apex:outputText value="{!itemB.referencia}" />
+                    </apex:column>
+                   <apex:column headerValue="No. Caso" >
+                        <apex:outputText value="{!itemB.numeroCaso}" />
+                   </apex:column>
+                    <apex:column headerValue="Nombre Beneficiario" >
+                        <apex:outputText value="{!itemB.nombreCliente}" />
+                   </apex:column>
+                    <apex:column headerValue="Nombre Cliente" >
+                        <apex:outputText value="{!itemB.nombrePropietario}" />
+                   </apex:column>
+                    <apex:column headerValue="Código Cuenta" >
+                        <apex:outputText value="{!itemB.codCuenta}" />
+                   </apex:column>
+                   <apex:column headerValue="Monto Pignorado" >
+                        <apex:outputText value="{!itemB.montoPignorado}" />
+                   </apex:column>
+                    <apex:column headerValue="Forma Pago" >
+                        <apex:outputText value="{!itemB.fPago}" />
+                   </apex:column>
+                   <apex:column headerValue="Monto Bruto" >
+                        <apex:outputText value="{!itemB.monMovimto}" />
+                   </apex:column>
+                   <!--apex:column headerValue="Monto Salesforce" >
+                        <apex:outputText value="{!itemC.monRetirar}" />
+                   </apex:column-->
+                   <apex:column style="text-align: center;" headerValue="% Saldo Patronal" >
+                        <apex:outputText value="{!itemB.porcentaje}" />
+                   </apex:column>
+                   <apex:column headerValue="Monto Cliente Patronal" >
+                        <apex:outputText value="{!itemB.montoPatronalCte}" />
+                   </apex:column>
+                   <apex:column headerValue="TSP" >
+                        <apex:outputText value="{!itemB.tsp}" />
+                   </apex:column>
+                   <apex:column headerValue="ACH" >
+                        <apex:outputText value="{!itemB.ach}" />
+                   </apex:column>
+                   <apex:column headerValue="CK" >
+                        <apex:outputText value="{!itemB.ck}" />
+                   </apex:column>
+                   <apex:column headerValue="Monto HNL" >
+                        <apex:outputText value="{!itemB.monHNL}" />
+                   </apex:column>
+                    <apex:column headerValue="Monto USD" >
+                        <apex:outputText value="{!itemB.monUSD}" />
+                   </apex:column>
+                    <apex:column headerValue="Fecha SYSDE" >
+                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText> 
+                   </apex:column>
+                     <apex:column headerValue="Aprobar" >
+                        <apex:commandLink action="{!envioAprobacionB}" >  
+                         <apex:image value="{!$Resource.Acep}" width="40" height="40"/>
+                         <apex:param value="{!itemB.referencia}" AssignTo="{!Num_CodReferencia}"  name="APV1APROBACION" />
+                     </apex:commandLink>
+                   </apex:column> 
+              </apex:dataTable> 
+              </fieldset>  
+                    
+                 <apex:commandButton styleClass="slds-button slds-button--brand" style=" margin-left: 560px; " value="Enviar Todo" action="{!enviarListaTotalB}" />
                     
            </apex:outputPanel>
           </div>
@@ -218,7 +310,7 @@
                         <apex:outputText value="{!itemP.monTotal}" />
                    </apex:column>
                     <apex:column headerValue="Fecha Salesforce" >
-                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!itemP.fecSYSDE}" /> </apex:outputText> 
+                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText> 
                    </apex:column>
                      <apex:column headerValue="Aprobar" >
                         <apex:commandLink action="{!envioAprobacionP}" >  
@@ -257,6 +349,9 @@
                     <apex:column headerValue="Código Cuenta" >
                         <apex:outputText value="{!itemI.codCuenta}" />
                    </apex:column>
+                    <apex:column headerValue="Monto Pignorado" >
+                        <apex:outputText value="{!itemI.montoPignorado}" />
+                   </apex:column>
                     <apex:column headerValue="Forma Pago" >
                         <apex:outputText value="{!itemI.fPago}" />
                    </apex:column>
@@ -276,7 +371,7 @@
                         <apex:outputText value="{!itemI.monTotal}" />
                    </apex:column>
                     <apex:column headerValue="Fecha Salesforce" >
-                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!itemI.fecSYSDE}" /> </apex:outputText> 
+                        <apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!fechaMostrar}" /> </apex:outputText> 
                    </apex:column>
                      <apex:column headerValue="Aprobar" >
                         <apex:commandLink action="{!envioAprobacionI}" >  

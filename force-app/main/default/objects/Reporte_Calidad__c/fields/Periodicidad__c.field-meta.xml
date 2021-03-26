@@ -36,8 +36,9 @@
                 <label>Quincenal</label>
             </value>
             <value>
-                <fullName>W</fullName>
+                <fullName>Semanal</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Semanal</label>
             </value>
         </valueSetDefinition>

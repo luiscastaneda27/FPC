@@ -7,13 +7,16 @@
     <columns>CASES.PRIORITY</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <columns>CORE.USERS.ALIAS</columns>
-    <columns>CASES.RECORDTYPE</columns>
-    <columns>CASES.TYPE</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>CASES.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Case.Retiros</value>
+        <value>Case.Actualizacion_informacion</value>
+    </filters>
+    <filters>
+        <field>CASES.STATUS</field>
+        <operation>equals</operation>
+        <value>Pendiente de aprobación</value>
     </filters>
     <label>Actualización de información</label>
 </ListView>

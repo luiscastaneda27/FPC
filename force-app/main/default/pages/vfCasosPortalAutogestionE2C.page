@@ -258,7 +258,7 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
          <!-- Scripts -->
          <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
          <script type="text/javascript">
-        function validateNumber(e, field) {
+            function validateNumber(e, field) {
             key = e.keyCode ? e.keyCode : e.which
             
             // backspace
@@ -284,8 +284,8 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                 }
             }
         }
-
-    </script>
+        
+	</script>
          <!-- REQUIRED SLDS WRAPPER -->
          <div class="slds-scope">
              <center style="position:relative; z-index:9999; top:20.3rem;">
@@ -510,14 +510,6 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                      <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                         <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.Estado_Civil__c}" />
                      </div>
-                     <!--  
-                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                        <font class="padding-left-2em fontStyle">Correo Electrónico:</font>
-                     </div>
-                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                        <apex:inputField type="email" styleClass="margin-bottom-0-5x100 custom-select-sizing slds-input" value="{!Caso.Correo_Electronico__c}" />
-                     </div>
-                     -->  
                      <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                         <font class="padding-left-2em fontStyle" >Teléfono Casa:</font>
                      </div>
@@ -847,7 +839,7 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                         <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
                      </div>
                      <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A6', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TA')), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
-                        <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (14 ó 26) de cada mes">*</abbr> Fecha de Aporte permitida (14 ó 26) de cada mes</span><br/>
+                        <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (Label.DAU_Cambio_de_Fecha_1 ó Label.DAU_Cambio_de_Fecha_2) de cada mes">*</abbr> Fecha de Aporte permitida (Label.DAU_Cambio_de_Fecha_1 ó Label.DAU_Cambio_de_Fecha_2) de cada mes</span><br/>
                         <span class="slds-text-title">
                            <abbr style="color:#42c4dc; font-size:16px;" title="Fecha mínima permitida, tres días próximos a partir de hoy">*</abbr> Fecha mínima permitida a partir de 
                            <apex:outputText value="{0, date, dd'/'MM'/'yyyy}">
@@ -917,7 +909,7 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                      </div>
                   </div>
                </apex:outputPanel>
-              <!-- MODAL PARA MOSTRAR CÓDIGO DE VERIFICACIÓN -->
+                <!-- MODAL PARA MOSTRAR CÓDIGO DE VERIFICACIÓN -->
                 <apex:outputPanel rendered="{!popVerificacionCodigo}" id="popIdVerificacion"  >
                     <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                         <div class="slds-modal__container">
@@ -968,10 +960,10 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                         </div>
                     </section>
                     <div class="slds-backdrop slds-backdrop_open"></div>
-                </apex:outputPanel> 
-                    
+                </apex:outputPanel>
+                
+               <!-- MODAL DE ACEPTAR CONTRATO -->
                <apex:outputPanel rendered="{!mostrarCntrato}" >
-                  <!--apex:outputPanel rendered="false" -->
                   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                      <div class="slds-modal__container">
                         <header class="slds-modal__header">
@@ -1172,7 +1164,7 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                   <div class="slds-backdrop slds-backdrop_open"></div>
                </apex:outputPanel>
                <!-- MODAL PARA MOSTRAR PDF -->
-               <apex:outputPanel rendered="{!if(urlPagina !=null ,true,false)}">
+               <apex:outputPanel rendered="{!urlPagina !=null}">
                   <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
                      <div class="slds-modal__container">
                         <div class="slds-modal__header">

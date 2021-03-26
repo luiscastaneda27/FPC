@@ -28,7 +28,7 @@
         <table>
             <tr>
                 <td style="width: 80%;color:#005baa; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:20pt; font-weight:700;">ESTADO DE CUENTA</td>
-                <td><apex:image width="150" styleClass="logo" url="{!URLFOR($Resource.LogoFPC)}" /> </td>
+                <td><apex:image width="150" styleClass="logo" url="https://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1545328005000/Logo_Estado_de_cuentas" /> </td>
             </tr>
         </table>
         <table style="width: 100%">
@@ -74,7 +74,7 @@
                                >
                             <tr>
                                 <th width="4%" rowspan="2" style="background: #1d7482;border-top-left-radius: 20pt;
-                                    border-bottom-left-radius: 20pt;">
+                					border-bottom-left-radius: 20pt;">
                                     <img
                                          src="https://fpc.secure.force.com/portalautogestion/resource/1568949451000/aportes_voluntarios?"
                                          />

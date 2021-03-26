@@ -17,6 +17,11 @@
                 <default>true</default>
                 <label>Detallado</label>
             </value>
+            <value>
+                <fullName>A2</fullName>
+                <default>false</default>
+                <label>Resumen Mensual</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -109,17 +109,14 @@ public class controllerLoginEmpresarial {
                                         
                                         Tiempo_Inactividad__c h= new Tiempo_Inactividad__c();    
                                         u= [select count() from Tiempo_Inactividad__c where usuario__C=:usuario2.id];  
-                                        if(u==0)
-                                        {
+                                        if(u==0){
                                             h.Usuario__c=usuario2.id;
                                             h.Hora_ultima_consulta__c=datetime.now();
                                             insert h;
-                                        }
-                                        else
-                                        {
+                                        }else {
                                             h=[select id, usuario__C from Tiempo_Inactividad__c where usuario__C=:usuario2.id];
-                                             h.Hora_ultima_consulta__c=datetime.now();
-                                             update h;
+                                            h.Hora_ultima_consulta__c=datetime.now();
+                                            update h;
                                         }
                                         asysdeportalempresarial.traertasacambio();
                                         return new pageReference('/Apex/vfMenuPrincipalPlanillas?loetdncdhjch=' + usuario2.id +'&MPojknjsdj=0');   

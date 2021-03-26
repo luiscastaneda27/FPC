@@ -5,8 +5,9 @@
     <externalId>false</externalId>
     <label>Usuario</label>
     <referenceTo>User</referenceTo>
-    <relationshipName>Usuarios_para_asignaci_n_Casos_SAC</relationshipName>
+    <relationshipName>Usuarios_para_asignacion_Casos_SAC</relationshipName>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

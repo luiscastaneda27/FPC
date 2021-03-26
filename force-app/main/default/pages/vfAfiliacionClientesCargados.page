@@ -79,7 +79,7 @@
                                     <apex:repeat value="{!listAfiliaciones}" var="item">
                                         <tr>
                                             <td>
-                                                <apex:inputField value="{!item.Enviar_Sac__c}" rendered="{!item.Formulario_Completo__c ='S'}" />
+                                            	<apex:inputField value="{!item.Enviar_Sac__c}" rendered="{!item.Formulario_Completo__c ='S'}" />
                                             </td>
                                             <td>
                                                 <apex:outputField value="{!item.name}" />

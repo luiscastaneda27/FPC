@@ -4,7 +4,7 @@
     <description>Usuario del oficial de negocio que ingresa el aporte.</description>
     <externalId>false</externalId>
     <label>Oficial de negocios</label>
-    <length>50</length>
+    <length>15</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

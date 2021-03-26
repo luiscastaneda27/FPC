@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Aceptación de la Cuenta</label>
+    <protected>false</protected>
+    <values>
+        <field>Descripcion__c</field>
+        <value xsi:type="xsd:string">Al dar clic en el botón aceptar, usted declara y reconoce que: 
+1. La información incluida en los campos anteriores, ha sido brindada por usted mismo sin intervención de terceros y que la misma es correcta.
+
+
+2. Que una copia de este contrato le sea enviada a su correo electrónico, conteniendo un certificado que le indica la fecha y hora de aceptación del contrato, y que el mismo es jurídicamente vinculante entre las partes.
+
+
+3. Declaración Jurada PE: en cumplimiento con lo dispuesto en la Ley Especial Contra el Lavado de Activos y su Reglamento declaro bajo juramento que no desempeño o he desempeñado funciones públicas destacadas en el país o en un país extranjero, no he ejercido funciones destacadas en una organización internacional dentro o fuera del país, no tengo ni he tenido capacidad de influencia en decisiones estatales y sus relaciones de negocio con personas o sociedades, o sobre procesos públicos de cualquier naturaleza. Además, asumo el compromiso de informar a la institución financiera sobre cualquier modificación que se produzca a este respecto, dentro de los treinta (30) días de ocurrida, mediante la presentación de un nuevo formulario.
+
+
+4. Declaración Jurada FACTA: Por este medio y bajo la pena de perjurio declaro que la información aquí consignada es completa, correcta y fehaciente. No soy ciudadano de Estados Unidos ni cumplo con algún criterio para ser considerado contribuyente a la Renta Interna de los Estados Unidos. Acepto y conozco que, en caso de llegar a adquirir esta condición, es mi obligación informar de inmediato dicho cambio.
+
+
+Asimismo, me comprometo a poner en conocimiento de la institución financiera y confeccionar una nueva auto-certificación en un plazo máximo de treinta días en caso de que cualquier información contenida se vea desactualizada, incompleta o incorrecta. Me doy por enterado(a) que esta información es requerida por el Código de Renta Interna de los Estados Unidos, la reglamentación dispuesta por la Comisión Nacional de Bancos y Seguros (CNBS) y demás normativas conexa. Con la aceptación de este documento manifiesta que he leído comprensivamente el mismo y acepto las disposiciones de él contenidas.
+
+
+5. Cliente acepta términos y condiciones publicados en el tarifario de productos y servicios de acuerdo a la cuenta seleccionada.</value>
+    </values>
+</CustomMetadata>

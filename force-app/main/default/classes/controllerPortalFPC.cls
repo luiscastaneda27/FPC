@@ -1,4 +1,5 @@
 public class controllerPortalFPC {
+
     public string identidad {get;set;}
     public list<Account> cuentas {get;set;}
     public Account cliente {get;Set;}

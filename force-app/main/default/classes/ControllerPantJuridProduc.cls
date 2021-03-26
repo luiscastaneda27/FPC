@@ -6,8 +6,6 @@ public class ControllerPantJuridProduc {
     public string Causa /*pc_Agencia*/{get;set;}
     
     public boolean Tercera {get;Set;}
-    
-    public string numtran {get;Set;} //Agregado 08/04/2020
        
     public string pc_codCuenta /*pc_Agencia*/{get;set;} 
     public string tipoUsuarioProducto{get;set;} 
@@ -4181,7 +4179,6 @@ public class ControllerPantJuridProduc {
       public pageReference guardar(){
         try{
                 ClassPantJuridicoProduc juridicoEnvio = new ClassPantJuridicoProduc();
-                juridicoEnvio.numtran = numtran; //Agregado 08/04/2020
                 juridicoEnvio.pcagencia /*Cod_Agencia*/ = pcagencia;
                 juridicoEnvio.pcempresa /*Cod_Agencia*/ = pcempresa;
                 juridicoEnvio.pcEst_Cuenta=Activo;
@@ -4715,9 +4712,7 @@ public class ControllerPantJuridProduc {
     public pageReference actualizar(){
         try{
               ClassPantJuridicoProduc juridicoEnvio = new ClassPantJuridicoProduc();
-                JuridicoEnvio.V_fo_cuenta = CuentaMostrar; 
-            	JuridicoEnvio.numtran = numtran;//Agregado 11/05/2020
-            	
+                JuridicoEnvio.V_fo_cuenta = CuentaMostrar;            	
             	if(pcPEP == true)
                      {
                          juridicoEnvio.pcPEP = 'S';
@@ -5457,12 +5452,6 @@ public class ControllerPantJuridProduc {
                     }
                     
                     Activo = fcsd.pcEst_cuenta;
-                }
-                
-                /*Agregado 11/05/2020*/
-                if(fcsd.numtran != 'null')
-                {
-                    numtran = fcsd.numtran;
                 }
                 
                 TipoCausaOptions = new list <selectOption>();
@@ -6453,12 +6442,6 @@ public class ControllerPantJuridProduc {
                 if (fcsd.ValorPersonaUsaSI == 'S'){
                     ValorPersonaUsaSI = true;
                 }//fin
-                
-                /*Agregado 11/05/2020*/
-                if(fcsd.numtran != 'null')
-                {
-                    numtran = fcsd.numtran;
-                }
                 
                 Activo = fcsd.pcEst_cuenta;
                 TipoCausaOptions = new list <selectOption>();

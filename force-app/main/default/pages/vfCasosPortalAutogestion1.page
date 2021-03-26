@@ -1,0 +1,1394 @@
+<apex:page showHeader="false" standardStylesheets="false" id="page" sidebar="false"  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" title="Ficohsa FPC" cache="false" expires="0"  controller="ControladorCasosPortalAutogestion">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+            
+            <style type="text/css">
+                html, body {
+                background:#FFFFFF;
+                font-family:1em 'Open Sans Light', Helvetica, Arial, sans-serif;
+                }
+                
+                #topMenuZonaTransaccional {
+                /*position: relative;
+                width: 100%;
+                float: left;*/
+                }
+                
+                .Confirmar, .ConfirmarSecond {
+                font-weight: bolder !important;
+                height: 28px;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                }
+                
+                .Confirmar:hover, .ConfirmarSecond:hover {
+                color:#fff;
+                background-color: #666 !important;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                }
+                
+                /* .ConfirmarSecond {
+                font-weight: bolder !important;
+                height: 28px;
+                cursor: pointer;
+                border: medium solid;
+                font-weight: bold;
+                position: relative;
+                background-color:#fff;
+                color: #f78d1c !important;
+                font-family: 'Open Sans Bold', Helvetica, Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                } */
+                
+                .letra {
+                font-size: 14px;
+                font-weight: 560;
+                }
+                
+                .padding-left-0-5em {
+                padding-left: 0.5em !important;
+                }
+                
+                .padding-left-1em {
+                padding-left: 1em !important;
+                }
+                
+                .padding-left-2em {
+                padding-left: 2em !important;
+                }
+                
+                .margin-top-1em {
+                margin-top: 1em !important;
+                }
+                
+                .margin-bottom-0-5x100 {
+                margin-bottom: 0.5% !important;
+                }
+                
+                .font-title {
+                font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 22px !important;
+                color: #42c4dc !important;
+                font-weight: 350;
+                }
+                
+                .font-subtitle {
+                font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 16px !important;
+                color: #42c4dc !important;
+                font-weight: 350 !important;
+                }
+                
+                .fontStyle {
+                font-family: 1em 'Open Sans', Helvetica, Arial, sans-serif !important;
+                color: #666 !important;
+                font-weight: 560 !important;
+                font-size: 14px !important;
+                }
+                
+                .slds-grid_align-center {
+                margin-left: 0.5m;
+                }
+                
+                .custom-alignment {
+                margin-left: 0%;
+                }
+                
+                .custom-checkbox-aligment {
+                margin-bottom: 0em;
+                }
+                
+                .custom-help-text {
+                margin-left: 0%;
+                }
+                
+                .custom-overflow-text {
+                overflow: hidden !important;
+                white-space: nowrap !important;
+                text-overflow: ellipsis !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center;
+                width: 21.5%;
+                }
+                
+                .slds-textarea {
+                min-height: 4em;
+                }
+                
+                .hide {
+                display: none !important;
+                }
+                
+                .show {
+                display: block !important;
+                }
+                
+                .slds-notify__close {
+                width: 7% !important;
+                top: 15% !important;
+                }
+                
+                /* Extra small devices (phones, 600px and down) */
+                @media only screen and (max-width: 600px) {
+                .custom-select-sizing {
+                width: 90% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 42.6% !important;
+                }
+                
+                .Confirmar {
+                width: 90% !important;
+                text-align: center !important;
+                margin: 1em 0em 0em auto !important;
+                background-color: #f78d1c !important;
+                }
+                
+                .custom-alignment {
+                margin-left: 4% !important;
+                }
+                
+                .padding-left-2em {
+                padding-left: 1em !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 100% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 4% !important;
+                }
+                }
+                
+                /* Small devices (portrait tablets and large phones, 600px and up) */
+                /*@media only screen and (min-width: 600px) {
+                
+                }*/
+                
+                /* Medium devices (landscape tablets, 768px and up) */
+                @media only screen and (min-width: 768px) {
+                .custom-checkbox-aligment {
+                margin: 0.5em 0em !important;
+                }
+                
+                .custom-select-sizing {
+                width: 60% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 28.4% !important;
+                }
+                
+                .custom-alignment {
+                margin-left: 2% !important;
+                }
+                
+                .Confirmar {
+                width: 139% !important;
+                margin: 1em 0em 0em auto !important;
+                background-color: #f78d1c !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 53% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 27% !important;
+                }
+                }
+                
+                /* Large devices (laptops/desktops, 992px and up) */
+                /*@media only screen and (min-width: 992px) {
+                
+                }*/
+                
+                /* Extra large devices (large laptops and desktops, 1200px and up) */
+                @media only screen and (min-width: 1024px) {
+                .custom-alignment {
+                margin-left: 1% !important;
+                }
+                
+                .custom-checkbox-aligment {
+                margin: 1em 0em !important;
+                }
+                
+                .custom-select-sizing {
+                width: 30% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 14.1% !important;
+                }
+                
+                .Confirmar {
+                width: 100% !important;
+                background-color: #f78d1c !important;
+                }
+                
+                .custom-help-text {
+                margin-left: 17.7%;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 21.5% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 0.1% !important;
+                }
+                }
+            </style>
+        </head>
+        <body>
+            <!-- Scripts -->
+            <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
+<script type="text/javascript">
+/*    
+    
+    
+    function CampoNumeroRTN(e, field) {
+        key = e.keyCode ? e.keyCode : e.which
+          // backspace
+          if (key == 8) return true
+           // 0-9
+           if (key > 47 && key < 58) {
+           if (field.value == "") return true
+           regexp = /.[0-9]{13}$/
+           return !(regexp.test(field.value))
+           }
+            
+              return false
+             }
+       
+    
+    
+    var verifyCurrencySelected = null, checkStorage = null, closeAlert = null, showAlert = null, generateUID = null;
+var loader = null;
+
+function doLoad() {
+    //alert( "The load event is executing" );
+    
+    // Opera 8.0+
+    //var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+    
+    // Firefox 1.0+
+    //var isFirefox = typeof InstallTrigger !== 'undefined';
+    
+    // Safari 3.0+ "[object HTMLElementConstructor]" 
+    //var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+    
+    // Internet Explorer 6-11
+    var isIE = false || !!document.documentMode;
+    
+    // Edge 20+
+    //var isEdge = !isIE && !!window.StyleMedia;
+    
+    // Chrome 1 - 71
+    //var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    
+    // Blink engine detection
+    //var isBlink = (isChrome || isOpera) && !!window.CSS;
+    
+    if(isIE && (isIE !== undefined)) { //Lo que hizo Juan P 
+    //if(!isIE) { // Lo que hizo Luis Castaneda
+        showAlert(); //Llama a mfuncion de mostrar mensaje siempre
+        let itemSelects = document.querySelectorAll("select");
+        for(let index = 0; index <= itemSelects.length; index++) {
+            itemSelects[index].disabled = true;
+        }
+    } else {
+        checkStorage(); //Evalua localStorage
+    }
+}
+
+if( window.addEventListener ) {
+    window.addEventListener( "load", doLoad, false ); 
+} else if( window.attachEvent ) {
+    window.attachEvent( "onload", doLoad ); 
+} else if( window.onLoad ) {
+    window.onload = doLoad; 
+}
+
+generateUID = function() {
+    let navigator_info = window.navigator,
+        screen_info = window.screen,
+        uid = navigator_info.mimeTypes.length;
+    
+    uid += navigator_info.userAgent.replace(/\D+/g, '');
+    uid += navigator_info.plugins.length;
+    uid += screen_info.height || '';
+    uid += screen_info.width || '';
+    uid += screen_info.pixelDepth || '';
+    
+    return uid;
+}
+
+closeAlert = function() {
+    let el = document.querySelector('.slds-notify_alert');
+    el.classList.remove('show');
+    el.classList.add('hide');
+}
+
+showAlert = function(event) {
+    let el = document.querySelector('.slds-notify_alert');
+    el.classList.remove('hide');
+    el.classList.add('show');
+}
+
+checkStorage = function() {
+    let BrowserKey = localStorage.getItem('BrowserId');
+    BrowserKey = generateUID();
+    localStorage.setItem("BrowserId", BrowserKey); //Almacena el keybrowser
+    showAlert();
+    
+}
+
+verifyCurrencySelected = function(value, currencySelected) {
+    if(value !== currencySelected)
+        updateConstanciaView(true);
+    
+    if(value === currencySelected)
+        updateConstanciaView(false);
+}*/
+</script>
+
+<!-- REQUIRED SLDS WRAPPER -->
+            <div class="slds-scope">
+                <!-- Alerta para dar aviso de los navegadores soportados -->
+                <div class="slds-notify slds-notify_alert   hide" style="position: absolute; z-index: 10; background-color: #f5f5f5; " role="alert">
+                    <span class="slds-assistive-text">Advertencia</span>
+                    <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small" title="Advertencia">
+                        <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#warning"></use>
+                        </svg>
+                    </span>
+                    <table width="100%">
+                        <tr>    
+                            <td style="width:100%; text-align: center;   padding:10px 50px; font-weight: bold; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:13px; padding:10px 50px; border-radius:5px; letter-spacing:1px; background-color:#f5f5f5;"> 
+                                <p style="color:black; font-size:15px;">Navegadores recomendados <a target="_blank" style="font-weight: bold;" href="https://www.google.com.mx/chrome/">Google Chrome</a> y <a target="_blank" style="font-weight: bold;" href="https://www.mozilla.org/es-ES/">Firefox Mozilla</a></p> 
+                                <BR/><!--BR/><BR/><BR/-->
+                            </td>
+                        </tr>
+                    </table>
+                    <!--h3 style="display: block; text-align: left; padding-left: 5%;">
+                        <p><strong>Estimado Cliente, este sitio fué desarrollado para completa compatibilidad con los siguientes navegadores:</strong></p>
+                        <br/>
+                        <div>
+                            <ul style="list-style-type: square; padding-left: 3%;">
+                                <li><strong>MICROSOFT® INTERNET EXPLORER 11</strong> (fin de vida útil el 31 de diciembre de 2020)</li>
+                                <li><strong>MICROSOFT® EDGE</strong> (más reciente)</li>
+                                <li><strong>GOOGLE CHROME™</strong> (más reciente)</li>
+                                <li><strong>MOZILLA® FIREFOX®</strong> (más reciente)</li>
+                                <li><strong>APPLE® SAFARI®</strong> (12.x.+)</li>
+                            </ul>
+                        </div>
+                        <br/>
+                    </h3-->
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-small" onclick="closeAlert();" title="Cerrar">
+                            <b style="font-size: 1.2em;">Cerrar</b>
+                            <span class="slds-assistive-text">cerrar</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <br/>
+                <apex:form id="theForm">
+                    <apex:actionStatus id="status">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
+                            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 45px;">
+                                    <img src="http://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1570667060000/loading_gif" style="float: left; margin: 8px; width: 25px;" />
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <apex:actionStatus id="statusEDC">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                &nbsp;
+                            </div>
+                            <apex:outputPanel >
+                                <!--apex:outputPanel rendered="true" -->
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <div class="slds-modal__content slds-modal_small" id="modal-content-id-1">
+                                            <div style="position: relative; z-index: 1001; text-align: center; margin: 0% auto;">
+                                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 225px;">
+                                                    <img src="http://fpc-fpc.cs18.force.com/PortalAutoGestion/resource/1570667060000/loading_gif" style="float: left; margin: 8px; width: 25px;" />
+                                                    <span style="display: inline-block; padding: 10px 0px; font-size:12px;">Estado de cuenta en proceso</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </apex:outputPanel>
+                            <!-- <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+<div style="display: inline-block; padding: 2px; background-color: #fff; width: 225px;">
+<img src="http://fpc-fpc.cs18.force.com/PortalAutoGestion/resource/1558980641000/loading_gif" style="float: left; margin: 8px; width: 25px;" />
+<span style="display: inline-block; padding: 10px 0px; font-size:12px;">Estado de cuenta en proceso</span>
+</div>
+</div> -->
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <apex:actionFunction name="queryCurrencies" action="{!getCurrencySelected}" oncomplete="verifyCurrencySelected(this.value, '{!currencyAccountSelected}');" status="status" />
+                    <apex:actionFunction name="updateConstanciaView" action="{!updateConstanciaView}" reRender="chViewTasaCambio" status="status" >
+                        <apex:param name="DeseaVerTasaCambio" assignTo="{!Caso.Desea_ver_tasa_de_cambio__c}" value="" />
+                    </apex:actionFunction>
+                    
+                    <div id="topMenuZonaTransaccional">
+                        <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                        
+                        <font class="padding-left-0-5em font-title">Solicitud de Gesti&oacute;n</font><br/><br/>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Seleccione una Cuenta: </font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" id="idCuenta" value="{!idCuenta}"  size="1">
+                                    <apex:selectOptions value="{!listCuentas}" />
+                                    <apex:actionSupport event="onchange" action="{!CargarTipoGestion}" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                            <br/><br/> 
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle" >Tipo de Gestión: </font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList disabled="{!idCuenta ='--'}"  value="{!idTipoRegistro}" styleclass="custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listTipoCaso}" />
+                                    <apex:actionSupport event="onchange" action="{!SelectTipoGestion}"  reRender="theForm, sl_Subtipo_Operacion" status="status" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <apex:outputPanel rendered="{!AND(cTipoCaso.estadoCuenta, cTipoCaso.constancias, cTipoCaso.actInformacion, cTipoCaso.aumDisAporte, false)}">
+                        <div class="slds-grid slds-wrap">
+                            <span>INFORMACIÓN DEL CASO</span>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em">Estado </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:outputField styleClass="padding-left-2em" value="{!Caso.status}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em">Tipo </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:outputField styleClass="padding-left-2em" value="{!Caso.type}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em">Origen </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:outputField styleClass="padding-left-2em" value="{!Caso.origin}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em">Prioridad </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:outputField styleClass="padding-left-2em" value="{!Caso.Priority}" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                   
+                    <apex:outputPanel id="id_Sec_ActInformacion" rendered="{!CtipoCaso.actInformacion}" >
+                        <font class="padding-left-1em font-subtitle">Datos Generales</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Estado Civil: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.Estado_Civil__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Correo Electrónico:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="email" styleClass="margin-bottom-0-5x100 custom-select-sizing slds-input" value="{!Caso.Correo_Electronico__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle" >Teléfono Casa:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="tel" styleClass="margin-bottom-0-5x100 custom-select-sizing slds-input" OnKeyPress="return CampoNumeroRTN(event, this)" value="{!Caso.Telefono_Casa__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle" >Teléfono Móvil:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="tel" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-input" OnKeyPress="return CampoNumeroRTN(event, this)" value="{!Caso.Telefono_Movil__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Teléfono Trabajo: </font>
+                            </div>
+                            <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" value="{!Caso.Telefono_Trabajo__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Fecha de Nacimiento:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="date" styleClass="custom-select-sizing slds-input" showDatePicker="false" value="{!Caso.Fecha_Nacimiento__c}" />
+                            </div>
+                        </div>
+                        <font class="padding-left-1em font-subtitle">Dirección Residencia</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Departamento: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!Caso.Departamento_Residencia2__c}" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listDeptoResi}" />
+                                    <apex:actionSupport action="{!CiudadesResidencia}" event="onchange" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Ciudad: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!Caso.Ciudad_Residencia2__c}" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listCiudadResi}" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Punto de Referencia: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="min-height: 4em;" styleClass="custom-select-sizing slds-input"  html-placeholder="Colonia/Calle/Avenida/Bloque/Número de Casa/Apartamento/Punto de Referencia" value="{!Caso.Punto_Referencia_Residencia__c}" />
+                            </div>
+                        </div>
+                        <font class="padding-left-1em font-subtitle">Dirección Trabajo</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Departamento: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!Caso.Departamento_Trabajo2__c}" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listDeptoTrab}" />
+                                    <apex:actionSupport action="{!CiudadesTrabajo}" event="onchange" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Ciudad: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!Caso.Ciudad_Trabajo2__c}" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listCiudadTrab}" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Punto de Referencia: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="min-height: 4em;" styleClass="custom-select-sizing slds-input" html-placeholder="Colonia/Calle/Avenida/Bloque/Número de Casa/Apartamento/Punto de Referencia" value="{!Caso.Punto_Referencia_Trabajo__c}" />
+                            </div>
+                        </div>
+                        <!--font class="padding-left-1em font-subtitle">Información Laboral</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Empresa: </font>
+                            </div>
+                            <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing slds-input" value="{!Caso.Empresa__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Tipo de Empresa: </font>
+                            </div>
+                            <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing slds-select padding-left-2em" value="{!Caso.Tipo_empresa__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Cargo Actual: </font>
+                            </div>
+                            <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing slds-input" value="{!Caso.Cargo_actual__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Teléfono: </font>
+                            </div>
+                            <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" value="{!Caso.Telefono_Trabajo__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Fecha Ingreso: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField showDatePicker="false" styleClass="margin-bottom-0-5x100 custom-select-sizing slds-input" type="date" value="{!Caso.Fecha_Ingreso__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="margin-bottom-0-5x100 padding-left-2em fontStyle">Fecha Salida: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField showDatePicker="false" styleClass="custom-select-sizing slds-input" type="date" value="{!Caso.Fecha_salida__c}" />
+                            </div>
+                        </div-->
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="id_Sec_Constancias" rendered="{!CtipoCaso.constancias}" >
+                        <font class="padding-left-1em font-subtitle">Información de la Constancia</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Contancia:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!Caso.Constancia__c}" styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOption itemValue="" itemLabel="--Ninguno--" />
+                                    <apex:selectOption itemValue="A1" itemLabel="Aportes Históricos" />
+                                    <apex:selectOption itemValue="Saldo" itemLabel="Saldo al Día" />
+                                    <apex:actionSupport action="{!AccionVacia}" event="onchange" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                            <br/><br/>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Divisa de la Constancia:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing slds-select padding-left-2em" onchange="queryCurrencies();" value="{!caso.CurrencyIsoCode}" />
+                            </div>
+                            <br/><br/>
+                            <div class="hide slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputText styleClass="padding-left-2em fontStyle" style="line-height: 3em;" value="Desea Ver Tasa de Cambio?" rendered="{!Caso.Constancia__c='A1'}"/>
+                            </div>
+                            <div class="hide slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField id="chViewTasaCambio" rendered="{!Caso.Constancia__c='A1'}" styleClass="custom-checkbox-aligment padding-left-2em slds-input" style="width: 5em;" html-disabled="disabled" value="{!Caso.Desea_ver_tasa_de_cambio__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputText styleClass="padding-left-2em fontStyle" value="Fecha Desde:" rendered="{!Caso.Constancia__c='A1'}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" style="margin-bottom: 0.5em;" showDatePicker="false" rendered="{!Caso.Constancia__c='A1'}" type="date"  value="{!caso.Fecha_desde__c}" />
+                                <apex:outputField styleClass="padding-left-2em fontStyle" rendered="{!AND(caso.id!=null, Caso.Constancia__c='A1')}" value="{!caso.Fecha_desde__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputText styleClass="padding-left-2em fontStyle" value="Fecha Hasta:" rendered="{!Caso.Constancia__c='A1'}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" rendered="{!AND(Caso.id = null, Caso.Constancia__c = 'A1')}" type="date" value="{!caso.Fecha_hasta__c}" />
+                                <span class="padding-left-2em"><apex:outputField rendered="{!AND(Caso.id != null, Caso.Constancia__c = 'A1')}" value="{!caso.Fecha_hasta__c}" /></span>
+                            </div>
+                            <div class="{!IF(AND(Caso.Id = null, Caso.Constancia__c = 'A1'), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Período máximo a solicitar es de 1 año">*</abbr> Período máximo a solicitar es de 6 meses</span>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                   
+                    <apex:outputPanel id="id_Sec_EstadosCuenta" rendered="{!CtipoCaso.estadoCuenta}">
+                        <font class="padding-left-1em font-subtitle">Información del Estado de Cuenta</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="hide slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Tipo de Estado de Cuenta: </font>
+                            </div>
+                            <div style="margin-bottom: 1%;" class="hide slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <font class="padding-left-2em">
+                                    <apex:outputField value="{!caso.Tipo_Estado_Cuenta__c}" />
+                                </font>
+                            </div>
+                            <div class="hide slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Estado de Cuenta Detallado: </font>
+                            </div>
+                            <div style="margin-bottom: 1%;" class="hide slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <font class="padding-left-2em">
+                                    <apex:outputField value="{!caso.Estado_Cuenta_Detallado__c}" />
+                                </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Fecha Desde: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!caso.id=null}" value="{!caso.Fecha_desde__c}" />
+                                <font class="padding-left-2em">
+                                    <apex:outputField rendered="{!caso.id!=null}" value="{!caso.Fecha_desde__c}" />
+                                </font>
+                            </div>
+                            <br/><br/>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Fecha Hasta: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!caso.id=null}" value="{!caso.Fecha_hasta__c}" />
+                                <font class="padding-left-2em">
+                                    <apex:outputField rendered="{!caso.id!=null}" value="{!caso.Fecha_hasta__c}" />
+                                </font>
+                            </div>
+                            <br/><b/>
+                            <div class="custom-sizing-button slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_2-of-12">
+                                <apex:commandButton rendered="{!caso.id !=null}" reRender="theForm" status="statusEDC"
+                                                    action="{!VerEDCGeneral}" value="Ver EC General" styleClass="Confirmar slds-input padding-left-2em" />
+                            </div>
+                            <div class="custom-sizing-button slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_2-of-12">
+                                <apex:commandButton rendered="{!caso.id !=null}" style="margin-left:15px;" reRender="theForm" status="statusEDC"
+                                                    action="{!VerEDCDetallado}" value="Ver EC Detallado" styleClass="Confirmar slds-input padding-left-2em" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="id_Sec_ModificacionAporte" rendered="{!CtipoCaso.aumDisAporte}" >
+                        <font class="padding-left-1em font-subtitle">Información del Aporte</font> 
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="hide slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Sub Tipo de Gestión:</font>
+                            </div>
+                            <div class="hide margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList id="sl_Subtipo_Operacion" value="{!detallecaso.Tipo_Operacion__c}" disabled="true"  styleclass="custom-select-sizing slds-select padding-left-2em" size="1">
+                                    <apex:selectOptions value="{!listTipoOperacion}" />
+                                    <apex:actionSupport event="onchange" action="{!AccionVacia}" reRender="theForm"  status="status" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A1'}" value="Nuevo Monto de Aporte:" /> 
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A3'}" value="Nuevo Canal de Aporte:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A4'}" value="Nueva Fecha de Aporte:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input"  rendered="{!detallecaso.Tipo_Operacion__c='A1'}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
+                                <apex:selectList id="sl_Nuevo_Canal_Aporte" styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-select" value="{!detallecaso.Nuevo_canal_aporte__c}" rendered="{!detallecaso.Tipo_Operacion__c='A3'}" size="1"  >
+                                    <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
+                                    <apex:selectOption itemLabel="Débito a Cuenta de Ahorro/Cheque" itemValue="AH" />
+                                    <apex:selectOption itemLabel="Débito a Tarjeta de Crédito/Débito" itemValue="TA" />
+                                    <apex:actionSupport event="onchange" action="{!AccionVacia2}" reRender="theForm"  status="status"  />
+                                </apex:selectList>
+                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!detallecaso.Tipo_Operacion__c = 'A4'}" showDatePicker="false" type="date" value="{!detalleCaso.Nueva_fecha_aporte__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Frecuencia__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <!-- <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH',detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6')}"  value="# Cuenta / Tarjeta:" /> -->
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Número de Tarjeta:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Número de Cuenta:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Banco Emisor de la Tarjeta:" />
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList value="{!detallecaso.POS__c}" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" styleclass="custom-select-sizing slds-select padding-left-2em" size="1" >
+                                    <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
+                                    <apex:selectOption itemLabel="Ficohsa" itemValue="Ficohsa" />
+                                    <apex:selectOption itemLabel="Otros Bancos" itemValue="Otros Bancos" />
+                                </apex:selectList>
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Vencimiento:" />
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Mes__c}" />&nbsp;
+                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing margin-bottom-0-5x100" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Ano_tarjeta__c}" />
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <!-- <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A3', detallecaso.Tipo_Operacion__c='A4', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Inicio de Aporte:" /> -->
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Inicio de Aporte:" />
+                            </div>
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <!-- <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A3', detallecaso.Tipo_Operacion__c='A4', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" /> -->
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
+                            </div>
+                            <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A6', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TA')), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (14 ó 26) de cada mes">*</abbr> Fecha de Aporte permitida (14 ó 26) de cada mes</span><br/>
+                                <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha mínima permitida, tres días próximos a partir de hoy">*</abbr> Fecha mínima permitida a partir de <apex:outputText value="{0, date, dd'/'MM'/'yyyy}"><apex:param value="{!dateTemp}" /></apex:outputText></span>
+                            </div>
+                            <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A4', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'AH'), detallecaso.Tipo_Operacion__c = 'A5'), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha mínima permitida, tres días próximos a partir de hoy">*</abbr> Fecha mínima permitida a partir de <apex:outputText value="{0, date, dd'/'MM'/'yyyy}"><apex:param value="{!dateTemp}" /></apex:outputText></span>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="id_Sec_Otros" rendered="{!CtipoCaso.otros}">
+                        <font class="padding-left-1em font-subtitle">Gestión Otros</font>
+                        <div class="margin-top-1em slds-grid slds-wrap slds-form-element">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Asunto:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-select" value="{!Caso.FPC_Asunto__c}" size="1"  >
+                                    <apex:selectOption itemValue="Problemas Sitio Transaccional" itemLabel="Problemas Sitio Transaccional" />
+                                    <apex:selectOption itemValue="Problemas en la Aplicación Móvil" itemLabel="Problemas en la Aplicación Móvil" />
+                                    <apex:selectOption itemValue="Problemas Interbanca" itemLabel="Problemas Interbanca" />
+                                    <apex:selectOption itemValue="Consulta Seguro de Vida" itemLabel="Consulta Seguro de Vida" />
+                                    <apex:selectOption itemValue="No se Realizó Aporte" itemLabel="No se Realizó Aporte" />
+                                    <apex:selectOption itemValue="Problemas Caja Banco" itemLabel="Problemas Caja Banco" />
+                                    <apex:selectOption itemValue="Varios Débitos" itemLabel="Varios Débitos" />
+                                    <apex:selectOption itemValue="Consulta Proceso Retiro" itemLabel="Consulta Proceso Retiro" />
+                                    <apex:actionSupport action="{!asuntoOtro}" event="onchange" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Descripción: </font> 
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12 slds-form-element__control">
+                                <apex:inputField style="padding: 0.7em !important;" type="text" html-rows="4" styleClass="custom-select-sizing padding-left-2em slds-textarea" value="{!caso.Description}" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="id_Sec_RepoCarnet" rendered="{!CtipoCaso.reposicionCarnet}">
+                        <font class="padding-left-1em font-subtitle">Gestión Reposición de Carnet</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="custom-overflow-text slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle" title="Seleccione la Zona de su Agencia:">Seleccione la Zona de su Agencia:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" value="{!ZonaSeleccionada}" size="1">
+                                    <apex:selectOptions value="{!listaZonas}" />
+                                    <apex:actionSupport event="onchange" action="{!getListAgentsByZone}" reRender="theForm" status="status" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="custom-overflow-text slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle" title="Seleccione Agencia para Entrega de Carnet:">Seleccione Agencia para Entrega de Carnet:</font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" value="{!caso.Agencia__c}" size="1">
+                                    <apex:selectOptions value="{!listAgencias}" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <!-- MODAL DE ACEPTAR CONTRATO -->
+                    
+                    <apex:outputPanel rendered="{!AND(mostrarCntrato, false)}">
+                        <!--apex:outputPanel rendered="false" -->
+                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__header">
+                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>  
+                                    <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                                        <apex:image style="height:60px; width:250px;" value="{!$Resource.LogoFPC}"/>
+                                    </figure>
+                                </div>
+                                <div class="slds-modal__content">
+                                    <div style="text-align:justify; width:98%; margin-right: 10px; margin-left:10px;">
+                                        <div style="width: 100%; text-align: center;">
+                                            
+                                            <font style="font-weight: bold; font-size: 20px; text-align: center;">
+                                                TERMINOS Y CONDICIONES DEL PORTAL DE GESTIONES DE FICOHSA PENSIONES Y CESANTÍAS
+                                            </font>
+                                        </div>
+                                        <p style="font-size: 15px;">
+                                            <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A.</b>, pone a disposición de “EL AFILIADO” el “SITIO DE GESTIONES FICOHSA PENSIONES Y CESANTÍAS”, de conformidad a los siguientes términos y condiciones:
+                                        </p>
+                                        <p style="font-size: 15px;">
+                                            <b>ANTECEDENTES:</b>
+                                        </p>
+                                        <p> 
+                                            LA ADMINISTRADORA ha implementado un sistema para que EL AFILIADO pueda realizar diversas gestiones usando el Sitio de Gestiones de Ficohsa Pensiones y Cesantías. 
+                                        </p>
+                                        <br/><br/>
+                                        <div style="width: 100%; font-size: 15px; ">
+                                            <b>PRIMERA: DEFINICIONES:</b>
+                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">ADMINISTRADORA, LA: Administradora de Fondos de Pensiones Ficohsa, S.A., sociedad hondureña, autorizada por la Comisión Nacional de Bancos y Seguros (CNBS) para administrar fondos de pensiones de acuerdo a la resolución número 534-12/2014 del 18 de diciembre de 2014 y constituida mediante escritura pública número 179, autorizada por el Notario Ernesto Alfonso Carrasco Castro, e inscrita en el Libro de Comerciantes Sociales del Registro Mercantil de Francisco Morazán bajo asiento número 25837, matrícula 2540691.</p> 
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">AFILIADO, EL: La persona natural, domiciliada en la República de Honduras, titular de una CUENTA de pensiones en la ADMINISTRADORA.</p> 
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">CONTRATO, EL: El contrato de Administración de una cuenta de pensiones celebrado entre EL AFILIADO y LA ADMINISTRADORA, que contiene obligaciones recíprocas.</p> 
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">CUENTA, LA: La cuenta de pensiones que LA ADMINISTRADORA está autorizada para administrar en virtud del CONTRATO.</p> 
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                    <td style="width: 98%;  "><p style="margin-left: 10px;">SERVICIOS, LOS: Las diversas gestiones que EL AFILIADO puede llevar a cabo en el SITIO, relacionados con su CUENTA. Estos SERVICIOS son, sin perjuicio que puedan ser ampliados, modificados o eliminados por LA ADMINISTRADORA en el futuro:</p> 
+                                                        <ol style="padding-left: 28px;">
+                                                            
+                                                            <li Type="disc">Consulta en línea del Estado de Cuenta, envío al correo electrónico y generación en Formato PDF. </li>
+                                                            <li Type="disc">Visualización del Historial Laboral</li>
+                                                            <li type="disc">Visualización de Inversiones</li>
+                                                            <LI type="disc">Actualización de Información Personal y Laboral</LI>
+                                                            <LI type="disc">Solicitud de Reposición de Carnet</LI>
+                                                            <LI type="disc">Solicitud de Constancias generadas en Formato PDF</LI>
+                                                            <li type="disc">Solicitud de Aumento de Aporte</li>
+                                                            <li type="disc">Solicitud de Cambio en la Fecha de Aporte</li>
+                                                            <li type="disc">Solicitud de Cambio en el Canal de Aporte</li>
+                                                            <li type="disc">Solicitud de Cambio de Número de Cuenta de Ahorro/Cheques para Débito Automático y Único</li>
+                                                            <li type="disc">Solicitud de Cambio de Número de Tarjeta de Crédito/Débito para Débito Automático y Único</li>
+                                                            <li type="disc">Solicitud de Otra Gestión no Incluida en el listado</li>
+                                                        </ol>
+                                                        
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">6.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">SITIO, EL: El sitio web cuya dirección es <a href="https://www.ficohsapensiones.hn/transaccional/Login" target="_blank"> https://www.ficohsapensiones.hn/transaccional/Login</a> propiedad de LA ADMINISTRADORA, en el cual EL AFILIADO, puede llevar a cabo gestiones relacionadas con su CUENTA.
+                                                        </p> 
+                                                    </td>
+                                                    
+                                                </tr>
+                                                
+                                            </table>
+                                        </div>
+                                        <br/><br/>
+                                        <div style="width: 100%; font-size: 15px; ">
+                                            <b>SEGUNDA: CONDICIONES DE PRESTACION DE LOS SERVICIOS: 
+                                            </b><br/>
+                                            <p>Las condiciones de prestación de los servicios convenidos entre La Administradora y El Afiliado son las siguientes:
+                                            </p> 
+                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">El acceso al SITIO será sin restricciones y por tiempo indefinido. No obstante, si el AFILIADO no hace uso de los servicios del SITIO, La ADMINISTRADORA se reserva el derecho y queda facultado para bloquear las credenciales de acceso al SITIO del AFILIADO (nombre de usuario, contraseña, huella digital, etc.). 
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">El AFILIADO se compromete a usar los servicios cumpliendo con todas las condiciones y requerimientos aquí señalados y los que en el futuro establezca La Administradora para tales efectos
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">En caso de que La ADMINISTRADORA incluya SERVICIOS adicionales al SITIO por El AFILIADO, se dará por entendido que El AFILIADO acepta la prestación de los nuevos servicios. 
+                                                        
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Los horarios de prestación de SERVICIOS serán establecidos por la ADMINISTRADORA y podrán ser notificados al AFILIADO de tiempo en tiempo. 
+                                                        
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">La prestación de los SERVICIOS depende esencialmente de la utilización de líneas telefónicas y energía eléctrica y servicios de datos móviles o internet residencial por lo que la suspensión temporal o definitiva, parcial o total de tales servicios por parte de las empresas que lo prestan, sea por la causa que sea, determinara la interrupción de los servicios a que se contrae este contrato, sin responsabilidad alguna para la ADMINISTRADORA. 
+                                                        
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">6.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Los servicios también se podrán ver afectados por fallas o incapacidades del equipo, del Afiliado o bien por uso inadecuado de los servicios y equipos o software del Afiliado. En caso de interrupción de los servicios por cualquiera de estas causas no habrá responsabilidad alguna por la Administradora. 
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">7.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">El Sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías proporciona un alto nivel de seguridad para la transmisión de datos entre el Afiliado y la Administradora, de manera que ninguna tercera persona puede interferir en la comunicación entre el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías y el afiliado. 
+                                                        
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">8.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">La Administradora hará entrega al afiliado de las claves necesarias para acceder al sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías vía correo electrónico (email). El Afiliado deberá cambiar inmediatamente la clave por una de su exclusivo conocimiento para seguridad para el propio Afiliado, el sistema no permitirá funcionar con la clave originalmente proporcionada. Una vez que haya ingresado al sistema por primera vez, la clave de acceso personal es secreta e intransferible.
+                                                        
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <br/><br/>
+                                        <div style="width: 100%; font-size: 15px; ">
+                                            <b>TERCERA: ACEPTACION DE LOS SERVICIOS:  
+                                            </b><br/>
+                                            <p>El Afiliado acepta lo siguiente:
+                                            </p> 
+                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones que realice en el Sitio de gestiones de Ficohsa Pensiones y Cesantías quedaran registradas y operadas por la Administradora, según los servicios que se detallan en la cláusula segunda y las que se puedan ofrecer en el futuro y tendrán validez después de su registro correspondiente conforme los procedimientos establecidos por la Administradora. 
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones y demás usos que haga a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías serán por su propia cuenta y riesgo aceptando los estados de cuenta, informes y resultados que el propio sistema formule o archive de las mismas. 
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Sera responsabilidad del Afiliado si facilita el uso de su clave personal a terceros o no guarda las mismas con el debido cuidado, liberando a la Administradora de toda responsabilidad que de ello se derive. En el caso de controversias, el AFILIADO renuncia ya al fuero de su domicilio y se somete al tribunal que la Administradora elija, señalando la dirección asentada en la solicitud del servicio como lugar para recibir cualquier aviso o notificación siendo responsabilidad del Afiliado informar del cambio de la misma. </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Que bajo ningún concepto la Administradora es responsable por errores u omisiones en información electrónica proporcionada cuya fuente no sea la Administradora, ni por el uso que se haga de la misma. </p> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                    <td style="width: 98%; "><p style="margin-left: 10px;">Que será por su propia cuenta y responsabilidad el uso de la información e impresiones que a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías. 
+                                                        </p> 
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <br/><br/>
+                                        <div style="width: 100%; font-size: 15px; ">
+                                            <b>CUARTA: VALOR POR SERVICIO:  </b><br/>
+                                            <p>El servicio del Sitio de gestiones de Ficohsa Pensiones y Cesantías será gratuito hasta que la Administradora decida lo contrario, en cuyo caso la Administradora establecerá un valor y lo comunicará oportunamente al AFILIADO por medio de los canales definidos por la misma ADMINISTRADORA. En caso que el servicio sea cobrado, el Afiliado se compromete a aceptar como buenos y exactos los registros que la Administradora posea en el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías. Además de lo anterior, EL AFILIADO acepta que algunos de los SERVICIOS que se pueden efectuar a través del SITIO podría acarrear el pago de alguna tasa establecida por la ADMINSITRADORA lo cual será comunicado al AFILIADO previo a llevar a cabo la operación del SERVICIO.
+                                                
+                                            </p> 
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-backdrop slds-backdrop--open"></div>
+                    </apex:outputPanel>
+                    
+                    
+                    
+                    
+                    <apex:outputPanel rendered="{!AND(mostrarCntrato, true)}" >
+                        <!--apex:outputPanel rendered="false" -->
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">                 
+                                    <!--h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Aceptación de Contrato </h2-->
+                                    <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                                        <apex:image style="height:60px; width:250px;" value="{!$Resource.LogoFPC}"/>
+                                    </figure>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-form slds-form_compound">
+                                        <fieldset class="slds-form-element" >
+                                            
+                                            <!--apex:image value="{!$Resource.LogoFPC}" style="height:50px; width:200px;" /><br/><br/-->
+                                            <!--figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                                                <apex:image style="height:60px; width:250px;" value="{!$Resource.LogoFPC}"/>
+                                            </figure><br/-->
+                                            
+                                            <div style="text-align:justify; width:98%; margin-right: 10px; margin-left:10px;">
+                                                <div style="width: 100%; text-align: center;">
+                                                    <font style="font-weight: bold; font-size: 20px; text-align: center;">
+                                                        TERMINOS Y CONDICIONES DEL PORTAL DE GESTIONES DE FICOHSA PENSIONES Y CESANTÍAS
+                                                    </font>
+                                                </div>
+                                                <p style="font-size: 15px;">
+                                                    <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A.</b>, pone a disposición de “EL AFILIADO” el “SITIO DE GESTIONES FICOHSA PENSIONES Y CESANTÍAS”, de conformidad a los siguientes términos y condiciones:
+                                                </p>
+                                                <p style="font-size: 15px;">
+                                                    <b>ANTECEDENTES:</b>
+                                                </p>
+                                                <p> 
+                                                    LA ADMINISTRADORA ha implementado un sistema para que EL AFILIADO pueda realizar diversas gestiones usando el Sitio de Gestiones de Ficohsa Pensiones y Cesantías. 
+                                                </p>
+                                                <br/><br/>
+                                                <div style="width: 100%; font-size: 15px; ">
+                                                    <b>PRIMERA: DEFINICIONES:</b>
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">ADMINISTRADORA, LA: Administradora de Fondos de Pensiones Ficohsa, S.A., sociedad hondureña, autorizada por la Comisión Nacional de Bancos y Seguros (CNBS) para administrar fondos de pensiones de acuerdo a la resolución número 534-12/2014 del 18 de diciembre de 2014 y constituida mediante escritura pública número 179, autorizada por el Notario Ernesto Alfonso Carrasco Castro, e inscrita en el Libro de Comerciantes Sociales del Registro Mercantil de Francisco Morazán bajo asiento número 25837, matrícula 2540691.</p> 
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">AFILIADO, EL: La persona natural, domiciliada en la República de Honduras, titular de una CUENTA de pensiones en la ADMINISTRADORA.</p> 
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">CONTRATO, EL: El contrato de Administración de una cuenta de pensiones celebrado entre EL AFILIADO y LA ADMINISTRADORA, que contiene obligaciones recíprocas.</p> 
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">CUENTA, LA: La cuenta de pensiones que LA ADMINISTRADORA está autorizada para administrar en virtud del CONTRATO.</p> 
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                            <td style="width: 98%;  "><p style="margin-left: 10px;">SERVICIOS, LOS: Las diversas gestiones que EL AFILIADO puede llevar a cabo en el SITIO, relacionados con su CUENTA. Estos SERVICIOS son, sin perjuicio que puedan ser ampliados, modificados o eliminados por LA ADMINISTRADORA en el futuro:</p> 
+                                                                <ol style="padding-left: 28px;">
+                                                                    
+                                                                    <li Type="disc">Consulta en línea del Estado de Cuenta, envío al correo electrónico y generación en Formato PDF. </li>
+                                                                    <li Type="disc">Visualización del Historial Laboral</li>
+                                                                    <li type="disc">Visualización de Inversiones</li>
+                                                                    <LI type="disc">Actualización de Información Personal y Laboral</LI>
+                                                                    <LI type="disc">Solicitud de Reposición de Carnet</LI>
+                                                                    <LI type="disc">Solicitud de Constancias generadas en Formato PDF</LI>
+                                                                    <li type="disc">Solicitud de Aumento de Aporte</li>
+                                                                    <li type="disc">Solicitud de Cambio en la Fecha de Aporte</li>
+                                                                    <li type="disc">Solicitud de Cambio en el Canal de Aporte</li>
+                                                                    <li type="disc">Solicitud de Cambio de Número de Cuenta de Ahorro/Cheques para Débito Automático y Único</li>
+                                                                    <li type="disc">Solicitud de Cambio de Número de Tarjeta de Crédito/Débito para Débito Automático y Único</li>
+                                                                    <li type="disc">Solicitud de Otra Gestión no Incluida en el listado</li>
+                                                                </ol>
+                                                                
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">6.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">SITIO, EL: El sitio web cuya dirección es <a href="https://www.ficohsapensiones.hn/transaccional/Login" target="_blank"> https://www.ficohsapensiones.hn/transaccional/Login</a> propiedad de LA ADMINISTRADORA, en el cual EL AFILIADO, puede llevar a cabo gestiones relacionadas con su CUENTA.
+                                                                </p> 
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                </div>
+                                                <br/><br/>
+                                                <div style="width: 100%; font-size: 15px; ">
+                                                    <b>SEGUNDA: CONDICIONES DE PRESTACION DE LOS SERVICIOS: 
+                                                    </b><br/>
+                                                    <p>Las condiciones de prestación de los servicios convenidos entre La Administradora y El Afiliado son las siguientes:
+                                                    </p> 
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El acceso al SITIO será sin restricciones y por tiempo indefinido. No obstante, si el AFILIADO no hace uso de los servicios del SITIO, La ADMINISTRADORA se reserva el derecho y queda facultado para bloquear las credenciales de acceso al SITIO del AFILIADO (nombre de usuario, contraseña, huella digital, etc.). 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El AFILIADO se compromete a usar los servicios cumpliendo con todas las condiciones y requerimientos aquí señalados y los que en el futuro establezca La Administradora para tales efectos
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">En caso de que La ADMINISTRADORA incluya SERVICIOS adicionales al SITIO por El AFILIADO, se dará por entendido que El AFILIADO acepta la prestación de los nuevos servicios. 
+                                                                
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Los horarios de prestación de SERVICIOS serán establecidos por la ADMINISTRADORA y podrán ser notificados al AFILIADO de tiempo en tiempo. 
+                                                                
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">La prestación de los SERVICIOS depende esencialmente de la utilización de líneas telefónicas y energía eléctrica y servicios de datos móviles o internet residencial por lo que la suspensión temporal o definitiva, parcial o total de tales servicios por parte de las empresas que lo prestan, sea por la causa que sea, determinara la interrupción de los servicios a que se contrae este contrato, sin responsabilidad alguna para la ADMINISTRADORA. 
+                                                                
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">6.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Los servicios también se podrán ver afectados por fallas o incapacidades del equipo, del Afiliado o bien por uso inadecuado de los servicios y equipos o software del Afiliado. En caso de interrupción de los servicios por cualquiera de estas causas no habrá responsabilidad alguna por la Administradora. 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">7.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El Sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías proporciona un alto nivel de seguridad para la transmisión de datos entre el Afiliado y la Administradora, de manera que ninguna tercera persona puede interferir en la comunicación entre el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías y el afiliado. 
+                                                                
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">8.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">La Administradora hará entrega al afiliado de las claves necesarias para acceder al sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías vía correo electrónico (email). El Afiliado deberá cambiar inmediatamente la clave por una de su exclusivo conocimiento para seguridad para el propio Afiliado, el sistema no permitirá funcionar con la clave originalmente proporcionada. Una vez que haya ingresado al sistema por primera vez, la clave de acceso personal es secreta e intransferible.
+                                                                
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <br/><br/>
+                                                <div style="width: 100%; font-size: 15px; ">
+                                                    <b>TERCERA: ACEPTACION DE LOS SERVICIOS:  
+                                                    </b><br/>
+                                                    <p>El Afiliado acepta lo siguiente:
+                                                    </p> 
+                                                    <table width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">1.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones que realice en el Sitio de gestiones de Ficohsa Pensiones y Cesantías quedaran registradas y operadas por la Administradora, según los servicios que se detallan en la cláusula segunda y las que se puedan ofrecer en el futuro y tendrán validez después de su registro correspondiente conforme los procedimientos establecidos por la Administradora. 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">2.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones y demás usos que haga a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías serán por su propia cuenta y riesgo aceptando los estados de cuenta, informes y resultados que el propio sistema formule o archive de las mismas. 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">3.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Sera responsabilidad del Afiliado si facilita el uso de su clave personal a terceros o no guarda las mismas con el debido cuidado, liberando a la Administradora de toda responsabilidad que de ello se derive. En el caso de controversias, el AFILIADO renuncia ya al fuero de su domicilio y se somete al tribunal que la Administradora elija, señalando la dirección asentada en la solicitud del servicio como lugar para recibir cualquier aviso o notificación siendo responsabilidad del Afiliado informar del cambio de la misma. </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">4.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que bajo ningún concepto la Administradora es responsable por errores u omisiones en información electrónica proporcionada cuya fuente no sea la Administradora, ni por el uso que se haga de la misma. </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">5.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que será por su propia cuenta y responsabilidad el uso de la información e impresiones que a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías. 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <br/><br/>
+                                                <div style="width: 100%; font-size: 15px; ">
+                                                    <b>CUARTA: VALOR POR SERVICIO:  </b><br/>
+                                                    <p>El servicio del Sitio de gestiones de Ficohsa Pensiones y Cesantías será gratuito hasta que la Administradora decida lo contrario, en cuyo caso la Administradora establecerá un valor y lo comunicará oportunamente al AFILIADO por medio de los canales definidos por la misma ADMINISTRADORA. En caso que el servicio sea cobrado, el Afiliado se compromete a aceptar como buenos y exactos los registros que la Administradora posea en el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías. Además de lo anterior, EL AFILIADO acepta que algunos de los SERVICIOS que se pueden efectuar a través del SITIO podría acarrear el pago de alguna tasa establecida por la ADMINSITRADORA lo cual será comunicado al AFILIADO previo a llevar a cabo la operación del SERVICIO.
+                                                        
+                                                    </p> 
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <br/>
+                                            <apex:inputField value="{!contrato.Acepto_Condiciones_de_Portal_Autogestion__c}" />
+                                            <strong>Acepto terminos y condiciones</strong><br/>
+                                            <apex:commandButton value="Acepto" action="{!AceptarTerminos}" style="width:100%;" styleClass="Confirmar" />
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer"></footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>
+                    
+                    <!-- MODAL PARA MOSTRAR PDF -->
+                    <apex:outputPanel rendered="{!if(urlPagina !=null ,true,false)}">
+                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+                            <div class="slds-modal__container">
+                                <div class="slds-modal__header">
+                                    <apex:commandLink action="{!cerrar}" status="status" reRender="theForm" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>  
+                                </div>
+                                <div class="slds-modal__content">
+                                    <iframe id="contenido" src="{!urlPagina}" scrolling="false" style="border:none;" width="100%" height="700"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-backdrop slds-backdrop--open"></div>
+                    </apex:outputPanel>
+                    <div class="slds-grid slds-wrap">
+                        <div class="custom-alignment slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12 slds-grid_align-center">
+                            <apex:commandButton action="{!guardar}" styleClass="Confirmar" style="width:100%;margin-top:8px;" reRender="theForm" status="status" value="Guardar"
+                                                rendered="{!AND(OR(cTipoCaso.estadoCuenta, cTipoCaso.constancias,
+                                                          cTipoCaso.actInformacion, cTipoCaso.aumDisAporte, cTipoCaso.otros,
+                                                          cTipoCaso.reposicionCarnet), caso.id=null)}" />
+                        </div>
+                    </div>
+                    <!--<table width="100%">
+<tr>
+<td style="width:41.5%;" >
+
+</td>
+<td style="width:58.5%;"></td>
+</tr>
+</table> -->
+                </apex:form>
+            </div>
+        </body>
+    </html>
+</apex:page>

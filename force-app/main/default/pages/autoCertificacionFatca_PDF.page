@@ -170,7 +170,7 @@
         </div><br/><br/>
           4. Nacionalidad(es)/ Ciudadanía(s) &nbsp;
         <div style="border-bottom:1px solid black;width:520px;display:inline-block;">
-        <!--Nacionalidad(es)/ Ciudadanía(s)-->{!nac}&nbsp;{!info.pcnacionalidad2}&nbsp;{!info.pcnacionalidad3}
+        <!--Nacionalidad(es)/ Ciudadanía(s){!info.pcnacionalidad}&nbsp;{!info.pcnacionalidad2}&nbsp;{!info.pcnacionalidad3}-->{!nac}
         </div><br/><br/>
           5. ¿Posee más de una nacionalidad? 
          <!--preguntar por el campo? -->
@@ -196,7 +196,7 @@
         &nbsp;
         País &nbsp;
         <div style="border-bottom:1px solid black;width:390px;display:inline-block;">
-        <!--¿Posee más de una nacionalidad?País{!info.pccodpais}-->{!pais}
+        <!--¿Posee más de una nacionalidad?País {!info.pccodpais}-->{!PFisNacionalidad}
         </div><br/><br/>
           6. Lugar de Nacimiento &nbsp;
         <div style="border-bottom:1px solid black;width:590px;display:inline-block;">
@@ -204,11 +204,11 @@
         </div><br/><br/>
           7. Dirección de Domicilio &nbsp;
         <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
-        <!--Dirección de Domicilio{!info.pcDeptoCN}&nbsp;{!info.pcMunicipioCN}&nbsp;{!info.pcColoniaCN}&nbsp;{!info.pcCalleDetalleCN}-->{!depto}&nbsp;{!mun}&nbsp;{!col}&nbsp;{!dir}
+        <!--Dirección de Domicilio{!info.pcDeptoCN}&nbsp;{!info.pcMunicipioCN}&nbsp;{!info.pcColoniaCN}&nbsp;{!info.pcCalleDetalleCN}-->{!col} {!dir}
         </div><br/><br/>
           8. Teléfono de Residencia &nbsp;
-            <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
-        <!--Teléfono de Residencia {!info.pcTelefonoCN}-->{!telD}
+        <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
+        <!--Teléfono de Residencia{!info.pcTelefonoCN}-->{!telD}
         </div><br/><br/>
         </div>
         <br/>   <br/>    
@@ -256,7 +256,7 @@
         </p>  
         3. País de Residencia para Efectos Fiscales:
         <div style="border-bottom:1px solid black;width:470px;display:inline-block;">
-        <!--País de Residencia para Efectos Fiscales-->{!info.pccodpais}
+        <!--País de Residencia para Efectos Fiscales-->{!PFis}
         </div><br/><br/>
         4. Número de Identificación Fiscal de los Estados Unidos (TIN)
         <div style="border-bottom:1px solid black;width:350px;display:inline-block;">

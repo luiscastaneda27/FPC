@@ -155,21 +155,6 @@
                 <default>false</default>
                 <label>Call Center USA</label>
             </value>
-            <value>
-                <fullName>Canales Varios</fullName>
-                <default>false</default>
-                <label>Canales Varios</label>
-            </value>
-            <value>
-                <fullName>Proteccion Integral 3</fullName>
-                <default>false</default>
-                <label>Proteccion Integral 3</label>
-            </value>
-            <value>
-                <fullName>Segmentos Winners COVID</fullName>
-                <default>false</default>
-                <label>Segmentos Winners COVID</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

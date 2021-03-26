@@ -85,16 +85,6 @@
                 <default>false</default>
                 <label>CAMPAÑA INSTITUCIONAL 2019</label>
             </value>
-            <value>
-                <fullName>AGUINALDO 2019</fullName>
-                <default>false</default>
-                <label>AGUINALDO 2019</label>
-            </value>
-            <value>
-                <fullName>PROTECCIÓN INTEGRAL REDES</fullName>
-                <default>false</default>
-                <label>PROTECCIÓN INTEGRAL REDES</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

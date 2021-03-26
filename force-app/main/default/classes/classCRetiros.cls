@@ -1,10 +1,11 @@
 public with sharing class classCRetiros {
-	public date fecha_retiro {get;set;}
+	public datetime fecha {get;set;}
     public datetime fechaSysdeRetiros {get;set;}
     public List<cuadreRetiros> ListPagos {get;set;}
     public List<cuadreRetirosC> ListPagosC {get;set;}
     public List<cuadreRetirosP> ListPagosP {get;set;}
     public List<cuadreRetirosI> ListPagosI {get;set;}
+    public List<cuadreRetirosB> ListPagosB {get;set;}
     
     public classCRetiros()
     {
@@ -12,5 +13,6 @@ public with sharing class classCRetiros {
         ListPagosC =new List<cuadreRetirosC>(); 
         ListPagosP =new List<cuadreRetirosP>(); 
         ListPagosI =new List<cuadreRetirosI>();
+        ListPagosB =new List<cuadreRetirosB>();
     }
 }

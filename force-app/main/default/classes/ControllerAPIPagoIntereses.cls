@@ -44,7 +44,7 @@ public class ControllerAPIPagoIntereses {
         system.debug(Cuenta); 
 		classPagoInteresesFPC fcsds= new classPagoInteresesFPC();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del BuscarCuenta');
 		try{
 
 			HttpResponse response =new HttpResponse();//
@@ -81,7 +81,7 @@ public class ControllerAPIPagoIntereses {
         system.debug(Cuenta); 
 		classPagoInteresesFPC fcsd= new classPagoInteresesFPC();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del BuscarCuenta2 ');
 		try{
 			
 			HttpResponse response =new HttpResponse();//
@@ -119,7 +119,7 @@ public class ControllerAPIPagoIntereses {
 		request.setEndpoint(url + 'api/InsertarPago');
 		
 		String respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del INSERTAINFO');
 		try{
 						
 			classJson envio = new classJson();

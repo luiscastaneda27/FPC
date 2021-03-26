@@ -1,0 +1,1033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Otros</fullName>
+    <active>true</active>
+    <businessProcess>Otros</businessProcess>
+    <label>Otros</label>
+    <picklistValues>
+        <picklist>Constancia__c</picklist>
+        <values>
+            <fullName>A1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saldo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Embajadas__c</picklist>
+        <values>
+            <fullName>Consulado de Belice</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulado de Canadá</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulado de Holanda-Países Bajos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulado de Noruega</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulado de Portugal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulado de Tailandia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Alemania</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Argentina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Brasil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Chile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de China</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Colombia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Costa Rica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Cuba</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Ecuador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de El Salvador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de España</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Francia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Guatemala</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Italia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de La Santa Sede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de México</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Nicaragua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Panamá</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Perú</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Suecia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de Venezuela</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de la Rep%2E Dominicana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de la Soberana Orden Militar Hospitalaria de Malta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada de los Estados Unidos de América %28USA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Embajada del Japón</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Estado_Civil__c</picklist>
+        <values>
+            <fullName>Casado%2Fa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Divorciado%2Fa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soltero%2Fa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Viudo%2Fa</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FPC_Asunto__c</picklist>
+        <values>
+            <fullName>Actualización Información</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Constancia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulta Cuenta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulta Proceso Retiro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulta Préstamos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulta Seguro Vida</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulta de correo electrónico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estado Cuenta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modificación Aportes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No se Realizó Aporte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemas Caja Banco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemas Interbanca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemas Sitio Transaccional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemas en la Aplicación Móvil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reposición Carnet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retiro Manual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reversiones</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Varios Débitos</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Frecuencia__c</picklist>
+        <values>
+            <fullName>Anual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Semestral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trimestral</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Mostrar_tasa_Cambio__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Motivo_Cambio__c</picklist>
+        <values>
+            <fullName>Aceptación de Nueva Promoción</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio de Patrono</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Error en la Afiliación</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nacionalidad__c</picklist>
+        <values>
+            <fullName>Afgano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Alemán</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Argentino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Australiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Belga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Boliviano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Brasilero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camboyano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canadiense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chileno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Colombiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Coreano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costarricense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cubano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Danés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dominicano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ecuatoriano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Egipcio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Español</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estadounidense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estonio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Etiope</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filipino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finlandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Francés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Galés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Griego</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Guatemalteco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Haitiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hondureño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inglés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iraní</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iraquí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Irlandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Israelí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Italiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Japonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jordano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laosiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letonés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letón</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marroquí</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mexicano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Neocelandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nicaragüense</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noruego</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Panameño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paraguayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Peruano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Polaco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portugués</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Puertorriqueño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rumano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ruso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvadoreño</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sueco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suizo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tailandés</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Taiwanes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Turco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ucraniano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uruguayo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venezolano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vietnamita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Árabe</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Nombre_agencia__c</picklist>
+        <values>
+            <fullName>AG%2E BANCA PREMIER SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGEN%2E C%2E METROPLITANA SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA 3ERA%2E AVENIDA S%2EP%2ES%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA 5TA%2E AVENIDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA ALTARA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA AVENIDA LA PAZ TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA BOULEVARD MORAZAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA CHOLOMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA CHOLUTECA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA CITY MALL TEGUCIGALPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA COMAYAGUA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA COMAYAGUA MALL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA DIUNSA EL PEDREGAL SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA DIUNSA S%2EP%2ES%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA EL CENTRO S%2EP%2ES%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA EL PROGRESO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA FRENCH HARBOUR ROATAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA GALERIAS DEL VALLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA JUTICALPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA KENNEDY</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA LA CEIBA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA LA COLONIA PRADO ALTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA LA LIMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA LA MERCED</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA LAS TORRES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MALL CHOLUTECA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MALL LAS CASCADAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MALL MULTIPLAZA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MALL MULTIPLAZA SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MALL PREMIER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MEDINA%2C 7A%2ECALLE S%2EP%2ES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA MEGAPLAZA LA CEIBA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA METROMALL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA PLAZA 105</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA PLAZA EL PEDREGAL SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA PLAZA HONDUREÃ%E2%80%98A PCR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA PLAZA TORONJAL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA PUERTO CORTES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA SANTA FE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA SATELITE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA SIGUATEPEQUE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA STA ROSA DE COPAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA TELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA TONCONTIN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA UNIMALL CHOLUTECA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA UNIPLAZA SANTA ROSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA VILLANUEVA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA Y AUTOBANCO LOS ALAMOS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGENCIA ZIP BUENA VISTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CITY MALL SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT CIRCUNVALACION SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT CITY MALL SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT MEGAPLAZA PGR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT MEGAPLAZA SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT MULTIPLAZA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN CT PLAZA HONDUREÃ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN DANLI CENTRO DNL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN JARDINES DEL VALLE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN LC TELA TELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PLAZA FICOHSA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PLAZA HUMUYA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN%2E PASEO JUAN PABLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN%2E PLAZA CHOLOMA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN%2E PLAZA MIRAFLORES</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN%2E SAN LORENZO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EL CENTRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>JUAN PABLO SEGUNDO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OFICINA PRINCIPAL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SANTA MONICA SUYAPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUCURSAL SAN PEDRO SULA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin</picklist>
+        <values>
+            <fullName>Agencias FPC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agencias_Banco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correo electrónico FPC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LAEFE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medios electrónicos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oficiales de negocio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rango_salarial_Lps__c</picklist>
+        <values>
+            <fullName>0%2E00 - 26%2C496%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>176%2C640%2E01 - 441%2C600%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26%2C496%2E01 - 52%2C992%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>52%2C992%2E01 - 88%2C320%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>88%2C320%2E01 - 176%2C640%2E00</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mayor a 441%2C600%2E00</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason</picklist>
+        <values>
+            <fullName>Otro</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Sexo__c</picklist>
+        <values>
+            <fullName>F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_Estado_Cuenta__c</picklist>
+        <values>
+            <fullName>A1</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>A2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_Identificacion__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_actualizacion__c</picklist>
+        <values>
+            <fullName>A1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>A2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_empresa__c</picklist>
+        <values>
+            <fullName>Negocio propio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Privada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pública</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Gestión</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestión Usuario Financiero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solicitud</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

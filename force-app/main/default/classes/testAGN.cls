@@ -1,7 +1,7 @@
 @isTest
 public class testAGN {
     
-    static testMethod void ControllerProductoAgn(){ 
+    static testMethod void ControllerProductoAgn(){
     test.startTest();
         Estado_Cuenta__c ec= new Estado_Cuenta__c(name = 'Test', CodigoEstado__c = 'A');
         insert ec;
@@ -29,7 +29,7 @@ public class testAGN {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        //cliente.Distribucion = null;
+        cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
@@ -167,7 +167,7 @@ public class testAGN {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        //cliente.Distribucion = null;
+        cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;

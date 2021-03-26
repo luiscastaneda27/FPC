@@ -267,7 +267,7 @@
                         
                         <apex:pageBlockSection columns="1"  title="Reporte de Seguimiento, {!listReporte.size} afiliciones">
                             
-                            <apex:dataTable style="width:6000px;"  value="{!listReporte}" var="item">
+                            <apex:dataTable styleClass="slds-table slds-table_bordered slds-table_col-bordered"  value="{!listReporte}" var="item">
                                 
                                 <apex:column headerValue="Primer Nombre">
                                     <apex:outputField value="{!item.Name}" />

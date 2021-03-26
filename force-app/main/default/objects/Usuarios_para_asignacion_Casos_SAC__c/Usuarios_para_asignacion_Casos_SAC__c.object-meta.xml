@@ -146,18 +146,19 @@
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Masculine</gender>
-    <label>Usuarios para asignacion - Casos SAC</label>
+    <label>Usuarios para asignación - Casos SAC</label>
     <nameField>
-        <displayFormat>ACSAC-{000000}</displayFormat>
-        <label>Correlativo</label>
+        <displayFormat>UA-{0000000000}</displayFormat>
+        <label>Número de registro</label>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Usuarios para asignación - Casos SAC</pluralLabel>

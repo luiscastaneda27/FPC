@@ -51,7 +51,7 @@ public class aSysdePortalEmpresarial {
     }
    
     
-    public static list<string> fechaCierreSysde() { 
+    public static date fechaCierreSysde() { 
          Http http = new Http();  
          HttpRequest request = new HttpRequest();  
          String url = claseUtil.urlSysde('Test');   
@@ -59,28 +59,24 @@ public class aSysdePortalEmpresarial {
          request.setMethod('GET');  
          request.setHeader('Content-Type', 'application/x-www-form-urlencoded'); 
          request.setTimeout(120000); 
-        list<string> fr = new list<string>();
+        date fecha;
          try{   
              HttpResponse response =new HttpResponse();// http.send(request);  
              if(!test.isRunningTest()){
                  response = http.send(request); 
-             }
-             else{
+             }else{
                  response.setBody('"2019-12-10T00:00:00"');
              }
               
-             //System.debug('Respuesta '+response.getBody()); 
-             string resp=string.valueOf(response.getBody());
-             system.debug(resp);
-             fr=resp.split('T');
-             resp=fr[0];
-             fr=resp.split('-');
+             System.debug('Respuesta '+response.getBody()); 
+             fecha=date.valueOf(response.getBody().replace('"',''));
+             //system.debug(resp);
              
-         }catch(System.CalloutException e)
-         { 
+             
+         }catch(Exception e){ 
              system.debug(e.getMessage());  
          }    
-        return fr;        
+        return fecha;        
      }
     
     public static list<Account> agregarPersonaPlanilla(list<String> identificacionPersona) {

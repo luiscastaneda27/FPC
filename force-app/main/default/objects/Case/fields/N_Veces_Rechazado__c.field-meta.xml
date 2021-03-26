@@ -2,7 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>N_Veces_Rechazado__c</fullName>
     <defaultValue>0</defaultValue>
+    <description>Campo que controla cuantas veces un caso ha sido rechazado por operaciones.</description>
     <externalId>false</externalId>
+    <inlineHelpText>Campo que controla cuantas veces un caso ha sido rechazado por operaciones.</inlineHelpText>
     <label>N° de Veces Rechazado</label>
     <precision>18</precision>
     <required>false</required>

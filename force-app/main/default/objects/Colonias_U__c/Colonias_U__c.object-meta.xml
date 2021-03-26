@@ -154,12 +154,12 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Colonia_U (otras)</label>
+    <label>Colonia_U</label>
     <nameField>
         <label>Nombre de Colonias_U</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Colonias (Otras)</pluralLabel>
+    <pluralLabel>Colonias</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

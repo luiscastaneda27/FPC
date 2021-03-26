@@ -8,10 +8,6 @@
     <picklistValues>
         <picklist>Agencia_Refiere__c</picklist>
         <values>
-            <fullName>000000000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>110000000000</fullName>
             <default>false</default>
         </values>
@@ -21,10 +17,6 @@
         </values>
         <values>
             <fullName>110200000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>110300000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -45,10 +37,6 @@
         </values>
         <values>
             <fullName>111100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>111111111111</fullName>
             <default>false</default>
         </values>
         <values>
@@ -220,6 +208,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>125400000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>125900000000</fullName>
             <default>false</default>
         </values>
@@ -280,10 +272,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>131900000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>132000000000</fullName>
             <default>false</default>
         </values>
@@ -312,10 +300,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>136100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>136500000000</fullName>
             <default>false</default>
         </values>
@@ -329,22 +313,6 @@
         </values>
         <values>
             <fullName>138100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>138300000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>138500000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>138800000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13900000000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -710,10 +678,6 @@
     <picklistValues>
         <picklist>Motivo_Contacto__c</picklist>
         <values>
-            <fullName>AGUINALDO 2019</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Asesoría Producto Empresarial</fullName>
             <default>false</default>
         </values>
@@ -735,10 +699,6 @@
         </values>
         <values>
             <fullName>Inicio de Año 2019</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PROTECCIÓN INTEGRAL REDES</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1096,6 +1056,17 @@
         </values>
         <values>
             <fullName>SUPERIOR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pais_r__c</picklist>
+        <values>
+            <fullName>Estados Unidos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Honduras</fullName>
             <default>false</default>
         </values>
     </picklistValues>

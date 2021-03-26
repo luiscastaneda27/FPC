@@ -4,8 +4,10 @@ trigger enviarASysde on Case (before update) {
         
         //Inicio Evaluar SLA's de Caso
         set<Id> caso2 = new set<Id>();
+        set<user> caso3 = new set<user>();
         for(Case c : Trigger.new){
             caso2.add(c.Id);
+            caso3.add(c.CreatedBy);
         }
         
         List<ProcessInstance> approvalProcess = new List<ProcessInstance>{};
@@ -24,8 +26,8 @@ trigger enviarASysde on Case (before update) {
         
         List<Case> lstCase = new List<Case>{};
         List<Case> updatelstCase = new List<Case>{};    
-        lstCase = [Select Id, Finalizar_SLA__c, RecordType.Name, Recordtype.DeveloperName, SuppliedEmail from Case Where Id =: caso2 Limit 1];
-        
+        lstCase = [Select Id, Finalizar_SLA__c, RecordType.Name, DAU_aprobacion__c, Respuesta_SF_Tarjetas__c, Respuesta_desde_Sysde__c, Recordtype.DeveloperName, SuppliedEmail, CreatedBy.id, Tipo_de_Operacion__c from Case Where Id =: caso2 Limit 1];
+             
         Boolean EnAprobacion = Approval.isLocked(lstCase[0].Id); System.debug('En aprobación: '+EnAprobacion);
         
         //if(CaseTriggerHandler.isFirstTime) {
@@ -137,6 +139,12 @@ trigger enviarASysde on Case (before update) {
                 else if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Cerrado'  && !item.Cerrado_sin_cambios__c){
                     casosAprobados.put(item, tipoRnombre);
                 }
+                if(item.Status == 'Cerrado' && item.DAU_aprobacion__c == false) {
+                    casosAprobados.put(item, tipoRnombre);
+                } 
+                if(item.Status == 'Cerrado' && item.DAU_aprobacion__c == true) {
+                    casosAprobados.put(item, tipoRnombre);
+                }
             }
             if(tipoRnombre == 'Estados_Cuenta' || test.isRunningTest()){
                 if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Cerrado'){
@@ -182,7 +190,7 @@ trigger enviarASysde on Case (before update) {
                        casosAprobados.put(item, tipoRnombre);
                    }
             }
-            if(tipoRnombre == 'Constancia'){
+            if(tipoRnombre == 'Constancia') {
                 system.debug('Al Constancia');
                 list<detalle_Caso__C> listdetalleCaso = [select Numero_prestamo__C, Prestamo_anterior__c,
                                                          Es_Refinanciamiento__c
@@ -222,19 +230,49 @@ trigger enviarASysde on Case (before update) {
             boolean banderaTru2 =false;
             integer bandera3 =0;
             boolean banderaTru3 =false;
+            system.debug('usuario que creo el caso: '+ lstCase[0].CreatedBy.id + caso3);
             For(Case item : casosAprobados.keySet()){
                 String tipoRnombre = casosAprobados.get(item);
                 if( tipoRnombre == 'Cambio_Subproducto'){                   
                     aSysdeCallouts.accionSubProducto(item.id);  
                     
-                }else if(tipoRnombre == 'Actualizacion_informacion'){
-                    system.debug('A ver que hay en esto:  ' + item.id);
-                    aSysdeCallouts.actualizacionInformacion(item.id);   
-                    
-                }else if(tipoRnombre == 'Aumento_Disminucion_Aportes'){
-                    aSysdeCallouts.aumentoDisminucion(item.id); 
-                    
-                }else if(tipoRnombre == 'Retiros' || test.isRunningTest()){
+                } else if(tipoRnombre == 'Actualizacion_informacion'){
+                    aSysdeCallouts.actualizacionInformacion(item.id);                    
+                } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
+                    List<Detalle_caso__c> lstDetCase = [Select Id, Cuenta__r.Forma_Aportacion__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
+                    if(lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
+                        if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c <> Null) {
+                            System.debug('Entra 1');
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c =item.Id, DAU_EjecutarSYSDEOper__c = true));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs);      
+                        } else if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
+                            System.debug('Entra 2'); 
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c =item.Id));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs); 
+                        } else if(lstCase[0].Tipo_de_Operacion__c == 'A4' || lstCase[0].Tipo_de_Operacion__c == 'A7') {
+                            System.debug('Es cambio de fecha de aporte');
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs);    
+                        } else if(lstCase[0].Tipo_de_Operacion__c == 'A6') {
+                            System.debug('Es Cambio de # Tarjeta');
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs);    
+                        } 
+                    } else if(lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'TAOB') {
+                        DAU_GestionesBac.execute(item.Id);
+                    } else if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3') {
+                    	System.debug('Entra 3');
+                        aSysdeCallouts.aumentoDisminucion(item.id); 
+                    } 
+                } else if(tipoRnombre == 'Retiros' || test.isRunningTest()){
                     aSysdeCallouts.retiros(item.id);    
                     
                 }else if(tipoRnombre == 'Reposicion_Carnet'){
@@ -258,5 +296,5 @@ trigger enviarASysde on Case (before update) {
             }
         }
         
-    }      
+    }        
 }

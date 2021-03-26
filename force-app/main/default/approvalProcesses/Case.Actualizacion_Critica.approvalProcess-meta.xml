@@ -24,7 +24,21 @@
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <formula>AND( RecordType.DeveloperName = &apos;Actualizacion_informacion&apos; , !Aprobado__c, !Viene_Portal_Autogestion__c, OR( !ISBLANK( Nombre_Cliente__c), !ISBLANK( Apellidos__c), !ISBLANK( Segundo_nombre__c ), !ISBLANK( Segundo_apellido__c ),!ISPICKVAL( Tipo_Identificacion__c,&apos;&apos;), !ISBLANK( Identificacion__c), !ISPICKVAL(Sexo__c,&apos;&apos;),!ISBLANK( Fecha_Nacimiento__c ), !ISBLANK( Correo_Electronico__c)))</formula>
+        <formula>AND( 
+RecordType.DeveloperName = &apos;Actualizacion_informacion&apos;,
+ !Aprobado__c,
+ !Viene_Portal_Autogestion__c, 
+OR(
+ !ISBLANK( Nombre_Cliente__c),
+ !ISBLANK( Apellidos__c), 
+!ISBLANK( Segundo_nombre__c ), 
+!ISBLANK( Segundo_apellido__c ),
+!ISPICKVAL( Tipo_Identificacion__c,&apos;&apos;), 
+!ISBLANK( Identificacion__c), !ISPICKVAL(Sexo__c,&apos;&apos;),
+!ISBLANK( Fecha_Nacimiento__c ),
+ !ISBLANK( Correo_Electronico__c)
+)
+)</formula>
     </entryCriteria>
     <finalApprovalActions>
         <action>
@@ -59,7 +73,7 @@
         </action>
     </initialSubmissionActions>
     <label>Actualizacion Crítica</label>
-    <processOrder>3</processOrder>
+    <processOrder>4</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

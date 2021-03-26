@@ -4,14 +4,14 @@
     <protected>false</protected>
     <values>
         <field>Correo_electronico__c</field>
-        <value xsi:type="xsd:string">olga.antunez@ficohsa.com</value>
+        <value xsi:type="xsd:string">paola.cruz@ficohsa.com</value>
     </values>
     <values>
         <field>Dirigido_a__c</field>
-        <value xsi:type="xsd:string">Olga Antunez</value>
+        <value xsi:type="xsd:string">Maxiel Vallejo</value>
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://fpc.secure.force.com/aprobarCasos/vfAprobarCasos?Id=</value>
+        <value xsi:type="xsd:string">http://fpc-fpc.cs40.force.com/aprobarCasos/vfAprobarCasos?Id=</value>
     </values>
 </CustomMetadata>

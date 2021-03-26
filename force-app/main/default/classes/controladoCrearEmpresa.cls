@@ -40,16 +40,15 @@ public class controladoCrearEmpresa {
         try{
             Rubro__c rubro=new Rubro__c();
             empresa = new Account();
-            if(id_rubro!='--Ninguno--')
-            {
+            if(id_rubro!='--Ninguno--'){
                 
-            rubro =[select name,PAPCE__c,PAPCT__c,Porc_Apor_SSoc_Empleado_IVM__c,Porc_Apor_SSoc_Empleado_Mate__c,
-                    Salario_Base_Seguro_Social_Mater__c,Salario_Base_Seguro_Social_RP__c,
-                   Porc_Apor_SSoc_Empleador_IVM__c,Porc_Apor_SSoc_Empleador_Mater__c,
-                    Porcentaje_de_aportaciones_Reserva_Labor__c, Riesgo_Profecional_Patronal__c,Salario_Base_Pilar_Complementario__c,
-                    Salario_Base_Reserva_Laboral__c,Salario_Base_Seguro_Social__c
-                   from rubro__c where id=:id_rubro];
-             	empresa.PAPCE__c=rubro.PAPCE__c;
+                rubro =[select name,PAPCE__c,PAPCT__c,Porc_Apor_SSoc_Empleado_IVM__c,Porc_Apor_SSoc_Empleado_Mate__c,
+                        Salario_Base_Seguro_Social_Mater__c,Salario_Base_Seguro_Social_RP__c,
+                        Porc_Apor_SSoc_Empleador_IVM__c,Porc_Apor_SSoc_Empleador_Mater__c,
+                        Porcentaje_de_aportaciones_Reserva_Labor__c, Riesgo_Profecional_Patronal__c,Salario_Base_Pilar_Complementario__c,
+                        Salario_Base_Reserva_Laboral__c,Salario_Base_Seguro_Social__c
+                        from rubro__c where id=:id_rubro];
+                empresa.PAPCE__c=rubro.PAPCE__c;
                 empresa.PAPCT__c=rubro.PAPCT__c;
                 empresa.Porc_Apor_SSoc_Empleado_IVM__c=rubro.Porc_Apor_SSoc_Empleado_IVM__c;
                 empresa.Porc_Apor_SSoc_Empleado_Mater__c=rubro.Porc_Apor_SSoc_Empleado_Mate__c;
@@ -63,38 +62,30 @@ public class controladoCrearEmpresa {
                 empresa.Salario_Base_Pilar_Complementario__c=rubro.Salario_Base_Pilar_Complementario__c;
                 empresa.Salario_Base_Reserva_Laboral__c=rubro.Salario_Base_Reserva_Laboral__c;
                 empresa.Salario_Base_Seguro_Social__c=rubro.Salario_Base_Seguro_Social__c;
-                 empresa.Salario_Base_Seguro_Social_mater__c=rubro.Salario_Base_Seguro_Social_mater__c;
-                 empresa.Salario_Base_Seguro_Social_rp__c=rubro.Salario_Base_Seguro_Social_rp__c;
-            	
-            }
+                empresa.Salario_Base_Seguro_Social_mater__c=rubro.Salario_Base_Seguro_Social_mater__c;
+                empresa.Salario_Base_Seguro_Social_rp__c=rubro.Salario_Base_Seguro_Social_rp__c;
                 
             }
-            Catch(Exception ex)
-            {
-                
-            }
+            
+        }Catch(Exception ex){
+            
+        }
     }
     
     
     
-    public void llenarRubros()
-    {
+    public void llenarRubros(){
         try{
-             list<Rubro__c> rubros = new list<Rubro__C>();
+            list<Rubro__c> rubros = new list<Rubro__C>();
             rubros=[select id, name from rubro__c order by name desc];
             options=new List<SelectOption>();
             options.add(new SelectOption('--Ninguno--','--Ninguno--'));
-            for(integer i=0; i<rubros.size(); i++)
-            {
+            for(integer i=0; i<rubros.size(); i++) {
                 options.add(new SelectOption(rubros[i].id,rubros[i].name));
-               
+                
             }
             
-            
-            
-        }
-        Catch(Exception ex)
-        {
+        }Catch(Exception ex){
             
         }
     }
@@ -103,11 +94,10 @@ public class controladoCrearEmpresa {
     public void llenarEmpresa()
     {
         try{
-             list<Account> Empresas = new list<Account>();
+            list<Account> Empresas = new list<Account>();
             Empresas=[select id, name,isPersonAccount   from Account where recordtype.developername='Juridico' and isPersonAccount =false order by name asc];
             options2=new List<SelectOption>();
-            for(integer i=0; i<Empresas.size(); i++)
-            {
+            for(integer i=0; i<Empresas.size(); i++) {
                 options2.add(new SelectOption(Empresas[i].id,Empresas[i].name));
             }
 

@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">http://190.5.68.49:9090/</value>
+        <value xsi:type="xsd:string">http://190.5.68.11:9090/</value>
     </values>
 </CustomMetadata>

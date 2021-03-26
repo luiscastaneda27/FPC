@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Estado_de_Cuenta_Historico__c</fullName>
     <externalId>false</externalId>
-    <label>Estado_de_Cuenta_Historico</label>
-    <length>131072</length>
+    <label>Estado de Cuenta Historico</label>
+    <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Correo_estado_de_cuenta__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Correo estado de cuenta</label>
+    <referenceTo>Correo_estado_cuenta__c</referenceTo>
+    <relationshipLabel>Correo Estado de Cuenta</relationshipLabel>
+    <relationshipName>Clientes</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

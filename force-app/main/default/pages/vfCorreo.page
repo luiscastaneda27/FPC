@@ -1,0 +1,57 @@
+<apex:page > 
+	<html>  
+    	<style>
+        	img.alineadoTextoImagenArriba{
+            vertical-align: text-top; 
+        	class=responsive-img;
+        	}
+
+        	img.alineadoTextoImagenAbajo{
+            vertical-align: text-bottom;
+        	class=responsive-img;
+        	}
+
+      		td{
+            color:#0f4f9e;
+            font-family: "kievet","kievet" , sans-serif; 
+            font-size: 15px;
+         	}
+    	</style>
+
+        <div style="text-align:center;">
+            <table> 
+                <tr>
+                    <img class="responsive-img" src="https://fpc-fpc.cs40.force.com/comercio/resource/1608308421000/header?"/>
+                </tr>
+            </table> 
+       
+             <table  style="margin-left:410px" > 
+            	<tr>
+                	<td> 
+                    	<img class="alineadoTextoImagenAbajo" src="https://ficohsafpc--fpc--c.cs40.visual.force.com/resource/1608328717000/codcliente"/> 
+                    </td> 
+                    <td>
+                            <b> getCodCliente</b>
+                    </td>
+               	 	
+            	</tr>
+
+                 <tr> 
+                 	<td> 
+                 		<img  class="alineadoTextoImagenAbajo" src="https://ficohsafpc--fpc--c.cs40.visual.force.com/resource/1608328850000/numcuenta"/> 
+                     </td>
+                     
+                     <td>
+                           <b> getCodCuenta </b>
+                     </td>
+                 </tr>   
+        	</table> 
+
+            <table style="text-align:center;"> 
+                <tr>                
+                    <img class="responsive-img" src="https://fpc-fpc.cs40.force.com/comercio/resource/1608308477000/footer?"/>
+                </tr> 
+            </table> 
+        </div>         
+	</html>
+</apex:page>

@@ -1,6 +1,5 @@
 public class aSysdeCallouts {
     
-    
     @future(callout=true)
     public static void EjecutarJobEDCMasivo(date fecha) {
         Http http = new Http();
@@ -181,9 +180,6 @@ public class aSysdeCallouts {
         }
     }
     
-    
-    
-    
     @future(callout=true)
     public static void PDFHistorico() {
         Http http = new Http();
@@ -334,7 +330,7 @@ public class aSysdeCallouts {
             }
             
         }catch(System.CalloutException e){
-            Caso.Respuesta_desde_Sysde__c = e.getMessage();
+            Caso.Respuesta_desde_Sysde__c = e.getMessage() + 'Línea: ' + e.getLineNumber();
             Caso.Status = 'Error de conexion';
             claseUtil.stopTrigger();
             
@@ -378,13 +374,12 @@ public class aSysdeCallouts {
         list<classBitacora> bitacoras = new list<classBitacora>();
         
         try{
-            caso = [Select AccountId,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate 
+            caso = [Select AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate 
                     From Case Where Id =: idCaso];
-            detalle = [Select Tipo_Operacion__c, Nuevo_monto_aporte__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c,
-                       Nuevo_canal_aporte__c, Nueva_fecha_aporte__c, N_Cuenta_Bancaria__c,
+            detalle = [Select Id, Tipo_Operacion__c, Nuevo_monto_aporte__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c, 
+                       Nuevo_canal_aporte__c, Nueva_fecha_aporte__c, N_Cuenta_Bancaria__c, DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c,
                        Cuenta__r.Monto_aporte__c, Cuenta__r.Forma_Aportacion__c, Cuenta__r.Fecha_Aporte__c,Frecuencia__c
-                       From Detalle_caso__c
-                       Where Caso__c =: Caso.id Limit 1];
+                       From Detalle_caso__c Where Caso__c =: Caso.id Limit 1];
             
             system.debug(detalle);                              
             if(detalle.Cuenta__r.Monto_aporte__c==null) { detalle.Cuenta__r.Monto_aporte__c=0; 
@@ -395,6 +390,7 @@ public class aSysdeCallouts {
             claseEnvio.montoOperacion = detalle.Nuevo_monto_aporte__c != null ? detalle.Nuevo_monto_aporte__c : 0;
             claseEnvio.fecha =  detalle.Nueva_fecha_aporte__c != null ? detalle.Nueva_fecha_aporte__c : date.today();
             claseEnvio.cuentaTarjeta =  string.valueOF(detalle.N_Cuenta_Bancaria__c);
+            if(detalle.Tipo_Operacion__c == 'A8') {detalle.Tipo_Operacion__c = 'A3';}
             claseEnvio.accion =  detalle.Tipo_Operacion__c;
             claseEnvio.periodicidad = detalle.Frecuencia__c;
             DateTime sHoy = system.now();
@@ -441,7 +437,7 @@ public class aSysdeCallouts {
             if (response.getStatusCode() == 200) {
                 System.debug(response.getBody());
                 Cuentas__c cuenta = new Cuentas__c(Id = detalle.Cuenta__c);
-                
+                               
                 if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' ){
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     update cuenta;
@@ -451,8 +447,14 @@ public class aSysdeCallouts {
                 }else if(detalle.Tipo_Operacion__c == 'A4'){
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
                     update cuenta;
-                }
-                
+                } else if(detalle.Tipo_Operacion__c == 'A8' /*&& detalle.Cuenta__r.Forma_Aportacion__c == 'TA'*/ && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3')){
+                    System.debug('Entra a borrar las cuotas');
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S10__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                }                
+            
                 Caso.Respuesta_desde_Sysde__c = response.getBody();
                 claseUtil.stopTrigger();
                 
@@ -461,7 +463,7 @@ public class aSysdeCallouts {
             }
         }catch(System.CalloutException e){
             system.debug(e.getMessage());
-            Caso.Respuesta_desde_Sysde__c = e.getMessage();
+            Caso.Respuesta_desde_Sysde__c = e.getMessage() + 'Línea: ' + e.getLineNumber();
             Caso.Status = 'Error de conexion';
             claseUtil.stopTrigger();
             
@@ -608,7 +610,7 @@ public class aSysdeCallouts {
         }catch(System.CalloutException e){
             system.debug(e.getMessage());
             if(Status=='Cerrado'){
-                Caso.Respuesta_desde_Sysde__c = e.getMessage();
+                Caso.Respuesta_desde_Sysde__c = e.getMessage() + 'Línea: ' + e.getLineNumber();
             }else{
                 Caso.Respuesta_desde_Sysde_Esperando_Docu__c = e.getMessage();
             }
@@ -663,6 +665,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
     @future(callout=true)
     public static void actualizacionInformacion(String idCaso) {
         //idcaso = '500540000034XMUAA2';
+        //system.debug(flag);
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');
@@ -946,7 +949,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             cons = cons.replace('Claudia Maxiel Vallejo Galo', 'Admin User');
             request.setBody(cons);
             request.setTimeout(120000);
-            
+            system.debug('lo que manda el request: '+request);
             HttpResponse response = http.send(request);
             system.debug(response.getBody());
             Caso.Respuesta_desde_Sysde__c = response.getBody();
@@ -957,10 +960,9 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 delete([select id  from Beneficiario__c where ID_Externo__c in :(clientesaeliminar) and Cuenta__r.Codigo__c=:numeroCuenta]); 
                 delete([select id  from Detalle_caso__c where ID_Externo__c in :(clientesaeliminar) and Caso__C=:idcaso]); 
             }
-            
             Approval.LockResult lrList = Approval.lock(Caso);           
         }catch(System.CalloutException e){
-            system.debug(e.getMessage());
+            system.debug('Error '+e.getMessage()+', Linea: '+e.getLineNumber());
             
         }Catch(Exception e){
             system.debug('Error del llamado' + e.getMessage() + ' Linea - ' + e.getLineNumber());   
@@ -987,13 +989,13 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     System.debug('Respuesta de Traer saldos: '+response.getBody());
                     // string respuesta2 = '{"cuenta":"50800","montoPignorado":"0","saldoTotal":"190,632.59","saldos":[{"tipoSaldo":"12","montoSaldo":"62,618.76"},{"tipoSaldo":"10","montoSaldo":"75,297.06"},{"tipoSaldo":"11","montoSaldo":"52,716.77"}]}';
                     
-                    respuesta = (getSaldoCuenta)System.JSON.deserialize(response.getBody()/*.replace('"0"','"4500"')*/, getSaldoCuenta.class); //.replace('130','131')                   
+                    //respuesta = (getSaldoCuenta)System.JSON.deserialize(response.getBody()/*.replace('"0"','"4500"')*/, getSaldoCuenta.class); //.replace('130','131')                   
                     
                     //respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"118,001.00","saldos":[{"tipoSaldo":"11","montoSaldo":"60,000.50"},{"tipoSaldo":"13","montoSaldo":"1000"},{"tipoSaldo":"10","montoSaldo":"30,000.50"},{"tipoSaldo":"12","montoSaldo":"28,000.00"}]}', getSaldoCuenta.class);
-                    //respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"25587","montoPignorado":"null","saldoTotal":"1076318.20","saldos":[{"tipoSaldo":"12","montoSaldo":"537729.90"},{"tipoSaldo":"10","montoSaldo":"537727.90"},{"tipoSaldo":"11","montoSaldo":"860.40"}]}', getSaldoCuenta.class);
+                    respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"465554.08","saldos":[{"tipoSaldo":"11","montoSaldo":"465554.08"}]}', getSaldoCuenta.class);
                 }
             }else{
-                respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51238","montoPignorado":"null","saldoTotal":"15,518.70","saldos":[{"tipoSaldo":"12","montoSaldo":"11902.88"},{"tipoSaldo":"10","montoSaldo":"2956.6"},{"tipoSaldo":"11","montoSaldo":"193.96"}]}', getSaldoCuenta.class); 
+                respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"8583.79","saldos":[{"tipoSaldo":"11","montoSaldo":"8412.11"},{"tipoSaldo":"13","montoSaldo":"171.68"}]}', getSaldoCuenta.class); 
             }
             
         } catch(System.CalloutException e) {
@@ -1047,7 +1049,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                        nivel_de_regla__C,Aplica_Cambio_Sub_Producto_desde_Retiros__c,
                        Porcentaje_CRA_Individual__c, Cobro_Individual_CRA__c,Saldo_Prestamo__c,Monto_Bruto_Retirar_Empresa__c,
                        Banco__c,Cuenta_destino__c,N_Cuenta_Bancaria__c,currencyIsoCode,Monto_total_retirar__c,Tipo_Cuenta__c,
-                       Cliente_sigue_Laborando__c, Cobrar_empleado_sigue_laborando__c, Comision_retiro_anticipado_empresa__c, Monto_Saldo_Patronal__c, Tipo_pago__c 
+                       Cliente_sigue_Laborando__c, Cobrar_empleado_sigue_laborando__c, Comision_retiro_anticipado_empresa__c, Monto_Saldo_Patronal__c, Tipo_pago__c
                        From Detalle_caso__c 
                        Where Caso__c =: caso.id order by Cabeza_retiro__c desc];
             
@@ -1225,6 +1227,10 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             }
             
             System.debug('Respuesta: '+response.getBody());
+            FechaDC_Sysde__c varFec = [Select Fecha_cierre__c,id,Trimestre_Terminado__C From FechaDC_Sysde__c where name = 'CierreAlDia'];
+            if(!response.getBody().contains('Su retiro ha sido registrado, aprobado y pagado')) {
+            	Caso.Fecha_Sysde__c = varFec.Fecha_cierre__c;
+            }
             Caso.Respuesta_desde_Sysde__c = response.getBody();
             caso.Contenido_Sysde__c = cons;
             claseUtil.stopTrigger();
@@ -1236,7 +1242,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             
         }catch(System.CalloutException e){
             system.debug(e.getMessage());
-            Caso.Respuesta_desde_Sysde__c = e.getMessage();
+            Caso.Respuesta_desde_Sysde__c = e.getMessage() + 'Línea: ' + e.getLineNumber();
             Caso.Status = 'Error de conexion';
             claseUtil.stopTrigger();
             update caso;
@@ -1373,6 +1379,12 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     fdcs.Total_Correos_Enviados__C = 0;
                 }
             update fdcs;
+            for(CronTrigger item : [SELECT id FROM CronTrigger where CronJobDetail.Name = 'FechaCierreSysde']){
+                System.abortJob(item.id);
+            }
+            Datetime fechaAcron = Datetime.now().addHours(1);	
+            String acron = fechaAcron.second()+' '+fechaAcron.minute()+' '+fechaAcron.hour()+' '+fechaAcron.day()+' '+fechaAcron.month()+' ? '+fechaAcron.year();	
+            System.schedule('FechaCierreSysde', acron, new verificarFechaCierreSysde());
             
         }catch(Exception e){ 
             system.debug('Error: '+e.getMessage());  
@@ -1641,7 +1653,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             
         }catch(System.CalloutException e){
             system.debug('Error: '+e.getMessage()+', Linea: '+e.getLineNumber());
-            Caso.Respuesta_desde_Sysde__c = e.getMessage();
+            Caso.Respuesta_desde_Sysde__c = e.getMessage() + 'Línea: ' + e.getLineNumber();
             update caso;
             Caso.Status = 'Error de conexion';
             claseUtil.stopTrigger();

@@ -11,7 +11,7 @@ public with sharing class cuadreRetirosP {
     public Decimal monTotal { get; set; }
     public Decimal monHNL { get; set; }
     public Decimal monUSD { get; set; }
-    public DateTime fecSYSDE { get; set; }
+    public string fecSYSDE { get; set; }
     public string moneda { get; set; }
     public string cuentaBancaria { get; set; }
     public string cuentaDestino { get; set; }
@@ -21,7 +21,7 @@ public with sharing class cuadreRetirosP {
     
     public cuadreRetirosP (string referencia, Decimal numeroCaso, string nombreCliente, string codCuenta, string fPago, Decimal monRetirar, 
                            Decimal tsp, Decimal ach, Decimal ck, Decimal monTotal, Decimal monHNL, Decimal monUSD,
-                           DateTime fecSYSDE, string moneda, string cuentaBancaria, 
+                           string fecSYSDE, string moneda, string cuentaBancaria, 
                            string cuentaDestino, string bancoDestino, string tCuenta, Integer index)
     {
         this.referencia = referencia;

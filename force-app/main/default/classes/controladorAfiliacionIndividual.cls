@@ -131,7 +131,9 @@ public class controladorAfiliacionIndividual {
     }
     
     public void EliminarAfiliacion(){
-        for(Reporte_calidad__C item:listAfiliaciones ){ if(idAfiliacion == item.Id){ delete(item);
+        for(Reporte_calidad__C item:listAfiliaciones ){ 
+            if(idAfiliacion == item.Id){ 
+                delete(item);
             }
         }
         reinicar();
@@ -155,7 +157,9 @@ public class controladorAfiliacionIndividual {
     
     
     public void SelectPopEliminar(){
-        for(Reporte_calidad__C item:listAfiliaciones ) { if(idAfiliacion == item.Id){ nombreAfiiacion =item.name +' '+item.primer_apellido__C;
+        for(Reporte_calidad__C item:listAfiliaciones ) {
+            if(idAfiliacion == item.Id){ 
+                nombreAfiiacion =item.name +' '+item.primer_apellido__C;
             }
         }
         popEliminar = true; 

@@ -24,8 +24,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>Primeros_aprobadores_reversiones</name>
-                <type>queue</type>
+                <name>silvia.ayestas@ficohsa.com</name>
+                <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
@@ -52,8 +52,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>Segundos_aprobadores_reversiones</name>
-                <type>queue</type>
+                <name>astrid.rivera@ficohsa.com</name>
+                <type>user</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
@@ -102,7 +102,7 @@
         </action>
     </initialSubmissionActions>
     <label>Reversiones</label>
-    <processOrder>6</processOrder>
+    <processOrder>5</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

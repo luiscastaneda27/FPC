@@ -69,7 +69,7 @@ public class controllerEstadoCuentaTrimestral {
                 
                 if (indice == 2 || i == cuentas.cuentas.size()-1){
                     if(indice == 1 && i == cuentas.cuentas.size()-1){
-                        detallesTmps.add(new classECTrimestral.classECCuenta()); 	    
+                        detallesTmps.add(new classECTrimestral.classECCuenta());       
                     }
                     listCuentas.add(new wTrimestral(y, detallesTmps));
                     detallesTmps = new list<classECTrimestral.classECCuenta>();

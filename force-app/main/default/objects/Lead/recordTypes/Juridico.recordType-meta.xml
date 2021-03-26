@@ -208,6 +208,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>125400000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>125900000000</fullName>
             <default>false</default>
         </values>
@@ -268,10 +272,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>131900000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>132000000000</fullName>
             <default>false</default>
         </values>
@@ -313,10 +313,6 @@
         </values>
         <values>
             <fullName>138100000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13900000000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1036,6 +1032,17 @@
         </values>
         <values>
             <fullName>SUPERIOR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pais_r__c</picklist>
+        <values>
+            <fullName>Estados Unidos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Honduras</fullName>
             <default>false</default>
         </values>
     </picklistValues>

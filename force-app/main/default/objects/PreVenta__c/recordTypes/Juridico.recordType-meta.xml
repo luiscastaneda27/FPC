@@ -6,14 +6,6 @@
     <picklistValues>
         <picklist>Agencia_Refiere__c</picklist>
         <values>
-            <fullName>100000000001</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>100000000002</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>110000000000</fullName>
             <default>false</default>
         </values>
@@ -186,10 +178,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>122400000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>122700000000</fullName>
             <default>false</default>
         </values>
@@ -215,6 +203,10 @@
         </values>
         <values>
             <fullName>125200000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>125400000000</fullName>
             <default>false</default>
         </values>
         <values>
@@ -278,10 +270,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>131900000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>132000000000</fullName>
             <default>false</default>
         </values>
@@ -325,10 +313,6 @@
             <fullName>138100000000</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>139000000000</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Canal_que_Refiere__c</picklist>
@@ -363,22 +347,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Convertir_Tarea__c</picklist>
-        <values>
-            <fullName>Cierre Fondo Empresarial</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cierre Fondo de Pensiones Individual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cierre Fondo empresarial proyecto planilla</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cierre Plan Protección integral</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>Correo - Actualizaciones de Ley</fullName>
             <default>false</default>
@@ -495,43 +463,7 @@
     <picklistValues>
         <picklist>Departamento__c</picklist>
         <values>
-            <fullName>ALABAMA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ALASKA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ARIZONA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ARKANSAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Atlantida</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CALIFORNIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAROLINA DEL NORTE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAROLINA DEL SUR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>COLORADO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONNETICUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -555,23 +487,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>DAKOTA DEL NORTE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DAKOTA DEL SUR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DELAWARE</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>El Paraiso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FLORIDA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -579,31 +495,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GEORGIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gracias a Dios</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HAWAII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IDAHO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ILLINOIS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>INDIANA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IOWA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -615,18 +507,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>KANSAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KENTUCKY</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LUISIANA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>La Paz</fullName>
             <default>false</default>
         </values>
@@ -635,75 +515,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MAINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MARYLAND</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MASSACHUSETTS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MICHIGAN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MINNESOTA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MISISIPI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MISURI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MONTANA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>N%2FA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NEBRASKA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NEVADA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NUEVA JERSEY</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NUEVA YORK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NUEVO HAMPSHIRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NUEVO MEXICO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OHIO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OKLAHOMA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OREGÓN</fullName>
             <default>false</default>
         </values>
         <values>
@@ -715,55 +527,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>PENSILVANIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RHODE ISLAND</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Santa Barbara</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TENNESSEE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TEXAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UTAH</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VERMONT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VIRGINIA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VIRGINIA OCCIDENTAL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Valle</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WASHINGTON</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WISCONSIN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WYOMING</fullName>
             <default>false</default>
         </values>
         <values>
@@ -948,10 +716,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Canales Varios</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Célula Banca Corporativa</fullName>
             <default>false</default>
         </values>
@@ -1004,10 +768,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Proteccion Integral 3</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Proveedores</fullName>
             <default>false</default>
         </values>
@@ -1024,10 +784,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segmentos Winners COVID</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web</fullName>
             <default>false</default>
         </values>
@@ -1035,23 +791,11 @@
     <picklistValues>
         <picklist>Motivo_Contacto__c</picklist>
         <values>
-            <fullName>Aguinaldo2020</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Asesoría Producto Empresarial</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Asesoría Producto Individual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Campaña Institucional 2021</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hondureños en el Extranjero</fullName>
             <default>false</default>
         </values>
         <values>

@@ -2,8 +2,10 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Acepto_Condiciones_de_Portal_Autogestion__c</fullName>
     <defaultValue>false</defaultValue>
+    <description>Acepto condiciones de Portal Autogestión</description>
     <externalId>false</externalId>
-    <label>Acepto_Condiciones_de_Portal_Autogestion</label>
+    <inlineHelpText>Acepto condiciones de Portal Autogestión</inlineHelpText>
+    <label>Acepto Condiciones de Portal Autogestión</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>

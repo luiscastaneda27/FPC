@@ -1,0 +1,25 @@
+<!-- apex:page StandardController="Account" extensions="MultiAdd" id="thePage">
+
+
+
+</apex:page -->
+
+<apex:page controller="MultiAdd">
+<script>
+    function myFunction(checkboxId) {
+        var flag = document.getElementById(checkboxId).checked;
+        callAction(flag);
+    }
+</script>
+<apex:form >
+    
+    <apex:actionFunction name="callAction" reRender="yourText" action="{!changeFlag}">
+        <apex:param value="" name="flagValue"/>
+    </apex:actionFunction>
+    
+    <apex:inputCheckbox id="yourBox" styleClass="test" onclick="myFunction('{!$Component.yourBox}')"/>
+    
+    <apex:inputText id="yourText" disabled="{!(!flag)}"/>
+
+</apex:form>
+</apex:page>

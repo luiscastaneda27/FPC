@@ -12,77 +12,57 @@
             <value>
                 <fullName>7</fullName>
                 <default>false</default>
-                <label>ABUELO(A)</label>
+                <label>Abuelo(a)</label>
             </value>
             <value>
                 <fullName>12</fullName>
                 <default>false</default>
-                <label>AFILIADO(A)</label>
+                <label>Afiliado</label>
             </value>
             <value>
                 <fullName>13</fullName>
                 <default>false</default>
-                <label>AMIGO(A)</label>
+                <label>Amigo(a)</label>
             </value>
             <value>
                 <fullName>1</fullName>
                 <default>false</default>
-                <label>CONYUGE</label>
-            </value>
-            <value>
-                <fullName>3</fullName>
-                <default>false</default>
-                <label>CUÑADO(A)</label>
+                <label>Conyuge</label>
             </value>
             <value>
                 <fullName>6</fullName>
                 <default>false</default>
-                <label>HERMANO(A)</label>
-            </value>
-            <value>
-                <fullName>16</fullName>
-                <default>false</default>
-                <label>HIJASTRO(A)</label>
+                <label>Hermano(a)</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>HIJO(A)</label>
+                <label>Hijo(a)</label>
             </value>
             <value>
                 <fullName>14</fullName>
                 <default>false</default>
-                <label>NIETO(A)</label>
+                <label>Nieto(a)</label>
             </value>
             <value>
                 <fullName>5</fullName>
                 <default>false</default>
-                <label>PADRE/MADRE</label>
+                <label>Padre / Madre</label>
             </value>
             <value>
                 <fullName>9</fullName>
                 <default>false</default>
-                <label>PRIMO(A)</label>
+                <label>Primo(a)</label>
             </value>
             <value>
                 <fullName>8</fullName>
                 <default>false</default>
-                <label>SOBRINO(A)</label>
-            </value>
-            <value>
-                <fullName>15</fullName>
-                <default>false</default>
-                <label>SUEGRO(A)</label>
+                <label>Sobrino(a)</label>
             </value>
             <value>
                 <fullName>11</fullName>
                 <default>false</default>
-                <label>TIO(A)</label>
-            </value>
-            <value>
-                <fullName>4</fullName>
-                <default>false</default>
-                <label>YERNO/NUERA</label>
+                <label>Tio(a)</label>
             </value>
         </valueSetDefinition>
     </valueSet>

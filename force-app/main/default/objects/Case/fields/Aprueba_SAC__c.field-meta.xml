@@ -3,7 +3,7 @@
     <fullName>Aprueba_SAC__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Aprueba_SAC</label>
+    <label>Aprueba SAC</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

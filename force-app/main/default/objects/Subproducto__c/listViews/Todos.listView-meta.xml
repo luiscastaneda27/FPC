@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Todos</fullName>
-    <columns>OBJECT_ID</columns>
     <columns>NAME</columns>
     <columns>Codigo__c</columns>
     <columns>Tipo__c</columns>
-    <columns>TipoProducto__c</columns>
     <columns>CURRENCY_ISO_CODE</columns>
     <columns>Producto__c</columns>
-    <columns>Tipo_Fondo__c</columns>
     <columns>Comisi_n_por_Aporte__c</columns>
+    <columns>Comision_retiro_anticipado__c</columns>
     <columns>Comisi_n_Sobre_Saldo__c</columns>
+    <columns>Tipo_Fondo__c</columns>
+    <columns>TipoProducto__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

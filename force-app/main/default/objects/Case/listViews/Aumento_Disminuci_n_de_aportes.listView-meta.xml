@@ -14,15 +14,5 @@
         <operation>equals</operation>
         <value>Case.Aumento_Disminucion_Aportes</value>
     </filters>
-    <filters>
-        <field>CORE.USERS.ALIAS</field>
-        <operation>equals</operation>
-        <value>APacheco</value>
-    </filters>
-    <filters>
-        <field>CASES.CREATED_DATE_DATE_ONLY</field>
-        <operation>greaterThan</operation>
-        <value>6/1/2018 12:00 AM</value>
-    </filters>
     <label>Aumento / Disminución de aportes</label>
 </ListView>
