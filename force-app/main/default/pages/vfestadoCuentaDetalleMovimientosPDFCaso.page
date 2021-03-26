@@ -139,7 +139,7 @@
                     </tr>
                     <tr>
                         <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >Rendimiento (HNL):</apex:outputText> </td>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>
                     </tr>
                     <tr>
                         <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >Rendimiento (USD):</apex:outputText></td>
