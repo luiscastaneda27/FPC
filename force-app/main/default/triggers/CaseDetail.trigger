@@ -41,14 +41,14 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                 //} 
                 //Fin Evaluar SLA's de Caso
                 
-                List<Detalle_caso__c> dt = [Select Id,Caso__c,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c From Detalle_caso__c Where Id In: detalleCaso];
+                List<Detalle_caso__c> dt = [Select Id,Caso__c,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c,Nuevo_canal_aporte__c From Detalle_caso__c Where Id In: detalleCaso];
                 List<Cuentas__c> cuentaC = new List<Cuentas__c>();
                 List<Producto__c> prod = new List<Producto__c>();
                 if(!dt.isEmpty()) {                    
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = dt[0].Caso__c));
                     List<Database.SaveResult> results = EventBus.publish(Logs);
-                }              
+                }     
             } catch(Exception ex) {
                 System.debug('Error: '+ex.getLineNumber()+'---'+ex.getMessage());
             }
@@ -62,7 +62,7 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
             	caso.add(dc.Caso__c);
                 detalleCaso.add(dc.Id);
         	}    
-            List<Detalle_caso__c> dt = [Select Id,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c From Detalle_caso__c Where Id In: detalleCaso];
+            List<Detalle_caso__c> dt = [Select Id,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c,Nuevo_canal_aporte__c From Detalle_caso__c Where Id In: detalleCaso];
             List<Cuentas__c> cuentaC = new List<Cuentas__c>();
             List<Producto__c> prod = new List<Producto__c>();
             if(!dt.isEmpty()) {
@@ -90,6 +90,14 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                         }
                     }
                 } 
+                
+                if(dt[0].Nuevo_canal_aporte__c == 'TAOB' && (dt[0].Tipo_Operacion__c == 'A3' ||  dt[0].Tipo_Operacion__c == 'A8')) { 
+                    List<Case> vcaso = [Select Id,Finalizar_SLA__c,Status,RecordType.DeveloperName From Case Where Id =: caso and Status != 'Cerrado' and RecordType.DeveloperName = 'Aumento_Disminucion_Aportes' Limit 1];
+                    vcaso[0].DAU_aprobacion__c = false; 
+                    vcaso[0].Enviar_aprobacion_AD__c = true; 
+                    update vcaso;
+                } 
+                
             }
         }
     }

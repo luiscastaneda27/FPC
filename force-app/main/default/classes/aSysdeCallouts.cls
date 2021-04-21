@@ -374,7 +374,7 @@ public class aSysdeCallouts {
         list<classBitacora> bitacoras = new list<classBitacora>();
         
         try{
-            caso = [Select AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate 
+            caso = [Select Id,AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate 
                     From Case Where Id =: idCaso];
             detalle = [Select Id, Tipo_Operacion__c, Nuevo_monto_aporte__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c, 
                        Nuevo_canal_aporte__c, Nueva_fecha_aporte__c, N_Cuenta_Bancaria__c, DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c,
@@ -409,8 +409,8 @@ public class aSysdeCallouts {
                 
             }else if(detalle.Tipo_Operacion__c == 'A4'){    
                 bitacoras.add(crearBitacora(caso.CaseNumber, caso.RecordType.Name, caso.CreatedDate,
-                                            detalle.Cuenta__r.Fecha_Aporte__c.format(),
-                                            detalle.Nueva_fecha_aporte__c.format(),
+                                            String.valueOf(detalle.Cuenta__r.Fecha_Aporte__c)/*.format()*/,
+                                            String.valueOf(detalle.Nueva_fecha_aporte__c)/*.format()*/,
                                             caso.Owner.Name, caso.Owner.Name, sHoy, sHoy)); 
                 
             } else if(detalle.Tipo_Operacion__c == 'A5' || detalle.Tipo_Operacion__c == 'A6') {   
@@ -438,7 +438,7 @@ public class aSysdeCallouts {
                 System.debug(response.getBody());
                 Cuentas__c cuenta = new Cuentas__c(Id = detalle.Cuenta__c);
                                
-                if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' ){
+                if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' ) {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     update cuenta;
                 }else if(detalle.Tipo_Operacion__c == 'A3'){
@@ -447,7 +447,7 @@ public class aSysdeCallouts {
                 }else if(detalle.Tipo_Operacion__c == 'A4'){
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
                     update cuenta;
-                } else if(detalle.Tipo_Operacion__c == 'A8' /*&& detalle.Cuenta__r.Forma_Aportacion__c == 'TA'*/ && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3')){
+                } else if((detalle.Tipo_Operacion__c == 'A6' || detalle.Tipo_Operacion__c == 'A8') && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3') && detalle.Nuevo_canal_aporte__c != 'AH'){
                     System.debug('Entra a borrar las cuotas');
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S10__c = true));
@@ -987,12 +987,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 response = http.send(request);
                 if (response.getStatusCode() == 200) {
                     System.debug('Respuesta de Traer saldos: '+response.getBody());
-                    // string respuesta2 = '{"cuenta":"50800","montoPignorado":"0","saldoTotal":"190,632.59","saldos":[{"tipoSaldo":"12","montoSaldo":"62,618.76"},{"tipoSaldo":"10","montoSaldo":"75,297.06"},{"tipoSaldo":"11","montoSaldo":"52,716.77"}]}';
-                    
-                    //respuesta = (getSaldoCuenta)System.JSON.deserialize(response.getBody()/*.replace('"0"','"4500"')*/, getSaldoCuenta.class); //.replace('130','131')                   
-                    
-                    //respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"118,001.00","saldos":[{"tipoSaldo":"11","montoSaldo":"60,000.50"},{"tipoSaldo":"13","montoSaldo":"1000"},{"tipoSaldo":"10","montoSaldo":"30,000.50"},{"tipoSaldo":"12","montoSaldo":"28,000.00"}]}', getSaldoCuenta.class);
-                    respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"465554.08","saldos":[{"tipoSaldo":"11","montoSaldo":"465554.08"}]}', getSaldoCuenta.class);
+                    respuesta = (getSaldoCuenta)System.JSON.deserialize(response.getBody(), getSaldoCuenta.class); 
                 }
             }else{
                 respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"8583.79","saldos":[{"tipoSaldo":"11","montoSaldo":"8412.11"},{"tipoSaldo":"13","montoSaldo":"171.68"}]}', getSaldoCuenta.class); 
@@ -1666,18 +1661,22 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
     
     public static string MesLetras (integer mes){
         string respuesta ='';
-        if(mes==1){respuesta = 'JAN';}
+        if(mes==1 && Label.IdiomaMes == 'I'){respuesta = 'JAN';}
+        if(mes==1 && Label.IdiomaMes == 'E'){respuesta = 'ENE';}
         if(mes==2){respuesta = 'FEB';}
         if(mes==3){respuesta = 'MAR';}
-        if(mes==4){respuesta = 'APR';}
+        if(mes==4 && Label.IdiomaMes == 'I'){respuesta = 'APR';}
+        if(mes==4 && Label.IdiomaMes == 'E'){respuesta = 'ABR';}
         if(mes==5){respuesta = 'MAY';}
         if(mes==6){respuesta = 'JUN';}
         if(mes==7){respuesta = 'JUL';}
-        if(mes==8){respuesta = 'AUG';}
+        if(mes==8 && Label.IdiomaMes == 'I'){respuesta = 'AUG';}
+        if(mes==8 && Label.IdiomaMes == 'E'){respuesta = 'AGO';}
         if(mes==9){respuesta = 'SEP';}
         if(mes==10){respuesta = 'OCT';}
         if(mes==11){respuesta = 'NOV';}
-        if(mes==12){respuesta = 'DEC';}
+        if(mes==12 && Label.IdiomaMes == 'I'){respuesta = 'DEC';}
+        if(mes==12 && Label.IdiomaMes == 'E'){respuesta = 'DIC';}
         return respuesta;
     }
     public class classRespuesta {

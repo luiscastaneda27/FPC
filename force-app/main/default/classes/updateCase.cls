@@ -135,12 +135,22 @@ public class updateCase {
         System.debug('detcaso: '+detcaso);
 		validarIdentidad(String.valueOf(caso.Id), pccuentapago, pcnroid);     
     }
-    @Future(callout=true)
-    public static void validarIdentidad(String casoId, String pccuentapago, String pcnroid) {
+    
+    public class wrapperClass {
+       public String DAU_Identidad {get;set;}
+       public String DAU_No_Cuenta {get;set;}
+       public Boolean DAU_aprobacion {get;set;} 
+       public String Respuesta_SF_Tarjetas {get;set;}
+    }
+    
+    //@Future(callout=true)
+    public static wrapperClass validarIdentidad(String casoId, String pccuentapago, String pcnroid) {
+        
         System.debug('Se ejecuta el servicio para validar la identidad');
+        wrapperClass wc = new wrapperClass();
         
         List<Case> caso = new List<Case>();
-        caso = [Select Id, Status, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c From case where Id =: casoId /*and Status <> 'Cerrado'*/ and DAU_Identidad__c = ''];
+        caso = [Select Id, Status, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c From case where Id =: casoId /*and Status <> 'Cerrado'*/ and DAU_Identidad__c = null];
         
         if(!caso.isEmpty()) {
        
@@ -162,63 +172,63 @@ public class updateCase {
            
             if(caso[0].Status <> 'Cerrado') {
                 if(resultJson.CARD_HOLDER_LEGAL_ID == Null) { 
-                    caso[0].DAU_Identidad__c = 'No se obtuvo la identidad';
-                    //caso[0].Status = 'Error de conexion';
-                    update caso;
-                } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
-                    caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID + (' (Debito a tercero / ' + resultJson.CARD_STATUS + ')');
-                    caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                    caso[0].DAU_aprobacion__c = false;  
-                    update caso;
+                    /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = 'No se obtuvo la identidad';
+                    //update caso;
+                } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) { //Adicional
+                    /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID;
+                    /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                    /*caso[0].DAU_aprobacion__c*/ wc.DAU_aprobacion = false;  
+                    /*caso[0].Respuesta_SF_Tarjetas__c*/ wc.Respuesta_SF_Tarjetas = 'No se puede ingresar dado que es una tarjeta de adicional';
+                    //update caso;
                 } else {
                     if(resultJson.CARD_STATUS == '20 - TARJETA NORMAL') {
                         if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
-                            caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID/* + (' (Débito al titular / ' + resultJson.CARD_STATUS + ')')*/;
-                            caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                            caso[0].DAU_aprobacion__c = true;
-                            update caso;
+                            /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID/* + (' (Débito al titular / ' + resultJson.CARD_STATUS + ')')*/;
+                            /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                            /*caso[0].DAU_aprobacion__c*/ wc.DAU_aprobacion = true;
+                            //update caso;
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso[0].Id, /*DAU_EjecutarSYSDE__c = true,*/ DAU_NumeroCuenta__c = resultJson.ACCOUNT_NUMBER));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);
                         } else {
-                            caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID/* + ' (Débito a tercero)'*/;
-                            caso[0].DAU_aprobacion__c = false;
-                            caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                            update caso;
+                            /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID/* + ' (Débito a tercero)'*/;
+                            /*caso[0].DAU_aprobacion__c*/ wc.DAU_aprobacion = false;
+                            /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                            //update caso;
                         }  
                     }    
                 }
             } else if(caso[0].Status == 'Cerrado') {
                 if(resultJson.CARD_HOLDER_LEGAL_ID == Null) { 
-                    caso[0].DAU_Identidad__c = 'No se obtuvo la identidad';
-                    //caso[0].Status = 'Error de conexion';
-                    update caso;
+                    /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = 'No se obtuvo la identidad';
+                    //update caso;
                 } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
-                    caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID + (' (Debito a tercero / ' + resultJson.CARD_STATUS + ')');
-                    caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                    caso[0].DAU_aprobacion__c = false;  
-                    update caso;
+                    /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID + (' (Debito a tercero / ' + resultJson.CARD_STATUS + ')');
+                    /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                    /*caso[0].DAU_aprobacion__c*/ wc.DAU_aprobacion = false;  
+                    //update caso;
                 } else {
                     if(resultJson.CARD_STATUS == '20 - TARJETA NORMAL') {
                         if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
-                            caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID/* + (' (Débito al titular / ' + resultJson.CARD_STATUS + ')')*/;
-                            caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                            update caso;
+                            /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID/* + (' (Débito al titular / ' + resultJson.CARD_STATUS + ')')*/;
+                            /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                            //update caso;
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso[0].Id, DAU_EjecutarSYSDE__c = true, DAU_NumeroCuenta__c = resultJson.ACCOUNT_NUMBER));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);
                         } else {
-                            caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID/* + ' (Débito a tercero)'*/;
-                            caso[0].DAU_aprobacion__c = false;
-                            caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                            update caso;
+                            /*caso[0].DAU_Identidad__c*/ wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID/* + ' (Débito a tercero)'*/;
+                            /*caso[0].DAU_aprobacion__c*/ wc.DAU_aprobacion = false;
+                            /*caso[0].DAU_No_Cuenta__c*/ wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                            //update caso;
                         }  
                     }    
                 }    
             }
-        }    
+        }   
+        return wc;
     } 
     //Fin Crear cliente, cuenta y gestión desde afiliación electrónica
 }

@@ -136,7 +136,7 @@ public class controllerConstanciaPdf{
             //system.debug('quiero ver que tiene esto: '+detallesCaso.isEmpty());
             if(!detallesCaso.isEmpty()){
                 // DETALLE DE CUENTA
-                camposCuenta = 'Codigo__c,toLabel(Frecuencia_Aportacion__c),toLabel(Forma_Aportacion__c),Fecha_Apertura__c';
+                camposCuenta = 'Codigo__c,FondoInversionCP__c,toLabel(Frecuencia_Aportacion__c),toLabel(Forma_Aportacion__c),Fecha_Apertura__c';
                 queryRelated = 'Select ';
                 queryRelated += camposCuenta;
                 queryRelated += ' From Cuentas__c';
@@ -146,7 +146,7 @@ public class controllerConstanciaPdf{
                 camposCuenta = camposCuenta.replace('toLabel(','');
                 camposCuenta = camposCuenta.replace(')','');
             }else{
-                camposCuenta = 'Codigo__c,toLabel(Frecuencia_Aportacion__c),toLabel(Forma_Aportacion__c),Fecha_Apertura__c';
+                camposCuenta = 'Codigo__c,FondoInversionCP__c,toLabel(Frecuencia_Aportacion__c),toLabel(Forma_Aportacion__c),Fecha_Apertura__c';
                 queryRelated = 'Select ';
                 queryRelated += camposCuenta;
                 queryRelated += ' From Cuentas__c';
@@ -442,7 +442,7 @@ public class controllerConstanciaPdf{
                     tr = 'Con un saldo personal a la fecha de <strong>'+mon+' '+formatonumero(cambio)+'</strong>';
                     
                 }else{
-                    if(casoTratar.CurrencyIsoCode !=detallesCaso[0].cuenta__r.CurrencyIsoCode){
+                    if(casoTratar.CurrencyIsoCode != detallesCaso[0].cuenta__r.CurrencyIsoCode){
                         TasaCambio.ValorDolar p = new TasaCambio.ValorDolar();
                         p.fecha=date.today();
                         if(test.isRunningTest()){
@@ -539,6 +539,11 @@ public class controllerConstanciaPdf{
             }
             html=html.replace('[getMostrarTasaCambio]',repla);
             html=html.replace('[getHoyTS]','');
+            
+            if(html.contains('[getCuentaCliente]')){
+               html = html.replace('[getCuentaCliente]', cuenta.Codigo__c +' del Fondo '+cuenta.FondoInversionCP__c);
+                
+            } 
             
         }
         if(html.contains('[getDirigidoA]')){

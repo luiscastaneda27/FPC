@@ -55,8 +55,8 @@ public without sharing class ControladorCasosPortalAutogestion{
         try {
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
             system.debug('Parametro Recibido: '+idCLiente);
-            idCliente = '0801199411013'; 
-            //idCliente='0801199220733';
+            //idCliente = '0801198801163'; 
+            idCliente='0709199300155';
             contrato = new Contrato_Aceptado__c();
             
             //Si el entorno actual es un site, se obtiene el url del site como tal.

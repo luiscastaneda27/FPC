@@ -239,8 +239,8 @@ trigger enviarASysde on Case (before update) {
                 } else if(tipoRnombre == 'Actualizacion_informacion'){
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
                 } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
-                    List<Detalle_caso__c> lstDetCase = [Select Id, Cuenta__r.Forma_Aportacion__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
-                    if(lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
+                    List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
+                    if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
                         if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c <> Null) {
                             System.debug('Entra 1');
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
@@ -254,22 +254,26 @@ trigger enviarASysde on Case (before update) {
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs); 
                         } else if(lstCase[0].Tipo_de_Operacion__c == 'A4' || lstCase[0].Tipo_de_Operacion__c == 'A7') {
-                            System.debug('Es cambio de fecha de aporte');
+                            System.debug('Entra 3');
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);    
                         } else if(lstCase[0].Tipo_de_Operacion__c == 'A6') {
-                            System.debug('Es Cambio de # Tarjeta');
+                            System.debug('Entra 4');
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);    
                         } 
-                    } else if(lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'TAOB') {
-                        DAU_GestionesBac.execute(item.Id);
+                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'TAOB' || lstDetCase[0].Banco__c == 'Otros Bancos') {
+                        System.debug('Entra 5');
+                        DAU_GestionesBac.execute(item.Id, ''); 
+                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || (lstDetCase[0].Tipo_Operacion__c == 'A2' && lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH')) {
+                        System.debug('Entra 6');
+                        ControllerServiciosCuentaAhorro.execute(item.id);  
                     } else if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3') {
-                    	System.debug('Entra 3');
+                    	System.debug('Entra 7');
                         aSysdeCallouts.aumentoDisminucion(item.id); 
                     } 
                 } else if(tipoRnombre == 'Retiros' || test.isRunningTest()){

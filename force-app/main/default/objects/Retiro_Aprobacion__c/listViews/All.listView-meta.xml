@@ -14,10 +14,5 @@
     <columns>LAST_UPDATE</columns>
     <columns>Tipo_Pago__c</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Fecha_SalesForce__c</field>
-        <operation>equals</operation>
-        <value>1/4/2021</value>
-    </filters>
     <label>Todos</label>
 </ListView>

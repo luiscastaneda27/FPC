@@ -49,6 +49,7 @@ public class extensionCasoDetalle {
     public list<Cuentas__c> cuentasColectivas{get;set;}
     public list<Subproducto__c> subProductos{get;set;}
     public boolean mostrarGuardar{get;set;}
+    public boolean mostrarFinalizar{get;set;}
     public boolean esSalesforce {get;set;}
     
     public boolean popAporte{get;set;}
@@ -149,21 +150,20 @@ public class extensionCasoDetalle {
         mostrarDespuesDeEnviarAprobacion = false;
         esSalesforce = false;
         string guest = '';
+        mostrarFinalizar = false;
         //nueva lista
         
         
         try{
             
             if(CasoSTD.Id != null){
-                Caso = [Select Status,AccountId,CreatedDate, Account.Identificacion__c, RecordType.DeveloperName,
-                        Fecha_desde__c, fecha_hasta__c,Account.PersonBirthdate, account.sexo__C,
-                        Desea_ver_tasa_de_cambio__c, SuppliedEmail,
-                        Constancia__c, currencyIsoCode,Requiere_aprobacion_exoneracion__c,
-                        Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
+                Caso = [Select Status,AccountId,CreatedDate, Account.Name, Account.Identificacion__c, RecordType.DeveloperName,
+                        Fecha_desde__c, fecha_hasta__c,Account.PersonBirthdate, account.sexo__C, Desea_ver_tasa_de_cambio__c, 
+                        SuppliedEmail, Constancia__c, currencyIsoCode,Requiere_aprobacion_exoneracion__c, Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
-                        Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c,
-                        Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
-                        Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C,DAU_No_Cuenta__c
+                        Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c, Nombre_agencia__c, agencia__c, Agencia__r.Name, 
+                        account.Departamento_Residencia2__c, Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C,DAU_No_Cuenta__c, 
+                        DAU_Tarjeta_de_Sysde__c, DAU_llamarSalesforceTarjeta__c, Tipo_de_Operacion__c, Respuesta_SF_Tarjetas__c, DAU_Identidad__c
                         From Case Where Id =: CasoSTD.Id Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){
                     date gdcs=caso.Account.PersonBirthdate;
@@ -178,12 +178,18 @@ public class extensionCasoDetalle {
                     listAgencias.add(new SelectOption(item.id, item.name));
                 }
                 
+                /*if(Caso.Status == 'Cerrado' && !Caso.Respuesta_SF_Tarjetas__c.contains('Afiliación: //')) {
+                        mostrarFinalizar = false;    
+                    } else {
+                        mostrarFinalizar = true;
+                    }*/
+                
                 if(Caso.Status != 'Pendiente de aprobación' && Caso.Status != 'Pendiente segunda aprobación' 
-                   && Caso.Status != 'Error de conexion' && Caso.Status != 'Cerrado'){
+                   && Caso.Status != 'Error de conexion' && Caso.Status != 'Cerrado') {
                        mostrarGuardar = true;
-                   }else{
+                   } else {
                        mostrarGuardar = false;
-                   }
+                   }                  
                 guest = userInfo.getUserType();
                 
                 IF(Guest != null && Guest !=''){
@@ -216,7 +222,7 @@ public class extensionCasoDetalle {
                              Monto_comision_aporte__c,Pago_terceros__c,Cuenta_destino__c,Propietario_cuenta__c,Cargo_Empleado_Paga_Empresa__C,
                              Monto_TSP_Patrono__c, Monto_Cheque_Patrono__c, Monto_ACH_Patrono__c, Numero_prestamo__c,
                              Cuenta_Colectiva_Anterior__c,cuenta__r.codigo__C, cuenta__r.Cuenta_colectiva2__c,
-                             Monto_Pignorar_Refinanciamiento__C, Cuenta__r.Forma_Aportacion__c,
+                             Monto_Pignorar_Refinanciamiento__C, Cuenta__r.Forma_Aportacion__c, Cuenta__r.Name,
                              rezago__C, cod_referencia__C, Producto_Anterior__C,Fecha_Deposito__C,Inicio_Fecha_Aporte__c,
                              monto_prestamo__c, Total_Saldo_Personal__c, Total_Saldo_Patronal__c, Es_Primer_Prestamo__c,
                              No_es_primer_prestamo__c, Es_Refinanciamiento__c, Monto_a_Pignorar__c, Detalle_Subproducto2__c,
@@ -235,7 +241,7 @@ public class extensionCasoDetalle {
                     monedaCuenta= mapCuentas.get(idCuenta).CurrencyIsoCode;
                 }
                 if(!cuentasCaso.isEmpty()) {
-                    
+                                    
                     pagosBT = 'display:block;';
                     
                     detalleCaso = cuentasCaso[0];
@@ -450,7 +456,7 @@ public class extensionCasoDetalle {
                                    Cuenta_Colectiva2__r.De_12_anos__c, Cuenta_Colectiva2__r.De_23_anos__c,
                                    Cuenta_Colectiva2__r.De_34_anos__c, Cuenta_Colectiva2__r.De_45_anos__c,
                                    Cuenta_Colectiva2__r.Mas_5_anos__c,Monto_aporte__c ,
-                                   Porcentaje_CRA_Individual__c, Cobro_Individual_CRA__c,
+                                   Porcentaje_CRA_Individual__c, Cobro_Individual_CRA__c,FondoInversionCP__c,
                                    De_01_anos__c,De_12_anos__c, De_23_anos__c,Cuenta_colectiva2__r.Tipo_Politica_Retiro_Saldo_Patronal__c,
                                    Cuenta_colectiva2__r.PSP_De_01_anos__C, Cuenta_colectiva2__r.PSP_De_12_anos__C,
                                    Cuenta_colectiva2__r.PSP_De_23_anos__C, Cuenta_colectiva2__r.PSP_De_34_anos__C, 
@@ -722,6 +728,7 @@ public class extensionCasoDetalle {
     public void agregarCuenta(){
         try{
             system.debug('Id Cuenta: '+idCuenta);
+            
             if(cTipoCaso.actInformacion){
                 Detalle_caso__c nuevo = new Detalle_caso__c(Cuenta__c = idCuenta, Caso__c = Caso.id, Indice__c = conteoGeneral);
                 cuentasCaso.add(nuevo);     
@@ -736,52 +743,7 @@ public class extensionCasoDetalle {
                 mapDCasoCuenta.put(idCuenta, nuevo);
                 if((cTipoCaso.constancias && caso.Constancia__c=='P1'
                     && caso.Status=='Nuevo') || test.isRunningTest()){
-                       detalleCaso.Total_Saldo_Patronal__c=0;
-                        detalleCaso.Total_Saldo_Personal__c=0;
-                        for(cuentas__C item: [select codigo__C, CurrencyIsoCode from cuentas__C where id =:idCuenta]){
-                            if(caso.CurrencyIsoCode=='USD' && item.CurrencyIsoCode == 'HNL'){ 
-                                system.debug('Hola');
-                                detalleCaso = new detalle_caso__C();
-                                cuentasCaso = new list<detalle_caso__C>();
-                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No esta permitido prestamo en dolares con fonde en lempiras.'));
-                                return;
-                            }
-                            getSaldoCuenta saldosTempo = new getSaldoCuenta(); 
-                            detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
-                            saldosTempo = aSysdeCallouts.traerSaldos(item.Codigo__c);
-                            
-                            detalleCaso.Monto_Pignorado__c=0;
-                            detalleCaso.Monto_Prestamo__c = 0;
-                            try{detalleCaso.Monto_Pignorado__c = saldosTempo.montoPignorado !='null' ? decimal.valueOf(saldosTempo.montoPignorado.replace(',','')) : 0;}catch(Exception ex){}
-                            for(classSaldos tipoSaldo : saldosTempo.saldos){
-                                if(caso.CurrencyIsoCode == item.CurrencyIsoCode){
-                                   if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
-                                        detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
-                                    }else{
-                                        detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
-                                    }
-                                }else if(caso.CurrencyIsoCode=='HNL' && item.CurrencyIsoCode == 'USD'){
-                                    system.debug('Hola 1');
-                                    if(caso.Tasa_Cambio__c == null){
-                                        detalleCaso = new detalle_caso__C();
-                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para hacer este tipo de constancia tiene que detallar la tasa de cambio en el caso'));
-                                        return;
-                                    }
-                                    detalleCaso.Cambio_moneda__c = true;
-                                    if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
-                                        detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
-                                    }else{
-                                        detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
-                                    }
-                                }//else{
-                                   // system.debug('Hola');
-                                    //detalleCaso = new detalle_caso__C();
-                                    //cuentasCaso = new list<detalle_caso__C>();
-                                    // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para este tipo de constancia solo puedes agregar una cuenta'));
-                                //}
-                            }
-                           detalleCaso.Monto_Pignorado__c = (detalleCaso.Cambio_moneda__c && detalleCaso.Monto_Pignorado__c > 0) ?  (detalleCaso.Monto_Pignorado__c * caso.Tasa_Cambio__c).setscale(2) : detalleCaso.Monto_Pignorado__c;         
-                        }
+                        validacionSaldosP1();
                     }
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cuenta ya agregada'));
@@ -792,6 +754,55 @@ public class extensionCasoDetalle {
         } 
         system.debug('Hola: '+ cuentasCaso.size());
            
+    }
+    
+    public void validacionSaldosP1(){
+        detalleCaso.Total_Saldo_Patronal__c=0;
+        detalleCaso.Total_Saldo_Personal__c=0;
+        cuentaCliente = mapCuentas.get(idCuenta);
+        if(caso.CurrencyIsoCode=='USD' && cuentaCliente.CurrencyIsoCode == 'HNL'){
+            detalleCaso = new detalle_caso__C();
+            cuentasCaso = new list<detalle_caso__C>();
+            cuentaCliente = new Cuentas__C();
+            mapDCasoCuenta = new map<Id, detalle_caso__C>();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No esta permitido prestamo en dolares con fonde en lempiras.'));
+            return;
+        }
+        
+        getSaldoCuenta saldosTempo = new getSaldoCuenta(); 
+        detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
+        saldosTempo = aSysdeCallouts.traerSaldos(cuentaCliente.Codigo__c);
+        
+        detalleCaso.Monto_Pignorado__c=0;
+        detalleCaso.Monto_Prestamo__c = 0;
+        try{detalleCaso.Monto_Pignorado__c = saldosTempo.montoPignorado !='null' ? decimal.valueOf(saldosTempo.montoPignorado.replace(',','')) : 0;}catch(Exception ex){}
+        for(classSaldos tipoSaldo : saldosTempo.saldos){
+            if(caso.CurrencyIsoCode == cuentaCliente.CurrencyIsoCode){
+                if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
+                    detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
+                }else{
+                    detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
+                }
+            }else if(caso.CurrencyIsoCode=='HNL' && cuentaCliente.CurrencyIsoCode == 'USD'){
+                system.debug('Hola 1');
+                if(caso.Tasa_Cambio__c == null){
+                    detalleCaso = new detalle_caso__C();
+                    cuentaCliente = new Cuentas__C();
+                    cuentasCaso = new list<detalle_caso__C>();
+                    mapDCasoCuenta = new map<Id, detalle_caso__C>();
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para hacer este tipo de constancia tiene que detallar la tasa de cambio en el caso'));
+                    return;
+                }
+                detalleCaso.Cambio_moneda__c = true;
+                if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
+                    detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
+                }else{
+                    detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
+                }
+            }
+        }
+        detalleCaso.Monto_Pignorado__c = (detalleCaso.Cambio_moneda__c && detalleCaso.Monto_Pignorado__c > 0) ?  (detalleCaso.Monto_Pignorado__c * caso.Tasa_Cambio__c).setscale(2) : detalleCaso.Monto_Pignorado__c;         
+        
     }
     
     public void eliminarCuenta(){
@@ -1376,22 +1387,70 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         upsert cuentasCaso;
                     }
                     
-                }else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                        
-                    //caso.creado_FPC__c = true;                    
-                    update Caso;    
-                    upsert detalleCaso;
-                    List<Cuentas__c> cuentaClie = [Select Id, Forma_Aportacion__c From Cuentas__c Where Id =: idCuenta Limit 1];
-                    if(cuentaClie[0].Forma_Aportacion__c == 'TA') {
-                        if(detalleCaso.Tipo_Operacion__c == 'A6') {
-                            updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
-                        }
-                        if(detalleCaso.Tipo_Operacion__c == 'A3' && caso.DAU_No_Cuenta__c == Null && detalleCaso.N_Cuenta_Bancaria__c <> Null) {
-                            updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
+                }else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
+    
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Banco__c == '28') {
+                        if(detalleCaso.Tipo_Operacion__c == 'A3' && caso.DAU_No_Cuenta__c == Null && detalleCaso.N_Cuenta_Bancaria__c <> Null) {        
+                        	updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                         }
                         if(detalleCaso.Tipo_Operacion__c == 'A8' && caso.DAU_No_Cuenta__c == Null) {
-                            updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                         }
-                    }
+                        if(detalleCaso.Tipo_Operacion__c == 'A4' && caso.DAU_No_Cuenta__c == Null) {
+                            Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
+                            if(Caso.DAU_Tarjeta_de_Sysde__c <> Null) {
+                                updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                                wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, Caso.Account.Identificacion__c);
+                                System.debug('validar Identidad: '+wc);
+                                caso.DAU_Identidad__c = wc.DAU_Identidad;
+                                caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                                caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                                caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
+                            }
+                        }
+                        if(detalleCaso.Tipo_Operacion__c == 'A6' && caso.DAU_No_Cuenta__c == Null) {
+                            Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
+                            if(Caso.DAU_Tarjeta_de_Sysde__c <> Null) {
+                                updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                                wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, Caso.Account.Identificacion__c);
+                                System.debug('validar Identidad: '+wc);
+                                caso.DAU_Identidad__c = wc.DAU_Identidad;
+                                caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                                //caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                                caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
+                            }
+                            if(Caso.DAU_Identidad__c <> Null && Caso.DAU_No_Cuenta__c <> Null) {
+								Set<Id> caseId = new Set<Id>();
+                                caseId.add(Caso.Id);
+                            	Salesforce_Tarjetas.processCase(caseId, 'DEC', '', '', '');
+                            }    
+                        }   
+                        if(detalleCaso.Tipo_Operacion__c == 'A7' && caso.DAU_No_Cuenta__c == Null) {
+                        	Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
+                            if(Caso.DAU_Tarjeta_de_Sysde__c <> Null) {
+                                updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                                wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, Caso.Account.Identificacion__c);
+                                System.debug('validar Identidad: '+wc);
+                                caso.DAU_Identidad__c = wc.DAU_Identidad;
+                                caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                                caso.DAU_aprobacion__c = false;
+                            }    
+                        }
+                    }                    
+                    update Caso;    
+                    upsert detalleCaso;
                 }else if(cTipoCaso.actInformacion){
                     upsert cuentasCaso;
                     
@@ -1489,11 +1548,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                     }else if(detalleCaso.Tipo_Operacion__c =='A2' && cuentaCliente.Monto_aporte__c !=null  && (detallecaso.Nuevo_monto_aporte__c == null || detallecaso.Nuevo_monto_aporte__c >= cuentaCliente.Monto_aporte__c )){
                         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'El nuevo monto de aporte debe ser menor a '+cuentaCliente.Monto_aporte__c.format()+'.00')));
                         hayerror = true;
-                    }  
-                    /*else if(detallecaso.Tipo_Operacion__c == 'A4' && cuentaCliente.Forma_Aportacion__c=='TA' && (detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) || detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2))){
-                        hayerror = true;
-                        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
-                    }*/   
+                    }   
                 }
                 //FIN PARTE NUEVA
                 system.debug('Detalle: '+detalleCaso);
@@ -1542,38 +1597,21 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             //Approval.ProcessResult result = Approval.process(req1);
                             verCaso();
                             
-                        }else if(caso.Origin != 'Agencias_Banco'){ 
+                        } else if(caso.Origin != 'Agencias_Banco'){ 
                             mostrarEnviarAprobacion= false;
-                        }
-                        else if(cuentaCLiente.Forma_Aportacion__c=='PL'){
+                        } else if(cuentaCLiente.Forma_Aportacion__c=='PL'){
                             caso.Enviar_aprobacion_AD__c = false;
                             caso.Aprueba_SAC__c = true;
                             mostrarEnviarAprobacion= true;
                             solicitud = AFPCCasos.upsertCaso(caso);
-                        }else if(cuentaCLiente.Forma_Aportacion__c == 'AH' || cuentaCLiente.Forma_Aportacion__c =='CK' ||  cuentaCLiente.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3'|| detallecaso.Tipo_Operacion__c=='A5'|| detallecaso.Tipo_Operacion__c=='A6'){
+                        } else if(cuentaCLiente.Forma_Aportacion__c == 'AH' || cuentaCLiente.Forma_Aportacion__c =='CK' ||  cuentaCLiente.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3'|| detallecaso.Tipo_Operacion__c=='A5'|| detallecaso.Tipo_Operacion__c=='A6'){
                             caso.Enviar_aprobacion_AD__c = true;
                             caso.Aprueba_SAC__c = false;
                             mostrarEnviarAprobacion= true;
                             solicitud = AFPCCasos.upsertCaso(caso);
                         } 
-                        /*if(cuentaCLiente.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A8' && (caso.Status == 'Nuevo' || caso.Status == 'Devuelto')) {
-                            mostrarEnviarAprobacion = True;    
-                        }*/
-                        /*if(cuentaCLiente.Forma_Aportacion__c == 'TA' && (detallecaso.Tipo_Operacion__c == 'A8' || (detallecaso.Tipo_Operacion__c == 'A2')) && (caso.Status == 'Nuevo' || caso.Status == 'Devuelto')) {
-                            System.debug('Tipo Operación: Afiliación de Débito Automático');
-                            caso.DAU_aprobacion__c = false;    
-                            solicitud = AFPCCasos.upsertCaso(caso);
-                        }
-                        if(cuentaCLiente.Forma_Aportacion__c == 'TA') {
-                            System.debug('Tipo Operación: Afiliación de Débito Automático');
-                            caso.DAU_aprobacion__c = false;    
-                            solicitud = AFPCCasos.upsertCaso(caso);
-                        }*/
-                        /*if(cuentaCLiente.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c=='A8' && caso.Status == 'Nuevo') {
-                        
-                        }  */
                     }
-                   //  system.debug('Se metio sin querer'+ cTipoCaso.otros+'   '+ cTipoCaso.reposicionCarnet +'  '+caso.Origin  );
+                    //  system.debug('Se metio sin querer'+ cTipoCaso.otros+'   '+ cTipoCaso.reposicionCarnet +'  '+caso.Origin  );
                     if(((cTipoCaso.otros || cTipoCaso.reposicionCarnet) && caso.Origin != 'Agencias_Banco') || test.isRunningTest() ) {
                         //system.debug('Se metio sin querer'+ cTipoCaso.otros+'   '+ cTipoCaso.reposicionCarnet +'  '+caso.Origin  );
                         Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c();
@@ -1588,9 +1626,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                            // ZonaSeleccionada =test.isRunningTest() ? '2':ZonaSeleccionada;
                             p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
                                  from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada
-                                 order by Ultimo_Caso_Asignado__c  asc limit 1];
-                            
-                            
+                                 order by Ultimo_Caso_Asignado__c  asc limit 1];  
                         }
                         caso.OwnerId = p.usuario__C;
                         //caso.Mostrar_Asignar__C = true;
@@ -1651,6 +1687,26 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
         }
         return null;
+    }
+    
+    public pageReference finalizar() {   
+        if(Caso.DAU_llamarSalesforceTarjeta__c == true && Caso.Tipo_de_Operacion__c == 'A6' && Caso.Status == 'Cerrado' && Caso.Respuesta_SF_Tarjetas__c <> null) {
+            //Afiliación
+            String Identidad = Caso.DAU_Identidad__c;
+            String Titular;
+            if(Caso.Account.Identificacion__c <> Identidad) {
+                Titular = 'No';     
+            } else {
+                Titular = 'Si';
+            }
+            Set<Id> caseId = new Set<Id>();
+            caseId.add(Caso.Id);
+            List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c =: Caso.Id Limit 1];
+            if(!detailCase.isEmpty()) { 
+                Salesforce_Tarjetas.processCase(caseId,'ADI',Titular,Caso.Account.Name,detailCase[0].DAU_Dia_de_pago__c);
+            }      
+        }
+        return null;    
     }
     
     public void AsignacarCaso(){

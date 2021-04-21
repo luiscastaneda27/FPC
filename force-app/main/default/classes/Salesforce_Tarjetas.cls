@@ -3,8 +3,10 @@ public class Salesforce_Tarjetas {
     public static void processCase(Set<Id> caseIds, String tipoGestion, String Titular, String beneficiario, String diaPago) {
         List<Case> updateCase = new List<Case>();
         try {
-    	List<Case> lstCase = [Select Id,Status,Account.Identificacion__c,Respuesta_desde_Sysde__c,Respuesta_SF_Tarjetas__c, DAU_No_Cuenta__c,DAU_Identidad__c,Tipo_de_Operacion__c From Case Where Id in :caseIds Limit 1];
-        List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Name,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c From Detalle_caso__c Where Caso__c In: caseIds/* and Tipo_retiro__c = '52'*/ Limit 1];
+    	List<Case> lstCase = [Select Id,Status,Account.Identificacion__c,Respuesta_desde_Sysde__c,Respuesta_SF_Tarjetas__c, DAU_No_Cuenta__c,
+                              DAU_Identidad__c,Tipo_de_Operacion__c,DAU_Tarjeta_de_Sysde__c From Case Where Id in :caseIds Limit 1];
+        List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Name,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c 
+                                         From Detalle_caso__c Where Caso__c In: caseIds Limit 1];
         String Identidad = lstCase[0].DAU_Identidad__c;
         System.debug('Identidad2: '+Identidad.substring(0,13));
         String moneda;
@@ -25,24 +27,31 @@ public class Salesforce_Tarjetas {
                 servDau.SessionHeader = sessionHeader;
                 
             	String asunto = '';
+                String CuentaBancaria = detcaso[0].N_Cuenta_Bancaria__c;
+            
                 if(c.Tipo_de_Operacion__c == 'A7') {
                 	asunto = 'Cancelación DAU Pensiones';
                 } else if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
                 	asunto = 'Debito automático Pensiones';    
                 } else if(c.Tipo_de_Operacion__c == 'A4') {
                 	asunto = 'Modificacion de Beneficios';    
+                } else if(c.Tipo_de_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
+                	asunto = 'Cancelación DAU Pensiones';
+                    CuentaBancaria = lstCase[0].DAU_Tarjeta_de_Sysde__c;
+                } else if(c.Tipo_de_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null) {
+                	asunto = 'Debito automático Pensiones';  
                 }
             
-                System.debug('tipoGestion: '+tipoGestion+'---'+'Identidad: '+lstCase[0].DAU_Identidad__c+'---'+'nroCuenta: '+lstCase[0].DAU_No_Cuenta__c+'---'+'# Cuenta Bancaria: '+detcaso[0].N_Cuenta_Bancaria__c+'---'+'moneda: '+moneda+'---'+'Cuenta Salesforce: '+detcaso[0].Cuenta__r.Name+'---'+'Asunto: '+asunto+'---'+'Beneficiario: '+beneficiario+'---'+'DiaPago: '+diaPago);
+                System.debug('tipoGestion: '+tipoGestion+'---'+'Identidad: '+lstCase[0].DAU_Identidad__c+'---'+'nroCuenta: '+lstCase[0].DAU_No_Cuenta__c+'---'+'# Cuenta Bancaria: '+CuentaBancaria+'---'+'moneda: '+moneda+'---'+'Cuenta Salesforce: '+detcaso[0].Cuenta__r.Name+'---'+'Asunto: '+asunto+'---'+'Beneficiario: '+beneficiario+'---'+'DiaPago: '+diaPago);
             
-                String response = String.valueOf(servDau.crearGestion(tipoGestion,lstCase[0].DAU_Identidad__c,lstCase[0].DAU_No_Cuenta__c,detcaso[0].N_Cuenta_Bancaria__c,'Pensiones y Cesantías -Personal Ordinario '+moneda,detcaso[0].Cuenta__r.Name,asunto,'Otros',beneficiario,diaPago,'Ficohsa Pensiones','','','','','',''));
+                /*String response = String.valueOf(servDau.crearGestion(tipoGestion,lstCase[0].DAU_Identidad__c,lstCase[0].DAU_No_Cuenta__c,CuentaBancaria,'Pensiones y Cesantías -Personal Ordinario '+moneda,detcaso[0].Cuenta__r.Name,asunto,'Otros',beneficiario,diaPago,'Ficohsa Pensiones','','','','','',''));
                 System.debug('response: '+response);
                 
                 WsGestiones.crearGestionResponse_element resultado = new WsGestiones.crearGestionResponse_element();
-                System.debug('resultado: '+resultado);
+                System.debug('resultado: '+resultado);*/
                                 
                 //Get Identity of Response
-                String respuesta;
+                /*String respuesta;
                 JSONParser parser = JSON.createParser(JSON.serialize(resultado));
                 System.debug('parser01: '+parser);
                 while (parser.nextToken() != null) {
@@ -53,15 +62,31 @@ public class Salesforce_Tarjetas {
                         respuesta = parser.getText();
                     }
                 }  
-                System.debug('respuesta: '+respuesta);
+                System.debug('respuesta: '+respuesta);*/
                 
+                String response = 'Gestión creada con éxito';
+                String response2 = 'Gestión creada con éxito 2';
+            
                 //c.Respuesta_SF_Tarjetas__c = String.valueOf(respuesta);               
                 if(response.contains('éxito')) {
                 	System.debug('Gestión creada con éxito');    
-                    c.Respuesta_SF_Tarjetas__c = String.valueOf(/*'Gestión creada con éxito'*/response);
-                    if(c.Tipo_de_Operacion__c == 'A7') {
+                    if(c.Tipo_de_Operacion__c <> 'A6') {
+                        c.Respuesta_SF_Tarjetas__c = String.valueOf(response);
+                    }               
+                    if(c.Tipo_de_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
+                    	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+String.valueOf(response); 
+                    }                    
+                    if(c.Tipo_de_Operacion__c == 'A6' && asunto == 'Debito automático Pensiones') {
+                    	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' --- Afiliación: // ' + String.valueOf(response2);  
                     	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id/*, DAU_EjecutarSYSDE__c = true*/));
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
+                    }
+                    
+                    if(c.Tipo_de_Operacion__c == 'A4' || c.Tipo_de_Operacion__c == 'A7') {
+                    	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
                         // Call method to publish events
                         List<Database.SaveResult> results = EventBus.publish(Logs);
                     }
@@ -78,10 +103,10 @@ public class Salesforce_Tarjetas {
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);   
                         }
-                    }    
+                    } 
                 } else if(response.contains('error')) {
                     System.debug('Error al crear la gestion');
-                    c.Respuesta_SF_Tarjetas__c = String.valueOf(/*'Error al crear la gestion.'*/response);
+                    c.Respuesta_SF_Tarjetas__c = String.valueOf(response);
 					c.DAU_aprobacion__c = false;  
                 }
                 updateCase.add(c);

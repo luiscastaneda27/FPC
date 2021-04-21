@@ -6,7 +6,7 @@ public class EstadosDeCuenta {
                 system.debug('Entró en método enviarCorreos');
                
                 Date fechaHoy = Date.Today();
-    			String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = ';                
+    			String queryCorreo = 'Select Cuerpo__c,DeveloperName From Correo_EDC__mdt Where DeveloperName in ';                
     			list<classECMensual> respuesta = new list<classECMensual>();
     			list<classECPortada> respuestaDetallado = new list<classECPortada>();
     			list<classClientesEC> claseEnvio = new list<classClientesEC>();
@@ -15,100 +15,73 @@ public class EstadosDeCuenta {
     			map<String, String> mapFDesde = new map<String, String>();
     			map<String, String> mapFHasta = new map<String, String>();
                 map<String, String> mapContacto = new map<String, String>();
-    			map<String, String> mapNombre = new map<String, String>();
-    			list<string> idClientes= new list<string>();
-                List<Account> clientes = new List<Account>();
-    			if(idCaso != null){
+                map<String, String> mapNombre = new map<String, String>();
+                map<String, String> mapTypeCliente = new map<String, String>();
+                String recordTypeIdNatural = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
+                list<string> idClientes= new list<string>();
+                if(idCaso != null){
                     system.debug('Entró en True casos');
-                    string idclientenuevo =[select  accountid from case where id in :idCaso limit 1].accountid;
-                    clientes = [Select Name, PersonEmail, Identificacion__c, PersonContactId 
-                                              From Account Where id =:idclientenuevo];
-    				For(Case item : [Select Fecha_Desde__c,Account.Identificacion__c, Account.PersonContactId ,
-                                     Account.Name,Account.PersonEmail, Fecha_Hasta__c 
-    								From Case Where Id In: idCaso]){
-    									
-    					classClientesEC nueva = new classClientesEC();
-    					nueva.idCliente = item.Account.Identificacion__c;
-    					nueva.desde = item.Fecha_Desde__c;
-    					nueva.hasta = item.Fecha_Hasta__c;
-    					claseEnvio.add(nueva);
-                                        
-    					mapClientes.put(item.Account.Identificacion__c, item.Account.Identificacion__c);
-                    	mapCorreos.put(item.Account.Identificacion__c, item.Account.PersonEmail);
-                        mapContacto.put(item.Account.Identificacion__c, item.Account.PersonContactId);
-                        mapNombre.put(item.Account.Identificacion__c, item.Account.Name);                
-    					String fDesde = item.Fecha_Desde__c != null ? string.valueOF(item.Fecha_Desde__c) : 'null';
-    					String fHasta = item.Fecha_Hasta__c != null ? string.valueOF(item.Fecha_Hasta__c) : 'null';
-    					mapFDesde.put(item.Account.Identificacion__c, fDesde);
-    					mapFHasta.put(item.Account.Identificacion__c, fHasta);
-                        fechaHoy = item.Fecha_Hasta__c;
-    					
-    				}
-    			}else{
-                    idClientes = ObtenerCorreos(tipoEDC);
-                    fechaHoy = fechaHoy.addDays(-fechaHoy.Day());
-                    system.debug('Entró False caso con fecha  ' + fechaHoy);
-                    date fechafebrero =DATE.valueOf('2019-12-31');  
-                    list<string> codigosclientes = new list<string>();     
-                     for(Cuentas__C item: [select cliente__C from cuentas__C where Fecha_Apertura__c <: fechafebrero and 
-                                          cliente__C in :idClientes]){
-                        codigosclientes.add(item.cliente__C);
+                    For(Case item :
+                        [Select Fecha_Desde__c,Account.Identificacion__c, Account.PersonContactId ,
+                         Account.Name,Account.PersonEmail, Fecha_Hasta__c,
+                         Contact.Email,ContactId, Account.RecordTypeId 
+                         From Case Where Id In: idCaso and EnviarEDCPorCorreo__c = true]){
+                             
+                             classClientesEC nueva = new classClientesEC();
+                             nueva.idCliente = item.Account.Identificacion__c;
+                             nueva.desde = item.Fecha_Desde__c;
+                             nueva.hasta = item.Fecha_Hasta__c;
+                             claseEnvio.add(nueva);
+                             
+                             mapClientes.put(item.Account.Identificacion__c, item.Account.Identificacion__c);
+                             mapNombre.put(item.Account.Identificacion__c, item.Account.Name);
+                             if(item.Account.RecordTypeId  == recordTypeIdNatural){
+                                 mapCorreos.put(item.Account.Identificacion__c, item.Account.PersonEmail);
+                                 mapContacto.put(item.Account.Identificacion__c, item.Account.PersonContactId);
+                                 mapTypeCliente.put(item.Account.Identificacion__c, 'EDC_Portada');
+                             }else{
+                                 mapCorreos.put(item.Account.Identificacion__c, item.Contact.Email);
+                                 mapContacto.put(item.Account.Identificacion__c, item.ContactId);
+                                 mapTypeCliente.put(item.Account.Identificacion__c, 'EDC_Portada_Juridicos');
+                             }
+                             
+                             String fDesde = item.Fecha_Desde__c != null ? string.valueOF(item.Fecha_Desde__c) : 'null';
+                             String fHasta = item.Fecha_Hasta__c != null ? string.valueOF(item.Fecha_Hasta__c) : 'null';
+                             mapFDesde.put(item.Account.Identificacion__c, fDesde);
+                             mapFHasta.put(item.Account.Identificacion__c, fHasta);
+                             fechaHoy = item.Fecha_Hasta__c;
+                                         
                     }
-                    clientes = [Select Name, PersonEmail, Identificacion__c, PersonContactId 
-                                              From Account Where id in :codigosclientes];
-                    
-                    system.debug('Clientes queryCli ' + clientes);
-    				For(Account item : clientes){
-    					classClientesEC nueva = new classClientesEC();
-    					nueva.idCliente = item.Identificacion__c;
-                        nueva.hasta = fechaHoy;
-    					claseEnvio.add(nueva);
-    					
-    					mapClientes.put(item.Identificacion__c, item.Identificacion__c);
-                        mapContacto.put(item.Identificacion__c, item.PersonContactId);
-                    	mapCorreos.put(item.Identificacion__c, item.PersonEmail);
-                        mapNombre.put(item.Identificacion__c, item.Name); 
-    					mapFDesde.put(item.Identificacion__c, 'null');
-    					mapFHasta.put(item.Identificacion__c, string.valueOf(fechaHoy));
-    				}    				
-    			}
-    			
+                }
     			Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
     			OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];   	
     			map<string, integer> mapClientestrimestral = new map<string, integer>();
     			if(tipoEDC == 'A1'){
-					queryCorreo += '\'EDC_Portada\'';
+					queryCorreo += '(\'EDC_Portada\',\'EDC_Portada_Juridicos\')';
 					respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio);
-                    for(account item : clientes)
-                    {
-                        for(integer i=0; i<respuestaDetallado.size(); i++)
-                        {
-                           if(item.Identificacion__c==respuestaDetallado[i].identidad)
-                           {
-                               respuestaDetallado[i].nombrecliente=item.name;
-                               respuestaDetallado[i].emailCliente=item.PersonEmail;
-                           }
-                        }
+                    for(integer i=0; i<respuestaDetallado.size(); i++) {
+                        respuestaDetallado[i].nombrecliente = mapNombre.get(respuestaDetallado[i].identidad);
+                        respuestaDetallado[i].emailCliente = mapCorreos.get(respuestaDetallado[i].identidad);
                         
                     }
 				}else{
-					queryCorreo += '\'EDC_Mensual2\'';
+					queryCorreo += '(\'EDC_Mensual2\')';
                     respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio);
-                   for(classECPortada item : respuestaDetallado)
-                   {
-                       if(!mapClientestrimestral.containsKey(item.identidad))
-                       {
+                   for(classECPortada item : respuestaDetallado){
+                       if(!mapClientestrimestral.containsKey(item.identidad)){
                            mapClientestrimestral.put(item.identidad,6);
                        }
                    }
 				}
-                
-    			Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
+                Map<String, String> mapBodyEmail = new Map<String, String>();
+                for(Correo_EDC__mdt item : dataBase.query(queryCorreo)){
+                    mapBodyEmail.put(item.DeveloperName, item.Cuerpo__C);
+                }
 			
 			if(tipoEDC == 'A1'){
 				For(classECPortada item : respuestaDetallado){
                     Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
-                    String cuerpo = cuerpoCorreo.Cuerpo__c;
+                    String cuerpo = mapBodyEmail.get(mapTypeCliente.get(item.identidad));
 					cuerpo = cuerpo.replace('[getAlaFecha]', item.fechaCierre);
 					String lps = item.fondosLempiras != null ? '<br/> &nbsp; &nbsp; &nbsp; Total Fondos en Lempiras: ' + item.fondosLempiras : '';
 					cuerpo = cuerpo.replace('[getFondosLempira]', lps);
@@ -146,7 +119,7 @@ public class EstadosDeCuenta {
                    if(mapClientestrimestral.containsKey(item))
                    {
                        Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
-                    	String cuerpo = cuerpoCorreo.Cuerpo__c;  
+                    	String cuerpo = mapBodyEmail.get('EDC_Mensual2');  
                          varurl url= new varurl();
                          url.idcli=mapNombre.get(item);
                          url.desde=mapFDesde.get(item);
@@ -183,31 +156,13 @@ public class EstadosDeCuenta {
            //system.debug('Variable correos: ' + listCorreo);
            Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
            system.debug('Correos enviados correctamente: '+results);
-           list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
-           todosCorreos = [select cliente__C, enviado__C, id, enviado_mensual__C from Correo_estado_cuenta__c where cliente__C in :idClientes];
-           if(TipoEDC=='A1' && listCorreo.size()>0 && idCaso ==null)
-           {
-                for(integer i=0; i<todosCorreos.size(); i++)
-               {
-                   todosCorreos[i].enviado__C=true;
-                   
-               }
-           }
-           else if(listCorreo.size()>0 && idCaso ==null)
-           {
-                for(integer i=0; i<todosCorreos.size(); i++)
-               {
-                   todosCorreos[i].enviado_mensual__C=true;
-                   
-               }
-           }
-          
-           update todosCorreos;
+           
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());	
         }
     }  
    
+    
     public static list<classECPortada> estadoCuentaCorreo(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
