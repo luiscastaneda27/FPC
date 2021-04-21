@@ -81,7 +81,7 @@ public class ControllerAPIPagoIntereses {
         system.debug(Cuenta); 
 		classPagoInteresesFPC fcsd= new classPagoInteresesFPC();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST BuscarCuenta2');
 		try{
 			
 			HttpResponse response =new HttpResponse();//
@@ -95,9 +95,9 @@ public class ControllerAPIPagoIntereses {
 	    	respuesta = response.getBody();
             
             //fcsd = respuesta.split(',');
-            system.debug(respuesta); 
+            system.debug('Respuesta: '+respuesta); 
             if (response.getStatusCode() == 200) {
-	            fcsd = (classPagoInteresesFPC)System.JSON.deserialize(response.getBody(), classPagoInteresesFPC.class);         
+                fcsd = (classPagoInteresesFPC)System.JSON.deserialize(respuesta, classPagoInteresesFPC.class); 
 	        }
 		}catch(System.CalloutException e){
 			system.debug(e.getMessage());

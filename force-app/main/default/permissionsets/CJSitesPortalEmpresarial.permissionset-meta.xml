@@ -3591,6 +3591,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.EnviarEDCPorCorreo__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Enviar_a_aprobacion__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -5413,6 +5418,11 @@
         <editable>true</editable>
         <field>Cuentas__c.Fecha_Aporte__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Cuentas__c.FondoInversionCP__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

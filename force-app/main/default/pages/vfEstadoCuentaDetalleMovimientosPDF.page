@@ -139,12 +139,12 @@
                         <td style="color:#0f4f9e;">{!cuentas.numeroCliente}</td> 
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >Rendimiento (HNL):</apex:outputText> </td>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>                       
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >Rendimiento (HNL):</apex:outputText> </td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>                       
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"> <apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >Rendimiento (USD):</apex:outputText></td>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
+                        <td style="color:#0f4f9e;"> <apex:outputText rendered="{!rendimientoUSD}" >Rendimiento (USD):</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
                     </tr>
                 </table>
             </div>

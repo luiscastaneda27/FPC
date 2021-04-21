@@ -719,11 +719,16 @@ public class ControllerPantJuridProduc {
 			PC_DEBIDA_DELIGENCIA = '2';
             desNacion2 = true; 
             TipoEntidadLLenar();
+            
+             /*paso1Cabeza = 'slds-is-complete';
+	            paso1Cuerpo = 'slds-hide';
+	            
+	            paso2Cabeza = 'slds-is-current';
+	            paso2Cuerpo = 'slds-show'; */  
      }
     
    
-      public void iniciar()
-      {    
+    public void iniciar(){    
         paso1Cabeza = 'slds-is-current';
         paso1Cuerpo = 'slds-show';
         
@@ -731,24 +736,24 @@ public class ControllerPantJuridProduc {
         paso2Cuerpo = 'slds-hide';
     }
     
-     public void enviarPagPro()
-       {   
-                paso1Cabeza = 'slds-is-complete';
-	            paso1Cuerpo = 'slds-hide';
-	            
-	            paso2Cabeza = 'slds-is-current';
-	            paso2Cuerpo = 'slds-show';           
-       }
+    public void enviarPagPro()
+    {   
+        paso1Cabeza = 'slds-is-complete';
+        paso1Cuerpo = 'slds-hide';
+        
+        paso2Cabeza = 'slds-is-current';
+        paso2Cuerpo = 'slds-show';           
+    }
     
     
-      public void BtnCancelar()
-       {   
-                disbot=false;
-	            paso2Cuerpo = 'slds-hide';
-	            
-	            paso1Cabeza = 'slds-is-current';
-	            paso1Cuerpo = 'slds-show';    
-       }
+    public void BtnCancelar()
+    {   
+        disbot=false;
+        paso2Cuerpo = 'slds-hide';
+        
+        paso1Cabeza = 'slds-is-current';
+        paso1Cuerpo = 'slds-show';    
+    }
 
     //Productos 
     public void llenarProductos(){

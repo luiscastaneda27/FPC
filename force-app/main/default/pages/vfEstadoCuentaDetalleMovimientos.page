@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>simple</title>
+<title>Estado de Cuenta FPC</title>
 <meta  name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0," />
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,600italic,700italic,800,800italic' rel='stylesheet' type='text/css' />
 <style type="text/css">
@@ -313,7 +313,7 @@ table[class=display-width] table[class="pricing"] {
               <tr>
                 <td><!-- TABLE LEFT -->
                   
-                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="47%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="60%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
                     <tr>
                       <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; font-weight:400; line-height:20px; padding-right: 20px"><p>A la fecha: <br />
                           Nombre del cliente:<br />
@@ -323,12 +323,12 @@ table[class=display-width] table[class="pricing"] {
                           {!cuentas.numeroCliente} </p></td>
                       </tr>
                       <tr>
-                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >Rendimiento (HNL):</apex:outputText> </td>
-                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>                       
+                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >Rendimiento (HNL):</apex:outputText> </td>
+                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>                       
                       </tr>
                       <tr>
-                          <td style="color:#0f4f9e;"> <apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >Rendimiento (USD):</apex:outputText></td>
-                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
+                          <td style="color:#0f4f9e;"> <apex:outputText rendered="{!rendimientoUSD}" >Rendimiento (USD):</apex:outputText></td>
+                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
                       </tr>
                   </table>
                   <table align="left" border="0" cellpadding="0"  cellspacing="0" width="1" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
@@ -341,7 +341,7 @@ table[class=display-width] table[class="pricing"] {
                   
                   <!-- TABLE RIGHT -->
                   
-                  <table align="right" border="0" cellpadding="0" cellspacing="0" width="47%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                  <table align="right" border="0" cellpadding="0" cellspacing="0" width="34%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
                     <tr>
                       <td align="right" class="MsoNormal" style="color:#005baa; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:45px; font-weight:700; line-height:24px;"><img src="https://fpc.secure.force.com/estadosCuenta/resource/1545328005000/Logo_Estado_de_cuentas" style="height:50px; width:200px" /></td>
                     </tr>

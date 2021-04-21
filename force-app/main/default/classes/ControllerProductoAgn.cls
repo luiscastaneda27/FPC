@@ -5307,12 +5307,12 @@ public class ControllerProductoAgn
                 if (fcsd.pcsubproducto != null){
                     system.debug('lo que trae el subproducto: '+pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
-            	opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            	for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
-            	{
-                	opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
-            	}
-                pcsubproducto = fcsd.pcsubproducto;
+                    opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
+                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
+                    {
+                        opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
+                    }
+                    pcsubproducto = fcsd.pcsubproducto;
                 }
                 if (fcsd.pcTipoFondo != 'null')
                 {
@@ -5953,8 +5953,7 @@ public class ControllerProductoAgn
                     system.debug('lo que trae el subproducto: '+pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
             	opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            	for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
-            	{
+            	for (Subproducto__c item:[select name, codigo__c from Subproducto__c order by name asc /*where codigo__c =: fcsd.pcsubproducto*/]){
                 	opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
             	}
                 pcsubproducto = fcsd.pcsubproducto;

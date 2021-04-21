@@ -22,8 +22,13 @@ public class controllerEDChistoricoPDFCaso {
             claseEnvio.add(nueva);
             cuentas = EstadosDeCuenta.estadoCuentaHistorico(claseEnvio)[0];
             for(classECHistorico.classMovimientos item : cuentas.movimientos){
-                rendimientoHNL =  item.moneda.trim() == 'Lempiras' ? true : RendimientoHNL;
-                rendimientoUSD =  item.moneda.trim()== 'Dólares' ? true : RendimientoUSD;
+                if(item.moneda.trim() == 'Lempiras' && cuentas.rendimientoLempiras != null
+                       && !cuentas.rendimientoLempiras.contains('null') && !rendimientoHNL){
+                        rendimientoHNL = true;
+                    }else if(item.moneda.trim() == 'Dólares' && cuentas.rendimientoDolares != null 
+                       && !cuentas.rendimientoDolares.contains('null') && !rendimientoUSD){
+                        rendimientoUSD = true;
+                    }
             }
             
         }Catch(Exception e){

@@ -192,7 +192,7 @@ public class Controller_AprobacionPagoInteres {
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             MuestraRegistrados();
             EnvioCorreoAprobado();
-            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c = :cuenta ]);
+            //delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c = :cuenta ]);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, 'PAGO DE INTERESES APROBADO'));
         }catch(Exception e){ 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
@@ -427,7 +427,7 @@ public class Controller_AprobacionPagoInteres {
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             
             MuestraRegistrados(); 
-            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c in :listIds ]);
+          //  delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c in :listIds ]);
         }catch(Exception e){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
         }
     }

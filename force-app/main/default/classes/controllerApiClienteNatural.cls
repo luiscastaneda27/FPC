@@ -42,7 +42,7 @@ public class controllerApiClienteNatural {
 		request.setEndpoint(url + 'api/actualizaClienteNatural');
 		
 		String respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entró al método actualiza información');
 		try{
 						
 			classJson envio = new classJson();

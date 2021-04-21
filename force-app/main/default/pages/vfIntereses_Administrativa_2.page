@@ -313,19 +313,21 @@
                                                 <tr>
                                                     <td style="width:33%;">
                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
-                                                            <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p>  Estado de Pensión
+                                                            <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p>  Estado Pago de Intereses
                                                         </label><br/>
                                                         <apex:selectList disabled="{!pagoInteres.NombreCompleto == null}" styleclass="slds-input"  size="1" value="{!pagoInteres.estadoAprobacion}" style="height:10px; width:160px; margin-left:10px;" >
-                                                             <apex:selectOption itemLabel="--Ninguno--" itemValue="" rendered="{!pagoInteres.NombreCompleto == null}"  />
+                                                            <apex:selectOption itemLabel="--Ninguno--" itemValue=""   />
+                                                            <apex:selectOption itemLabel="Registrado" itemValue="R" />
                                                             <apex:selectOption itemLabel="Activo" itemValue="A" />
                                                             <apex:selectOption itemLabel="Inactivo" itemValue="I"  />
+                                                            <!--apex:selectOption itemLabel="Rechazado" itemValue="D" /-->
                                                         </apex:selectList>
                                                     </td>
                                                     <td style="width:33%;">
                                                         <label class="slds-form-element__label" for="inputSample" >
                                                             Última Fecha de Pago de Intereses
                                                         </label><br/>
-                                                        <apex:outputText value="{0, date, dd/MM/yyyy HH:mm}"> <apex:param value="{!pagoInteres.ultFec_inclusion}" /> </apex:outputText>
+                                                        <apex:outputText value="{0, date, dd/MM/yyyy}"> <apex:param value="{!pagoInteres.ultFec_inclusion}" /> </apex:outputText>
                                                     </td>
                                                     <td style="width:34%;">
                                                         <label class="slds-form-element__label" for="inputSample" >

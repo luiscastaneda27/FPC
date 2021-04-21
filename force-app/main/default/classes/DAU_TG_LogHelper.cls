@@ -8,62 +8,68 @@ public class DAU_TG_LogHelper {
                  From case Where Id =: st[0].DAU_IdCaso__c];
             
             List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c, Cuenta__r.Name, 
-                                                Cuenta__r.Forma_Aportacion__c From Detalle_caso__c where Caso__c =: c.Id Limit 1];
+                       Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c where Caso__c =: c.Id Limit 1];
             
             if(!detailCase.isEmpty()) {
                 //Lllamar al servico de *Salesforce Tarjetas* cuando la forma de aportación de la cuenta es: Tarjeta de Crédito/Debito
-                if(detailCase[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
+                if(detailCase[0].Nuevo_canal_aporte__c == 'TA' || detailCase[0].Banco__c == '28') {
                     if(c.Tipo_de_Operacion__c == 'A4') {
-                        if(c.DAU_Tarjeta_de_Sysde__c == Null && c.DAU_Identidad__c == Null) {
+                        /*if(c.DAU_Tarjeta_de_Sysde__c == Null && c.DAU_Identidad__c == Null) {
                             DAU_BorrarCuotas.ConsultaInfoClienteC(c.Id,detailCase[0].Cuenta__r.Name);
-                        } 
-                        if(c.DAU_Tarjeta_de_Sysde__c <> Null && c.DAU_Identidad__c == Null) {
-                            updateCase.validarIdentidad(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);    
+                        } */
+                        if(/*c.DAU_Tarjeta_de_Sysde__c <> Null && */st[0].DAU_NumeroCuenta__c <> Null) {
+                            updateCase.validarIdentidad(c.Id, st[0].DAU_NumeroCuenta__c, c.Account.Identificacion__c);    
                         }
                         if(c.DAU_llamarSalesforceTarjeta__c == false && c.DAU_Identidad__c <> Null) {
                             c.DAU_llamarSalesforceTarjeta__c = true;
                             update c;
                         }
                         //LLamar al servicio que procesa el caso en Sysde 
-                        if(st[0].DAU_EjecutarSYSDE__c == true && c.Respuesta_SF_Tarjetas__c <> Null) {
+                        if(st[0].DAU_EjecutarSYSDE__c == true /*&& c.Respuesta_SF_Tarjetas__c <> Null*/) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }
                     }
                     
                     if(c.Tipo_de_Operacion__c == 'A6') { 
-                        if(c.DAU_Tarjeta_de_Sysde__c == Null && c.DAU_Identidad__c == Null) {
-                            DAU_BorrarCuotas.ConsultaInfoClienteC(c.Id,detailCase[0].Cuenta__r.Name);
-                        } 
-                        if(c.DAU_Tarjeta_de_Sysde__c <> Null && c.DAU_Identidad__c == Null) {
-                            updateCase.validarIdentidad(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);    
-                        }
-                        //LLamar al servicio que procesa el caso en Sysde cuando es débito a titular
-                        if(st[0].DAU_EjecutarSYSDE__c == true) {
-                            System.debug('Entra a cerrar el caso');
-                            c.DAU_aprobacion__c = true;
-                            c.Status = 'Cerrado';
-                            update c;
-                        }
-                        //Bandera para que el trigger de caso llama al Servio de Salesforce Tarjetas
-                        if(c.DAU_llamarSalesforceTarjeta__c == false && c.DAU_Identidad__c <> '') {
-                            c.DAU_llamarSalesforceTarjeta__c = true;
-                            update c;
-                        }
-                    }
-                    
-                    if(c.Tipo_de_Operacion__c == 'A7') {
-                        if(c.DAU_Tarjeta_de_Sysde__c == Null && c.DAU_Identidad__c == Null) {
-                            DAU_BorrarCuotas.ConsultaInfoClienteC(c.Id,detailCase[0].Cuenta__r.Name);
-                        } 
-                        if(c.DAU_Tarjeta_de_Sysde__c <> Null && c.DAU_Identidad__c == Null) {
-                            updateCase.validarIdentidad(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);    
-                        }
+                        /*if(st[0].DAU_NumeroCuenta__c <> Null && c.Respuesta_SF_Tarjetas__c == Null) {
+                            updateCase.validarIdentidad(c.Id, st[0].DAU_NumeroCuenta__c, c.Account.Identificacion__c);    
+                        }*/
                         if(c.DAU_llamarSalesforceTarjeta__c == false && c.DAU_Identidad__c <> Null) {
                             c.DAU_llamarSalesforceTarjeta__c = true;
                             update c;
                         }
                         //LLamar al servicio que procesa el caso en Sysde 
-                        if(st[0].DAU_EjecutarSYSDE__c == true && c.Respuesta_SF_Tarjetas__c <> Null) {
+                        if(st[0].DAU_EjecutarSYSDE__c == true) {
+                            aSysdeCallouts.aumentoDisminucion(c.id); 
+                        }
+                        //Llamar al servicio que borra las cuotas del saldo 10 en el caso de Afiliación de Débito Automático
+                        String tipoSaldo = '';
+                        if(st[0].DAU_Borrar_Cuotas_S10__c == true) {
+                            System.debug('Solo llama al servicio que Borra la cuotas del Saldo 10');
+                            tipoSaldo = '10';
+                            DAU_BorrarCuotas.aumentoDisminucion(c.Id, tipoSaldo);
+                        }                         
+                        //Llamar al servicio que borra las cuotas del saldo 10 en el caso de Afiliación de Débito Automático
+                        if(st[0].DAU_Borrar_Cuotas_S18__c == true) {
+                            System.debug('Solo llama al servicio que Borra la cuotas del Saldo 18');
+                            tipoSaldo = '18';
+                            DAU_BorrarCuotas.aumentoDisminucion2(c.Id, tipoSaldo);
+                        } 
+                    }
+                    
+                    if(c.Tipo_de_Operacion__c == 'A7') {
+                        /*if(c.DAU_Tarjeta_de_Sysde__c == Null && c.DAU_Identidad__c == Null) {
+                            DAU_BorrarCuotas.ConsultaInfoClienteC(c.Id,detailCase[0].Cuenta__r.Name);
+                        } 
+                        if(c.DAU_Tarjeta_de_Sysde__c <> Null && c.DAU_Identidad__c == Null) {
+                            updateCase.validarIdentidad(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);    
+                        }*/
+                        if(c.DAU_llamarSalesforceTarjeta__c == false && c.DAU_Identidad__c <> Null) {
+                            c.DAU_llamarSalesforceTarjeta__c = true;
+                            update c;
+                        }
+                        //LLamar al servicio que procesa el caso en Sysde 
+                        if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }
                     }
@@ -95,8 +101,8 @@ public class DAU_TG_LogHelper {
                         } 
                     } 
                 //Lllamar al servico de *BAC* cuando la forma de aportación de la cuenta es: Tarjeta de Crédito/Debito otros Bancos	    
-                } else if(detailCase[0].Cuenta__r.Forma_Aportacion__c == 'TAOB') {
-                	if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
+                } else if(detailCase[0].Nuevo_canal_aporte__c == 'TAOB') {
+                	if(c.Tipo_de_Operacion__c == 'A8') {
                         //Bandera para que el trigger de caso llama al Servio de Salesforce Tarjetas                
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
@@ -121,6 +127,22 @@ public class DAU_TG_LogHelper {
                             tipoSaldo = '18';
                             DAU_BorrarCuotas.aumentoDisminucion2(c.Id, tipoSaldo);
                         } 
+                    }  
+                    
+                    if(c.Tipo_de_Operacion__c == 'A3') {
+                    	DAU_GestionesBac.execute(c.Id, 'Afiliacion');    
+                    }
+                    
+                    if(c.Tipo_de_Operacion__c == 'A4') {
+                    	if(st[0].DAU_EjecutarSYSDE__c == true) {
+                            aSysdeCallouts.aumentoDisminucion(c.id); 
+                        }
+                    }
+                    
+                } else if(detailCase[0].Nuevo_canal_aporte__c == 'AH' || (c.Tipo_de_Operacion__c == 'A2' && detailCase[0].Cuenta__r.Forma_Aportacion__c == 'AH')) {              
+                    System.debug('Tipo AH');
+                    if(st[0].DAU_EjecutarSYSDE__c == true) {
+                    	aSysdeCallouts.aumentoDisminucion(c.id); 
                     }    
                 }
             }

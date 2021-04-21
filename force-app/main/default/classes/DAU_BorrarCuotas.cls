@@ -129,8 +129,8 @@ public class DAU_BorrarCuotas {
         }    
     }
     
-    @future(callout=true)
-    public static void ConsultaInfoClienteC(String idCaso, String pc_codCuenta) {
+    //@future(callout=true)
+    public static string ConsultaInfoClienteC(String idCaso, String pc_codCuenta) {
         
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -146,7 +146,7 @@ public class DAU_BorrarCuotas {
         
         Case caso = new Case();
         
-        caso = [Select Id, Status, DAU_Tarjeta_de_Sysde__c From Case Where Id =: idCaso];
+        caso = [Select Id, Status, DAU_Tarjeta_de_Sysde__c, Tipo_de_Operacion__c From Case Where Id =: idCaso];
         
 		try{
             
@@ -161,15 +161,15 @@ public class DAU_BorrarCuotas {
 	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
                 System.debug('fcsd: '+fcsd);
 
-                caso.DAU_Tarjeta_de_Sysde__c = fcsd.pccuentapago;
-                update caso;
+                //caso.DAU_Tarjeta_de_Sysde__c = fcsd.pccuentapago/*4809939250096876*/;
+                //update caso;
                     
                 System.debug('fcsd.pccuentapago: '+fcsd.pccuentapago);
                   
-                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id));
+                /*List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_NumeroCuenta__c = fcsd.pccuentapago));
                 // Call method to publish events
-                List<Database.SaveResult> results = EventBus.publish(Logs);   
+                List<Database.SaveResult> results = EventBus.publish(Logs); */  
         	}
             
 		}catch(System.CalloutException e){
@@ -179,11 +179,11 @@ public class DAU_BorrarCuotas {
             if(e.getMessage().contains('For input string')) {
             	caso.Status = 'No Aplica'; 
             	update caso;
-            }  
+            } 
 		} 
         
         system.debug('debuggAPI' +' '+ fcsd);
-		//return fcsd;   
+		return fcsd.pccuentapago;   
     }
     
     public static String generarPartidas(classAumentoDisminucion envioDatos) {

@@ -612,6 +612,7 @@
 		<members>Cuentas__c.Fecha_Apertura__c</members>
 		<members>Cuentas__c.Fecha_Aporte__c</members>
 		<members>Cuentas__c.Fondo_Inversion__c</members>
+		<members>Cuentas__c.FondoInversionCP__c</members>
 		<members>Cuentas__c.Forma_Aportacion__c</members>
 		<members>Cuentas__c.Frecuencia_Aportacion__c</members>
 		<members>Cuentas__c.Mas_5_anos__c</members>

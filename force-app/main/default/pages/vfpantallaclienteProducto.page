@@ -3427,7 +3427,7 @@ reRender="" />
                                             <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
                                                 
                                                 <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
-                                                    BENEFICIARIOS CONTINGENCIAS M
+                                                    BENEFICIARIOS CONTINGENCIAS
                                                 </legend>
                                                 
                                                 
@@ -3523,14 +3523,14 @@ reRender="" />
                                                                     <abbr class="slds-required" title="required"></abbr> Grado
                                                                 </label>
                                                                 
-                                                                <apex:selectList disabled="true" value="{!beneficiarioUnicoC.grado}" styleclass="slds-input"  id="gradoC"  style="height:10px; width:170px; margin-left:75px; " size="1" >
+                                                                <!--apex:selectList disabled="true" value="{!beneficiarioUnicoC.grado}" styleclass="slds-input"  id="gradoC"  style="height:10px; width:170px; margin-left:75px; " size="1" >
                                                                     <apex:selectOption itemLabel="Primer Grado" itemValue="1" />
                                                                     <apex:selectOption itemLabel="Segundo Grado" itemValue="2" />
                                                                     <apex:selectOption itemLabel="tercer Grado" itemValue="3" />
                                                                     <apex:selectOption itemLabel="Cuarto Grado" itemValue="4" />
-                                                                </apex:selectList>
-                                                                <!--apex:inputField html-disabled="true" onkeypress="return sololetras(event)" value="{!CanalVentaaConti.Grado_Familiar__c}" styleclass="slds-input"  id="gradoC"  style="height:10px; width:170px; margin-left:75px; " />
-                                                                -->
+                                                                </apex:selectList-->
+                                                                <apex:inputField html-disabled="true" onkeypress="return sololetras(event)" value="{!CanalVentaaConti.Grado_Familiar__c}" styleclass="slds-input"  id="gradoC"  style="height:10px; width:170px; margin-left:75px; " />
+                                                                
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Fecha Nacim.
                                                                 </label>
@@ -3748,7 +3748,7 @@ reRender="" />
                                                     <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning"/>
                                                     <br/><br/>
                                                     <apex:commandButton value="Agregar" disabled="{!disbot}" action="{!guardar}" styleClass="slds-button slds-button--brand" style="height:40px; width:200px; margin-left:255px " reRender="infoAfiliado, pantProductosP, BTNGuardar" status="status"/>
-                                                    <apex:commandButton disabled="{!MostarActualizar}" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
+                                                    <apex:commandButton disabled="{!MostarActualizar}" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px " />
                                                     <apex:commandButton value="Cancelar" action="{!limpiar}" styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:52px "/>
                                                 </div>
                                             </div>

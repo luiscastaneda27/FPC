@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prueba</fullName>
+    <columns>Codigo_Referencia__c</columns>
+    <columns>Codigo_Usuario__c</columns>
+    <columns>OWNER.FIRST_NAME</columns>
+    <columns>Tipo_SaldoN__c</columns>
+    <columns>Periodo_Aporte__c</columns>
+    <columns>Oficial_de_negocios__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Prueba</label>
+    <sharedTo>
+        <role>Oficial_de_Operaciones_Back_Office</role>
+    </sharedTo>
+</ListView>

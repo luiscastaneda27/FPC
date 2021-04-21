@@ -1,17 +1,17 @@
 <apex:page extensions="controllerEDChistoricoPDFCaso" standardController="Case" title="Estado de Cuenta Historico PDF" renderAs="PDF" applyBodyTag="false" sidebar="false" showHeader="false">
-	<head>
+    <head>
           <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,600italic,700italic,800,800italic' rel='stylesheet' type='text/css' />
         
         <style> 
             @page { 
-            	margin-top: 3cm;
-            	margin-bottom: 3cm;
-            	margin-left: 2cm;
-            	margin-right: 2cm;
+                margin-top: 3cm;
+                margin-bottom: 3cm;
+                margin-left: 2cm;
+                margin-right: 2cm;
             }
                                    
             
-           	
+            
             table {
               border-collapse: collapse;
             }
@@ -19,9 +19,9 @@
                 page-break-after: always;
             }
             .logo {
-            	margin-left: 150px;
-            	
-            	left:0px;
+                margin-left: 150px;
+                
+                left:0px;
                 position: running(logo);
             }
             div.footerR {
@@ -31,7 +31,7 @@
             }
             @page {
                 @top-left {
-            		margin
+                    margin
                     content: element(logo)
                 }
             }
@@ -41,13 +41,13 @@
                 }
             }
             .logos {
-            	display:block;
-            	top: 0px;
-            	margin-left:63%;
-            	width: 200px;
+                display:block;
+                top: 0px;
+                margin-left:63%;
+                width: 200px;
             }
             td {
-            	font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;
+                font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;
             }
             .table_green td.total {
                 text-align: right;
@@ -138,12 +138,12 @@
                         <td style="color:#0f4f9e;">{!cuentas.numeroCliente}</td>
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >Rendimiento (HNL):</apex:outputText> </td>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoHNL, cuentas.rendimientoLempiras != null)}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >Rendimiento (HNL):</apex:outputText> </td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >Rendimiento (USD):</apex:outputText></td>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!AND(rendimientoUSD, cuentas.rendimientoDolares != null)}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >Rendimiento (USD):</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
                    </tr>
                 </table>
             </div>
@@ -184,7 +184,6 @@
                     </td>
                 </tr>
             </apex:repeat>
-            
         </apex:form>
 
     </body>

@@ -74,6 +74,7 @@ public class ControllerLoginAfiliados {
     public void cerrar(){
         mostrarlogin=true;
         mostrarhome=false;
+        pagina = '';
     }
     
     public void ClienteNatural()

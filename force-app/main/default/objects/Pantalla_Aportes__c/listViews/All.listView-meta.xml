@@ -11,4 +11,8 @@
     <columns>LAST_UPDATE</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
+    <sharedTo>
+        <role>Asesor_Servicio_Cliente</role>
+        <role>Oficial_de_Operaciones_Back_Office</role>
+    </sharedTo>
 </ListView>
