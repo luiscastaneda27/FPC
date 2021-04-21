@@ -26,7 +26,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                 .slds-scope .slds-notify--alert, .slds-scope .slds-notify_alert{
                 background: #ffb75d;
                 color:#FFF;      
-           		font-weight: bold; 
+                font-weight: bold; 
                 background-image:linear-gradient(45deg,rgba(0,0,0,.025) 25%,transparent 25%,transparent 50%,rgba(0,0,0,.025) 50%,rgba(0,0,0,.025) 75%,transparent 75%,transparent);
                 background-size: 100px 100px;
                 }
@@ -760,7 +760,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <td width="450">
                                                             <label class="slds-form-element__label" for="inputSample">
-                                                                <abbr class="slds-required" title="required"></abbr> Profesión/Ocupación				
+                                                                <abbr class="slds-required" title="required"></abbr> Profesión/Ocupación                
                                                             </label>
                                                             <apex:inputField value="{!TipoProfesion.Profesi_n_Ocupaci_n__c}" styleclass="slds-input" style="height:10px; width:170px; margin-left:7px;"/>      
                                                             
@@ -777,7 +777,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             <!--
 <apex:inputField onclick="deshabilita12()" value="{!TipoEstadoCivil.Estado_Civil__pc}" styleclass="slds-input"  id="estadoCiv"  style="height:10px; width:170px; margin-left:40px;" />
--->	
+--> 
                                                             
                                                             <script>
                                                             
@@ -878,8 +878,8 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             <apex:actionFunction action="{!desrtn}" name="desrtn"/>
                                                             <apex:actionFunction action="{!desSeguro}" name="desSeguro"/>
                                                             
-                                                            <apex:actionFunction action="{!BloqBotonCU}" name="BloqBotonCU"/>		
-                                                            <apex:actionFunction action="{!BloqBotonID}" name="BloqBotonID"/>	                                                          
+                                                            <apex:actionFunction action="{!BloqBotonCU}" name="BloqBotonCU"/>       
+                                                            <apex:actionFunction action="{!BloqBotonID}" name="BloqBotonID"/>                                                             
                                                                                                                        
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Nombre Cónyuge
@@ -932,7 +932,7 @@ reRender="" />
                                                                     <apex:inputCheckbox styleclass="slds-input" id="MosNaci2" value="{!desCheckb2}" >
                                                                         <apex:actionSupport event="onclick"
                                                                                             action="{!MostrarFatcaNacio2}" 
-                                                                                            >                                    				
+                                                                                            >                                                   
                                                                         </apex:actionSupport>
                                                                     </apex:inputCheckbox>
                                                                     
@@ -953,7 +953,7 @@ reRender="" />
                                                                     <abbr class="slds-required" title="required"></abbr> 3ra Nacionalidad
                                                                 </label>
                                                                 <apex:selectList disabled="{!desNacion2}" id="na3"  size="1" styleClass="slds-select" value="{!pcnacionalidad3}" style="height:10px; width:170px; margin-left:7px;">
-                                                                    <apex:selectOptions value="{!opcionNacionalidadTerceros}"></apex:selectOptions>	
+                                                                    <apex:selectOptions value="{!opcionNacionalidadTerceros}"></apex:selectOptions> 
                                                                     <apex:actionSupport event="onchange" action="{!NacionalidadFatca}" /> 
                                                                 </apex:selectList> 
                                                                 
@@ -1008,13 +1008,13 @@ reRender="" />
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo Teléfono
-                                                            	</label>
+                                                                </label>
                                                                                                                                 
                                                                 <apex:inputField id="TipoTelEmple" styleclass="slds-input" value="{!Cliente25.Tipo_Telefono__c}" style="height:10px; width:170px; margin-left:10px"/>
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Ubicación Teléfono
-                                                            	</label>
+                                                                </label>
                                                                                                                                 
                                                                 <apex:inputField id="UbicTelEmple" styleclass="slds-input" value="{!Cliente25.Telefono_Ubicacion__c}" style="height:10px; width:170px; margin-left:0px"/>
                                                                 
@@ -1097,7 +1097,7 @@ reRender="" />
                                                     
                                                         </apex:column> 
                                                         
-                                                	</apex:dataTable> 
+                                                    </apex:dataTable> 
                                                 
                                             </fieldset>  
                                             <br/>
@@ -1158,7 +1158,7 @@ reRender="" />
                                                     
                                                         </apex:column> 
                                                         
-                                                	</apex:dataTable> 
+                                                    </apex:dataTable> 
                                                 
                                             </fieldset>  
                                             <br/>
@@ -1228,14 +1228,14 @@ reRender="" />
                                                             <td width = "450">
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo Dirección
-                                                            	</label>                                                                                                                                
+                                                                </label>                                                                                                                                
                                                                 <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_Direccion__c}" style="height:10px; width:170px; margin-left:31px;"/>
                                                                 
-                                                                 <label class="slds-form-element__label" for="inputSample">
+                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Por defecto
                                                                 </label>
-                                                                <apex:inputField value="{!Cliente25.Por_Defecto__c}" id="def" styleclass="slds-input" style="height:10px; width:170px; margin-left:25px;"/>
-                             
+                                                                <apex:inputField value="{!Cliente25.Por_Defecto__c}" id="def" styleclass="slds-input" style="height:10px; width:170px; margin-left:25px;"/-->
+                                                                 
                                                                 <script>    
                                                                     function myFunction() {
                                                                         var x = document.getElementById("page:ubic1:pcCalleDetalleCN");  
@@ -1246,7 +1246,7 @@ reRender="" />
                                                                         }
                                                                         //document.getElementById("page:ubic1:pcCalleDetalleCN").setCustomValidity( x.value.length + " de " + x.maxLength );
                                                                         //document.getElementById("page:ubic1:pcCalleDetalleCN").reportValidity();
-                                                                	}
+                                                                    }
                                                                 </script>
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Calle/Detalle
@@ -1262,7 +1262,7 @@ reRender="" />
                                                             <td width = "450">
                                                                 <apex:commandButton action="{!guardarListaDir}" value="Agregar Dirección" styleClass="slds-button slds-button--brand" style="height:35px; margin-left:1002px "/>                                                                
                                                             
-                                                            	
+                                                                
                                                             </td>     
                                                         </tr>    
                                                         
@@ -1331,7 +1331,7 @@ reRender="" />
                                                     
                                                         </apex:column> 
                                                         
-                                                	</apex:dataTable> 
+                                                    </apex:dataTable> 
                                                 
                                             </fieldset>  
                                             <br/>
@@ -1399,7 +1399,7 @@ reRender="" />
                                                     
                                                         </apex:column> 
                                                         
-                                                	</apex:dataTable> 
+                                                    </apex:dataTable> 
                                                 
                                             </fieldset>  
                                             <br/>
@@ -1614,13 +1614,13 @@ reRender="" />
                                         
                                         
                                         <!-- Inicio popup -->                        
-                                        <div class="slds-scope">	
+                                        <div class="slds-scope">    
                                             <apex:outputPanel rendered="{!actPop}"> 
                                                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                                     <div class="slds-modal__container">
                                                         <header class="slds-modal__header">
                                                             
-                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">No se puede afiliar.</h1>			        
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">No se puede afiliar.</h1>                  
                                                         </header>
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
@@ -1643,7 +1643,7 @@ reRender="" />
                                                     </div>
                                                 </section>
                                                 <div class="slds-backdrop slds-backdrop_open"></div>
-                                            </apex:outputPanel>	
+                                            </apex:outputPanel> 
                                         </div>
                                         
                                         <!--
@@ -1655,7 +1655,7 @@ reRender="" />
                                         
                                         <!--VENTANA EMERGENTE PARA BUSCAR LAS CUENTAS-->
                                         
-                                        <div class="slds-scope"  >	
+                                        <div class="slds-scope"  >  
                                             
                                             <apex:outputPanel rendered="{!BuscarCuentas}">
                                                 
@@ -1665,7 +1665,7 @@ reRender="" />
                                                             
                                                             <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">
                                                                 Cuentas.
-                                                            </h1>			        
+                                                            </h1>                   
                                                         </header>
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
@@ -1745,7 +1745,7 @@ reRender="" />
                                                     </div>
                                                 </section>
                                                 <div class="slds-backdrop slds-backdrop_open"></div>
-                                            </apex:outputPanel>	
+                                            </apex:outputPanel> 
                                         </div>
                                         
                                     </div> <!-- DIV 1RO FIN -->
@@ -2126,10 +2126,10 @@ reRender="" />
                                         
                                     </div> <!--FIN DEL 6TO DIV-->
                                     
-     								<!--Div 29-05-2019-->
+                                    <!--Div 29-05-2019-->
                                     <!--VENTANA EMERGENTE PARA BUSCAR LAS EMPRESAS-->
                                     
-                                    <div class="slds-scope">	
+                                    <div class="slds-scope">    
                                         
                                         <apex:outputPanel rendered="{!BuscarEmpresas}">
                                             
@@ -2139,7 +2139,7 @@ reRender="" />
                                                         
                                                         <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">
                                                             Empresas.
-                                                        </h1>			        
+                                                        </h1>                   
                                                     </header>
                                                     <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                         <div class="slds-form-element__row slds-text-align_center">
@@ -2185,7 +2185,7 @@ reRender="" />
                                                 </div>
                                             </section>
                                             <div class="slds-backdrop slds-backdrop_open"></div>
-                                        </apex:outputPanel>	
+                                        </apex:outputPanel> 
                                     </div>
                                     <!--Div 29-05-2019-->                                    
                                     
@@ -2700,7 +2700,7 @@ reRender="" />
                                                                 <abbr class="slds-required" title="required"></abbr> #Cta/TC
                                                             </label>
                                                             <apex:inputText disabled="{!BloqForma}" id="CTATC" value="{!pccuentapago}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:61px;"/>
-                                                        	<br/>
+                                                            <br/>
                                                             <br/>
                                                         </td>
                                                     </tr>
@@ -2739,7 +2739,7 @@ reRender="" />
                                                                 <abbr class="slds-required" title="required"></abbr> #Transacciones                                                                    
                                                             </label>                                                                
                                                             <apex:inputText rendered="true" id="numtran" value="{!numtran}" styleclass="slds-input" style="height:10px; width:170px; margin-left:23px;"/>
-                                                        	<br/>
+                                                            <br/>
                                                             <apex:inputText style="border-style:none" id="id3" disabled="true"/>
                                                             <br/><br/>
                                                         <apex:inputText style="background-color:none;border-style:none;font-size:11px;text-align:center;width:1170px;margin-left:0px " value="{!codigoAsignado}" id="codigoAsignado" disabled="true"/>
@@ -2761,7 +2761,7 @@ reRender="" />
                                     </div> <!--Fin delFormulario-->
                                             
                                         </apex:outputPanel>
-                              		<apex:outputPanel id="panelSeguroVida" >
+                                    <apex:outputPanel id="panelSeguroVida" >
                                     <div id="seguro" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                                             
                                         <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
@@ -3042,7 +3042,7 @@ reRender="" />
                                             
                                             <!--Ventana Emergente de ayuda--> 
                                             
-                                            <div class="slds-scope">	
+                                            <div class="slds-scope">    
                                                 <apex:outputPanel rendered="{!VentanaAyuda}"> 
                                                     <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                                         <div class="slds-modal__container" style="width:800px;">
@@ -3051,7 +3051,7 @@ reRender="" />
                                                                 
                                                                 <!-- <apex:commandLink style="slds-item-align_center"  action="{!salir}" ><apex:image styleClass="imgx" value="{!$Resource.Logocerrar}"/> </apex:commandLink>-->
                                                                 
-                                                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Ficohsa Pensiones y Censantías.</h1>			        
+                                                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Ficohsa Pensiones y Censantías.</h1>                   
                                                                 <h4 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate" style="color:#A7AFB1; font-size:19px;">Afiliación Cliente Natural.</h4>
                                                                 
                                                             </header>
@@ -3072,10 +3072,10 @@ reRender="" />
                                                                         <div class="slds-form-element slds-size_1-of-1">
                                                                             <font style="color:#42C4DD; font-size:18px;"><strong>Informacion Beneficiarios</strong> </font><br/>
                                                                             <font style="color:#666666; font-size:16px;">
-                                                                                1.	La distribución del beneficiario, sea para beneficiarios directos o contingencia sera del 100 %.
+                                                                                1.  La distribución del beneficiario, sea para beneficiarios directos o contingencia sera del 100 %.
                                                                                 <br/> 
                                                                                 <br/> 
-                                                                                2.	La distribución se ingresa primero la de los beneficiarios directos completando el 100% y luego  la de los beneficiarios contingencia.
+                                                                                2.  La distribución se ingresa primero la de los beneficiarios directos completando el 100% y luego  la de los beneficiarios contingencia.
                                                                                 <br/> 
                                                                                 <br/>  
                                                                                 
@@ -3102,7 +3102,7 @@ reRender="" />
                                                         </div>
                                                     </section>
                                                     <div class="slds-backdrop slds-backdrop_open"></div>
-                                                </apex:outputPanel>	
+                                                </apex:outputPanel> 
                                             </div>
                                             
                                         </div> <!--FIN DEL FORM2-->
@@ -3259,7 +3259,7 @@ reRender="" />
                                         <!--Tabla Para Mostrar los beneficiarios-->
                                         
                                             <apex:outputPanel id="tablaBeneficiarios"> 
-                                        	<div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                            <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                                             <apex:outputPanel rendered="{!mostrarTabla}"  style="width:1200px; margin-left:35px; "> 
                                                 
                                                 <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
@@ -3576,7 +3576,7 @@ reRender="" />
                                         </apex:outputPanel>
                                             <!--Tabla Para Mostrar los beneficiarios-->
                                         <apex:outputPanel id="tablaBeneficiariosC"> 
-                                        	<div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                            <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                                             <apex:outputPanel id="datodBeneC" rendered="{!mostrarTablaC}"  style="width:1200px; margin-left:35px; "> 
                                                 
                                                 <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">

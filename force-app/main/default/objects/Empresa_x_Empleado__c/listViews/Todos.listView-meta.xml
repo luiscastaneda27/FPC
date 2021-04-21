@@ -5,5 +5,10 @@
     <columns>Empleado2__c</columns>
     <columns>Empresa2__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Empresa2__c</field>
+        <operation>equals</operation>
+        <value>CORPORACION PETROLERA MONTECRISTO S.A. DE C.V.</value>
+    </filters>
     <label>Todos</label>
 </ListView>

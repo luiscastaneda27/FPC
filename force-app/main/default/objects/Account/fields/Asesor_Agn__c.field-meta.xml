@@ -122,6 +122,16 @@
                 <label>WENDY RUBIO</label>
             </value>
             <value>
+                <fullName>HN25657</fullName>
+                <default>false</default>
+                <label>YAJAIRA MUÑOZ</label>
+            </value>
+            <value>
+                <fullName>HN24776</fullName>
+                <default>false</default>
+                <label>OTHIE PINTO</label>
+            </value>
+            <value>
                 <fullName>HN24539</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

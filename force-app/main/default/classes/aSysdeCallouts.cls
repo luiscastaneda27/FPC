@@ -1652,20 +1652,24 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         }
     }
     
-    public static string MesLetras (integer mes){
+      public static string mesLetras (integer mes){
         string respuesta ='';
-        if(mes==1){respuesta = 'JAN';}
+        if(mes==1 && Label.IdiomaMes == 'I'){respuesta = 'JAN';}
+        if(mes==1 && Label.IdiomaMes == 'E'){respuesta = 'ENE';}
         if(mes==2){respuesta = 'FEB';}
         if(mes==3){respuesta = 'MAR';}
-        if(mes==4){respuesta = 'APR';}
+        if(mes==4 && Label.IdiomaMes == 'I'){respuesta = 'APR';}
+        if(mes==4 && Label.IdiomaMes == 'E'){respuesta = 'ABR';}
         if(mes==5){respuesta = 'MAY';}
         if(mes==6){respuesta = 'JUN';}
         if(mes==7){respuesta = 'JUL';}
-        if(mes==8){respuesta = 'AUG';}
+        if(mes==8 && Label.IdiomaMes == 'I'){respuesta = 'AUG';}
+        if(mes==8 && Label.IdiomaMes == 'E'){respuesta = 'AGO';}
         if(mes==9){respuesta = 'SEP';}
         if(mes==10){respuesta = 'OCT';}
         if(mes==11){respuesta = 'NOV';}
-        if(mes==12){respuesta = 'DEC';}
+        if(mes==12 && Label.IdiomaMes == 'I'){respuesta = 'DEC';}
+        if(mes==12 && Label.IdiomaMes == 'E'){respuesta = 'DIC';}
         return respuesta;
     }
     public class classRespuesta {

@@ -30,6 +30,10 @@
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
+        <entryCriteria>
+            <formula>AND(!Aprobado__c)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>ApproveRecord</ifCriteriaNotMet>
         <label>Revisión de operaciones</label>
         <name>Paso_1</name>
         <rejectionActions>

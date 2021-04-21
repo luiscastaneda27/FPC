@@ -4034,12 +4034,12 @@ public class ControllerProducto {
                         Messaging.sendEmail(listCorreo);
           
                     }
-                	if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
+                	/*if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
                         //updateCase.createAccount(pctipoid, pcnroid, val2, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, Cuenta20.Tipo_Fondo__c, Cuenta20.Frecuencia_Aportacion__c, pcformapago, pccuentapago, DiaMes.Dias_Mes__c);    
-                    	/*FieldsBankManagement fields = new FieldsBankManagement();
+                    	FieldsBankManagement fields = new FieldsBankManagement();
                         fields.pctipoid = pctipoid;
                         fields.pcnroid = pcnroid;
                         fields.cuenta = val2;
@@ -4054,8 +4054,8 @@ public class ControllerProducto {
                         fields.diaPago = DiaMes.Dias_Mes__c;
                         list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
                         fieldsList.add(fields);
-                        UpdateCase.createRecord(fieldsList);*/
-                    }
+                        UpdateCase.createRecord(fieldsList);
+                    }*/
                     
                     final PageReference target = new
                     PageReference(Site.getBaseSecureUrl() + '/apex/vfpantallaclienteProducto?mensaje='+resultado);
@@ -5419,11 +5419,12 @@ public class ControllerProducto {
                     system.debug('lo que trae el subproducto: '+pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
                     opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
+                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c order by name asc /*where codigo__c =: fcsd.pcsubproducto*/])
                     {
                         opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
                     }
                     pcsubproducto = fcsd.pcsubproducto;
+                    system.debug('lo que trae el subproducto: '+pcsubproducto);
                 }
                 if (fcsd.pcTipoFondo != 'null')
                 {
