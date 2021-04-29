@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
+	<!--types>
 		<members>*</members>
 		<name>ApexClass</name>
 	</types>
@@ -1974,6 +1974,51 @@
 		<members>CJSitePortalUsuariosFPC</members>
 		<members>CJSitesPortalEmpresarial</members>
 		<name>PermissionSet</name>
+	</types-->
+	<types>
+		<members>Case.Bloquear_Email_2_Case</members>
+		<members>Case.CONSTANCIAS_Monto_compromiso_aporte</members>
+		<members>Case.CONSTANCIAS_Usuario_firmador</members>
+		<members>Case.ESTADOS_CUENTA_Validar_fecha_final</members>
+		<members>Case.ESTADOS_CUENTA_Validar_fecha_inicial</members>
+		<members>Case.ESTADOS_CUENTA_fInicial_menor_fFinal</members>
+		<members>Case.Llenar_motivo_de_rechazo</members>
+		<members>Case.No_cerrar_casos_sin_adjunto_AyD</members>
+		<members>Case.No_cerrar_casos_sin_aprobado_ActInfo</members>
+		<members>Case.No_cerrar_casos_sin_aprobado_AyD</members>
+		<members>Case.No_cerrar_casos_sin_aprobado_Constancias</members>
+		<members>Case.No_cerrar_casos_sin_aprobado_Retiros</members>
+		<members>Case.No_cerrar_casos_sin_aprobado_subproducto</members>
+		<members>Case.Visualizar_Membrete</members>
+		<members>Cuentas__c.Validacion_Parte_bancaria</members>
+		<members>Cuentas__c.Validacion_de_Cobro</members>
+		<members>Cuentas__c.Validacion_de_tabla_Retiro_anticipado</members>
+		<members>Detalle_caso__c.ADA_Validar_nuevo_canal_aporte</members>
+		<members>Detalle_caso__c.ADA_monto_de_aporte_igual</members>
+		<members>Detalle_caso__c.ADA_monto_de_aporte_mayor_aumento</members>
+		<members>Detalle_caso__c.ADA_monto_de_aporte_menor_disminucion</members>
+		<members>Detalle_caso__c.ADA_nuevo_fecha_aporte</members>
+		<members>Detalle_caso__c.ADA_nuevo_medio_aporte_cuenta</members>
+		<members>Detalle_caso__c.ADA_nuevo_monto_de_aporte</members>
+		<members>Detalle_caso__c.Porcentaje_no_negativo</members>
+		<members>Detalle_caso__c.RETIROS_Validar_Forma_Retiro</members>
+		<members>Detalle_caso__c.RETIROS_Validar_Forma_Retiro_ACH</members>
+		<members>Detalle_caso__c.RETIROS_Validar_numero_cuenta_retiros</members>
+		<members>Detalle_caso__c.RETIROS_monto_de_retiro_no_mayor</members>
+		<members>Detalle_caso__c.RETIROS_monto_de_retiro_no_negativo</members>
+		<members>Detalle_caso__c.RETIROS_nuevo_monto_de_retiro</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_cambio_subproducto_sin_CC</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_diferente_cuenta_colectiva</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_diferente_moneda_subproducto</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_diferente_subproducto</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_nueva_cuenta_colectiva</members>
+		<members>Detalle_caso__c.SUBPRODUCTO_nuevo_subproducto</members>
+		<members>Detalle_caso__c.Validacion_Caso_de_Pignoracion</members>
+		<members>Opportunity.Valida_Numero_Cuenta</members>
+		<members>Pago_Interes__c.isBlank</members>
+		<members>Reporte_Calidad__c.Test</members>
+		<members>Transaccion__c.Monto_en_0</members>
+		<name>ValidationRule</name>
 	</types>
 	<version>50.0</version>
 </Package>
