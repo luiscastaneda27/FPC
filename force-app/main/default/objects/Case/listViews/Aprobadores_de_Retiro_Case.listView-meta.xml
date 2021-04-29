@@ -16,6 +16,6 @@
     </filters>
     <label>Aprobadores de Retiro</label>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

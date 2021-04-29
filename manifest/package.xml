@@ -357,12 +357,18 @@
 		<members>Case.Correo_Electronico__c</members>
 		<members>Case.Correo_electronico_empleado__c</members>
 		<members>Case.Cuentas_seleccionada__c</members>
+		<members>Case.DAU_Identidad__c</members>
+		<members>Case.DAU_No_Cuenta__c</members>
+		<members>Case.DAU_Tarjeta_de_Sysde__c</members>
+		<members>Case.DAU_aprobacion__c</members>
+		<members>Case.DAU_llamarSalesforceTarjeta__c</members>
 		<members>Case.Departamento_Residencia2__c</members>
 		<members>Case.Departamento_Trabajo2__c</members>
 		<members>Case.Desde_sitio_externo__c</members>
 		<members>Case.Desea_ver_tasa_de_cambio__c</members>
 		<members>Case.Embajadas__c</members>
 		<members>Case.Empresa__c</members>
+		<members>Case.EnviarEDCPorCorreo__c</members>
 		<members>Case.Enviar_a_aprobacion__c</members>
 		<members>Case.Enviar_aprobacion_AD__c</members>
 		<members>Case.Enviar_aprobacion_automatica__c</members>
@@ -378,6 +384,7 @@
 		<members>Case.FPC_Asunto__c</members>
 		<members>Case.Fecha_Ingreso__c</members>
 		<members>Case.Fecha_Nacimiento__c</members>
+		<members>Case.Fecha_Sysde__c</members>
 		<members>Case.Fecha_desde__c</members>
 		<members>Case.Fecha_hasta__c</members>
 		<members>Case.Fecha_salida__c</members>
@@ -397,6 +404,7 @@
 		<members>Case.Motivo_rechazo__c</members>
 		<members>Case.N_Veces_Rechazado__c</members>
 		<members>Case.Nacionalidad__c</members>
+		<members>Case.No_Aplica_SLA__c</members>
 		<members>Case.No_Es_primer_prestamo__c</members>
 		<members>Case.Nombre_Cliente__c</members>
 		<members>Case.Nombre_Usuario_Firmador__c</members>
@@ -408,6 +416,7 @@
 		<members>Case.RA_limite_exonerado__c</members>
 		<members>Case.Rango_salarial_Lps__c</members>
 		<members>Case.Requiere_aprobacion_exoneracion__c</members>
+		<members>Case.Respuesta_SF_Tarjetas__c</members>
 		<members>Case.Respuesta_desde_Sysde_Esperando_Docu__c</members>
 		<members>Case.Respuesta_desde_Sysde__c</members>
 		<members>Case.Segunda_aprobacion__c</members>
@@ -422,6 +431,7 @@
 		<members>Case.Tipo_Estado_Cuenta__c</members>
 		<members>Case.Tipo_Identificacion__c</members>
 		<members>Case.Tipo_actualizacion__c</members>
+		<members>Case.Tipo_de_Operacion__c</members>
 		<members>Case.Tipo_empresa__c</members>
 		<members>Case.Usuario_firmador__c</members>
 		<members>Case.Usuario_referencia__c</members>
@@ -435,6 +445,7 @@
 		<members>Colonia__c.Codigo_Colonia__c</members>
 		<members>Colonia__c.Codigo_Municipio_Colonia__c</members>
 		<members>Colonia__c.Codigo_municipio__c</members>
+		<members>Colonia__c.Municipio__c</members>
 		<members>Colonias_U__c.codigo_colonia__c</members>
 		<members>Colonias_U__c.codigo_departamento__c</members>
 		<members>Colonias_U__c.codigo_municipio__c</members>
@@ -576,6 +587,7 @@
 		<members>Cuenta_planilla__c.Codigo_cuenta__c</members>
 		<members>Cuenta_planilla__c.Contenido_Planilla__c</members>
 		<members>Cuenta_planilla__c.Cuenta__c</members>
+		<members>Cuenta_planilla__c.Idcustomer__c</members>
 		<members>Cuenta_planilla__c.Tipo__c</members>
 		<members>Cuenta_planilla__c.Valor_Monto_Extraordinario__c</members>
 		<members>Cuenta_planilla__c.Valor_Monto_Patronal_Extraordinario__c</members>
@@ -611,8 +623,8 @@
 		<members>Cuentas__c.Estatus__c</members>
 		<members>Cuentas__c.Fecha_Apertura__c</members>
 		<members>Cuentas__c.Fecha_Aporte__c</members>
-		<members>Cuentas__c.Fondo_Inversion__c</members>
 		<members>Cuentas__c.FondoInversionCP__c</members>
+		<members>Cuentas__c.Fondo_Inversion__c</members>
 		<members>Cuentas__c.Forma_Aportacion__c</members>
 		<members>Cuentas__c.Frecuencia_Aportacion__c</members>
 		<members>Cuentas__c.Mas_5_anos__c</members>
@@ -652,6 +664,13 @@
 		<members>Cuentas__c.Tipo_Fondo__c</members>
 		<members>Cuentas__c.Tipo_Politica_Retiro_Saldo_Patronal__c</members>
 		<members>Cuentas__c.Tipo_Seguro__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_Borrar_Cuotas_S10__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_Borrar_Cuotas_S18__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_EjecutarSYSDEOper__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_EjecutarSYSDE__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_IdCaso__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_NumeroCuenta__c</members>
+		<members>DAU_Salesforce_Tarjetas__e.DAU_SegundoServicio__c</members>
 		<members>Departamento__c.Codigo_Departamento__c</members>
 		<members>Departamentos__c.Departamento__c</members>
 		<members>Departamentos__c.codigo_departamento__c</members>
@@ -693,6 +712,10 @@
 		<members>Detalle_caso__c.Cuenta_Colectiva_Anterior__c</members>
 		<members>Detalle_caso__c.Cuenta__c</members>
 		<members>Detalle_caso__c.Cuenta_destino__c</members>
+		<members>Detalle_caso__c.DAU_Borrar_Cuotas__c</members>
+		<members>Detalle_caso__c.DAU_Dia_de_pago__c</members>
+		<members>Detalle_caso__c.DAU_Tarjeta_Habiente__c</members>
+		<members>Detalle_caso__c.DAU_Tipo_Tarjeta__c</members>
 		<members>Detalle_caso__c.Descripcion__c</members>
 		<members>Detalle_caso__c.Detalle_Cuenta_colectiva__c</members>
 		<members>Detalle_caso__c.Detalle_subproducto2__c</members>
@@ -842,6 +865,8 @@
 		<members>Empresa_x_Empleado__c.Salario__c</members>
 		<members>Empresa_x_Empleado__c.Ultima_modificacion__c</members>
 		<members>Estado_Cuenta__c.CodigoEstado__c</members>
+		<members>Estado_de_cuenta_envio_y_repuesta__c.Envio__c</members>
+		<members>Estado_de_cuenta_envio_y_repuesta__c.Respuesta__c</members>
 		<members>Fantasma_portal__c.Asignado_A__c</members>
 		<members>Fantasma_portal__c.Correo_electronico__c</members>
 		<members>Fantasma_portal__c.Descripcion__c</members>
@@ -949,6 +974,7 @@
 		<members>Municipio__c.codigo_departamento__c</members>
 		<members>Municipio__c.codigo_pais__c</members>
 		<members>Municipio__c.nombre_municipio__c</members>
+		<members>ObjectoReferenciaArchivos__c.Cuenta__c</members>
 		<members>Oficial_X_Asesor__c.Asesor__c</members>
 		<members>Oficial_X_Asesor__c.Codigo_Asesor__c</members>
 		<members>Oficial_X_Asesor__c.Codigo_Oficial_SAC__c</members>
@@ -1094,6 +1120,7 @@
 		<members>Pantalla_Aportes__c.Tipo_Moneda__c</members>
 		<members>Pantalla_Aportes__c.Tipo_SaldoN__c</members>
 		<members>Pantalla_Aportes__c.cuenta__c</members>
+		<members>Parametros_DAU__mdt.Monto_a_Disminuir__c</members>
 		<members>Partida_Rezago__mdt.Compra_Dolar__c</members>
 		<members>Partida_Rezago__mdt.Cuenta_Debito__c</members>
 		<members>Partida_Rezago__mdt.Cuenta__c</members>
@@ -1373,6 +1400,7 @@
 		<members>Retiro_Aprobacion__c.Monto_USD__c</members>
 		<members>Retiro_Aprobacion__c.No__c</members>
 		<members>Retiro_Aprobacion__c.Nombre_Cliente__c</members>
+		<members>Retiro_Aprobacion__c.Nombre_Propietario__c</members>
 		<members>Retiro_Aprobacion__c.Numero_Caso__c</members>
 		<members>Retiro_Aprobacion__c.Numero_Referencia__c</members>
 		<members>Retiro_Aprobacion__c.Tipo_Pago__c</members>
@@ -1453,7 +1481,6 @@
 		<members>Subproducto__c.TipoProducto__c</members>
 		<members>Subproducto__c.Tipo_Fondo__c</members>
 		<members>Subproducto__c.Tipo__c</members>
-		<members>Subproducto__c.observacion__c</members>
 		<members>Sueldo_Temporal__c.Numeracion_automatica__c</members>
 		<members>Sueldos_Temporales__c.Apellidos__c</members>
 		<members>Sueldos_Temporales__c.Identidad__c</members>
@@ -1715,10 +1742,8 @@
 		<members>Account</members>
 		<members>AccountContactRole</members>
 		<members>ActivacionCuenta__c</members>
-		<members>ActiveScratchOrg</members>
 		<members>Activity</members>
 		<members>ActivityRecurrence2Exception</members>
-		<members>Afiliacion_Electronica_FPC__mdt</members>
 		<members>Afiliacion_Electronica__c</members>
 		<members>Agencia__c</members>
 		<members>AsesoresPremier__mdt</members>
@@ -1790,6 +1815,7 @@
 		<members>Cuenta_planilla__c</members>
 		<members>Cuentas_Colectivas__c</members>
 		<members>Cuentas__c</members>
+		<members>DAU_Salesforce_Tarjetas__e</members>
 		<members>DataUseLegalBasis</members>
 		<members>DataUsePurpose</members>
 		<members>DelegatedAccount</members>
@@ -1809,6 +1835,7 @@
 		<members>Entitlement</members>
 		<members>EntitlementContact</members>
 		<members>Estado_Cuenta__c</members>
+		<members>Estado_de_cuenta_envio_y_repuesta__c</members>
 		<members>Event</members>
 		<members>ExchangeUserMapping</members>
 		<members>ExpressionFilter</members>
@@ -1830,9 +1857,6 @@
 		<members>Individual</members>
 		<members>InformeEDC__c</members>
 		<members>Lead</members>
-		<members>LearningAssignment</members>
-		<members>LearningAssignmentProgress</members>
-		<members>LearningLinkProgress</members>
 		<members>Listado_Empresas__c</members>
 		<members>Location</members>
 		<members>LocationTrustMeasure</members>
@@ -1849,9 +1873,9 @@
 		<members>Monto_cambio_dolar__c</members>
 		<members>Movimiento_Seleccionado__c</members>
 		<members>Municipio__c</members>
-		<members>NamespaceRegistry</members>
 		<members>NetworkMember</members>
 		<members>NetworkMemberChunk</members>
+		<members>ObjectoReferenciaArchivos__c</members>
 		<members>Oficial_X_Asesor__c</members>
 		<members>Oficiales_X_Empresa__c</members>
 		<members>Opportunity</members>
@@ -1866,6 +1890,7 @@
 		<members>Pago_Interes__c</members>
 		<members>Pais_R__c</members>
 		<members>Pantalla_Aportes__c</members>
+		<members>Parametros_DAU__mdt</members>
 		<members>Partida_Rezago__mdt</members>
 		<members>Partida_contable__mdt</members>
 		<members>PartnerRole</members>
@@ -1899,7 +1924,6 @@
 		<members>Scorecard</members>
 		<members>ScorecardAssociation</members>
 		<members>ScorecardMetric</members>
-		<members>ScratchOrgInfo</members>
 		<members>Secuencia_rtn__c</members>
 		<members>Seguro__c</members>
 		<members>ServiceContract</members>

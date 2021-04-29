@@ -6465,6 +6465,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Estado_de_cuenta_envio_y_repuesta__c.Envio__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Estado_de_cuenta_envio_y_repuesta__c.Respuesta__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Event.Asunto__c</field>
         <readable>false</readable>
     </fieldPermissions>

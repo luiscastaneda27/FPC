@@ -157,12 +157,12 @@ public class extensionCasoDetalle {
         try{
             
             if(CasoSTD.Id != null){
-                Caso = [Select Status,AccountId,CreatedDate, Account.Name, Account.Identificacion__c, RecordType.DeveloperName,
+                Caso = [Select Status, AccountId, CreatedDate, Account.Name, Account.Identificacion__c, RecordType.DeveloperName,
                         Fecha_desde__c, fecha_hasta__c,Account.PersonBirthdate, account.sexo__C, Desea_ver_tasa_de_cambio__c, 
                         SuppliedEmail, Constancia__c, currencyIsoCode,Requiere_aprobacion_exoneracion__c, Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
                         Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c, Nombre_agencia__c, agencia__c, Agencia__r.Name, 
-                        account.Departamento_Residencia2__c, Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C,DAU_No_Cuenta__c, 
+                        account.Departamento_Residencia2__c, Monto_compromiso_aporte__c, Frecuencia__c, Codigo_barra__C, DAU_No_Cuenta__c, 
                         DAU_Tarjeta_de_Sysde__c, DAU_llamarSalesforceTarjeta__c, Tipo_de_Operacion__c, Respuesta_SF_Tarjetas__c, DAU_Identidad__c
                         From Case Where Id =: CasoSTD.Id Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){
@@ -728,6 +728,7 @@ public class extensionCasoDetalle {
     public void agregarCuenta(){
         try{
             system.debug('Id Cuenta: '+idCuenta);
+            
             if(cTipoCaso.actInformacion){
                 Detalle_caso__c nuevo = new Detalle_caso__c(Cuenta__c = idCuenta, Caso__c = Caso.id, Indice__c = conteoGeneral);
                 cuentasCaso.add(nuevo);     
@@ -803,7 +804,6 @@ public class extensionCasoDetalle {
         detalleCaso.Monto_Pignorado__c = (detalleCaso.Cambio_moneda__c && detalleCaso.Monto_Pignorado__c > 0) ?  (detalleCaso.Monto_Pignorado__c * caso.Tasa_Cambio__c).setscale(2) : detalleCaso.Monto_Pignorado__c;         
         
     }
-    
     
     public void eliminarCuenta(){
         try{
@@ -1390,16 +1390,8 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 }else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
     
                     if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Banco__c == '28') {
-                        if(detalleCaso.Tipo_Operacion__c == 'A3' && caso.DAU_No_Cuenta__c == Null && detalleCaso.N_Cuenta_Bancaria__c <> Null) {        
-                        	updateCase.wrapperClass wc = new updateCase.wrapperClass();
-                            wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
-                            System.debug('validar Identidad: '+wc);
-                            caso.DAU_Identidad__c = wc.DAU_Identidad;
-                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
-                            caso.DAU_aprobacion__c = wc.DAU_aprobacion;
-                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
-                        }
-                        if(detalleCaso.Tipo_Operacion__c == 'A8' && caso.DAU_No_Cuenta__c == Null) {
+                        if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
+                            System.debug('Cambio de Canal de Aporte	o Afiliación de Débito Automático');
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
                             wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
                             System.debug('validar Identidad: '+wc);
@@ -1428,9 +1420,14 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                 System.debug('validar Identidad: '+wc);
                                 caso.DAU_Identidad__c = wc.DAU_Identidad;
                                 caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
-                                caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                                //caso.DAU_aprobacion__c = wc.DAU_aprobacion;
                                 caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                             }
+                            if(Caso.DAU_Identidad__c <> Null && Caso.DAU_No_Cuenta__c <> Null) {
+								Set<Id> caseId = new Set<Id>();
+                                caseId.add(Caso.Id);
+                            	Salesforce_Tarjetas.processCase(caseId, 'DEC', '', ''); 
+                            }    
                         }   
                         if(detalleCaso.Tipo_Operacion__c == 'A7' && caso.DAU_No_Cuenta__c == Null) {
                         	Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
@@ -1463,11 +1460,11 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 }
                 mostrarGuardar = false;
             }
-            if(Caso.id == null || esCallCenter || esBanco || test.isRunningTest()){
+            if(Caso.id == null || esCallCenter || esBanco || test.isRunningTest()) {
                 Boolean hayError = false;
                 mostrarFormulario = false;
                 Boolean upsertDetalleC = false;
-                if(caso.Origin == 'Agencias_Banco' ){ mostrarFormulario = true;
+                if(caso.Origin == 'Agencias_Banco') { mostrarFormulario = true;
                 }
                 if(cTipocaso.otros && (caso.FPC_Asunto__c ==null || caso.Description==null)){ 
                     hayError = true; 
@@ -1521,7 +1518,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por favor ingresar el código de barra'));
                     }
                 } 
-                if(cTipoCaso.aumDisAporte || test.isRunningTest()){
+                if(cTipoCaso.aumDisAporte || test.isRunningTest()) {
                     decimal valorVenta = 1;
                     if(cuentaCliente.CurrencyIsoCode == 'USD'){
                         //system.debug('Que pedo aquí: '+v);
@@ -1548,7 +1545,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 //FIN PARTE NUEVA
                 system.debug('Detalle: '+detalleCaso);
                 
-                if(!hayError ||  test.isRunningTest()){
+                if(!hayError ||  test.isRunningTest()) {
                     SolicitudCaso solicitud = AFPCCasos.upsertCaso(caso);
                     if(!solicitud.solicitudExitosa){ 
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.FATAL, 'Ha ocurrido un error: '+solicitud.error)); 
@@ -1682,26 +1679,6 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
         }
         return null;
-    }
-    
-    public pageReference finalizar() {   
-        if(Caso.DAU_llamarSalesforceTarjeta__c == true && Caso.Tipo_de_Operacion__c == 'A6' && Caso.Status == 'Cerrado' && Caso.Respuesta_SF_Tarjetas__c <> null) {
-            //Afiliación
-            String Identidad = Caso.DAU_Identidad__c;
-            String Titular;
-            if(Caso.Account.Identificacion__c <> Identidad) {
-                Titular = 'No';     
-            } else {
-                Titular = 'Si';
-            }
-            Set<Id> caseId = new Set<Id>();
-            caseId.add(Caso.Id);
-            List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c =: Caso.Id Limit 1];
-            if(!detailCase.isEmpty()) { 
-                Salesforce_Tarjetas.processCase(caseId,'ADI',Titular,Caso.Account.Name,detailCase[0].DAU_Dia_de_pago__c);
-            }      
-        }
-        return null;    
     }
     
     public void AsignacarCaso(){

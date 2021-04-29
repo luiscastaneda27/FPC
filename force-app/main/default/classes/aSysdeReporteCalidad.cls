@@ -63,7 +63,7 @@ public class aSysdeReporteCalidad {
             
             InformeReporteCalidad a = new InformeReporteCalidad();
             a.accion=accion;
-            a.desde = date.today().addMonths(-2);
+            a.desde = date.today().addDays(-10);
             //a.desde = date.valueOf(datetime.newInstance(2018, 1, 1));
             a.hasta = date.today();
             /*a.hasta = date.valueOf(datetime.newInstance(2019, 5, 20));

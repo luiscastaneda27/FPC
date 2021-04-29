@@ -163,7 +163,7 @@ pantallas que lo utilizan VF_AprobacionPagoInteres y VFinteres_administrativa</d
         <type>Text</type>
     </nameField>
     <pluralLabel>Pago_Intereses</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

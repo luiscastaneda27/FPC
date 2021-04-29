@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DAU_EjecutarSYSDEOper__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Bandera cuando el caso es aprobado desde Operaciones.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Bandera cuando el caso es aprobado desde Operaciones.</inlineHelpText>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>DAU_EjecutarSYSDEOperaciones</label>
+    <type>Checkbox</type>
+</CustomField>

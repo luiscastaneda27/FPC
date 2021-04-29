@@ -241,26 +241,20 @@ trigger enviarASysde on Case (before update) {
                 } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
                     List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
                     if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
-                        if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c <> Null) {
-                            System.debug('Entra 1');
-                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c =item.Id, DAU_EjecutarSYSDEOper__c = true));
-                            // Call method to publish events
-                            List<Database.SaveResult> results = EventBus.publish(Logs);      
-                        } else if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
-                            System.debug('Entra 2'); 
+                        if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
+                            System.debug('Entra 1'); 
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c =item.Id));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs); 
                         } else if(lstCase[0].Tipo_de_Operacion__c == 'A4' || lstCase[0].Tipo_de_Operacion__c == 'A7') {
-                            System.debug('Entra 3');
+                            System.debug('Entra 2');
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);    
-                        } else if(lstCase[0].Tipo_de_Operacion__c == 'A6') {
-                            System.debug('Entra 4');
+                        } else if(lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Respuesta_SF_Tarjetas__c.contains('éxito')) {
+                            System.debug('Entra 3');
                             List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                             Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = item.Id));
                             // Call method to publish events

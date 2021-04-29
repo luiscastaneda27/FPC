@@ -10,7 +10,7 @@
     <filters>
         <field>Caso__c</field>
         <operation>equals</operation>
-        <value>00037385</value>
+        <value>37385</value>
     </filters>
     <label>Todos</label>
 </ListView>

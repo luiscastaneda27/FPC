@@ -114,53 +114,41 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 }    
                 //Fin Creando caso de Cancelación de aporte por retiro total 
                 
-                if(/*lstCase[0].DAU_llamarSalesforceTarjeta__c == true && */(lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null && lstDetCase[0].Nuevo_canal_aporte__c == 'TA') {
-                    String Identidad = lstCase[0].DAU_Identidad__c;
-        			System.debug('Identidad1: '+Identidad.substring(0,13));
-                    String Titular;
-                    If(lstCase[0].Account.Identificacion__c <> Identidad) {
-                    	Titular = 'No';	    
-                    } else {
-                        Titular = 'Si';
-                    }
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && (lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null && lstDetCase[0].Nuevo_canal_aporte__c == 'TA') {
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
                     if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'ADI',Titular,lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
+                    	Salesforce_Tarjetas.processCase(caso,'ADI',lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
                     }    
                 }
                 
-                if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
+                /*if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
                     lstCase[0].DAU_aprobacion__c = false; 
                     update lstCase;
-                }
+                }*/
                                 
                 if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
                     String Identidad = lstCase[0].DAU_Identidad__c;
-                    String Titular = '';
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
                     if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'DEC',Titular,'','');
+                    	Salesforce_Tarjetas.processCase(caso,'DEC','','');
                     }    
                 } 
                 
                 if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A4' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
                     String Identidad = lstCase[0].DAU_Identidad__c;
-                    String Titular = '';
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c,Nueva_fecha_aporte__c From Detalle_caso__c where Caso__c In: caso Limit 1];
                     Date dia = detailCase[0].Nueva_fecha_aporte__c;
                     if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'MOD',Titular,casos[0].Account.Name,String.valueOf(dia.Day()));
+                    	Salesforce_Tarjetas.processCase(caso,'MOD',casos[0].Account.Name,String.valueOf(dia.Day()));
                     }    
                 } 
                 
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
-                    //Cancelación
-                    String Identidad = lstCase[0].DAU_Identidad__c;
-                    String Titular = '';
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' /*&& lstCase[0].Respuesta_SF_Tarjetas__c == null*/) {
+                    //Adición
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
                     if(!detailCase.isEmpty()) { 
-                        Salesforce_Tarjetas.processCase(caso,'DEC',Titular,'','');
-                    }        
+                    	Salesforce_Tarjetas.processCase(caso,'ADI',lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
+                    }         
                 }
                 
             }

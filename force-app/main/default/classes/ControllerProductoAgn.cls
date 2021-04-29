@@ -243,7 +243,7 @@ public class ControllerProductoAgn
     Public Account NivelTRiesgo{get;set;}
     Public Account Departamento{get;set;}
     
-    //Public Account CanalVentaaConti{get;set;}
+    Public Account CanalVentaaConti{get;set;}
     Public Account CanalVentaa{get;set;}
     Public Account Gradop2{get;set;}
     Public Account Gradop3{get;set;}
@@ -471,7 +471,7 @@ public class ControllerProductoAgn
             NivelTRiesgo = new Account();
 			NivelTDilegencia  = new Account();
             CanalVentaa = new Account();
-            //CanalVentaaConti = new Account();
+            CanalVentaaConti = new Account();
              Gradop2 = new Account();
              Gradop3 = new Account();
              Gradop4 = new Account();
@@ -1724,7 +1724,7 @@ public class ControllerProductoAgn
             beneficiarioUnicoC.tipoId=beneficiarioUnicoC.tipoId;
             beneficiarioUnicoC.genero= Cliente1Conti.Sexo__c;
             beneficiarioUnicoC.Parentesco = Parentesco1C;
-            //beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
+            beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
             //beneficiarioUnico.Grado =  CanalVentaa.Grado_Familiar__c !=null ? integer.valueOf(CanalVentaa.Grado_Familiar__c):0;
             beneficiarioUnicoC.tipoBeneficiario = TipoBeneficiarioConti.Tipo_Beneficiario__c;
             beneficiarioUnicoC.fechaNacimiento = fechaBeneficiarioC;
@@ -1917,7 +1917,7 @@ public class ControllerProductoAgn
                     beneficiarioUnicoC.segundoApellido =  ListBeneficiariosC[i].segundoApellido;
                     Parentesco1C = ListBeneficiariosC[i].Parentesco != null ? String.valueOf(Integer.valueOf(ListBeneficiariosC[i].Parentesco)) : null  ;
                     
-                    /*if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
+                    if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '1';
                     }
@@ -1932,7 +1932,7 @@ public class ControllerProductoAgn
                     else
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '4';
-                    }   */   
+                    }   
                     
                     //CanalVentaa.Grado_Familiar__c = double.valueOf(ListBeneficiarios[i].Grado);
                     beneficiarioUnicoC.fechaNacimiento = ListBeneficiariosC[i].fechanacimiento;
@@ -4828,7 +4828,7 @@ public class ControllerProductoAgn
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Seguro de Vida vacio'));
                 return null;    
-            }*/
+            }
             if(pcaplicaseguro == true)
             {
                 if(pcTipoSeguro == ' --Ninguno-- '||pcTipoSeguro == '--Ninguno--')
@@ -4836,7 +4836,7 @@ public class ControllerProductoAgn
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro vacio'));
                     return null; 
                 }
-            }
+            }*/
      
          else
              { 

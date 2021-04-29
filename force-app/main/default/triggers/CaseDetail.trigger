@@ -41,14 +41,14 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                 //} 
                 //Fin Evaluar SLA's de Caso
                 
-                List<Detalle_caso__c> dt = [Select Id,Caso__c,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c,Nuevo_canal_aporte__c From Detalle_caso__c Where Id In: detalleCaso];
+                /*List<Detalle_caso__c> dt = [Select Id,Caso__c,Nuevo_monto_aporte__c,Cuenta__c,Tipo_Operacion__c,Nuevo_canal_aporte__c From Detalle_caso__c Where Id In: detalleCaso];
                 List<Cuentas__c> cuentaC = new List<Cuentas__c>();
                 List<Producto__c> prod = new List<Producto__c>();
                 if(!dt.isEmpty()) {                    
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = dt[0].Caso__c));
                     List<Database.SaveResult> results = EventBus.publish(Logs);
-                }     
+                }    */ 
             } catch(Exception ex) {
                 System.debug('Error: '+ex.getLineNumber()+'---'+ex.getMessage());
             }
@@ -66,11 +66,7 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
             List<Cuentas__c> cuentaC = new List<Cuentas__c>();
             List<Producto__c> prod = new List<Producto__c>();
             if(!dt.isEmpty()) {
-            	if(dt[0].Tipo_Operacion__c == 'A8') {
-                    List<Case> casoUpdate = [Select Id,DAU_aprobacion__c From Case Where Id =: caso and (Status = 'Nuevo' or Status = 'Devuelto' or Status = 'Pendiente de aprobación') and RecordType.DeveloperName = 'Aumento_Disminucion_Aportes' Limit 1];
-                    casoUpdate[0].DAU_aprobacion__c = false;
-                    update casoUpdate[0];    
-                } else if(dt[0].Tipo_Operacion__c == 'A2') {
+            	if(dt[0].Tipo_Operacion__c == 'A2') {
                     cuentaC = [Select Id, Producto__c From Cuentas__c Where Id =: dt[0].Cuenta__c and Activo__c = true];
                     if(!cuentaC.isEmpty()) {
                         prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuentaC[0].Producto__c];
@@ -79,11 +75,13 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                     List<Parametros_DAU__mdt> paramUSD = [Select Id,DeveloperName,Monto_a_Disminuir__c From Parametros_DAU__mdt Where DeveloperName = 'Disminucion_de_aporte_USD']; 
                     List<Case> casoUpdate = [Select Id,DAU_aprobacion__c From Case Where Id =: caso and (Status = 'Nuevo' or Status = 'Devuelto') and RecordType.DeveloperName = 'Aumento_Disminucion_Aportes' Limit 1];
                     if(!prod.isEmpty() && prod[0].CurrencyIsoCode == 'HNL') {
+                        System.debug('Cuenta en Lempiras');
                         if(dt[0].Nuevo_monto_aporte__c >= paramHNL[0].Monto_a_Disminuir__c && !casoUpdate.isEmpty() && dt[0].Tipo_Operacion__c == 'A2') {  
                             casoUpdate[0].DAU_aprobacion__c = false;
                             update casoUpdate[0];
                         }
                     } else if(!prod.isEmpty() && prod[0].CurrencyIsoCode == 'USD') {
+                        System.debug('Cuenta en Dólares');
                         if(dt[0].Nuevo_monto_aporte__c >= paramUSD[0].Monto_a_Disminuir__c && !casoUpdate.isEmpty() && dt[0].Tipo_Operacion__c == 'A2') {  
                             casoUpdate[0].DAU_aprobacion__c = false;
                             update casoUpdate[0];

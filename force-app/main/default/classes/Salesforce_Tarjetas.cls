@@ -1,6 +1,6 @@
 public class Salesforce_Tarjetas {
 	@future(callout=true)
-    public static void processCase(Set<Id> caseIds, String tipoGestion, String Titular, String beneficiario, String diaPago) {
+    public static void processCase(Set<Id> caseIds, String tipoGestion, String beneficiario, String diaPago) {
         List<Case> updateCase = new List<Case>();
         try {
     	List<Case> lstCase = [Select Id,Status,Account.Identificacion__c,Respuesta_desde_Sysde__c,Respuesta_SF_Tarjetas__c, DAU_No_Cuenta__c,
@@ -74,16 +74,19 @@ public class Salesforce_Tarjetas {
                         c.Respuesta_SF_Tarjetas__c = String.valueOf(response);
                     }               
                     if(c.Tipo_de_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
-                    	c.Respuesta_SF_Tarjetas__c = String.valueOf(response); 
+                    	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+String.valueOf(response); 
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_SegundoServicio__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
                     }                    
                     if(c.Tipo_de_Operacion__c == 'A6' && asunto == 'Debito automático Pensiones') {
-                    	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+c.Respuesta_SF_Tarjetas__c + ' --- Afiliación: // ' + String.valueOf(response);  
+                    	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' --- Afiliación: // ' + String.valueOf(response);  
                     	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
                         // Call method to publish events
                         List<Database.SaveResult> results = EventBus.publish(Logs);
-                    }
-                    
+                    }                    
                     if(c.Tipo_de_Operacion__c == 'A4' || c.Tipo_de_Operacion__c == 'A7') {
                     	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
@@ -91,18 +94,10 @@ public class Salesforce_Tarjetas {
                         List<Database.SaveResult> results = EventBus.publish(Logs);
                     }
                     if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
-                        if(Titular == 'Si') {
-                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
-                            // Call method to publish events
-                            List<Database.SaveResult> results = EventBus.publish(Logs);
-                        } else {
-                            System.debug('No es titular');
-                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDEOper__c = true));
-                            // Call method to publish events
-                            List<Database.SaveResult> results = EventBus.publish(Logs);   
-                        }
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
                     } 
                 } else if(response.contains('error')) {
                     System.debug('Error al crear la gestion');
@@ -117,4 +112,5 @@ public class Salesforce_Tarjetas {
         } 
         Update updateCase;
     }	
+    
 }

@@ -52,7 +52,8 @@ public class classPagoInteresesFPC {
     public String pc_Imagen { get; set; }
     
     //CAMPOS AÑADIDOS POR INTELLECT
-    public String estadoAprobacion { get; set; }  
+    public String estadoAprobacion { get; set; }
+    public String estadoAlAprobar { get; set; }
     public String usuarioRegis { get; set; } //El Usuario que ingresó el caso
     public DateTime ultFec_inclusion { get; set; } //Última Fecha de Pago de Intereses
     //public String ultFec_inclusionString { get; set; }

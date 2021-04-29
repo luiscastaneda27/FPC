@@ -422,7 +422,7 @@
                 <label>FPC SPS</label>
             </value>
             <value>
-                <fullName>000000000000</fullName>
+                <fullName>0</fullName>
                 <default>false</default>
                 <label>FPC TGU</label>
             </value>
@@ -442,19 +442,19 @@
                 <label>AGN INJUPEM TGU</label>
             </value>
             <value>
-                <fullName>01</fullName>
+                <fullName>1</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn Altara SPS</label>
             </value>
             <value>
-                <fullName>07</fullName>
+                <fullName>7</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn Avenida La Paz TGU</label>
             </value>
             <value>
-                <fullName>08</fullName>
+                <fullName>8</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn BCIE TGU</label>
@@ -466,7 +466,7 @@
                 <label>Agn CT Multiplaza TGU</label>
             </value>
             <value>
-                <fullName>09</fullName>
+                <fullName>9</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn Central Metrpolitana SPS</label>
@@ -772,31 +772,31 @@
                 <label>Agn ZIP Buena Vista SPS</label>
             </value>
             <value>
-                <fullName>02</fullName>
+                <fullName>2</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn-Atb Blvd. Morazán TGU</label>
             </value>
             <value>
-                <fullName>03</fullName>
+                <fullName>3</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn-Atb Juan Pablo II TGU</label>
             </value>
             <value>
-                <fullName>04</fullName>
+                <fullName>4</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn-Atb Los Alamos SPS</label>
             </value>
             <value>
-                <fullName>05</fullName>
+                <fullName>5</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn-Atb Salida Cortes SPS</label>
             </value>
             <value>
-                <fullName>06</fullName>
+                <fullName>6</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Agn-Atb Satelite SPS</label>
