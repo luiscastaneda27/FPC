@@ -3640,7 +3640,7 @@ public class ControllerProducto {
             naturalEnvio.TipoPantalla = 'AN'; //Afiliación Natural 
             naturalEnvio.PCEMPRESA = pcempresa;    
             naturalEnvio.pcagencia = pcagencia;
-            naturalEnvio.pnnrocertificado = pnnrocertificado;
+            //naturalEnvio.pnnrocertificado = pnnrocertificado;
             naturalEnvio.RTN = RTN;
             naturalEnvio.pdfechasuscripcion = date.today();
             system.debug(pcPEP);
@@ -3978,13 +3978,16 @@ public class ControllerProducto {
             
             //fin del agregado
             else{ 
+                Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
+                pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
+                naturalEnvio.pnnrocertificado = pnnrocertificado;
                 String resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
                 system.debug('Antes del if '+idAfiliacion);
                 aSysdeReporteCalidad.ClassReporteCalidad respuesta = new aSysdeReporteCalidad.ClassReporteCalidad();
                 if((idAfiliacion !=null || checkcorreo) &&resultado.contains('Proceso realizado Correctamente')){
                     respuesta= aSysdeReporteCalidad.infoCliente(pcnroid);
                 }
-                    
+                update af;  
                 if(idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')){
                     afiliacion.Periodicidad__c = Cuenta20.Frecuencia_Aportacion__c;
                     afiliacion.Forma_Pago__c = pcformapago;

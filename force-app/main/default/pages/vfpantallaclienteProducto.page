@@ -292,10 +292,10 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         
                                                         <td width="1500">
-                                                            <label class="slds-form-element__label" for="inputSample">
+                                                            <!--label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Id Formulario
                                                             </label>
-                                                            <apex:inputText maxlength="13" value="{!pnnrocertificado}" styleclass="slds-input" style="height:10px; width:170px; margin-left:53px;  "/>
+                                                            <apex:inputText maxlength="13" value="{!pnnrocertificado}" styleclass="slds-input" style="height:10px; width:170px; margin-left:53px;  "/-->
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> RTN Cliente
                                                             </label>
@@ -310,7 +310,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             <apex:input type="date" disabled="true" value="{!fechasuscripcion}" id="pdfechasuscripcion"  styleclass="slds-input" style="height:10px; width:170px; margin-left:5px;"/>
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:103px;">
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:403px;">
                                                                 <abbr class="slds-required" title="required"></abbr>  PEP
                                                             </label>
                                                             

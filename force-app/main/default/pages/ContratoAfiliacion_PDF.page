@@ -71,7 +71,7 @@
                     </apex:outputPanel>
                     Fondo de pensión
                 </div>
-                <div style="width:180px;display:inline-block;">
+                <div style="width:180px;display:{!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'),'inline-block;', 'none;')}">
                     
                     <apex:outputPanel rendered="{!if(or(info.pcTipoFondo=='C',info.pcTipoFondo=='c'),false, true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
@@ -981,7 +981,11 @@
                             </tr>
                             <tr>
                                 <th colspan="3">
-                                    <div style="width:100%;display:inline-block;text-align:center;">
+                                    
+                                    <dvi style="width:100%;display:{!IF(AND(info.pcaplicaseguro == 'S', info.pcTipoSeguro == '1'),'inline-block;', 'none;')}">
+                                         <img src="/img/checkbox_checked.gif"/> Estoy de acuerdo que la frecuencia del aporte sea mensual
+                                    </dvi>
+                                    <div style="width:100%;display:{!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'),'inline-block;', 'none;')};text-align:center;">
                                         <div style="display:inline-block;margin-right:2px;width:100%;">
                                             Frecuencia del aporte:
                                         </div>
@@ -1103,10 +1107,12 @@
                 </div>
             </div>
             <div style="width:100%;">
-                <div style="width:228px;margin-right:4px;display:inline-block;margin-top:5px;">
-                    Monto de aporte inicial, extraordinario o unico
+                <div style="width:{!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'), '228px;', '128px;')}margin-right:4px;display:inline-block;margin-top:5px;">
+                    <apex:outputText rendered="{!OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1')}" value="Monto de aporte inicial, extraordinario o unico" />
+                    <apex:outputText rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}" value="Monto de aporte inicial" /> 
+                    
                 </div>
-                <div style="border-bottom:1px solid black;width:535px;display:inline-block;margin-right:7px;">
+                <div style="border-bottom:1px solid black;width:{!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'), '535px;', '635px;')}display:inline-block;margin-right:7px;">
                     <!--aporte-->
                 </div>
             </div><br/>
@@ -1160,7 +1166,7 @@
                     </table>
                     <table style="width:100%;">
                         <th colspan="5" style="max-width:50%;">
-                                Banco emisor de tarjeta de crédito:
+                            {!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'), 'Banco emisor de tarjeta de crédito:', 'Banco emisor:')}
                         </th>
                         <td style="max-width:50%;">
                             
@@ -1321,93 +1327,160 @@
                 </div>
             </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
-                INFORMACIÓN SEGUROS OPCIONALES
-            </div>
-            <div style="margin-top:5px;font-size:12px;">
-                <div style="display:inline-block;margin-right:5px;">
-                    Seguro de vida:
+                {!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'), 'INFORMACIÓN SEGUROS OPCIONALES', 'INFORMACIÓN SEGURO DE VIDA')}
+             </div>
+            <apex:outputPanel rendered="{!OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1')}">
+                <div style="margin-top:5px;font-size:12px;">
+                    <div style="display:inline-block;margin-right:5px;">
+                        Seguro de vida:
+                    </div>
+                    <div style="width:55px;display:inline-block;">
+                        <apex:outputPanel rendered="{!if(info.pcaplicaseguro=='S',false,true)}">
+                            <img src="/img/checkbox_unchecked.gif"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(info.pcaplicaseguro=='S',true,false)}">
+                            <img src="/img/checkbox_checked.gif"/>
+                        </apex:outputPanel>
+                        Si
+                    </div>
+                    <div style="width:85px;display:inline-block;">
+                        <apex:outputPanel rendered="{!if(or(info.pcaplicaseguro=='N',info.pcaplicaseguro==' '),false,true)}">
+                            <img src="/img/checkbox_unchecked.gif"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(or(info.pcaplicaseguro=='N',info.pcaplicaseguro==' '),true,false)}">
+                            <img src="/img/checkbox_checked.gif"/>
+                        </apex:outputPanel>
+                        No
+                    </div>
                 </div>
-                <div style="width:55px;display:inline-block;">
-                    <apex:outputPanel rendered="{!if(info.pcaplicaseguro=='S',false,true)}">
-                        <img src="/img/checkbox_unchecked.gif"/>
-                    </apex:outputPanel>
-                    <apex:outputPanel rendered="{!if(info.pcaplicaseguro=='S',true,false)}">
-                        <img src="/img/checkbox_checked.gif"/>
-                    </apex:outputPanel>
-                    Si
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="margin-top:5px;font-size:12px;">
+                    <div style="display:inline-block;margin-top:0px;width:427px;">
+                        Expreso mi deseo de contratar un seguro de vida voluntario con una suma asegurada  de
+                    </div>
+                    <div style="border-bottom:1px solid black;width:80px;display:inline-block;">
+                        {!info.pcSumaAsegurada}
+                    </div>
+                    <div style="display:inline-block;margin-top:0px;width:230px;">
+                        por el cual pagaré adicionalmente la cantidad 
+                    </div>
+                    <div style="display:inline-block;margin-top:0px;width:60px;">
+                        mensual de
+                    </div>
+                    <div style="border-bottom:1px solid black;width:80px;display:inline-block;">
+                        {!info.pcPrimaAsegurada}
+                    </div>
+                    <div style="display:inline-block;margin-top:0px;width:210px;">
+                        en concepto de prima de seguro.
+                    </div>
                 </div>
-                <div style="width:85px;display:inline-block;">
-                    <apex:outputPanel rendered="{!if(or(info.pcaplicaseguro=='N',info.pcaplicaseguro==' '),false,true)}">
-                        <img src="/img/checkbox_unchecked.gif"/>
-                    </apex:outputPanel>
-                    <apex:outputPanel rendered="{!if(or(info.pcaplicaseguro=='N',info.pcaplicaseguro==' '),true,false)}">
-                        <img src="/img/checkbox_checked.gif"/>
-                    </apex:outputPanel>
-                    No
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="display:block; margin-top:4px;" >
+                    <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
+                        <div align="justify">
+                            <B>IMPORTANTE:</B> Se establece un período de espera de 1 año, contado a partir de la fecha de ingreso del asegurado a la
+                            póliza, para las coberturas de muerte e invalidez ocasionadas por las siguientes enfermedades: Cualquier tipo de Cáncer,
+                            VIH Sida, Enfermedades Renales y/o Hepáticas Crónicas, Enfermedades Cardiovasculares, Lupus Eritomatoso
+                            Sistemático, Evento Cerebrovascular, Infarto Cerebral, Hemorragia Cerebral, Embolia desde fuente extracraneal, EPOC
+                            (Enfermedad Pulmonar Obstructiva Crónica). En caso de accidente no aplica período de espera.   
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
-            </div> 
-            <div style="margin-top:5px;font-size:12px;">
-                <div style="display:inline-block;margin-top:0px;width:427px;">
-                    Expreso mi deseo de contratar un seguro de vida voluntario con una suma asegurada  de
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="display:block; margin-top:4px;" >
+                    <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
+                        <div align="justify">
+                            DECLARACION DEL ASEGURADO: Que la actividad a la que me dedico es lícita y normal y no genera riesgo o peligro
+                            inminente para mi vida y que a la fecha de suscribir este seguro gozo de muy buena salud y que no padezco ni he padecido
+                            de afecciones crónicas graves en mi salud. Autorizo por la presente a cualquier médico, profesional de la salud, hospital,
+                            clínica u otra facilidad médica o médicamente relacionada que posea licencia como tal, compañía de seguros, buró de
+                            información médica, u otra organización, institución o persona que tenga información sobre mi salud ya sea en Honduras
+                            o en el extranjero a dar dicha información a Ficohsa Seguros, incluyendo copias fotostáticas de los análisis, diagnósticos,
+                            informes, declaraciones, expedientes clínicos o registros profesionales que obren en su poder, para lo cual los libero de
+                            toda responsabilidad en que puedan incurrir por proporcionar dicha información o copias. El proponente ha tomado
+                            conocimiento de su derecho a decidir sobre la contratación de los seguros y a la libre elección de la institución
+                            aseguradora.
+                        </div>
+                    </div>
                 </div>
-                <div style="border-bottom:1px solid black;width:80px;display:inline-block;">
-                    {!info.pcSumaAsegurada}
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="display:block; margin-top:4px;" >
+                    <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
+                        <div align="justify">
+                            * Autorizo a que los beneficiarios del seguro de vida sean los mismos que el fondo de pensiones.
+                        </div>
+                    </div>
                 </div>
-                <div style="display:inline-block;margin-top:0px;width:230px;">
-                    por el cual pagaré adicionalmente la cantidad 
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}">
+                <div style="margin-top:5px;font-size:12px;">
+                    <div style="display:inline-block;margin-right:5px;">
+                        Plazo:
+                    </div>
+                    <div style="width:65px;display:inline-block;">
+                        <img src="{!if(info.pcPlazoSeguro =='1','/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')} "/>
+                        5 años
+                    </div>
+                    <div style="width:85px;display:inline-block;">
+                        <img src="{!if(info.pcPlazoSeguro =='2','/img/checkbox_checked.gif','/img/checkbox_unchecked.gif')} "/>
+                        10 años
+                    </div>
                 </div>
-                <div style="display:inline-block;margin-top:0px;width:60px;">
-                    mensual de
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="margin-top:5px;font-size:12px;">
+                    <div style="display:inline-block;margin-top:0px;">
+                        Autorizo la contratación de un seguro de vida con una suma asegurada de
+                        
+                    </div>
+                    <div style="border-bottom:1px solid black;width:40px;display:inline-block;">
+                        {!info.pcSumaAsegurada}
+                    </div>
+                    <div style="display:inline-block;margin-top:0px;width:230px;">
+                        contratado por Ficohsa Pensiones y Cesantías.
+                    </div>
+                    Quedo entendido que la prima del seguro contratado esta incluido en el cobro de la comisión pactada.
+                    
                 </div>
-                <div style="border-bottom:1px solid black;width:80px;display:inline-block;">
-                    {!info.pcPrimaAsegurada}
+                <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
+                </div> 
+                <div style="display:block; margin-top:4px;" >
+                    <div style="width:100%;display:inline-block;margin-right:5px;font-size:13px;">
+                        <div align="justify">
+                            DECLARACIÓN DEL ASEGURADO: Que la actividad a la que me dedico es lícita y normal y no genera riesgo o peligro
+                            inminente para mi vida y que a la fecha de suscribir este seguro gozo de buena salud y no estoy incapacitado, que no
+                            padezco ni he padecido de afecciones crónicas o graves en mi salud. Autorizo por este medio a los médicos,
+                            laboratorios, clínicas u hospitales y cualquier otro centro médico que me haya atendido en la recuperación de mi
+                            salud, para que suministre a Ficohsa Seguros, la información que está requiera en relación a este seguro, relevándolos
+                            de cualquier prohibición legal que existiera sobre revelación de datos con respecto a mi persona. El proponente ha
+                            tomado conocimiento de su derecho a decidir sobre la contratación de los seguros y a la libre elección de la institución
+                            aseguradora.
+                        </div>
+                        <br/>
+                        <div align="justify">
+                            Importante: La cobertura es inmediata en caso de Accidente. Se establece período de espera de un año, contado a partir
+                            de la fecha de ingreso del asegurado a la póliza para las coberturas de muerte e invalidez ocasionadas por las siguientes
+                            enfermedades: Cualquier tipo de Cáncer, VIH Sida, Enfermedades Renales y/o Hepáticas Crónicas, Enfermedades
+                            Cardiovasculares, Lupus Eritomatoso Sistemático, Evento Cerebrovascular, Infarto Cerebral, Hemorragia Cerebral,
+                            Embolia desde fuente extracraneal, Enfermedad Pulmonar Obstructiva Crónica (EPOC).
+                            
+                        </div>
+                    </div>
                 </div>
-                <div style="display:inline-block;margin-top:0px;width:210px;">
-                    en concepto de prima de seguro.
+                <div style="display:block; margin-top:4px;" >
+                    <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
+                        <div align="justify">
+                            *Autorizo que el beneficiario del seguro de vida sea Ficohsa Pensiones y Cesantías, quien una vez recibida la suma
+                            asegurada restante y completado el monto del fondo de pensión, lo entregará a los beneficiarios designados en el
+                            mismo.
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
-            </div> 
-            <div style="display:block; margin-top:4px;" >
-                <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
-                    <div align="justify">
-                        <B>IMPORTANTE:</B> Se establece un período de espera de 1 año, contado a partir de la fecha de ingreso del asegurado a la
-                        póliza, para las coberturas de muerte e invalidez ocasionadas por las siguientes enfermedades: Cualquier tipo de Cáncer,
-                        VIH Sida, Enfermedades Renales y/o Hepáticas Crónicas, Enfermedades Cardiovasculares, Lupus Eritomatoso
-                        Sistemático, Evento Cerebrovascular, Infarto Cerebral, Hemorragia Cerebral, Embolia desde fuente extracraneal, EPOC
-                        (Enfermedad Pulmonar Obstructiva Crónica). En caso de accidente no aplica período de espera.   
-                	</div>
-            	</div>
-        	</div>
-            <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
-            </div> 
-            <div style="display:block; margin-top:4px;" >
-                <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
-                    <div align="justify">
-                        DECLARACION DEL ASEGURADO: Que la actividad a la que me dedico es lícita y normal y no genera riesgo o peligro
-                        inminente para mi vida y que a la fecha de suscribir este seguro gozo de muy buena salud y que no padezco ni he padecido
-                        de afecciones crónicas graves en mi salud. Autorizo por la presente a cualquier médico, profesional de la salud, hospital,
-                        clínica u otra facilidad médica o médicamente relacionada que posea licencia como tal, compañía de seguros, buró de
-                        información médica, u otra organización, institución o persona que tenga información sobre mi salud ya sea en Honduras
-                        o en el extranjero a dar dicha información a Ficohsa Seguros, incluyendo copias fotostáticas de los análisis, diagnósticos,
-                        informes, declaraciones, expedientes clínicos o registros profesionales que obren en su poder, para lo cual los libero de
-                        toda responsabilidad en que puedan incurrir por proporcionar dicha información o copias. El proponente ha tomado
-                        conocimiento de su derecho a decidir sobre la contratación de los seguros y a la libre elección de la institución
-                        aseguradora.
-                	</div>
-            	</div>
-        	</div>
-            <div style="border-bottom:1px solid black;width:770px;display:inline-block;">
-            </div> 
-            <div style="display:block; margin-top:4px;" >
-                <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
-                    <div align="justify">
-                        * Autorizo a que los beneficiarios del seguro de vida sean los mismos que el fondo de pensiones.
-                	</div>
-            	</div>
-        	</div>
+            </apex:outputPanel>
         </div>
         <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
             ACEPTACIÓN DE AFILIACIÓN A FICOHSA PENSIONES Y CESANTÍAS
@@ -1597,13 +1670,13 @@
 				<b>t. PENSIÓN O RENTA</b>: El pago único o total, parcial, temporal o de por vida en tanto la CUENTA INDIVIDUAL 
                 DE CAPITALIZACION tenga Fondos disponibles, que recibe un AFILIADO o sus BENEFICIARIOS, según la elección 
                 de la modalidad de Pensión o Renta dispuesto en la SOLICITUD DE AFILIACIÓN y en el CONTRATO DE AFILIACIÓN.<br/>
-				<b>u. PENSIÓN POR INCAPACIDAD TOTAL Y PERMANENTE</b>: Es el beneficio, en dinero, que EL AFILIADO percibirá por 
+				<b>u. {!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'),'PENSIÓN POR INVALIDEZ TOTAL Y PERMANENTE','PENSIÓN POR INCAPACIDAD TOTAL Y PERMANENTE')}</b>: Es el beneficio, en dinero, que EL AFILIADO percibirá por 
                 el tiempo que dure el FONDO DE PENSIÓN, por motivo de una INCAPACIDAD TOTAL Y PERMANENTE que lo inhabilite
                 de un modo absoluto y definitivo.<br/>
 				<b>v. PLANES PRIVADOS DE PENSIONES O SIMPLEMENTE "PLANES"</b>. Los programas privados de formación de un ahorro 
                 individual destinado a la obtención de una pensión complementaria a los beneficios establecidos por otros
                 regímenes.<br/>
-               <b>w. SEGURO DE VIDA PREVISIONAL</b>: La cobertura de Vida e incapacidad Total y Permanente que EL AFILIADO podrá
+               <b>w. SEGURO DE VIDA PREVISIONAL</b>: La cobertura de Vida e {!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'),'invalidez','incapacidad')} Total y Permanente que EL AFILIADO podrá
                 contratar opcionalmente a través de LA ADMINISTRADORA por intermedio de la póliza colectiva de seguros 
                 contratada por esta, con una Compañía de Seguros supervisada por la COMISIÓN NACIONAL DE BANCOS Y SEGUROS,
                 para lo cual deberá completar los documentos correspondientes.<br/>
@@ -1657,16 +1730,20 @@
                 de tiempo Suscrito.<br/>
               	<b>CLAUSULA CUARTA.</b> EL AFILIADO en cualquier momento podrá efectuar aportes extraordinarios a su fondo de pensión.
                 Dichos aportes los podrá hacer sin necesidad de requerimiento, a través de los canales que LA ADMINISTRADORA
-                le indique.<br/>
+                le indique.<apex:outputText rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}">&nbsp;EL AFILIADO entiende y acepta que los aportes extraordinarios no forman parte del cálculo de la suma
+                asegurada pactada en la póliza de seguro de vida descrita en LA SOLICITUD DE
+                AFILIACIÓN.</apex:outputText> <br/>
                 <b>CLAUSULA QUINTA. DE LOS RENDIMIENTOS</b>: Los rendimientos del fondo de pensión se calcularán
                 mensualmente y podrán variar durante el plazo del contrato; en todo caso, LA ADMINISTRADORA
                 no garantiza a EL AFILIADO un rendimiento determinado. Los rendimientos se empezarán a
                 computar apartir del día siguiente hábil en que LA ADMINISTRADORA reciba los aportes. En caso
                 de que el aporte se haga por medio de cheque, quedará sujeto a la condición de que se haga efectivo,
                 de conformidad a lo dispuesto en el Artículo 959 del Código de Comercio vigente.<br/>
-                <b>CLAUSULA SEXTA. VIGENCIAY CARGOS POR RETIROS ANTICIPADOS</b>: El presente contrato tendrá una vigencia de 
+                <b>CLAUSULA SEXTA. VIGENCIA Y CARGOS POR RETIROS ANTICIPADOS</b>: El presente contrato tendrá una vigencia de 
                 acuerdo a lo establecido en la SOLICITUD DE AFILIACION. Sin perjuicio de lo anterior, cualquier retiro 
-                anticipado parcial o total que <br/>
+                anticipado parcial o total que<apex:outputText rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}">
+                &nbsp;que ocurra, será objeto de un cargo, de acuerdo los porcentajes siguientes:
+                </apex:outputText><br/>
                 <p align="center">
                     COMISIÓN POR RETIRO ANTICIPADO
                 </p>
@@ -1800,7 +1877,7 @@
                 convenido que LA ADMINISTRADORA actúa únicamente como intermediaria en la suscripción de las coberturas, por
                 lo tanto, la procedencia de Cualquier indemnización será determinada por la Compañía de Seguros Contratada y
                 El AFILIADO queda en el entendido que perderá su cobertura en el momento que interrumpa los aportes mensuales
-                pactados.<br/>       
+                pactados{!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'), ', efectúe retiros anticipados o cancele su plan antes del plazo contratado.', '.')}<br/>  
                 <b>CLAUSULA DÉCIMA TERCERA. NORMA PARA LA APLICACIÓN DELACUERDO ENTRE EL GOBIERNO DE LOS ESTADOS UNIDOS DE 
                 AMERICA Y EL GOBIERNO DE LA REPUBLICA DE HONDURAS PARA LA MEJORA DEL CUMPLIMIENTO TRIBUTARIO INTERNACIONAL
                 E IMPLEMENTAR FATCA</b>: Específicamente EL AFILIADO:<br/>

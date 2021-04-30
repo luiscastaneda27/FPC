@@ -23,6 +23,11 @@ public class testClienteNatural {
         Secuencia_rtn__c sq = new Secuencia_rtn__c();
         insert sq;
         
+        Autonumerico_cuentas_Syste__c af = new Autonumerico_cuentas_Syste__c ();
+        af.Id_Formulario_Sysde__c = 0;
+        insert af;
+        
+        
         Reporte_calidad__C reporteCalidad = new Reporte_Calidad__C();
         reporteCalidad.Subproducto__c = subp.id;
         reporteCalidad.Name = '21';

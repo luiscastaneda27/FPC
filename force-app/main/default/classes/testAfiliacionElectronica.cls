@@ -2,9 +2,9 @@
 public class testAfiliacionElectronica {
     
     static testMethod void ControllerAfiliacionElectronica(){
-    test.startTest();
+        test.startTest();
         /*EmailTemplate pem= new EmailTemplate(Name='Link Bienvenida Afiliacion', subject='prueba', HtmlValue='<html> <head>   <title></title>  </head>  <body style="height: auto; min-height: auto;">  <div style="text-align: center;">    <img alt="body_link" src="https://ficohsafpc--FPC--c.cs40.content.force.com/file-asset-public/body_link?oid=00D540000001Ye0" style="max-width: 620.35px" title="body_link" />   </div> </body></html>');
-        insert pem;*/
+insert pem;*/
         Estado_Cuenta__c ec= new Estado_Cuenta__c(name = 'Test', CodigoEstado__c = 'A');
         insert ec;
         Causa_Cuenta__c cc= new Causa_Cuenta__c(name = 'Test', codigo__c = '01', Estado_Cuenta__c = ec.Id);
@@ -21,7 +21,12 @@ public class testAfiliacionElectronica {
         Listado_Empresas__c lip = new Listado_Empresas__c(Name='prueba', RTN_Empresa__c='PRUEBA0101');
         insert lip;
         
-    ControllerAfiliacionElectronica cliente = new ControllerAfiliacionElectronica();
+        Autonumerico_cuentas_Syste__c af = new Autonumerico_cuentas_Syste__c ();
+        af.Id_Formulario_Sysde__c = 0;
+        insert af;
+        
+        ControllerAfiliacionElectronica cliente = new ControllerAfiliacionElectronica();
+        cliente.updateAF();
         cliente.texto1= '';
         cliente.texto2= '';
         cliente.usuarioValidacion = '';
@@ -87,7 +92,7 @@ public class testAfiliacionElectronica {
         cliente.pcNombreCompletoDependencia = 'wendy alvarado';
         cliente.OcultaCarSI = true;
         cliente.pccodpais = '074';
-    	cliente.pcDeptoCN = '123';
+        cliente.pcDeptoCN = '123';
         cliente.pcMunicipioCN = '000';
         cliente.pcColoniaCN = '000';
         cliente.pcCalleDetalleCN = 'frente a iglesia';
@@ -128,7 +133,7 @@ public class testAfiliacionElectronica {
         cliente.pcFechaValidacionCN = date.today();
         cliente.ES_Residente = false;
         cliente.ES_Residente_EfectosMi = false;
-   		cliente.OcultarES_Residente_EfectosMi = false;
+        cliente.OcultarES_Residente_EfectosMi = false;
         cliente.OcultarES_Residente_EfectosNO = true; 
         cliente.PaisResidenciaEfectosFiscales = '074';
         cliente.pcproducto = '01';
@@ -156,7 +161,7 @@ public class testAfiliacionElectronica {
         cliente.pc_ActuaNombreCompleto = 'paola alvarado';
         cliente.pc_ActuaNumID = '0000000000000';
         cliente.enviarPagPro();
-		cliente.guardar();
+        cliente.guardar();
         cliente.pcsubproducto ='';
         //cliente.pcTipoMoneda = '';
         cliente.guardar();
@@ -227,7 +232,7 @@ public class testAfiliacionElectronica {
         cliente.pcNumeroIDDependencia = '0000000000';
         cliente.pcNombreCompletoDependencia = 'wendy alvarado';
         cliente.pccodpais = '074';
-    	cliente.pcDeptoCN = '123';
+        cliente.pcDeptoCN = '123';
         cliente.pcMunicipioCN = '000';
         cliente.pcColoniaCN = '000';
         cliente.pcCalleDetalleCN = 'frente a iglesia';
@@ -268,7 +273,7 @@ public class testAfiliacionElectronica {
         cliente.pcFechaValidacionCN = date.today();
         cliente.ES_Residente = true;
         cliente.ES_Residente_EfectosMi = true;
-   		cliente.OcultarES_Residente_EfectosMi = true;
+        cliente.OcultarES_Residente_EfectosMi = true;
         cliente.OcultarES_Residente_EfectosNO = false; 
         cliente.PaisResidenciaEfectosFiscales = ' --Ninguno-- ';
         cliente.pcproducto = '';
@@ -299,8 +304,8 @@ public class testAfiliacionElectronica {
         //cliente.guardarListaDir();
         cliente.llenarEstado();
         cliente.enviarPagPro();
-		cliente.guardar();
-
+        cliente.guardar();
+        
         cliente.cancelar();   
         cliente.limpiar();
         cliente.limpiar2();
@@ -326,7 +331,7 @@ public class testAfiliacionElectronica {
         cliente.OcultarResidenciaNO = false; 
         cliente.AplicaSeguroNO = true;
         cliente.ES_Residente = true;
-   		cliente.OcultarES_Residente_EfectosMi = true;
+        cliente.OcultarES_Residente_EfectosMi = true;
         cliente.OcultarES_Residente_EfectosNO = false; 
         cliente.PaisResidenciaEfectosFiscales = ' --Ninguno-- ';
         cliente.BloquearBtnID = false;
@@ -350,11 +355,11 @@ public class testAfiliacionElectronica {
         cliente.mostrarSiguiente =true;
         cliente.mostrarSiguienteEmpleador = true;
         cliente.mostrarSiguienteEmpresas = true;
-    	cliente.mostrarAnteriorEmpresas = true;
+        cliente.mostrarAnteriorEmpresas = true;
         cliente.siguiente();
         cliente.siguienteEmpleado();
         cliente.VentanaFatca = true;
-		cliente.AplicaResidencia();
+        cliente.AplicaResidencia();
         cliente.AplicaResidenciaEfectos();
         cliente.Actua_SI3();
         cliente.MostrarFatcaNacio2();
@@ -430,7 +435,7 @@ public class testAfiliacionElectronica {
         cliente.NumbDirTable = '1';
         cliente.mostrarTablaModificarDir= false;
         cliente.MostrarTablaDireccion =false;
-               
+        
         cliente.guardarListaTel();
         cliente.EliminarTel();
         cliente.EliminarTelADD();
@@ -441,9 +446,9 @@ public class testAfiliacionElectronica {
         cliente.ModificarDIR();
         cliente.fechaBeneficiarioConti = null;
         cliente.ParentescoConti = '';
-    	cliente.mostrarTablaC = false;
-    	cliente.mostrarTablaModificarC = false;
-    	cliente.Num_CodigoConti = '';
+        cliente.mostrarTablaC = false;
+        cliente.mostrarTablaModificarC = false;
+        cliente.Num_CodigoConti = '';
         cliente.anterior();
         cliente.PaisFatca();
         cliente.ocultarF();
@@ -525,7 +530,7 @@ public class testAfiliacionElectronica {
         //cliente.minimo13();
         //cliente.BuscaInfoEmpresa();
         cliente.TipoPantalla = 'Prueba';
-              
+        
         
         Pais_R__c paisr = new Pais_R__c(codigo__C = '074', nombre__C = 'Test', name = 'Test');
         insert paisr;
@@ -554,7 +559,7 @@ public class testAfiliacionElectronica {
         ///////////////////////7
         //
         //
-       ControllerAfiliacionElectronica p = new ControllerAfiliacionElectronica();
+        ControllerAfiliacionElectronica p = new ControllerAfiliacionElectronica();
         p.CargoNO();
         p.CargoNADA();
         p.AplicaResidenciaNO();
@@ -614,7 +619,7 @@ public class testAfiliacionElectronica {
         p.pcNumeroIDDependencia = '0000000000';
         p.pcNombreCompletoDependencia = 'wendy alvarado';
         p.pccodpais = '053';
-    	p.pcDeptoCN = '123';
+        p.pcDeptoCN = '123';
         p.pcMunicipioCN = '000';
         p.pcColoniaCN = '000';
         p.pcCalleDetalleCN = 'frente a iglesia';
@@ -679,11 +684,11 @@ public class testAfiliacionElectronica {
         cliente.ValidarDependenciaSI();
         cliente.pcDependeNO = false;
         cliente.ValidarDependenciaNOV();
-		//p.actualizar();  
+        //p.actualizar();  
         p.mostrarSiguiente =false;
         p.mostrarSiguienteEmpleador = false;
         p.mostrarSiguienteEmpresas = false;
-    	p.mostrarAnteriorEmpresas = false;
+        p.mostrarAnteriorEmpresas = false;
         p.beneficiarioUnico.tipoId = '1';
         p.beneficiarioUnico.genero = 'F';
         p.beneficiarioUnico.Grado = 2;
@@ -697,7 +702,7 @@ public class testAfiliacionElectronica {
         //p.beneficiarioUnico.primerNombre == '';
         //p.beneficiarioUnico.primerApellido == '';
         p.ListBeneficiarios.add(p.beneficiarioUnico);
-                   
+        
         p.GUARDAR2();
         p.ModificarD();
         p.EliminarD();
@@ -754,9 +759,9 @@ public class testAfiliacionElectronica {
         p.disbotBene = false;
         p.fechaBeneficiarioConti = null;
         p.ParentescoConti = '';
-    	p.mostrarTablaC = false;
-    	p.mostrarTablaModificarC = false;
-    	p.Num_CodigoConti = '';
+        p.mostrarTablaC = false;
+        p.mostrarTablaModificarC = false;
+        p.Num_CodigoConti = '';
         p.NO_APLICASEGURO();
         p.desrtn();
         p.salirCuenta();
@@ -769,7 +774,7 @@ public class testAfiliacionElectronica {
         p.RTN = '465454654';
         p.validar125();
         p.salirEmpresas();     
-         //27022020 Agregando
+        //27022020 Agregando
         p.tele= true;
         p.OcultarTelSi = false;
         p.OcultarTelNo = false;
@@ -779,7 +784,7 @@ public class testAfiliacionElectronica {
         p.valorsiDir = false;
         p.valornoDir = false;
         p.NumbDirTable = '1';
-               
+        
         p.guardarListaTel();
         p.EliminarTel();
         p.EliminarTelADD();
@@ -790,8 +795,8 @@ public class testAfiliacionElectronica {
         //p.TraerDatos();
         
         
-       // ClassDirecion clasedire = new ClassDirecion('1','1','1','1','1','1','1','1',1.0);
-       // Direcciones clasedirec = new Direcciones('', '', '', '', '', '');
+        // ClassDirecion clasedire = new ClassDirecion('1','1','1','1','1','1','1','1',1.0);
+        // Direcciones clasedirec = new Direcciones('', '', '', '', '', '');
         //Direcciones Direc = new Direcciones('', '', '', '', '', '');
         
         p.ListDirecciones.add(clasedire);
@@ -806,7 +811,7 @@ public class testAfiliacionElectronica {
         //list<ListBeneficiarios> lista = new <ListBeneficiarios>();
         controllerApiClienteNatural apii = new controllerApiClienteNatural();
         list<Class_CuentasTraer> v =  new list<Class_CuentasTraer>();
-    	classListas lista = new classListas();
+        classListas lista = new classListas();
         ClienteNaturales j = new ClienteNaturales();
         classCuenta h = new classCuenta();
         h.cliente = '';
@@ -869,10 +874,10 @@ public class testAfiliacionElectronica {
         
         PAO.numeroId = '0801199411013';
         PAO.PEP = false;
-    	PAO.BLACKLIST = false;
-    	PAO.AML = false; 
-    	PAO.FATCA = false;
-    	PAO.RTN = 'A';
+        PAO.BLACKLIST = false;
+        PAO.AML = false; 
+        PAO.FATCA = false;
+        PAO.RTN = 'A';
         PAO.pctipoid = 'A';
         PAO.pcFechaVencimientoCN = DATE.valueOf('2019-06-20');
         PAO.pcprimernombre = 'A';
@@ -909,7 +914,7 @@ public class testAfiliacionElectronica {
         PAO.NumeroID_Fiscal_EEUU = 'A';
         PAO.NumeroID_Fiscal_OtroPais = 'A'; 
         
-         ControllerAfiliacionElectronica c = new ControllerAfiliacionElectronica();
+        ControllerAfiliacionElectronica c = new ControllerAfiliacionElectronica();
         p.ocultarF();
         c.pcrncempl = '1234567';
         //c.buscarColectiva();
@@ -925,7 +930,7 @@ public class testAfiliacionElectronica {
         c.BtnCancelar();
         c.MostrarCUENTT = '51600';
         c.TerceNADA();
-		//c.TraerDatos();
+        //c.TraerDatos();
         c.BusCuentas();
         c.mostrarModal();
         c.pcnroid = '';
@@ -1000,7 +1005,7 @@ public class testAfiliacionElectronica {
         c.pcprimerapellido = 'Alvarado';
         c.TipoSexo.Sexo__c = 'F';
         c.pcnacionalidad = 'hondueno';
-       	c.desCheckb2 = false;
+        c.desCheckb2 = false;
         c.pcnacionalidad2 = 'hondureno';
         c.ES_Residente_EfectosMi = true;
         c.NumeroID_Fiscal_EEUU = '';
@@ -1013,7 +1018,7 @@ public class testAfiliacionElectronica {
         c.pcprimerapellido = 'Alvarado';
         c.TipoSexo.Sexo__c = 'F';
         c.pcnacionalidad = 'hondueno';
-       	c.desCheckb2 = false;
+        c.desCheckb2 = false;
         c.pcnacionalidad2 = 'hondureno';
         c.ES_Residente_EfectosMi = true;
         c.NumeroID_Fiscal_EEUU = '11';
@@ -1027,7 +1032,7 @@ public class testAfiliacionElectronica {
         c.pcprimerapellido = 'Alvarado';
         c.TipoSexo.Sexo__c = 'F';
         c.pcnacionalidad = 'hondueno';
-       	c.desCheckb2 = false;
+        c.desCheckb2 = false;
         c.pcnacionalidad2 = 'hondureno';
         c.ES_Residente_EfectosMi = false;
         c.NumeroID_Fiscal_EEUU = '11';
@@ -1400,7 +1405,7 @@ public class testAfiliacionElectronica {
         c.EliminarDILADD();
         c.ModificarDIL();
         c.limpiaDil();
-                
+        
         c.pcrncempl = '1234567';
         //c.buscarColectiva();
         
@@ -2033,12 +2038,12 @@ public class testAfiliacionElectronica {
         c.llenarCuentasDesdeSysde();
         
         
-
+        
         controllerHomePortalFPC home = new controllerHomePortalFPC();
         home.Afiliaciones();
         home.anio = 2018;
         home.Gestiones();
         home.pagina = '';        
     }
-
+    
 }

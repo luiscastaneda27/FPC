@@ -1,4 +1,4 @@
-public class ControllerProductoAgn
+public without sharing class  ControllerProductoAgn
 {
     public Cuentas__c cuentas {get;set;}
     String[] lPromotores = new String[]{};
@@ -4117,7 +4117,6 @@ public class ControllerProductoAgn
         naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
         naturalEnvio.PCEMPRESA = pcempresa;    
         naturalEnvio.pcagencia = pcagencia;
-        naturalEnvio.pnnrocertificado = pnnrocertificado;
         naturalEnvio.RTN = RTN;
         naturalEnvio.pdfechasuscripcion = date.today();
         system.debug(pcPEP);
@@ -4372,116 +4371,115 @@ public class ControllerProductoAgn
         naturalEnvio.ListDebidaDil= ListDebidaDil;
         naturalEnvio.ListTelefonos= ListTelefonos;
         naturalEnvio.ListDirecciones= ListDirecciones;
-        if( pcproducto == '' || pcproducto == ' --Ninguno-- ')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Producto  Vacio'));
-                return null;    
-            }
-            if( pcsubproducto == ''|| pcsubproducto == null)
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Subroducto  Vacio'));
-                return null;    
-            }
-            if( Cuenta20.Tipo_Fondo__c == ''|| Cuenta20.Tipo_Fondo__c == ' --Ninguno-- ' || Cuenta20.Tipo_Fondo__c == null)
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Fondo Vacio'));
-                return null;    
-            }
-            if( pcTipoMoneda == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Moneda Vacio'));
-                return null;    
-            }
-            if( Cuenta20.Frecuencia_Aportacion__c == ''|| Cuenta20.Frecuencia_Aportacion__c == ' --Ninguno-- '|| Cuenta20.Frecuencia_Aportacion__c == null)
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Periocidad Vacio'));
-                return null;    
-            }            
-            if( pcformapago == ''|| pccuentapago == ' --Ninguno-- ')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Forma de pago Vacio'));
-                return null;    
-            }
-            if( pcformapago == 'AH' && pccuentapago == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacio'));
-                return null;    
-            }
-            if( pcformapago == 'TA' && pccuentapago == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacio'));
-                return null;    
-            }
-            if( v_des_procedfds == ''|| v_des_procedfds == null)
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Procedencia de Fondos Vacío'));
-                return null;    
-            }
-            if( TipoEnvioo.Tipo_EnvioNuevo__c == ''|| TipoEnvioo.Tipo_EnvioNuevo__c == ' --Ninguno-- ' || TipoEnvioo.Tipo_EnvioNuevo__c == null)
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Envio Vacio'));
-                return null;    
-            } 
-            if(pcaplicaseguro == true)
-            {                
-                if(pcTipoSeguro == ' --Ninguno-- '||pcTipoSeguro == null)
-                {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro vacio'));
-                    return null; 
-                }                 
-            }
+        if( pcproducto == '' || pcproducto == ' --Ninguno-- '){          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Producto  Vacio'));
+            return null;    
+        }
+        if( pcsubproducto == ''|| pcsubproducto == null){          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Subroducto  Vacio'));
+            return null;    
+        }
+        if( Cuenta20.Tipo_Fondo__c == ''|| Cuenta20.Tipo_Fondo__c == ' --Ninguno-- ' || Cuenta20.Tipo_Fondo__c == null)
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Fondo Vacio'));
+            return null;    
+        }
+        if( pcTipoMoneda == '')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Moneda Vacio'));
+            return null;    
+        }
+        if( Cuenta20.Frecuencia_Aportacion__c == ''|| Cuenta20.Frecuencia_Aportacion__c == ' --Ninguno-- '|| Cuenta20.Frecuencia_Aportacion__c == null)
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Periocidad Vacio'));
+            return null;    
+        }            
+        if( pcformapago == ''|| pccuentapago == ' --Ninguno-- ')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Forma de pago Vacio'));
+            return null;    
+        }
+        if( pcformapago == 'AH' && pccuentapago == '')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacio'));
+            return null;    
+        }
+        if( pcformapago == 'TA' && pccuentapago == '')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacio'));
+            return null;    
+        }
+        if( v_des_procedfds == ''|| v_des_procedfds == null)
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Procedencia de Fondos Vacío'));
+            return null;    
+        }
+        if( TipoEnvioo.Tipo_EnvioNuevo__c == ''|| TipoEnvioo.Tipo_EnvioNuevo__c == ' --Ninguno-- ' || TipoEnvioo.Tipo_EnvioNuevo__c == null)
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Envio Vacio'));
+            return null;    
+        } 
+        if(pcaplicaseguro == true)
+        {                
+            if(pcTipoSeguro == ' --Ninguno-- '||pcTipoSeguro == null)
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro vacio'));
+                return null; 
+            }                 
+        }
             
             /*if( pcaplicaseguro == false && AplicaSeguroNO == false)
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Seguro de Vida vacio'));
                 return null;    
             } */
-            if(pcpromotor ==' --Ninguno-- ' || pcpromotor ==null || pcpromotor == '')
-            {
-                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Oficial de negocio vacio'));
-                 return null;    
-            }
-            if( pcUsuarioCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Código de Empleado GFF vacio'));
-                return null;    
-            }
-            if( pcUsuNombreCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre de Empleado GFF vacio'));
-                return null;    
-            }
-            if( pcAgn == ' --Ninguno-- ')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agencia GFF vacio'));
-                return null;    
-            }
-        	decimal totalBene= 0;
-            for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {	
-                system.debug('distri: '+ListBeneficiarios[i].Distribucion);
-                totalBene += ListBeneficiarios[i].Distribucion; 
-            }
-            if(totalBene < 100)
-            {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se Puede Agregar porque la distribución de los beneficiarios Directos es menor a 100% '));
-                return null; 
-            }
-            decimal totalBeneC= 0;
-            for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {	
-                system.debug('distri: '+ListBeneficiariosC[i].Distribucion);
-                totalBeneC += ListBeneficiariosC[i].Distribucion; 
-            }
-            if(totalBeneC > 0 && totalBeneC < 100)
-            {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se Puede Agregar porque la distribución de los beneficiarios de Contingencias es menor a 100% '));
-                return null; 
-            }
-      
-        else
-        { 
+        if(pcpromotor ==' --Ninguno-- ' || pcpromotor ==null || pcpromotor == '')
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Oficial de negocio vacio'));
+            return null;    
+        }
+        if( pcUsuarioCN == '')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Código de Empleado GFF vacio'));
+            return null;    
+        }
+        if( pcUsuNombreCN == '')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre de Empleado GFF vacio'));
+            return null;    
+        }
+        if( pcAgn == ' --Ninguno-- ')
+        {          
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agencia GFF vacio'));
+            return null;    
+        }
+        decimal totalBene= 0;
+        for(integer i=0; i<ListBeneficiarios.size(); i++)
+        {	
+            system.debug('distri: '+ListBeneficiarios[i].Distribucion);
+            totalBene += ListBeneficiarios[i].Distribucion; 
+        }
+        if(totalBene < 100)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se Puede Agregar porque la distribución de los beneficiarios Directos es menor a 100% '));
+            return null; 
+        }
+        decimal totalBeneC= 0;
+        for(integer i=0; i<ListBeneficiariosC.size(); i++)
+        {	
+            system.debug('distri: '+ListBeneficiariosC[i].Distribucion);
+            totalBeneC += ListBeneficiariosC[i].Distribucion; 
+        }
+        if(totalBeneC > 0 && totalBeneC < 100)
+        {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se Puede Agregar porque la distribución de los beneficiarios de Contingencias es menor a 100% '));
+            return null; 
+        }else{ 
+            Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
+            pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
+            naturalEnvio.pnnrocertificado = pnnrocertificado;
          	String resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
+            update af;
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
             // bloqBotonGuardar();
@@ -4522,6 +4520,7 @@ public class ControllerProductoAgn
             else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
             }
+            
             
         }
     } 
