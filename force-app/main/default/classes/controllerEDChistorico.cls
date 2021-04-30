@@ -39,8 +39,14 @@ public class controllerEDChistorico {
             }
             cuentas = contenido ==null ? (EstadosDeCuenta.estadoCuentaHistorico(claseEnvio))[0] : ((list<classECHistorico>)System.JSON.deserialize(contenido, list<classECHistorico>.class))[0];
                 for(classECHistorico.classMovimientos item : cuentas.movimientos){
-                    rendimientoHNL = item.moneda.trim() == 'Lempiras' ? true : rendimientoHNL;
-                    rendimientoUSD = item.moneda.trim()== 'Dólares' ? true : rendimientoUSD;
+                    if(!rendimientoHNL && item.moneda.trim() == 'Lempiras' && cuentas.rendimientoLempiras != null
+                       && !cuentas.rendimientoLempiras.contains('null') ){
+                        rendimientoHNL = true;
+                    }else if(!rendimientoUSD && item.moneda.trim() == 'Dólares' && cuentas.rendimientoDolares != null 
+                       && !cuentas.rendimientoDolares.contains('null')){
+                        rendimientoUSD = true;
+                    }
+                   
                 }
                 }Catch(Exception e){
                     
