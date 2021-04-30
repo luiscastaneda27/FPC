@@ -5,6 +5,6 @@
     <label>PortalAutoGestion</label>
     <queue>PortalAutoGestion</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

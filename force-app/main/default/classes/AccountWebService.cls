@@ -13,7 +13,7 @@ public with sharing class AccountWebService {
  
         request = new HttpRequest();
         request.setMethod('GET');
-        request.setEndpoint('callout:SalesforceAccount/services/apexrest/Account/' + accId);
+        request.setEndpoint('callout:SalesforceAccounount/' + accId);
  
         response = http.send(request); 
  

@@ -5,6 +5,6 @@
     <label>Segundos aprobadores reversiones</label>
     <queue>Segundos_aprobadores_reversiones</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

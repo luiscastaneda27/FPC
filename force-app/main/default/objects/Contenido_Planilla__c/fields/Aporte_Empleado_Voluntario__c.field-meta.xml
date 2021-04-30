@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Aporte_Empleado_Voluntario__c</fullName>
-    <defaultValue>0.0</defaultValue>
+    <defaultValue>0</defaultValue>
     <externalId>false</externalId>
     <label>Aporte Empleado Voluntario</label>
     <precision>12</precision>

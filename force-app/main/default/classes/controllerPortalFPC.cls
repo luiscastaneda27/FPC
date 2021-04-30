@@ -282,6 +282,7 @@ public class controllerPortalFPC {
             claseCasoD.popCaso = true;
             claseCasoD.esBanco = esBanco;
             claseCasoD.esCallCenter = esCallCenter;
+            claseCasoD.Identidad = identidad;
         }Catch(Exception e){
             system.debug('Casos ' + e.getMessage() + ' linea : ' + e.getLineNumber());
         }

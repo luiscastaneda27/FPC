@@ -49,7 +49,7 @@ public class DAU_BorrarCuotas {
                 System.debug(response.getBody());               
                 Caso.Respuesta_desde_Sysde__c = Caso.Respuesta_desde_Sysde__c + ', Cuotas Borradas del Saldo: '+tipoSaldo;
                 update Caso;
-                if(detalle.DAU_Borrar_Cuotas__c == '3' /*&& caso.Respuesta_desde_Sysde__c.contains('Cuotas Borradas del Saldo: 10') && !caso.Respuesta_desde_Sysde__c.contains('Cuotas Borradas del Saldo: 18')*/) {
+                if(detalle.DAU_Borrar_Cuotas__c == '3') {
                 	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S18__c = true));
                     // Call method to publish events
@@ -185,31 +185,5 @@ public class DAU_BorrarCuotas {
         system.debug('debuggAPI' +' '+ fcsd);
 		return fcsd.pccuentapago;   
     }
-    
-    public static String generarPartidas(classAumentoDisminucion envioDatos) {
-    	Http http = new Http();
-		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
-		request.setMethod('POST');
-		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-		request.setTimeout(120000);
-		request.setEndpoint(url + 'api/aumentodisminucion');
-        
-		String respuesta = '';
-		system.debug('Entro al metodo API');
-		try{		
-			classJson envio = new classJson();
-			envio.contenido = JSON.serialize(envioDatos);
-            String cons = 'contenido=' + envio.contenido;
-			system.debug('cons: '+cons);		
-			request.setBody(cons);	
-			HttpResponse response = http.send(request);
-	    	respuesta = response.getBody();
-            system.debug('respuesta: '+respuesta);
-		}catch(System.CalloutException e){
-			system.debug('Mensaje Conexión: '+e.getMessage());
-            respuesta = e.getMessage();
-        }
-		return respuesta;     
-    }    
+   
 }

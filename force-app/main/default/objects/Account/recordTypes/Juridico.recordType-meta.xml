@@ -611,7 +611,7 @@
     <picklistValues>
         <picklist>Ciudad_Residencia2__c</picklist>
         <values>
-            <fullName>000</fullName>
+            <fullName>0</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3701,7 +3701,7 @@
     <picklistValues>
         <picklist>Ciudad_Trabajo2__c</picklist>
         <values>
-            <fullName>000</fullName>
+            <fullName>0</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4915,7 +4915,7 @@
     <picklistValues>
         <picklist>Departamento_Residencia2__c</picklist>
         <values>
-            <fullName>000</fullName>
+            <fullName>0</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4994,7 +4994,7 @@
     <picklistValues>
         <picklist>Departamento_Trabajo2__c</picklist>
         <values>
-            <fullName>000</fullName>
+            <fullName>0</fullName>
             <default>false</default>
         </values>
         <values>

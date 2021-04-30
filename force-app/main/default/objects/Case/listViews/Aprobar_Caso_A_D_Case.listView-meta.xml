@@ -5,6 +5,6 @@
     <label>Aprobar Caso A&amp;D</label>
     <queue>Aprobar_Caso_A_D</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

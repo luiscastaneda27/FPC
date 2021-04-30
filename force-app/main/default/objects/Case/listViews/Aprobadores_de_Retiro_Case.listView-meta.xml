@@ -5,6 +5,6 @@
     <label>Aprobadores de Retiro</label>
     <queue>Aprobadores_de_Retiro</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

@@ -193,9 +193,16 @@ public without sharing class ControladorCasosPortalAutogestion{
                 idTipoRegistro = '--';
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
-                cuenta = [Select Colectiva__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
+                cuenta = [Select Colectiva__c,Codigo__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
                           Forma_Aportacion__c, Tipo_Fondo__c 
                           from cuentas__c where id = :idCuenta];
+                if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
+                    idCuenta = '--';
+                    Cuenta = new cuentas__C();
+                    return;
+                }
+                
                 //Obtener la moneda de configurada a la cuenta.
                 currencyAccountSelected = cuenta.CurrencyIsoCode;
                 

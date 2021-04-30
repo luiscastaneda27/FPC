@@ -11,42 +11,42 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>01</fullName>
+                <fullName>1</fullName>
                 <default>false</default>
                 <label>Afiliación por Solicitud</label>
             </value>
             <value>
-                <fullName>03</fullName>
+                <fullName>3</fullName>
                 <default>false</default>
                 <label>Liquidado</label>
             </value>
             <value>
-                <fullName>05</fullName>
+                <fullName>5</fullName>
                 <default>false</default>
                 <label>Fondo Pignorado por Préstamo</label>
             </value>
             <value>
-                <fullName>07</fullName>
+                <fullName>7</fullName>
                 <default>false</default>
                 <label>Prospecto</label>
             </value>
             <value>
-                <fullName>02</fullName>
+                <fullName>2</fullName>
                 <default>false</default>
                 <label>No Aportante</label>
             </value>
             <value>
-                <fullName>04</fullName>
+                <fullName>4</fullName>
                 <default>false</default>
                 <label>No procede por decisión Admin</label>
             </value>
             <value>
-                <fullName>06</fullName>
+                <fullName>6</fullName>
                 <default>false</default>
                 <label>Fondo Pignorado por Fianza</label>
             </value>
             <value>
-                <fullName>08</fullName>
+                <fullName>8</fullName>
                 <default>false</default>
                 <label>Pensionado</label>
             </value>

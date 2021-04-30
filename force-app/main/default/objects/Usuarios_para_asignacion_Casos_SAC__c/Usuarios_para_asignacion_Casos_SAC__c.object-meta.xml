@@ -162,7 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Usuarios para asignación - Casos SAC</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

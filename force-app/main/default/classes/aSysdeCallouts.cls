@@ -374,7 +374,7 @@ public class aSysdeCallouts {
         list<classBitacora> bitacoras = new list<classBitacora>();
         
         try{
-            caso = [Select Id,AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate 
+            caso = [Select Id,AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate, Respuesta_desde_Sysde__c 
                     From Case Where Id =: idCaso];
             detalle = [Select Id, Tipo_Operacion__c, Nuevo_monto_aporte__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c, 
                        Nuevo_canal_aporte__c, Nueva_fecha_aporte__c, N_Cuenta_Bancaria__c, DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c,
@@ -386,11 +386,13 @@ public class aSysdeCallouts {
             }
             claseEnvio.cuenta = detalle.Cuenta__r.Codigo__c;
             claseEnvio.tipoSaldoMod = '10';
+            if(detalle.Nuevo_canal_aporte__c == 'TAOB') {detalle.Nuevo_canal_aporte__c = 'TA';}
             claseEnvio.nuevoCanalAporte =  detalle.Nuevo_canal_aporte__c;
             claseEnvio.montoOperacion = detalle.Nuevo_monto_aporte__c != null ? detalle.Nuevo_monto_aporte__c : 0;
             claseEnvio.fecha =  detalle.Nueva_fecha_aporte__c != null ? detalle.Nueva_fecha_aporte__c : date.today();
             claseEnvio.cuentaTarjeta =  string.valueOF(detalle.N_Cuenta_Bancaria__c);
             if(detalle.Tipo_Operacion__c == 'A8') {detalle.Tipo_Operacion__c = 'A3';}
+            if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c <> Null) {detalle.Tipo_Operacion__c = 'A1';}
             claseEnvio.accion =  detalle.Tipo_Operacion__c;
             claseEnvio.periodicidad = detalle.Frecuencia__c;
             DateTime sHoy = system.now();
@@ -441,21 +443,41 @@ public class aSysdeCallouts {
                 if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' ) {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     update cuenta;
-                }else if(detalle.Tipo_Operacion__c == 'A3'){
-                    Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
-                    update cuenta;                  
-                }else if(detalle.Tipo_Operacion__c == 'A4'){
+                } else if(detalle.Tipo_Operacion__c == 'A4') {
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
                     update cuenta;
-                } else if((detalle.Tipo_Operacion__c == 'A6' || detalle.Tipo_Operacion__c == 'A8') && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3') && detalle.Nuevo_canal_aporte__c != 'AH'){
+                } else if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A6' || detalle.Tipo_Operacion__c == 'A8') 
+                          && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3') 
+                          && detalle.Nuevo_canal_aporte__c != 'AH') {
+                              
                     System.debug('Entra a borrar las cuotas');
+                    if(detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
+                        if(detalle.Nuevo_canal_aporte__c == 'TAOB') {
+                        	detalle.Nuevo_canal_aporte__c = 'TA';    
+                        }
+                    	Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
+                    	update cuenta; 	 	
+                    }                   
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S10__c = true));
                     // Call method to publish events
                     List<Database.SaveResult> results = EventBus.publish(Logs);
-                }                
-            
-                Caso.Respuesta_desde_Sysde__c = response.getBody();
+                }  
+                
+                if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c == Null) {
+                    //Ejecutando segundo llamado a Sysde para modificar el monto del aporte.
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                }  
+                
+                if(detalle.Tipo_Operacion__c == 'A1' && caso.Respuesta_desde_Sysde__c <> Null) {
+                	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: ' + caso.Respuesta_desde_Sysde__c + 'Monto del aporte: ' + response.getBody();	   
+                } else {
+                	Caso.Respuesta_desde_Sysde__c = response.getBody();
+                }    
+                
                 claseUtil.stopTrigger();
                 
                 update Caso;
