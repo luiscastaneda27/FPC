@@ -4879,7 +4879,7 @@ public class ControllerProducto {
                     system.debug('lo que trae el subproducto: '+pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
                     opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
+                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c /*where codigo__c =: fcsd.pcsubproducto*/ order by Name asc])
                     {
                         opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
                     }

@@ -5304,10 +5304,10 @@ public without sharing class  ControllerProductoAgn
                    pcproducto = fcsd.pcproducto;
                 }
                 if (fcsd.pcsubproducto != null){
-                    system.debug('lo que trae el subproducto: '+pcsubproducto);
+                    system.debug('lo que trae el subproducto: '+fcsd.pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
                     opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c where codigo__c =: fcsd.pcsubproducto])
+                    for (Subproducto__c item:[select name, codigo__c from Subproducto__c /*where codigo__c =: fcsd.pcsubproducto*/ order by Name asc])
                     {
                         opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
                     }
@@ -5908,7 +5908,7 @@ public without sharing class  ControllerProductoAgn
                 else
                 //if(fcsd.pcUsuarioCN!=null)    
                 {
-                    if(fcsd.pcUsuarioCN!='//' && !test.isRunningTest())
+                    if(fcsd.pcUsuarioCN != null && fcsd.pcUsuarioCN!='//' && !test.isRunningTest())
                     {
                         pcUsuarioCN = fcsd.pcUsuarioCN.split('/').get(0);
                         pcUsuNombreCN = fcsd.pcUsuarioCN.split('/').get(1);
