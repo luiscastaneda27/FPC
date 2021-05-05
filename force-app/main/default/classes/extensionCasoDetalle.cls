@@ -182,7 +182,7 @@ public class extensionCasoDetalle {
                         Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
                         Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c,
-                        Archivo_Adjunto__C,Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
+                        Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
                         Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C
                         From Case Where Id =: CasoSTD.Id Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){
@@ -1022,7 +1022,7 @@ public class extensionCasoDetalle {
                                    Cuenta_Colectiva2__r.De_12_anos__c, Cuenta_Colectiva2__r.De_23_anos__c,
                                    Cuenta_Colectiva2__r.De_34_anos__c, Cuenta_Colectiva2__r.De_45_anos__c,
                                    Cuenta_Colectiva2__r.Mas_5_anos__c,Monto_aporte__c ,
-                                   Porcentaje_CRA_Individual__c, Cobro_Individual_CRA__c,
+                                   Porcentaje_CRA_Individual__c, Cobro_Individual_CRA__c,FondoInversionCP__c,
                                    De_01_anos__c,De_12_anos__c, De_23_anos__c,Cuenta_colectiva2__r.Tipo_Politica_Retiro_Saldo_Patronal__c,
                                    Cuenta_colectiva2__r.PSP_De_01_anos__C, Cuenta_colectiva2__r.PSP_De_12_anos__C,
                                    Cuenta_colectiva2__r.PSP_De_23_anos__C, Cuenta_colectiva2__r.PSP_De_34_anos__C, 
@@ -1829,52 +1829,7 @@ public class extensionCasoDetalle {
                 mapDCasoCuenta.put(idCuenta, nuevo);
                 if((cTipoCaso.constancias && caso.Constancia__c=='P1'
                     && caso.Status=='Nuevo') || test.isRunningTest()){
-                       detalleCaso.Total_Saldo_Patronal__c=0;
-                        detalleCaso.Total_Saldo_Personal__c=0;
-                        for(cuentas__C item: [select codigo__C, CurrencyIsoCode from cuentas__C where id =:idCuenta]){
-                            if(caso.CurrencyIsoCode=='USD' && item.CurrencyIsoCode == 'HNL'){ 
-                                system.debug('Hola');
-                                detalleCaso = new detalle_caso__C();
-                                cuentasCaso = new list<detalle_caso__C>();
-                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No esta permitido prestamo en dolares con fonde en lempiras.'));
-                                return;
-                            }
-                            getSaldoCuenta saldosTempo = new getSaldoCuenta(); 
-                            detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
-                            saldosTempo = aSysdeCallouts.traerSaldos(item.Codigo__c);
-                            
-                            detalleCaso.Monto_Pignorado__c=0;
-                            detalleCaso.Monto_Prestamo__c = 0;
-                            try{detalleCaso.Monto_Pignorado__c = saldosTempo.montoPignorado !='null' ? decimal.valueOf(saldosTempo.montoPignorado.replace(',','')) : 0;}catch(Exception ex){}
-                            for(classSaldos tipoSaldo : saldosTempo.saldos){
-                                if(caso.CurrencyIsoCode == item.CurrencyIsoCode){
-                                   if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
-                                        detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
-                                    }else{
-                                        detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
-                                    }
-                                }else if(caso.CurrencyIsoCode=='HNL' && item.CurrencyIsoCode == 'USD'){
-                                    system.debug('Hola 1');
-                                    if(caso.Tasa_Cambio__c == null){
-                                        detalleCaso = new detalle_caso__C();
-                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para hacer este tipo de constancia tiene que detallar la tasa de cambio en el caso'));
-                                        return;
-                                    }
-                                    detalleCaso.Cambio_moneda__c = true;
-                                    if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
-                                        detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
-                                    }else{
-                                        detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
-                                    }
-                                }//else{
-                                   // system.debug('Hola');
-                                    //detalleCaso = new detalle_caso__C();
-                                    //cuentasCaso = new list<detalle_caso__C>();
-                                    // ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para este tipo de constancia solo puedes agregar una cuenta'));
-                                //}
-                            }
-                           detalleCaso.Monto_Pignorado__c = (detalleCaso.Cambio_moneda__c && detalleCaso.Monto_Pignorado__c > 0) ?  (detalleCaso.Monto_Pignorado__c * caso.Tasa_Cambio__c).setscale(2) : detalleCaso.Monto_Pignorado__c;         
-                        }
+                       validacionSaldosP1();
                     }
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cuenta ya agregada'));
@@ -1886,6 +1841,55 @@ public class extensionCasoDetalle {
         system.debug('Hola: '+ cuentasCaso.size());
            
     }
+     public void validacionSaldosP1(){
+        detalleCaso.Total_Saldo_Patronal__c=0;
+        detalleCaso.Total_Saldo_Personal__c=0;
+        cuentaCliente = mapCuentas.get(idCuenta);
+        if(caso.CurrencyIsoCode=='USD' && cuentaCliente.CurrencyIsoCode == 'HNL'){
+            detalleCaso = new detalle_caso__C();
+            cuentasCaso = new list<detalle_caso__C>();
+            cuentaCliente = new Cuentas__C();
+            mapDCasoCuenta = new map<Id, detalle_caso__C>();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No esta permitido prestamo en dolares con fonde en lempiras.'));
+            return;
+        }
+        
+        getSaldoCuenta saldosTempo = new getSaldoCuenta(); 
+        detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
+        saldosTempo = aSysdeCallouts.traerSaldos(cuentaCliente.Codigo__c);
+        
+        detalleCaso.Monto_Pignorado__c=0;
+        detalleCaso.Monto_Prestamo__c = 0;
+        try{detalleCaso.Monto_Pignorado__c = saldosTempo.montoPignorado !='null' ? decimal.valueOf(saldosTempo.montoPignorado.replace(',','')) : 0;}catch(Exception ex){}
+        for(classSaldos tipoSaldo : saldosTempo.saldos){
+            if(caso.CurrencyIsoCode == cuentaCliente.CurrencyIsoCode){
+                if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
+                    detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
+                }else{
+                    detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''));
+                }
+            }else if(caso.CurrencyIsoCode=='HNL' && cuentaCliente.CurrencyIsoCode == 'USD'){
+                system.debug('Hola 1');
+                if(caso.Tasa_Cambio__c == null){
+                    detalleCaso = new detalle_caso__C();
+                    cuentaCliente = new Cuentas__C();
+                    cuentasCaso = new list<detalle_caso__C>();
+                    mapDCasoCuenta = new map<Id, detalle_caso__C>();
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Para hacer este tipo de constancia tiene que detallar la tasa de cambio en el caso'));
+                    return;
+                }
+                detalleCaso.Cambio_moneda__c = true;
+                if(tipoSaldo.tipoSaldo=='10' || tipoSaldo.tipoSaldo=='11' ){
+                    detalleCaso.Total_Saldo_Personal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
+                }else{
+                    detalleCaso.Total_Saldo_Patronal__c +=decimal.valueOf(tipoSaldo.montoSaldo.replace(',',''))*caso.Tasa_Cambio__c;
+                }
+            }
+        }
+        detalleCaso.Monto_Pignorado__c = (detalleCaso.Cambio_moneda__c && detalleCaso.Monto_Pignorado__c > 0) ?  (detalleCaso.Monto_Pignorado__c * caso.Tasa_Cambio__c).setscale(2) : detalleCaso.Monto_Pignorado__c;         
+        
+    }
+   
     
     public void eliminarCuenta(){
         try{

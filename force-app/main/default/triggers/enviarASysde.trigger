@@ -1,4 +1,5 @@
 trigger enviarASysde on Case (before update) {
+    //if(!test.isRunningTest()) Trigger.new[0].addError('No se puede gestionar un caso ya que se esta haciendo un implementación en este momento.');
     system.debug('Puedo corrrelo ' + claseUtil.canIRun());
     if(claseUtil.canIRun() && !System.isFuture()) { 
         
