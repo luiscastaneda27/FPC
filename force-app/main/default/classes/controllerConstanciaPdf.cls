@@ -337,16 +337,17 @@ public class controllerConstanciaPdf{
                 SaldoDispoible +=detallesCaso[0].Total_saldo_patronal__C;
             }
             //Modificada
-            SaldoDispoible -=detallesCaso[0].es_refinanciamiento__C && detallesCaso[0].monto_pignorado__C !=null ? detallesCaso[0].monto_pignorado__C:0;
+            /*SaldoDispoible -=detallesCaso[0].es_refinanciamiento__C && detallesCaso[0].monto_pignorado__C !=null ? detallesCaso[0].monto_pignorado__C:0;
             list<detalle_caso__C> listdetalle = [select monto_pignorado__C from detalle_caso__C
                                                  where Prestamo_anterior__c = :detallesCaso[0].Prestamo_anterior__c
-                                                and monto_pignorado__C>0 and Prestamo_anterior__c !=null];
+                                                and monto_pignorado__C>0 and Prestamo_anterior__c !=null 
+												and Caso__r.Status = 'Cerrado'];
             if(detallesCaso[0].es_refinanciamiento__C && listdetalle.size()>0 ){
                 SaldoDispoible += listdetalle[0].monto_pignorado__C;
             }
             if(detallesCaso[0].No_es_primer_prestamo__C || test.isRunningTest() ){
                 SaldoDispoible -= !test.isRunningTest() ? detallesCaso[0].Monto_Pignorado__c : 0;
-            }
+            }*/
             if(detallesCaso[0].Cambio_moneda__c){
                 saldoDolares = SaldoDispoible / casotratar.Tasa_Cambio__c;
                 string x = ConvertirNumeros.convertirLetras((integer) saldoDolares);
