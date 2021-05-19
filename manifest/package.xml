@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>controllerConstanciaPdf</members>
-		<members>extensionCasoDetalle</members>
+		<members>*</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
-		<members>CompleteResolutionTimeMilestone</members>
-		<members>enviarASysde</members>
-		<name>ApexTrigger</name>
+		<members>*</members>
+		<name>ApexPage</name>
 	</types>
 	<types>
-		<members>Cuentas__c.FondoInversionCP__c</members>
-		<name>CustomField</name>
+		<members>*</members>
+		<name>ApexTrigger</name>
 	</types>
 	<version>50.0</version>
 </Package>

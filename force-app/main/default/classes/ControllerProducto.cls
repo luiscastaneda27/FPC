@@ -241,7 +241,7 @@ public class ControllerProducto {
     Public Account NivelTRiesgo{get;set;}
     Public Account Departamento{get;set;}
     
-    //Public Account CanalVentaaConti{get;set;}
+    Public Account CanalVentaaConti{get;set;}
     Public Account CanalVentaa{get;set;}
     Public Account Gradop2{get;set;}
     Public Account Gradop3{get;set;}
@@ -498,7 +498,7 @@ public class ControllerProducto {
         NivelTRiesgo = new Account();
         NivelTDilegencia  = new Account();
         CanalVentaa = new Account();
-        //CanalVentaaConti = new Account();
+        CanalVentaaConti = new Account();
         Gradop2 = new Account();
         Gradop3 = new Account();
         Gradop4 = new Account();
@@ -1246,6 +1246,7 @@ public class ControllerProducto {
         }
         return null;
     }
+    
     public pageReference GUARDAR2C()
     {
         try
@@ -1254,7 +1255,7 @@ public class ControllerProducto {
             beneficiarioUnicoC.tipoId=beneficiarioUnicoC.tipoId;
             beneficiarioUnicoC.genero= Cliente1Conti.Sexo__c;
             beneficiarioUnicoC.Parentesco = Parentesco1C;
-            //beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
+            beneficiarioUnicoC.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaaConti.Grado_Familiar__c) : 0;
             //beneficiarioUnico.Grado =  CanalVentaa.Grado_Familiar__c !=null ? integer.valueOf(CanalVentaa.Grado_Familiar__c):0;
             beneficiarioUnicoC.tipoBeneficiario = TipoBeneficiarioConti.Tipo_Beneficiario__c;
            beneficiarioUnicoC.fechaNacimiento = fechaBeneficiarioC;
@@ -1373,6 +1374,7 @@ public class ControllerProducto {
         }
         return null;
     }
+    
     PUBLIC VOID ModificarD()
     {
         try
@@ -1455,7 +1457,7 @@ public class ControllerProducto {
                     beneficiarioUnicoC.segundoApellido =  ListBeneficiariosC[i].segundoApellido;
                     Parentesco1C = ListBeneficiariosC[i].Parentesco != null ? String.valueOf(Integer.valueOf(ListBeneficiariosC[i].Parentesco)) : null  ;
                     
-                    /*if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
+                    if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '1';
                     }
@@ -1470,7 +1472,7 @@ public class ControllerProducto {
                     else
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '4';
-                    }   */   
+                    }      
                     
                     //CanalVentaa.Grado_Familiar__c = double.valueOf(ListBeneficiarios[i].Grado);
                     beneficiarioUnicoC.fechaNacimiento = ListBeneficiariosC[i].fechanacimiento;
@@ -1606,7 +1608,7 @@ public class ControllerProducto {
     public Listado_Empresas__c InfoEmpresa {get;set;}
     public boolean mostrarSiguienteInfo {get;set;}
     
-    //funcion para listar los telefonos
+     //funcion para listar los telefonos
     public boolean tele {get;set;}
     public boolean OcultarTelSi {get;set;}
     public boolean OcultarTelNo {get;set;}
@@ -1626,9 +1628,8 @@ public class ControllerProducto {
     public boolean mostrarTablaModificarDir {get;set;}
     public boolean MostrarTablaDireccion {get;set;}
      
-	PUBLIC pageReference guardarListaDir()
+    PUBLIC pageReference guardarListaDir()
     {      
-        
         direccionUnico.paisDir = pccodpais;
         direccionUnico.deptoDir = pcDeptoCN;
         direccionUnico.ciuDir = pcMunicipioCN;
@@ -1637,7 +1638,7 @@ public class ControllerProducto {
         direccionUnico.esDefault = Cliente25.Por_defecto__c;          
         direccionUnico.detalleDir = pcCalleDetalleCN;
         
-        if(direccionUnico.esDefault == null && direccionUnico.tipDireccion == 'C')
+        if(direccionUnico.esDefault == null || direccionUnico.esDefault != null && direccionUnico.tipDireccion == 'C')
         {    
             direccionUnico.esDefault ='S';
         }
@@ -1655,7 +1656,8 @@ public class ControllerProducto {
             }
             else
             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Dirección agregada Con Exito!'));
+                
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
                 if( mostrarTablaModificarDir  == true)
                 {
                     mostrarTablaModificarDir  = true;
@@ -1683,12 +1685,12 @@ public class ControllerProducto {
             }
                      
         }catch(exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber())); 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Permiten Campos Vacios En Dirección'));
         }
         //mostrarTablaModificarDir  = true;
         return null;
     }
-    
     PUBLIC void EliminarDIR() 
     { 
         try
@@ -1789,14 +1791,10 @@ public class ControllerProducto {
                     {
                         opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
                     }
-                    
                     pcColoniaCN = ListDirecciones[i].coloDir;
                     direccionUnico.secuencia = ListDirecciones[i].secuencia;
                     Cliente25.Por_defecto__c = ListDirecciones[i].esDefault;
-                    
-        
                 }
-                
             }
             if(posi != null)
             {
@@ -1813,8 +1811,7 @@ public class ControllerProducto {
     }   
     
     PUBLIC pageReference guardarListaTel()
-    {       
-        
+    {      
         telefonoUnico.Secuencia = telefonoUnico.Secuencia;
         telefonoUnico.numTelefono = pcTelefonoCN;
         telefonoUnico.tipTelefono = Cliente25.Tipo_Telefono__c;
@@ -1822,26 +1819,24 @@ public class ControllerProducto {
         telefonoUnico.esDefault = Cliente25.Por_Defecto_Tel__c;
         telefonoUnico.TelUbicacion = Cliente25.Telefono_Ubicacion__c;
         
-        if(telefonoUnico.esDefault == null && telefonoUnico.tipTelefono == 'C' && telefonoUnico.TelUbicacion == 'C')
+        if(telefonoUnico.esDefault == null ||telefonoUnico.esDefault != null && telefonoUnico.tipTelefono == 'C' && telefonoUnico.TelUbicacion == 'C')
         {    
             telefonoUnico.esDefault ='S';
         }
         else {telefonoUnico.esDefault ='N';} 
-        
-        
+
         system.debug('numTel:' + telefonoUnico.numTelefono + ' Tipo: ' + telefonoUnico.tipTelefono + ' EsDefa: ' + telefonoUnico.esDefault + 
                         ' ubi: ' + telefonoUnico.TelUbicacion);   
-        
         try
         {
             if(telefonoUnico.numTelefono == '' || telefonoUnico.tipTelefono == null || telefonoUnico.TelUbicacion == null/*|| telefonoUnico.esDefault == null*/)
             {    
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Permiten Campos Vacios En Teléfonos'));  
                 return null;
-            }            
+            }  
             else
             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Agregado Con Exito!')); 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!')); 
                 if( mostrarTablaModificarTel == true)
                 {
                     mostrarTablaModificarTel = true;
@@ -1853,8 +1848,7 @@ public class ControllerProducto {
                 {                  
                     MostrarTablaTelefono =  true;
                     ListTelefonos.add(telefonoUnico);
-                    telefonoUnico  = new ClassTelefono ('', null, '', '', '', null, '');
-                    
+                    telefonoUnico  = new ClassTelefono ('', null, '', '', '', null, '');                 
                 }
                 pcTelefonoCN = '';
                 extension = null;
@@ -1880,8 +1874,7 @@ public class ControllerProducto {
                 if (ListTelefonos[i].secuencia == double.valueOf(NumbTelTable))
                 {
                     pos=i;
-                } 
-                
+                }  
             }
             if(pos != null)
             {
@@ -1911,12 +1904,9 @@ public class ControllerProducto {
             }
             if(pos != null)
             {
-                
                 ListTelefonos.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminó el télefono'));
                 MostrarTablaTelefono = false;    
-                //mostrarTablaModificarTel = false;
-                //disbotBene = true;
             } 
         }
         catch(exception e)
@@ -1934,7 +1924,6 @@ public class ControllerProducto {
             integer posi;
             for(integer i=0; i<ListTelefonos.size(); i++) 
             { 
-                
                 if(ListTelefonos[i].secuencia == double.valueOf(NumbTelTable))// null)//double.valueOf(NumbTelTable))
                 {         
                     posi=i;
@@ -1943,15 +1932,14 @@ public class ControllerProducto {
                     Cliente25.Tipo_Telefono__c = ListTelefonos[i].tipTelefono;
                     extension =  ListTelefonos[i].extension;
                     Cliente25.Por_Defecto_Tel__c = ListTelefonos[i].esDefault;
-                    Cliente25.Telefono_Ubicacion__c = ListTelefonos[i].TelUbicacion;    
-                   
+                    Cliente25.Telefono_Ubicacion__c = ListTelefonos[i].TelUbicacion;                       
                 }
             }
             if(posi != null)
             {
                 ListTelefonos.remove(posi);
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificará el Télefono'));            }         
-            
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificará el Télefono'));            
+            }                  
         }
         catch(exception e)
         {
@@ -1964,8 +1952,6 @@ public class ControllerProducto {
         valorsiTel = false;
         valornoTel = false;
     }
-    //FIN DE LO AGREGADO prueba 10042019
-    
     
     public void BuscaInfoEmpresa()
     {
@@ -3406,7 +3392,8 @@ public class ControllerProducto {
         ListDirecciones = null;
         ListTelefonos = null;
         mostrarTablaModificar = false;
-        CanalVentaa.Canal_Venta__c = null;	
+        CanalVentaa.Canal_Venta__c = null;
+        CanalVentaaConti.Canal_Venta__c = null;
         //agregando 10042019
         mostrarTablaModificarDil = false;
         mostrarTablaModificarTel = false;
@@ -4409,7 +4396,7 @@ public class ControllerProducto {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Procedencia de Fondos Vacío'));
                 return null;    
             }
-            if(pcaplicaseguro)
+           /* if(pcaplicaseguro)
             {       
                 system.debug('pcTipoSeguro: '+pcTipoSeguro);
                 if(pcTipoSeguro == ' --Ninguno-- '||pcTipoSeguro == null)
@@ -4417,7 +4404,7 @@ public class ControllerProducto {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro vacio'));
                     return null; 
                 }                 
-            }
+            }*/
             
             /*if( pcaplicaseguro == false && AplicaSeguroNO == false)
             {          
@@ -6194,7 +6181,6 @@ public class ControllerProducto {
             Prueba = MostrarCUENTT;             
         }
     } 
-    
     
     public void SeleccionGradoPa()
     {

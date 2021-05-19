@@ -122,7 +122,7 @@ public class ConvertirNumeros {
             }
             else if (numero >= 700 && numero <= 799)
             {
-                num_letra = 'setencientos ';
+                num_letra = 'setecientos ';
                 if (numero > 700)
                     num_letra = num_letra + (decena(numero - 700));
             }
