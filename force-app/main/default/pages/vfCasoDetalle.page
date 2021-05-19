@@ -415,8 +415,8 @@
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.POS__c}" /> 
                                             </apex:outputPanel> 
                                             
-                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
-                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB')}">
+                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                                        OR(detalleCaso.Nuevo_canal_aporte__c = 'TAOB', detalleCaso.Banco__c = 'Otros Bancos'))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Tipo de Tarjeta</label>
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" /> 
@@ -426,7 +426,9 @@
                                                                         detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), detalleCaso.Tipo_Operacion__c = 'A4', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A7')}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Banco</label>
-                                                <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}" /> 
+                                                <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 
+                                                    <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
+                                                </apex:inputField>    
                                             </apex:outputPanel>
                                         </div>
                                         <div class="slds-form-element slds-size--2-of-2">
@@ -463,7 +465,7 @@
                                             
                                             
                                             <apex:outputpanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8', detalleCaso.Tipo_Operacion__c = 'A3'), 
-                                                                        AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA',detalleCaso.Nuevo_canal_aporte__c = 'TAOB')))}">                                     
+                                                                        AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA',detalleCaso.Nuevo_canal_aporte__c = 'TAOB',detalleCaso.Banco__c = 'Otros Bancos')))}">                                     
                                                 <label class="slds-form-element__label">
                                                   <abbr class="slds-required" title="required">*</abbr>Fecha de vencimiento
                                                 </label>                                              
@@ -491,8 +493,8 @@
                                                 </div>
                                             </apex:outputpanel>  
                                             
-                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
-                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB')}">
+                                            <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                                        OR(detalleCaso.Nuevo_canal_aporte__c = 'TAOB', detalleCaso.Banco__c = 'Otros Bancos'))}">                              
                                                 <label class="slds-form-element__label">
                                                     <abbr class="slds-required" title="required">*</abbr>Nombre Tarjeta Habiente</label>
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" /> 
@@ -519,7 +521,7 @@
                                         </div>
                                     </div>
                                     
-                                    <apex:outputPanel rendered="{!detalleCaso.Inicio_Fecha_Aporte__c != null}" >
+                                    <apex:outputPanel rendered="{!AND(detalleCaso.Inicio_Fecha_Aporte__c != null, detalleCaso.Nueva_fecha_aporte__c == Null)}" >
                                         <div class="slds-form-element__row">
                                             <div class="slds-form-element slds-size--1-of-2">
                                                 <label class="slds-form-element__label" >

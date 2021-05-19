@@ -19,15 +19,19 @@ public class controladorOficialxEmpresa {
         mapCodigos = new map<string, string>();
         listAsesores.add(new selectOption('', '--Ninguno--'));
         listOficiales.add(new selectOption('', '--Ninguno--'));
-        for(user item :[select name, id ,codigo__C, profile.name from user where profile.name ='Asesores Financieros' OR profile.name ='Asesores Financieros Plataforma' OR profile.name = 'Servicio Cliente']){
-            mapCodigos.put(item.id, item.codigo__C);
-            if(item.profile.name =='Asesores Financieros' || item.profile.name =='Asesores Financieros Plataforma'){
-                listAsesores.add(new selectOption(item.id, item.name));
-                
-            }else{
-                listOficiales.add(new selectOption(item.id, item.name));
-            }
-        }
+        for(User item :
+            [Select Name, Id ,Codigo__C, Profile.Name 
+             From user 
+             Where (profile.name ='Asesores Financieros' OR profile.name ='Asesores Financieros Plataforma' 
+             OR profile.name = 'Servicio Cliente') And IsActive = true]){
+                 mapCodigos.put(item.id, item.codigo__C);
+                 if(item.profile.name =='Asesores Financieros' || item.profile.name =='Asesores Financieros Plataforma'){
+                     listAsesores.add(new selectOption(item.id, item.name));
+                     
+                 }else{
+                     listOficiales.add(new selectOption(item.id, item.name));
+                 }
+             }
         for(Account item: [select id, name from Account  where recordtype.developername='Juridico' order by name asc]){
             listEmpresas.add(new selectOption(item.id, item.name));
         }
@@ -35,14 +39,11 @@ public class controladorOficialxEmpresa {
     }
     
     public void inicio(){
-        try{
-            AsesorxOficial = new Oficiales_X_Empresa__c ();
-            listAsesoresxOficiales = new list<Oficiales_X_Empresa__c >();
-            listAsesoresxOficiales = [select Oficial_SAC__c,asesor__C,Oficial_SAC__r.name, Asesor__r.name,id, Codigo_Oficial_SAC__C,
-                           Codigo_Asesor__C, empresa__r.name from Oficiales_X_Empresa__c  where Oficial_SAC__c !=null and Asesor__c !=null  order by Oficial_SAC__r.name asc];
-        }catch(exception ex){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.error,' Ha ocurrido un error, por favor contacte a sus administrador.'+ex.getLineNumber()));
-        }
+        AsesorxOficial = new Oficiales_X_Empresa__c ();
+        listAsesoresxOficiales = new list<Oficiales_X_Empresa__c >();
+        listAsesoresxOficiales = [select Oficial_SAC__c,asesor__C,Oficial_SAC__r.name, Asesor__r.name,id, Codigo_Oficial_SAC__C,
+                                  Codigo_Asesor__C, empresa__r.name from Oficiales_X_Empresa__c  where Oficial_SAC__c !=null and Asesor__c !=null  order by Oficial_SAC__r.name asc];
+        
     }
     
     public void editar(){

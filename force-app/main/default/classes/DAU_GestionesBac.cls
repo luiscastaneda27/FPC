@@ -4,7 +4,7 @@ public class DAU_GestionesBac {
         
         String respuesta = '';
         
-        Case c = [Select Id,Respuesta_SF_Tarjetas__c,Account.Identificacion__c,Account.Name,Account.PersonEmail,Account.Celular__c,
+        Case c = [Select Id,Status,Respuesta_SF_Tarjetas__c,Account.Identificacion__c,Account.Name,Account.PersonEmail,Account.Celular__c,
                       Account.Sexo__c From Case Where Id =: CaseId];
             
         System.debug('caso: '+c);
@@ -24,7 +24,9 @@ public class DAU_GestionesBac {
             String estadoDebito = 'A';
             
             classGestionesBac datos = new classGestionesBac();
-            if(detC.Tipo_Operacion__c == 'A8' || Gestion == 'Afiliacion') {
+            if(detC.Tipo_Operacion__c == 'A3' || detC.Tipo_Operacion__c == 'A8' || Gestion == 'Afiliacion' 
+              || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null && c.Status == 'Cerrado')) {
+                System.debug('Afiliación de Débito Automático');
                 datos.tipoGestion = 'afiliaDebito';
                 datos.identificacion = c.Account.Identificacion__c;
                 datos.nombreCliente = c.Account.Name;
@@ -45,7 +47,8 @@ public class DAU_GestionesBac {
                 datos.diaCobro = detC.DAU_Dia_de_pago__c;
                 datos.montoDebito = String.valueOf(detC.Nuevo_monto_aporte__c);
                 datos.estadoDebito = estadoDebito;
-            } else if(detC.Tipo_Operacion__c == 'A4') {                                            
+            } else if(detC.Tipo_Operacion__c == 'A4') {       
+                System.debug('Cambio de Fecha de Aporte');
                 datos.tipoGestion = 'modificaDebito';
                 datos.identificacion = c.Account.Identificacion__c;
                 datos.nombreCliente = '';
@@ -63,7 +66,8 @@ public class DAU_GestionesBac {
                 datos.diaCobro = String.valueOf(myDate.Day());
                 datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);   
                 datos.estadoDebito = estadoDebito;                                              
-            } else if(detC.Tipo_Operacion__c == 'A7' || detC.Tipo_Operacion__c == 'A3') {
+            } else if(detC.Tipo_Operacion__c == 'A7' || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null)) {
+                System.debug('Cancelación');
                 datos.tipoGestion = 'modificaDebito';
                 datos.identificacion = c.Account.Identificacion__c;
                 datos.nombreCliente = '';
@@ -78,15 +82,9 @@ public class DAU_GestionesBac {
                 datos.fechaExpiracion = '';
                 datos.bancoTarjeta = '';                              
                 datos.diaCobro = '14';
-                datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);    
+                datos.montoDebito = '0';    
                 datos.estadoDebito = 'C';  
-                if(detC.Tipo_Operacion__c == 'A3') {
-                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id));
-                    // Call method to publish events
-                    List<Database.SaveResult> results = EventBus.publish(Logs);
-                }
-            }             
+            }  
             
             System.debug('Datos: '+datos);
             
@@ -110,16 +108,46 @@ public class DAU_GestionesBac {
 			request.setBody(cons);	
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            //respuesta = 'Débito modificado correctamente';
             system.debug('respuesta: '+respuesta);
+            
             if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente') {
-                c.Respuesta_SF_Tarjetas__c = respuesta;
+                if(detC.Tipo_Operacion__c == 'A7' || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null)) {
+                	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta; 
+                } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null) {
+                	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' --- Afiliación: // ' + respuesta; 
+                } else {
+                	c.Respuesta_SF_Tarjetas__c = respuesta;    
+                }               
                 update c;
-                if(detC.Tipo_Operacion__c != 'A3' || Gestion == 'Afiliacion') {
+                if(detC.Tipo_Operacion__c == 'A4') {
+                    System.debug('Cambio de Fecha de Aporte llama a Sysde');
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
                     // Call method to publish events
                     List<Database.SaveResult> results = EventBus.publish(Logs);
-                }    
+                }
+                else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c.Contains('Afiliación')) {
+                    System.debug('CCambio de # Tarjeta llama a Sysde');
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                } 
+                else if(detC.Tipo_Operacion__c == 'A7') {
+                	System.debug('Cancelación llama a Sysde');
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);    
+                }
+                else if(detC.Tipo_Operacion__c == 'A3' || detC.Tipo_Operacion__c == 'A8') {
+                	System.debug('Cambio de Canal de Aporte	o Afiliación de Débito Automático llama a Sysde');
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);    
+                }
             } else if(respuesta.contains('Error')){
             	c.Respuesta_SF_Tarjetas__c = respuesta;
                 update c;    

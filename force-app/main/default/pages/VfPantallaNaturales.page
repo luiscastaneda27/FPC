@@ -64,7 +64,7 @@
                              	</label>
 
                              	<label class="slds-checkbox">
-                             		<apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!PEP}" id="PEP"  styleclass="slds-input"  />
+                             		<apex:inputcheckbox disabled="true" onclick="actPEP()" value="{!PEP}" id="PEP"  styleclass="slds-input"  />
                              		<span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                              	</label>
 

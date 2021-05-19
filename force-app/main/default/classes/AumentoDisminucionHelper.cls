@@ -4,7 +4,7 @@ public class AumentoDisminucionHelper {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');
-        request.setEndpoint(url + 'api/valEstado /' + codCuenta); //http://190.5.68.11:9090/
+        request.setEndpoint(url + 'api/valEstado/' + codCuenta); //http://190.5.68.11:9090/
         request.setMethod('GET');
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setTimeout(120000);

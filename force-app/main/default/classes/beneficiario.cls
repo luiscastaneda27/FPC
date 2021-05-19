@@ -3,6 +3,9 @@ public class beneficiario {
    	public decimal idExterno{get;set;} 
     public string tipoId{get;set;} 
     public string numeroId{get;set;}
+    public string PEPbeneficiario{get;set;}
+    public string FATCAbeneficiario{get;set;}
+    public string FATCANCbeneficiario{get;set;}
     public string tipoBeneficiario{get;set;} 
     public string genero{get;set;}
     public string primerNombre{get;set;}
@@ -16,12 +19,17 @@ public class beneficiario {
     public date fechaBeneficiario{get;set;}
     public decimal idGuardar{get;set;} 
     
-    public beneficiario( decimal idGuardar, string tipoId, string numeroId, string tipoBeneficiario, string genero, string primerNombre, string segundoNombre, string primerApellido, string segundoApellido, string Parentesco,double Distribucion,double Grado,date fechaNacimiento                     
-                        )
+    public beneficiario( decimal idGuardar, string tipoId, string numeroId, string PEPbeneficiario, string FATCAbeneficiario, 
+                         string FATCANCbeneficiario, string tipoBeneficiario, string genero, string primerNombre, 
+                         string segundoNombre, string primerApellido, string segundoApellido, string Parentesco,
+                         double Distribucion,double Grado,date fechaNacimiento)
     {
         this.idGuardar=idGuardar;
         this.tipoId=tipoId;
         this.numeroId=numeroId;
+        this.PEPbeneficiario=PEPbeneficiario;
+        this.FATCAbeneficiario=FATCAbeneficiario;
+        this.FATCANCbeneficiario=FATCANCbeneficiario;
         this.tipoBeneficiario=tipoBeneficiario;
         this.genero=genero;     
         this.primerNombre=primerNombre;

@@ -25,6 +25,8 @@ public class ControladorCasosPortalAutogestionE2C2 {
     public string currencyAccountSelected { get; private set; }
     public Cuentas__C Cuenta { get; set; }
     
+    SolicitudCaso solicitud;
+    
     //Nuevo 14/05/2020
     Public Boolean showLogin {get;set;}
     Public String casoCliente {get;set;}
@@ -544,7 +546,148 @@ public class ControladorCasosPortalAutogestionE2C2 {
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, (ZonaSeleccionada==null ? 'Por favor seleccionar una zona.':'Por favor seleccionar una agencia.')));
             } 
                         
-            if(!hayError) { caso.AccountId = cliente.id; list<contact> listContactos = [select id from contact where name = :cliente.name and accountId = :cliente.id]; if(listContactos.size() > 0) { caso.ContactId = listContactos[0].id; } if(idTipoRegistro.length() > 2) { caso.RecordTypeId = idTipoRegistro; } else { caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].id; } if(Caso.Constancia__c == 'A1' || Caso.Constancia__c == 'Saldo') { caso.Viene_Portal_Autogestion__c = true; }  if(cTipoCaso.actInformacion) { caso.Viene_Portal_Autogestion__c = true; } if(cTipoCaso.constancias || test.isRunningTest()){ caso.Mostrar_Saldo_a_la_fecha__c=true; if(cuenta.CurrencyIsoCode != caso.CurrencyIsoCode) { caso.Desea_ver_tasa_de_cambio__c = true; } if(caso.Constancia__c == 'A4') { caso.Embajadas__c = valueEmbajada; } } caso.CurrencyIsoCode = caso.CurrencyIsoCode ==null ? cuenta.CurrencyIsoCode: caso.CurrencyIsoCode; caso.Id = idCasoE2C; caso.Viene_Email_2_Case__c = true; update caso; if(cTipoCaso.constancias) { detallecaso.Caso__c = caso.id; detalleCaso.Cuenta__c = idCuenta; detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; insert detalleCaso; if(Caso.Constancia__c != 'A6' && Caso.Constancia__c != 'A4') { urlPagina = Label.UrlCustomSite+'/vfConstanciaPDFSite?id=' + caso.id; } } else if(cTipoCaso.aumDisAporte) { detallecaso.Caso__c = caso.id; detalleCaso.Cuenta__c = idCuenta; detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; insert detalleCaso; } if(cTipoCaso.aumDisAporte  && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' || cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3')) { caso.Aprobado__c = false; caso.Enviar_aprobacion_AD__c = true; update caso; Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); req1.setObjectId(caso.id); req1.setProcessDefinitionNameOrId('AumentoDisminucion'); Approval.ProcessResult result = Approval.process(req1); disabledSelect = true; disabledSelect2 = true; ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); } else if(cTipoCaso.constancias && Caso.Constancia__c == 'A6') { if(Caso.Monto_compromiso_aporte__c <= 0) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Monto del aporte no puede ser negativo ni igual a 0')); } else { caso.Aprobado__c = false; update caso; Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); req1.setObjectId(caso.id); req1.setProcessDefinitionNameOrId('Constancia'); Approval.ProcessResult result = Approval.process(req1); ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); disabledSelect = true; disabledSelect2 = true; } } else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c(); if(cTipoCaso.otros){ p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; }else{ p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada order by Ultimo_Caso_Asignado__c  asc limit 1]; } p.Ultimo_Caso_Asignado__c = System.now(); update p; caso.ownerId = p.usuario__c; update caso; List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>(); OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn']; Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); mail.setToAddresses(new String[] {p.usuario__r.email}); string numeroCaso = [select Casenumber from case where id = :caso.id].Casenumber; mail.setSubject('Asiganción de nuevo caso No. ' + numeroCaso); mail.setPlainTextBody('Buen día, se notifica que se ha asignado nuevo caso (' + numeroCaso + ') del portal autogestión. \n\nMuchas gracias'); mail.setOrgWideEmailAddressId(owea.get(0).Id); MessageList.add(mail); Messaging.sendEmail(MessageList,false); if(cTipoCaso.otros) { disabledSelect = true; disabledSelect2 = true; ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido asignada a un oficial de servicio al cliente que pronto te contactará.')); } else { datetime b = system.now().addDays(1); string g = b.format('EEEE'); date fecha = date.today(); if(g == 'Saturday' || g == 'Friday' || g == 'Wednesday' || g == 'Thursday') { fecha = fecha.addDays(6); }else if (g == 'Sunday' ) { fecha = fecha.addDays(5); } else if(g == 'Monday' || g =='Tuesday') { fecha = fecha.addDays(4); } disabledSelect = true; disabledSelect2 = true; if(cTipoCaso.constancias && Caso.Constancia__c == 'A4') { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su Constancia a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.')); } else { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su carnet a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.')); } } } else { List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web']; caso.OwnerId=usuario[0].Id; caso.Status = 'Cerrado'; update caso; disabledSelect = true; disabledSelect2 = true; ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito')); } if(!cTipoCaso.estadoCuenta) { inicio(); }
+            if(!hayError) { 
+                caso.AccountId = cliente.id; 
+                list<contact> listContactos = [select id from contact where name = :cliente.name and accountId = :cliente.id]; 
+                if(listContactos.size() > 0) { 
+                    caso.ContactId = listContactos[0].id; 
+                } 
+                if(idTipoRegistro.length() > 2) { 
+                    caso.RecordTypeId = idTipoRegistro; 
+                } else { 
+                    caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].id; 
+                } 
+                if(Caso.Constancia__c == 'A1' || Caso.Constancia__c == 'Saldo') { 
+                    caso.Viene_Portal_Autogestion__c = true; 
+                }  
+                if(cTipoCaso.actInformacion) { 
+                    caso.Viene_Portal_Autogestion__c = true; 
+                } 
+                if(cTipoCaso.constancias || test.isRunningTest()){ 
+                    caso.Mostrar_Saldo_a_la_fecha__c=true; 
+                    if(cuenta.CurrencyIsoCode != caso.CurrencyIsoCode) { 
+                        caso.Desea_ver_tasa_de_cambio__c = true; 
+                    } 
+                    if(caso.Constancia__c == 'A4') { 
+                        caso.Embajadas__c = valueEmbajada; 
+                    } 
+                } 
+                caso.CurrencyIsoCode = caso.CurrencyIsoCode ==null ? cuenta.CurrencyIsoCode: caso.CurrencyIsoCode; 
+                caso.Id = idCasoE2C; caso.Viene_Email_2_Case__c = true; 
+                update caso; 
+                if(cTipoCaso.constancias) { 
+                    detallecaso.Caso__c = caso.id; 
+                    detalleCaso.Cuenta__c = idCuenta; 
+                    detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
+                    insert detalleCaso; 
+                    if(Caso.Constancia__c != 'A6' && Caso.Constancia__c != 'A4') { 
+                        urlPagina = Label.UrlCustomSite+'/vfConstanciaPDFSite?id=' + caso.id; 
+                    } 
+                } else if(cTipoCaso.aumDisAporte) { 
+                    detallecaso.Caso__c = caso.id; 
+                    detalleCaso.Cuenta__c = idCuenta; 
+                    detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
+                    insert detalleCaso; 
+                } 
+                if(cTipoCaso.aumDisAporte  && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' || 
+                                               cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3') && detallecaso.Tipo_Operacion__c <> 'A1') { 
+                	caso.Aprobado__c = false; 
+                    caso.Enviar_aprobacion_AD__c = true;                              
+                    update caso;
+                    Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
+                    req1.setObjectId(caso.id); 
+                    req1.setProcessDefinitionNameOrId('AumentoDisminucion'); 
+                    Approval.ProcessResult result = Approval.process(req1); 
+                    disabledSelect = true; 
+                    disabledSelect2 = true; 
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+               } else if(cTipoCaso.aumDisAporte) {    
+                   if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A1') {
+                       System.debug('Caso de aumento de aporte');
+                       caso.Archivo_Adjunto__c = true;
+                       caso.Status = 'Cerrado';
+                       update caso;
+                       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); 
+                       disabledSelect = true; 
+                       disabledSelect2 = true;
+                       /*solicitud = new SolicitudCaso();
+                       solicitud = AFPCCasos.upsertCaso(caso);
+                       if(solicitud.solicitudExitosa){
+                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                       }else{
+                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                       }*/     
+                   }
+               } else if(cTipoCaso.constancias && Caso.Constancia__c == 'A6') {
+                   if(Caso.Monto_compromiso_aporte__c <= 0) { 
+                       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Monto del aporte no puede ser negativo ni igual a 0')); 
+                   } else { 
+                       caso.Aprobado__c = false; 
+                       update caso; 
+                       Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); 
+                       req1.setObjectId(caso.id); 
+                       req1.setProcessDefinitionNameOrId('Constancia'); 
+                       Approval.ProcessResult result = Approval.process(req1); 
+                       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); 
+                       disabledSelect = true; 
+                       disabledSelect2 = true; 
+                   } 
+               } else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { 
+                   Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c(); 
+                   if(cTipoCaso.otros){ 
+                       p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                   } else { 
+                       p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                   } 
+                   p.Ultimo_Caso_Asignado__c = System.now(); 
+                   update p; 
+                   caso.ownerId = p.usuario__c; 
+                   update caso; 
+                   List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>(); 
+                   OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn']; 
+                   Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
+                   mail.setToAddresses(new String[] {p.usuario__r.email}); 
+                   string numeroCaso = [select Casenumber from case where id = :caso.id].Casenumber; 
+                   mail.setSubject('Asiganción de nuevo caso No. ' + numeroCaso); 
+                   mail.setPlainTextBody('Buen día, se notifica que se ha asignado nuevo caso (' + numeroCaso + ') del portal autogestión. \n\nMuchas gracias'); 
+                   mail.setOrgWideEmailAddressId(owea.get(0).Id); 
+                   MessageList.add(mail); 
+                   Messaging.sendEmail(MessageList,false); 
+                   if(cTipoCaso.otros) { 
+                       disabledSelect = true; 
+                       disabledSelect2 = true; 
+                       ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido asignada a un oficial de servicio al cliente que pronto te contactará.')); 
+                   } else { 
+                       datetime b = system.now().addDays(1); 
+                       string g = b.format('EEEE'); 
+                       date fecha = date.today(); 
+                       if(g == 'Saturday' || g == 'Friday' || g == 'Wednesday' || g == 'Thursday') { 
+                           fecha = fecha.addDays(6); 
+                       } else if (g == 'Sunday' ) { 
+                           fecha = fecha.addDays(5); 
+                       } else if(g == 'Monday' || g =='Tuesday') { 
+                           fecha = fecha.addDays(4); 
+                       } 
+                       disabledSelect = true; 
+                       disabledSelect2 = true; 
+                       if(cTipoCaso.constancias && Caso.Constancia__c == 'A4') { 
+                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su Constancia a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.')); 
+                       } else { 
+                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su carnet a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.')); 
+                       } 
+                   } 
+               } else { 
+                   List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web']; 
+                   caso.OwnerId=usuario[0].Id; 
+                   caso.Status = 'Cerrado'; 
+                   update caso; 
+                   disabledSelect = true; 
+                   disabledSelect2 = true; 
+                   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito')); 
+               } 
+               if(!cTipoCaso.estadoCuenta) { 
+                   inicio(); 
+               }
             }
         } catch(Exception ex) {
             system.debug('Error: ' + ex.getMessage() + ', Linea: ' + ex.getLineNumber());

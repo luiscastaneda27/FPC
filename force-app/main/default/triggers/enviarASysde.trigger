@@ -1,6 +1,6 @@
 trigger enviarASysde on Case (before update) {
     system.debug('Puedo corrrelo ' + claseUtil.canIRun());
-    if((claseUtil.canIRun() && !System.isFuture()) || trigger.new[0].origin == 'Agencias_Banco')  { 
+    if(claseUtil.canIRun() && !System.isFuture()) { 
         
         //Inicio Evaluar SLA's de Caso
         set<Id> caso2 = new set<Id>();
@@ -30,53 +30,56 @@ trigger enviarASysde on Case (before update) {
              
         Boolean EnAprobacion = Approval.isLocked(lstCase[0].Id); System.debug('En aprobación: '+EnAprobacion);
         
-        if(approvalProcess.size() > 0) { 
-            List<ProcessInstanceWorkitem> actor; if(approvalProcess.size() > 0) { 
-                actor = [SELECT Id, ActorId, Actor.Name, Actor.Profile.Name, ProcessInstanceId From ProcessInstanceWorkitem Where ProcessInstanceId =: approvalProcess[0].Id and Actor.Name != 'Admin User']; 
-            } 
-            List<ProcessInstanceStep> paso = [SELECT Id, StepStatus From ProcessInstanceStep Where ProcessInstanceId =: approvalProcess[0].Id Order By CreatedDate Asc Limit 1];
-            
-            for(Case objCase : Trigger.new) { 
-                if(actor.size() > 0) { 
-                    if(actor[0].Actor.Name == 'Aprobacion Intermedia Retiros' && approvalProcess[0].Status == 'Pending' && paso[0].StepStatus == 'Started' && objCase.Status == 'Pendiente segunda aprobación' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
-                        objCase.Finalizar_SLA_Aprobacion__c = true; 
-                    } else if(actor[0].Actor.Name == 'Aprobadores de Retiro' && approvalProcess[0].Status == 'Pending' && paso[0].StepStatus == 'Started' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
-                        objCase.Finalizar_SLA_Aprobacion__c = true; 
-                    } else if(actor[0].Actor.Name == 'Aprobadores de Retiro' && approvalProcess[0].Status == 'Pending' && objCase.Requiere_aprobacion_exoneracion__c == false) { 
-                        objCase.Finalizar_SLA_Aprobacion__c = true; 
-                    } else { objCase.Finalizar_SLA_Aprobacion__c = false; 
-                           } 
-                }
-                
-                if(approvalProcess[0].Status == 'Started') { 
-                    if(objCase.Status == 'Pendiente de aprobación' && objCase.Finalizar_SLA__c == false && objCase.Finalizar_SLA_Aprobacion__c == false && objCase.Requiere_aprobacion_exoneracion__c == true) { objCase.Finalizar_SLA_Aprobacion__c = true; 
-                                                                                                                                                                                                               } 
+        //if(CaseTriggerHandler.isFirstTime) {
+            //CaseTriggerHandler.isFirstTime = false;
+            if(approvalProcess.size() > 0) { 
+                List<ProcessInstanceWorkitem> actor; if(approvalProcess.size() > 0) { 
+                    actor = [SELECT Id, ActorId, Actor.Name, Actor.Profile.Name, ProcessInstanceId From ProcessInstanceWorkitem Where ProcessInstanceId =: approvalProcess[0].Id and Actor.Name != 'Admin User']; 
                 } 
+                List<ProcessInstanceStep> paso = [SELECT Id, StepStatus From ProcessInstanceStep Where ProcessInstanceId =: approvalProcess[0].Id Order By CreatedDate Asc Limit 1];
                 
-                if(EnAprobacion == false && approvalProcess[0].Status == 'Rejected' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = true; 
-                                                                                                                } else if(EnAprobacion == true && approvalProcess[0].Status == 'Pending' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = false; 
-                                                                                                                                                                                                                     } 
-                
-                if(actor.size() > 0 && lstCase[0].Recordtype.DeveloperName == 'Retiros' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
-                    if(EnAprobacion == false && actor[0].Actor.Name == 'Aprobación SubGerencia SAC' && approvalProcess[0].Status == 'Started' && objCase.Status == 'Pendiente de aprobación' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = true; 
-                                                                                                                                                                                                                         } 
+                for(Case objCase : Trigger.new) { 
+                    if(actor.size() > 0) { 
+                        if(actor[0].Actor.Name == 'Aprobacion Intermedia Retiros' && approvalProcess[0].Status == 'Pending' && paso[0].StepStatus == 'Started' && objCase.Status == 'Pendiente segunda aprobación' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
+                            objCase.Finalizar_SLA_Aprobacion__c = true; 
+                        } else if(actor[0].Actor.Name == 'Aprobadores de Retiro' && approvalProcess[0].Status == 'Pending' && paso[0].StepStatus == 'Started' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
+                            objCase.Finalizar_SLA_Aprobacion__c = true; 
+                        } else if(actor[0].Actor.Name == 'Aprobadores de Retiro' && approvalProcess[0].Status == 'Pending' && objCase.Requiere_aprobacion_exoneracion__c == false) { 
+                            objCase.Finalizar_SLA_Aprobacion__c = true; 
+                        } else { objCase.Finalizar_SLA_Aprobacion__c = false; 
+                        } 
+                    }
+                    
+                    if(approvalProcess[0].Status == 'Started') { 
+                        if(objCase.Status == 'Pendiente de aprobación' && objCase.Finalizar_SLA__c == false && objCase.Finalizar_SLA_Aprobacion__c == false && objCase.Requiere_aprobacion_exoneracion__c == true) { objCase.Finalizar_SLA_Aprobacion__c = true; 
+                        } 
+                    } 
+                    
+                    if(EnAprobacion == false && approvalProcess[0].Status == 'Rejected' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = true; 
+                    } else if(EnAprobacion == true && approvalProcess[0].Status == 'Pending' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = false; 
+                    } 
+                    
+                    if(actor.size() > 0 && lstCase[0].Recordtype.DeveloperName == 'Retiros' && objCase.Requiere_aprobacion_exoneracion__c == true) { 
+                        if(EnAprobacion == false && actor[0].Actor.Name == 'Aprobación SubGerencia SAC' && approvalProcess[0].Status == 'Started' && objCase.Status == 'Pendiente de aprobación' && System.Trigger.isUpdate) { objCase.Finalizar_SLA__c = true; 
+                        } 
+                    }
+                    
+                    if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Actualizacion_informacion') { 
+                        objCase.Finalizar_SLA__c = false;    
+                    } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Aumento_Disminucion_Aportes') { 
+                        objCase.Finalizar_SLA__c = false;    
+                    } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Constancia') { 
+                        objCase.Finalizar_SLA__c = false;    
+                    } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Cambio_Subproducto') { 
+                        objCase.Finalizar_SLA__c = false; 
+                    } 
+                    
+                    if(objCase.Status == 'Devuelto' && EnAprobacion == true) { objCase.N_Veces_Rechazado__c++; 
+                    }                    
+                    
                 }
-                
-                if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Actualizacion_informacion') { 
-                    objCase.Finalizar_SLA__c = false;    
-                } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Aumento_Disminucion_Aportes') { 
-                    objCase.Finalizar_SLA__c = false;    
-                } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Constancia') { 
-                    objCase.Finalizar_SLA__c = false;    
-                } else if(EnAprobacion == true && approvalProcess[0].Status == 'Rejected' && objCase.Status == 'Devuelto' && lstCase[0].Recordtype.DeveloperName == 'Cambio_Subproducto') { 
-                    objCase.Finalizar_SLA__c = false; 
-                } 
-                
-                if(objCase.Status == 'Devuelto' && EnAprobacion == true) { objCase.N_Veces_Rechazado__c++; 
-                                                                         }                    
-                
             }
-        }
+        //}
         //Fin Evaluar SLA's de Caso
         
         map<Case, String> casosAprobados = new map<Case, String>();
@@ -98,7 +101,6 @@ trigger enviarASysde on Case (before update) {
         
         For(Case item : trigger.new){
             String tipoRnombre = mapTiposRegistro.get(item.recordTypeId).DeveloperName;
-            System.debug('tipoRnombre: '+tipoRnombre);
             string tiporetiro='';
             fechaCreacioncaso = DATE.valueOf(Datetime.newInstance(item.createddate.year(), item.createddate.month(), item.createddate.day(),-6,0,0) );
              
@@ -121,10 +123,6 @@ trigger enviarASysde on Case (before update) {
                    
                }
             
-            if(trigger.new[0].origin == 'Agencias_Banco' && tipoRnombre == 'Aumento_Disminucion_Aportes'){
-            	casosAprobados.put(item, tipoRnombre); 
-            }
-            
             if(tipoRnombre == 'Cambio_Subproducto'){
                 if(!trigger.oldMap.get(item.id).Aprobado__c && item.Aprobado__c){
                     casosAprobados.put(item, tipoRnombre);
@@ -142,11 +140,9 @@ trigger enviarASysde on Case (before update) {
                     casosAprobados.put(item, tipoRnombre);
                 }
                 if(item.Status == 'Cerrado' && item.DAU_aprobacion__c == false) {
-                    System.debug('DAU_aprobacion__c == false');
                     casosAprobados.put(item, tipoRnombre);
                 } 
                 if(item.Status == 'Cerrado' && item.DAU_aprobacion__c == true) {
-                    System.debug('DAU_aprobacion__c == true');
                     casosAprobados.put(item, tipoRnombre);
                 }
             }
@@ -227,7 +223,7 @@ trigger enviarASysde on Case (before update) {
         }                               
         
         system.debug('Casos Aprobados a ver ' + casosAprobados);
-        if(!casosAprobados.isEmpty()) {
+        if(!casosAprobados.isEmpty()){
             integer bandera =0;
             boolean banderaTru =false;
             integer bandera2 =0;
@@ -242,7 +238,7 @@ trigger enviarASysde on Case (before update) {
                     
                 } else if(tipoRnombre == 'Actualizacion_informacion'){
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
-                } else if(tipoRnombre == 'Aumento_Disminucion_Aportes' && trigger.new[0].Status == 'Cerrado') {
+                } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
                     List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
                     if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
                         if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
@@ -285,14 +281,13 @@ trigger enviarASysde on Case (before update) {
                     
                 }
             }   
-        }
-        if((!casosEDCtrimestral.isEmpty() || test.isRunningTest()) && lstCase[0].SuppliedEmail == Null) {
-            EstadosDeCuenta.enviarCorreos(casosEDCtrimestral,'A1');           
-        }
-        if((!casosEDCmensual.isEmpty() || test.isRunningTest()) && lstCase[0].SuppliedEmail == Null) {
-            EstadosDeCuenta.enviarCorreos(casosEDCmensual,'A2');           
-        }
-        if(!listCasoConstancia.isEmpty()  ){
+        }if((!casosEDCtrimestral.isEmpty() || test.isRunningTest()) && lstCase[0].SuppliedEmail == Null) {
+            EstadosDeCuenta.enviarCorreos(casosEDCtrimestral,'A1');
+            
+        }if((!casosEDCmensual.isEmpty() || test.isRunningTest()) && lstCase[0].SuppliedEmail == Null) {
+            EstadosDeCuenta.enviarCorreos(casosEDCmensual,'A2');
+            
+        }if(!listCasoConstancia.isEmpty()  ){
             if(trigger.new[0].constancia__C!='P1'){
                 aSysdeCallouts.bloquerCasoConstancia(listCasoConstancia);
             }else{ aSysdeCallouts.ConstanciaPignoracion(listCasoConstancia, estadoConstancia);

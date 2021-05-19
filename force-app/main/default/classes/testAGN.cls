@@ -1,7 +1,7 @@
 @isTest
 public class testAGN {
     
-    static testMethod void ControllerProductoAgn(){
+    static testMethod void ControllerProductoAgn(){ 
     test.startTest();
         Estado_Cuenta__c ec= new Estado_Cuenta__c(name = 'Test', CodigoEstado__c = 'A');
         insert ec;
@@ -13,7 +13,11 @@ public class testAGN {
         subProducto__C subP = new subProducto__C(producto__C = pp.id, name = 'Test', codigo__C = '01', TipoProducto__c = 'I', Tipo_Fondo__c= 'M', Comisi_n_Sobre_Saldo__c = 5, Comisi_n_por_Aporte__c=6);
         insert subp; 
         
-    ControllerProductoAgn cliente = new ControllerProductoAgn();
+        Autonumerico_cuentas_Syste__c af = new Autonumerico_cuentas_Syste__c ();
+        af.Id_Formulario_Sysde__c = 0;
+        insert af;
+        
+        ControllerProductoAgn cliente = new ControllerProductoAgn();
         cliente.iniciarMensaje('mensaje prueba');
         cliente.Pruebax2();
         cliente.usuarioValidacion = '';
@@ -29,7 +33,7 @@ public class testAGN {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+        //cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
@@ -167,7 +171,7 @@ public class testAGN {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+        //cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;

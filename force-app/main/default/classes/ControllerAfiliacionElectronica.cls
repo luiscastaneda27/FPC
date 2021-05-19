@@ -1,4 +1,4 @@
-public class ControllerAfiliacionElectronica
+public without sharing class ControllerAfiliacionElectronica
 {
     public String Recaptcha {get;set;}
     public String securityToken {get;set;}
@@ -370,8 +370,6 @@ public class ControllerAfiliacionElectronica
     //Fin
     
     public string pagina{get;set;}
-    public static string ClienteNatural {get;set;}
-    public static string ProductoNatural {get;set;}
     public string paso1Cabeza{get;set;}
     public string paso1Cuerpo{get;set;}
     
@@ -416,12 +414,15 @@ public class ControllerAfiliacionElectronica
     public String tokenA;
     Public Boolean actionPoller {get;set;}*/
     
-    public ControllerAfiliacionElectronica() 
-    {
+    public Boolean updateRecord{get;set;}
+    
+    
+    public ControllerAfiliacionElectronica(){
         String queryCorreo = 'Select URL__c From URL_conexion_Sysde__mdt Where DeveloperName = \'Afiliacion_Electronica\'';
         URL_conexion_Sysde__mdt cuerpoCorreo = dataBase.query(queryCorreo);
         cuerpo = cuerpoCorreo.URL__c;
         Blob key = Blob.valueOf('aAk!h@37WQ9bsAfk');
+        updateRecord = true;
         //actionPoller = false;
         if(!test.isRunningTest()){
             idClie = ApexPages.currentPage().getParameters().get('ident');
@@ -659,18 +660,17 @@ Tercera = true;  */
         pcaplicaseguro = FALSE; 
         //pcpromotor = 'HN22250'; 
         //pnnrocertificado= 'AF';
-        
-        ID_FORMULARIOAE__c acct = new ID_FORMULARIOAE__c();
-        
-        for (ID_FORMULARIOAE__c item:[select name from ID_FORMULARIOAE__c order by name desc limit 1])
-        { 
-            pnnrocertificado=item.name;
-        }       
-        
+        af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
+        pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
         if(prueba2!=null)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,prueba2));                        
         }    
+    }
+    Autonumerico_cuentas_Syste__c af;
+    public void updateAF(){
+        updateRecord = false;
+        update af;
     }
     
     public void iniciar()
@@ -2745,12 +2745,7 @@ Tercera = true;  */
         }else{
             ContratistaNOSelec();
         }    
-        /*  if(pcprimernombre!= null){
-validar125();
-}*/
-        //PARA Generar Formulario
-        ID_FORMULARIOAE__c acct = new ID_FORMULARIOAE__c();
-        insert acct;   
+        
         //PARA Generar Secuencia RTN
         Secuencia_rtn__c acctR = new Secuencia_rtn__c();
         insert acctR; 
@@ -2865,12 +2860,6 @@ validar125();
         else{
             ContratistaNOOSelec();
         }
-        /*if(pcprimernombre!= null){
-validar125();
-}*/
-        //PARA Generar Formulario
-        ID_FORMULARIOAE__c acct = new ID_FORMULARIOAE__c();
-        insert acct;   
         //PARA Generar Secuencia RTN
         Secuencia_rtn__c acctR = new Secuencia_rtn__c();
         insert acctR; 
@@ -3485,8 +3474,7 @@ paso2Cuerpo = 'slds-hide';
         try{ 
             
             system.debug('captcha: '+Recaptcha);        
-            if( pnnrocertificado == '')
-            {          
+            if( pnnrocertificado == ''){          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacio'));
                 return null;    
             }

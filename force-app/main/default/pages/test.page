@@ -1,10 +1,23 @@
-<!-- apex:page StandardController="Account" extensions="MultiAdd" id="thePage">
+<apex:page StandardController="Test__c" extensions="MultiAdd" id="thePage" lightningStylesheets="true" >
 
+	<apex:form >
+    	<apex:pageBlock >
+        	<apex:pageBlockSection title="Test" columns="2" >
+                <apex:inputField value="{!Test__c.Select__c}" >
+                    <apex:actionSupport action="{!changeFlag}" event="onchange" />
+                </apex:inputField>
+            	<apex:inputField value="{!Test__c.Name}" rendered="{!Test__c.Select__c}" />
+                <apex:outputField value="{!Test__c.Name}" rendered="{!!Test__c.Select__c}" />
+                
+                <apex:commandButton value="Guaradar" action="{!save}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
 
+</apex:page>
 
-</apex:page -->
-
-<apex:page controller="MultiAdd">
+<!--apex:page controller="MultiAdd">
 <script>
     function myFunction(checkboxId) {
         var flag = document.getElementById(checkboxId).checked;
@@ -22,4 +35,4 @@
     <apex:inputText id="yourText" disabled="{!(!flag)}"/>
 
 </apex:form>
-</apex:page>
+</apex:page-->

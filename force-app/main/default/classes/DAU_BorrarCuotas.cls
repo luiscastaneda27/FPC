@@ -152,13 +152,17 @@ public class DAU_BorrarCuotas {
             
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\\"','"');
+            respuesta = respuesta.replace('\"','"');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta: ' + respuesta); 
             
             System.debug('response.getStatusCode: '+response.getStatusCode());
             if (response.getStatusCode() == 200) {  
-	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(respuesta, ClienteNaturales.class);
                 System.debug('fcsd: '+fcsd);
 
                 //caso.DAU_Tarjeta_de_Sysde__c = fcsd.pccuentapago/*4809939250096876*/;

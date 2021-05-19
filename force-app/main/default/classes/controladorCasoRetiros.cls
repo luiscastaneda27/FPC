@@ -135,7 +135,7 @@ public class controladorCasoRetiros {
                         Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
                         Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c,
-                        Archivo_Adjunto__C,Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
+                        Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
                         Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C, Cuentas_seleccionada__c
                         From Case Where Id =: idCaso Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){

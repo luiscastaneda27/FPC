@@ -679,7 +679,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
                 cuenta = [Select Colectiva__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
-                          Forma_Aportacion__c, Tipo_Fondo__c,Codigo__c
+                          Forma_Aportacion__c, Tipo_Fondo__c, Codigo__c, Producto__c
                           from cuentas__c where id = :idCuenta]; 
                 if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
@@ -919,9 +919,10 @@ public class ControladorCasosPortalAutogestionE2C {
                 solicitud = new SolicitudCaso();
                 solicitud = AFPCCasos.upsertCaso(caso);
                 if(solicitud.solicitudExitosa) {
-                    caso = solicitud.caso;    
+                    caso = solicitud.caso;  
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
                 } else {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error2:' + solicitud.error));     
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error:' + solicitud.error));     
                 }
                 
                 if(cTipoCaso.constancias) { 
@@ -929,69 +930,191 @@ public class ControladorCasosPortalAutogestionE2C {
                     detalleCaso.Cuenta__c = idCuenta; 
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
                     insertDetalle = true;
-                    /*if(Caso.Constancia__c != 'A6' && Caso.Constancia__c != 'A4') { 
-                        urlPagina = Label.UrlCustomSite+'/vfConstanciaPDFDesdeSite?id=' + caso.id; 
-                    } */
-                    /*if(solicitud.solicitudExitosa == true) {
-                        insert detalleCaso;
-                    }*/    
                 } else if(cTipoCaso.aumDisAporte) { 
                     detallecaso.Caso__c = caso.id; 
                     detalleCaso.Cuenta__c = idCuenta; 
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
                     insertDetalle = true; 
                 } 
-                if(cTipoCaso.aumDisAporte && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' || cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3')) { 
-                    if(detallecaso.Tipo_Operacion__c=='A1' || detallecaso.Tipo_Operacion__c=='A4') {
-                        caso.DAU_aprobacion__c = false;
+                if(cTipoCaso.aumDisAporte) {    
+                    if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A1') {
+                        System.debug('Caso de aumento de aporte');
+                        caso.Archivo_Adjunto__c = true;
                         caso.Status = 'Cerrado';
+                        disabledSelect = true; 
+                        disabledSelect2 = true;
                         solicitud = new SolicitudCaso();
                         solicitud = AFPCCasos.upsertCaso(caso);
                         if(solicitud.solicitudExitosa){
-                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada.'));
-                        } else {
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                        }else{
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
-                            inicio();
-                            return;
-                        }
-                    } else {        
-                        if(cTipoCaso.aumDisAporte) { 
-                            p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
-                            p.Ultimo_Caso_Asignado__c = System.now(); 
-                            updateUsuarioAsigna = true;
+                        }    
+                    } 
+                    if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A2') {  
+                        System.debug('Caso de disminución de aporte');
+                        List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuenta.Producto__c];
+                        List<Parametros_DAU__mdt> paramHNL = [Select Id,DeveloperName,Monto_a_Disminuir__c From Parametros_DAU__mdt Where DeveloperName = 'Disminucion_de_aporte_HNL']; 
+                        List<Parametros_DAU__mdt> paramUSD = [Select Id,DeveloperName,Monto_a_Disminuir__c From Parametros_DAU__mdt Where DeveloperName = 'Disminucion_de_aporte_USD']; 
+                        //List<Case> casoUpdate = [Select Id,DAU_aprobacion__c From Case Where Id =: caso and (Status = 'Nuevo' or Status = 'Devuelto') and RecordType.DeveloperName = 'Aumento_Disminucion_Aportes' Limit 1];
+                        if(!prod.isEmpty() && prod[0].CurrencyIsoCode == 'HNL') {
+                            System.debug('Cuenta en Lempiras');
+                            if((cuenta.Monto_aporte__c - detallecaso.Nuevo_monto_aporte__c) >= paramHNL[0].Monto_a_Disminuir__c) { 
+                                System.debug('HNL - Monto es Mayor - Lleva aprobación');
+                                caso.Archivo_Adjunto__c = true;
+                                caso.Enviar_aprobacion_AD__c = true;
+                                caso.DAU_aprobacion__c = false;
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                if(solicitud.solicitudExitosa){
+                                    solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                                    if(solicitud.solicitudExitosa){
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                                    }else{
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                        inicio();
+                                        return;
+                                    }
+                                } 
+                            } else {
+                            	System.debug('Caso de disminución en HNL no lleva aprobación');
+                                caso.Archivo_Adjunto__c = true;
+                                caso.Reason = 'Otro';
+                                caso.Status = 'Cerrado';
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                if(solicitud.solicitudExitosa){
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                }else{
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                }          
+                            }
+                        } else if(!prod.isEmpty() && prod[0].CurrencyIsoCode == 'USD') {
+                            System.debug('Cuenta en Dólares');
+                            System.debug('Valores a restar: '+detallecaso.Nuevo_monto_aporte__c + '---' + cuenta.Monto_aporte__c);
+                            if((cuenta.Monto_aporte__c - detallecaso.Nuevo_monto_aporte__c) >= paramUSD[0].Monto_a_Disminuir__c) { 
+                                System.debug('USD - Monto es Mayor - Lleva aprobación');
+                                caso.Archivo_Adjunto__c = true;
+                                caso.Enviar_aprobacion_AD__c = true;
+                                caso.DAU_aprobacion__c = false;
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                if(solicitud.solicitudExitosa){
+                                    solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                                    if(solicitud.solicitudExitosa){
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                                    }else{
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                        inicio();
+                                        return;
+                                    }
+                                }
+                            } else {
+                            	System.debug('Caso de disminución en USD no lleva aprobación');
+                                caso.Archivo_Adjunto__c = true;
+                                caso.Reason = 'Otro';
+                                caso.Status = 'Cerrado';
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                if(solicitud.solicitudExitosa){
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                }else{
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                }          
+                            }
                         } 
-                        
-                        //if(cTipoCaso.aumDisAporte && detalleCaso.Tipo_Operacion__c == 'A2' && detalleCaso.Cuenta__r.CurrencyIsoCode == 'HNL' && detalleCaso.Nuevo_monto_aporte__c >= Double.ValueOf(Label.DAU_Disminucion_aporte_HNL)) {
-                            //caso.Archivo_Adjunto__c = true;
-                            //caso.DAU_aprobacion__c = false;
-                        /*} else if(cTipoCaso.aumDisAporte && detalleCaso.Tipo_Operacion__c == 'A2' && detalleCaso.Cuenta__r.CurrencyIsoCode == 'USD' && detalleCaso.Nuevo_monto_aporte__c >= Double.ValueOf(Label.DAU_Disminucion_aporte_USD)) {
-                            caso.Archivo_Adjunto__c = true;
-                            caso.DAU_aprobacion__c = false;    
-                        }*/
-                        
-                        caso.ownerId = p.usuario__C;
-       
-                        caso.Aprobado__c = false; 
-                        caso.Enviar_aprobacion_AD__c = true; 
-                        //update caso;
+                        disabledSelect = true; 
+                        disabledSelect2 = true;        
+                    }  
+                    if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A3') {
+                        System.debug('Cambio de Canal de Aporte');
+                        updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                        wc = updateCase.validarIdentidad(String.valueOf(caso.Id), detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
+                        System.debug('validar Identidad: '+wc);
+                        caso.DAU_Identidad__c = wc.DAU_Identidad;
+                        caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                        caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                        caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;                                             
                         solicitud = new SolicitudCaso();
                         solicitud = AFPCCasos.upsertCaso(caso);
-                        if(solicitud.solicitudExitosa) {
-                            caso = solicitud.caso;    
-                        } else {
-                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error123:' + solicitud.error));     
-                        } 
-                        Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); 
-                        req1.setObjectId(caso.id); 
-                        req1.setProcessDefinitionNameOrId('AumentoDisminucion'); 
-                        if(!test.isRunningTest()){
-                            Approval.ProcessResult result = Approval.process(req1); 
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                            caso.Archivo_Adjunto__c = true;
+                            caso.Status = 'Cerrado';
+                            caso.DAU_llamarSalesforceTarjeta__c = false; 
+                            solicitud = new SolicitudCaso();
+                            solicitud = AFPCCasos.upsertCaso(caso);
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
                         }
                         disabledSelect = true; 
                         disabledSelect2 = true; 
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas')); 
+                    } 
+                    if(detallecaso.Tipo_Operacion__c == 'A4' && detallecaso.Banco__c == '28') {
+                        System.debug('Cambio de Fecha de Aporte');
+                        caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, cuenta.Codigo__c);
+                        if(caso.DAU_Tarjeta_de_Sysde__c <> Null) {
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, Caso.Account.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
+                        }    
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                            caso.Archivo_Adjunto__c = true;
+                            caso.Reason = 'Otro';
+                            caso.Status = 'Cerrado';
+                            solicitud = new SolicitudCaso();
+                            solicitud = AFPCCasos.upsertCaso(caso);
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                        } 
+                        disabledSelect = true; 
+                        disabledSelect2 = true;
                     }
-                } else if(cTipoCaso.constancias && Caso.Constancia__c == 'A6') { 
+                    if(detallecaso.Tipo_Operacion__c == 'A6' && detallecaso.Banco__c == '28') {
+                        System.debug('Cambio de # Tarjeta');
+                    	caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, cuenta.Codigo__c);
+                        if(caso.DAU_Tarjeta_de_Sysde__c <> Null) {
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(caso.Id, caso.DAU_Tarjeta_de_Sysde__c, caso.Account.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            //caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
+                            caso.Archivo_Adjunto__c = true;
+                            caso.Reason = 'Otro';
+                            
+                            //Asignar a SAC
+                            p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1];
+                            p.Ultimo_Caso_Asignado__c = System.now(); 
+                            updateUsuarioAsigna = true;
+                            caso.ownerId = p.usuario__c; 
+                            
+                        }
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                            if(caso.DAU_Identidad__c <> Null && caso.DAU_No_Cuenta__c <> Null) {
+                                Set<Id> caseId = new Set<Id>();
+                                caseId.add(caso.Id);
+                                Salesforce_Tarjetas.processCase(caseId, 'DEC', '', ''); 
+                            }
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                        }  
+                        disabledSelect = true; 
+                        disabledSelect2 = true;
+                    }
+                } 
+                else if(cTipoCaso.constancias && Caso.Constancia__c == 'A6') { 
                     if(Caso.Monto_compromiso_aporte__c <= 0) { 
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Monto del aporte no puede ser negativo ni igual a 0')); 
                     } else { 
@@ -1012,7 +1135,8 @@ public class ControladorCasosPortalAutogestionE2C {
                         disabledSelect = true; 
                         disabledSelect2 = true; 
                     } 
-                } else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { 
+                } 
+                else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { 
                     if(cTipoCaso.otros) { 
                         p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
                     } else { 
@@ -1063,7 +1187,8 @@ public class ControladorCasosPortalAutogestionE2C {
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su carnet a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.')); 
                         } 
                     } 
-                } else { 
+                } 
+                else { 
                     //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web']; 
                     //caso.OwnerId=usuario[0].Id; 
                     caso.Subject = rt[0].Name;
@@ -1073,12 +1198,12 @@ public class ControladorCasosPortalAutogestionE2C {
                     solicitud = AFPCCasos.upsertCaso(caso);
                     if(solicitud.solicitudExitosa) {
                         caso = solicitud.caso;    
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito'));
                     } else {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error458:' + solicitud.error));     
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se encontró un error:' + solicitud.error));     
                     }
                     disabledSelect = true; 
-                    disabledSelect2 = true; 
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito')); 
+                    disabledSelect2 = true;                     
                 } 
                 if(insertDetalle) {
                     insert detalleCaso;

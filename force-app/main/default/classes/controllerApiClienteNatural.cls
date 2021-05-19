@@ -29,9 +29,7 @@ public class controllerApiClienteNatural {
 		} 
 		return respuesta;   
     }
-    
-
-    
+   
     public static String actualizaCliente(NaturalActualizar claseEnvio) {
         
         Http http = new Http();
@@ -206,6 +204,10 @@ public class controllerApiClienteNatural {
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\\"','"');
+            
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta' +''+ respuesta); 
@@ -213,7 +215,7 @@ public class controllerApiClienteNatural {
             if (response.getStatusCode() == 200) 
            {
                 
-	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(respuesta, ClienteNaturales.class);
                
            }
             
@@ -245,6 +247,10 @@ public class controllerApiClienteNatural {
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\\"','"');
+            respuesta = respuesta.replace('\"','"');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta: ' + respuesta); 
@@ -252,7 +258,7 @@ public class controllerApiClienteNatural {
             if (response.getStatusCode() == 200) 
            {
                 
-	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(respuesta, ClienteNaturales.class);
                
            }
             
@@ -262,6 +268,7 @@ public class controllerApiClienteNatural {
         }Catch(Exception e){
 			system.debug(e.getMessage()+'   '+e.getLineNumber());	
 		} 
+        
         
         system.debug('debuggAPI' +' '+ fcsd);
 		return fcsd;   
@@ -284,6 +291,9 @@ public class controllerApiClienteNatural {
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\"','"');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta' +''+ respuesta); 
@@ -291,7 +301,7 @@ public class controllerApiClienteNatural {
             if (response.getStatusCode() == 200) 
            {
                 
-	            fcsd = (ClienteNaturales)System.JSON.deserialize(response.getBody(), ClienteNaturales.class);
+	            fcsd = (ClienteNaturales)System.JSON.deserialize(respuesta, ClienteNaturales.class);
                
            }
             

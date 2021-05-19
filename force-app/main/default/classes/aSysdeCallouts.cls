@@ -473,7 +473,7 @@ public class aSysdeCallouts {
                 }  
                 
                 if(detalle.Tipo_Operacion__c == 'A1' && caso.Respuesta_desde_Sysde__c <> Null) {
-                	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: ' + caso.Respuesta_desde_Sysde__c + 'Monto del aporte: ' + response.getBody();	   
+                	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: ' + caso.Respuesta_desde_Sysde__c + ' --- Monto del aporte: // ' + response.getBody();	   
                 } else {
                 	Caso.Respuesta_desde_Sysde__c = response.getBody();
                 }    

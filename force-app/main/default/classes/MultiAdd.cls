@@ -13,7 +13,7 @@ public class MultiAdd {
     }
     
     public void changeFlag(){
-        flag = boolean.valueOf(ApexPages.currentPage().getParameters().get('flagValue'));
+        //flag = boolean.valueOf(ApexPages.currentPage().getParameters().get('flagValue'));
     }
 
 }
