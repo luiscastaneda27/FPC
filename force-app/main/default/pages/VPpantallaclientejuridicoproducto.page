@@ -293,21 +293,21 @@
                                                             
                                                             <apex:input type="date"  value="{!fechasuscripcion}" id="pdfechasuscripcion"  styleclass="slds-input" style="height:10px; width:170px; margin-left:10px;"/>
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:30px;">
+                                                            <!--label class="slds-form-element__label" for="inputSample" style="margin-left:30px;">
                                                                 <abbr class="slds-required" title="required"></abbr>  PEP
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
                                                                 <apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
-                                                            </label>
+                                                            </label-->
                                                             
                                                             <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
                                                                 <abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckb}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                             </label>
                                                             
@@ -316,18 +316,75 @@
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckb}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-                                                                
+                                                            </label>
+                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA No Consiente
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="FT_Venta()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"  />
+                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>     
                                                                 <script>
                                                                 
                                                                 function amlPop() {
                                                                     var obtn = document.getElementById('{!$Component.AML}');
+                                                                    var obtnControlate = document.getElementById('{!$Component.AMLControlante}');
                                                                     if (obtn.checked) {
                                                                         mostPop(); 
                                                                     } 
+                                                                    if (obtnControlate.checked) {
+                                                                        mostPop(); 
+                                                                    } 
+                                                                }
+                                                                                                                            
+                                                                function pepPop() {
+                                                                    var obtn = document.getElementById('{!$Component.PEPControlante}');
+                                                                    var obtnSocio = document.getElementById('{!$Component.PEPSocio}');
+                                                                    if (obtn.checked) {
+                                                                        mostPopPEP(); 
+                                                                    } 
+                                                                    if (obtnSocio.checked) {
+                                                                        mostPopPEP(); 
+                                                                    }
                                                                 }
                                                                 
+                                                                function fatcaPop() {
+                                                                    var obtn = document.getElementById('{!$Component.FATCAControlante}');
+                                                                    var obtnSocio = document.getElementById('{!$Component.FATCASocio}');
+                                                                    if (obtn.checked) {
+                                                                        mostPopFATCA(); 
+                                                                    }
+                                                                    if (obtnSocio.checked) {
+                                                                        mostPopFATCA(); 
+                                                                    }
+                                                                }
+                                                                
+                                                                function fatcaNcPop() {
+                                                                    var obtn = document.getElementById('{!$Component.FATCANCControlante}');
+                                                                    var obtnSocio = document.getElementById('{!$Component.FATCANCSocio}');
+                                                                    if (obtn.checked) {
+                                                                        mostPopFATCANC(); 
+                                                                    } 
+                                                                    if (obtnSocio.checked) {
+                                                                        mostPopFATCANC(); 
+                                                                    }
+                                                                }
+                                                                
+                                                                function keyDetControlante(){
+                                                                    var agus = "{!validadosControlantes}";
+                                                                    if(agus == 'false') {
+                                                                        desBtnControlantes(); 
+                                                                    }
+                                                                }
+                                                                
+                                                                function keyDetSocio(){
+                                                                    var agus = "{!validadosSocios}";
+                                                                    if(agus == 'false') {
+                                                                        desBtnSocios(); 
+                                                                    }
+                                                                }
                                                                 
                                                                 function FT_Venta() {
                                                                     var obtn = document.getElementById('{!$Component.pcFATCA}');
@@ -997,6 +1054,9 @@
                                                             <apex:actionFunction action="{!unblock}" name="unblock"/>
                                                             <apex:actionFunction action="{!bloqPep}" name="bloqPep"/>
                                                             <apex:actionFunction action="{!mostPop}" name="mostPop"/>
+                                                            <apex:actionFunction action="{!mostPopPEP}" name="mostPopPEP"/>
+                                                            <apex:actionFunction action="{!mostPopFATCA}" name="mostPopFATCA"/>
+                                                            <apex:actionFunction action="{!mostPopFATCANC}" name="mostPopFATCANC"/>
                                                             <apex:actionFunction action="{!desUn}" name="desUn"/>
                                                             <apex:actionFunction action="{!contrUn}" name="contrUn"/>
                                                             <apex:actionFunction action="{!mostPopVentana}" name="mostPopVentana"/>
@@ -1397,6 +1457,8 @@
                                                     }
                                                     
                                                     </script>
+                                                    <apex:actionFunction action="{!desBtnControlantes}" name="desBtnControlantes"/>
+                                                    <apex:actionFunction action="{!desBtnSocios}" name="desBtnSocios"/>
                                                     
                                                     <!-- 
 <apex:actionFunction action="{!cleanRiesgo}" name="cleanRiesgo"/>
@@ -2137,19 +2199,19 @@
                                                 
                                         
                                         </div>
-                                        <!-- Inicio popup -->                        
+                                        <!-- Inicio popup AML-->                        
                                         <div class="slds-scope">    
                                             <apex:outputPanel rendered="{!actPop}"> 
                                                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                                     <div class="slds-modal__container">
                                                         <header class="slds-modal__header">
                                                             
-                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Relación no Permitida</h1>                 
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                 
                                                         </header>
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>Este usuario no se puede registrar</h4>
+                                                                    <h4>Este cliente no se puede registrar porque se encuentra en lista AML</h4>
                                                                 </div>
                                                             </div>
                                                             
@@ -2169,7 +2231,93 @@
                                                 <div class="slds-backdrop slds-backdrop_open"></div>
                                             </apex:outputPanel> 
                                         </div>
-                                        
+                                        <!-- Inicio popup PEP-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopPEP}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Cliente/Controlante en Lista PEP</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
+                                        <!-- Inicio popup FATCA-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopFATCA}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Cliente/Controlante en Lista FATCA</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
+                                        <!-- Inicio popup FATCANC-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopFATCANC}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Cliente/Controlante en Lista FATCA no Consiente</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
                                         
                                         <!--VENTANA EMERGENTE PARA BUSCAR LAS CUENTAS-->
                                         
@@ -3219,49 +3367,364 @@
                                         <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
                                             
                                             <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
-                                                Controlante Junta Directiva
+                                                Controlantes Junta Directiva
                                             </legend>
-                                            
-                                            <table width = "900" style="text-align: center;">
-                                                <tr>
-                                                    <td width = "450">
-                                                        <label class="slds-form-element__label" for="inputSample">
-                                                            <abbr class="slds-required" title="required"></abbr> Número de ID
-                                                        </label>
-                                                        <apex:inputText value="{!NUM_ID_CONTR_SOCI}" onkeypress="return isNumberKey(event)" id="NUM_ID_CONTR_SOCI" styleclass="slds-input" style="height:9px; width:170px; margin-left:38px;  "/>
-                                                        <!--    <apex:commandButton value="Buscar" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px "/>
--->
-                                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
-                                                            <abbr class="slds-required" title="required"></abbr> Nombre Completo
-                                                        </label>
-                                                        <apex:inputText onkeypress="return sololetras(event)" value="{!NOMBRE_CONTR_SOC}" id="NOMBRE_CONTR_SOC" styleclass="slds-input" style="height:9px; width:730px; margin-left:10px; "/>
-                                                        
-                                                        
-                                                        <!--<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Cargo
-</label>
-<apex:inputText onkeypress="return sololetras(event)" value="{!pcNombreCompletoPV}" id="pcNombreGA" styleclass="slds-input" style="height:9px; width:170px; margin-left:10px; "/>
--->
-                                                        <br/>
-                                                        <br/> 
-                                                        
-                                                        
-                                                    </td>
+                                            <div  class="outer">
+                                                <table width = "1500" style="text-align: center;"> 
                                                     
-                                                </tr>
+                                                    <tr>
+                                                        <td width = "1500">
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Número de ID
+                                                            </label>
+                                                            <apex:inputText value="{!numControlante}" onkeyup="keyDetControlante()" onkeypress="return isNumberKey(event)" id="numControlante" styleclass="slds-input" style="height:9px; width:170px; margin-left:41px;  "/>
+                                                            <apex:commandButton value="Validar" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px" action="{!validarControlantes}"/>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:405px;">
+                                                                <abbr class="slds-required" title="required"></abbr>  PEP
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="pepPop()" value="{!PEPControlante}" id="PEPControlante"  styleclass="slds-input"  />
+                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
+                                                            </label>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                <abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="amlPop()" value="{!AMLControlante}" id="AMLControlante" styleclass="slds-input"    />
+                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                                            </label>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaPop()" value="{!FATCAControlante}" id="FATCAControlante" styleclass="slds-input"  />
+                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                                            </label>
+                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA NO CONSIENTE
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaNcPop()" value="{!FATCANCControlante}" id="FATCANCControlante" styleclass="slds-input"  />
+                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                                            </label>
+                                                            
+                                                            <br/>
+                                                            <br/> 
+                                                            
+                                                            
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td width="450">
+                                                            <label class="slds-form-element__label" for="inputSample" >
+                                                                <abbr class="slds-required" title="required"></abbr> Nombre Completo
+                                                            </label>
+                                                            <apex:inputText onkeypress="return sololetras(event)" value="{!nombreControlante}" id="nombreControlante" styleclass="slds-input" style="height:9px; width:528px; margin-left:15px; "/>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Tipo de Persona
+                                                            </label>
+                                                            
+                                                            
+                                                            <apex:inputField value="{!Cliente1.Tipo_Persona__c}" id="tipoPersonaControlante" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;" />
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            <br/>
+                                                            <br/>
+                                                            
+                                                            
+                                                        </td>
+                                                        
+                                                    </tr> 
+                                                    
+                                                    
+                                                    <tr>
+                                                        
+                                                        <td width="450">
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Nacionalidad
+                                                            </label>
+                                                            <apex:selectList id="nac1" size="1" styleClass="slds-select" value="{!propiedadControlUnicoUnico.nacionalidadControlante}" style="height:10px; width:170px; margin-left:46px;">
+                                                                <apex:selectOptions value="{!opcionNacionalidadSocios}"></apex:selectOptions>
+                                                            </apex:selectList>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:13px;">
+                                                                <abbr class="slds-required" title="required"></abbr> Nivel
+                                                            </label>
+                                                            <apex:selectList id="Nivel1Socios" size="1" styleClass="slds-select" value="{!propiedadControlUnicoUnico.nivelControlante}" style="height:10px; width:170px; margin-left:35px;">
+                                                                <apex:selectOptions value="{!ListNivel}"></apex:selectOptions>
+                                                                <!--apex:actionSupport event="onchange" action="{!OcultarPorcentajeIndi}"/--> 
+                                                            </apex:selectList>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:17px;">
+                                                                <abbr class="slds-required" title="required"></abbr> %Directo
+                                                            </label>
+                                                            <apex:inputText value="{!propiedadControlUnicoUnico.porcentajeDiControlante}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:25px;  "/>
+                                                            
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:17px;">
+                                                                <abbr class="slds-required" title="required"></abbr> %Indirecto
+                                                            </label>
+                                                            <apex:inputText value="{!propiedadControlUnicoUnico.porcentajeInControlante}" title="Este Campo Es Obligatorio"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:25px;  "/>
+                                                            <br/>
+                                                            <br/>
+                                                            
+                                                            
+                                                        </td>
+                                                        
+                                                    </tr> 
+                                                    
+                                                    
+                                                    <tr>
+                                                        
+                                                        <td width="450">
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Código Empresa
+                                                            </label>
+                                                            <!--    <apex:inputText disabled="{!Bene_Ocultar_CamPos}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
+--> <apex:inputText onkeypress="return isNumberKey(event)"  value="{!propiedadControlUnicoUnico.numIdEmpresaControlante}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:27px;  "/>
+                                                            <label class="slds-form-element__label" for="inputSample" style=" margin-left:18px">
+                                                                <abbr class="slds-required" title="required"></abbr> Cargo
+                                                            </label>
+                                                            <apex:inputText id="cargoControlante"  value="{!propiedadControlUnicoUnico.cargoControlante}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:27px;  "/>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:17px;">
+                                                                <abbr class="slds-required" title="required"></abbr> Cotiza en Bolsa
+                                                            </label>
+                                                            
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style=" width:25px; margin-left:5px">
+                                                                <abbr class="slds-required" title="required"></abbr> SI
+                                                            </label>
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox value="{!cotizaControlanteSi}" id="cotizaControlanteSi" styleclass="slds-input" >
+                                                                    <apex:actionSupport event="onclick"
+                                                                                        action="{!ocultarCotizaControlante}"/>
+                                                                </apex:inputcheckbox>
+                                                                <span class="slds-checkbox--faux" style=" width:15px; margin-left:1px"  ></span>
+                                                            </label>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> NO
+                                                            </label>
+                                                            
+                                                            <label class="slds-checkbox">
+                                                                <apex:inputcheckbox value="{!cotizaControlanteNo}" id="cotizaControlanteNo" styleclass="slds-input" >
+                                                                    <apex:actionSupport event="onclick"
+                                                                                        action="{!ocultarCotizaControlante}"/>
+                                                                </apex:inputcheckbox>
+                                                                <span class="slds-checkbox--faux" style=" width:15px; margin-left:10x"  ></span>
+                                                            </label>
+                                                            
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample" style=" margin-left:54px">
+                                                                <abbr class="slds-required" title="required"></abbr> # ticker Symbol
+                                                            </label>
+                                                            <apex:inputText disabled="{!TickerOculControlante}" value="{!propiedadControlUnicoUnico.ticSymbolControlante}"  id="ticSymbolControlante" styleclass="slds-input"  style="height:10px; width:170px; margin-left:25px;  "/>
+                                                            <!--apex:inputText rendered="false" id="numControlante" value="{!num}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:20px;  "/-->  
+                                                            
+                                                            <br/>
+                                                            <br/>
+                                                            
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    
+                                                    
+                                                    <TR>
+                                                        
+                                                        
+                                                        <TD>
+                                                            <apex:commandButton action="{!guardarControlante}" disabled="{!validadosControlantes}" value="Enviar"  styleClass="slds-button slds-button--brand" style="margin-left:875px "/>
+                                                            <!--             <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
+-->                             
+                                                        </TD>
+                                                        
+                                                    </TR>
+                                                    
+                                                    
+                                                </table>
                                                 
-                                                
-                                                
-                                                
-                                                
-                                            </table> 
-                                            
+                                            </div> 
                                             
                                         </fieldset>
                                         
                                     </div> <!--FIN DEL doce FORM-->
                                     
-                                    
+                                    <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                        <apex:outputPanel rendered="{!mostrarTablaControlantes}" style="width:1200px; margin-left:35px; "> 
+                                            
+                                            <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
+                                                
+                                                <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
+                                                    Datos de los Controlantes
+                                                </legend>
+                                                <br/>
+                                                
+                                                <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPropiedadControl}" var="item">
+                                                    
+                                                    <apex:column headerValue="Número id" >
+                                                        <apex:outputText value="{!item.numControlante}" />  
+                                                        <!--    <apex:outputText value="{!item.pcnumeroidsocc}"  -->
+                                                    </apex:column>
+                                                    <apex:column headerValue="PEP" >
+                                                        <apex:outputText value="{!item.PEPControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="FATCA" >
+                                                        <apex:outputText value="{!item.FATCAControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="FATCANC" >
+                                                        <apex:outputText value="{!item.FATCANCControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Nombre Controlante" >
+                                                        <apex:outputText value="{!item.nombreControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Tipo Persona" >
+                                                        <apex:outputText value="{!item.tipoPersonaControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nacionalidad" >
+                                                        <apex:outputText value="{!item.nacionalidadControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nivel" >
+                                                        <apex:outputText value="{!item.nivelControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Directo" >
+                                                        <apex:outputText value="{!item.porcentajeDiControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Indirecto" >
+                                                        <apex:outputText value="{!item.porcentajeInControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Còdigo Empresa" >
+                                                        <apex:outputText value="{!item.numIdEmpresaControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Cargo" >
+                                                        <apex:outputText value="{!item.cargoControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Cotiza Bolsa" >
+                                                        <apex:outputText value="{!item.cotBolsaControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="# ticker Symbol" >
+                                                        <apex:outputText value="{!item.ticSymbolControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Eliminar" >
+                                                        <apex:commandLink value="Eliminar" action="{!eliminarControlantesOtro}">
+                                                            <!--    <apex:param value="{!item.idGuardar}" AssignTo="{!Num_identidadProducto}" name="APV2" />      -->
+                                                            <apex:param value="{!item.numControlante}" AssignTo="{!numControlanteAsignado}" name="APV2" /> 
+                                                        </apex:commandLink> 
+                                                        
+                                                    </apex:column> 
+                                                    
+                                                </apex:dataTable> 
+                                                
+                                            </fieldset>  
+                                            
+                                            
+                                        </apex:outputPanel>
+                                        
+                                    </div>
+                					<br/>
+                                    <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                        <apex:outputPanel rendered="{!mostrarTablaModiControlantes}" style="width:1200px; margin-left:35px; "> 
+                                            
+                                            <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
+                                                
+                                                <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
+                                                    Datos de los Controlantes
+                                                </legend>
+                                                <br/>
+                                                
+                                                <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPropiedadControl}" var="item">
+                                                    
+                                                    <apex:column headerValue="Número id" >
+                                                        <apex:outputText value="{!item.numControlante}" />  
+                                                        <!--    <apex:outputText value="{!item.pcnumeroidsocc}"  -->
+                                                    </apex:column>
+                                                    <apex:column headerValue="PEP" >
+                                                        <apex:outputText value="{!item.PEPControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="FATCA" >
+                                                        <apex:outputText value="{!item.FATCAControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="FATCANC" >
+                                                        <apex:outputText value="{!item.FATCANCControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Nombre Controlante" >
+                                                        <apex:outputText value="{!item.nombreControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Tipo Persona" >
+                                                        <apex:outputText value="{!item.tipoPersonaControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nacionalidad" >
+                                                        <apex:outputText value="{!item.nacionalidadControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nivel" >
+                                                        <apex:outputText value="{!item.nivelControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Directo" >
+                                                        <apex:outputText value="{!item.porcentajeDiControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Indirecto" >
+                                                        <apex:outputText value="{!item.porcentajeInControlante}" />
+                                                    </apex:column> 
+                                                    
+                                                    <apex:column headerValue="Còdigo Empresa" >
+                                                        <apex:outputText value="{!item.numIdEmpresaControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Cargo" >
+                                                        <apex:outputText value="{!item.cargoControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Cotiza Bolsa" >
+                                                        <apex:outputText value="{!item.cotBolsaControlante}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="# ticker Symbol" >
+                                                        <apex:outputText value="{!item.ticSymbolControlante}" />
+                                                    </apex:column>
+                                                    <apex:column headerValue="Modificar" >
+                                                        <apex:commandLink value="Modificar" action="{!modificarControlantes}">
+                                                            <!--  <apex:param value="{!item.AI_ID_EXTERNO}" AssignTo="{!Num_identidadProducto}" name="APV1" />  -->
+                                                            <apex:param value="{!item.numControlante}" AssignTo="{!numControlanteAsignado}" name="APV1" />
+                                                        </apex:commandLink> 
+                                                        
+                                                    </apex:column>
+                                                    <apex:column headerValue="Eliminar" >
+                                                        <apex:commandLink value="Eliminar" action="{!eliminarControlantes}">
+                                                            <!--    <apex:param value="{!item.idGuardar}" AssignTo="{!Num_identidadProducto}" name="APV2" />      -->
+                                                            <apex:param value="{!item.numControlante}" AssignTo="{!numControlanteAsignado}" name="APV2" /> 
+                                                        </apex:commandLink> 
+                                                        
+                                                    </apex:column> 
+                                                </apex:dataTable>                      
+                                            </fieldset>  
+                                            
+                                            
+                                        </apex:outputPanel>
+                                        
+                                    </div>
+                                    <br/>
                                     
                                     <div id="content-path-3" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-3"> <!-- DIV Tercero -->
                                         
@@ -3348,7 +3811,83 @@
                                         
                                     </div> <!--FIN DEL cuarto FORM-->
                                     
-                                    
+                                    <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                        <apex:outputPanel rendered="{!mostrarTablaModifi2}" style="width:1200px; margin-left:35px; "> 
+                                            
+                                            <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
+                                                
+                                                <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
+                                                    Datos de los Beneficiarios
+                                                </legend>
+                                                <br/>
+                                                
+                                                <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListSocios}" var="item">
+                                                    
+                                                    <apex:column headerValue=" Número Identificación " >
+                                                        <apex:outputText value="{!item.pcnumeroidsoc}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nombre Socio" >
+                                                        <apex:outputText value="{!item.nombresocio}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Tipo Persona" >
+                                                        <apex:outputText value="{!item.tipo_persona}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nacionalidad" >
+                                                        <apex:outputText value="{!item.nacionalidad}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Nivel" >
+                                                        <apex:outputText value="{!item.NIVEL}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Directo" >
+                                                        <apex:outputText value="{!item.POR_PART_DIRECT}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="% Indirecto" >
+                                                        <apex:outputText value="{!item.POR_PART_INDIRECT}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Còdigo Empresa" >
+                                                        <apex:outputText value="{!item.NUMERO_ID_EMPRESA}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Cotiza en Bolsa" >
+                                                        <apex:outputText value="{!item.COT_BOLSA}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="# ticker Symbol" >
+                                                        <apex:outputText value="{!item.TIC_SYMBOL}" />
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Modificar" >
+                                                        <apex:commandLink value="Modificar" action="{!ModificarD}">
+                                                            <!--  <apex:param value="{!item.AI_ID_EXTERNO}" AssignTo="{!Num_identidadProducto}" name="APV1" />  -->
+                                                            <apex:param value="{!item.pcnumeroidsoc}" AssignTo="{!Num_identidadProducto}" name="APV1" />
+                                                        </apex:commandLink> 
+                                                        
+                                                    </apex:column>
+                                                    
+                                                    <apex:column headerValue="Eliminar" >
+                                                        <apex:commandLink value="Eliminar" action="{!EliminarD}">
+                                                            <!-- <apex:param value="{!item.AI_ID_EXTERNO}" AssignTo="{!Num_identidadProducto}" name="APV2" />   -->
+                                                            <apex:param value="{!item.pcnumeroidsoc}" AssignTo="{!Num_identidadProducto}" name="APV2" /> 
+                                                        </apex:commandLink> 
+                                                        
+                                                    </apex:column> 
+                                                    
+                                                </apex:dataTable> 
+                                                
+                                            </fieldset>  
+                                            
+                                            
+                                        </apex:outputPanel>
+                                        
+                                    </div>
+                                    <br/>
                                     
                                     
                                     <div id="content-path-10" class="slds-tabs--path__content" role="tabpanel" aria-labelledby="tab-path-5"> <!-- DIV Cuarto -->
@@ -3375,17 +3914,7 @@
                                                                 <abbr class="slds-required" title="required"></abbr> Producto o Servicio
                                                             </label>
                                                             <apex:inputText value="{!REF1_PROVE_PRODUC}" onkeypress="return sololetras(event)" id="REF1_PROVE_PRODUC" styleclass="slds-input"  style="height:10px; width:270px; margin-left:10px;  "/>
-                                                            
-                                                            <!--<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Primer Apellido
-</label>
-<apex:inputText value="{!pcPrimerApellidoReferi1}" onkeypress="return sololetras(event)" id="pcPrimerApellidoReferi1" styleclass="slds-input"  style="height:10px; width:170px; margin-left:24px;  "/>
 
-<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Segundo Apellido
-</label>
-<apex:inputText value="{!pcSegundoApellidoReferi1}" onkeypress="return sololetras(event)" id="pcSegundoApellidoReferi1" styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
--->
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Teléfono 
                                                             </label>
@@ -3412,17 +3941,7 @@
                                                                 <abbr class="slds-required" title="required"></abbr> Producto o Servicio
                                                             </label>
                                                             <apex:inputText value="{!REF2_PROVE_PRODUC}" onkeypress="return sololetras(event)" id="REF2_PROVE_PRODUC" styleclass="slds-input"  style="height:10px; width:270px; margin-left:10px;  "/>
-                                                            
-                                                            <!--  <label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Primer Apellido
-</label>
-<apex:inputText value="{!pcPrimerApellidoReferi2}" onkeypress="return sololetras(event)" id="pcPrimerApellidoReferi2" styleclass="slds-input"  style="height:10px; width:170px; margin-left:24px;  "/>
 
-<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Segundo Apellido
-</label>
-<apex:inputText value="{!pcSegundoApellidoReferi2}" onkeypress="return sololetras(event)" id="pcSegundoApellidoReferi2" styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
--->
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Teléfono 
                                                             </label>
@@ -3468,22 +3987,7 @@
                                                                 <abbr class="slds-required" title="required"></abbr> Nombre
                                                             </label>
                                                             <apex:inputText value="{!REF1_BANCA_NOMB}" onkeypress="return sololetras(event)" id="REF1_BANCA_NOMB" styleclass="slds-input"  style="height:10px; width:770px; margin-left:14px;  "/>
-                                                            
-                                                            <!-- <label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Segundo Nombre
-</label>
-<apex:inputText value="{!pcSegundoNombreReferi1}" onkeypress="return sololetras(event)" id="pcSegundoNombreReferi1" styleclass="slds-input"  style="height:10px; width:170px; margin-left:20px;  "/>
 
-<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Primer Apellido
-</label>
-<apex:inputText value="{!pcPrimerApellidoReferi1}" onkeypress="return sololetras(event)" id="pcPrimerApellidoReferi1" styleclass="slds-input"  style="height:10px; width:170px; margin-left:24px;  "/>
-
-<label class="slds-form-element__label" for="inputSample">
-<abbr class="slds-required" title="required"></abbr> Segundo Apellido
-</label>
-<apex:inputText value="{!pcSegundoApellidoReferi1}" onkeypress="return sololetras(event)" id="pcSegundoApellidoReferi1" styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
--->
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:25px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Teléfono 
                                                             </label>
@@ -4232,14 +4736,43 @@ function validarIDU()
                                         <label class="slds-form-element__label" for="inputSample">
                                             <abbr class="slds-required" title="required"></abbr> Número de ID
                                         </label>
-                                        <apex:inputText value="{!pcnumeroidsocc}" onkeyup="keyDet()" id="pcNumeroIDbeni" styleclass="slds-input" style="height:9px; width:170px; margin-left:12px;  "/>
+                                        <apex:inputText value="{!pcnumeroidsocc}" onkeyup="keyDetSocios()" id="pcNumeroIDbeni" styleclass="slds-input" style="height:9px; width:170px; margin-left:41px;"/>
                                         <apex:commandButton value="Buscar" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px" action="{!buscarSocio}"/>
                                         
-                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:21px;">
-                                            <abbr class="slds-required" title="required"></abbr> Nombre Completo
+                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:405px;">
+                                            <abbr class="slds-required" title="required"></abbr>  PEP
                                         </label>
-                                        <apex:inputText onkeypress="return sololetras(event)" value="{!socioUnico.nombresocio}" id="pcNombreCompletobene" styleclass="slds-input" style="height:9px; width:559px; margin-left:10px; "/>
                                         
+                                        <label class="slds-checkbox">
+                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="pepPop()" value="{!PEPSocio}" id="PEPSocio"  styleclass="slds-input"  />
+                                            <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
+                                        </label>
+                                        
+                                        <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                            <abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
+                                        </label>
+                                        
+                                        <label class="slds-checkbox">
+                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="amlPop()" value="{!AMLSocio}" id="AMLSocio" styleclass="slds-input"    />
+                                            <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                        </label>
+                                        
+                                        <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                            <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA
+                                        </label>
+                                        
+                                        <label class="slds-checkbox">
+                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaPop()" value="{!FATCASocio}" id="FATCASocio" styleclass="slds-input"  />
+                                            <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                        </label>
+                                        <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                            <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA NO CONSIENTE
+                                        </label>
+                                        
+                                        <label class="slds-checkbox">
+                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaNcPop()" value="{!FATCANCSocio}" id="FATCANCSocio" styleclass="slds-input"  />
+                                            <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
+                                        </label>
                                         <br/>
                                         <br/> 
                                         
@@ -4250,34 +4783,20 @@ function validarIDU()
                                 
                                 <tr>
                                     <td width="450">
-                                        
                                         <label class="slds-form-element__label" for="inputSample">
+                                            <abbr class="slds-required" title="required"></abbr> Nombre Completo
+                                        </label>
+                                        <apex:inputText onkeypress="return sololetras(event)" value="{!socioUnico.nombresocio}" id="pcNombreCompletobene" styleclass="slds-input" style="height:9px; width:528px; margin-left:15px; "/>
+                                        
+                                        
+                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:166px;">
                                             <abbr class="slds-required" title="required"></abbr> Tipo de Persona
                                         </label>
                                         
                                         
-                                        <apex:inputField value="{!Cliente1.Tipo_Persona__c}" id="TipoBeneficiario1" styleclass="slds-input"    style="height:10px; width:170px; margin-left:1px;" />
+                                        <apex:inputField value="{!Cliente1.Tipo_Persona__c}" id="TipoBeneficiario1" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;" />
                                         
                                         
-                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:98px;">
-                                            <abbr class="slds-required" title="required"></abbr> Nacionalidad
-                                        </label>
-                                        <apex:selectList id="na1" size="1" styleClass="slds-select" value="{!socioUnico.nacionalidad}" style="height:10px; width:170px; margin-left:43px;">
-                                            <apex:selectOptions value="{!opcionNacionalidadSocios}"></apex:selectOptions>
-                                        </apex:selectList>
-                                        
-                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
-                                            <abbr class="slds-required" title="required"></abbr> Nivel
-                                        </label>
-                                        <apex:selectList id="Nivel1" size="1" styleClass="slds-select" value="{!socioUnico.NIVEL}" style="height:10px; width:170px; margin-left:1px;">
-                                            <apex:selectOptions value="{!ListNivel}"></apex:selectOptions>
-                                            <apex:actionSupport event="onchange" action="{!OcultarPorcentajeIndi}"/> 
-                                        </apex:selectList>
-                                        
-                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
-                                            <abbr class="slds-required" title="required"></abbr> %Directo
-                                        </label>
-                                        <apex:inputText disabled="{!Bene_Ocultar_CamPos}"  value="{!socioUnico.POR_PART_DIRECT}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:15px;  "/>
                                         
                                         
                                         <br/>
@@ -4292,18 +4811,43 @@ function validarIDU()
                                 <tr>
                                     
                                     <td width="450">
+                                        <label class="slds-form-element__label" for="inputSample">
+                                            <abbr class="slds-required" title="required"></abbr> Nacionalidad
+                                        </label>
+                                        <apex:selectList id="na1" size="1" styleClass="slds-select" value="{!socioUnico.nacionalidad}" style="height:10px; width:170px; margin-left:46px;">
+                                            <apex:selectOptions value="{!opcionNacionalidadSocios}"></apex:selectOptions>
+                                        </apex:selectList>
+                                        
+                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
+                                            <abbr class="slds-required" title="required"></abbr> Nivel
+                                        </label>
+                                        <apex:selectList id="Nivel1" size="1" styleClass="slds-select" value="{!socioUnico.NIVEL}" style="height:10px; width:170px; margin-left:35px;">
+                                            <apex:selectOptions value="{!ListNivel}"></apex:selectOptions>
+                                            <apex:actionSupport event="onchange" action="{!OcultarPorcentajeIndi}"/> 
+                                        </apex:selectList>
+                                        
+                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
+                                            <abbr class="slds-required" title="required"></abbr> %Directo
+                                        </label>
+                                        <apex:input type="number" disabled="{!Bene_Ocultar_CamPos}"  value="{!socioUnico.POR_PART_DIRECT}" styleclass="slds-input" style="height:10px; width:170px; margin-left:25px;  "/>
+                                        
                                         
                                         
                                         <label class="slds-form-element__label" for="inputSample">
                                             <abbr class="slds-required" title="required"></abbr> %Indirecto
                                         </label>
-                                        <apex:inputText disabled="{!Indirectoo}" value="{!socioUnico.POR_PART_INDIRECT}" title="Este Campo Es Obligatorio"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:22px;  "/>
-                                        
-                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:98px;">
+                                        <apex:input type="number" disabled="{!Indirectoo}" value="{!socioUnico.POR_PART_INDIRECT}" title="Este Campo Es Obligatorio"  styleclass="slds-input" style="height:10px; width:170px; margin-left:25px;  "/>
+                                        <br/>
+                                        <br/>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td width="450">
+                                        <label class="slds-form-element__label" for="inputSample">
                                             <abbr class="slds-required" title="required"></abbr> Código Empresa
                                         </label>
                                         <!--    <apex:inputText disabled="{!Bene_Ocultar_CamPos}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
---> <apex:inputText disabled="{!Indirectoo}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
+--> 									<apex:inputText disabled="{!Indirectoo}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:30px;  "/>
                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                                             <abbr class="slds-required" title="required"></abbr> Cotiza en Bolsa
                                         </label>
@@ -4333,10 +4877,10 @@ function validarIDU()
                                         </label>
                                         
                                         
-                                        <label class="slds-form-element__label" for="inputSample" style=" margin-left:17px">
+                                        <label class="slds-form-element__label" for="inputSample" style=" margin-left:37px">
                                             <abbr class="slds-required" title="required"></abbr> # ticker Symbol
                                         </label>
-                                        <apex:inputText disabled="{!TickerOcul}" value="{!socioUnico.TIC_SYMBOL}"  id="PCNumerotickersymbol" styleclass="slds-input"  style="height:10px; width:170px; margin-left:24px;  "/>
+                                        <apex:inputText disabled="{!TickerOcul}" value="{!socioUnico.TIC_SYMBOL}"  id="PCNumerotickersymbol" styleclass="slds-input"  style="height:10px; width:170px; margin-left:20px;  "/>
                                         <apex:inputText rendered="false" id="num" value="{!num}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:20px;  "/>  
                                         
                                         <br/>
@@ -4351,7 +4895,7 @@ function validarIDU()
                                     
                                     
                                     <TD>
-                                        <apex:commandButton action="{!GUARDAR2}" value="Enviar"  styleClass="slds-button slds-button--brand" style="margin-left:875px "/>
+                                        <apex:commandButton action="{!GUARDAR2}" value="Enviar" disabled="{!validadosSocios}" styleClass="slds-button slds-button--brand" style="margin-left:875px "/>
                                         <!--             <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                             
                                     </TD>
@@ -4394,7 +4938,15 @@ function validarIDU()
                                     <apex:outputText value="{!item.pcnumeroidsoc}" />  
                                     <!--    <apex:outputText value="{!item.pcnumeroidsocc}"  -->
                                 </apex:column>
-                                
+                                <apex:column headerValue="PEP" >
+                                    <apex:outputText value="{!item.PEPSocio}" />
+                                </apex:column>
+                                <apex:column headerValue="FATCA" >
+                                    <apex:outputText value="{!item.FATCASocio}" />
+                                </apex:column>
+                                <apex:column headerValue="FATCANC" >
+                                    <apex:outputText value="{!item.FATCANCSocio}" />
+                                </apex:column>
                                 <apex:column headerValue="Nombre Socio" >
                                     <apex:outputText value="{!item.nombresocio}" />
                                 </apex:column>
@@ -4474,7 +5026,15 @@ function validarIDU()
                                 <apex:column headerValue=" Número Identificación " >
                                     <apex:outputText value="{!item.pcnumeroidsoc}" />
                                 </apex:column>
-                                
+                                <apex:column headerValue="PEP" >
+                                    <apex:outputText value="{!item.PEPSocio}" />
+                                </apex:column>
+                                <apex:column headerValue="FATCA" >
+                                    <apex:outputText value="{!item.FATCASocio}" />
+                                </apex:column>
+                                <apex:column headerValue="FATCANC" >
+                                    <apex:outputText value="{!item.FATCANCSocio}" />
+                                </apex:column>
                                 <apex:column headerValue="Nombre Socio" >
                                     <apex:outputText value="{!item.nombresocio}" />
                                 </apex:column>
@@ -4536,7 +5096,125 @@ function validarIDU()
                     
                 </div>
                 <br/>
-                
+                <!-- Inicio popup AML-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!actPop}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                 
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Este cliente no se puede registrar porque se encuentra en lista AML</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">
+                                                                    
+                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePop}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                        
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
+                                        <!-- Inicio popup PEP-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopPEP}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Socio/Controlante en Lista PEP</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
+                                        <!-- Inicio popup FATCA-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopFATCA}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Socio/Controlante en Lista FATCA</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
+                                        <!-- Inicio popup FATCANC-->                        
+                                        <div class="slds-scope">    
+                                            <apex:outputPanel rendered="{!muestraPopFATCANC}"> 
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            
+                                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:23px;">Respuesta Validación</h1>                  
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                                            <div class="slds-form-element__row slds-text-align_center">
+                                                                <div class="slds-form-element slds-size_1-of-1">
+                                                                    <h4>Socio/Controlante en Lista FATCA no Consiente</h4>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="slds-form-element__group slds-text-align_center">
+                                                                <div class="slds-form-element__row slds-text-align_center">                                                                    
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <apex:commandButton value="Salir" action="{!hidePopOtros}" styleClass="slds-button slds-button_neutral" />
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel> 
+                                        </div>
                 
                 <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                     

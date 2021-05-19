@@ -801,6 +801,14 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                           </apex:selectList>
                           <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!detallecaso.Tipo_Operacion__c = 'A4'}" showDatePicker="false" type="date" value="{!detalleCaso.Nueva_fecha_aporte__c}" />
                       </div>
+                     
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                        <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6')}" value="Banco:" />
+                     </div>
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                         <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input removePicklistValue2" rendered="{!OR(detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Banco__c}" />
+                     </div> 
+                      
                      <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
                      </div>
@@ -814,6 +822,31 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                      <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                         <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
                      </div>
+                      
+                     
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                        <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Día de pago:" />
+                        <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Día de pago:" />
+                     </div>
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                         <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Dia_de_pago__c}" />
+                     </div>
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="POS:" />
+                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="POS:" />
+                     </div>  
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                         <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.POS__c}" />
+                     </div>
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Monto Débito:" />
+                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Monto Débito:" />
+                     </div>  
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                         <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
+                     </div> 
+                      
+                      
                      <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Banco Emisor de la Tarjeta:" />
                      </div>
@@ -839,7 +872,7 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                         <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
                      </div>
                      <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A6', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TA')), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
-                        <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (Label.DAU_Cambio_de_Fecha_1 ó Label.DAU_Cambio_de_Fecha_2) de cada mes">*</abbr> Fecha de Aporte permitida (Label.DAU_Cambio_de_Fecha_1 ó Label.DAU_Cambio_de_Fecha_2) de cada mes</span><br/>
+                        <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (Label.DAU_Cambio_de_Fecha_1 ó Label.DAU_Cambio_de_Fecha_2) de cada mes">*</abbr> Fecha de Aporte permitida (14 ó 26) de cada mes</span><br/>
                         <span class="slds-text-title">
                            <abbr style="color:#42c4dc; font-size:16px;" title="Fecha mínima permitida, tres días próximos a partir de hoy">*</abbr> Fecha mínima permitida a partir de 
                            <apex:outputText value="{0, date, dd'/'MM'/'yyyy}">
@@ -960,7 +993,8 @@ cache="false" expires="0"  controller="ControladorCasosPortalAutogestionE2C" act
                         </div>
                     </section>
                     <div class="slds-backdrop slds-backdrop_open"></div>
-                </apex:outputPanel>  
+                </apex:outputPanel>
+                
                <!-- MODAL DE ACEPTAR CONTRATO -->
                <apex:outputPanel rendered="{!mostrarCntrato}" >
                   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">

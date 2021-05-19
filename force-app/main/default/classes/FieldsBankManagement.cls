@@ -20,6 +20,10 @@ public class FieldsBankManagement {
     public String pcformapago;
     public String pccuentapago;
     public String diaPago;
+    public String pcMes;
+    public String pcAnio;
+    public Double pcMonto;
+    public String pcPOS;
     public List<FieldsBankManagement> fieldsList;
     
     public String CARD_HOLDER_LEGAL_ID;

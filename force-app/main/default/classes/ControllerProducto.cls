@@ -42,6 +42,9 @@ public class ControllerProducto {
     public string pdLugarNacimientoCN /*LugarNacimiento*/ {get;set;}
     public string pcsexo /*Genero*/ {get;set;}
     public string pcestadocivil /*EstadoCivil*/ {get;set;}
+    public string pcmes {get;set;}
+    public string pcAnioTarjeta {get;set;}
+    public string pcPOS {get;set;}
     public string pcNombreConyuge {get;set;}
     public string pcProfesionOcupacion {get;set;}
     // public string pcProfesionOcupacion2 {get;set;}
@@ -325,7 +328,7 @@ public class ControllerProducto {
     public boolean MostarActualizar {get;set;}
     /*campos bloqueo*/
     public boolean ActNombre {get;set;}
-	public boolean ActNombre2 {get;set;}
+    public boolean ActNombre2 {get;set;}
     public boolean ActApellido {get;set;}
     public boolean ActApellido2 {get;set;}
     public boolean ActId {get;set;}
@@ -414,7 +417,7 @@ public class ControllerProducto {
     public string codigoAsignado{get;set;}
     
     public ControllerProducto() 
-    {	
+    {   
         cuentas = new Cuentas__c();
         mostrarBoton = true;
         string prueba2 = '';
@@ -459,10 +462,10 @@ public class ControllerProducto {
         ocultaLista = true;
         MostarActualizar = false;
         ActNombre = false;
-		ActNombre2 = false;
-    	ActApellido = false;
-    	ActApellido2 = false;
-    	ActId = false;
+        ActNombre2 = false;
+        ActApellido = false;
+        ActApellido2 = false;
+        ActId = false;
         ActTipoId = true;
         MostarActualizarFechaSeguro = false;
         prueba();
@@ -570,6 +573,9 @@ public class ControllerProducto {
         //llenarNacionalidadEmpleado();
         llenarNivelIngreso();
         llenarEstadoCivil();
+        llenarMes();
+        llenarAnioTarjeta();
+        llenarPOS();
         llenarParentesco();
         llenarTipoCuenta();
         llenarTipoFormaPago();
@@ -658,7 +664,7 @@ public class ControllerProducto {
         }
         catch(exception ex)
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));  	   
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
         }              
     }
     public void obtieneCodSub (){
@@ -1020,11 +1026,45 @@ public class ControllerProducto {
     public void llenarEstadoCivil()
     {
         this.EstadoCivil = new SelectOption[]{};                                                               
-            this.EstadoCivil.add(new SelectOption('S',' SOLTERO(A)'));
+        this.EstadoCivil.add(new SelectOption('S',' SOLTERO(A)'));
         this.EstadoCivil.add(new SelectOption('C',' CASADO(A)'));
         this.EstadoCivil.add(new SelectOption('D',' DIVORCIADO(A)'));
         this.EstadoCivil.add(new SelectOption('U',' UNION LIBRE'));
         this.EstadoCivil.add(new SelectOption('V',' VIUDO'));
+    }
+    
+    public void llenarMes() {
+        this.Mes = new SelectOption[]{};                                                               
+        this.Mes.add(new SelectOption('1',' 1'));
+        this.Mes.add(new SelectOption('2',' 2'));
+        this.Mes.add(new SelectOption('3',' 3'));
+        this.Mes.add(new SelectOption('4',' 4'));
+        this.Mes.add(new SelectOption('5',' 5'));
+        this.Mes.add(new SelectOption('6',' 6'));
+        this.Mes.add(new SelectOption('7',' 7'));
+        this.Mes.add(new SelectOption('8',' 8'));
+        this.Mes.add(new SelectOption('9',' 9'));
+        this.Mes.add(new SelectOption('10',' 10'));
+        this.Mes.add(new SelectOption('11',' 11'));
+        this.Mes.add(new SelectOption('12',' 12'));
+    }
+    
+    public void llenarAnioTarjeta() {
+        this.AnioTarjeta = new SelectOption[]{};                                                               
+        this.AnioTarjeta.add(new SelectOption('2019',' 2019'));
+        this.AnioTarjeta.add(new SelectOption('2020',' 2020'));
+        this.AnioTarjeta.add(new SelectOption('2021',' 2021'));
+        this.AnioTarjeta.add(new SelectOption('2022',' 2022'));
+        this.AnioTarjeta.add(new SelectOption('2023',' 2023'));
+        this.AnioTarjeta.add(new SelectOption('2024',' 2024'));
+        this.AnioTarjeta.add(new SelectOption('2025',' 2025'));
+    }
+    
+    public void llenarPOS() {
+        this.POS = new SelectOption[]{};                                                               
+        this.POS.add(new SelectOption('Ficohsa',' Ficohsa'));
+        this.POS.add(new SelectOption('BAC',' BAC'));
+        this.POS.add(new SelectOption('Otros Bancos',' Otros Bancos'));
     }
     
     public list <selectOption> TipoCuentaOptions {get; set;}
@@ -1361,7 +1401,7 @@ public class ControllerProducto {
                 else
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Puede Agregar porque la distribución de los beneficiarios de Contingencias es mayor a 100% '));
-                    return null;	
+                    return null;    
                 }  
                 
             } //FIN DEL IF DE VALIDACION 
@@ -1508,7 +1548,7 @@ public class ControllerProducto {
                 if(ListBeneficiarios[i].idExterno == null)   
                 {
                     pos=i;
-               	}
+                }
             }
             if(pos != null)
             {
@@ -1532,7 +1572,7 @@ public class ControllerProducto {
                 if(ListBeneficiariosC[i].idExterno == null)   
                 {
                     pos=i;
-               	}
+                }
             }
             if(pos != null)
             {
@@ -1628,7 +1668,7 @@ public class ControllerProducto {
     public boolean mostrarTablaModificarDir {get;set;}
     public boolean MostrarTablaDireccion {get;set;}
      
-	PUBLIC pageReference guardarListaDir()
+    PUBLIC pageReference guardarListaDir()
     {      
         
         direccionUnico.paisDir = pccodpais;
@@ -1787,7 +1827,7 @@ public class ControllerProducto {
                                             where codigo_pais__c =: ListDirecciones[i].paisDir 
                                             and codigo_departamento__c =: ListDirecciones[i].deptoDir
                                             AND codigo_municipio__c =: ListDirecciones[i].ciuDir
-                                           	and codigo_colonia__c =: ListDirecciones[i].coloDir])
+                                            and codigo_colonia__c =: ListDirecciones[i].coloDir])
                     {
                         opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
                     }
@@ -1988,7 +2028,7 @@ public class ControllerProducto {
             listEmpresas = [select name, RTN_Empresa__c from Listado_Empresas__c order by name asc];
             opcionesEmpresas = new list <selectOption>();
             opcionesEmpresas.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-			if(listEmpresas.size()>999)
+            if(listEmpresas.size()>999)
             {
                 paginacionEmpresas++;
                 mostrarBotonEmpresas =  true;
@@ -2184,7 +2224,7 @@ public class ControllerProducto {
         {
             opcionMunicipio = new list <selectOption>();
             opcionMunicipio.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            for (Municipio__c item:[select nombre_municipio__c, codigo_municipio__c from Municipio__c where codigo_pais__c =: pccodpais and 	codigo_departamento__c =: pcDeptoCN])
+            for (Municipio__c item:[select nombre_municipio__c, codigo_municipio__c from Municipio__c where codigo_pais__c =: pccodpais and     codigo_departamento__c =: pcDeptoCN])
             {
                 opcionMunicipio.add(new selectOption(item.codigo_municipio__c, item.nombre_municipio__c));
             }
@@ -2266,7 +2306,7 @@ public class ControllerProducto {
             
         }
         else
-        {	
+        {   
             if (pccodpais == '053' || pccodpais == '144')
             {
                 VentanaFatca = true;
@@ -3328,6 +3368,9 @@ public class ControllerProducto {
         pdLugarNacimientoCN = null;
         TipoSexo.Sexo__c = null;
         pcestadocivil = null;
+        pcmes = null;
+        pcAnioTarjeta = null;
+        pcPOS = null;
         pcNombreConyuge = null;
         TipoProfesion.Profesi_n_Ocupaci_n__c = null;
         pcmail = null;
@@ -3397,8 +3440,8 @@ public class ControllerProducto {
         pcTipoSeguro = null;
         pcPrimaAsegurada = null;
         pcSumaAsegurada = null;
-		pcPlazoSeguro = null;
-		pcfecCancelaSeguro = null;        
+        pcPlazoSeguro = null;
+        pcfecCancelaSeguro = null;        
         pcNUMUSU = null;
         TipoEnvioo.Tipo_EnvioNuevo__c = null;
         v_des_procedfds = null;
@@ -3738,7 +3781,7 @@ public class ControllerProducto {
             naturalEnvio.pcNumeroIDDependencia = pcNumeroIDDependencia;
             //naturalEnvio.pcParentescoDependencia /*Parentesco_DependenciaEconomica*/ = Cuenta22.Parentesco__c;
             naturalEnvio.pcNombreCompletoDependencia = pcNombreCompletoDependencia;
-            //InfoDireccion	
+            //InfoDireccion 
             
             naturalEnvio.pccodpais = pcnacionalidad;            
             naturalEnvio.pcnacionalidad = pcnacionalidad;
@@ -3812,12 +3855,12 @@ public class ControllerProducto {
             naturalEnvio.pcFechaValidacionCN = date.today();
             //PantallaProducto
             naturalEnvio.pcproducto = pcproducto;
-        	naturalEnvio.pcsubproducto = pcsubproducto;
+            naturalEnvio.pcsubproducto = pcsubproducto;
             if(Cuenta20.Tipo_Fondo__c == 'I')
             {
                 naturalEnvio.pcTipoFondo = '';
             }
-			else
+            else
             {
                 naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c;
             }
@@ -3866,7 +3909,7 @@ public class ControllerProducto {
             naturalEnvio.pcenvio = TipoEnvioo.Tipo_EnvioNuevo__c;
             naturalEnvio.pcTipoAporte = 'F';
             naturalEnvio.v_des_procedfds   = v_des_procedfds;
-            naturalEnvio.pcpromotor = pcpromotor;            	
+            naturalEnvio.pcpromotor = pcpromotor;               
             naturalEnvio.pctiposolicitud = pctiposolicitud;
             //Pantalla fatca
             if(ES_Residente == true)
@@ -3955,7 +3998,7 @@ public class ControllerProducto {
             }*/   
             decimal totalBene= 0;
             for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {	
+            {   
                 system.debug('distri: '+ListBeneficiarios[i].Distribucion);
                 totalBene += ListBeneficiarios[i].Distribucion; 
             }
@@ -3966,7 +4009,7 @@ public class ControllerProducto {
             }
             decimal totalBeneC= 0;
             for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {	
+            {   
                 system.debug('distri: '+ListBeneficiariosC[i].Distribucion);
                 totalBeneC += ListBeneficiariosC[i].Distribucion; 
             }
@@ -4024,7 +4067,7 @@ public class ControllerProducto {
                     if(checkcorreo && pcmail != null){
                         checkCorreo = false;
                         String queryCorreo = 'Select Cuerpo__c From  Correo_EDC__mdt Where DeveloperName = ';
-                        queryCorreo += '\'correoextranjero\'';    	
+                        queryCorreo += '\'correoextranjero\'';      
                         Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
                         String cuerpo = cuerpoCorreo.Cuerpo__c;
                         Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
@@ -4040,12 +4083,12 @@ public class ControllerProducto {
                         Messaging.sendEmail(listCorreo);
           
                     }
-                	if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
+                    if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
                         //updateCase.createAccount(pctipoid, pcnroid, val2, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, Cuenta20.Tipo_Fondo__c, Cuenta20.Frecuencia_Aportacion__c, pcformapago, pccuentapago, DiaMes.Dias_Mes__c);    
-                    	FieldsBankManagement fields = new FieldsBankManagement();
+                        FieldsBankManagement fields = new FieldsBankManagement();
                         fields.pctipoid = pctipoid;
                         fields.pcnroid = pcnroid;
                         fields.cuenta = val2;
@@ -4058,6 +4101,10 @@ public class ControllerProducto {
                         fields.pcformapago = pcformapago;
                         fields.pccuentapago = pccuentapago;
                         fields.diaPago = DiaMes.Dias_Mes__c;
+                        fields.pcMes = pcmes;
+                        fields.pcAnio = pcAnioTarjeta;
+                        fields.pcMonto = pnmontoaporte;
+                        fields.pcPOS = pcPOS;
                         list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
                         fieldsList.add(fields);
                         UpdateCase.createRecord(fieldsList);
@@ -4071,9 +4118,9 @@ public class ControllerProducto {
                     return target; 
                 }
                 else{
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado)); 
                 }
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
+                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
                 //limpiar();
             }  
@@ -4127,16 +4174,16 @@ public class ControllerProducto {
             naturalEnvio.pcNombreConyuge = pcNombreConyuge;
             naturalEnvio.pcProfesionOcupacion = TipoProfesion.Profesi_n_Ocupaci_n__c;
             /*if((pcmail != null || pcmail != 'null') && infoCorreo == false )
-            {	
+            {   
                 
                  String queryCorreo = 'Select Cuerpo__c From ConstanContact__mdt Where DeveloperName = '; 
                 queryCorreo += '\'correoo\'';
                 ConstanContact__mdt cuerpoCorreo = dataBase.query(queryCorreo);
                 String cuerpo = cuerpoCorreo.Cuerpo__c;
-            	//Se enviara el correo a las personas con el correo nuevo
+                //Se enviara el correo a las personas con el correo nuevo
                 Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
                 OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
-        		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();                 
+                Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();                 
                 mail.setHtmlBody(cuerpo);
                 mail.setSubject('Te felicitamos por pensar en tu futuro' + '' + +' Estimad@ '+  ''  + ' ');
                 String[] toAddresses = new String[] {pcmail};              
@@ -4146,11 +4193,11 @@ public class ControllerProducto {
                 mail.setSaveAsActivity(true);
                 listCorreo.add(mail);
                 Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-           		system.debug('Correos enviados correctamente: '+results);
-        		system.debug('Email:' + pcmail+' EnvioCorreo:'+listCorreo);
+                system.debug('Correos enviados correctamente: '+results);
+                system.debug('Email:' + pcmail+' EnvioCorreo:'+listCorreo);
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
                 naturalEnvio.pcmail = pcmail;
-		}
+        }
         else
         {*/
          naturalEnvio.pcmail = pcmail;
@@ -4285,12 +4332,12 @@ public class ControllerProducto {
             naturalEnvio.pcFechaValidacionCN = null;
             //PantallaProducto
             naturalEnvio.pcproducto = pcproducto;
-        	naturalEnvio.pcsubproducto = pcsubproducto;
+            naturalEnvio.pcsubproducto = pcsubproducto;
             if(Cuenta20.Tipo_Fondo__c == 'I')
             {
                 naturalEnvio.pcTipoFondo = '';
             }
-			else
+            else
             {
                 naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c;
             }
@@ -4320,7 +4367,7 @@ public class ControllerProducto {
             naturalEnvio.pcenvio = TipoEnvioo.Tipo_EnvioNuevo__c;
             naturalEnvio.pcTipoAporte = 'F';
             naturalEnvio.v_des_procedfds   = v_des_procedfds;
-            naturalEnvio.pcpromotor = pcpromotor;            	
+            naturalEnvio.pcpromotor = pcpromotor;               
             //naturalEnvio.pctiposolicitud = pctiposolicitud;
             //Pantalla fatca
             if(ES_Residente == true)
@@ -4363,7 +4410,7 @@ public class ControllerProducto {
             naturalEnvio.ListDebidaDil= ListDebidaDil; 
             
             for(integer i=0; i<ListTelefonos.size(); i++)
-            {	                
+            {                   
                 naturalEnvio.ListTelefonos= ListTelefonos; 
             }
             
@@ -4371,7 +4418,7 @@ public class ControllerProducto {
             {
                 
                 ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(pc_codCuenta);
-					naturalEnvio.ListDirecciones= ListDirecciones; 
+                    naturalEnvio.ListDirecciones= ListDirecciones; 
             }   
             disbot = true;
             if( pcproducto == '' || pcproducto == ' --Ninguno-- ')
@@ -4435,7 +4482,7 @@ public class ControllerProducto {
             else
             { 
                 String resultado = controllerApiClienteNatural.actualizaCliente(naturalEnvio);
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado)); 
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
                 limpiar();
                 
@@ -4521,17 +4568,17 @@ public class ControllerProducto {
                 pcColoniaEmpleadorCN =fcsd.pcColoniaEmpleadorCN;
                 pcdirempl = fcsd.pcdirempl;
                 
-                pccontratocolectivo = temporal;	
+                pccontratocolectivo = temporal; 
                 
                 system.debug(fcsd.pcdirempl);    
                 
             }else{
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cuenta Colectiva No Encontrada'));	    
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cuenta Colectiva No Encontrada'));     
             }
             salirEmpresas();
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));       
         }
     }
     
@@ -4539,7 +4586,7 @@ public class ControllerProducto {
     
     public void buscarInfoCuenta()
     {
-        try{	
+        try{    
             string temporal = MostrarCUENTT;
             ClienteNaturales claseEnvio = new ClienteNaturales();
             ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoCliente(MostrarCUENTT, NumIDBuscar);
@@ -4671,7 +4718,7 @@ public class ControllerProducto {
                     TipoProfesion.Profesi_n_Ocupaci_n__c = fcsd.pcProfesionOcupacion;
                 }
                 
-				infoCorreo = false;                
+                infoCorreo = false;                
                 if (fcsd.pcmail != 'null'||fcsd.pcmail != 'NULL'||fcsd.pcmail != null)
                 {
                     infoCorreo = true;
@@ -5009,7 +5056,7 @@ public class ControllerProducto {
                 mostrarTablaModificar = true;
                 if (fcsd.ListBeneficiariosC != null){
                     ListBeneficiariosC = fcsd.ListBeneficiariosC;
-                	mostrarTablaModificarC = true;
+                    mostrarTablaModificarC = true;
                 }
                 //Validación de Teléfonos
                 for(integer i=0; i<fcsd.ListTelefonos.size(); i++)
@@ -5024,7 +5071,7 @@ public class ControllerProducto {
                 
                  for(integer i=0; i<fcsd.ListDirecciones.size(); i++)
             {                
-                	Pais_R__c itemP = [select nombre__c from Pais_R__c
+                    Pais_R__c itemP = [select nombre__c from Pais_R__c
                                                 where codigo__c =: fcsd.ListDirecciones[i].paisDir];
                 
                     Departamentos__c itemD = [select Departamento__c, codigo_departamento__c from Departamentos__c
@@ -5040,15 +5087,15 @@ public class ControllerProducto {
                                             where codigo_pais__c =: fcsd.ListDirecciones[i].paisDir 
                                             and codigo_departamento__c =: fcsd.ListDirecciones[i].deptoDir
                                             AND codigo_municipio__c =: fcsd.ListDirecciones[i].ciuDir
-                                           	and codigo_colonia__c =: fcsd.ListDirecciones[i].coloDir];
+                                            and codigo_colonia__c =: fcsd.ListDirecciones[i].coloDir];
                 
-                	fcsd.ListDirecciones[i].paisDir = itemP.nombre__c;
-                	fcsd.ListDirecciones[i].deptoDir = itemD.Departamento__c;
-                	fcsd.ListDirecciones[i].ciuDir = itemM.nombre_municipio__c;
-                	fcsd.ListDirecciones[i].coloDir = itemC.nombre_colonia__c;
+                    fcsd.ListDirecciones[i].paisDir = itemP.nombre__c;
+                    fcsd.ListDirecciones[i].deptoDir = itemD.Departamento__c;
+                    fcsd.ListDirecciones[i].ciuDir = itemM.nombre_municipio__c;
+                    fcsd.ListDirecciones[i].coloDir = itemC.nombre_colonia__c;
                     
-                	ListDirecciones = fcsd.ListDirecciones; 
-                	mostrarTablaModificarDir = true;
+                    ListDirecciones = fcsd.ListDirecciones; 
+                    mostrarTablaModificarDir = true;
             }
                 
                 ListDebidaDil= fcsd.ListDebidaDil;
@@ -5071,19 +5118,19 @@ public class ControllerProducto {
                 validarRol();
                 //ActNombre = true;
             }else{
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));	    
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }  
             salirCuenta();
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));       
         }
     }
     ///Buscar Por Cuenta 
     public void buscarInfoCuentaC()
     {
-        try{	
+        try{    
             string temporal = pc_codCuenta;
             ClienteNaturales claseEnvio = new ClienteNaturales();
             ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(pc_codCuenta);
@@ -5598,13 +5645,13 @@ public class ControllerProducto {
                 OcultarCuenta1 = true;
                 validarRol();
             }else{
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));	    
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }  
             salirCuenta();
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));       
         }
     }
     
@@ -5617,7 +5664,7 @@ public class ControllerProducto {
             classListas fcsd = controllerApiClienteNatural.consultaListas(pcnroid);
             
             if(pcnroid ==''){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Númeroro ID Vacio'));	
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Númeroro ID Vacio'));  
             }else{
                 
                 system.debug(fcsd.FATCA);
@@ -5846,7 +5893,7 @@ public class ControllerProducto {
             desCheckb =  true;
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));     
         }
     }
     
@@ -5995,21 +6042,21 @@ public class ControllerProducto {
         }
         else if( (pcAPNFDNO == true) || (pcAPNFDNO == true && valornoCont == true)){
             dispep = true; 
-        	PC_NIVEL_RIESGO = '1'; 
-        	PC_DEBIDA_DELIGENCIA = '2';
+            PC_NIVEL_RIESGO = '1'; 
+            PC_DEBIDA_DELIGENCIA = '2';
             }   
         else if( (valornoCont == true) || (valornoCont == true && pcAPNFDNO == true)){
             dispep = true; 
-        	PC_NIVEL_RIESGO = '1'; 
-        	PC_DEBIDA_DELIGENCIA = '2';
+            PC_NIVEL_RIESGO = '1'; 
+            PC_DEBIDA_DELIGENCIA = '2';
             }            
         else if( (pcFATCA == true) || (pcFATCA == true && valornoCont == true)){
             dispep = true; 
-        	PC_NIVEL_RIESGO = '1'; 
-        	PC_DEBIDA_DELIGENCIA = '2'; }     
+            PC_NIVEL_RIESGO = '1'; 
+            PC_DEBIDA_DELIGENCIA = '2'; }     
         else{
             PC_NIVEL_RIESGO = '2'; 
-          	PC_DEBIDA_DELIGENCIA = '2';
+            PC_DEBIDA_DELIGENCIA = '2';
             dispep = false; }     
           
        //validacion para Ingreso mayor de 16000 y cedula
@@ -6040,6 +6087,24 @@ public class ControllerProducto {
         private set;
     }
     
+    public SelectOption[] Mes
+    { 
+        public get;
+        private set;
+    }
+    
+    public SelectOption[] AnioTarjeta
+    { 
+        public get;
+        private set;
+    }
+    
+    public SelectOption[] POS
+    { 
+        public get;
+        private set;
+    }
+    
     public void mostrarModal()
     {
         despN=true;
@@ -6062,7 +6127,7 @@ public class ControllerProducto {
     {
         BuscarCuentas=false;
     }
-	public void salirEmpresas()
+    public void salirEmpresas()
     {
         BuscarEmpresas=false;
     }    
@@ -6235,7 +6300,7 @@ public class ControllerProducto {
     public void bloqueTarjet()
     {
         
-        if (pcformapago == 'TA' || pcformapago == 'AH' || pcformapago == 'TAOB')
+        if (pcformapago == 'TA' || pcformapago == 'AH' /*|| pcformapago == 'TAOB'*/)
         {
             BloqForma = false;
         }    
@@ -6248,7 +6313,7 @@ public class ControllerProducto {
     Public list<string> Numcuentas {get; set;}
     
     Public void llenarCuentasDesdeSysde(){
-        try{	    		
+        try{                
             resultado = new list<controllerApiClienteNatural.classRespuestaAportesCuenta>();                    
             resultado =  controllerApiClienteNatural.ConsultalAportesPatronales(NumIDBuscar);  
             mostrarTabla2 = false ; 
@@ -6266,7 +6331,7 @@ public class ControllerProducto {
             }            
         }Catch(Exception e)
         {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error desde SYSDE ' + e.getMessage() ));	
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error desde SYSDE ' + e.getMessage() ));   
         }
     }
     

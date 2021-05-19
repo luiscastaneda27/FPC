@@ -305,6 +305,7 @@
                 }
                 }
             </style>
+            
         </head>
         <body>
             <!-- Scripts -->
@@ -402,9 +403,9 @@
                                 <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:selectList disabled="{!idCuenta ='--'}"  value="{!idTipoRegistro}" styleclass="custom-select-sizing slds-select padding-left-2em" size="1">
+                                <apex:selectList disabled="{!idCuenta ='--'}"  value="{!idTipoRegistro}" id="TipoOperacion" styleclass="custom-select-sizing slds-select padding-left-2em" size="1">
                                     <apex:selectOptions value="{!listTipoCaso}" />
-                                    <apex:actionSupport event="onchange" action="{!SelectTipoGestion}"  reRender="theForm, sl_Subtipo_Operacion" status="status" />
+                                    <apex:actionSupport event="onchange" action="{!SelectTipoGestion}" reRender="theForm, sl_Subtipo_Operacion" status="status" />
                                 </apex:selectList>
                             </div>
                         </div>
@@ -441,7 +442,7 @@
                                 <font class="padding-left-2em fontStyle">Teléfono Trabajo: </font>
                             </div>
                             <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" OnKeyPress="return validateNumber(event, this)" onkeyup="validacionFormTel(event, this)" html-placeholder="9999-9999" value="{!Caso.Telefono_Trabajo__c}"  />
+                                <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" OnKeyPress="return validateNumber(event, this)" onkeyup="validacionFormTel(event, this)" value="{!Caso.Telefono_Trabajo__c}" html-placeholder="9999-9999" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <font class="padding-left-2em fontStyle">Fecha de Nacimiento:</font>
@@ -630,6 +631,14 @@
                                 </apex:selectList>
                                 <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!detallecaso.Tipo_Operacion__c = 'A4'}" showDatePicker="false" type="date" value="{!detalleCaso.Nueva_fecha_aporte__c}" />
                             </div>
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6')}" value="Banco:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input RemoveNone" Id="banco" rendered="{!OR(detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Banco__c}" /> 
+                            </div>
+                            
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
                             </div>
@@ -643,6 +652,31 @@
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
                             </div>
+                            
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Día de pago:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Día de pago:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Dia_de_pago__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="POS:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="POS:" />
+                            </div>  
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.POS__c}" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Monto Débito:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Monto Débito:" />
+                            </div>  
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
+                            </div>
+                            
+                            
                             <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Banco Emisor de la Tarjeta:" />
                             </div>
@@ -663,6 +697,17 @@
                             <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Inicio de Aporte:" />
                             </div>
+                            
+                            
+                            <!-- div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Día de pago:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Día de pago:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Dia_de_pago__c}" />
+                            </div> -->
+                            
+                            
                             <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
                             </div>
@@ -987,12 +1032,11 @@
                                             
                                             <div class="slds-modal__content slds-p-around--medium">
                                                 <h3 class="slds-text-heading_medium slds-hyphenate">Por su seguridad le hemos enviado un código de verificación a su nuevo correo electrónico
-                                                    {!caso.Correo_Electronico__c}, ingréselo a continuación: </h3> 
-                                                <apex:inputText label="Código de Verificación" styleClass="slds-input" value="{!inputCodigoVeficacion}" id="idCodigoVerificacion" style="w" />
+                                                    {!caso.Correo_Electronico__c}, ingréselo a continuación: </h3>  
+                                                <apex:inputText label="Código de Verificación" styleClass="slds-input" value="{!inputCodigoVeficacion}" id="idCodigoVerificacion" />
                                             </div>
-                                            
                                             <footer class="slds-modal__footer">
-                                                <apex:actionStatus id="mySaveStatus2">
+                                                 <apex:actionStatus id="mySaveStatus2">
                                                     <apex:facet name="stop">
                                                         <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!reenviarCodigo}"  value="Volver a enviar código de verificación"
                                                                             disabled="false" rerender="theForm" status="mySaveStatus2"/>
@@ -1019,7 +1063,7 @@
                         </section>
                         <div class="slds-backdrop slds-backdrop_open"></div>
                     </apex:outputPanel>
-                
+                    
                     <div class="slds-grid slds-wrap">
                         <div class="custom-alignment slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12 slds-grid_align-center">
                             <apex:commandButton action="{!guardar}" styleClass="Confirmar" style="width:100%;margin-top:8px;" reRender="theForm" status="status" value="Guardar"

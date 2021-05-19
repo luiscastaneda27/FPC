@@ -1,4 +1,5 @@
 public class controllerPortalFPC {
+
     public string identidad {get;set;}
     public list<Account> cuentas {get;set;}
     public Account cliente {get;Set;}
@@ -281,6 +282,7 @@ public class controllerPortalFPC {
             claseCasoD.popCaso = true;
             claseCasoD.esBanco = esBanco;
             claseCasoD.esCallCenter = esCallCenter;
+            claseCasoD.Identidad = identidad;
         }Catch(Exception e){
             system.debug('Casos ' + e.getMessage() + ' linea : ' + e.getLineNumber());
         }

@@ -3,6 +3,9 @@ public class socios {
     public string AI_ID_EXTERNO {get;set;}
     public string pcnumeroidsoc{get;set;}
     public string nombresocio{get;set;} 
+    public string PEPSocio{get;set;}
+    public string FATCASocio{get;set;}
+    public string FATCANCSocio{get;set;}
     public string tipo_persona{get;set;}
     public string nacionalidad{get;set;}
     public string NIVEL{get;set;}
@@ -12,13 +15,17 @@ public class socios {
     public string COT_BOLSA{get;set;}
     public string TIC_SYMBOL{get;set;}
    
-    public socios(decimal idGuardar, string pcnumeroidsoc, string nombresocio, string tipo_persona, string nacionalidad, 
+    public socios(decimal idGuardar, string pcnumeroidsoc, string nombresocio, string PEPSocio,
+                  string FATCASocio, string FATCANCSocio, string tipo_persona, string nacionalidad, 
                   string NIVEL, double POR_PART_DIRECT, double POR_PART_INDIRECT, string NUMERO_ID_EMPRESA, 
                   string COT_BOLSA, string TIC_SYMBOL)
     {
         this.idGuardar = idGuardar;
         this.pcnumeroidsoc=pcnumeroidsoc;
         this.nombresocio=nombresocio;
+        this.PEPSocio=PEPSocio;
+        this.FATCASocio=FATCASocio;
+        this.FATCANCSocio=FATCANCSocio;
         this.tipo_persona=tipo_persona;
         this.nacionalidad=nacionalidad;
         this.NIVEL=NIVEL;

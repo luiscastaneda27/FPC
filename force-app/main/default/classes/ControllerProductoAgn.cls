@@ -1,5 +1,31 @@
 public without sharing class  ControllerProductoAgn
 {
+    //campos nuevos Esteban Romero 10/05/2021
+    public boolean PEPRepresentante{get;set;}
+    public boolean FATCARepresentante{get;set;}
+    public boolean FATCANCRepresentante{get;set;}
+    public boolean AMLRepresentante{get;set;}
+    public boolean muestraPopPEP{get;set;}
+    public boolean muestraPopPEPBene{get;set;}
+    public boolean muestraPopFATCA{get;set;}
+    public boolean muestraPopFATCABene{get;set;}
+    public boolean muestraPopFATCANC{get;set;}
+    public boolean muestraPopFATCANCBene{get;set;}
+    public boolean muestraPopAMLBene{get;set;}
+    public string periodoPep {get;set;}
+    public string institucionPep {get;set;}
+    public boolean PEPbeneficiario{get;set;}
+    public boolean AMLbeneficiario{get;set;}
+    public boolean FATCAbeneficiario{get;set;}
+    public boolean FATCANCbeneficiario{get;set;}
+    public boolean PEPbeneficiarioC{get;set;}
+    public boolean AMLbeneficiarioC{get;set;}
+    public boolean FATCAbeneficiarioC{get;set;}
+    public boolean FATCANCbeneficiarioC{get;set;}
+    public boolean validadosBeneficiarios{get;set;}
+    public boolean validadosBeneficiariosC{get;set;}
+    //public boolean desCheckListas{get;set;}
+    //
     public Cuentas__c cuentas {get;set;}
     String[] lPromotores = new String[]{};
     public String requestJSONPDF{get;set;}
@@ -32,6 +58,7 @@ public without sharing class  ControllerProductoAgn
     public boolean BLACKLIST{get;set;}
     public boolean AML{get;set;}
     public boolean pcFATCA{get;set;}
+    public boolean pcFATCANC{get;set;}
     public boolean despN {get;Set;}    
     public string pcExtensionCN {get;set;}
     public string pcprimernombre /*primerNombre*/ {get;set;}
@@ -44,6 +71,9 @@ public without sharing class  ControllerProductoAgn
     public string pdLugarNacimientoCN /*LugarNacimiento*/ {get;set;}
     public string pcsexo /*Genero*/ {get;set;}
     public string pcestadocivil /*EstadoCivil*/ {get;set;}
+    public string pcmes {get;set;}
+    public string pcAnioTarjeta {get;set;}
+    public string pcPOS {get;set;}
     public string pcNombreConyuge {get;set;}
     public string pcProfesionOcupacion {get;set;}
    // public string pcProfesionOcupacion2 {get;set;}
@@ -410,7 +440,9 @@ public without sharing class  ControllerProductoAgn
     public string codigoAsignado{get;set;} 
 
         public ControllerProductoAgn() 
-        {		
+        {	
+            validadosBeneficiarios =  true;
+            validadosBeneficiariosC = true;
             cuentas = new Cuentas__c();
             mostrarBoton = true;
             string prueba2 = '';
@@ -491,8 +523,8 @@ public without sharing class  ControllerProductoAgn
             Cuenta20 = new Cuentas__c();
             Cuenta22 = new Beneficiario__c();
             //ParentezcoDependen = new Beneficiario__c();
-            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
-            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
+            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
             telefonoUnico = new ClassTelefono('', null, '', '', '', null, '');
             direccionUnico = new ClassDirecion('', '', '', '', '', '', '','', null);
             //beneficiarioUnicoConti = new ClassBeneficiarioContigencia(null,'','','','','','','','','',null,null,null);
@@ -540,6 +572,9 @@ public without sharing class  ControllerProductoAgn
             //llenarNacionalidadEmpleado();
             llenarNivelIngreso();
             llenarEstadoCivil();
+            llenarMes();
+            llenarAnioTarjeta();
+            llenarPOS();
             llenarParentesco();
             llenarTipoCuenta();
             llenarTipoFormaPago();
@@ -640,6 +675,14 @@ public without sharing class  ControllerProductoAgn
                     else 
                     {
                         pcFATCA = true;
+                    }
+                    IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null')
+                    {
+                        pcFATCANC = false;
+                    }
+                    else 
+                    {
+                        pcFATCANC = true;
                     }
                     if (fcsd.pcEst_cuenta != 'null')
                     {
@@ -841,6 +884,8 @@ public without sharing class  ControllerProductoAgn
                     {
                         pcCargoEjercido = fcsd.Cargo_Pulbico;
                     }
+                    periodoPep = fcsd.periodoPep;
+                    institucionPep = fcsd.institucionPep;
                     if (fcsd.pcTIpoEmpleado != 'null')
                     {
                         Cliente25.Tipo_trabajador__c = fcsd.pcTIpoEmpleado;
@@ -1044,10 +1089,12 @@ public without sharing class  ControllerProductoAgn
                     {
                         NumeroID_Fiscal_OtroPais = fcsd.NumeroID_Fiscal_OtroPais;
                     }
-                    for(integer i=0; i<fcsd.ListBeneficiarios.size(); i++)
-                    {
-                        ListBeneficiarios = fcsd.ListBeneficiarios;
-                        mostrarTablaModificar = true;            
+                    if(fcsd.ListBeneficiariosC != null){
+                        for(integer i=0; i<fcsd.ListBeneficiarios.size(); i++)
+                        {
+                            ListBeneficiarios = fcsd.ListBeneficiarios;
+                            mostrarTablaModificar = true;            
+                        }
                     }
                     if(fcsd.ListBeneficiariosC != null){
                         for(integer i=0; i<fcsd.ListBeneficiariosC.size(); i++)
@@ -1253,6 +1300,17 @@ public without sharing class  ControllerProductoAgn
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Cargo que ejerce o ha ejercido vacio'));
                         return null; 
                     }
+                    if(periodoPep == '')
+                    {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Periodo vacio'));
+                        return null; 
+                    }
+                    if(institucionPep == '')
+                    {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
+                        return null; 
+                    }
+                    
                 }
                 if( fechaNacimiento == null || fechaNacimiento >= date.today())
                 {        
@@ -1494,6 +1552,41 @@ public without sharing class  ControllerProductoAgn
            this.EstadoCivil.add(new SelectOption('U',' UNION LIBRE'));
            this.EstadoCivil.add(new SelectOption('V',' VIUDO'));
     }
+    
+    public void llenarMes() {
+        this.Mes = new SelectOption[]{};                                                               
+        this.Mes.add(new SelectOption('1',' 1'));
+        this.Mes.add(new SelectOption('2',' 2'));
+        this.Mes.add(new SelectOption('3',' 3'));
+        this.Mes.add(new SelectOption('4',' 4'));
+        this.Mes.add(new SelectOption('5',' 5'));
+        this.Mes.add(new SelectOption('6',' 6'));
+        this.Mes.add(new SelectOption('7',' 7'));
+        this.Mes.add(new SelectOption('8',' 8'));
+        this.Mes.add(new SelectOption('9',' 9'));
+        this.Mes.add(new SelectOption('10',' 10'));
+        this.Mes.add(new SelectOption('11',' 11'));
+        this.Mes.add(new SelectOption('12',' 12'));
+    }
+    
+    public void llenarAnioTarjeta() {
+        this.AnioTarjeta = new SelectOption[]{};                                                               
+        this.AnioTarjeta.add(new SelectOption('2019',' 2019'));
+        this.AnioTarjeta.add(new SelectOption('2020',' 2020'));
+        this.AnioTarjeta.add(new SelectOption('2021',' 2021'));
+        this.AnioTarjeta.add(new SelectOption('2022',' 2022'));
+        this.AnioTarjeta.add(new SelectOption('2023',' 2023'));
+        this.AnioTarjeta.add(new SelectOption('2024',' 2024'));
+        this.AnioTarjeta.add(new SelectOption('2025',' 2025'));
+    }
+    
+    public void llenarPOS() {
+        this.POS = new SelectOption[]{};                                                               
+        this.POS.add(new SelectOption('Ficohsa',' Ficohsa'));
+        this.POS.add(new SelectOption('BAC',' BAC'));
+        this.POS.add(new SelectOption('Otros Bancos',' Otros Bancos'));
+    }
+    
     public list <selectOption> TipoCuentaOptions {get; set;}
     public void llenarTipoCuenta(){
         
@@ -1601,7 +1694,7 @@ public without sharing class  ControllerProductoAgn
             beneficiarioUnico.tipoId=beneficiarioUnico.tipoId;
             beneficiarioUnico.genero= Cliente1.Sexo__c;
             beneficiarioUnico.Parentesco = Parentesco1;
-            beneficiarioUnico.Grado = !test.isRunningTest() ? integer.valueOf(CanalVentaa.Grado_Familiar__c) : 0;
+            beneficiarioUnico.Grado = !test.isRunningTest() && CanalVentaa.Grado_Familiar__c!= null ? integer.valueOf(CanalVentaa.Grado_Familiar__c) : 0;
             //beneficiarioUnico.Grado =  CanalVentaa.Grado_Familiar__c !=null ? integer.valueOf(CanalVentaa.Grado_Familiar__c):0;
             beneficiarioUnico.tipoBeneficiario = TipoBeneficiario.Tipo_Beneficiario__c;
             beneficiarioUnico.fechaNacimiento = fechaBeneficiario;
@@ -1615,7 +1708,30 @@ public without sharing class  ControllerProductoAgn
             
             else
             { 
-                
+                if (PEPbeneficiario == true )
+                {
+                     beneficiarioUnico.PEPbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnico.PEPbeneficiario = 'N'; 
+                }
+                if (FATCAbeneficiario == true )
+                {
+                    beneficiarioUnico.FATCAbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnico.FATCAbeneficiario = 'N'; 
+                }
+                if (FATCANCbeneficiario == true )
+                {
+                     beneficiarioUnico.FATCANCbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnico.FATCANCbeneficiario = 'N'; 
+                }
                 for(integer i=0; i<ListBeneficiarios.size(); i++)
                 {
                     
@@ -1639,7 +1755,7 @@ public without sharing class  ControllerProductoAgn
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true;
                         }
                         else
@@ -1659,7 +1775,7 @@ public without sharing class  ControllerProductoAgn
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true; 
                         }
                         return null;
@@ -1677,7 +1793,7 @@ public without sharing class  ControllerProductoAgn
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;
                         
                     }
@@ -1698,7 +1814,7 @@ public without sharing class  ControllerProductoAgn
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;  
                     }
                     return null;
@@ -1739,6 +1855,30 @@ public without sharing class  ControllerProductoAgn
             
             else
             { 
+                if (PEPbeneficiarioC == true )
+                {
+                     beneficiarioUnicoC.PEPbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnicoC.PEPbeneficiario = 'N'; 
+                }
+                if (FATCAbeneficiarioC == true )
+                {
+                    beneficiarioUnicoC.FATCAbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnicoC.FATCAbeneficiario = 'N'; 
+                }
+                if (FATCANCbeneficiarioC == true )
+                {
+                     beneficiarioUnicoC.FATCANCbeneficiario = 'S';
+                }
+                ELSE
+                {
+                    beneficiarioUnicoC.FATCANCbeneficiario = 'N'; 
+                }
                 for(integer i=0; i<ListBeneficiariosC.size(); i++)
                 {
                     
@@ -1762,7 +1902,7 @@ public without sharing class  ControllerProductoAgn
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true;
                         }
                         else
@@ -1782,7 +1922,7 @@ public without sharing class  ControllerProductoAgn
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true; 
                         }
                         return null;
@@ -1800,7 +1940,7 @@ public without sharing class  ControllerProductoAgn
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;
                         
                     }
@@ -1821,7 +1961,7 @@ public without sharing class  ControllerProductoAgn
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;  
                     }
                     return null;
@@ -1852,6 +1992,9 @@ public without sharing class  ControllerProductoAgn
                     posi=i;
                     beneficiarioUnico.tipoId = ListBeneficiarios[i].tipoId;
                     beneficiarioUnico.numeroId = ListBeneficiarios[i].numeroId;
+                    beneficiarioUnico.PEPbeneficiario = ListBeneficiarios[i].PEPbeneficiario;
+                    beneficiarioUnico.FATCAbeneficiario = ListBeneficiarios[i].FATCAbeneficiario;
+                    beneficiarioUnico.FATCANCbeneficiario = ListBeneficiarios[i].FATCANCbeneficiario;
                     TipoBeneficiario.Tipo_Beneficiario__c = ListBeneficiarios[i].tipoBeneficiario;
                     Cliente1.Sexo__c = ListBeneficiarios[i].genero;
                     beneficiarioUnico.primerNombre = ListBeneficiarios[i].primerNombre;
@@ -1874,7 +2017,31 @@ public without sharing class  ControllerProductoAgn
                     else
                     { 
                         CanalVentaa.Grado_Familiar__c = '4';
-                    }      
+                    }
+                    if (beneficiarioUnico.PEPbeneficiario == 'S' )
+                     {
+                         PEPbeneficiario = true;
+                     }
+                     ELSE
+                     {
+                         PEPbeneficiario = false; 
+                     }
+                     if (beneficiarioUnico.FATCAbeneficiario == 'S')
+                     {
+                         FATCAbeneficiario = true;
+                     }
+                     ELSE
+                     {
+                         FATCAbeneficiario = false; 
+                     }
+                     if (beneficiarioUnico.FATCANCbeneficiario == 'S')
+                     {
+                         FATCANCbeneficiario = true ;
+                     }
+                     ELSE
+                     {
+                         FATCANCbeneficiario = false; 
+                     }
                     beneficiarioUnico.fechaNacimiento = fechaBeneficiario;
                     beneficiarioUnico.Distribucion = ListBeneficiarios[i].Distribucion;
                     beneficiarioUnico.idExterno = ListBeneficiarios[i].idExterno;
@@ -1905,6 +2072,9 @@ public without sharing class  ControllerProductoAgn
                     system.debug('Nuevo debug: '+ListBeneficiariosC[i]);
                     beneficiarioUnicoC.tipoId = ListBeneficiariosC[i].tipoId;
                     beneficiarioUnicoC.numeroId = ListBeneficiariosC[i].numeroId;
+                    beneficiarioUnicoC.PEPbeneficiario = ListBeneficiariosC[i].PEPbeneficiario;
+                    beneficiarioUnicoC.FATCAbeneficiario = ListBeneficiariosC[i].FATCAbeneficiario;
+                    beneficiarioUnicoC.FATCANCbeneficiario = ListBeneficiariosC[i].FATCANCbeneficiario;
                     TipoBeneficiarioConti.Tipo_Beneficiario__c = ListBeneficiariosC[i].tipoBeneficiario;
                     Cliente1Conti.Sexo__c = ListBeneficiariosC[i].genero;
                     /*beneficiarioUnico.primerNombre = ListBeneficiariosC[i].primerNombre;
@@ -1933,7 +2103,30 @@ public without sharing class  ControllerProductoAgn
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '4';
                     }   
-                    
+                    if (beneficiarioUnicoC.PEPbeneficiario == 'S' )
+                     {
+                         PEPbeneficiarioC = true;
+                     }
+                     ELSE
+                     {
+                         PEPbeneficiarioC = false; 
+                     }
+                     if (beneficiarioUnicoC.FATCAbeneficiario == 'S')
+                     {
+                         FATCAbeneficiarioC = true;
+                     }
+                     ELSE
+                     {
+                         FATCAbeneficiarioC = false; 
+                     }
+                     if (beneficiarioUnicoC.FATCANCbeneficiario == 'S')
+                     {
+                         FATCANCbeneficiarioC = true ;
+                     }
+                     ELSE
+                     {
+                         FATCANCbeneficiarioC = false; 
+                     }
                     //CanalVentaa.Grado_Familiar__c = double.valueOf(ListBeneficiarios[i].Grado);
                     beneficiarioUnicoC.fechaNacimiento = ListBeneficiariosC[i].fechanacimiento;
                     beneficiarioUnicoC.Distribucion = ListBeneficiariosC[i].Distribucion;
@@ -3516,6 +3709,8 @@ public without sharing class  ControllerProductoAgn
              Cargoo = true;
              bloqRTN = true;
              pcCargoEjercido = '';
+             periodoPep = '';
+             institucionPep = '';
 
              if(pcAPNFDSI == true)
              {
@@ -3548,6 +3743,8 @@ public without sharing class  ControllerProductoAgn
          OcultaCarSI_1 = false;
          OcultaCarNO_2 = false; 
          pcCargoEjercido = '';
+         periodoPep = '';
+         institucionPep = '';
          bloqRTN = true;
          if(pcAPNFDSI == true||pcPEP == true)
          {
@@ -3617,7 +3814,7 @@ public without sharing class  ControllerProductoAgn
          pcPEP = null;
          AML = null;
          pcFATCA = null;
-         
+         pcFATCANC = null;
         
         
          pcprimernombre /*primerNombre*/  = null;
@@ -3758,7 +3955,7 @@ public without sharing class  ControllerProductoAgn
          pcPEP = null;
          AML = null;
          pcFATCA = null;
-         
+         pcFATCANC = null;
         
         
          pcprimernombre /*primerNombre*/  = null;
@@ -3771,6 +3968,9 @@ public without sharing class  ControllerProductoAgn
          pdLugarNacimientoCN /*LugarNacimiento*/  = null;
          TipoSexo.Sexo__c /*Genero*/  = null;
          pcestadocivil /*EstadoCivil*/  = null;
+         pcmes = null;
+         pcAnioTarjeta = null;
+         pcPOS = null;       
          pcNombreConyuge = null;
          TipoProfesion.Profesi_n_Ocupaci_n__c = null;
     	 //pcProfesionOcupacion2 = null;
@@ -4027,7 +4227,16 @@ public without sharing class  ControllerProductoAgn
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Cargo que ejerce o ha ejercido vacio'));
             		return null; 
                 }
-               
+                if(periodoPep == '')
+                    {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Periodo vacio'));
+                        return null; 
+                    }
+                    if(institucionPep == '')
+                    {
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
+                        return null; 
+                    }
             }
             if( fechaNacimiento == null || fechaNacimiento >= date.today())
             {        
@@ -4136,6 +4345,14 @@ public without sharing class  ControllerProductoAgn
         {
             naturalEnvio.pcFATCA = 'N';
         }
+        if(pcFATCANC == true)
+        {
+            naturalEnvio.pcFATCANC = 'S';
+        } 
+        else
+        {
+            naturalEnvio.pcFATCANC = 'N';
+        }
         naturalEnvio.pctipoid = pctipoid;   
         naturalEnvio.pcnroid = pcnroid;
         naturalEnvio.pcFechaVencimientoCN = fechaVencimiento;
@@ -4178,6 +4395,30 @@ public without sharing class  ControllerProductoAgn
         {
             naturalEnvio.pcNumeroIDPV = pcNumeroIDPV;
         }
+        if (PEPRepresentante == true)
+        {
+            naturalEnvio.PEPRepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.PEPRepresentante = 'N';
+        }
+        if (FATCARepresentante == true)
+        {
+            naturalEnvio.FATCARepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.FATCARepresentante = 'N';
+        }
+        if (FATCANCRepresentante == true)
+        {
+            naturalEnvio.FATCANCRepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.FATCANCRepresentante = 'N';
+        }
         naturalEnvio.pcNombreCompletoPV = pcNombreCompletoPV;
         if(OcultaCarSI == true)
         {
@@ -4188,6 +4429,8 @@ public without sharing class  ControllerProductoAgn
             naturalEnvio.pcEjerce_Cargo_Publico = 'N';
         }
         naturalEnvio.pcCargoEjercido = pcCargoEjercido;
+        naturalEnvio.periodoPep = periodoPep;
+        naturalEnvio.institucionPep = institucionPep;
         //DependenciaEconomica
         system.debug('pruebakikito: '+pcDependeSI);
         system.debug('pruebakikito: '+pcDependeNO);
@@ -4508,6 +4751,26 @@ public without sharing class  ControllerProductoAgn
                     String val = resultado.substring(51);
                     String val2 = val.replace('"','');
                     //updateCase.createAccount(pctipoid, pcnroid, val2, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, Cuenta20.Tipo_Fondo__c, Cuenta20.Frecuencia_Aportacion__c, pcformapago, pccuentapago, DiaMes.Dias_Mes__c);    
+                	FieldsBankManagement fields = new FieldsBankManagement();
+                    fields.pctipoid = pctipoid;
+                    fields.pcnroid = pcnroid;
+                    fields.cuenta = val2;
+                    fields.pcprimernombre = pcprimernombre;
+                    fields.pcprimerapellido = pcprimerapellido;
+                    fields.pcmail = pcmail;
+                    fields.pnnrocertificado = pnnrocertificado;
+                    fields.tipoFondo = Cuenta20.Tipo_Fondo__c;
+                    fields.frecuencia = Cuenta20.Frecuencia_Aportacion__c;
+                    fields.pcformapago = pcformapago;
+                    fields.pccuentapago = pccuentapago;
+                    fields.diaPago = DiaMes.Dias_Mes__c;
+                    fields.pcMes = pcmes;
+                    fields.pcAnio = pcAnioTarjeta;
+                    fields.pcMonto = pnmontoaporte;
+                    fields.pcPOS = pcPOS;
+                    list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
+                    fieldsList.add(fields);
+                    UpdateCase.createRecord(fieldsList);
                 }
                 
                 final PageReference target = new
@@ -4557,6 +4820,14 @@ public without sharing class  ControllerProductoAgn
         {
             naturalEnvio.pcFATCA = 'N';
         }
+        if(pcFATCANC == true)
+        {
+            naturalEnvio.pcFATCANC = 'S';
+        } 
+        else
+        {
+            naturalEnvio.pcFATCANC = 'N';
+        }
         naturalEnvio.pctipoid = pctipoid;   
         naturalEnvio.pcnroid = pcnroid;
         naturalEnvio.pcFechaVencimientoCN = fechaVencimiento;
@@ -4594,6 +4865,30 @@ public without sharing class  ControllerProductoAgn
             naturalEnvio.pc_ActuaSI = 'N';
         }
         naturalEnvio.pcNumeroIDPV = pcNumeroIDPV;
+        if (PEPRepresentante == true)
+        {
+            naturalEnvio.PEPRepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.PEPRepresentante = 'N';
+        }
+        if (FATCARepresentante == true)
+        {
+            naturalEnvio.FATCARepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.FATCARepresentante = 'N';
+        }
+        if (FATCANCRepresentante == true)
+        {
+            naturalEnvio.FATCANCRepresentante = 'S';
+        }
+        else
+        {
+            naturalEnvio.FATCANCRepresentante = 'N';
+        }
         naturalEnvio.pcNombreCompletoPV = pcNombreCompletoPV;
         if(OcultaCarSI == true)
         {
@@ -4604,6 +4899,8 @@ public without sharing class  ControllerProductoAgn
             naturalEnvio.OcultaCarSI = 'N';
         }
         naturalEnvio.pcCargoEjercido = pcCargoEjercido;
+        naturalEnvio.periodoPep = periodoPep;
+        naturalEnvio.institucionPep = institucionPep;
         //DependenciaEconomica
         if(pcDependeSI == true)
         {
@@ -5004,7 +5301,14 @@ public without sharing class  ControllerProductoAgn
                 {
                     pcFATCA = true;
                 }
-				
+				IF (fcsd.pcFATCANC == 'N'||fcsd.pcFATCANC == 'null'||fcsd.pcFATCANC == ''||fcsd.pcFATCANC == null)
+                {
+                    pcFATCANC = false;
+                }
+                else 
+                {
+                    pcFATCANC = true;
+                }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
                    Activo = fcsd.pcEst_cuenta;
@@ -5190,6 +5494,21 @@ public without sharing class  ControllerProductoAgn
                 {
                   pcNumeroIDPV = fcsd.pcNumeroIDPV;
                 }
+                if(fcsd.PEPRepresentante == 'S'){
+                    PEPRepresentante = true;
+                }else{
+                    PEPRepresentante = false;
+                }
+                if(fcsd.FATCARepresentante == 'S'){
+                    FATCARepresentante = true;
+                }else{
+                    FATCARepresentante = false;
+                }
+                if(fcsd.FATCANCRepresentante == 'S'){
+                    FATCANCRepresentante = true;
+                }else{
+                    FATCANCRepresentante = false;
+                }
                 if (fcsd.pcNombreCompletoPV != 'null')
                 {
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
@@ -5211,6 +5530,8 @@ public without sharing class  ControllerProductoAgn
                 {
                   pcCargoEjercido = fcsd.Cargo_Pulbico;
                 }
+                periodoPep = fcsd.periodoPep;
+        		institucionPep = fcsd.institucionPep;
                 if (fcsd.pcTIpoEmpleado != 'null')
                 {
                   Cliente25.Tipo_trabajador__c = fcsd.pcTIpoEmpleado;
@@ -5304,7 +5625,7 @@ public without sharing class  ControllerProductoAgn
                    pcproducto = fcsd.pcproducto;
                 }
                 if (fcsd.pcsubproducto != null){
-                    system.debug('lo que trae el subproducto: '+fcsd.pcsubproducto);
+                    system.debug('lo que trae el subproducto: '+pcsubproducto);
                     opcionSubproducto = new list <selectOption>();
                     opcionSubproducto.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
                     for (Subproducto__c item:[select name, codigo__c from Subproducto__c /*where codigo__c =: fcsd.pcsubproducto*/ order by Name asc])
@@ -5610,13 +5931,21 @@ public without sharing class  ControllerProductoAgn
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null')
+                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null'||fcsd.pcFATCA == null)
                 {
                     pcFATCA = false;
                 }
                 else 
                 {
                     pcFATCA = true;
+                }
+                IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null'||fcsd.pcFATCANC == null)
+                {
+                    pcFATCANC = false;
+                }
+                else 
+                {
+                    pcFATCANC = true;
                 }
 				if (fcsd.pcEst_cuenta != 'null')
                 {
@@ -5825,6 +6154,21 @@ public without sharing class  ControllerProductoAgn
                 {
                   pcNumeroIDPV = fcsd.pcNumeroIDPV;
                 }
+                if(fcsd.PEPRepresentante == 'S'){
+                    PEPRepresentante = true;
+                }else{
+                    PEPRepresentante = false;
+                }
+                if(fcsd.FATCARepresentante == 'S'){
+                    FATCARepresentante = true;
+                }else{
+                    FATCARepresentante = false;
+                }
+                if(fcsd.FATCANCRepresentante == 'S'){
+                    FATCANCRepresentante = true;
+                }else{
+                    FATCANCRepresentante = false;
+                }
                 if (fcsd.pcNombreCompletoPV != 'null')
                 {
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
@@ -5846,6 +6190,8 @@ public without sharing class  ControllerProductoAgn
                 {
                   pcCargoEjercido = fcsd.Cargo_Pulbico;
                 }
+                periodoPep = fcsd.periodoPep;
+        		institucionPep = fcsd.institucionPep;
                 if (fcsd.pcTIpoEmpleado != 'null')
                 {
                   Cliente25.Tipo_trabajador__c = fcsd.pcTIpoEmpleado;
@@ -6074,12 +6420,13 @@ public without sharing class  ControllerProductoAgn
                 
                 
                 //Validación de Beneficiarios
-                
-                for(integer i=0; i<fcsd.ListBeneficiarios.size(); i++)
-            	{                     
-                	ListBeneficiarios = fcsd.ListBeneficiarios;
-                    mostrarTablaModificar = true;            
-            	}
+                if(fcsd.ListBeneficiariosC != null){
+                    for(integer i=0; i<fcsd.ListBeneficiarios.size(); i++)
+                    {                     
+                        ListBeneficiarios = fcsd.ListBeneficiarios;
+                        mostrarTablaModificar = true;            
+                    }
+                }
                 if(fcsd.ListBeneficiariosC != null){
                     for(integer i=0; i<fcsd.ListBeneficiariosC.size(); i++)
                     {                     
@@ -6178,7 +6525,7 @@ public without sharing class  ControllerProductoAgn
     }
    
    public void validar125()
-    {
+   {
         try{
             classListas claseEnvio = new classListas();
             classListas fcsd = controllerApiClienteNatural.consultaListas(pcnroid);
@@ -6197,6 +6544,7 @@ public without sharing class  ControllerProductoAgn
                     OcultaCarSI = true;
                     OcultaCarNO_2 = true;
                     Cargoo = false;
+                    muestraPopPEP = true;
                 }
                 if(fcsd.AML == true||test.isRunningTest()){
                     AML = fcsd.AML;
@@ -6208,6 +6556,16 @@ public without sharing class  ControllerProductoAgn
                 if(fcsd.PEP == true||test.isRunningTest()){
                     dispep = true;   
                 }
+                if(fcsd.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCA = true;
+                    pcFATCA = true;
+                }
+                if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANC = true;
+                    pcFATCANC = true;
+                }
+                
+                
                 
                 disbot = false;
                 validar1 = true;
@@ -6418,6 +6776,152 @@ public without sharing class  ControllerProductoAgn
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
         }
     }
+   public void validarBeneficiario()
+   {
+
+        try{
+            classListas claseEnvio = new classListas();
+            classListas fcsd = controllerApiClienteNatural.consultaListas(beneficiarioUnico.numeroId);
+            
+            if(beneficiarioUnico.numeroId ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio'));	
+            }else{
+                
+                system.debug(fcsd.FATCA);
+                
+                if(fcsd.PEP == true||test.isRunningTest()){
+                    PEPbeneficiario = fcsd.PEP;
+                    muestraPopPEPBene = true;
+                }
+                if(fcsd.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCABene = true;
+                    FATCAbeneficiario = true;
+                }
+                if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANCBene = true;
+                    FATCANCbeneficiario = true;
+                }
+                
+                if(fcsd.AML == true||test.isRunningTest()){
+                    AMLbeneficiario = fcsd.AML;
+                }
+                if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                    AMLbeneficiario = fcsd.BLACKLIST;
+                    actPop = true; 
+                }
+                /*if(fcsd.PEP == true||test.isRunningTest()){
+                    dispep = true;   
+                }*/
+                
+                validadosBeneficiarios = false;
+                validar1 = true;
+                
+            }
+            //String resultado = controllerApiUsuarioNatural.BuscarUsuarioNatural(claseEnvio);
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,resultado));
+            desCheckb =  true;
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+        }
+    }
+   public void validarBeneficiarioC()
+    {
+
+        try{
+            classListas claseEnvio = new classListas();
+            classListas fcsd = controllerApiClienteNatural.consultaListas(beneficiarioUnicoC.numeroId);
+            
+            if(beneficiarioUnicoC.numeroId ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio'));	
+            }else{
+                
+                system.debug(fcsd.FATCA);
+                
+                if(fcsd.PEP == true||test.isRunningTest()){
+                    PEPbeneficiarioC = fcsd.PEP;
+                    muestraPopPEPBene = true;
+                }
+                if(fcsd.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCABene = true;
+                    FATCAbeneficiarioC = true;
+                }
+                if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANCBene = true;
+                    FATCANCbeneficiarioC = true;
+                }
+                
+                if(fcsd.AML == true||test.isRunningTest()){
+                    AMLbeneficiarioC = fcsd.AML;
+                }
+                if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                    AMLbeneficiarioC = fcsd.BLACKLIST;
+                    actPop = true; 
+                }
+                /*if(fcsd.PEP == true||test.isRunningTest()){
+                    dispep = true;   
+                }*/
+                
+                validadosBeneficiariosC = false;
+                validar1 = true;
+                
+            }
+            //String resultado = controllerApiUsuarioNatural.BuscarUsuarioNatural(claseEnvio);
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,resultado));
+            desCheckb =  true;
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+        }
+    }
+    public void validarRepresentantes()
+    {
+
+        try{
+            classListas claseEnvio = new classListas();
+            classListas fcsd = controllerApiClienteNatural.consultaListas(pcNumeroIDPV);
+            
+            if(pcNumeroIDPV ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio'));	
+            }else{
+                
+                system.debug(fcsd.FATCA);
+                
+                if(fcsd.PEP == true||test.isRunningTest()){
+                    PEPRepresentante = fcsd.PEP;
+                    PC_NIVEL_RIESGO = '3';
+                    PC_DEBIDA_DELIGENCIA = '3';
+                    //bloqRTN = false;
+                    //OcultaCarSI = true;
+                    //OcultaCarNO_2 = true;
+                    //Cargoo = false;
+                    muestraPopPEP = true;
+                }
+                if(fcsd.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCA = true;
+                    FATCARepresentante = true;
+                }
+                if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANC = true;
+                    FATCANCRepresentante = true;
+                }
+                
+                if(fcsd.AML == true||test.isRunningTest()){
+                    AMLRepresentante = fcsd.AML;
+                    actPop = true; 
+                }                
+                //validadosControlantes = false;
+                //validar1 = true;
+                
+            }
+            //String resultado = controllerApiUsuarioNatural.BuscarUsuarioNatural(claseEnvio);
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,resultado));
+            desCheckb =  true;
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+        }
+    }
     
     public void cleanRiesgo(){
         desCheckb = true; 
@@ -6442,7 +6946,18 @@ public without sharing class  ControllerProductoAgn
     {
         actPop = true; 
     }
-    
+    public void mostPopPEP()
+    {
+        muestraPopPEP = true;
+    }
+    public void mostPopFATCA()
+    {
+        muestraPopFATCA = true;
+    }
+    public void mostPopFATCANC()
+    {
+        muestraPopFATCANC = true;
+    }
     public void mostPopVentana()
     {
         MostraVentana = true; 
@@ -6643,6 +7158,7 @@ public without sharing class  ControllerProductoAgn
         desCheckb = true;
         AML =  false;
         pcFATCA = false;
+        pcFATCANC = false;
         pcPEP = false;
         
     }    
@@ -6669,7 +7185,14 @@ public without sharing class  ControllerProductoAgn
         actPop = false;
         actPopAgregarCliente = false;    
     }
-    
+    public void hidePopOtros(){
+        muestraPopPEP = false;
+        muestraPopPEPBene = false;
+        muestraPopFATCA = false;
+        muestraPopFATCABene = false;
+        muestraPopFATCANC = false;
+        muestraPopFATCABene = false;
+    }
      public void hideVentana(){
         MostraVentana = false;
         Bene_Ocultar_CamPos = False; 
@@ -6775,6 +7298,24 @@ public without sharing class  ControllerProductoAgn
 		public get;
 		private set;
 	}
+    
+    public SelectOption[] Mes
+    { 
+        public get;
+        private set;
+    }
+    
+    public SelectOption[] AnioTarjeta
+    { 
+        public get;
+        private set;
+    }
+    
+    public SelectOption[] POS
+    { 
+        public get;
+        private set;
+    }
     
     public void mostrarModal()
     {

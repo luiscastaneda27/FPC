@@ -120,7 +120,7 @@ public class ControllerUsuarioNatural {
             
             
             nivelRiesgo = '1'; 
-            debidaDiligencviaAplicada = '2';
+            debidaDiligencviaAplicada = '3';
   			
 		   despN = false;   
             disbot = true; 
@@ -557,6 +557,7 @@ public class ControllerUsuarioNatural {
             
                if(fcsd.PEP == true){
            	PEP = fcsd.PEP;
+                   nivelRiesgo = '3';
                    }
                if(fcsd.AML == true){
             AML = fcsd.AML;
@@ -619,8 +620,7 @@ public class ControllerUsuarioNatural {
                 this.NiveloOptions = new SelectOption[]{};
         	    this.NiveloOptions.add(new SelectOption('','NINGUNO'));
                 this.NiveloOptions.add(new SelectOption('1','SOCIO'));
-                this.NiveloOptions.add(new SelectOption('2','BENEFICIARIO'));    
-                this.NiveloOptions.add(new SelectOption('3','TERCERO'));    
+                this.NiveloOptions.add(new SelectOption('2','BENEFICIARIO'));             
     }
     
     public SelectOption[] NiveloOptions

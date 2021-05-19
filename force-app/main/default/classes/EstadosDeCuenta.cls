@@ -153,9 +153,9 @@ public class EstadosDeCuenta {
                 }
 				
 		   }
-           //system.debug('Variable correos: ' + listCorreo);
+           system.debug('Variable correos: ' + listCorreo);
            Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-           system.debug('Correos enviados correctamente: '+results);
+           //system.debug('Correos enviados correctamente: '+results);
            
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());	

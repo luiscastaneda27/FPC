@@ -211,30 +211,48 @@
                 Cargo<br/>
                  <!--Cargo-->{!info.Cargo_Pulbico}
                 </td>
-                <td align="left"> Periodo</td>
+                <td align="left"> Periodo {!info.periodoPep}</td>
+                <td align="left">Institución {!info.institucionPep}</td>
             </tr> 
         </table>
         <table>
             <tr>
                 <td style="width:253px" align="center">¿Tiene un familiar que sea una Figura<br/>Pública? Esposo(a) o compañero(a) de<br/>hogar, Padres, Hijos, Hijos del cónyuge(a), &nbsp;<br/>   &nbsp;&nbsp;Hermanos, Abuelos, Nietos, Suegros,<br/> &nbsp;  Yerno/Nuera, Cuñado. &nbsp;</td>
-                <td style="width:31px" align="center"></td>
-                <td style="width:32px" align="center"></td>
+                <td style="width:30px" align="center">
+                    <font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='N',true,false)}">
+                        X
+                    </apex:outputPanel>
+                    <font></font>  
+                </td>
+                <td style="width:30px" align="center">
+                    <font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',true,false)}">
+                        X
+                    </apex:outputPanel>
+                    <font></font>   
+                </td>
                 <td style="width:197px;" align="left">
-                        <div style="border-bottom:1px solid black;height:33px;max-height:33px;margin-top:0px;">
+                        <div style="border-bottom:1px solid black;height:73px;max-height:33px;margin-top:0px;">
                             Nombre completo<br/><!--Nombre-->
                         </div>
                         <div style="height:33px;max-height:33px;">
                             Parentesco
                         </div> 
+                    <br/>
+                    	
                 </td>
                 <td style="width:246px" align="left">
-                    <div style="border-bottom:1px solid black;height:33px;max-height:33px;margin-top:0px;">
-                    Cargo<br/>
+                    <div style="border-bottom:1px solid black;height:73px;max-height:33px;margin-top:0px;">
+                    	Cargo {!info.Cargo_Pulbico}
                     <!--Cargo-->
                     </div>
-                    <div style="height:33px;max-height:33px;">
-                        Periodo
-                    </div>                    
+                    <div style="height:33px;max-height:26px;">
+                        Periodo {!info.periodoPep}
+                    </div>  
+                    <div style="height:33px;max-height:26px;">
+                        Institución {!info.institucionPep}
+                    </div>  
                 </td>
             </tr> 
         </table>

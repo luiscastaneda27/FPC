@@ -4,12 +4,12 @@ public class AumentoDisminucionHelper {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');
-        request.setEndpoint(url + 'api/valEstado /' + codCuenta); //http://190.5.68.11:9090/
+        request.setEndpoint(url + 'api/valEstado/' + codCuenta); //http://190.5.68.11:9090/
         request.setMethod('GET');
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setTimeout(120000);
         EstadoCuenta respuesta = new EstadoCuenta();
-        
+        System.debug('request: '+request);
         try {
             HttpResponse response = new HttpResponse();// http.send(request);
             if(!test.isRunningTest()){
@@ -23,7 +23,7 @@ public class AumentoDisminucionHelper {
                 respuesta = (EstadoCuenta)System.JSON.deserialize(response.getBody(), EstadoCuenta.class);
                 return  respuesta.EST_CUENTA == 'I' ? false : true;             
             }
-            
+            System.debug('response: '+response);
         } Catch(Exception e) {
             system.debug('Error' +e.getMessage() + ' linea ' + e.getLineNumber());
         }
