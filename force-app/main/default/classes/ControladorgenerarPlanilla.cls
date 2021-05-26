@@ -1,4 +1,4 @@
-public class ControladorgenerarPlanilla {  
+public without sharing class ControladorgenerarPlanilla {  
     public list<Empresa_x_Empleado__c> listEmpleadosEmpresa{get;set;}
     public Usuario_X_Empresa__c usuarioEmpresa{get;set;}
     
@@ -164,7 +164,7 @@ From Contenidos_Planilla__r order by Empleado2__r.Firstname asc
                                                From Planilla__c 
                                                Where Empresa2__c =: Codigo_Unico_Banco 
                                                AND currencyIsoCode =: Moneda
-                                               Order by createdDate desc Limit 20];
+                                               Order by createdDate desc Limit 50];
             
             for(Planilla__c item : listPlanillas){
                 if(item.CurrencyIsoCode==Moneda)
