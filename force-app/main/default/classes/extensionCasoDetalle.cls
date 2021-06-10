@@ -1436,6 +1436,9 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         }
                     }  
                     if(detalleCaso.Nuevo_canal_aporte__c == 'TAOB' || detalleCaso.Banco__c == 'Otros Bancos') {
+                        if(detalleCaso.Tipo_Operacion__c == 'A7') {
+                        	caso.DAU_aprobacion__c = false;    
+                        }    
                         List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = Caso.Id));
                         // Call method to publish events

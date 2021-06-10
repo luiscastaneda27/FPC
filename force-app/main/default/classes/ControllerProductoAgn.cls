@@ -439,6 +439,10 @@ public without sharing class ControllerProductoAgn {
     
     Public Detalle_caso__c detalleCaso{get;set;}
     
+    public list <ContenidoValidaNivel> validaDatos;  
+    public string Ppais {get;set;}
+    public string Pdepto {get;set;}
+    
     public ControllerProductoAgn() {    
         validadosBeneficiarios =  true;
         validadosBeneficiariosC = true;
@@ -1386,10 +1390,7 @@ insert reg;
             resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(ApexPages.currentPage().getParameters().get('hytrd'));
             
             for(integer j=0; j<resultado2.size(); j++) {
-                if (resultado2[j].rol == 'OFSAC'||resultado2[j].rol =='OFSRCU'){
-                    MostarActualizar=true;
-                    MostarActualizarFechaSeguro = true;
-                }else{
+                if (resultado2[j].rol == 'AFILI' || resultado2[j].rol =='OFJROP' ){
                     MostarActualizar=false;
                     ActNombre = true;
                     ActNombre2 = true;
@@ -1397,9 +1398,13 @@ insert reg;
                     ActApellido2 = true;
                     ActId = true;
                     MostarActualizarFechaSeguro = false;
+                }else{
+                    MostarActualizar=true;
+                    MostarActualizarFechaSeguro = true;
                     
                 }
-            }            
+                break;
+            }              
         }catch(exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
         }              
@@ -2329,6 +2334,8 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         if(direccionUnico.esDefault == null || direccionUnico.esDefault != null && direccionUnico.tipDireccion == 'C')
         {    
             direccionUnico.esDefault ='S';
+            Ppais = direccionUnico.paisDir;
+            Pdepto = direccionUnico.deptoDir ;
         }
         else {direccionUnico.esDefault ='N';} 
         
@@ -4360,7 +4367,7 @@ paso2Cuerpo = 'slds-hide';
     public pageReference guardar(){
         try{
             ClienteNaturales naturalEnvio = new ClienteNaturales();
-            
+            ValidaRiesgo();
             naturalEnvio.numtran = numtran; //Agregado 08/04/2020
             naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
             naturalEnvio.PCEMPRESA = pcempresa;    
@@ -6793,6 +6800,70 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));     
         }
     }
+    
+    public void ValidaRiesgo()
+    {
+        try{
+           ClienteNaturales naturalEnvio = new ClienteNaturales();
+            if(pcAPNFDSI == true)
+            {
+                naturalEnvio.pcAPNFD = 'S';
+            }
+            else
+            {
+                naturalEnvio.pcAPNFD = 'N';
+            }
+            if(pcFATCA == true)
+            {
+                naturalEnvio.pcFATCA = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcFATCA = 'N';
+            }
+            if(pcPEP == true)
+            {
+                naturalEnvio.pcPEP = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcPEP = 'N'; 
+            } 
+             
+            validaDatos = NEW List<ContenidoValidaNivel>();                
+                    validaDatos.add(new ContenidoValidaNivel(pctipoid,
+                                                              fechanacimiento, 
+                                                              pcrazonsocialempl,                                                       
+                                                              pcNombreempl,                                                               
+                                                              TipoProfesion.Profesi_n_Ocupaci_n__c,
+                                                              //pcProfesionOcupacion,
+                                                              naturalEnvio.pcAPNFD,
+                                                              naturalEnvio.pcFATCA,
+                                                              naturalEnvio.pcPEP,
+                                                              Ppais,
+                                                              //pcTipoFondo,
+                                                              Cuenta20.Tipo_Fondo__c,
+                                                              pcAgn,
+                                                              Pdepto,
+                                                              pcnacionalidad
+                                                             ));  
+              //  } 
+            enviarValidarNivel Enviar = new enviarValidarNivel(validaDatos); 
+            string csharp;           
+            csharp=string.valueOf(ControllerApiValidaRiesgo.NivelRiesgo(Enviar));            
+            system.debug('PRUEBA1 ' + csharp);         
+            //PC_MEDIDA_APLICADA = csharp.substring(42,43);
+            PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
+            PC_NIVEL_RIESGO = csharp.substring(61,62);
+            //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
+            system.debug('campo1 ' + PC_DEBIDA_DELIGENCIA + 'campo2 ' + PC_NIVEL_RIESGO);
+            
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());   
+        }
+    }    
+    
+    
     public void validarBeneficiario()
     {
         
