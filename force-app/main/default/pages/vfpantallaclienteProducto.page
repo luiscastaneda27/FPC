@@ -199,7 +199,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
             {  
                 var care = document.getElementById('{!$Component.page.ubic1.FormaPago}').value 
                 console.log(care);
-               if (care == 'TA'||care == 'AH')
+               if (care == 'TA' || care == 'AH' || care == 'TAOB')
                 {    
                     document.getElementById('{!$Component.page.ubic1.CTATC}').disabled=false;
                 }
@@ -2743,10 +2743,10 @@ reRender="" />
                                                             <label class="slds-form-element__label" for="inputSample" padding-left = "0">
                                                                 <abbr class="slds-required" title="required"></abbr> Fecha de vencimiento                                                             
                                                             </label>                                                                
-                                                            <apex:selectList styleclass="slds-input" id="Mes" size="1" value="{!pcmes}" style="height:10px; width:50px; margin-left:10px; " >
+                                                            <apex:selectList styleclass="slds-input" id="Mes" size="1" value="{!pcmes}" style="height:10px; width:68px; margin-left:0px; " >
                                                                 <apex:selectOptions value="{!Mes}"/>
                                                             </apex:selectList>
-                                                            <apex:selectList styleclass="slds-input" id="AnioTarjeta" size="1" value="{!pcAnioTarjeta}" style="height:10px; width:90px; margin-left:5px; " >
+                                                            <apex:selectList styleclass="slds-input" id="AnioTarjeta" size="1" value="{!pcAnioTarjeta}" style="height:10px; width:82px; margin-left:5px; " >
                                                                 <apex:selectOptions value="{!AnioTarjeta}"/>
                                                             </apex:selectList>
                                                             <br/><br/>
@@ -2763,6 +2763,22 @@ reRender="" />
                                                             <apex:selectList styleclass="slds-input" id="POS" size="1" value="{!pcPOS}" style="height:10px; width:170px; margin-left:100px; " >
                                                                 <apex:selectOptions value="{!POS}"/>
                                                             </apex:selectList>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Nombre Tarjeta Habiente
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" style="height:10px; width:170px; margin-left:26px;"/>
+                                                        
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Tipo de Tarjeta
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" style="height:10px; width:170px; margin-left:22px;"/>
+                                                                                       
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Banco
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Banco__c}" style="height:10px; width:170px; margin-left:5px;"/>
+                                                            
                                                             <br/>
                                                             <apex:inputText style="border-style:none" id="id3" disabled="true"/>
                                                             <br/><br/>

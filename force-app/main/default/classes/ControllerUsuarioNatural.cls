@@ -120,7 +120,7 @@ public class ControllerUsuarioNatural {
             
             
             nivelRiesgo = '1'; 
-            debidaDiligencviaAplicada = '3';
+            debidaDiligencviaAplicada = '2';
   			
 		   despN = false;   
             disbot = true; 

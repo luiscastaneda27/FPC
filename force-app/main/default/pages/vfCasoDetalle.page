@@ -28,7 +28,7 @@
                 var CanalAporte = $('[id$=CanalAporte]').val(); //alert(CanalAporte);                   
                 var e = document.querySelectorAll('[id$="Frecuencia"]')[0];
                 
-                if(TipoOperacion == 'A4' || TipoOperacion == 'A6' || TipoOperacion == 'A7') { 
+                if(TipoOperacion == 'A1' || TipoOperacion == 'A2' || TipoOperacion == 'A4' || TipoOperacion == 'A6' || TipoOperacion == 'A7') { 
                     $('select.removePicklistValue2 option[value=24]').remove(); $('select.removePicklistValue2 option[value=2]').remove(); $('select.removePicklistValue2 option[value=30]').remove(); $('select.removePicklistValue2 option[value=6]').remove(); $('select.removePicklistValue2 option[value=15]').remove();
                     $('select.removePicklistValue2 option[value=7]').remove(); $('select.removePicklistValue2 option[value=18]').remove(); $('select.removePicklistValue2 option[value=14]').remove(); $('select.removePicklistValue2 option[value=17]').remove(); $('select.removePicklistValue2 option[value=25]').remove();  
                     $('select.removePicklistValue2 option[value=31]').remove(); $('select.removePicklistValue2 option[value=32]').remove(); $('select.removePicklistValue2 option[value=51]').remove(); $('select.removePicklistValue2 option[value=1]').remove(); $('select.removePicklistValue2 option[value=13]').remove();
@@ -402,7 +402,7 @@
                                                 <apex:inputField id="Frecuencia" styleclass="slds-input" value="{!detalleCaso.Frecuencia__c}" />
                                             </apex:outputpanel> 
                                             
-                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3',  detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8')}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Día de pago</label>
                                                 <apex:inputField id="DiaPago" styleclass="slds-input removePicklistValue" value="{!detalleCaso.DAU_Dia_de_pago__c}" />
@@ -423,7 +423,8 @@
                                             </apex:outputPanel>
                                             
                                             <apex:outputPanel rendered="{!OR(AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
-                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), detalleCaso.Tipo_Operacion__c = 'A4', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A7')}">
+                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), detalleCaso.Tipo_Operacion__c = 'A1', detalleCaso.Tipo_Operacion__c = 'A2', 
+                                                                        detalleCaso.Tipo_Operacion__c = 'A4', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A7')}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Banco</label>
                                                 <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 

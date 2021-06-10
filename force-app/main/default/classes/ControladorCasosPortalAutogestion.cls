@@ -194,9 +194,8 @@ public without sharing class ControladorCasosPortalAutogestion{
                 idTipoRegistro = '--';
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
-                cuenta = [Select Colectiva__c,Codigo__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
-                          Forma_Aportacion__c, Tipo_Fondo__c 
-                          from cuentas__c where id = :idCuenta];
+                cuenta = [Select Id, Name, Colectiva__c, Codigo__c, Cliente__r.Name, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
+                          Forma_Aportacion__c, Tipo_Fondo__c from cuentas__c where id = :idCuenta];
                 if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
                     idCuenta = '--';
@@ -453,27 +452,22 @@ public without sharing class ControladorCasosPortalAutogestion{
                     insertDetalle = true;
                 }
                 // system.debug('Antes de meterse: '+ cuenta.Forma_Aportacion__c);
-                if(cTipoCaso.aumDisAporte  && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c == 'CK' ||
-                	cuenta.Forma_Aportacion__c == 'TA') && detallecaso.Tipo_Operacion__c <> 'A3' 
-                   		&& detallecaso.Tipo_Operacion__c <> 'A1' && detallecaso.Tipo_Operacion__c <> 'A4' 
-                   			&& detallecaso.Tipo_Operacion__c <> 'A6') {
-                	caso.Aprobado__c = false;
-                    caso.Enviar_aprobacion_AD__c = true;
-                    solicitud = new SolicitudCaso();
-                    solicitud = AFPCCasos.upsertCaso(caso);
-                    if(solicitud.solicitudExitosa){
-                        solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                if(cTipoCaso.aumDisAporte && detallecaso.Banco__c == 'Otros Bancos') {
+                	if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2') {
+                        System.debug('Caso de aumento de aporte o Disminución de Aporte');
+                        caso.Archivo_Adjunto__c = true;
+                        caso.Status = 'Cerrado';
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
                         if(solicitud.solicitudExitosa){
-                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
                         }else{
-                        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
-                        	inicio();
-                            return;
-                    	}
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                        } 
                     }
                 } 
                 else if(cTipoCaso.aumDisAporte) {
-                    if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A1') {
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A1') {
                         System.debug('Caso de aumento de aporte');
                         caso.Archivo_Adjunto__c = true;
                         caso.Status = 'Cerrado';
@@ -485,7 +479,7 @@ public without sharing class ControladorCasosPortalAutogestion{
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
                         } 
                     }  
-                    if(cuenta.Forma_Aportacion__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A3') {
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A3') {
                     	System.debug('Cambio de Canal de Aporte');
                         updateCase.wrapperClass wc = new updateCase.wrapperClass();
                         wc = updateCase.validarIdentidad(String.valueOf(caso.Id), detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
@@ -499,6 +493,7 @@ public without sharing class ControladorCasosPortalAutogestion{
                         if(solicitud.solicitudExitosa){
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
                             caso.Archivo_Adjunto__c = true;
+                            caso.Reason = 'Otro';
                             caso.Status = 'Cerrado';
                             caso.DAU_llamarSalesforceTarjeta__c = false; 
                             solicitud = new SolicitudCaso();
@@ -548,14 +543,50 @@ public without sharing class ControladorCasosPortalAutogestion{
                         solicitud = AFPCCasos.upsertCaso(caso);
                         if(solicitud.solicitudExitosa){
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
-                            if(caso.DAU_Identidad__c <> Null && caso.DAU_No_Cuenta__c <> Null) {
-                                Set<Id> caseId = new Set<Id>();
-                                caseId.add(caso.Id);
-                                Salesforce_Tarjetas.processCase(caseId, 'DEC', '', ''); 
+                            if(caso.DAU_Identidad__c <> Null && caso.DAU_No_Cuenta__c <> Null) {                                
+                                System.debug('Se ejecuta la cancelación');
+                                
+                                Salesforce_Tarjetas.wrapperClass wc = new Salesforce_Tarjetas.wrapperClass();
+                                wc.tipoGestion = 'DEC';
+                                wc.DAU_Identidad = caso.DAU_Identidad__c;
+                                wc.DAU_No_Cuenta = caso.DAU_No_Cuenta__c;
+                                wc.Moneda = cuenta.CurrencyIsoCode;
+                                wc.Cuenta = cuenta.Name;
+                                System.debug('Campos de wrapperClass: '+wc);
+
+                                String respuesta = Salesforce_Tarjetas.processCasePortal(wc);
+                                System.debug('respuesta de cancelación: '+respuesta);
+                                if(respuesta.contains('Gestión creada con éxito')) { 
+                                    
+                                    updateCase.wrapperClass wc2 = new updateCase.wrapperClass();
+                                    wc2 = updateCase.validarIdentidad(String.valueOf(caso.Id), detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
+                                    System.debug('validar Identidad: '+wc);
+                                    caso.DAU_Identidad__c = wc2.DAU_Identidad;
+                                    caso.DAU_No_Cuenta__c = wc2.DAU_No_Cuenta;
+                                    caso.DAU_aprobacion__c = wc2.DAU_aprobacion;
+                                    caso.Respuesta_SF_Tarjetas__c = wc2.Respuesta_SF_Tarjetas;  
+                                    
+                                    caso.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta;
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa){
+                                        System.debug('Se ejecuta la afiliación');
+	                                    caso.Archivo_Adjunto__c = true;
+                                        caso.Reason = 'Otro';
+                                        caso.DAU_llamarSalesforceTarjeta__c = true; 
+                                        caso.Status = 'Cerrado';
+                                        solicitud = new SolicitudCaso();
+                                        solicitud = AFPCCasos.upsertCaso(caso);
+                                    }    
+                                } else if(respuesta.contains('error')) {
+                                	caso.Respuesta_SF_Tarjetas__c = respuesta;
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);    
+                                }
                             }
-                        }else{
+                        } else {
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
-                        }                                     
+                        }                                   
                     }
                 }
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet) {

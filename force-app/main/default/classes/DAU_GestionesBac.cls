@@ -13,7 +13,7 @@ public class DAU_GestionesBac {
         
             System.debug('Caso: '+CaseId);
             
-            Detalle_caso__c detC = [Select Id,Cuenta__r.Name,Cuenta__r.Monto_aporte__c,N_Cuenta_Bancaria__c,Mes__c,Ano_tarjeta__c,DAU_Dia_de_pago__c, Tipo_Operacion__c,	
+            Detalle_caso__c detC = [Select Id,Cuenta__r.Name,Cuenta__r.Monto_aporte__c,Cuenta__r.Fecha_Aporte__c,N_Cuenta_Bancaria__c,Mes__c,Ano_tarjeta__c,DAU_Dia_de_pago__c, Tipo_Operacion__c,	
                                     DAU_Tarjeta_Habiente__c,DAU_Tipo_Tarjeta__c,Nuevo_monto_aporte__c,toLabel(Banco__c), Nueva_fecha_aporte__c 
                                     From Detalle_caso__c Where Caso__c =: c.Id];
             
@@ -47,6 +47,25 @@ public class DAU_GestionesBac {
                 datos.diaCobro = detC.DAU_Dia_de_pago__c;
                 datos.montoDebito = String.valueOf(detC.Nuevo_monto_aporte__c);
                 datos.estadoDebito = estadoDebito;
+            } else if(detC.Tipo_Operacion__c == 'A1' || detC.Tipo_Operacion__c == 'A2') {       
+                System.debug('Aumento de Aporte	o Disminución de Aporte');
+                datos.tipoGestion = 'modificaDebito';
+                datos.identificacion = c.Account.Identificacion__c;
+                datos.nombreCliente = '';
+                datos.email = '';
+                datos.celular = '';
+                datos.sexo = '';
+                datos.servicio = '';
+                datos.cuentaPensiones = detC.Cuenta__r.Name;
+                datos.tipoTarjeta = '';              
+                datos.nombreTarjetaHabiente = '';               
+                datos.numeroTarjeta = '';                                            
+                datos.fechaExpiracion = '';
+                datos.bancoTarjeta = '';              
+                Date myDate = Date.valueOf(detC.Cuenta__r.Fecha_Aporte__c);
+                datos.diaCobro = String.valueOf(myDate.Day());
+                datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);   
+                datos.estadoDebito = estadoDebito;                                              
             } else if(detC.Tipo_Operacion__c == 'A4') {       
                 System.debug('Cambio de Fecha de Aporte');
                 datos.tipoGestion = 'modificaDebito';
@@ -120,8 +139,8 @@ public class DAU_GestionesBac {
                 	c.Respuesta_SF_Tarjetas__c = respuesta;    
                 }               
                 update c;
-                if(detC.Tipo_Operacion__c == 'A4') {
-                    System.debug('Cambio de Fecha de Aporte llama a Sysde');
+                if(detC.Tipo_Operacion__c == 'A1' || detC.Tipo_Operacion__c == 'A2' || detC.Tipo_Operacion__c == 'A4') {
+                    System.debug('Aumento de Aporte	o Disminución de Aporte	 o Cambio de Fecha de Aporte llama a Sysde');
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
                     // Call method to publish events

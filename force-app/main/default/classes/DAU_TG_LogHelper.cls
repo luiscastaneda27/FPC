@@ -100,8 +100,11 @@ public class DAU_TG_LogHelper {
                         } 
                     } 
                 //Lllamar al servico de *BAC* cuando la forma de aportación de la cuenta es: Tarjeta de Crédito/Debito otros Bancos	    
-                } else if(detailCase[0].Nuevo_canal_aporte__c == 'TAOB' || detailCase[0].Banco__c == 'Otros Bancos') {
-                	if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
+                } 
+                
+                else if(detailCase[0].Nuevo_canal_aporte__c == 'TAOB' || detailCase[0].Banco__c == 'Otros Bancos') {
+                    //Caso de Cambio de Canal de Aporte	
+                    if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
                         //Bandera para que el trigger de caso llama al Servio de Salesforce Tarjetas                
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
@@ -128,7 +131,8 @@ public class DAU_TG_LogHelper {
                         } 
                     }  
                     
-                    if(c.Tipo_de_Operacion__c == 'A4') {
+                    //Caso de Aumento de Aporte	o Disminución de Aporte	 o Cambio de Fecha de Aporte	
+                    if(c.Tipo_de_Operacion__c == 'A1' || c.Tipo_de_Operacion__c == 'A2' || c.Tipo_de_Operacion__c == 'A4') {
                         if(c.Respuesta_SF_Tarjetas__c == Null) {
                         	DAU_GestionesBac.execute(c.Id, '');  
                         }    
@@ -137,6 +141,7 @@ public class DAU_TG_LogHelper {
                         }
                     }
                     
+                    //Caso de Cambio de # Tarjeta	
                     if(c.Tipo_de_Operacion__c == 'A6') {	
                     	if(c.Respuesta_SF_Tarjetas__c == Null) {
                         	DAU_GestionesBac.execute(c.Id, '');  
@@ -159,6 +164,7 @@ public class DAU_TG_LogHelper {
                         } 
                     }
                     
+                    //Caso de Cancelación
                     if(c.Tipo_de_Operacion__c == 'A7') {	  
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 

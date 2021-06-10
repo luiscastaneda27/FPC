@@ -49,7 +49,6 @@ public  with sharing class ClienteNaturales {
     //Actua Tercera persona
     public string pc_ActuaSItercera /*SiActuaTerceraPersona*/ {get;set;}
     public string pcNumeroIDPV /*NumeroIDTerceraPersona*/ {get;set;}
-    public string PEPRepresentante{get;set;}
     public string FATCARepresentante{get;set;}
     public string FATCANCRepresentante{get;set;}
     //public boolean AMLRepresentante{get;set;}

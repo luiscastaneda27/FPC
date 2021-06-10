@@ -24,6 +24,9 @@ public class FieldsBankManagement {
     public String pcAnio;
     public Double pcMonto;
     public String pcPOS;
+    public String pcTarjetaHabiente;
+    public String pcTipoTarjeta;
+    public String pcBanco;
     public List<FieldsBankManagement> fieldsList;
     
     public String CARD_HOLDER_LEGAL_ID;

@@ -272,7 +272,7 @@ Razón Social o Denominación Social
                                                                 
                                                                 <td width = "450">
                                                                     <label class="slds-form-element__label" for="inputSample">
-                                                                        <abbr class="slds-required" title="required"></abbr> Debida Dili. Aplicada
+                                                                        <abbr class="slds-required" title="required"></abbr> Medida Aplicada
                                                                     </label>
                                                                     <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepBlo" value="{!diligenciaAplicada}"  size="1" style="height:9px; width:188px; margin-left: 13px;" >
                                                                         <apex:selectOptions value="{!DeligenciaOptions}" />

@@ -37,10 +37,10 @@
     <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
     <script>
         $(document).ready( function () { 
-               
+        	process2();       
         });
         
-        function activate() { alert('Entra');
+    	function activate() { //alert('Entra');
             return false;
         }
         
@@ -65,16 +65,18 @@
            } 
         }
     
-        function process2() {
-           var TipoOperacion = $('[id$=TipoOperacion]').val(); alert(TipoOperacion);  
-           if(TipoOperacion == 'A4') {
-                $('select.removePicklistValue2 option[value=24]').remove(); $('select.removePicklistValue2 option[value=2]').remove(); $('select.removePicklistValue2 option[value=30]').remove(); $('select.removePicklistValue2 option[value=6]').remove(); $('select.removePicklistValue2 option[value=15]').remove();
-                $('select.removePicklistValue2 option[value=7]').remove(); $('select.removePicklistValue2 option[value=18]').remove(); $('select.removePicklistValue2 option[value=14]').remove(); $('select.removePicklistValue2 option[value=17]').remove(); $('select.removePicklistValue2 option[value=25]').remove();  
-                $('select.removePicklistValue2 option[value=31]').remove(); $('select.removePicklistValue2 option[value=32]').remove(); $('select.removePicklistValue2 option[value=51]').remove(); $('select.removePicklistValue2 option[value=1]').remove(); $('select.removePicklistValue2 option[value=13]').remove();
-                $('select.removePicklistValue2 option[value=33]').remove(); $('select.removePicklistValue2 option[value=52]').remove();
-        
-           }    
-        }
+        function process2() {          
+           	   alert('Entra al process 2');
+           
+               $('select.removePicklistValue option[value=1]').remove(); $('select.removePicklistValue option[value=2]').remove(); $('select.removePicklistValue option[value=3]').remove(); $('select.removePicklistValue option[value=4]').remove(); $('select.removePicklistValue option[value=5]').remove();
+               $('select.removePicklistValue option[value=6]').remove(); $('select.removePicklistValue option[value=7]').remove(); $('select.removePicklistValue option[value=8]').remove(); $('select.removePicklistValue option[value=9]').remove(); $('select.removePicklistValue option[value=10]').remove(); 
+               $('select.removePicklistValue option[value=11]').remove(); $('select.removePicklistValue option[value=12]').remove(); $('select.removePicklistValue option[value=13]').remove(); 
+               $('select.removePicklistValue option[value=15]').remove(); $('select.removePicklistValue option[value=16]').remove(); $('select.removePicklistValue option[value=17]').remove(); 
+               $('select.removePicklistValue option[value=18]').remove(); $('select.removePicklistValue option[value=19]').remove(); $('select.removePicklistValue option[value=20]').remove();   
+               $('select.removePicklistValue option[value=21]').remove(); $('select.removePicklistValue option[value=22]').remove(); $('select.removePicklistValue option[value=23]').remove(); 
+               $('select.removePicklistValue option[value=24]').remove(); $('select.removePicklistValue option[value=25]').remove();    
+               $('select.removePicklistValue option[value=27]').remove(); $('select.removePicklistValue option[value=28]').remove(); $('select.removePicklistValue option[value=29]').remove(); $('select.removePicklistValue option[value=30]').remove(); $('select.removePicklistValue option[value=31]').remove();   
+
     </script>
     
     <SCRIPT>
@@ -471,7 +473,7 @@
                         <apex:inputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" required="true"
                                             rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4',true,false)}"/>
                         
-                        <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" styleclass="removePicklistValue2" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}"/>
+                        <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" styleclass="removePicklistValue2" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}"/>
                             
                         <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
                                                     claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}">

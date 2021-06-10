@@ -202,7 +202,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
             {  
                 var care = document.getElementById('{!$Component.page.ubic1.FormaPago}').value 
                 console.log(care);
-               if (care == 'TA'||care == 'AH')
+               if (care == 'TA' || care == 'AH' || care == 'TAOB')
                 {    
                     document.getElementById('{!$Component.page.ubic1.CTATC}').disabled=false;
                 }
@@ -2066,17 +2066,8 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             </label>
                                                             <apex:inputText disabled="{!Tercera}" value="{!pcNumeroIDPV}" onkeypress="return isNumberKey(event)" id="pcNumeroIDPV" styleclass="slds-input" style="height:9px; width:170px; margin-left:46px;  "/>
                                                             <apex:commandButton value="Validar" styleClass="slds-button slds-button--brand" style=" width:65px; margin-left:13px" action="{!validarRepresentantes}"/>
-                                                            
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:405px;">
-                                                                <abbr class="slds-required" title="required"></abbr>  PEP
-                                                            </label>
-                                                            
-                                                            <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckb}" onclick="pepPop()" value="{!PEPRepresentante}" id="PEPRepresentante"  styleclass="slds-input"  />
-                                                                <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
-                                                            </label>
-                                                            
-                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                       
+                                                            <label class="slds-form-element__label" for="inputSample" style = "margin-left:455px">
                                                                 <abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
                                                             </label>
                                                             
@@ -2692,7 +2683,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
-                                                                    <abbr class="slds-required" title="required"></abbr> Debida Deligencia
+                                                                    <abbr class="slds-required" title="required"></abbr> Medida Aplicada
                                                                 </label>    
                                                                 <apex:selectList disabled="true" styleclass="slds-input" id="pepBlo" value="{!PC_DEBIDA_DELIGENCIA}"  size="1" style="height:10px; width:170px; margin-left:2px;" >
                                                                     <apex:selectOptions value="{!DeligenciaOptions}" />
@@ -2930,6 +2921,22 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             <apex:selectList styleclass="slds-input" id="POS" size="1" value="{!pcPOS}" style="height:10px; width:170px; margin-left:100px; " >
                                                                 <apex:selectOptions value="{!POS}"/>
                                                             </apex:selectList>
+                                                            
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Nombre Tarjeta Habiente
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" style="height:10px; width:170px; margin-left:26px;"/>
+                                                        
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Tipo de Tarjeta
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" style="height:10px; width:170px; margin-left:22px;"/>
+                                                                                       
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Banco
+                                                            </label>                                                            
+                                                            <apex:inputField styleclass="slds-input" value="{!detalleCaso.Banco__c}" style="height:10px; width:170px; margin-left:5px;"/>
+                                                                                                                        
                                                             <br/>
                                                             <apex:inputText style="border-style:none" id="id3" disabled="true"/>
                                                             <br/><br/>
@@ -4241,7 +4248,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning"/>
                                                         <br/><br/>
                                                         <apex:commandButton value="Agregar Cuenta" disabled="{!btnGuardar}" action="{!guardar}" styleClass="slds-button slds-button--brand" style="height:40px; width:200px; margin-left:255px"  reRender="infoAfiliado, pantProductosP, BTNGuardar" status="status" />
-                                                        <apex:commandButton disabled="true" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
+                                                        <apex:commandButton disabled="{!MostarActualizar}" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
                                                         <apex:commandButton value="Cancelar" action="{!limpiar}" styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:52px "/>                                                        
                                                     </div>
                                                 </div>

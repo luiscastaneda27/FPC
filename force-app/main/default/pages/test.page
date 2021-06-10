@@ -1,38 +1,8 @@
 <apex:page StandardController="Test__c" extensions="MultiAdd" id="thePage" lightningStylesheets="true" >
 
-	<apex:form >
-    	<apex:pageBlock >
-        	<apex:pageBlockSection title="Test" columns="2" >
-                <apex:inputField value="{!Test__c.Select__c}" >
-                    <apex:actionSupport action="{!changeFlag}" event="onchange" />
-                </apex:inputField>
-            	<apex:inputField value="{!Test__c.Name}" rendered="{!Test__c.Select__c}" />
-                <apex:outputField value="{!Test__c.Name}" rendered="{!!Test__c.Select__c}" />
-                
-                <apex:commandButton value="Guaradar" action="{!save}" />
-            </apex:pageBlockSection>
-        </apex:pageBlock>
-    </apex:form>
-    
+	Nosotros, ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A. en adelante denominado simplemente como LA ADMINISTRADORA, del domicilio de Tegucigalpa, M.D.C., con Registro Tributario Nacional número 08019015715256 y la persona que suscribe este contrato, en adelante denominada como EL AFILIADO aceptan sujetarse a los siguientes términos y condiciones:
+CLÁUSULA PRIMERA. DEFINICIONES: Para los propósitos de este contrato, las siguientes palabras tendrán los significados establecidos a continuación: 
+ADENDA Y ANEXO: Documentos suscritos entre EL AFILIADO y LA ADMINISTRADORA, por medio de los cuales, se modifican las cláusulas previamente pactadas entre estos en el CONTRATO DE AFILIACIÓN y surtirá efectos siempre y cuando estas modificaciones no contravengan lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones, las “Normas para el Fortalecimiento de la Transparencia, la Cultu
 
+      
 </apex:page>
-
-<!--apex:page controller="MultiAdd">
-<script>
-    function myFunction(checkboxId) {
-        var flag = document.getElementById(checkboxId).checked;
-        callAction(flag);
-    }
-</script>
-<apex:form >
-    
-    <apex:actionFunction name="callAction" reRender="yourText" action="{!changeFlag}">
-        <apex:param value="" name="flagValue"/>
-    </apex:actionFunction>
-    
-    <apex:inputCheckbox id="yourBox" styleClass="test" onclick="myFunction('{!$Component.yourBox}')"/>
-    
-    <apex:inputText id="yourText" disabled="{!(!flag)}"/>
-
-</apex:form>
-</apex:page-->
