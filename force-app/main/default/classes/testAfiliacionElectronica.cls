@@ -20,10 +20,14 @@ public class testAfiliacionElectronica {
         
         Listado_Empresas__c lip = new Listado_Empresas__c(Name='prueba', RTN_Empresa__c='PRUEBA0101');
         insert lip;
+        Autonumerico_cuentas_Syste__c af = new Autonumerico_cuentas_Syste__c ();
+        af.Id_Formulario_Sysde__c = 0;
+        insert af;
         
     ControllerAfiliacionElectronica cliente = new ControllerAfiliacionElectronica();
         cliente.texto1= '';
         cliente.texto2= '';
+        cliente.updateAF();
         cliente.usuarioValidacion = '';
         cliente.FechaValidacion = '';
         cliente.Num_identidadProducto = '';

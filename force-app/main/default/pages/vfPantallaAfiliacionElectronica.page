@@ -432,6 +432,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                         </div>
                     </apex:facet>
                 </apex:actionStatus>
+                <apex:actionPoller rendered="{!updateRecord}" action="{!updateAF}" interval="5" />
                 <!--apex:outputPanel id="actionPoll">
                 	<apex:actionPoller rendered="{!actionPoller}" reRender="actionPoll"  action="{!enviarcorreoAfiliacion}" interval="5" />
                 </apex:outputPanel-->

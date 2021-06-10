@@ -9,6 +9,10 @@ public class testClienteNatural {
         Producto__c pp= new Producto__c(name = 'Test', codigo__C = '01');
         insert pp;
         
+        Autonumerico_cuentas_Syste__c af = new Autonumerico_cuentas_Syste__c ();
+        af.Id_Formulario_Sysde__c = 0;
+        insert af;
+        
         subProducto__C subP = new subProducto__C(
             producto__C = pp.id,
             name = 'Test', 

@@ -194,10 +194,15 @@ public class formularioIdentificacion_PDF_CONT {
 				PFisNacionalidad = mapNaFis.get(info.PaisResidenciaEfectosFiscales );                  
                 //NACIONALIDAD
                 
-                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
+                /*for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
                     mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
                 }
-                nac=mapNac.get(info.ListDirecciones[i].paisDir);
+                nac=mapNac.get(info.ListDirecciones[i].paisDir);*/
+                 for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
+                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+                nac= itemNA.nacionalidad__c;
+                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad );
+            	}
                 //info.pcnacionalidad2=mapNaci.get(info.pcnacionalidad2);
                 //info.pcnacionalidad3=mapNaci.get(info.pcnacionalidad3);
                 

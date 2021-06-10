@@ -4117,7 +4117,7 @@ public class ControllerProductoAgn
         naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
         naturalEnvio.PCEMPRESA = pcempresa;    
         naturalEnvio.pcagencia = pcagencia;
-        naturalEnvio.pnnrocertificado = pnnrocertificado;
+        //naturalEnvio.pnnrocertificado = pnnrocertificado;
         naturalEnvio.RTN = RTN;
         naturalEnvio.pdfechasuscripcion = date.today();
         system.debug(pcPEP);
@@ -4481,6 +4481,10 @@ public class ControllerProductoAgn
       
         else
         { 
+            Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
+            pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
+            naturalEnvio.pnnrocertificado = pnnrocertificado;
+            
          	String resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));	
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
@@ -4488,7 +4492,7 @@ public class ControllerProductoAgn
             //limpiarAgregado(resultado);
             // iniciar();
             //limpiar();
-            
+            update af;
             if(resultado.contains('Proceso realizado Correctamente')) {
                 String cuenta = resultado.replace('Proceso realizado Correctamente  Número De Cuenta:', '');
                 cuenta = cuenta.replace('"', '');

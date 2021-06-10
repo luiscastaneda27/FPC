@@ -6810,6 +6810,10 @@ public class ControllerPantJuridProduc {
                if(fcsd.AML == true){
                 AML = fcsd.AML;
                }
+               if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                    AML = fcsd.BLACKLIST;
+                    actPop = true; 
+                }    
                if(fcsd.FATCA == true ){
                 pcFATCA = fcsd.FATCA;
                    

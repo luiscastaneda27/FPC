@@ -309,35 +309,35 @@
         <body>
             <!-- Scripts -->
             <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
-    <script type="text/javascript">
-        function validateNumber(e, field) {
-            key = e.keyCode ? e.keyCode : e.which
-            
-            // backspace
-            if (key == 8) return true
-            // 0-9
-            if (key > 47 && key < 58) {
-                if (field.value == "") return true
-                regexp = /.[0-9]{7}$/
-                return !(regexp.test(field.value.replace("-", "")))
-            }
-            
-            return false
-        }
-        
-        function validacionFormTel(e, field) {
-            var x = field.value; 
-            if(x!= null && x!= ""){
-                x = x.replace("-", "");
-                if( x.length > 4){
-                    field.value = x.substring(0, 4)+"-" +x.substring(4, x.length) ;
-                }else{
-                    field.value = x.substring(0, x.length);
-                }
-            }
-        }
+<script type="text/javascript">
+    function validateNumber(e, field) {
+    key = e.keyCode ? e.keyCode : e.which
+    
+    // backspace
+    if (key == 8) return true
+    // 0-9
+    if (key > 47 && key < 58) {
+        if (field.value == "") return true
+        regexp = /.[0-9]{7}$/
+        return !(regexp.test(field.value.replace("-", "")))
+    }
+    
+    return false
+}
 
-    </script>
+function validacionFormTel(e, field) {
+    var x = field.value; 
+    if(x!= null && x!= ""){
+        x = x.replace("-", "");
+        if( x.length > 4){
+            field.value = x.substring(0, 4)+"-" +x.substring(4, x.length) ;
+        }else{
+            field.value = x.substring(0, x.length);
+        }
+    }
+}
+
+</script>
 
 <!-- REQUIRED SLDS WRAPPER -->
             <div class="slds-scope">
@@ -422,7 +422,7 @@
                         </div>
                     </div>
                     <br/>
-                   
+                    
                     <apex:outputPanel id="id_Sec_ActInformacion" rendered="{!CtipoCaso.actInformacion}" >
                         <font class="padding-left-1em font-subtitle">Datos Generales</font>
                         <div class="margin-top-1em slds-grid slds-wrap">
@@ -564,7 +564,7 @@
                             </div>
                         </div>
                     </apex:outputPanel>
-                   
+                    
                     <apex:outputPanel id="id_Sec_EstadosCuenta" rendered="{!CtipoCaso.estadoCuenta}">
                         <font class="padding-left-1em font-subtitle">Información del Estado de Cuenta</font>
                         <div class="margin-top-1em slds-grid slds-wrap">
@@ -745,66 +745,64 @@
                         </div>
                     </apex:outputPanel>
                     
-                <!-- MODAL PARA MOSTRAR CÓDIGO DE VERIFICACIÓN -->
-                <apex:outputPanel rendered="{!popVerificacionCodigo}" id="popIdVerificacion"  >
-                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                        <div class="slds-modal__container">
-                            <header class="slds-modal__header" >
-                                <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
-                                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                                    </svg>
-                                    <span class="slds-assistive-text">Cerrar</span>
-                                </apex:commandLink>
-                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Código de Verificación</h1>
-                            </header>
-                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
-                            <div class="slds-modal__content slds-p-around_medium ">
-                                <div class="slds-form slds-form_compound slds-align--absolute-left">
-                                    <fieldset class="slds-form-element">
-                                        
-                                        <div class="slds-modal__content slds-p-around--medium">
-                                            <h3 class="slds-text-heading_medium slds-hyphenate">Por su seguridad le hemos enviado un código de verificación a su nuevo correo electrónico
-                                                {!caso.Correo_Electronico__c}, ingréselo a continuación: </h3> 
-                                            <apex:inputText label="Código de Verificación" styleClass="slds-input" value="{!inputCodigoVeficacion}" id="idCodigoVerificacion" style="w" />
-                                        </div>
-                                        
-                                        <footer class="slds-modal__footer">
-                                            <apex:actionStatus id="mySaveStatus2">
-                                                <apex:facet name="stop">
-                                                    <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!reenviarCodigo}"  value="Volver a enviar código de verificación"
-                                                                        disabled="false" rerender="theForm" status="mySaveStatus2"/>
-                                                </apex:facet>
-                                                <apex:facet name="start">
-                                                    <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus2" value="Enviando..." disabled="true"/>
-                                                </apex:facet>
-                                            </apex:actionStatus>   
-                                            &nbsp; 
-                                            <apex:actionStatus id="mySaveStatus1">
-                                                <apex:facet name="stop">
-                                                    <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!verificarCodigo}"  value="Verificar"
-                                                                        disabled="false" rerender="theForm" status="mySaveStatus1"/>
-                                                </apex:facet>
-                                                <apex:facet name="start">
-                                                    <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus1" value="Validando..." disabled="true"/>
-                                                </apex:facet>
-                                            </apex:actionStatus>                 
-                                        </footer>
-                                    </fieldset>
+                    <!-- MODAL PARA MOSTRAR CÓDIGO DE VERIFICACIÓN -->
+                    <apex:outputPanel rendered="{!popVerificacionCodigo}" id="popIdVerificacion"  >
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header" >
+                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </apex:commandLink>
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Código de Verificación</h1>
+                                </header>
+                                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                                <div class="slds-modal__content slds-p-around_medium ">
+                                    <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                        <fieldset class="slds-form-element">
+                                            
+                                            <div class="slds-modal__content slds-p-around--medium">
+                                                <h3 class="slds-text-heading_medium slds-hyphenate">Por su seguridad le hemos enviado un código de verificación a su nuevo correo electrónico
+                                                    {!caso.Correo_Electronico__c}, ingréselo a continuación: </h3> 
+                                                <apex:inputText label="Código de Verificación" styleClass="slds-input" value="{!inputCodigoVeficacion}" id="idCodigoVerificacion" style="w" />
+                                            </div>
+                                            
+                                            <footer class="slds-modal__footer">
+                                                <apex:actionStatus id="mySaveStatus2">
+                                                    <apex:facet name="stop">
+                                                        <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!reenviarCodigo}"  value="Volver a enviar código de verificación"
+                                                                            disabled="false" rerender="theForm" status="mySaveStatus2"/>
+                                                    </apex:facet>
+                                                    <apex:facet name="start">
+                                                        <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus2" value="Enviando..." disabled="true"/>
+                                                    </apex:facet>
+                                                </apex:actionStatus>   
+                                                &nbsp; 
+                                                <apex:actionStatus id="mySaveStatus1">
+                                                    <apex:facet name="stop">
+                                                        <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!verificarCodigo}"  value="Verificar"
+                                                                            disabled="false" rerender="theForm" status="mySaveStatus1"/>
+                                                    </apex:facet>
+                                                    <apex:facet name="start">
+                                                        <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus1" value="Validando..." disabled="true"/>
+                                                    </apex:facet>
+                                                </apex:actionStatus>                 
+                                            </footer>
+                                        </fieldset>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open"></div>
-                </apex:outputPanel> 
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel> 
                     
-                    
+                    <!-- MODAL DE ACEPTAR CONTRATO -->
                     <apex:outputPanel rendered="{!mostrarCntrato}" >
-                        <!--apex:outputPanel rendered="false" -->
                         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                             <div class="slds-modal__container">
                                 <header class="slds-modal__header">                 
-                                    <!--h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Aceptación de Contrato </h2-->
                                     <figure class="slds-image slds-image--avatar slds-align--absolute-center">
                                         <apex:image style="height:60px; width:250px;" value="{!$Resource.LogoFPC}"/>
                                     </figure>
@@ -812,26 +810,20 @@
                                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                                     <div class="slds-form slds-form_compound">
                                         <fieldset class="slds-form-element" >
-                                            
-                                            <!--apex:image value="{!$Resource.LogoFPC}" style="height:50px; width:200px;" /><br/><br/-->
-                                            <!--figure class="slds-image slds-image--avatar slds-align--absolute-center">
-                                                <apex:image style="height:60px; width:250px;" value="{!$Resource.LogoFPC}"/>
-                                            </figure><br/-->
-                                            
                                             <div style="text-align:justify; width:98%; margin-right: 10px; margin-left:10px;">
                                                 <div style="width: 100%; text-align: center;">
                                                     <font style="font-weight: bold; font-size: 20px; text-align: center;">
-                                                        TERMINOS Y CONDICIONES DEL PORTAL DE GESTIONES DE FICOHSA PENSIONES Y CESANTÍAS
+                                                        TERMINOS Y CONDICIONES DEL PORTAL TRANSACCIONAL DE FICOHSA PENSIONES Y CESANTÍAS
                                                     </font>
                                                 </div>
                                                 <p style="font-size: 15px;">
-                                                    <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A.</b>, pone a disposición de “EL AFILIADO” el “SITIO DE GESTIONES FICOHSA PENSIONES Y CESANTÍAS”, de conformidad a los siguientes términos y condiciones:
+                                                    <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A.,</b> pone a disposición de “EL AFILIADO” el “SITIO TRANSACCIONAL FICOHSA PENSIONES Y CESANTÍAS”, de conformidad a los siguientes términos y condiciones:
                                                 </p>
                                                 <p style="font-size: 15px;">
                                                     <b>ANTECEDENTES:</b>
                                                 </p>
                                                 <p> 
-                                                    LA ADMINISTRADORA ha implementado un sistema para que EL AFILIADO pueda realizar diversas gestiones usando el Sitio de Gestiones de Ficohsa Pensiones y Cesantías. 
+                                                    LA ADMINISTRADORA ha implementado un sistema para que EL AFILIADO pueda realizar diversas operaciones y transacciones usando el Sitio Transaccional de Ficohsa Pensiones y Cesantías. 
                                                 </p>
                                                 <br/><br/>
                                                 <div style="width: 100%; font-size: 15px; ">
@@ -863,7 +855,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">5.</td>
-                                                            <td style="width: 98%;  "><p style="margin-left: 10px;">SERVICIOS, LOS: Las diversas gestiones que EL AFILIADO puede llevar a cabo en el SITIO, relacionados con su CUENTA. Estos SERVICIOS son, sin perjuicio que puedan ser ampliados, modificados o eliminados por LA ADMINISTRADORA en el futuro:</p> 
+                                                            <td style="width: 98%;  "><p style="margin-left: 10px;">SERVICIOS, LOS: Las diversas operaciones y transacciones que EL AFILIADO puede llevar a cabo en el SITIO, relacionados con su CUENTA. Estos SERVICIOS son, sin perjuicio que puedan ser ampliados, modificados o eliminados por LA ADMINISTRADORA en el futuro:</p> 
                                                                 <ol style="padding-left: 28px;">
                                                                     
                                                                     <li Type="disc">Consulta en línea del Estado de Cuenta, envío al correo electrónico y generación en Formato PDF. </li>
@@ -885,7 +877,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">6.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">SITIO, EL: El sitio web cuya dirección es <a href="https://www.ficohsapensiones.hn/transaccional/Login" target="_blank"> https://www.ficohsapensiones.hn/transaccional/Login</a> propiedad de LA ADMINISTRADORA, en el cual EL AFILIADO, puede llevar a cabo gestiones relacionadas con su CUENTA.
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">SITIO, EL: El sitio web cuya dirección es <a href="https://www.ficohsapensiones.hn/transaccional/Login" target="_blank"> https://www.ficohsapensiones.hn/transaccional/Login</a> propiedad de LA ADMINISTRADORA, en el cual EL AFILIADO, puede llevar a cabo diversas operaciones y transacciones relacionadas con su CUENTA.
                                                                 </p> 
                                                             </td>
                                                             
@@ -908,7 +900,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">2.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El AFILIADO se compromete a usar los servicios cumpliendo con todas las condiciones y requerimientos aquí señalados y los que en el futuro establezca La Administradora para tales efectos
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El AFILIADO se compromete a usar los servicios cumpliendo con todas las condiciones y requerimientos aquí señalados y los que en el futuro establezca La Administradora para tales efectos.
                                                                 </p> 
                                                             </td>
                                                         </tr>
@@ -941,15 +933,33 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">7.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El Sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías proporciona un alto nivel de seguridad para la transmisión de datos entre el Afiliado y la Administradora, de manera que ninguna tercera persona puede interferir en la comunicación entre el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías y el afiliado. 
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">El Sistema del Sitio Transaccional de Ficohsa Pensiones y Cesantías proporciona un alto nivel de seguridad para la transmisión de datos entre el Afiliado y la Administradora, de manera que ninguna tercera persona puede interferir en la comunicación entre el sistema del Sitio Transaccional de Ficohsa Pensiones y Cesantías y el afiliado. 
                                                                 
                                                                 </p> 
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">8.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">La Administradora hará entrega al afiliado de las claves necesarias para acceder al sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías vía correo electrónico (email). El Afiliado deberá cambiar inmediatamente la clave por una de su exclusivo conocimiento para seguridad para el propio Afiliado, el sistema no permitirá funcionar con la clave originalmente proporcionada. Una vez que haya ingresado al sistema por primera vez, la clave de acceso personal es secreta e intransferible.
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">La Administradora hará entrega al afiliado de las claves necesarias para acceder al sistema del Sitio Transaccional de Ficohsa Pensiones y Cesantías vía correo electrónico (email). El Afiliado deberá cambiar inmediatamente la clave por una de su exclusivo conocimiento para seguridad para el propio Afiliado, el sistema no permitirá funcionar con la clave originalmente proporcionada. Una vez que haya ingresado al sistema por primera vez, la clave de acceso personal es secreta e intransferible.
                                                                 
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">9.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;"> En caso de que, por acción u omisión propia, o que voluntaria o involuntariamente usted permita que un tercero tenga acceso a las credenciales del Afiliado tales como, pero no limitadas a: dispositivo móvil, nombres de usuario, claves de acceso o contraseñas, pines, tokens, huellas digitales, reconocimiento facial, etc., La ADMINISTRADORA presumirá en todo momento que es usted como AFILIADO quien ha llevado a cabo la gestión, operación o transacción personalmente o a través de las personas autorizadas por usted en caso de que aplique, y por lo tanto ha estado enterado(a) y acuerdo con su ejecución. Esta disposición abarca todos los canales disponibles presentes y futuros que el Banco autorice para el AFILIADO.
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">10.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">LA ADMINISTRADORA pone a disposición de EL AFILIADO, la utilización de medios electrónicos, APP, para las tiendas oficiales de aplicaciones  Android, iOS, Huawei y cualquier otra tienda oficial futura donde LA ADMINISTRADORA ponga a disposición su APP,  SARA (FACEBOOK, WHATSAPP), TOKEN, OTPS, Soluciones de firma electrónica, procesamiento de transacciones a través de celulares, etc., así como cualquier otro medio que se cree en el futuro que le permite monitorear los movimientos, transacciones, débitos y créditos que en su cuenta se hayan efectuado. LA ADMINISTRADORA no asume responsabilidad alguna por las operaciones efectuados por terceras personas autorizadas por cuenta de EL AFILIADO, asimismo, no será responsable cuando las operaciones y/o transacciones sean realizadas fuera de los  medios electrónicos  autorizados por LA ADMINISTRADORA, o cuando EL AFILIADO no haya guardado la debida diligencia con los usuarios, PIN, claves de acceso que LA ADMINISTRADORA le haya otorgado.
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width:2%; text-align: right;" valign="top">11.</td>
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">LA ADMINISTRADORA no tendrá ninguna obligación de indemnizar o de reponer valores que hayan sido sustraídos de las cuentas de  EL AFILIADO por causa de Phishing, Ingeniería social,  Descarga de Malware por medio de links o apps no autorizados (uso de dispositivos que están Redirigidos o a los cuáles se les ha realizado un jailbreak).
                                                                 </p> 
                                                             </td>
                                                         </tr>
@@ -964,13 +974,13 @@
                                                     <table width="100%" cellpadding="0" cellspacing="0">
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">1.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones que realice en el Sitio de gestiones de Ficohsa Pensiones y Cesantías quedaran registradas y operadas por la Administradora, según los servicios que se detallan en la cláusula segunda y las que se puedan ofrecer en el futuro y tendrán validez después de su registro correspondiente conforme los procedimientos establecidos por la Administradora. 
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones que realice en el Sitio Transaccional de Ficohsa Pensiones y Cesantías quedaran registradas y operadas por la Administradora, según los servicios que se detallan en la cláusula segunda y las que se puedan ofrecer en el futuro y tendrán validez después de su registro correspondiente conforme los procedimientos establecidos por la Administradora. 
                                                                 </p> 
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">2.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones y demás usos que haga a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías serán por su propia cuenta y riesgo aceptando los estados de cuenta, informes y resultados que el propio sistema formule o archive de las mismas. 
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que todas las operaciones y demás usos que haga a través del Sitio Transaccional  de Ficohsa Pensiones y Cesantías serán por su propia cuenta y riesgo aceptando los estados de cuenta, informes y resultados que el propio sistema formule o archive de las mismas. 
                                                                 </p> 
                                                             </td>
                                                         </tr>
@@ -986,7 +996,7 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="width:2%; text-align: right;" valign="top">5.</td>
-                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que será por su propia cuenta y responsabilidad el uso de la información e impresiones que a través del Sitio de gestiones de Ficohsa Pensiones y Cesantías. 
+                                                            <td style="width: 98%; "><p style="margin-left: 10px;">Que será por su propia cuenta y responsabilidad el uso de la información e impresiones que a través del Sitio Transaccional de Ficohsa Pensiones y Cesantías. 
                                                                 </p> 
                                                             </td>
                                                         </tr>
@@ -994,10 +1004,13 @@
                                                 </div>
                                                 <br/><br/>
                                                 <div style="width: 100%; font-size: 15px; ">
-                                                    <b>CUARTA: VALOR POR SERVICIO:  </b><br/>
-                                                    <p>El servicio del Sitio de gestiones de Ficohsa Pensiones y Cesantías será gratuito hasta que la Administradora decida lo contrario, en cuyo caso la Administradora establecerá un valor y lo comunicará oportunamente al AFILIADO por medio de los canales definidos por la misma ADMINISTRADORA. En caso que el servicio sea cobrado, el Afiliado se compromete a aceptar como buenos y exactos los registros que la Administradora posea en el sistema del Sitio de gestiones de Ficohsa Pensiones y Cesantías. Además de lo anterior, EL AFILIADO acepta que algunos de los SERVICIOS que se pueden efectuar a través del SITIO podría acarrear el pago de alguna tasa establecida por la ADMINSITRADORA lo cual será comunicado al AFILIADO previo a llevar a cabo la operación del SERVICIO.
-                                                        
+                                                    <b>CUARTA: PAGO DE SERVICIOS A TERCEROS: </b><br/>
+                                                    <p>La Administradora no se responsabilizará por errores en el ingreso de los datos al sistema. Las diferencias que resultaren, deberán ser conciliadas entre el Afiliado y la empresa que preste el servicio.        
                                                     </p> 
+                                                </div><br/><br/>
+                                                <div style="width: 100%; font-size: 15px; ">
+                                                    <b>QUINTA: VALOR POR SERVICIO: </b><br/>
+                                                    <p>El servicio del Sitio Transaccional de Ficohsa Pensiones y Cesantías será gratuito hasta que la Administradora decida lo contrario, en cuyo caso la Administradora establecerá un valor y lo comunicará oportunamente al AFILIADO por medio de los canales definidos por la misma ADMINISTRADORA. En caso que el servicio sea cobrado, el Afiliado se compromete a aceptar como buenos y exactos los registros que la Administradora posea en el sistema del Sitio Transaccional de Ficohsa Pensiones y Cesantías. Además de lo anterior, EL AFILIADO acepta que algunos de los SERVICIOS que se pueden efectuar a través del SITIO podría acarrear el pago de alguna tasa establecida por la ADMINISTRADORA lo cual será comunicado al AFILIADO previo a llevar a cabo la operación del SERVICIO.          </p> 
                                                 </div>
                                                 
                                             </div>
@@ -1042,14 +1055,7 @@
                                                           cTipoCaso.reposicionCarnet), caso.id=null)}" />
                         </div>
                     </div>
-                    <!--<table width="100%">
-<tr>
-<td style="width:41.5%;" >
-
-</td>
-<td style="width:58.5%;"></td>
-</tr>
-</table> -->
+                    
                 </apex:form>
             </div>
         </body>
