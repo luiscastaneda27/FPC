@@ -1,5 +1,5 @@
 public class Api_CambioAsesor {
-
+	
     public class classRespuestaCambioAsesor
     {
         public string Certificado { get; set; }
@@ -160,51 +160,6 @@ public class Api_CambioAsesor {
 		} 
 		return resultado;   
     }	
-    //public static list<classRespuestaCambioAsesor> CambioAsesor(enviar_CambioAsesor claseEnvio){
-	/*public static list<classRespuestaCambioAsesor> actualizaCambioAsesor(enviarCambioAsesor claseEnvio)
-     {
-        Http http = new Http();
-		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
-		request.setMethod('POST');
-		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-		request.setTimeout(120000);
-        request.setEndpoint(url + 'api/ActualizarCambioAsesor');
-		
-		String respuesta = '';
-         
-        classRespuestaCambioAsesor fcsd= new classRespuestaCambioAsesor(); 
-        list<classRespuestaCambioAsesor> resultado = new list<classRespuestaCambioAsesor>();
-         
-		system.debug('Entro al REST del EDC');
-		try{
-            						
-			classJson envio = new classJson();
-			envio.contenido = JSON.serialize(claseEnvio);
-			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
-			request.setBody(cons);	
-			HttpResponse response = http.send(request);
-	    	respuesta = response.getBody();
-            system.debug(respuesta);  
-            
-            resultado = (list<classRespuestaCambioAsesor>)JSON.deserialize(response.getBody(), list<classRespuestaCambioAsesor>.class);
-            
-            respuesta = String.valueOf(resultado);
-            system.debug('Respuesta'+ resultado);
-            system.debug('Respuesta_texto '+ respuesta); 
-           
-            fcsd.sizeResu = resultado.size();
-            
-            
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage());
-	
-        }Catch(Exception e){
-			system.debug(e.getMessage());	
-		} 
-		return resultado;   
-     }*/
     
     //DENEGAR
     public static list<classRespuestaCambioAsesor> BitacoraDCambioAsesor(enviarCambioAsesor claseEnvio) {
@@ -264,63 +219,68 @@ public class Api_CambioAsesor {
 		return resultado;   
     }
     
-    /*public static list<classRespuestaCambioAsesor> BitacoraDCambioAsesor(enviarCambioAsesor claseEnvio)
-     {
+   
+    public class deserializeResponse{
+        public String valor1;
+        public String valor2;
+      
+    }       
+        
+    public class classRespuestaRiesgo
+    {
+        public string PC_NIVEL_RIESGO{get;set;}
+        public string PC_MEDIDA_APLICADA{get;set;}
+
+    }
+    public static list<classRespuestaRiesgo> NivelRiesgo(enviarValidarNivel claseEnvio)
+    {
+        
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
 		String url = claseUtil.urlSysde('Test');		
 		request.setMethod('POST');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);
-        request.setEndpoint(url + 'api/BitacoraCambioAsesor');
+		request.setEndpoint(url + 'api/ValidaNivel');
+        
+        deserializeResponse fcsd= new deserializeResponse(); 
+        list<classRespuestaRiesgo> resultado = new list<classRespuestaRiesgo>();        
 		
 		String respuesta = '';
-         
-        classRespuestaCambioAsesor fcsd= new classRespuestaCambioAsesor(); 
-        list<classRespuestaCambioAsesor> resultado = new list<classRespuestaCambioAsesor>();
-         
 		system.debug('Entro al REST del EDC');
-		try{
-            						
+		try{       
 			classJson envio = new classJson();
 			envio.contenido = JSON.serialize(claseEnvio);
 			String cons = 'contenido=' + envio.contenido;
 			system.debug(cons);		
 			request.setBody(cons);	
-			HttpResponse response = http.send(request);
-	    	respuesta = response.getBody();
-            system.debug(respuesta);  
+			HttpResponse response;
+            if(test.isRunningTest())
+            { 
+               respuesta='{"classRespuestaRiesgo":[{"Certificado":null,"Mensaje":"A"}]}';
+            	fcsd = (deserializeResponse)System.JSON.deserialize(respuesta, deserializeResponse.class);
+            }
             
-            resultado = (list<classRespuestaCambioAsesor>)JSON.deserialize(response.getBody(), list<classRespuestaCambioAsesor>.class);
-              
-            //List<classRespuestaCambioAsesor> delegationMap = (List<classRespuestaCambioAsesor>)JSON.deserialize(RestContext.request.requestBody.toString(), List<classRespuestaCambioAsesor>.class); 
-			//resultado = (List<classRespuestaCambioAsesor>)JSON.deserialize(RestContext.request.requestBody.toString(), List<classRespuestaCambioAsesor>.class); 
-         	
-            /*if (response.getStatusCode() == 200) 
-            {
-                prueba prueba2= new prueba();
-                //system.debug('Sysde'+response.getBody());
-                prueba2 = (prueba) JSON.deserialize(response.getBody(), prueba.class);
-               	resultado = prueba2.PruebaAse;
-                system.debug('ResultadoPrueba2' + resultado);
-              
-	        }*/
-    /*        respuesta = String.valueOf(resultado);
-            system.debug('Respuesta'+ resultado);
-            system.debug('Respuesta_texto '+ respuesta); 
-           
-            fcsd.sizeResu = resultado.size();
+            else{
+                response = http.send(request);
+                respuesta = response.getBody();
+                respuesta = respuesta.replace('"[', '[');
+                respuesta = respuesta.replace(']"', ']');
+                respuesta = respuesta.replace('\\"','"');        
             
+            //fcsd = respuesta.split(',');
+            system.debug('debuggRespuesta:' +''+ respuesta);
+            }            
             
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage() + ' LINEA ' + E.getLineNumber());
-	
-        }Catch(Exception e){
-			system.debug(e.getMessage() + ' LINEA ' +E.getLineNumber());	
+            resultado = (list<classRespuestaRiesgo>)JSON.deserialize(response.getBody(), list<classRespuestaRiesgo>.class);
+          	
+		}
+        
+        Catch(Exception e){
+			system.debug(e.getMessage());	
 		} 
-		return resultado;   
-     }   */      	   
-    
-    
+		return resultado;
+        
+    } 
    
 }

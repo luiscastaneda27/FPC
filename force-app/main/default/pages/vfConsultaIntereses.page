@@ -315,7 +315,7 @@
                                                         </label><br/>
                                                         <apex:selectList disabled="true" styleclass="slds-input"  size="1" value="{!pagoInteres.estadoAprobacion}" style="height:10px; width:160px; margin-left:10px;" >
                                                             <apex:selectOption itemLabel="--Ninguno--" itemValue=""   />
-                                                            <apex:selectOption itemLabel="Registrado" itemValue="R" />
+                                                            <apex:selectOption itemLabel="Aprobación" itemValue="R" />
                                                             <apex:selectOption itemLabel="Activo" itemValue="A" />
                                                             <apex:selectOption itemLabel="Inactivo" itemValue="I"  />
                                                             <apex:selectOption itemLabel="Rechazado" itemValue="D" />

@@ -22,12 +22,32 @@ global class ControladorCargarRezagos {
     public string mensaje{get;set;}
     public string tipoMoneda{get;set;}  
     public string usuario;
+    public Date CierreSysde;
+    FechaDC_Sysde__c FCS;
+    Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
 
     public ControladorCargarRezagos(){
         Codigo_Unico_Banco = ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
-        usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
+        //usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
+        List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+        System.debug('User: '+usr[0].Name);///////Marcooo
+        usuario = usr[0].Name;
+        mapInfoRezagos = new Map<String,InfoRezagos>();           
+        for(InfoRezagos.clientes IRc : ControllerApiRezagos.ConsultaRezagos()){
+            InfoRezagos Rez = new InfoRezagos();
+            Rez.clientes.add(IRc);
+            mapInfoRezagos.put(IRc.codReferencia,Rez);
+        }
+        
         tipoMoneda = ApexPages.currentPage().getParameters().get('Moneda');
         MostrarGuardar = true;
+    }
+    
+    public FechaDC_Sysde__c getFCS() {
+        if(FCS == null){                      
+            FCS = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
+        }
+        return FCS;
     }
     
     @RemoteAction
@@ -181,13 +201,23 @@ global class ControladorCargarRezagos {
                                 system.debug('Paso C.Y: '+dateyear);
                                 string datecomplete = '20'+dateyear+'-'+datemonth+'-'+dateday+' 06:00:00';
                                 DateTime DTime = DateTime.valueOf(datecomplete);
-                                if(DTime > DateTime.now()){
-                                    datecomplete = dateyear+'-'+dateday+'-'+datemonth+' 06:00:00';
-                                    DTime = DateTime.valueOf(datecomplete);
-                                    system.debug('Paso C.H: '+DateTime.now());
+                                aSysdeCallouts.fechaCierreSysde(date.today());
+                                list<FechaDC_Sysde__c> FechaCierreSysde = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia'];
+                                //String FCS = FechaCierreSysde[0].Fecha_cierre__c;
+                                Date FCS = Date.valueOf(datecomplete);
+                                System.debug('Cierre desde Sysde: '+FechaCierreSysde[0].Fecha_cierre__c+' Cierrre desde Archivo: '+FCS);
+                                If(FechaCierreSysde[0].Fecha_cierre__c==FCS){
+                                    if(DTime > DateTime.now()){
+                                        datecomplete = dateyear+'-'+dateday+'-'+datemonth+' 06:00:00';
+                                        DTime = DateTime.valueOf(datecomplete);
+                                        system.debug('Paso C.H: '+DateTime.now());
+                                    }
+                                    fdeposito.add(DTime);//Agrego la Fecha del Deposito
+                                    system.debug('Paso C: '+DTime);
+                                }else{
+                                    correcto=false;
+                                    fdeposito.add(null);
                                 }
-                                fdeposito.add(DTime);//Agrego la Fecha del Deposito
-                                system.debug('Paso C: '+DTime);
                             }else{
                                 correcto=false;
                                 fdeposito.add(null);
@@ -328,8 +358,7 @@ global class ControladorCargarRezagos {
             }
                 
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
         }
         system.debug('Rezlist: '+Rezlist);
 		return Rezlist;
@@ -348,11 +377,12 @@ global class ControladorCargarRezagos {
             for(integer count=0; count<resuelto.size(); count++){
                 
                 String consulta = resuelto[count].Referencia__c.replace('"','');
-                string resultado = ControllerApiRezagos.ConsultaRezagos(consulta);
-                List<String> SearchRes1 = resultado.split('},');
-                system.debug('Tamaño del Search: '+SearchRes1.size());
+                InfoRezagos resultado = new InfoRezagos();
+                if(mapInfoRezagos.containsKey(consulta)){
+                    resultado = mapInfoRezagos.get(consulta); 
+                }
                 
-                if(SearchRes1.size()==1 && resultado!='{"clientes":[]}' && !test.isRunningTest()){
+                if(resultado.clientes.size() == 1 && resultado.clientes != null && !test.isRunningTest()){
                     ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'El codigo de Referencia: "'+consulta+'" Ya Existe.'));
                     return null;
                 }
@@ -435,7 +465,9 @@ global class ControladorCargarRezagos {
                 System.debug('Sumo el estado: Pendiente');
                 clienteUnico.estado = 'PENDIENTE';
                 
-                System.debug('Sumo el incluidoPor: '+usuario);
+                List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+                System.debug('User: '+usr[0].Name);///////Marcooo
+                usuario = usr[0].Name;
                 if(usuario==null){usuario='System';}
                 clienteUnico.incluidoPor = usuario;
                 if(clienteUnico.fondo=='' || clienteUnico.codReferencia=='' || clienteUnico.fechaDeposito==null || clienteUnico.codigoMoneda=='' || clienteUnico.montoRezago=='' ||
@@ -451,17 +483,16 @@ global class ControladorCargarRezagos {
                 rezagoEnvio.ListRezagos = ListClientes;
                 resultado = ControllerApiRezagos.guardarRezago(rezagoEnvio);
             }else{
-                resultado='Datos en Blanco, Verifique los datos y el formato de su archivo cargado';
+                resultado='Verifique los datos y el formato de su archivo cargado.';
             }
             if((resultado == '"OK"' && correcto==true) || test.isRunningTest()){
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Datos Guardados Exitosamente'));
                 SendMails();//Ejecuto el envio de emails
             }else{
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al Guardar los datos ' + resultado));
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al Guardar los datos : ' + resultado));
             }
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
         }
         return null;
     }
@@ -469,49 +500,38 @@ global class ControladorCargarRezagos {
     public void SendMails(){
         try{
             system.debug('Tamaño de la lista: '+aseso.size());
-            for(integer count=0;count<aseso.size();count++){
+            Schema.DescribeFieldResult fieldResult = Account.Asesor__c.getDescribe();
+            List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
+            List<String> AsesorNames = new List<String>();
+            Map<String,String> AsesorData = new Map<String,String>();
+            for(Schema.PicklistEntry v : values){
+                AsesorData.put(v.getValue(), v.getLabel());
+                AsesorNames.add(v.getLabel());
+            }
+            System.debug('Datos de asesores cargados: '+AsesorData);
+            for(Integer count=0;count<aseso.size();count++){
+                System.debug('Busco el Asesor: '+aseso[count]);
                 Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-                
-                String asesorstr2='';
-                Schema.DescribeFieldResult fieldResult = Account.Asesor__c.getDescribe();
-                List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
                 List<String> mail = new List<String>();
-                if(aseso[count]!='TODOS'){    
-                    for( Schema.PicklistEntry v : values) {
-                        if(v.getValue() == aseso[count]){
-                            try{
-                                string asesorstr = v.getLabel();
-                                User[] usr = [Select email from user where name =: asesorstr Limit 1];
-                                if(usr.size() != 0){
-                                    User us = usr[0];
-                                    system.debug('Cargo Mail Individual: '+us.email);
-                                    mail.add(us.email);    
-                                }else{
-                                    system.debug('Nombre del Asesor: '+ asesorstr);
-                                    usr = [Select email from user];
-                                    User us = usr[0];
-                                    system.debug('Cargo Mail TODOS: '+ us.email);
-                                    mail.add(us.email);
-                                    System.debug('guarda todos los Mails'); 
-                                }
-                                
-                            }catch(exception ex){
-                                system.debug('Error al buscar usuario para el envio');
-                            }
-                        }
+                If( AsesorData.containsKey(aseso[count]) ){
+                    System.debug('El asesor esta en la lista: '+aseso[count]);
+                    String AsesorName = AsesorData.get(aseso[count]);
+                    try{
+                        List<User> UserEmail = [SELECT email FROM User WHERE Name =: AsesorName Limit 1];
+                        if(UserEmail.size() == 1){
+                            System.debug('Cargo Mail Individual: '+UserEmail[0].email);
+                            mail.add(UserEmail[0].email);
+                        }                       
+                    }catch(exception ex){
+                        system.debug('Error al buscar usuario para el envio de email: ' + AsesorName);
                     }
                 }else{
-                    for( Schema.PicklistEntry v : values) {
-                        string asesorstr = v.getLabel();
-                        system.debug('Nombre del Asesor: '+ asesorstr);
-                        User[] usr = [Select email from user];
-                        User us = usr[0];
-                        system.debug('Cargo Mail TODOS: '+ us.email);
-                        mail.add(us.email);
+                    System.debug('Cargo todos los Email.');
+                    for(User item :[SELECT email FROM User WHERE Name IN :AsesorNames]){
+                        mail.add(item.email);
                     }
-                    System.debug('guarda todos los Mails');
-                }
-                mail.add('marco.calderon@intellectsystem.net');
+                    System.debug('Lista de Emails: '+mail);
+                } 
                 message.toAddresses = mail;
                 message.optOutPolicy = 'FILTER';
                 message.subject = 'Depósitos No Identificados';            
@@ -561,8 +581,8 @@ global class ControladorCargarRezagos {
                 }
             }
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al enviar el email : '+ ex.getMessage() + ' Linea: ' + ex.getLineNumber()));
         }
     }
 }

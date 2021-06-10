@@ -59,14 +59,14 @@
                                </td>
 
                                <td width = "450">
-                               	<label class="slds-form-element__label" for="inputSample">
+                               	<!--label class="slds-form-element__label" for="inputSample">
                              		<abbr class="slds-required" title="required"></abbr>  PEP
                              	</label>
 
                              	<label class="slds-checkbox">
                              		<apex:inputcheckbox disabled="true" onclick="actPEP()" value="{!PEP}" id="PEP"  styleclass="slds-input"  />
                              		<span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
-                             	</label>
+                             	</label-->
 
                              	<label class="slds-form-element__label" for="inputSample" style = "margin-left:69px">
                              		<abbr class="slds-required" title="required" style="height:15px; width:15px;"></abbr> AML
@@ -369,7 +369,7 @@
 
                             <td width = "490">
                             	<label class="slds-form-element__label" for="inputSample">
-                                	<abbr class="slds-required" title="required"></abbr> Debida Deligencia Aplicada
+                                	<abbr class="slds-required" title="required"></abbr> Medida Aplicada
                                 </label>
                               	<apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepBlo" value="{!debidaDiligencviaAplicada}"  size="1" style="height:9px; width:170px; margin-left: 7px;" >
 								<apex:selectOptions value="{!DeligenciaOptions}" />

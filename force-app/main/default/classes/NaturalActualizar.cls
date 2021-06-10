@@ -29,7 +29,6 @@ public with sharing class NaturalActualizar {
     public string PC_NIVEL_RIESGO {get;set;}
     public string pc_ActuaSI {get;set;}
     public string pcNumeroIDPV {get;set;}
-    public string PEPRepresentante{get;set;}
     public string FATCARepresentante{get;set;}
     public string FATCANCRepresentante{get;set;}
     public string pcNombreCompletoPV {get;set;}

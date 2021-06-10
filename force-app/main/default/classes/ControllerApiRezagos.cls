@@ -32,7 +32,7 @@ public class ControllerApiRezagos {
 		return respuesta;   
     }
     
-    public static String ConsultaRezagos(String consulta) {
+    public static List<InfoRezagos.clientes> ConsultaRezagos() {
         
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -43,20 +43,35 @@ public class ControllerApiRezagos {
         request.setEndpoint(url + 'api/consultaRezagos');
         String respuesta = '';
         system.debug('Entro al REST del EDC');
+        List<InfoRezagos.clientes> respuest = new List<InfoRezagos.clientes>();
         try{
             
-            classJson envio = new classJson();
-            envio.contenido = '{"numTransaccion":'+JSON.serialize(consulta)+'}';
+            /*classJson envio = new classJson();
+            envio.contenido = '{"numTransaccion":'+JSON.serialize('')+'}';
             String cons = 'contenido=' + envio.contenido;
-            system.debug(cons);		
-            request.setBody(cons);	
-            HttpResponse response = http.send(request);
+            system.debug(cons);	*/	
+            request.setBody('contenido={"numTransaccion":""}');	
+            
+            HttpResponse response = new HttpResponse();
+            if(!test.isRunningTest()){
+                response = http.send(request);
+            }else{
+            	response.setBody('{"clientes":[{"idRezago":"SF-135","montoRezago":"40000","fondo":"106","codReferencia":"FT20prueba4","fechaDeposito":"27-SEP-20","codigoMoneda":"USD","descripcion":"Transferencia entre Cuentas","descripcionNota":"Transferencia de la cuenta XX4156 de CRISTINA BANEGAS ZEITUN    100110 VENTA $","usuIngresaRezago":"HN02913","codBanco":"28","agnBanco":"AGN PRINCIPAL TGU","rezagoSINO":"SI","asesor":"HN23213","estado":"Pendiente","valorCuotaEntrada":"127.52636724","fecInclusion":"01-OCT-20","incluidoPor":"System","fecModificacion":"08-OCT-20","modificadoPor":"HN02913","montoPendienteAplicar":""},{"idRezago":"SF-135","montoRezago":"40000","fondo":"106","codReferencia":"FT20prueba5","fechaDeposito":"01-sep-20","codigoMoneda":"USD","descripcion":"Transferencia entre Cuentas","descripcionNota":"Transferencia de la cuenta XX4156 de CRISTINA BANEGAS ZEITUN    100110 VENTA $","usuIngresaRezago":"HN02913","codBanco":"28","agnBanco":"AGN PRINCIPAL TGU","rezagoSINO":"NO","asesor":"HN23213","estado":"Pendiente","valorCuotaEntrada":"127.52636724","fecInclusion":"01-OCT-20","incluidoPor":"System","fecModificacion":"08-OCT-20","modificadoPor":"HN02913","montoPendienteAplicar":""}]}');
+            }    
+
             respuesta = response.getBody();
             system.debug('Respuesta Search: '+respuesta);
+            
+            InfoRezagos test = (InfoRezagos)System.JSON.deserialize(respuesta,InfoRezagos.class);
+            respuest = test.clientes;
+            
+            //respuest = (List<InfoRezagos>)System.JSON.deserialize(respuesta, List<InfoRezagos>.class);
+            System.debug('Exito');
+            
         }Catch(Exception e){
             system.debug(e.getMessage());	
         } 
-        return respuesta;    
+        return respuest;    
     }
     
     public static String AplicaRezagosDia(ClassClientesRez Rez) {

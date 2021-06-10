@@ -1,6 +1,6 @@
 public class aSysdePortalEmpresarial {
        
-       public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
+     public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
         classDolares.classRespuestaDolares respuesta = new classDolares.classRespuestaDolares();
         try{
             Compra_Venta_Dolares__mdt dato = new Compra_Venta_Dolares__mdt();
@@ -40,16 +40,28 @@ public class aSysdePortalEmpresarial {
                 response.setStatusCode(200);
             }
             system.debug('Codigo: '+response.getStatusCode());
-            system.debug('Respuesta: '+response.getbody());
+            system.debug('Respuesta del servicio: '+response.getbody());
             if(response.getStatusCode() == 200){
                 respuesta = (classDolares.classRespuestaDolares)System.JSON.deserialize(response.getBody(), classDolares.classRespuestaDolares.class);
+                system.debug('Respuesta luego del status 200 Antes de Aplicar Parche: '+respuesta);           
+                if(respuesta.montoAcreditado==null && respuesta.tasaCambio!=null && respuesta.montoDebitado!=null){
+                    if(respuesta.monedaOrigen=='HNL'){
+                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)/Decimal.valueOf(respuesta.tasaCambio);
+                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
+                    }
+                    if(respuesta.monedaOrigen=='USD'){
+                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)*Decimal.valueOf(respuesta.tasaCambio);
+                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
+                    }
+                    
+                }
+                system.debug('Respuesta luego del status 200 Despues de Aplicar Parche: '+respuesta);
             }
         }catch(Exception ex){
             system.debug('Error ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());	
         }
         return respuesta;
     }
-   
     
     public static list<string> fechaCierreSysde() { 
          Http http = new Http();  

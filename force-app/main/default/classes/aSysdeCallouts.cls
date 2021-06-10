@@ -440,7 +440,7 @@ public class aSysdeCallouts {
                 System.debug(response.getBody());
                 Cuentas__c cuenta = new Cuentas__c(Id = detalle.Cuenta__c);
                                
-                if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' ) {
+                if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' || detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     update cuenta;
                 } else if(detalle.Tipo_Operacion__c == 'A4') {

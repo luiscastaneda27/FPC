@@ -45,6 +45,7 @@ public class ControllerProducto {
     public string pcmes {get;set;}
     public string pcAnioTarjeta {get;set;}
     public string pcPOS {get;set;}
+    public string pcTarjetaHabiente {get;set;}
     public string pcNombreConyuge {get;set;}
     public string pcProfesionOcupacion {get;set;}
     // public string pcProfesionOcupacion2 {get;set;}
@@ -416,6 +417,8 @@ public class ControllerProducto {
     public Reporte_calidad__C Afiliacion {get;set;}
     public string codigoAsignado{get;set;}
     
+    Public Detalle_caso__c detalleCaso{get;set;}
+    
     public ControllerProducto() 
     {   
         cuentas = new Cuentas__c();
@@ -497,6 +500,7 @@ public class ControllerProducto {
         TipMoneda = new Account();
         TipoAport = new Account();
         TipoEnvioo =  new Account();
+        detalleCaso =  new Detalle_caso__c();
         TipoEstadoCivil = new Account();
         NivelTRiesgo = new Account();
         NivelTDilegencia  = new Account();
@@ -521,8 +525,8 @@ public class ControllerProducto {
         Cuenta20 = new Cuentas__c();
         Cuenta22 = new Beneficiario__c();
         //ParentezcoDependen = new Beneficiario__c();
-        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
-        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
+        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
         telefonoUnico = new ClassTelefono('', null, '', '', '', null, '');
         direccionUnico = new ClassDirecion('', '', '', '', '', '', '','', null);
         //beneficiarioUnicoConti = new ClassBeneficiarioContigencia(null,'','','','','','','','','',null,null,null);
@@ -1208,7 +1212,7 @@ public class ControllerProducto {
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                             disbotBene = true;
                         }
                         else
@@ -1228,7 +1232,7 @@ public class ControllerProducto {
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                             disbotBene = true; 
                         }
                         return null;
@@ -1246,7 +1250,7 @@ public class ControllerProducto {
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                         disbotBene = true;
                         
                     }
@@ -1267,7 +1271,7 @@ public class ControllerProducto {
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                         disbotBene = true;  
                     }
                     return null;
@@ -1334,7 +1338,7 @@ public class ControllerProducto {
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                             disbotBeneC = true;
                         }
                         else
@@ -1354,7 +1358,7 @@ public class ControllerProducto {
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                             disbotBeneC = true; 
                         }
                         return null;
@@ -1372,7 +1376,7 @@ public class ControllerProducto {
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                         disbotBeneC = true;
                         
                     }
@@ -1393,7 +1397,7 @@ public class ControllerProducto {
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null,null,null,null);
                         disbotBeneC = true;  
                     } 
                     return null;
@@ -3371,6 +3375,7 @@ public class ControllerProducto {
         pcmes = null;
         pcAnioTarjeta = null;
         pcPOS = null;
+        pcTarjetaHabiente = null;
         pcNombreConyuge = null;
         TipoProfesion.Profesi_n_Ocupaci_n__c = null;
         pcmail = null;
@@ -4083,7 +4088,7 @@ public class ControllerProducto {
                         Messaging.sendEmail(listCorreo);
           
                     }
-                    if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
+                    if(pcformapago == 'AH' || pcformapago == 'TA' ||  pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
@@ -4105,11 +4110,14 @@ public class ControllerProducto {
                         fields.pcAnio = pcAnioTarjeta;
                         fields.pcMonto = pnmontoaporte;
                         fields.pcPOS = pcPOS;
+                        fields.pcTarjetaHabiente = detalleCaso.DAU_Tarjeta_Habiente__c;
+                        fields.pcTipoTarjeta = detalleCaso.DAU_Tipo_Tarjeta__c;
+                        fields.pcBanco = detalleCaso.Banco__c;
                         list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
                         fieldsList.add(fields);
                         UpdateCase.createRecord(fieldsList);
                     }
-                    
+                                       
                     final PageReference target = new
                     PageReference(Site.getBaseSecureUrl() + '/apex/vfpantallaclienteProducto?mensaje='+resultado);
                     target.setRedirect(true);
@@ -6300,7 +6308,7 @@ public class ControllerProducto {
     public void bloqueTarjet()
     {
         
-        if (pcformapago == 'TA' || pcformapago == 'AH' /*|| pcformapago == 'TAOB'*/)
+        if (pcformapago == 'TA' || pcformapago == 'AH' || pcformapago == 'TAOB')
         {
             BloqForma = false;
         }    

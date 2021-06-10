@@ -116,6 +116,8 @@ public class Controller_AprobacionPagoInteres {
         
     }
     
+    Map<String, String> mapEstado{get;set;}
+    
     
     
     public void MuestraRegistrados(){
@@ -124,6 +126,7 @@ public class Controller_AprobacionPagoInteres {
             
             classAdmInteres claseRecibida = new classAdmInteres();
             classAdmInteres AdmInteres = controllerAPIinteresAprobados.TraerRegistrados();
+             mapEstado = new map<String, String>();
             list<String> listIds = new list<String>();
             if(!test.isRunningTest()){
                ListIntRegistrados = AdmInteres.ListIntRegistrados; 
@@ -135,14 +138,21 @@ public class Controller_AprobacionPagoInteres {
                 fecha = string.valueOf(string.valueOf(dT.year())+'-'+string.valueOf(dT.month())+'-'+string.valueOf(dT.day()));
                 ListIntRegistrados[i].LEE_ERRORES = fecha;
                 listIds.add(String.valueOf(Integer.valueOf( ListIntRegistrados[i].cuenta )));
+                mapEstado.put(ListIntRegistrados[i].cuenta, 'A');
             }
             system.debug('Nuevo '+ListIntRegistrados);
             system.debug('Nuevo '+listIds);
             Map<String, String> mapObjectFiles = new Map<String, String>();
             List<String> ListObjct = new List<String>();
-            for(ObjectoReferenciaArchivos__c item: [Select Id, Name From ObjectoReferenciaArchivos__c Where Name in :listIds]){
+            for(ObjectoReferenciaArchivos__c item: [Select Id, Name,Estado__C From ObjectoReferenciaArchivos__c Where Name in :listIds]){
                 mapObjectFiles.put(item.Name, item.Id);
                 ListObjct.add(item.Id);
+                if(item.Estado__C != null){
+                    mapEstado.put(item.Name, item.Estado__C);
+                }
+            }
+            for(integer i=0; i<ListIntRegistrados.size(); i++){
+                ListIntRegistrados[i].estado = mapEstado.get(ListIntRegistrados[i].cuenta);
             }
             Map<String, String> mapFiles = new Map<String, String>();
             if(ListObjct.size() > 0){
@@ -176,7 +186,8 @@ public class Controller_AprobacionPagoInteres {
                 if(ListIntRegistrados[i].Id_pagointeres == Decimal.valueOf(ID_Referencia)){
                     classPagoInteresesRegA RA = new classPagoInteresesRegA();
                     RA = Cambio_de_clase(ListIntRegistrados[i]);
-                    RA.EstadoAprobacion = 'A';
+                    //RA.EstadoAprobacion = 'A';
+                    RA.EstadoAprobacion = mapEstado.get(RA.Cuenta);
                     RA.fechadeActivacion = datetime.now();
                     CuentaAprobadoD = RA.Cuenta;
                     cuenta = RA.Cuenta;
@@ -417,7 +428,8 @@ public class Controller_AprobacionPagoInteres {
                 classPagoInteresesRegA RA = new classPagoInteresesRegA();
                 RA = Cambio_de_clase(ListIntRegistrados[i]);
                 listIds.add(ListIntRegistrados[i].Cuenta);                                           
-                RA.EstadoAprobacion = 'A';
+                //RA.EstadoAprobacion = 'A';
+                RA.EstadoAprobacion = mapEstado.get(ListIntRegistrados[i].Cuenta);
                 RA.fechadeActivacion = datetime.now();
                 listS.add(RA);
                 Bitacora(RA);                

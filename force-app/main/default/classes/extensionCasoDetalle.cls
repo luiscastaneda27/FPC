@@ -1,4 +1,4 @@
-public class extensionCasoDetalle {
+public class extensionCasoDetalle { 
     public claseTipoCaso cTipoCaso{get;set;}
     public Case Caso{get;set;}
     
@@ -1155,6 +1155,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
     }
     
     public void continuarAlPaso2(){
+                
         RecordType registro =[select id,DeveloperName from RecordType where DeveloperName =:idTipoRCaso or id=:idTipoRCaso];
         Caso.recordTypeId = registro.id;
         cTipoCaso = new claseTipoCaso(registro.DeveloperName);
@@ -1191,7 +1192,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                      listTasaCambio.add(p);
                      if(!test.isRunningTest()) {listTasaCambio = tasaCambio.traertasacambio(listTasaCambio);}
                  }
-                 if(( cuentaCliente.Forma_Aportacion__c=='PL' ||cuentaCliente.Forma_Aportacion__c=='TA' || cuentaCliente.Forma_Aportacion__c=='AH' ||cuentaCliente.Forma_Aportacion__c=='CK' )
+                 if(( cuentaCliente.Forma_Aportacion__c=='PL' || cuentaCliente.Forma_Aportacion__c=='TA' || cuentaCliente.Forma_Aportacion__c=='AH' || cuentaCliente.Forma_Aportacion__c=='CK' )
                     && cTipoCaso.aumDisAporte && caso.Origin !='Agencias_Banco'){
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Esta gestión solo se puede realizar de manera presencial en cualquier agencia.')); 
                         return ;
@@ -1382,7 +1383,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                     
                 }else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
     
-                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Banco__c == '28') {
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' /*|| detalleCaso.Banco__c == '28'*/) {
                         if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1435,8 +1436,6 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         }
                     }  
                     if(detalleCaso.Nuevo_canal_aporte__c == 'TAOB' || detalleCaso.Banco__c == 'Otros Bancos') {
-                        /*String Respuesta = DAU_GestionesBac.executeCancel(Caso.Id);
-                        caso.Respuesta_SF_Tarjetas__c = Respuesta;*/
                         List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = Caso.Id));
                         // Call method to publish events
@@ -1589,8 +1588,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             req1.setProcessDefinitionNameOrId('AumentoDisminucion');
                             caso.Aprobado__c=false;                            
                             //Approval.ProcessResult result = Approval.process(req1);
-                            verCaso();
-                            
+                            verCaso();                           
                         } else if(caso.Origin != 'Agencias_Banco'){ 
                             mostrarEnviarAprobacion= false;
                         } else if(cuentaCLiente.Forma_Aportacion__c=='PL'){
@@ -1598,28 +1596,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             caso.Aprueba_SAC__c = true;
                             mostrarEnviarAprobacion= true;
                             solicitud = AFPCCasos.upsertCaso(caso);
-                        } else if(cuentaCLiente.Forma_Aportacion__c == 'AH' || cuentaCLiente.Forma_Aportacion__c =='CK' ||  cuentaCLiente.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3' || detallecaso.Tipo_Operacion__c=='A4' || detallecaso.Tipo_Operacion__c=='A5' || detallecaso.Tipo_Operacion__c=='A6'){
-                            /*caso.Enviar_aprobacion_AD__c = true;
-                            caso.Aprueba_SAC__c = false;
-                            mostrarEnviarAprobacion= true;*/
-                            
-                            
-                            
-                            //if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Banco__c == '28') {
-                                /*if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
-                                    System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
-                                    updateCase.wrapperClass wc = new updateCase.wrapperClass();
-                                    wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Identidad);
-                                    System.debug('validar Identidad: '+wc);
-                                    caso.DAU_Identidad__c = wc.DAU_Identidad;
-                                    caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
-                                    caso.DAU_aprobacion__c = wc.DAU_aprobacion;
-                                    caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
-                                }*/
-                            //}
-                            
-                            //solicitud = AFPCCasos.upsertCaso(caso);
-                        }
+                        } 
                         if(detallecaso.Tipo_Operacion__c == 'A2') {  
                             System.debug('Caso de disminución de aporte');
                             List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: mapcuentas.get(idCuenta).Producto__c];

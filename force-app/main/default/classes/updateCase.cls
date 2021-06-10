@@ -75,7 +75,7 @@ public class updateCase {
     //Inicio Crear cliente, cuenta y gestión desde afiliación electrónica
     public static void createRecord(List<FieldsBankManagement> values) {
     	System.debug('values: '+values);   
-        String pctipoid, pcnroid, cuenta, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcPOS;
+        String pctipoid, pcnroid, cuenta, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco;
         Double pcMonto;
         for(FieldsBankManagement f : values) {
         	pctipoid = f.pctipoid;
@@ -94,6 +94,9 @@ public class updateCase {
             pcAnio = f.pcAnio;
             pcMonto = f.pcMonto;
             pcPOS = f.pcPOS;
+            pcTarjetaHabiente = f.pcTarjetaHabiente; 
+            pcTipoTarjeta = f.pcTipoTarjeta; 
+            pcBanco = f.pcBanco;
         }
         System.debug('pctipoid: '+pctipoid+'--- pcnroid: '+pcnroid+'--- cuenta: '+cuenta+'--- pcprimernombre: '+pcprimernombre+'--- pcprimerapellido: '+pcprimerapellido+'--- pcmail: '+pcmail+'--- pnnrocertificado: '+pnnrocertificado+'--- tipoFondo: '+tipoFondo+'--- frecuencia: '+frecuencia+'--- pcformapago: '+pcformapago+'--- pccuentapago: '+pccuentapago+'--- diaPago: '+diaPago);
         List<Account> cuentaExiste = [Select Id,Identificacion__c From Account Where Identificacion__c =: pcnroid Limit 1];
@@ -112,7 +115,7 @@ public class updateCase {
             cuentac.Forma_Aportacion__c = pcformapago;
             insert cuentac;
             System.debug('cuentac: '+cuentac);
-            updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS);   
+            updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco);   
         } else {
             System.debug('Cliente no existe');
         	Account cta = new Account();
@@ -125,10 +128,10 @@ public class updateCase {
             //cta.OwnerId = pcpromotor;
             insert cta;
             System.debug('cta: '+cta);
-            updateCase.createCuentaC(pcnroid, cta.Id, cuenta, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS);
+            updateCase.createCuentaC(pcnroid, cta.Id, cuenta, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco);
         }
     }
-    public static void createCuentaC(String pcnroid, String cliente, String cuenta, String pnnrocertificado, String tipoFondo, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS) {
+    public static void createCuentaC(String pcnroid, String cliente, String cuenta, String pnnrocertificado, String tipoFondo, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco) {
     	System.debug('Nueva Cuenta: '+cuenta);
         System.debug('Nuevo cliente: '+cliente);
         Cuentas__c cuentac = new Cuentas__c();
@@ -144,9 +147,9 @@ public class updateCase {
         cuentac.Forma_Aportacion__c = pcformapago;
         insert cuentac;
         system.debug('cuentac: '+cuentac);
-        updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS);    
+        updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco);    
     }
-    public static void createManagementAfiliation(String pcnroid, String cliente, String cuenta, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS) {
+    public static void createManagementAfiliation(String pcnroid, String cliente, String cuenta, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco) {
     	//Crear caso de Afiliación de Débito Automático
         String RecordTypeId = [Select Id From RecordType Where SobjectType = 'Case' and Name = 'Modificación de aportes'].Id;          
         Case c = new Case();
@@ -165,9 +168,9 @@ public class updateCase {
         c.DAU_aprobacion__c = false;
         Insert c;
         System.debug('Caso guardado: '+c);  
-        updateCase.createDetailAfiliation(c, pcnroid, cuenta, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS);    
+        updateCase.createDetailAfiliation(c, pcnroid, cuenta, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco);    
     }
-    public static void createDetailAfiliation(Case caso, String pcnroid, String cuentac, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS) {
+    public static void createDetailAfiliation(Case caso, String pcnroid, String cuentac, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco) {
     	//Crear detalle de caso de Afiliación de Débito Automático
     	Detalle_caso__c detcaso = new Detalle_caso__c();
         detcaso.Caso__c = caso.Id;
@@ -181,9 +184,14 @@ public class updateCase {
         detcaso.Ano_tarjeta__c = pcAnio;
         detcaso.Nuevo_monto_aporte__c = pcMonto;
         detcaso.POS__c = pcPOS;
+        detcaso.DAU_Tarjeta_Habiente__c = pcTarjetaHabiente;
+        detcaso.DAU_Tipo_Tarjeta__c = pcTipoTarjeta;
+        detcaso.Banco__c = pcBanco;
         insert detcaso;
         System.debug('detcaso: '+detcaso);
-		validarIdentidad2(String.valueOf(caso.Id), pccuentapago, pcnroid);  
+        if(pcformapago == 'TA') {
+			validarIdentidad2(String.valueOf(caso.Id), pccuentapago, pcnroid);  
+        }    
     }
     
     //@Future(callout=true)

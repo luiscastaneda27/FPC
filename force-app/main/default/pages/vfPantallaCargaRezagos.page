@@ -178,12 +178,21 @@
                                     <span class="slds-text-heading_medium"> FICOHSA PENSIONES / CARGAR NO IDENTIFICADOS</span>
                                     <br/><br/>
                                 </h2>
-                                
+                                <h6>
+                                    <apex:variable var="Fecha" value="{!FCS}" />
+                                    <span class="slds-text-heading_medium"> Fecha Cierre Sysde : <apex:outputText value="{0, date, dd'-'MM'-'yyyy}">
+                                        <apex:param value="{!Fecha.Fecha_cierre__c}" /> 
+                                        </apex:outputText>
+                                    </span>
+                                    <br/><br/>
+                                </h6>
                             </div>
+                            
                         </header>
                         
                         <div style="height:50px;background-color: #F2F2F2;">
                             <br/>
+                            
                             <br/>
                         </div>
                         
@@ -199,7 +208,7 @@
                             </h3>
                         </div>
                         <br/>
-                        
+  
                         <article class="slds-card slds-theme_default" style="border:0;">                
                             <div class="slds-card__header slds-grid">
                                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -319,22 +328,22 @@
                     if (event.status) {
                         //Se insertan los datos en la tabla
                         var er='';
-                        var erfech='';
                         for(b=0;b<result.length;b++){
-                            if(result[b].Fondo__c.includes('ERROR')){er='ERROR';document.getElementById('Fondo').style.color = "red";}
-                            if(result[b].Referencia__c.includes('ERROR')){er='ERROR';document.getElementById('Referencia').style.color = "red";}
-                            if(result[b].Fecha_del_deposito__c == null){er='ERROR';erfech='ERROR';document.getElementById('Fecha').style.color = "red";}
-                            if(result[b].Moneda_del_deposito__c.includes('ERROR')){er='ERROR';document.getElementById('Moneda').style.color = "red";}
-                            if(result[b].Monto_del_deposito__c.includes('ERROR')){er='ERROR';document.getElementById('Monto').style.color = "red";}
-                            if(result[b].Banco__c.includes('ERROR')){er='ERROR';document.getElementById('Banco').style.color = "red";}
-                            if(result[b].Asesor_Rezago__c.includes('ERROR')){er='ERROR';document.getElementById('Asesor').style.color = "red";}
-                        }
-                        for(a=0;a<result.length;a++){                        
-                            document.getElementById('Fondo').innerHTML += result[a].Fondo__c +'<br/>';
-                            document.getElementById('Referencia').innerHTML += result[a].Referencia__c +'<br/>';
-                            //Pasamos la fecha de DateTime a String y la seteamos al formato del cliente
-                            if(erfech==''){
-                                var dateobj = new Date(result[a].Fecha_del_deposito__c);
+                            document.getElementById('Fondo').innerHTML += result[b].Fondo__c +'<br/>';
+                            if(result[b].Fondo__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Fondo').style.color = "red";
+                            }
+                            
+                            document.getElementById('Referencia').innerHTML += result[b].Referencia__c +'<br/>';
+                            if(result[b].Referencia__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Referencia').style.color = "red";
+                            }
+                            if(result[b].Fecha_del_deposito__c == null){
+                                document.getElementById('Fecha').innerHTML += 'ERROR: Fecha Incorrecta o campo Vacio.' + '<br/>';
+                                document.getElementById('Fecha').style.color = "red";
+                                er='ERROR';
+                            }else{
+                                var dateobj = new Date(result[b].Fecha_del_deposito__c);
                                 //alert('Fecha de la lista a mostrar antes de transformar'+dateobj);
                                 var dd = dateobj.getDate();
                                 var mm = dateobj.getMonth() + 1;
@@ -343,16 +352,26 @@
                                 if(mm<10){mm='0'+mm;}
                                 var B = dd + '/' + mm + '/' + yyyy;
                                 document.getElementById('Fecha').innerHTML += B + '<br/>';
-                            }else{
-                            	document.getElementById('Fecha').innerHTML += 'ERROR: Campo Vacio.' + '<br/>';
                             }
-                            document.getElementById('Moneda').innerHTML += result[a].Moneda_del_deposito__c +'<br/>';
-                            document.getElementById('Monto').innerHTML += result[a].Monto_del_deposito__c +'<br/>';
-                            document.getElementById('Desc').innerHTML += result[a].Descripcion__c +'<br/>';
-                            document.getElementById('DescNota').innerHTML += result[a].Descripcion_Nota__c +'<br/>';
-                            document.getElementById('Banco').innerHTML += result[a].Banco__c +'<br/>';
-                            document.getElementById('AOrigen').innerHTML += result[a].Agencia_Origen__c +'<br/>';
-                            document.getElementById('Asesor').innerHTML += result[a].Asesor_Rezago__c +'<br/>';
+                            document.getElementById('Moneda').innerHTML += result[b].Moneda_del_deposito__c +'<br/>';
+                            if(result[b].Moneda_del_deposito__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Moneda').style.color = "red";
+                            }
+                            document.getElementById('Monto').innerHTML += result[b].Monto_del_deposito__c +'<br/>';
+                            if(result[b].Monto_del_deposito__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Monto').style.color = "red";
+                            }
+                            document.getElementById('Desc').innerHTML += result[b].Descripcion__c +'<br/>';
+                            document.getElementById('DescNota').innerHTML += result[b].Descripcion_Nota__c +'<br/>';
+                            document.getElementById('Banco').innerHTML += result[b].Banco__c +'<br/>';
+                            if(result[b].Banco__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Banco').style.color = "red";
+                            }
+                            document.getElementById('AOrigen').innerHTML += result[b].Agencia_Origen__c +'<br/>';
+                            document.getElementById('Asesor').innerHTML += result[b].Asesor_Rezago__c +'<br/>';
+                            if(result[b].Asesor_Rezago__c.includes('ERROR')){
+                                er='ERROR';document.getElementById('Asesor').style.color = "red";
+                            }
                         }
                         //Muestra el boton luego de cargar los datos.
                         var x = document.getElementById("pqr");

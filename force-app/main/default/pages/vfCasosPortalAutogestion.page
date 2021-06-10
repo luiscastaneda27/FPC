@@ -1011,7 +1011,7 @@
                         </section>
                         <div class="slds-backdrop slds-backdrop_open"></div>
                     </apex:outputPanel>
-                    
+                   
                     <!-- MODAL PARA MOSTRAR PDF -->
                     <apex:outputPanel rendered="{!urlPagina !=null}">
                         <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">

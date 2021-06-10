@@ -18,6 +18,8 @@ public class formularioIdentificacion_PDF_CONT {
     public String Mu {get;set;}
     public String Co {get;set;}
     public string Nac {get;set;}
+    public string Nac2 {get;set;}
+    public string Nac3 {get;set;}
     public datetime fechaForm {get;set;}
     
     /*public string pcUsuarioCN {get;set;}
@@ -183,13 +185,18 @@ public class formularioIdentificacion_PDF_CONT {
 				PFisNacionalidad = mapNaFis.get(info.PaisResidenciaEfectosFiscales );                  
                 //NACIONALIDAD
                 
-                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
-                    mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+               /* for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.pcnacionalidad limit 1]){
+                 nac=   mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
                 }
-                nac=mapNac.get(info.ListDirecciones[i].paisDir);
+                */
                 //info.pcnacionalidad2=mapNaci.get(info.pcnacionalidad2);
                 //info.pcnacionalidad3=mapNaci.get(info.pcnacionalidad3);
-                
+                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
+                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+                nac= itemNA.nacionalidad__c;
+                //info.pcnacionalidad2 = itemNA.nacionalidad__c;    
+                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad + info.pcnacionalidad2 + Nac2);
+            	}
                 //DEPARTAMENTO
                 
                 for (Departamentos__c itemDe:[SELECT Departamento__c, codigo_departamento__c,codigo_pais__c from Departamentos__c where codigo_pais__c =: info.ListDirecciones[i].paisDir

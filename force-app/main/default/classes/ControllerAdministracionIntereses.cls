@@ -501,7 +501,8 @@ public class ControllerAdministracionIntereses {
                       }
                       
                       String cuenta = ClassInteres.Cuenta;  
-                      ClassInteres.estadoAprobacion = pagoInteres.estadoAprobacion;
+                      String estadoActual = pagoInteres.estadoAprobacion;
+                      ClassInteres.estadoAprobacion = 'R';
 					  ClassInteres.ultUsuCaso = usuario;                      
                       
                       String resultado2 = ControllerAPIPagoIntereses.MODIFICARINFO(ClassInteres);
@@ -512,7 +513,7 @@ public class ControllerAdministracionIntereses {
                       Cancelar();
                       comprobante = null;
                       if(resultado2.contains('"MODIFICADO CORRECTAMENTE"') && file!= null){
-                          ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta);
+                          ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta, Estado__C = estadoActual);
                           upsert a Cuenta__c;
                           Boolean flag = insertFIle (file, nombreArchivo, a.Id);
                           file = null;
@@ -735,7 +736,8 @@ public class ControllerAdministracionIntereses {
                           system.debug('ImagenConvertida'+' --- '+ hy);
                       }
             String cuenta = ClassInteres.Cuenta;  
-            ClassInteres.estadoAprobacion = pagoInteres.estadoAprobacion;
+            String estadoInteres = pagoInteres.estadoAprobacion;
+            ClassInteres.estadoAprobacion = 'R';
             ClassInteres.ultUsuCaso = usuario; 
             String resultado2 = ControllerAPIPagoIntereses.INSERTAINFO(ClassInteres);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado2));
@@ -748,7 +750,7 @@ public class ControllerAdministracionIntereses {
             
             //PARTE ANADIDA POR INTELLECT
             if(resultado2.contains('"REGISTRADO CORRECTAMENTE"') && file!= null){
-                ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta);
+                ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = cuenta, Cuenta__c = cuenta, Estado__c = estadoInteres);
                 upsert a Cuenta__c;
                 Boolean flag = insertFIle (file, nombreArchivo, a.Id);
                 nombreArchivo = null;

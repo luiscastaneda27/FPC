@@ -22,7 +22,7 @@ public class testClienteNaturalAgn {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+       // cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
@@ -156,7 +156,7 @@ public class testClienteNaturalAgn {
         cliente.Prob1 = null;
         cliente.pc_Actuano_no = null;
         cliente.Prueba = '';
-        cliente.Distribucion = null;
+        //cliente.Distribucion = null;
         cliente.fechaBeneficiario = null;
         cliente.num = null;
         cliente.numConti = null;
