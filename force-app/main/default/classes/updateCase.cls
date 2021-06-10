@@ -163,7 +163,11 @@ public class updateCase {
         c.Reason = 'Otro';
         c.Enviar_aprobacion_AD__c = true;
         c.Aprobado__c = false;
-        c.Archivo_Adjunto__c = false;
+        if(pcformapago == 'TAOB') {
+        	c.Archivo_Adjunto__c = true;	    
+        } else { 
+        	c.Archivo_Adjunto__c = false;
+        }    
         c.Viene_Portal_Autogestion__c = false;
         c.DAU_aprobacion__c = false;
         Insert c;
@@ -190,7 +194,15 @@ public class updateCase {
         insert detcaso;
         System.debug('detcaso: '+detcaso);
         if(pcformapago == 'TA') {
-			validarIdentidad2(String.valueOf(caso.Id), pccuentapago, pcnroid);  
+			validarIdentidad2(String.valueOf(caso.Id), pccuentapago, pcnroid); 
+        }    
+        if(pcformapago == 'TAOB') {
+            System.debug('Se envía el caso a aprobación de operaciones');
+            //SolicitudCaso solicitud = AFPCCasos.envioAprobacion(caso.Id, 'AumentoDisminucion');
+            Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest(); 
+            req1.setObjectId(caso.Id); 
+            req1.setProcessDefinitionNameOrId('AumentoDisminucion'); 
+            Approval.ProcessResult result = Approval.process(req1);     
         }    
     }
     

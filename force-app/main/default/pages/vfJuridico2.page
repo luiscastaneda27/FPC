@@ -1,5 +1,5 @@
 <apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
-           title="Ficohsa FPC" cache="false" expires="0" controller="ControllerPantJuridProduc" showQuickActionVfHeader="false" id="page">
+           title="Ficohsa FPC" cache="false" expires="0" controller="Juridico2" showQuickActionVfHeader="false" id="page">
     <apex:slds />
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
         <head>
@@ -4222,7 +4222,8 @@
                                                             </label>
                                                             
                                                             <apex:input type="date" disabled="true" value="{!fechaValida}" id="pcFechaValidacionCN" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;"/>
-                                                            
+                                                            <apex:commandButton action="{!ValidaRiesgo}" value="Valida Riesgo"  styleClass="slds-button slds-button--brand" style="height:35px; width:150px; margin-left:10px "/>        
+ 
                                                             
                                                         </td>    
                                                     </tr>

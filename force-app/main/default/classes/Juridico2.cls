@@ -4635,6 +4635,7 @@ public class Juridico2 {
       public pageReference guardar(){
         try{
                 ClassPantJuridicoProduc juridicoEnvio = new ClassPantJuridicoProduc();
+            	ValidaRiesgo();
                 juridicoEnvio.numtran = numtran; //Agregado 08/04/2020
                 juridicoEnvio.pcagencia /*Cod_Agencia*/ = pcagencia;
                 juridicoEnvio.pcempresa /*Cod_Agencia*/ = pcempresa;
@@ -7402,11 +7403,10 @@ public class Juridico2 {
             {
                 naturalEnvio.pcPEP = 'N'; 
             } 
-             
             validaDatos = NEW List<ContenidoValidaNivelJ>();                
                     validaDatos.add(new ContenidoValidaNivelJ(Cuenta20.Tipo_Fondo__c,
                                                               FECHA_CONSTITUCION,
-                                                              pcGiroEmpresaEmpCN,
+                                                              Cliente25.Sector__c,
                                                               naturalEnvio.pcAPNFD,
                                                               naturalEnvio.pcFATCA,
                                                               naturalEnvio.pcPEP,
@@ -7423,7 +7423,7 @@ public class Juridico2 {
             PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
             PC_NIVEL_RIESGO = csharp.substring(61,62);
             //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
-            system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO);
+            system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO + ' ' + Cliente25.Sector__c + '' +Cuenta20.Tipo_Fondo__c);
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());   

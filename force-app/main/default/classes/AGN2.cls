@@ -2304,6 +2304,7 @@ public without sharing class AGN2 {
         else {direccionUnico.esDefault ='N';} 
            Ppais = direccionUnico.paisDir;
            Pdepto = direccionUnico.deptoDir ;
+           pcDeptoCN = direccionUnico.deptoDir ;
            system.debug('pruebaPais:' + direccionUnico.paisDir + ' Depto: ' + direccionUnico.deptoDir + 'Mun: ' + direccionUnico.ciuDir + 
                         'Col ' + direccionUnico.coloDir + 'Tipo:' + direccionUnico.tipDireccion);     
         try
@@ -4463,6 +4464,7 @@ public without sharing class AGN2 {
         
         naturalEnvio.pccodpais = pcnacionalidad;
         naturalEnvio.pcnacionalidad = pcnacionalidad;
+        // naturalEnvio.pcDeptoCN = pcDeptoCN;
        
         if (pcnacionalidad2 == ' --Ninguno-- ')
         {

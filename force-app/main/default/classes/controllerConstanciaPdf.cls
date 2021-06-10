@@ -540,10 +540,6 @@ public class controllerConstanciaPdf{
             }
             html=html.replace('[getMostrarTasaCambio]',repla);
             html=html.replace('[getHoyTS]','');
-            
-            if(html.contains('[getCuentaCliente]')){
-               html = html.replace('[getCuentaCliente]', cuenta.Codigo__c +' del Fondo '+cuenta.FondoInversionCP__c);
-            } 
         }
         if(html.contains('[getDirigidoA]')){
             html = html.replace('[getDirigidoA]', CasoTratar.Account.Name);
@@ -556,7 +552,9 @@ public class controllerConstanciaPdf{
         }
         if(!detallesCaso.isEmpty() && esConstancia){
             if(html.contains('[getCuentaCliente]')){
-               html = html.replace('[getCuentaCliente]', cuenta.Codigo__c);
+               html = casoTratar.Constancia__c =='Pignoración' 
+                   ? html.replace('[getCuentaCliente]',(cuenta.Codigo__c +' del Fondo '+cuenta.FondoInversionCP__c))
+                   : html.replace('[getCuentaCliente]', cuenta.Codigo__c);
                 
             } 
             if(html.contains('[getFechaRealizacionAporte]') && detallesCaso[0].fecha_aporte__c!=null){

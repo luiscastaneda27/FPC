@@ -11,10 +11,10 @@ public class ContenidoValidaNivelJ {
     //CANAL
     public string pcagencia /*pc_Agencia*/{ get; set; }
     //GEOGRAFICO    
-    public string pcMunicipioCN /*Municipio_Direccion*/ { get; set; }
+    public string pcDeptoCN /*Depto*/ { get; set; }
     
     public ContenidoValidaNivelJ(string pcTipoFondo,dateTime FECHA_CONSTITUCION,string pcGiroEmpresaEmpC,
-                                 string pcAPNFD,string pcFATCA,string pcPEP,string pcproducto, string pcagencia, string pcMunicipioCN){
+                                 string pcAPNFD,string pcFATCA,string pcPEP,string pcproducto, string pcagencia, string pcDeptoCN){
                                      
                                      this.pcTipoFondo=pcTipoFondo;
                                      this.FECHA_CONSTITUCION=FECHA_CONSTITUCION;
@@ -24,6 +24,6 @@ public class ContenidoValidaNivelJ {
                                      this.pcPEP= pcPEP;    
                                      this.pcproducto = pcproducto;
                                      this.pcagencia = pcagencia;
-                                     this.pcMunicipioCN = pcMunicipioCN;                                     
+                                     this.pcDeptoCN = pcDeptoCN;                                     
                                  }      
 }

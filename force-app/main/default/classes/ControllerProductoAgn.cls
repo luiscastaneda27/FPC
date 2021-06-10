@@ -1395,10 +1395,7 @@ insert reg;
             resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(ApexPages.currentPage().getParameters().get('hytrd'));
             
             for(integer j=0; j<resultado2.size(); j++) {
-                if (resultado2[j].rol == 'OFSAC'||resultado2[j].rol =='OFSRCU'){
-                    MostarActualizar=true;
-                    MostarActualizarFechaSeguro = true;
-                }else{
+                if (resultado2[j].rol == 'AFILI' || resultado2[j].rol =='OFJROP' ){
                     MostarActualizar=false;
                     ActNombre = true;
                     ActNombre2 = true;
@@ -1406,8 +1403,12 @@ insert reg;
                     ActApellido2 = true;
                     ActId = true;
                     MostarActualizarFechaSeguro = false;
+                }else{
+                    MostarActualizar=true;
+                    MostarActualizarFechaSeguro = true;
                     
                 }
+                break;
             }            
         }catch(exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
