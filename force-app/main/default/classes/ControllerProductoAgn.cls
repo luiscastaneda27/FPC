@@ -4409,7 +4409,7 @@ paso2Cuerpo = 'slds-hide';
     public pageReference guardar(){
         try{
             ClienteNaturales naturalEnvio = new ClienteNaturales();
-            validaRiesgo();
+            ValidaRiesgo();
             naturalEnvio.numtran = numtran; //Agregado 08/04/2020
             naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
             naturalEnvio.PCEMPRESA = pcempresa;    
@@ -4540,6 +4540,7 @@ paso2Cuerpo = 'slds-hide';
             
             naturalEnvio.pccodpais = pcnacionalidad;
             naturalEnvio.pcnacionalidad = pcnacionalidad;
+            naturalEnvio.pcDeptoCN = Pdepto;//pcDeptoCN; 
             
             if (pcnacionalidad2 == ' --Ninguno-- ')
             {
