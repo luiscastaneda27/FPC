@@ -77,7 +77,7 @@ public class ControladorReporteCalidadIndividuales {
                 afiliacion.Fecha_Validacion__c  = date.today();
                 update afiliacion;
                 afiliacion.Espediente_Completo__c = 'S';
-                URLPagina =claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProducto?idAfiliacion='+afiliacion.id+'&hytrd='+usuario;
+                URLPagina =claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProductoAGN?idAfiliacion='+afiliacion.id+'&hytrd='+usuario;
                 reinicar();
                 return new PageReference (URLPagina);
                 

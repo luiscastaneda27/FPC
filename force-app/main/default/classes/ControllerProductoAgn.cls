@@ -446,6 +446,10 @@ public without sharing class ControllerProductoAgn {
     //public string PC_NIVEL_RIESGO{get;set;}
     public string PC_MEDIDA_APLICADA{get;set;}
     
+    //Agregadas por Luis
+    public string idAfiliacion{get; set;}
+    public Reporte_calidad__C Afiliacion {get;set;}
+    
     public ControllerProductoAgn() {    
         validadosBeneficiarios =  true;
         validadosBeneficiariosC = true;
@@ -455,6 +459,26 @@ public without sharing class ControllerProductoAgn {
         string cuentaG = '';
         llenarEmpresas();
         pcUsuarioCN =  ApexPages.currentPage().getParameters().get('hytrd');
+        idAfiliacion =  ApexPages.currentPage().getParameters().get('idAfiliacion');
+        Afiliacion =new Reporte_calidad__C();
+        if(idAfiliacion!=null){
+            afiliacion = [select name, segundo_nombre__C, primer_apellido__c, segundo_apellido__C,
+                          Asesor_Comercial__c, Codigo_Asesor_Comercial__c,empresa__r.name,
+                          Estado__C,Espediente_Completo__c,
+                          //CAMPOS PARA LLENAR
+                          Numero_de_Cliente__c, Numero_de_Contrato__c ,Numero_Cuenta__c ,
+                          Aportacion_HNL__c, Aportacion_USD__c , Seguro_HNL__c ,
+                          CurrencyIsoCode,
+                          Seguro_USD__c , Periodicidad__c ,Fecha_Inicio_Aporte__c ,
+                          Forma_Pago__c,
+                          //FIN DE CAMPOS PARA LLENAR
+                          Subproducto__r.producto__r.CurrencyIsoCode,
+                          Subproducto__r.producto__r.codigo__C, Subproducto__r.codigo__C,
+                          Codigo_Oficial_SAC__c , oficial_sac__C,Fecha_Validacion__c,
+                          Tipo_Identificacion__c,Identificacion__c, subProducto__C, subProducto__r.producto__C
+                          from Reporte_calidad__C where id =:idAfiliacion];
+            
+        }
         
         AplicaSeguroSi();
         AplicaSeguroNo();
@@ -1153,7 +1177,19 @@ public without sharing class ControllerProductoAgn {
                 
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
-            } 
+            }
+            if(idAfiliacion!=null){
+                pcprimernombre = afiliacion.name;
+                pcNombreempl = afiliacion.Empresa__r.name;
+                fechaValida=afiliacion.Fecha_Validacion__c;
+                pcsegundonombre = afiliacion.Segundo_Nombre__c;
+                pcprimerapellido = afiliacion.Primer_Apellido__c;
+                pcsegundoapellido = afiliacion.Segundo_Apellido__c;
+                pctipoid = afiliacion.Tipo_Identificacion__c;
+                pcnroid = afiliacion.Identificacion__c;
+                Cuenta20.Tipo_Fondo__c = 'I';
+                
+            }
             
         }
     }
@@ -1475,6 +1511,10 @@ insert reg;
             {
                 opciones.add(new selectOption(item.codigo__c, item.name));
             }
+             if(idAfiliacion !=null){
+                pcproducto = afiliacion.Subproducto__r.producto__r.codigo__C;
+                llenarSubproductos();
+            }
             
         }catch(exception e){
             
@@ -1488,6 +1528,9 @@ insert reg;
             for (Subproducto__c item:[select name, codigo__c from Subproducto__c])
             {
                 opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
+            }
+            if(idAfiliacion !=null){
+                pcsubproducto = afiliacion.Subproducto__r.codigo__C;
             }
             
             
@@ -1547,6 +1590,9 @@ insert reg;
         listAsesor.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
         for(Schema.PicklistEntry p : ple){          
             listAsesor.add(new selectOption(p.getValue(),p.getLabel())); 
+        }
+        if(idAfiliacion != null){
+            pcpromotor = afiliacion.Codigo_Asesor_Comercial__c;
         }
     }
     
@@ -4811,7 +4857,58 @@ return null;
                 // iniciar();
                 //limpiar();
                 
+                aSysdeReporteCalidad.ClassReporteCalidad respuesta = new aSysdeReporteCalidad.ClassReporteCalidad();
+                if((idAfiliacion !=null || checkcorreo) &&resultado.contains('Proceso realizado Correctamente')){
+                    respuesta= aSysdeReporteCalidad.infoCliente(pcnroid);
+                }
+                if(idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')){
+                    afiliacion.Periodicidad__c = Cuenta20.Frecuencia_Aportacion__c;
+                    afiliacion.Forma_Pago__c = pcformapago;
+                    afiliacion.Numero_Cuenta__c = respuesta.numCuenta;
+                    afiliacion.Numero_de_Cliente__c = respuesta.clienteUnicoBanco;
+                    afiliacion.Numero_de_Contrato__c = respuesta.numContrato;
+                    if(DiaMes.Dias_Mes__c != null){
+                        date fecha = integer.valueOf(DiaMes.Dias_Mes__c) > date.today().day() ? date.today().addMonths(1) :  date.today();
+                        afiliacion.Fecha_Inicio_Aporte__c = date.valueOf(fecha.year()+'-'+fecha.month()+'-'+DiaMes.Dias_Mes__c);
+                    }
+                    afiliacion.CurrencyIsoCode = afiliacion.Subproducto__r.producto__r.CurrencyIsoCode;
+                    if(afiliacion.Subproducto__r.producto__r.CurrencyIsoCode == 'HNL'){
+                        try{afiliacion.Seguro_HNL__c = decimal.valueOf(pcPrimaAsegurada);}catch(exception ex){system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());}
+                        afiliacion.Aportacion_HNL__c = pnmontoaporte;
+                    }else{
+                        try{afiliacion.Seguro_USD__c = decimal.valueOf(pcPrimaAsegurada);}catch(exception ex){system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());}
+                        afiliacion.Aportacion_USD__c = pnmontoaporte;
+                    }
+                    afiliacion.Estado__c = 'C';
+                    afiliacion.Espediente_Completo__c = 'S';
+                    system.debug('Antes del actualizar');
+                    update afiliacion;
+                    system.debug('despues del actualizar');
+                    
+                }
+                
                 if(resultado.contains('Proceso realizado Correctamente')) {
+                    
+                     if(checkcorreo && pcmail != null){
+                        checkCorreo = false;
+                        String queryCorreo = 'Select Cuerpo__c From  Correo_EDC__mdt Where DeveloperName = ';
+                        queryCorreo += '\'correoextranjero\'';      
+                        Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
+                        String cuerpo = cuerpoCorreo.Cuerpo__c;
+                        Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
+                        cuerpo=cuerpo.replace('getCodCuenta', respuesta.numCuenta);
+                        cuerpo=cuerpo.replace('getCodCliente', respuesta.clienteUnicoBanco);
+                        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];
+                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                        mail.setHtmlBody(cuerpo); 
+                        mail.setSubject('¡Bienvenido a Ficohsa Pensiones y Cesantías!');
+                        mail.setToAddresses(new String[] {pcmail});
+                        mail.setOrgWideEmailAddressId(owea.get(0).Id);
+                        listCorreo.add(mail);
+                        Messaging.sendEmail(listCorreo);
+          
+                    }
+                    
                     String cuenta = resultado.replace('Proceso realizado Correctamente  Número De Cuenta:', '');
                     cuenta = cuenta.replace('"', '');
                     system.debug('cuenta guardada: '+cuenta);
@@ -4877,7 +4974,7 @@ return null;
         }
         return null;   
     }
-    
+    public Boolean checkcorreo {get;set;}
     public pageReference actualizar(){
         try{
             

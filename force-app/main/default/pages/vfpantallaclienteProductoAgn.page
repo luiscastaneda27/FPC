@@ -1039,7 +1039,18 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                     <apex:selectOptions value="{!opcionNacionalidadTerceros}"></apex:selectOptions> 
                                                                     <apex:actionSupport event="onchange" action="{!NacionalidadFatca}" /> 
                                                                 </apex:selectList> 
+                                                                <br/>
+                                                                 <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                    <abbr class="slds-required" style="height:15px; width:15px;"></abbr> ¿Reside en el extranjero?
+                                                                </label> 
                                                                 
+                                                                
+                                                                <label class="slds-checkbox">
+                                                                    
+                                                                    <apex:inputCheckbox styleclass="slds-input" value="{!checkcorreo}" /> 
+                                                                   
+                                                                    <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span> 
+                                                                </label>
                                                                 
                                                                 <br/>
                                                                 <br/>
