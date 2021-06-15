@@ -40,7 +40,7 @@ public class ControladorReporteCalidadIndividuales {
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
                             Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C
                             where Codigo_Oficial_SAC__c =:Usuario and Enviar_Sac__C =true and Espediente_Completo__c != 'S'
-                            and Tipo_Afiliacion__c  ='I'];
+                            and Tipo_Afiliacion__c  ='I' order by lastModifiedDate desc];
         
        // agregarAfiliacion();
     }
@@ -77,7 +77,7 @@ public class ControladorReporteCalidadIndividuales {
                 afiliacion.Fecha_Validacion__c  = date.today();
                 update afiliacion;
                 afiliacion.Espediente_Completo__c = 'S';
-                URLPagina =claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProducto?idAfiliacion='+afiliacion.id+'&hytrd='+usuario;
+                URLPagina =claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProductoAGN?idAfiliacion='+afiliacion.id+'&hytrd='+usuario;
                 reinicar();
                 return new PageReference (URLPagina);
                 
