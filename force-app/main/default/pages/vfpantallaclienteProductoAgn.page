@@ -2130,7 +2130,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <td>
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:1px;  ">
                                                                 <abbr class="slds-required" title="required"></abbr> 
-                                                                ¿Usted o un familiar (Esposo(a) o compañero(a) de hogar, padres hijos(as) del cónyuge o hermano(a) ), ejerce o ha ejercido un cargo público nacional o internacional?
+                                                                ¿Ejerce o ha ejercido un cargo público nacional o internacional?
                                                             </label> 
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
@@ -2674,7 +2674,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
-                                                                    <abbr class="slds-required" title="required"></abbr> Nivel riesgo
+                                                                    <abbr class="slds-required" title="required"></abbr> Riesgo del cliente
                                                                 </label>
                                                                 
                                                                 <apex:selectList disabled="true" styleclass="slds-input" id="pepSel" size="1" value="{!PC_NIVEL_RIESGO}" style="height:10px; width:170px; margin-left:34px;" >
@@ -3521,7 +3521,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             
                                                             <TD>
-                                                                <apex:commandButton disabled="{!validadosBeneficiarios}" action="{!GUARDAR2}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiarios,infoAfiliado, pantProductosP, BTNGuardar,datodBene" status="status" />
+                                                                <apex:commandButton disabled="{!validadosBeneficiarios}" action="{!GUARDAR2}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiarios,tablaBeneModificar,infoAfiliado, pantProductosP, BTNGuardar,datodBene" status="status" />
                                                                 <!--
 <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                                              
@@ -3905,7 +3905,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             
                                                             <TD>
-                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiariosC,infoAfiliado, pantProductosP, BTNGuardar,idShowBeneficiciariosCon" status="status" />
+                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiariosC,tablaBeneModificarC,infoAfiliado, pantProductosP, BTNGuardar,idShowBeneficiciariosCon" status="status" />
                                                                 <!--
 <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                                              

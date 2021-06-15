@@ -884,7 +884,7 @@ public class ControllerUsuarioJuridico {
     public void llenarNivelRiesgo(){
         
         this.NivelRiesgoOptions = new SelectOption[]{};
-            this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
+        this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
         this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
         this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
         this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
@@ -899,7 +899,7 @@ public class ControllerUsuarioJuridico {
     //*********************Llenar Nivel de Riesgo***********************************
     public void llenaro(){
         this.NiveloOptions = new SelectOption[]{};
-            this.NiveloOptions.add(new SelectOption('','NINGUNO'));
+        this.NiveloOptions.add(new SelectOption('','NINGUNO'));
         this.NiveloOptions.add(new SelectOption('1','NO CONTRIBUTIVO'));             
     }
     

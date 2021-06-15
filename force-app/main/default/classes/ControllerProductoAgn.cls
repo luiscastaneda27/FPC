@@ -439,9 +439,12 @@ public without sharing class ControllerProductoAgn {
     
     Public Detalle_caso__c detalleCaso{get;set;}
     
+    //MR 09062021
     public list <ContenidoValidaNivel> validaDatos;  
     public string Ppais {get;set;}
     public string Pdepto {get;set;}
+    //public string PC_NIVEL_RIESGO{get;set;}
+    public string PC_MEDIDA_APLICADA{get;set;}
     
     public ControllerProductoAgn() {    
         validadosBeneficiarios =  true;
@@ -468,6 +471,7 @@ public without sharing class ControllerProductoAgn {
         pc_CamposActua = true;
         iniciar();
         MostarGuardar=false;
+        
         ActNombre = false;
         ActNombre2 = false;
         ActApellido = false;
@@ -1303,6 +1307,22 @@ public without sharing class ControllerProductoAgn {
                     return null;  
                 }
             }
+            if( fechaNacimiento == null || fechaNacimiento >= date.today())
+            {        
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
+                return null;    
+            }
+            if( pdLugarNacimientoCN == '')
+            {          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
+                return null;    
+            }
+            if( OcultaCarSI == false && OcultaCarNO == false)
+            { 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ejerce o ha ejercido un cargo público nacional o internacional vacio'));
+                return null;
+            }
+            SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
@@ -1321,16 +1341,6 @@ public without sharing class ControllerProductoAgn {
                     return null; 
                 }
                 
-            }
-            if( fechaNacimiento == null || fechaNacimiento >= date.today())
-            {        
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
-                return null;    
-            }
-            if( pdLugarNacimientoCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
-                return null;    
             }
             if(fechaLabor > date.today())
             {          
@@ -1375,6 +1385,7 @@ insert reg;
         //limpiar();     
         
     }
+    
     /*campos bloqueo*/
     public boolean ActNombre {get;set;}
     public boolean ActNombre2 {get;set;}
@@ -1404,11 +1415,12 @@ insert reg;
                     
                 }
                 break;
-            }              
+            }            
         }catch(exception ex) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
         }              
     }
+    
     public void obtieneCodSub (){
         Subproducto__c sb = [select Id, Codigo__c, Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c, Comisi_n_por_Aporte__c from Subproducto__c where codigo__c =: pcsubproducto];
         string label;             
@@ -1728,8 +1740,30 @@ insert reg;
     public decimal num {get; set;}
     public decimal numConti {get; set;}
     //BENEFICIARIOS
-    
-    // tABALA FUNCIONES
+    public void limpiabeneficiario()
+    {
+        beneficiarioUnico.tipoId = null;
+        Cliente1.Sexo__c = null;
+        Parentesco1 = null;
+        CanalVentaa.Grado_Familiar__c = null;
+        TipoBeneficiario.Tipo_Beneficiario__c = null;
+        fechaBeneficiario = null;
+        PEPbeneficiario = null;
+        FATCAbeneficiario = null;
+        FATCANCbeneficiario = null;
+    }
+	public void limpiabeneficiarioConti()
+    {
+        beneficiarioUnicoC.tipoId = null;
+        Cliente1Conti.Sexo__c = null;
+        Parentesco1C = null;
+        CanalVentaaConti.Grado_Familiar__c = null;
+        TipoBeneficiarioConti.Tipo_Beneficiario__c = null;
+        fechaBeneficiarioC = null;
+        PEPbeneficiarioC = null;
+        FATCAbeneficiarioC = null;
+        FATCANCbeneficiarioC = null;
+    }
     public pageReference GUARDAR2()
     {
         try
@@ -1861,6 +1895,7 @@ insert reg;
                         beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;  
                     }
+                    limpiabeneficiario();
                     return null;
                 }
                 else
@@ -2008,6 +2043,7 @@ insert reg;
                         beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;  
                     }
+                    limpiabeneficiarioConti();
                     return null;
                 }
                 { 
@@ -4181,7 +4217,16 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacio'));
                 return null;    
             }
-            
+            if( fechaNacimiento == null || fechaNacimiento >= date.today())
+            {        
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
+                return null;    
+            }
+            if( pdLugarNacimientoCN == '')
+            {          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
+                return null;    
+            }
             if( TipoSexo.Sexo__c == ' --Ninguno-- ')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Genero Vacio'));
@@ -4266,6 +4311,12 @@ paso2Cuerpo = 'slds-hide';
                     return null;  
                 }
             }
+            if( OcultaCarSI == false && OcultaCarNO == false)
+            { 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ejerce o ha ejercido un cargo público nacional o internacional vacio'));
+                return null;
+            }
+            SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
@@ -4283,16 +4334,7 @@ paso2Cuerpo = 'slds-hide';
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
                     return null; 
                 }
-            }
-            if( fechaNacimiento == null || fechaNacimiento >= date.today())
-            {        
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
-                return null;    
-            }
-            if( pdLugarNacimientoCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
-                return null;    
+                
             }
             if(fechaLabor > date.today())
             {          
@@ -4367,7 +4409,7 @@ paso2Cuerpo = 'slds-hide';
     public pageReference guardar(){
         try{
             ClienteNaturales naturalEnvio = new ClienteNaturales();
-            ValidaRiesgo();
+            validaRiesgo();
             naturalEnvio.numtran = numtran; //Agregado 08/04/2020
             naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
             naturalEnvio.PCEMPRESA = pcempresa;    
@@ -5867,7 +5909,7 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 mostrarBotonPan = true;
                 mostrarSiguientePan = true;
                 OcultarCuenta1 = true;
-                //validarRol();
+                validarRol();
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }  
@@ -6524,7 +6566,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                 mostrarBotonPan = true;
                 mostrarSiguientePan = true;
                 OcultarCuenta1 = true;
-                //validarRol();
+                validarRol();
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }  
@@ -6804,7 +6846,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
     public void ValidaRiesgo()
     {
         try{
-           ClienteNaturales naturalEnvio = new ClienteNaturales();
+            ClienteNaturales naturalEnvio = new ClienteNaturales();
             if(pcAPNFDSI == true)
             {
                 naturalEnvio.pcAPNFD = 'S';
@@ -6829,25 +6871,25 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             {
                 naturalEnvio.pcPEP = 'N'; 
             } 
-             
+            
             validaDatos = NEW List<ContenidoValidaNivel>();                
-                    validaDatos.add(new ContenidoValidaNivel(pctipoid,
-                                                              fechanacimiento, 
-                                                              pcrazonsocialempl,                                                       
-                                                              pcNombreempl,                                                               
-                                                              TipoProfesion.Profesi_n_Ocupaci_n__c,
-                                                              //pcProfesionOcupacion,
-                                                              naturalEnvio.pcAPNFD,
-                                                              naturalEnvio.pcFATCA,
-                                                              naturalEnvio.pcPEP,
-                                                              Ppais,
-                                                              //pcTipoFondo,
-                                                              Cuenta20.Tipo_Fondo__c,
-                                                              pcAgn,
-                                                              Pdepto,
-                                                              pcnacionalidad
-                                                             ));  
-              //  } 
+            validaDatos.add(new ContenidoValidaNivel(pctipoid,
+                                                     fechanacimiento, 
+                                                     pcrazonsocialempl,                                                       
+                                                     pcNombreempl,                                                               
+                                                     TipoProfesion.Profesi_n_Ocupaci_n__c,
+                                                     //pcProfesionOcupacion,
+                                                     naturalEnvio.pcAPNFD,
+                                                     naturalEnvio.pcFATCA,
+                                                     naturalEnvio.pcPEP,
+                                                     Ppais,
+                                                     //pcTipoFondo,
+                                                     Cuenta20.Tipo_Fondo__c,
+                                                     pcAgn,
+                                                     Pdepto,
+                                                     pcnacionalidad
+                                                    ));  
+            //  } 
             enviarValidarNivel Enviar = new enviarValidarNivel(validaDatos); 
             string csharp;           
             csharp=string.valueOf(ControllerApiValidaRiesgo.NivelRiesgo(Enviar));            
@@ -6856,13 +6898,12 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
             PC_NIVEL_RIESGO = csharp.substring(61,62);
             //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
-            system.debug('campo1 ' + PC_DEBIDA_DELIGENCIA + 'campo2 ' + PC_NIVEL_RIESGO);
+            system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO);
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());   
         }
-    }    
-    
+    }     
     
     public void validarBeneficiario()
     {

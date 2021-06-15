@@ -5659,7 +5659,7 @@ public class ControllerPantJuridProduc {
         try{
             classListas claseEnvio = new classListas();
             classListas fcsdListas = controllerApiClienteNatural.consultaListas(pcnumeroidsocc);
-            
+            system.debug('entro al metosi de validacion de listas');
             if(pcnumeroidsocc ==''){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nro ID Vacio'));}
             else{
@@ -5679,9 +5679,17 @@ public class ControllerPantJuridProduc {
                     FATCANCSocio = true;   
                     muestraPopFATCANC = true;
                 }
-                if(fcsdListas.AML == true){
+                /*if(fcsdListas.AML == true){
                     AMLSocio = true; 
                     actPop = true;
+                }*/
+                system.debug('respuesta AML: '+fcsdListas.AML+','+fcsdListas.BLACKLIST);
+                if(fcsdListas.AML == true){
+                    AMLSocio = fcsdListas.AML;
+                }
+                if(fcsdListas.BLACKLIST == true||test.isRunningTest()){
+                    AMLSocio = fcsdListas.BLACKLIST;
+                    actPop = true; 
                 }
                 validadosSocios = false;
             }
@@ -7334,6 +7342,10 @@ public class ControllerPantJuridProduc {
                     }
                     if(fcsd.AML == true){
                         AML = fcsd.AML;
+                    }
+                    if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                        AML = fcsd.BLACKLIST;
+                        actPop = true; 
                     }
                     if(fcsd.FATCA == true ){
                         pcFATCA = fcsd.FATCA;
