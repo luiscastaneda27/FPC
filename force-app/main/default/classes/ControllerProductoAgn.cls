@@ -434,6 +434,13 @@ public class ControllerProductoAgn
             iniciar();
             MostarGuardar=false;
             
+            ActNombre = false;
+            ActNombre2 = false;
+            ActApellido = false;
+            ActApellido2 = false;
+            ActId = false;
+            ActTipoId = true;
+            
             ocultaLista = true;
             MostarActualizar=false;
             MostarActualizarFechaSeguro = false;
@@ -1307,6 +1314,40 @@ public class ControllerProductoAgn
             //limpiar();     
             
         }
+    /*campos bloqueo*/
+    public boolean ActNombre {get;set;}
+    public boolean ActNombre2 {get;set;}
+    public boolean ActApellido {get;set;}
+    public boolean ActApellido2 {get;set;}
+    public boolean ActId {get;set;}
+    public boolean ActTipoId {get;set;}
+    /**/
+    
+    public void validarRol() {   
+        try {
+            list<controllerApiClienteNatural.classRespuestaMenu> resultado2 = new list<controllerApiClienteNatural.classRespuestaMenu>();                    
+            resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(ApexPages.currentPage().getParameters().get('hytrd'));
+            
+            for(integer j=0; j<resultado2.size(); j++) {
+                if (resultado2[j].rol == 'AFILI' || resultado2[j].rol =='OFJROP' ){
+                    MostarActualizar=false;
+                    ActNombre = true;
+                    ActNombre2 = true;
+                    ActApellido = true;
+                    ActApellido2 = true;
+                    ActId = true;
+                    MostarActualizarFechaSeguro = false;
+                }else{
+                    MostarActualizar=true;
+                    MostarActualizarFechaSeguro = true;
+                    
+                }
+                break;
+            }            
+        }catch(exception ex) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
+        }              
+    }
         public void obtieneCodSub (){
             Subproducto__c sb = [select Id, Codigo__c, Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c, Comisi_n_por_Aporte__c from Subproducto__c where codigo__c =: pcsubproducto];
             string label;             
@@ -6159,7 +6200,7 @@ public class ControllerProductoAgn
                 mostrarBotonPan = true;
                 mostrarSiguientePan = true;
                 OcultarCuenta1 = true;
-                //validarRol();
+                validarRol();
             }else{
             	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));	    
             }  

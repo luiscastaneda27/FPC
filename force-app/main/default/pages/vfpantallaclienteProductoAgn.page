@@ -3791,7 +3791,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning"/>
                                                         <br/><br/>
                                                         <apex:commandButton value="Agregar Cuenta" disabled="{!btnGuardar}" action="{!guardar}" styleClass="slds-button slds-button--brand" style="height:40px; width:200px; margin-left:255px"  reRender="infoAfiliado, pantProductosP, BTNGuardar" status="status" />
-                                                        <apex:commandButton disabled="true" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
+                                                        <apex:commandButton disabled="{!MostarActualizar}" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
                                                         <apex:commandButton value="Cancelar" action="{!limpiar}" styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:52px "/>                                                        
                                                     </div>
                                                 </div>
