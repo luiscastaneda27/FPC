@@ -4219,7 +4219,7 @@
                                                             
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Fecha Validación
-                                                            </label>
+                                                            </label>                                                            
                                                             
                                                             <apex:input type="date" disabled="true" value="{!fechaValida}" id="pcFechaValidacionCN" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;"/>
                                                             <apex:commandButton action="{!ValidaRiesgo}" value="Valida Riesgo"  styleClass="slds-button slds-button--brand" style="height:35px; width:150px; margin-left:10px "/>        

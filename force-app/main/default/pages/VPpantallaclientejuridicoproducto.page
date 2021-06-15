@@ -1539,7 +1539,7 @@
 -->   <span class="slds-checkbox--faux" style=" width:15px; margin-left:1px"  ></span>
                                                             </label>
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style=" margin-left:121px">
+                                                            <label class="slds-form-element__label" for="inputSample" style=" margin-left:116px">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo APNFD
                                                             </label>
                                                             <apex:selectList styleclass="slds-input" id="apnfd" size="1" disabled="{!OcultarAPNFD}" value="{!PCNumeroAPNFD}" style="height:10px; width:170px; margin-left:10px; " >
@@ -1553,16 +1553,16 @@
 <apex:inputText disabled="{!NumeroAPNFDBLO}" value="{!PCNumeroAPNFD}"  id="PCNumeroAPNFD" styleclass="slds-input"  style="height:10px; width:170px; margin-left:43px;  "/>
 -->
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
-                                                                <abbr class="slds-required" title="required"></abbr> Nivel riesgo
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:12px;">
+                                                                <abbr class="slds-required" title="required"></abbr> Riesgo del cliente
                                                             </label>
                                                             
-                                                            <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepSel" size="1" value="{!PC_NIVEL_RIESGO}" style="height:9px; width:170px; margin-left:15px;" >
+                                                            <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepSel" size="1" value="{!PC_NIVEL_RIESGO}" style="height:9px; width:170px; margin-left:3px;" >
                                                                 <apex:selectOptions value="{!NivelRiesgoOptions}"/>
                                                             </apex:selectList>
                                                             
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:7px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Medida Aplicada
                                                             </label>    
                                                             <apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepBlo" value="{!PC_DEBIDA_DELIGENCIA}"  size="1" style="height:9px; width:170px; margin-left:0px;" >
@@ -1658,7 +1658,7 @@
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:9px;">
                                                                 <abbr class="slds-required" title="required"></abbr> Nivel Ingresos 
                                                             </label>
-                                                            <apex:selectList styleclass="slds-input" id="listNivelIngreso" value="{!llenarNivelIngreso1}"  size="1" style="height:9px; width:170px; margin-left: 2px;" >
+                                                            <apex:selectList styleclass="slds-input" id="listNivelIngreso" value="{!llenarNivelIngreso1}"  size="1" style="height:9px; width:170px; margin-left: 25px;" >
                                                                 <apex:selectOptions value="{!NivelIngreso}" />
                                                             </apex:selectList>
                                                             
@@ -3430,13 +3430,17 @@
                                                             </label>
                                                             <apex:inputText onkeypress="return sololetras(event)" value="{!nombreControlante}" id="nombreControlante" styleclass="slds-input" style="height:9px; width:528px; margin-left:15px; "/>
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample">
+                                                            <!--label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo de Persona
                                                             </label>
                                                             
                                                             
-                                                            <apex:inputField value="{!Cliente1.Tipo_Persona__c}" id="tipoPersonaControlante" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;" />
+                                                            <apex:inputField value="{!Cliente1.Tipo_Persona__c}" id="tipoPersonaControlante" styleclass="slds-input" style="height:10px; width:170px; margin-left:19px;" /-->
                                                             
+                                                            <label class="slds-form-element__label" for="inputSample">
+                                                                <abbr class="slds-required" title="required"></abbr> Cargo
+                                                            </label>
+                                                            <apex:inputText id="cargoControlante"  value="{!propiedadControlUnicoUnico.cargoControlante}" styleclass="slds-input"  style="height:10px; width:359px; margin-left:70px;  "/>
                                                             
                                                             
                                                             
@@ -3449,7 +3453,7 @@
                                                     </tr> 
                                                     
                                                     
-                                                    <tr>
+                                                    <!--tr>
                                                         
                                                         <td width="450">
                                                             <label class="slds-form-element__label" for="inputSample">
@@ -3464,10 +3468,9 @@
                                                             </label>
                                                             <apex:selectList id="Nivel1Socios" size="1" styleClass="slds-select" value="{!propiedadControlUnicoUnico.nivelControlante}" style="height:10px; width:170px; margin-left:35px;">
                                                                 <apex:selectOptions value="{!ListNivel}"></apex:selectOptions>
-                                                                <!--apex:actionSupport event="onchange" action="{!OcultarPorcentajeIndi}"/--> 
-                                                            </apex:selectList>
+                                                               </apex:selectList-->
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:17px;">
+                                                            <!--label class="slds-form-element__label" for="inputSample" style="margin-left:17px;">
                                                                 <abbr class="slds-required" title="required"></abbr> %Directo
                                                             </label>
                                                             <apex:inputText value="{!propiedadControlUnicoUnico.porcentajeDiControlante}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:25px;  "/>
@@ -3486,14 +3489,13 @@
                                                     </tr> 
                                                     
                                                     
-                                                    <tr>
+                                                    <tr-->
                                                         
-                                                        <td width="450">
+                                                        <!--td width="450">
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Código Empresa
                                                             </label>
-                                                            <!--    <apex:inputText disabled="{!Bene_Ocultar_CamPos}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
---> <apex:inputText onkeypress="return isNumberKey(event)"  value="{!propiedadControlUnicoUnico.numIdEmpresaControlante}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:27px;  "/>
+                                                            <apex:inputText onkeypress="return isNumberKey(event)"  value="{!propiedadControlUnicoUnico.numIdEmpresaControlante}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:27px;  "/>
                                                             <label class="slds-form-element__label" for="inputSample" style=" margin-left:18px">
                                                                 <abbr class="slds-required" title="required"></abbr> Cargo
                                                             </label>
@@ -3532,21 +3534,20 @@
                                                                 <abbr class="slds-required" title="required"></abbr> # ticker Symbol
                                                             </label>
                                                             <apex:inputText disabled="{!TickerOculControlante}" value="{!propiedadControlUnicoUnico.ticSymbolControlante}"  id="ticSymbolControlante" styleclass="slds-input"  style="height:10px; width:170px; margin-left:25px;  "/>
-                                                            <!--apex:inputText rendered="false" id="numControlante" value="{!num}" styleclass="slds-input"  style="height:10px; width:170px; margin-left:20px;  "/-->  
-                                                            
+                                                           
                                                             <br/>
                                                             <br/>
                                                             
                                                         </td>
                                                         
-                                                    </tr>
+                                                    </tr-->
                                                     
                                                     
                                                     <TR>
                                                         
                                                         
                                                         <TD>
-                                                            <apex:commandButton action="{!guardarControlante}" disabled="{!validadosControlantes}" value="Enviar"  styleClass="slds-button slds-button--brand" style="margin-left:875px "/>
+                                                            <apex:commandButton action="{!guardarControlante}" disabled="{!validadosControlantes}" value="Enviar"  styleClass="slds-button slds-button--brand" style="margin-left:1060px "/>
                                                             <!--             <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                             
                                                         </TD>

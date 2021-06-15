@@ -13,7 +13,7 @@ public class ContenidoValidaNivelJ {
     //GEOGRAFICO    
     public string pcDeptoCN /*Depto*/ { get; set; }
     
-    public ContenidoValidaNivelJ(string pcTipoFondo,dateTime FECHA_CONSTITUCION,string pcGiroEmpresaEmpC,
+    public ContenidoValidaNivelJ(string pcTipoFondo,dateTime FECHA_CONSTITUCION,string pcGiroEmpresaEmpCN,
                                  string pcAPNFD,string pcFATCA,string pcPEP,string pcproducto, string pcagencia, string pcDeptoCN){
                                      
                                      this.pcTipoFondo=pcTipoFondo;

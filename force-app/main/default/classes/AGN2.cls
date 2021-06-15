@@ -2300,11 +2300,12 @@ public without sharing class AGN2 {
         if(direccionUnico.esDefault == null || direccionUnico.esDefault != null && direccionUnico.tipDireccion == 'C')
         {    
             direccionUnico.esDefault ='S';
+            Ppais = direccionUnico.paisDir;
+            Pdepto = direccionUnico.deptoDir ;
+            //pcDeptoCN = direccionUnico.deptoDir ;
         }
         else {direccionUnico.esDefault ='N';} 
-           Ppais = direccionUnico.paisDir;
-           Pdepto = direccionUnico.deptoDir ;
-           pcDeptoCN = direccionUnico.deptoDir ;
+           
            system.debug('pruebaPais:' + direccionUnico.paisDir + ' Depto: ' + direccionUnico.deptoDir + 'Mun: ' + direccionUnico.ciuDir + 
                         'Col ' + direccionUnico.coloDir + 'Tipo:' + direccionUnico.tipDireccion);     
         try
@@ -4464,7 +4465,7 @@ public without sharing class AGN2 {
         
         naturalEnvio.pccodpais = pcnacionalidad;
         naturalEnvio.pcnacionalidad = pcnacionalidad;
-        // naturalEnvio.pcDeptoCN = pcDeptoCN;
+        naturalEnvio.pcDeptoCN = Pdepto;//pcDeptoCN;
        
         if (pcnacionalidad2 == ' --Ninguno-- ')
         {

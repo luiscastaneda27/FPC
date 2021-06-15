@@ -602,8 +602,9 @@ public class ControllerUsuarioNatural {
     public void llenarNivelRiesgo(){
 
                 this.NivelRiesgoOptions = new SelectOption[]{};
-        	    this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
+        	    //this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
                 this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
+        		this.NivelRiesgoOptions.add(new SelectOption('4','MODERADO'));
                 this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
                 this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
     }

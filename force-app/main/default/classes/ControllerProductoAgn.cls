@@ -1307,6 +1307,22 @@ public without sharing class ControllerProductoAgn {
                     return null;  
                 }
             }
+            if( fechaNacimiento == null || fechaNacimiento >= date.today())
+            {        
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
+                return null;    
+            }
+            if( pdLugarNacimientoCN == '')
+            {          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
+                return null;    
+            }
+            if( OcultaCarSI == false && OcultaCarNO == false)
+            { 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ejerce o ha ejercido un cargo público nacional o internacional vacio'));
+                return null;
+            }
+            SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
@@ -1325,16 +1341,6 @@ public without sharing class ControllerProductoAgn {
                     return null; 
                 }
                 
-            }
-            if( fechaNacimiento == null || fechaNacimiento >= date.today())
-            {        
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
-                return null;    
-            }
-            if( pdLugarNacimientoCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
-                return null;    
             }
             if(fechaLabor > date.today())
             {          
@@ -1734,8 +1740,30 @@ insert reg;
     public decimal num {get; set;}
     public decimal numConti {get; set;}
     //BENEFICIARIOS
-    
-    // tABALA FUNCIONES
+    public void limpiabeneficiario()
+    {
+        beneficiarioUnico.tipoId = null;
+        Cliente1.Sexo__c = null;
+        Parentesco1 = null;
+        CanalVentaa.Grado_Familiar__c = null;
+        TipoBeneficiario.Tipo_Beneficiario__c = null;
+        fechaBeneficiario = null;
+        PEPbeneficiario = null;
+        FATCAbeneficiario = null;
+        FATCANCbeneficiario = null;
+    }
+	public void limpiabeneficiarioConti()
+    {
+        beneficiarioUnicoC.tipoId = null;
+        Cliente1Conti.Sexo__c = null;
+        Parentesco1C = null;
+        CanalVentaaConti.Grado_Familiar__c = null;
+        TipoBeneficiarioConti.Tipo_Beneficiario__c = null;
+        fechaBeneficiarioC = null;
+        PEPbeneficiarioC = null;
+        FATCAbeneficiarioC = null;
+        FATCANCbeneficiarioC = null;
+    }
     public pageReference GUARDAR2()
     {
         try
@@ -1867,6 +1895,7 @@ insert reg;
                         beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;  
                     }
+                    limpiabeneficiario();
                     return null;
                 }
                 else
@@ -2014,6 +2043,7 @@ insert reg;
                         beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;  
                     }
+                    limpiabeneficiarioConti();
                     return null;
                 }
                 { 
@@ -4187,7 +4217,16 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacio'));
                 return null;    
             }
-            
+            if( fechaNacimiento == null || fechaNacimiento >= date.today())
+            {        
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
+                return null;    
+            }
+            if( pdLugarNacimientoCN == '')
+            {          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
+                return null;    
+            }
             if( TipoSexo.Sexo__c == ' --Ninguno-- ')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Genero Vacio'));
@@ -4272,6 +4311,12 @@ paso2Cuerpo = 'slds-hide';
                     return null;  
                 }
             }
+            if( OcultaCarSI == false && OcultaCarNO == false)
+            { 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ejerce o ha ejercido un cargo público nacional o internacional vacio'));
+                return null;
+            }
+            SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
@@ -4289,16 +4334,7 @@ paso2Cuerpo = 'slds-hide';
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
                     return null; 
                 }
-            }
-            if( fechaNacimiento == null || fechaNacimiento >= date.today())
-            {        
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
-                return null;    
-            }
-            if( pdLugarNacimientoCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
-                return null;    
+                
             }
             if(fechaLabor > date.today())
             {          
@@ -4504,6 +4540,7 @@ paso2Cuerpo = 'slds-hide';
             
             naturalEnvio.pccodpais = pcnacionalidad;
             naturalEnvio.pcnacionalidad = pcnacionalidad;
+            naturalEnvio.pcDeptoCN = Pdepto;//pcDeptoCN; 
             
             if (pcnacionalidad2 == ' --Ninguno-- ')
             {

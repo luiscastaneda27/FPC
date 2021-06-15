@@ -357,7 +357,7 @@
 					   	<tr>
                         	<td width = "450">
                             	<label class="slds-form-element__label" for="inputSample">
-                                	<abbr class="slds-required" title="required"></abbr> Nivel de Riesgo
+                                	<abbr class="slds-required" title="required"></abbr> Riesgo del cliente
                                 </label>
                             	<apex:selectList disabled="{!dispep}" styleclass="slds-input" id="pepSel" size="1" value="{!nivelRiesgo}" style="height:9px; width:170px; margin-left: 67px;" >
 								<apex:selectOptions value="{!NivelRiesgoOptions}"/>

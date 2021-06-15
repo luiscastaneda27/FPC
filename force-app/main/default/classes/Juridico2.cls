@@ -547,8 +547,7 @@ public class Juridico2 {
     public string Ppais {get;set;}
     public string Pdepto {get;set;}
     //public string PC_NIVEL_RIESGO{get;set;}
-    public string PC_MEDIDA_APLICADA{get;set;}
-    
+    public string PC_MEDIDA_APLICADA{get;set;}    
     
     public void ClienteNatural()     
     {  
@@ -7403,10 +7402,14 @@ public class Juridico2 {
             {
                 naturalEnvio.pcPEP = 'N'; 
             } 
+            naturalEnvio.pcGiroEmpresaEmpCN /*GiroEmpresa*/ = Cliente25.Sector__c;
+           // naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c; 
+            naturalEnvio.pcTipoFondo = pcTipoFondo;
+            
             validaDatos = NEW List<ContenidoValidaNivelJ>();                
-                    validaDatos.add(new ContenidoValidaNivelJ(Cuenta20.Tipo_Fondo__c,
+                    validaDatos.add(new ContenidoValidaNivelJ(naturalEnvio.pcTipoFondo,
                                                               FECHA_CONSTITUCION,
-                                                              Cliente25.Sector__c,
+                                                              naturalEnvio.pcGiroEmpresaEmpCN,
                                                               naturalEnvio.pcAPNFD,
                                                               naturalEnvio.pcFATCA,
                                                               naturalEnvio.pcPEP,
@@ -7423,7 +7426,7 @@ public class Juridico2 {
             PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
             PC_NIVEL_RIESGO = csharp.substring(61,62);
             //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
-            system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO + ' ' + Cliente25.Sector__c + '' +Cuenta20.Tipo_Fondo__c);
+            system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO + ' ' + naturalEnvio.pcGiroEmpresaEmpCN  + ' '  + naturalEnvio.pcTipoFondo);
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());   
