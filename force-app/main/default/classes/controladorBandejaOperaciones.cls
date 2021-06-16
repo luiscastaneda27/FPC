@@ -382,7 +382,7 @@ public without sharing class controladorBandejaOperaciones {
     }
     
     public PageReference afiliar(){
-        return new Pagereference (claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProducto?idAfiliacion='+idafiliacion+'&hytrd='+usuario);
+        return new Pagereference (claseUtil.urlSysde('Site_pantallas')+'vfpantallaclienteProductoAGN?idAfiliacion='+idafiliacion+'&hytrd='+usuario);
                 
     }
     
