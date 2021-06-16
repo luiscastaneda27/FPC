@@ -329,11 +329,11 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                 </legend>
                                                 
                                                 <div  class="outer">
-                                                    <table  style="text-align: center; width = 1500">
+                                                    <table  style="text-align: center;" width = "1500">
                                                         <tr>
                                                             
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Id Formulario
@@ -688,7 +688,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <apex:outputPanel rendered="{!OcultarCuenta1}">
                                                             
                                                             <tr >
-                                                                <td  width = "450">
+                                                                <td width = "1500">
                                                                     
                                                                     <br/> 
                                                                     
@@ -735,7 +735,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <tr>
                                                             <br/>
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <br/>
                                                                 
@@ -784,7 +784,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         
                                                         <tr>
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Primer Nombre
                                                                 </label>
@@ -813,7 +813,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         </tr>
                                                         
                                                         <tr>
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample" style="margin-left:1px;">
                                                                     <abbr class="slds-required" title="required"></abbr> Fecha Nacimiento
@@ -847,7 +847,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <tr>
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Profesion/Ocupacion
@@ -984,7 +984,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <tr>
                                                             
-                                                            <td weidth= "450">
+                                                            <td width = "1500">
                                                                 
                                                                 <!--
 <apex:inputField value="{!TipoProfesion1.Profesi_n_Ocupaci_n__c}" styleclass="slds-input" style="height:10px; width:170px; margin-left:2px;"/>      
@@ -1061,7 +1061,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     </table>
                                                 </div>
                                                 
-                                            </fieldset>  <!--FIN DEL FIELDSET PRINCIPAL-->
+                                            </fieldset>   <!--FIN DEL FIELDSET PRINCIPAL-->
                                         </apex:outputPanel>   
                                         <!--Info Teléfono-->
                                         
@@ -1308,7 +1308,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Tipo Dirección
                                                                 </label>                                                                                                                                
-                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_direccion__c}" style="height:10px; width:170px; margin-left:50px;"/>
+                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_Direccion__c}" style="height:10px; width:170px; margin-left:50px;"/>
                                                                 
                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Por defecto

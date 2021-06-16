@@ -273,11 +273,11 @@
                                             </legend>
                                             
                                             <div  class="outer">
-                                                <table  style="text-align: center; width = 1500">
+                                                <table  width = "1500" style="text-align: center;">
                                                     <tr>
                                                         
                                                         
-                                                        <td width="450">
+                                                        <td width="1500">
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Id Formulario
                                                             </label>
@@ -1144,7 +1144,7 @@
                                                     
                                                     
                                                     <tr >
-                                                        <td  width = "450">
+                                                        <td  width = "1500">
                                                             
                                                             <br/> 
                                                             
@@ -1187,7 +1187,7 @@
                                                     
                                                     <tr>
                                                         
-                                                        <td width="450">
+                                                        <td width="1500">
                                                             
                                                             <br/>
                                                             
@@ -1227,7 +1227,7 @@
                                                     
                                                     
                                                     <tr>
-                                                        <td width="450">
+                                                        <td width="1500">
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Denom./Razón Social 
                                                             </label>
@@ -1513,7 +1513,7 @@
                                                     <tr>
                                                         
                                                         
-                                                        <td weidth= "450">
+                                                        <td width="1500" weidth= "450">
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> APNFD 

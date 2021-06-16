@@ -39,7 +39,11 @@
 
                 <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture slds-align--absolute-center" />
 					<div id="content-path-1" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1">
-                		<fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;">
+                		<!--fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;"-->
+                        <table width="100%">
+                            <tr>
+                                <td style="background-color: #f4f6f9;padding-left: 10px;">
+            
                     		<legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
                     				  Pantalla Afiliación Usuario Natural
                             </legend>
@@ -380,7 +384,10 @@
                            </td>
                        </tr>
                       </table>
-                	</fieldset>
+                	<!--/fieldset-->
+                                    </td>
+      </tr>
+   </table>
 					<br/>
                         
 <!-- Inicio popup -->                        
@@ -414,7 +421,10 @@
 			</apex:outputPanel>	
        </div>
 
-                    <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;">
+                    <!--fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:870px;"-->
+                        <table width="100%">
+      <tr>
+         <td style="background-color: #f4f6f9;padding-left: 10px;">
                     	<legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium">
                       		Perfil de Vinculación
                     	</legend>
@@ -456,6 +466,7 @@
                               	</table>
                     		</table>
 						</div>
+             
                         <div class="slds-form-element">
                         		<div class="row justify-content-center">
                   					<apex:commandButton disabled="{!disbot}" value="Agregar" action="{!guardar}" styleClass="slds-button slds-button--brand" style=" width:100px; margin-left:200px "/>
@@ -465,7 +476,10 @@
                                      <apex:actionFunction action="{!desBtn}" name="desBtn"/>
                                  </div>
                    			</div>
-                </fieldset>
+                <!--/fieldset-->
+                        </td>
+      </tr>
+   </table>
 
                          
                 <br/>
