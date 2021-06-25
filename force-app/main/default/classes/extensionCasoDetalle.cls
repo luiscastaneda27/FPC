@@ -1288,7 +1288,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 System.debug('Id Cuenta: '+idCuenta + '---' + 'Forma de Aportación: '+cuentaCliente.Forma_Aportacion__c);
                 List<Cuentas__c> cuentaClie = [Select Id, Forma_Aportacion__c,Codigo__C From Cuentas__c Where Id =: idCuenta Limit 1];
                 System.debug('cuentaClie: '+cuentaClie);
-                if(detallecaso.Tipo_Operacion__c == 'A4' /*&& cuentaClie[0].Forma_Aportacion__c == 'TA'*/ && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
+                if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuentaClie[0].Forma_Aportacion__c == 'TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     saveTrue = false;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                     return null;
@@ -1437,7 +1437,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                     }  
                     if(detalleCaso.Nuevo_canal_aporte__c == 'TAOB' || detalleCaso.Banco__c == 'Otros Bancos') {
                         if(detalleCaso.Tipo_Operacion__c == 'A7') {
-                        	caso.DAU_aprobacion__c = false;    
+                                caso.DAU_aprobacion__c = false;    
                         }    
                         List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = Caso.Id));
@@ -1705,11 +1705,13 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         
                             p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
                                  from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto()
+                                 And Objeto__c = 'Case' And Usuario__r.IsActive = true
                                  order by Ultimo_Caso_Asignado__c  asc limit 1];
                         }else{
                            // ZonaSeleccionada =test.isRunningTest() ? '2':ZonaSeleccionada;
                             p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
                                  from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada
+                                 And Objeto__c = 'Case' And Usuario__r.IsActive = true
                                  order by Ultimo_Caso_Asignado__c  asc limit 1];  
                         }
                         caso.OwnerId = p.usuario__C;
@@ -1783,6 +1785,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c();
                 p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
                      from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto()
+                     And Objeto__c = 'Case' And Usuario__r.IsActive = true
                      order by Ultimo_Caso_Asignado__c  asc limit 1];
                 caso.OwnerId = p.usuario__C;
                 caso.Mostrar_Asignar__C = false;

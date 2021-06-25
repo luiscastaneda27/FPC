@@ -182,6 +182,7 @@ public without sharing class controladorBandejaOperaciones {
                                 item.aprobado__C = false;
                                  item.estado__C = 'A';
                                 item.error_sysde__C = respuesta;
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error,'Error al aplicar capital semilla con el cliente '+item.name +' '+item.Primer_Apellido__c+' '+item.Identificacion__c));
                             }
                             
                         }
@@ -210,10 +211,12 @@ public without sharing class controladorBandejaOperaciones {
                 }
                
             }
+            if(listReporteUpdate.size() > 0){
+                update listReporteUpdate;
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.confirm,' Datos guardados exitosamente.'));
+            }
             salir();
-            update listReporteUpdate;
             filtros();
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.confirm,' Datos guardados exitosamente.'));
         }catch(exception ex){
              system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.error,' Ha ocurrido un error, por favor contacte a sus administrador.'));

@@ -22,13 +22,19 @@ public without sharing class ControladorgenerarPlanilla {
     list<string> identidadesconsulta;
     public list<Cuentas__c> listCuentas{get;set;}
     public boolean esAPV{get;set;}
+    //agregado wp 22-11-2019
+    public boolean esAEV{get;set;}
+    public boolean esAPE{get;set;}
+    public boolean esAPX{get;set;}
+    public boolean esASV{get;set;}
+    //
     public list<Cuenta_planilla__c> listCuentasPlanilla{get;set;}
     public string horafecha{get;set;}
     map<Id, Planilla__c> mapPlanillas;
     map<Id, Id> mapEmpleados;
     String Codigo_Unico_Banco;
     String Usuario;
-     map<integer, list<string>> mapPaginaciones;// = new map<integer, list<string>>();
+    map<integer, list<string>> mapPaginaciones;// = new map<integer, list<string>>();
     String Moneda;
     
     public string NombreAporte{get;set;}
@@ -37,7 +43,11 @@ public without sharing class ControladorgenerarPlanilla {
     public boolean popAgregar{get;set;}
     public boolean popQuitar{get;set;}
     public boolean popModificar{get;set;}
-    public boolean popCuentas{get;set;}
+    public boolean popCuentasAPV{get;set;}
+    public boolean popCuentasAPX{get;set;}
+    public boolean popCuentasAEV{get;set;}
+    public boolean popCuentasAPE{get;set;}
+    public boolean popCuentasASV{get;set;}
     public boolean mostrarBotones{get;set;}
     public integer banderaTiempo{get;set;}
     //Paginaciones
@@ -53,7 +63,11 @@ public without sharing class ControladorgenerarPlanilla {
             Moneda = ApexPages.currentPage().getParameters().get('Moneda'); 
             controladoraportes = 0;
             banderaTiempo=0;
-            popcuentas=false;
+            popCuentasAEV = false;
+            popCuentasAPE = false;
+            popCuentasAPV = false;
+            popCuentasAPX = false;
+            popCuentasASV = false;
             listAportes = new list<claseaportaciones>();
             usuarioEmpresa = [select Empresa2__r.Name, empresa2__C, Empresa2__r.IsPersonAccount, Usuario__r.Name, 
                               Empresa2__r.PAPCE__c, Empresa2__r.PAPCT__c,Aceptar_Planilla__c,
@@ -66,6 +80,12 @@ public without sharing class ControladorgenerarPlanilla {
                               AND Usuario__c =: Usuario Limit 1];
             identidadesconsulta=new list<string>();
             esAPV = false;
+            //agregado wp 22-11-2019
+            esAEV = false;
+            esAPE = false;
+            esAPX = false;
+            esASV = false;
+            //
             mostrarBotones = false;
             list<empresa_x_empleado__C> contenidoPlanilla2 = new list<empresa_x_empleado__C>();
             contenidoplanilla2=[Select empleado2__r.Identificacion__C 
@@ -90,9 +110,21 @@ public without sharing class ControladorgenerarPlanilla {
     public void cerrar(){
         popAgregar = false;
         popQuitar = false;
-        pop_exportar=false;
+        pop_exportar = false;
         popModificar = false;
-        popCuentas = false;
+        popCuentasAEV = false;
+        popCuentasAPE = false;
+        popCuentasAPV = false;
+        popCuentasAPX = false;
+        popCuentasASV = false;
+        
+        esAPV = false;
+        esAPX = false;
+        esAEV = false;
+        esAPE = false;
+        esASV = false;
+       
+        
         if(banderaTiempo==0)
         {
             registrarTiempo();
@@ -100,17 +132,21 @@ public without sharing class ControladorgenerarPlanilla {
         
     }
     
-    public void registrarTiempo(){
-        try{
+    public void registrarTiempo()
+    {
+        try
+        {
+            
             Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
             hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
             hora.Hora_ultima_consulta__c=datetime.now();
             update hora;
         }
-        catch(Exception ex){
+        catch(Exception ex)
+        {
+            
         }
     }
-    
     public void reIniciar(){
         try{
             opcionesPlanillas = new list<SelectOption>();
@@ -122,18 +158,21 @@ public without sharing class ControladorgenerarPlanilla {
             mapPlanillas = new map<Id, Planilla__c>();
             list<Planilla__c> listPlanillas = [Select Name, createdDate, currencyIsoCode, Fecha__c, lastModifiedDate, Estado2__c,
                                                TA_Empleado_Obligatorio__c,TA_Empleado_Voluntario__c, Ta_salarios__C,
-                                               TA_Patrono_obligatorio__c,TA_Patrono_Voluntario__c,
+                                               TA_Patrono_obligatorio__c,TA_Patrono_Voluntario__c, 
+                                               //agregado wp 22-11-2019
+                                               TA_Empleado_Extraordinario__c, TA_Patrono_Extraordinario__c, TA_Seguro_de_Vida__c,
+                                               //
                                                Total_Reserva_Laboral2__c, Mes_Aporte__c
                                                /*(Select Empleado2__c, Empleado2__r.Identificacion__c,
-                                                Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                                Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                                Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                                From Contenidos_Planilla__r order by Empleado2__r.Firstname asc
-                                               )*/	    											 
+Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+From Contenidos_Planilla__r order by Empleado2__r.Firstname asc
+)*/	    											 
                                                From Planilla__c 
                                                Where Empresa2__c =: Codigo_Unico_Banco 
                                                AND currencyIsoCode =: Moneda
-                                               Order by createdDate desc Limit 20];
+                                               Order by createdDate desc Limit 50];
             
             for(Planilla__c item : listPlanillas){
                 if(item.CurrencyIsoCode==Moneda)
@@ -199,7 +238,7 @@ public without sharing class ControladorgenerarPlanilla {
                 list<claseaportaciones> listAportes2=new list<claseaportaciones>();
                 list<string> identidadesconsultaTemp= new list<string> ();
                 for(integer i=0; i<identidadesconsulta.size(); i++)
-                //for(integer i=0; i<5; i++)
+                    //for(integer i=0; i<5; i++)
                 {
                     //identidadesconsultaTemp= new list<string> ();
                     identidadesconsultaTemp.add(identidadesconsulta[i]);
@@ -207,27 +246,27 @@ public without sharing class ControladorgenerarPlanilla {
                     {
                         for(claseaportaciones item:aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco))
                         {
-                           listAportes.add(item); 
+                            listAportes.add(item); 
                         }
                         identidadesconsultaTemp= new list<string>();
                         /*if(listAportes2!=null && listAportes2.size()>0)
-                        {
-                            listAportes.addAll(listAportes2);
-                            totalEmpleados++;
-                        }
-                        listAportes2=new list<claseaportaciones>();*/
+{
+listAportes.addAll(listAportes2);
+totalEmpleados++;
+}
+listAportes2=new list<claseaportaciones>();*/
                     }
                 }
                 /*if(identidadesconsultaTemp.size()>0)
-                {
-                    //listAportes2 = aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco);
-                    for(claseaportaciones item:aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco))
-                        {
-                           listAportes.add(item); 
-                        }
-                        identidadesconsultaTemp= new list<string>();
-                    
-                }*/
+{
+//listAportes2 = aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco);
+for(claseaportaciones item:aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco))
+{
+listAportes.add(item); 
+}
+identidadesconsultaTemp= new list<string>();
+
+}*/
                 
                 controladoraportes=1;
             }
@@ -238,31 +277,9 @@ public without sharing class ControladorgenerarPlanilla {
     }
     
     public Contenido_Planilla__c contenidoTotal {get;set;}
-   
     
-    public void PruebaAportes()
-    {
-        system.debug('Tamaño de la identidades: '+identidadesconsulta.size());
-       /* try{
-        list<string> identidadesconsultaTemp =new list<string>();
-        for(integer i=0; i<5; i++)
-        {
-            //identidadesconsultaTemp= new list<string> ();
-            identidadesconsultaTemp.add(identidadesconsulta[i]);
-            if(identidadesconsultaTemp.size()==300 || i+1==identidadesconsultaTemp.size())
-            {
-                for(claseaportaciones item:aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco))
-                {
-                    listAportes.add(item); 
-                }
-                identidadesconsultaTemp= new list<string>();
-                
-            }
-        }
-       system.debug('Tamaño de la lista de aportes: '+listAportes.size());
-        }catch(Exception ex){system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());}*/
-        system.debug('Tamaño de la lista de aportes: '+listAportes.size());
-    }
+    
+    
     
     public void traerContenido(){
         try{
@@ -271,11 +288,14 @@ public without sharing class ControladorgenerarPlanilla {
             totalEmpleados=0;
             mapPaginaciones = new map<integer, list<string>>();
             for(Contenido_Planilla__c item: [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
-                                 Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                 Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                 Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                 From Contenido_Planilla__c Where Planilla__c =: planilla.id
-                                 Order by Empleado2__r.Firstname])
+                                             Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+                                             Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                             //agregado wp 22-11-2019
+                                             Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                             //
+                                             Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+                                             From Contenido_Planilla__c Where Planilla__c =: planilla.id
+                                             Order by Empleado2__r.Firstname])
             {
                 idContenidoPlnilla.add(item.id);
                 totalEmpleados++;
@@ -284,7 +304,7 @@ public without sharing class ControladorgenerarPlanilla {
                     mapPaginaciones.put(bandera, idContenidoPlnilla);
                     bandera ++;
                     idContenidoPlnilla = new list<string>();
-	            }
+                }
             }
             if(idContenidoPlnilla.size()>00)
             {
@@ -295,6 +315,9 @@ public without sharing class ControladorgenerarPlanilla {
             contenidoPlanilla = [Select Empleado2__c, Empleado2__r.Identificacion__c,
                                  Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
                                  Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                 //agregado wp 22-11-2019
+                                 Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                 //
                                  Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
                                  From Contenido_Planilla__c Where Planilla__c =: planilla.id
                                  Order by Empleado2__r.Firstname limit 100
@@ -347,17 +370,20 @@ public without sharing class ControladorgenerarPlanilla {
                 mostrarSiguiente=true;
                 mostraranterior=false;
                 /*for(integer i=(contadorpaginacion - 1)*100; i<=totalempleados; i++)
-                {
-                    
-                    McontenidoPlanilla.add(contenidoPlanilla[i]);
-                } */
+{
+
+McontenidoPlanilla.add(contenidoPlanilla[i]);
+} */
                 McontenidoPlanilla= [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
-                                 Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                 Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                 Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                 From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 1))
-                                 Order by Empleado2__r.Firstname];
-            
+                                     Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+                                     Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                     //agregado wp 22-11-2019
+                                     Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                     //
+                                     Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+                                     From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 1))
+                                     Order by Empleado2__r.Firstname];
+                
                 
             }
             else
@@ -367,18 +393,21 @@ public without sharing class ControladorgenerarPlanilla {
                 contadorpaginacion ++;
                 McontenidoPlanilla = new list<contenido_planilla__C>();
                 /*for(integer i=(contadorpaginacion - 1)*100; i<contadorpaginacion*100; i++)
-                {
-                    
-                    McontenidoPlanilla.add(contenidoPlanilla[i]);
-                    
-                } */
-                 McontenidoPlanilla= [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
-                                 Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                 Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                 Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                 From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 1))
-                                 Order by Empleado2__r.Firstname];
+{
 
+McontenidoPlanilla.add(contenidoPlanilla[i]);
+
+} */
+                McontenidoPlanilla= [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
+                                     Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+                                     Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                     //agregado wp 22-11-2019
+                                     Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                     //
+                                     Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+                                     From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 1))
+                                     Order by Empleado2__r.Firstname];
+                
             }
             
         }
@@ -402,31 +431,37 @@ public without sharing class ControladorgenerarPlanilla {
                 mostrarsiguiente=false;
                 mostrarAnterior=true;
                 McontenidoPlanilla = new list<contenido_planilla__C>();
-               /* for(integer i=0; i<100; i++)
-                {
-                    McontenidoPlanilla.add(contenidoPlanilla[i]);
-                }*/
+                /* for(integer i=0; i<100; i++)
+{
+McontenidoPlanilla.add(contenidoPlanilla[i]);
+}*/
                 McontenidoPlanilla= [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
-                                 Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                 Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                 Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                 From Contenido_Planilla__c Where id in : mapPaginaciones.get(0)
-                                 Order by Empleado2__r.Firstname];
+                                     Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+                                     Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                     //agregado wp 22-11-2019
+                                     Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                     //
+                                     Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+                                     From Contenido_Planilla__c Where id in : mapPaginaciones.get(0)
+                                     Order by Empleado2__r.Firstname];
                 contadorpaginacion --;
             }
             else
             {
                 McontenidoPlanilla = new list<contenido_planilla__C>();
-               /* for(integer i=(contadorpaginacion - 2)*100; i<(contadorpaginacion-1) *100; i++)
-                {
-                    McontenidoPlanilla.add(contenidoPlanilla[i]);
-                } */ 
+                /* for(integer i=(contadorpaginacion - 2)*100; i<(contadorpaginacion-1) *100; i++)
+{
+McontenidoPlanilla.add(contenidoPlanilla[i]);
+} */ 
                 McontenidoPlanilla= [Select Empleado2__c, Empleado2__r.Identificacion__c,id,
-                                 Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
-                                 Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                                 Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
-                                 From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 2))
-                                 Order by Empleado2__r.Firstname];
+                                     Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
+                                     Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
+                                     //agregado wp 22-11-2019
+                                     Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                     //
+                                     Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
+                                     From Contenido_Planilla__c Where id in : mapPaginaciones.get((contadorpaginacion - 2))
+                                     Order by Empleado2__r.Firstname];
                 contadorpaginacion --;
                 mostrarSiguiente=false;
             }
@@ -436,36 +471,31 @@ public without sharing class ControladorgenerarPlanilla {
             
         }
     }
+    
     public void Cargarmeses(){
-        try{
-            
-            Listmeses = new list<SelectOption>();
-            nombremes = '';
-            Listmeses.add(new SelectOption('1','Enero'));
-            Listmeses.add(new SelectOption('2','Febrero'));
-            Listmeses.add(new SelectOption('3','Marzo'));
-            Listmeses.add(new SelectOption('4','Abril'));
-            Listmeses.add(new SelectOption('5','Mayo'));
-            Listmeses.add(new SelectOption('6','Junio'));
-            Listmeses.add(new SelectOption('7','Julio'));
-            Listmeses.add(new SelectOption('8','Agosto'));
-            Listmeses.add(new SelectOption('9','Septiembre'));
-            Listmeses.add(new SelectOption('10','Octubre'));
-            Listmeses.add(new SelectOption('11','Noviembre'));
-            Listmeses.add(new SelectOption('12','Diciembre'));
-            NombreMes=string.valueOf(date.today().Month());
-        }Catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ha ocurrido un error!')); 		
-        }
+        Listmeses = new list<SelectOption>();
+        nombremes = '';
+        Listmeses.add(new SelectOption('1','Enero'));
+        Listmeses.add(new SelectOption('2','Febrero'));
+        Listmeses.add(new SelectOption('3','Marzo'));
+        Listmeses.add(new SelectOption('4','Abril'));
+        Listmeses.add(new SelectOption('5','Mayo'));
+        Listmeses.add(new SelectOption('6','Junio'));
+        Listmeses.add(new SelectOption('7','Julio'));
+        Listmeses.add(new SelectOption('8','Agosto'));
+        Listmeses.add(new SelectOption('9','Septiembre'));
+        Listmeses.add(new SelectOption('10','Octubre'));
+        Listmeses.add(new SelectOption('11','Noviembre'));
+        Listmeses.add(new SelectOption('12','Diciembre'));
+        NombreMes=string.valueOf(date.today().Month());
     }
     
     public void asignarMapContenido(string idPlanillaN){
         mapEmpleados = new map<Id, Id>();
-        
         For(Contenido_Planilla__c item : [select Empleado2__c from Contenido_Planilla__c
-                                         where planilla__C=:idPlanillaN]){
-            mapEmpleados.put(item.Empleado2__c, item.Empleado2__c);	
-        }	
+                                          where planilla__C=:idPlanillaN]){
+                                              mapEmpleados.put(item.Empleado2__c, item.Empleado2__c);	
+                                          }	
     }
     
     public void sumasTotales()
@@ -476,11 +506,15 @@ public without sharing class ControladorgenerarPlanilla {
                                                        Aporte_Empleado_Obligatorio__c = planilla.TA_Empleado_Obligatorio__c,
                                                        Reserva_Laboral__c = planilla.Total_Reserva_Laboral2__c,
                                                        Aporte_Patrono_Voluntario__c = planilla.TA_Patrono_Voluntario__c,
-                                                       Aporte_Empleado_Voluntario__c = planilla.TA_Empleado_Voluntario__c, Salario__c =planilla.TA_salarios__C);
+                                                       Aporte_Empleado_Voluntario__c = planilla.TA_Empleado_Voluntario__c, 
+                                                       //agregado wp 22-11-2019
+                                                       Aporte_Empleado_Extraordinario__c = planilla.TA_Empleado_Extraordinario__c, 
+                                                       Aporte_Patrono_Extraordinario__c = planilla.TA_Patrono_Extraordinario__c, 
+                                                       Aporte_Seguro_de_Vida__c = planilla.TA_Seguro_de_Vida__c,
+                                                       //
+                                                       Salario__c =planilla.TA_salarios__C);
             
-        }
-        catch(Exception ex)
-        {
+        } catch(Exception ex){
             
         }
     }
@@ -488,8 +522,7 @@ public without sharing class ControladorgenerarPlanilla {
     public void calculoPilares(string bandera){ 
         
         try{
-            if(moneda=='HNL')
-            {
+            if(moneda=='HNL'){
                 Decimal salarioBaseEmpresa = usuarioEmpresa.Empresa2__r.Salario_Base_Pilar_Complementario__c;
                 Decimal salarioBaseReservaL = usuarioEmpresa.Empresa2__r.Salario_Base_Reserva_Laboral__c;
                 Decimal PAPCE = usuarioEmpresa.Empresa2__r.PAPCE__c;
@@ -624,15 +657,12 @@ public without sharing class ControladorgenerarPlanilla {
     }
     
     
-    public void CopiarPlanilla()
-    {
+    public void CopiarPlanilla(){
         try{
-            if(banderaTiempo==0)
-            {
+            if(banderaTiempo==0) {
                 registrarTiempo();
             }
-            if(contenidoPlanilla.size()>0)
-            {
+            if(contenidoPlanilla.size()>0){
                 Cargarmeses();
                 planilla = new Planilla__c();
                 planilla.Creado_por__c = Usuario;
@@ -647,21 +677,33 @@ public without sharing class ControladorgenerarPlanilla {
                 
                 contenidoPlanilla = new list<Contenido_Planilla__c>();
                 
-                For(contenido_planilla__c item: [select Aporte_Empleado_Obligatorio__c, Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,
-                                                 Aporte_Patrono_Voluntario__c,empleado2__c, Reserva_Laboral__c, salario__c
+                For(contenido_planilla__c item: [select Aporte_Empleado_Obligatorio__c, Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c, Aporte_Patrono_Voluntario__c,
+                                                 //agregado wp 22-11-2019
+                                                 Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c,
+                                                 //
+                                                 empleado2__c, Reserva_Laboral__c, salario__c
                                                  from contenido_planilla__c where planilla__c=:idplanilla]){
                                                      
                                                      contenidoPlanilla.add(new Contenido_Planilla__c(Planilla__c = planilla.id, Empleado2__c = item.Empleado2__c,
                                                                                                      Salario__c = item.Salario__c, Aporte_Empleado_Obligatorio__c=item.Aporte_Empleado_Obligatorio__c,
                                                                                                      Aporte_Empleado_Voluntario__c=item.Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c=item.Aporte_Patrono_obligatorio__c,
-                                                                                                     Aporte_Patrono_Voluntario__c=item.Aporte_Patrono_Voluntario__c, Reserva_Laboral__c=item.Reserva_Laboral__c ));	
+                                                                                                     Aporte_Patrono_Voluntario__c=item.Aporte_Patrono_Voluntario__c, 
+                                                                                                     //agregado wp 22-11-2019
+                                                                                                     Aporte_Empleado_Extraordinario__c = item.Aporte_Empleado_Extraordinario__c,
+                                                                                                     Aporte_Patrono_Extraordinario__c = item.Aporte_Patrono_Extraordinario__c, 
+                                                                                                     Aporte_Seguro_de_Vida__c = item.Aporte_Seguro_de_Vida__c,
+                                                                                                     //
+                                                                                                     Reserva_Laboral__c=item.Reserva_Laboral__c ));	
                                                  }
                 insert contenidoPlanilla;
                 list<Cuenta_Planilla__c> cuentaPlanilla= new list<Cuenta_Planilla__c>(); 
                 // cuentaPlanilla=[select Calcular_por__c, Casilla__c, Codigo_cuenta__c, Cuenta__c, Contenido_Planilla__r.empleado2__c ,Tipo__c, Valor_Monto__c, Valor_Monto_Patrono__c
                 //               from Cuenta_Planilla__c where contenido_planilla__r.planilla__c=:idplanilla];
                 
-                for(Cuenta_Planilla__c item:[select Calcular_por__c, Casilla__c, Codigo_cuenta__c, Cuenta__c, Contenido_Planilla__r.empleado2__c ,Tipo__c, Valor_Monto__c, Valor_Monto_Patrono__c
+                for(Cuenta_Planilla__c item:[select Calcular_por__c, Casilla__c, Codigo_cuenta__c, Cuenta__c, Contenido_Planilla__r.empleado2__c ,Tipo__c, Valor_Monto__c, Valor_Monto_Patrono__c,
+                                             //agregado wp 22-11-2019
+                                             Valor_Monto_Extraordinario__c, Valor_Monto_Patronal_Extraordinario__c, Valor_Monto_Seguro_Vida__c
+                                             //
                                              from Cuenta_Planilla__c where contenido_planilla__r.planilla__c=:idplanilla])
                 {
                     for(integer j=0; j<contenidoPlanilla.size(); j++)
@@ -670,7 +712,11 @@ public without sharing class ControladorgenerarPlanilla {
                         {
                             cuentaPlanilla.add(new Cuenta_Planilla__c(Contenido_Planilla__c= contenidoPlanilla[j].id, Calcular_por__c=item.Calcular_por__c,
                                                                       Casilla__c=item.Casilla__c,   Codigo_cuenta__c = item.Codigo_cuenta__c, cuenta__c=item.cuenta__c,
-                                                                      Tipo__c = item.Tipo__c, Valor_Monto__c=item.Valor_Monto__c, Valor_Monto_Patrono__c = item.Valor_Monto_Patrono__c));
+                                                                      Tipo__c = item.Tipo__c, Valor_Monto__c=item.Valor_Monto__c, Valor_Monto_Patrono__c = item.Valor_Monto_Patrono__c,
+                                                                      //agregado wp 22-11-2019
+                                                                      Valor_Monto_Extraordinario__c = item.Valor_Monto_Extraordinario__c, 
+                                                                      Valor_Monto_Patronal_Extraordinario__c = item.Valor_Monto_Patronal_Extraordinario__c, 
+                                                                      Valor_Monto_Seguro_Vida__c = item.Valor_Monto_Seguro_Vida__c));
                         }
                     }
                 }
@@ -685,9 +731,7 @@ public without sharing class ControladorgenerarPlanilla {
             }
             
             
-        }
-        catch(Exception ex)
-        {
+        }catch(Exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, '¡Ha ocurrido un error!'+ ex.getLineNumber()+'  '+ex.getMessage()));
         }
     }
@@ -698,7 +742,7 @@ public without sharing class ControladorgenerarPlanilla {
             hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
             hora.Hora_ultima_consulta__c=datetime.now();
             update hora;
-            if(popcuentas == false)
+            if(popCuentasAEV == false && popCuentasAPE == false && popCuentasAPV == false && popCuentasAPX == false && popCuentasASV == false)
             {
                 planilla = new Planilla__c();
                 Cargarmeses();
@@ -713,66 +757,63 @@ public without sharing class ControladorgenerarPlanilla {
                 insert planilla;
                 
                 contenidoPlanilla = new list<Contenido_Planilla__c>();
-                For(Empresa_x_Empleado__c item: [Select Empleado2__c,empleado2__r.Identificacion__C ,Salario__c,CurrencyIsoCode From Empresa_x_Empleado__c
-                                                 Where Empresa2__c = : Codigo_Unico_Banco
-                                                 AND Estado__c = 'Activo' AND Activo_Nueva_Planilla__c=true and 
-                                                 Empleado2__c in (select cliente__C from Cuentas__C where Producto__r.CurrencyIsoCode=:MONEDA)]){
-                                                     
-                                                     if(moneda=='HNL' && item.CurrencyIsoCode=='USD')
-                                                     {
-                                                         item.salario__C=item.salario__C*tasa;
-                                                     }
-                                                     contenidoPlanilla.add(new Contenido_Planilla__c(Planilla__c = planilla.id, Empleado2__c = item.Empleado2__c,
-                                                                                                     Salario__c = item.Salario__c));	
-                                                     
-                                                     
-                                                 }
+                for(Empresa_x_Empleado__c item: 
+                    [Select Empleado2__c,empleado2__r.Identificacion__C ,Salario__c,CurrencyIsoCode From Empresa_x_Empleado__c
+                     Where Empresa2__c = : Codigo_Unico_Banco
+                     AND Estado__c = 'Activo' AND Activo_Nueva_Planilla__c = true and 
+                     Empleado2__c in (select cliente__C from Cuentas__C where Producto__r.CurrencyIsoCode=:MONEDA)]){
+                         if(moneda=='HNL' && item.CurrencyIsoCode=='USD'){
+                             item.salario__C=item.salario__C*tasa;
+                         }
+                         contenidoPlanilla.add(new Contenido_Planilla__c(Planilla__c = planilla.id, Empleado2__c = item.Empleado2__c,
+                                                                         Salario__c = item.Salario__c));	
+                         
+                         
+                     }
                 map<string, list<claseaportaciones>> mapAportaciones = new  map<string, list<claseaportaciones>>();
                 map<string, list<claseaportaciones>> mapAportacionesC = new  map<string, list<claseaportaciones>>();
-                for(integer j=0; j<listaportes.size(); j++)
-                {
+                for(integer j=0; j<listaportes.size(); j++) {
                     list<claseaportaciones> aportacionesTemp = new list<claseaportaciones>();
-                    if(mapAportaciones.containskey(listaportes[j].idSalesforce))
-                    {
+                    if(mapAportaciones.containskey(listaportes[j].idSalesforce)) {
                         aportacionesTemp=mapAportaciones.get(listaportes[j].idSalesforce);
                         mapAportaciones.Remove(listaportes[j].idSalesforce);
                         aportacionesTemp.add(listaportes[j]);
                         mapAportaciones.put(listaportes[j].idSalesforce,aportacionesTemp);
-                    }
-                    else
-                    {
+                    }else{
                         aportacionesTemp.add(listaportes[j]);
                         mapAportaciones.put(listaportes[j].idSalesforce,aportacionesTemp);
                     }
                     aportacionesTemp = new list<claseaportaciones>();
-                    if(mapAportacionesc.containskey(listaportes[j].Num_cuenta))
-                    {
+                    if(mapAportacionesc.containskey(listaportes[j].Num_cuenta)){
                         aportacionesTemp=mapAportacionesc.get(listaportes[j].Num_cuenta);
                         mapAportacionesc.Remove(listaportes[j].Num_cuenta);
                         aportacionesTemp.add(listaportes[j]);
                         mapAportacionesc.put(listaportes[j].Num_cuenta,aportacionesTemp);
-                    }
-                    else
-                    {
+                    }else{
                         aportacionesTemp.add(listaportes[j]);
                         mapAportacionesc.put(listaportes[j].Num_cuenta,aportacionesTemp);
                     }
                 }
-                for(integer i=0; i<contenidoPlanilla.size(); i++)
-                {
+                for(integer i=0; i<contenidoPlanilla.size(); i++){
                     contenidoPlanilla[i].Aporte_Patrono_Voluntario__c=0;
                     contenidoPlanilla[i].Aporte_empleado_Voluntario__c=0;
+                    //agregado wp 22-11-2019
+                    contenidoPlanilla[i].Aporte_Empleado_Extraordinario__c=0;
+                    contenidoPlanilla[i].Aporte_Patrono_Extraordinario__c=0;
+                    contenidoPlanilla[i].Aporte_Seguro_de_Vida__c=0;
+                    //
                     list<claseaportaciones> aportacionesTemp = new list<claseaportaciones>();
-                    if(mapAportaciones.containskey(contenidoPlanilla[i].empleado2__c))
-                    {
+                    if(mapAportaciones.containskey(contenidoPlanilla[i].empleado2__c)){
                         aportacionesTemp = mapAportaciones.get(contenidoPlanilla[i].empleado2__c);
-                        for(integer j=0; j<aportacionesTemp.size(); j++)
-                        {
-                           if(contenidoPlanilla[i].empleado2__c== aportacionesTemp[j].idsalesforce)
-                            {
+                        for(integer j=0; j<aportacionesTemp.size(); j++){
+                            if(contenidoPlanilla[i].empleado2__c== aportacionesTemp[j].idsalesforce) {
                                 contenidoPlanilla[i].Aporte_Patrono_Voluntario__c += aportacionesTemp[j].apv;
                                 contenidoPlanilla[i].Aporte_empleado_Voluntario__c += aportacionesTemp[j].aev;
-                                
+                                //agregado wp 22-11-2019
+                                contenidoPlanilla[i].Aporte_Empleado_Extraordinario__c += aportacionesTemp[j].ape;
+                                contenidoPlanilla[i].Aporte_Patrono_Extraordinario__c += aportacionesTemp[j].apx;
+                                contenidoPlanilla[i].Aporte_Seguro_de_Vida__c += aportacionesTemp[j].asv;
+                                //
                             }
                         }
                     }
@@ -814,13 +855,13 @@ public without sharing class ControladorgenerarPlanilla {
                                 {
                                     idsalesforce=mapIdSalesforce.get(listcuentasEmpleados[i].cliente__C);
                                 }
-                               /* for(integer jj=0; jj<contenidoplanilla.size(); jj++)
-                                {
-                                    if(contenidoplanilla[jj].empleado2__c == listcuentasEmpleados[i].cliente__C)
-                                    {
-                                        idsalesforce= contenidoplanilla[jj].id;
-                                    }
-                                }*/
+                                /* for(integer jj=0; jj<contenidoplanilla.size(); jj++)
+{
+if(contenidoplanilla[jj].empleado2__c == listcuentasEmpleados[i].cliente__C)
+{
+idsalesforce= contenidoplanilla[jj].id;
+}
+}*/
                                 
                                 if(listcuentasEmpleados[i].cuenta_colectiva2__C ==null && idsalesforce!=null)
                                 {
@@ -830,6 +871,11 @@ public without sharing class ControladorgenerarPlanilla {
                                     cuentasEmpleadosPlanilla.Cuenta__c= listcuentasEmpleados[i].id;
                                     cuentasEmpleadosPlanilla.Tipo__c='Empleado';
                                     cuentasEmpleadosPlanilla.Valor_Monto__c=aportacionesTemp[j].aev;
+                                    //agregado wp 22-11-2019
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Extraordinario__c += aportacionesTemp[j].ape;
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Patronal_Extraordinario__c += aportacionesTemp[j].apx;
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Seguro_Vida__c += aportacionesTemp[j].asv;
+                                    //
                                     cuentasEmpleadosPlanilla.Calcular_por__c='Monto';
                                     listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
                                 }
@@ -843,6 +889,11 @@ public without sharing class ControladorgenerarPlanilla {
                                     cuentasEmpleadosPlanilla.Tipo__c='Empresa';
                                     cuentasEmpleadosPlanilla.Calcular_por__c='Monto';
                                     cuentasEmpleadosPlanilla.Valor_Monto__c=aportacionesTemp[j].aev;
+                                    //agregado wp 22-11-2019
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Extraordinario__c += aportacionesTemp[j].ape;
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Patronal_Extraordinario__c += aportacionesTemp[j].apx;
+                                    cuentasEmpleadosPlanilla.Valor_Monto_Seguro_Vida__c += aportacionesTemp[j].asv;
+                                    //
                                     cuentasEmpleadosPlanilla.Valor_Monto_Patrono__c=aportacionesTemp[j].apv; 
                                     listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
                                 }
@@ -899,15 +950,13 @@ public without sharing class ControladorgenerarPlanilla {
         if(banderaTiempo==0){
             registrarTiempo();
         }
-        if([select count() from contenido_planilla__C where planilla__C=:planilla.id]>95){
-            
-            url_pagina='vfexportarexcelplanilla2?id_pla='+planilla.id;
+        if(contenidoplanilla.size()>95){
+           url_pagina='vfexportarexcelplanilla2?id_pla='+planilla.id;
             system.debug(url_pagina);
             pop_exportar=true;
             return null;
-        }else{
-            return New PageReference ('/Apex/vfexportarexcelplanilla');
         }
+        return New PageReference ('/Apex/vfexportarexcelplanilla');
     }
     
     
@@ -996,16 +1045,29 @@ public without sharing class ControladorgenerarPlanilla {
                             {
                                 idsalesforce= contenidoplanilla[jj].id;
                                 juio=jj;
-                                if(contenidoplanilla[jj].aporte_empleado_voluntario__C ==null ||
-                                   contenidoplanilla[jj].aporte_empleado_voluntario__C <0)
-                                {
-                                    contenidoplanilla[jj].aporte_empleado_voluntario__C =0;
-                                }
-                                if(contenidoplanilla[jj].aporte_patrono_voluntario__C ==null ||
-                                   contenidoplanilla[jj].aporte_patrono_voluntario__C <0)
+                                
+                                if(contenidoplanilla[jj].aporte_patrono_voluntario__C ==null ||contenidoplanilla[jj].aporte_patrono_voluntario__C <0)
                                 {
                                     contenidoplanilla[jj].aporte_patrono_voluntario__C =0;
                                 }
+                                if(contenidoplanilla[jj].aporte_Patrono_Extraordinario__c ==null || contenidoplanilla[jj].aporte_Patrono_Extraordinario__c <0)
+                                {
+                                    contenidoplanilla[jj].aporte_Patrono_Extraordinario__c =0;
+                                }
+                                if(contenidoplanilla[jj].aporte_empleado_voluntario__C ==null || contenidoplanilla[jj].aporte_empleado_voluntario__C <0)
+                                {
+                                    contenidoplanilla[jj].aporte_empleado_voluntario__C =0;
+                                }
+                                //agregado wp 22-11-2019
+                                if(contenidoplanilla[jj].aporte_Empleado_Extraordinario__c ==null || contenidoplanilla[jj].aporte_Empleado_Extraordinario__c <0)
+                                {
+                                    contenidoplanilla[jj].aporte_Empleado_Extraordinario__c =0;
+                                }
+                                if(contenidoplanilla[jj].aporte_Seguro_de_Vida__c ==null || contenidoplanilla[jj].aporte_Seguro_de_Vida__c <0)
+                                {
+                                    contenidoplanilla[jj].aporte_Seguro_de_Vida__c =0;
+                                }
+                                //
                             }
                         }
                         if(listcuentasEmpleados[i].cuenta_colectiva2__C ==null)
@@ -1016,8 +1078,21 @@ public without sharing class ControladorgenerarPlanilla {
                             cuentasEmpleadosPlanilla.Cuenta__c= listcuentasEmpleados[i].id;
                             cuentasEmpleadosPlanilla.Tipo__c='Empleado';
                             cuentasEmpleadosPlanilla.Valor_Monto__c=listaportes[j].aev;
+                            //agregado wp 22-11-219
+                            cuentasEmpleadosPlanilla.Valor_Monto_Extraordinario__c=listaportes[j].ape;
+                            cuentasEmpleadosPlanilla.Valor_Monto_Patronal_Extraordinario__c=listaportes[j].apx;
+                            cuentasEmpleadosPlanilla.Valor_Monto_Seguro_Vida__c=listaportes[j].asv;
+                            //
                             contenidoplanilla[juio].aporte_empleado_voluntario__C +=listaportes[j].aev;
                             contenidoTotal.Aporte_Empleado_Voluntario__c +=listaportes[j].aev;
+                            //agregado wp 22-11-219
+                            contenidoplanilla[juio].aporte_Empleado_Extraordinario__c +=listaportes[j].ape;
+                            contenidoTotal.Aporte_Empleado_Extraordinario__c +=listaportes[j].ape;
+                            contenidoplanilla[juio].aporte_Patrono_Extraordinario__c +=listaportes[j].apx;
+                            contenidoTotal.Aporte_Patrono_Extraordinario__c +=listaportes[j].apx;
+                            contenidoplanilla[juio].aporte_Seguro_de_Vida__c +=listaportes[j].asv;
+                            contenidoTotal.Aporte_Seguro_de_Vida__c +=listaportes[j].asv;
+                            //
                             cuentasEmpleadosPlanilla.Calcular_por__c='Monto';
                             listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
                         }
@@ -1030,11 +1105,25 @@ public without sharing class ControladorgenerarPlanilla {
                             cuentasEmpleadosPlanilla.Tipo__c='Empresa';
                             cuentasEmpleadosPlanilla.Calcular_por__c='Monto';
                             contenidoplanilla[juio].aporte_patrono_voluntario__C +=listaportes[j].apv;
+                            contenidoplanilla[juio].aporte_Patrono_Extraordinario__c +=listaportes[j].apx;
                             contenidoplanilla[juio].aporte_empleado_voluntario__C +=listaportes[j].aev;
-                            contenidoTotal.Aporte_Empleado_Voluntario__c +=listaportes[j].aev;
+                            //agregado wp 22-11-219
+                            contenidoplanilla[juio].aporte_Empleado_Extraordinario__c +=listaportes[j].ape;
+                            contenidoplanilla[juio].aporte_Seguro_de_Vida__c +=listaportes[j].asv;
                             contenidoTotal.Aporte_patrono_Voluntario__c +=listaportes[j].apv;
-                            cuentasEmpleadosPlanilla.Valor_Monto__c=listaportes[j].aev;
+                            contenidoTotal.Aporte_Patrono_Extraordinario__c +=listaportes[j].apx;
+                            contenidoTotal.Aporte_Empleado_Voluntario__c +=listaportes[j].aev;
+                            //agregado wp 22-11-219
+                            contenidoTotal.Aporte_Empleado_Extraordinario__c +=listaportes[j].ape;
+                            contenidoTotal.Aporte_Seguro_de_Vida__c +=listaportes[j].asv;
+                            //
                             cuentasEmpleadosPlanilla.Valor_Monto_Patrono__c=listaportes[j].apv; 
+                            cuentasEmpleadosPlanilla.Valor_Monto_Patronal_Extraordinario__c=listaportes[j].apx;
+                            cuentasEmpleadosPlanilla.Valor_Monto__c=listaportes[j].aev;
+                            //agregado wp 22-11-219
+                            cuentasEmpleadosPlanilla.Valor_Monto_Extraordinario__c=listaportes[j].ape;
+                            cuentasEmpleadosPlanilla.Valor_Monto_Seguro_Vida__c=listaportes[j].asv;
+                            //
                             listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
                         }
                     }
@@ -1076,8 +1165,8 @@ public without sharing class ControladorgenerarPlanilla {
             update Planilla;
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, '¡La planilla '+planilla.name+' se canceló correctamente!'));
             reiniciar();
-        }catch(Exception ex){
-            
+        } catch(Exception ex){
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.error, '¡Ha ocurrido un error, por favor contacte su admin!'));
         }
     }
     public void quitarEmpleado(){
@@ -1140,8 +1229,7 @@ public without sharing class ControladorgenerarPlanilla {
             
             update unContenido;
             update empEmpresa;
-            for (integer i=0; i<contenidoplanilla.size(); i++)
-            {
+            for (integer i=0; i<contenidoplanilla.size(); i++){
                 if(idcontenido ==contenidoplanilla[i].id)
                 {
                     contenidoplanilla[i].salario__C=unContenido.Salario__c;
@@ -1157,8 +1245,7 @@ public without sharing class ControladorgenerarPlanilla {
             contenidoTotal.Aporte_Empleado_Obligatorio__c=0;
             contenidoTotal.Reserva_Laboral__c=0;
             calculopilares(unContenido.id);
-            for (integer i=0; i<contenidoplanilla.size(); i++)
-            {
+            for (integer i=0; i<contenidoplanilla.size(); i++){
                 contenidoTotal.Aporte_Patrono_obligatorio__c=contenidoplanilla[i].Aporte_Patrono_obligatorio__c;
                 contenidoTotal.Aporte_Empleado_Obligatorio__c=contenidoplanilla[i].Aporte_Empleado_Obligatorio__c;
                 contenidoTotal.Reserva_Laboral__c=contenidoplanilla[i].Reserva_Laboral__c;
@@ -1175,38 +1262,111 @@ public without sharing class ControladorgenerarPlanilla {
     
     
     Contenido_planilla__c contenidoPFinal;
+    List<AporteCuenta> listAportesCuenta {get;set;}
     public void mostrarCuentas(){
         try{
-            
             listCuentasPlanilla = new list<Cuenta_planilla__c>();
+            listAportesCuenta = new List<AporteCuenta>();
             Disponibleguardar=true;
-            if(banderaTiempo==0)
-            {
+            if(banderaTiempo==0){
                 registrarTiempo();
             }
-            if(esAPV)
-            {
+            system.debug('Contenido Paola1: '+ idContenido+' '+esAPV);
+            system.debug('esAPV: '+esAPV);
+            system.debug('esAPX: '+esAPX);
+            system.debug('esAEV: '+esAEV);
+            system.debug('esAPE: '+esAPE);
+            system.debug('esAEV: '+esASV);
+            String query = 'Select Id, Calcular_por__c, Codigo_cuenta__c,Tipo__c,Valor_Monto__c,  ';
+            query += 'Valor_Monto_Extraordinario__c, Valor_Monto_Patronal_Extraordinario__c, ';
+            query += 'Valor_Monto_Patrono__c, Valor_Monto_Seguro_Vida__c ';
+            query += 'From Cuenta_planilla__c Where Contenido_Planilla__c = \''+idContenido+'\' ';
+            if(esAPV){
+                query += ' And Tipo__c = \'Empresa\'';
+            }
+            for(Cuenta_planilla__c item: Database.query(query)){
+                AporteCuenta aporte = new AporteCuenta();
+                aporte.id = item.Id;
+                aporte.calcularPor = item.Calcular_por__c;
+                aporte.cuenta = item.Codigo_cuenta__c;
+                aporte.tipo = item.Tipo__c;
+                aporte.valorMonto = item.Valor_Monto__c;
+                aporte.valorMontoExtraordinario = item.Valor_Monto_Extraordinario__c;
+                aporte.valorMontoPatronalExtraordinario = item.Valor_Monto_Patronal_Extraordinario__c;
+                aporte.valorMontoPatrono = item.Valor_Monto_Patrono__c;
+                aporte.valorMontoSeguroVida = item.Valor_Monto_Seguro_Vida__c;
+                listAportesCuenta.add(aporte);
+            }
+            
+            if(esAPV){
                 listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
                 NombreAporte='Aportes Voluntario Patronal';
+                if(listCuentasPlanilla.size()>0){
+                    popCuentasAPV = true;
+                }
+                if(planilla.estado2__C=='Nueva'){
+                    Disponibleguardar=false;
+                }
             }
-            else
-            {
+            //agregado wp 22-11-2019
+            if(esAPX){
+                NombreAporte='Aportes Voluntario Patronal Extraordinario';
+                listCuentasPlanilla=[select Valor_Monto_Patrono__c ,Calcular_por__c, Codigo_cuenta__c,id,Valor_Monto_Patronal_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listCuentasPlanilla.size()>0)
+                {
+                    popCuentasAPX = true;
+                }
+                if(planilla.estado2__C=='Nueva')
+                {
+                    Disponibleguardar=false;
+                }
+            }
+            //
+            if(esAEV) {
                 NombreAporte='Aportes Voluntario Empleado';
-                listCuentasPlanilla=[select Calcular_por__c, id, Codigo_cuenta__c, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Patronal_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listCuentasPlanilla.size()>0)
+                {
+                    popCuentasAEV = true;
+                }
+                if(planilla.estado2__C=='Nueva')
+                {
+                    Disponibleguardar=false;
+                }
             }
-            if(listCuentasPlanilla.size()>0)
-            {
-                popCuentas = true;
+            //agregado wp 22-11-2019
+            if(esAPE){
+                NombreAporte='Aportes Voluntario Empleado Extraordinario';
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c , Codigo_cuenta__c,id, Valor_Monto_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listCuentasPlanilla.size()>0)
+                {
+                    popCuentasAPE = true;
+                }
+                if(planilla.estado2__C=='Nueva')
+                {
+                    Disponibleguardar=false;
+                }
             }
-            if(planilla.estado2__C=='Nueva')
-            {
-                Disponibleguardar=false;
+            if(esASV){
+                NombreAporte='Aportes Seguro de Vida';
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto_Seguro_Vida__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listCuentasPlanilla.size()>0)
+                {
+                    popCuentasASV = true;
+                }
+                if(planilla.estado2__C=='Nueva')
+                {
+                    Disponibleguardar=false;
+                }
             }
+            //
+            
         }Catch(Exception e){
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'No se han encontrado cuentas asociadas')); 	
         }
     }
+    
     
     public void aceptarCuentas(){
         try{
@@ -1234,13 +1394,36 @@ public without sharing class ControladorgenerarPlanilla {
                     }
                     contenidoTotal.Aporte_Patrono_Voluntario__c +=contenidoPlanilla[i].Aporte_Patrono_Voluntario__c;
                 }
+                esAPV = false;
             }
-            else
+            //agregado wp 22-11-2019
+            if(esAPX)
+            {
+                contenidoTotal.Aporte_Patrono_Extraordinario__c=0;
+                for(integer i=0; i<listCuentasPlanilla.size(); i++)
+                {
+                    totalaporte +=listCuentasPlanilla[i].Valor_Monto_Patronal_Extraordinario__c;
+                } 
+                for(integer i=0; i<contenidoPlanilla.size(); i++)
+                {
+                    if(idContenido == contenidoPlanilla[i].id)
+                    {
+                        contenidoPlanilla[i].aporte_Patrono_Extraordinario__c=totalaporte;
+                        contenidotemporal.Aporte_Patrono_Extraordinario__c=totalaporte;
+                        contenidotemporal.id=idcontenido;
+                        update contenidotemporal;
+                    }
+                    contenidoTotal.Aporte_Patrono_Extraordinario__c +=contenidoPlanilla[i].Aporte_Patrono_Extraordinario__c;
+                }
+                esAPX = false;
+            }
+            //
+            if(esAEV)
             {
                 contenidoTotal.Aporte_empleado_Voluntario__c=0;
                 for(integer i=0; i<listCuentasPlanilla.size(); i++)
                 {
-                    totalaporte +=listCuentasPlanilla[i].valor_monto__c;
+                    totalaporte +=listCuentasPlanilla[i].Valor_Monto__c;
                 } 
                 for(integer i=0; i<contenidoPlanilla.size(); i++)
                 {
@@ -1253,9 +1436,56 @@ public without sharing class ControladorgenerarPlanilla {
                     }
                     contenidoTotal.Aporte_empleado_Voluntario__c +=contenidoPlanilla[i].Aporte_empleado_Voluntario__c;
                 }
+                esAEV = false;
             }
+            //agregado wp 22-11-2019
+            if(esAPE)
+            {
+                contenidoTotal.Aporte_Empleado_Extraordinario__c=0;
+                for(integer i=0; i<listCuentasPlanilla.size(); i++)
+                {
+                    totalaporte +=listCuentasPlanilla[i].Valor_Monto_Extraordinario__c;
+                } 
+                for(integer i=0; i<contenidoPlanilla.size(); i++)
+                {
+                    if(idContenido == contenidoPlanilla[i].id)
+                    {
+                        contenidoPlanilla[i].aporte_Empleado_Extraordinario__c=totalaporte;
+                        contenidotemporal.Aporte_Empleado_Extraordinario__c=totalaporte;
+                        contenidotemporal.id=idcontenido;
+                        update contenidotemporal;
+                    }
+                    contenidoTotal.Aporte_Empleado_Extraordinario__c +=contenidoPlanilla[i].Aporte_Empleado_Extraordinario__c;
+                }
+                esAPE = false;
+            }
+            if(esASV)
+            {
+                contenidoTotal.Aporte_Seguro_de_Vida__c=0;
+                for(integer i=0; i<listCuentasPlanilla.size(); i++)
+                {
+                    totalaporte +=listCuentasPlanilla[i].Valor_Monto_Seguro_Vida__c;
+                } 
+                for(integer i=0; i<contenidoPlanilla.size(); i++)
+                {
+                    if(idContenido == contenidoPlanilla[i].id)
+                    {
+                        contenidoPlanilla[i].aporte_Seguro_de_Vida__c=totalaporte;
+                        contenidotemporal.Aporte_Seguro_de_Vida__c=totalaporte;
+                        contenidotemporal.id=idcontenido;
+                        update contenidotemporal;
+                    }
+                    contenidoTotal.Aporte_Seguro_de_Vida__c +=contenidoPlanilla[i].Aporte_Seguro_de_Vida__c;
+                }
+                esASV = false;
+            }
+            //
             update listCuentasPlanilla;
-            popcuentas = false;
+            popCuentasAEV = false;
+            popCuentasAPE = false;
+            popCuentasAPV = false;
+            popCuentasAPX = false;
+            popCuentasASV = false;
             
             
         }Catch(Exception e){
@@ -1309,405 +1539,676 @@ public without sharing class ControladorgenerarPlanilla {
         }
     }
     
-    public void metodoutil()
-    {
-        integer i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
-        i=0;
+    public class AporteCuenta{
+        public String id{get;set;}
+        public String cuenta{get;set;}
+        public String calcularPor{get;set;}
+        public String tipo{get;set;}
+        public Decimal valorMonto{get;set;}
+        public Decimal valorMontoExtraordinario {get;set;}
+        public Decimal valorMontoPatronalExtraordinario {get;set;}
+        public Decimal valorMontoPatrono {get;set;}
+        public Decimal valorMontoSeguroVida {get;set;}
+         
     }
-
+    
+    public void metodoutil(){
+        integer p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+          p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+          p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+          p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+        p=0;
+    }
+    
 }

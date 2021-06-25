@@ -65,6 +65,20 @@ public class ControladorCasosPortalAutogestionE2C {
     Public List<RecordType> rt;
     Public List<Case> caso01; 
     
+    public string bancoVal {get;set;}
+    
+    public SelectOption[] BANCO { 
+        public get;
+        private set;
+    }
+    
+    public void llenarBANCO() {
+        this.BANCO = new SelectOption[]{};                
+        this.BANCO.add(new SelectOption('','--Ninguno--'));    
+        this.BANCO.add(new SelectOption('28','Ficohsa'));
+        this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
+    }
+    
     //Fin nuevo 4/05/2020
     
     public ControladorCasosPortalAutogestionE2C(ApexPages.StandardController controller) {
@@ -97,6 +111,9 @@ public class ControladorCasosPortalAutogestionE2C {
     
     public ControladorCasosPortalAutogestionE2C() { 
         try { 
+            
+            llenarBANCO();
+            
             disabledSelect = true; disabledSelect2 = true; noRecibeToken = false; styleDiv = 'display:none;'; styleIngresaToken = 'display:none;'; styleNumCel = 'display:none;';
             
             String idCaso = ApexPages.currentPage().getParameters().get('idCaso');
@@ -228,7 +245,7 @@ public class ControladorCasosPortalAutogestionE2C {
             }
             
             //Inicio obtener y actualizar - usuario asignación casos
-            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
             List<Usuarios_para_asignacion_Casos_SAC__c> updateUserAsigna = new List<Usuarios_para_asignacion_Casos_SAC__c>();
             if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                 for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
@@ -315,7 +332,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 }
                 
                 //Inicio obtener y actualizar - usuario asignación casos
-                List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+                List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
                 
                 if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                     for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
@@ -506,7 +523,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 } 
             }
             
-            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
             if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                 for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
                     upac.Ultimo_Caso_Asignado__c = System.now(); 
@@ -864,7 +881,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){ 
                     hayerror = true; 
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){ 
+                }else if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){ 
                     hayerror = true; 
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
@@ -934,6 +951,9 @@ public class ControladorCasosPortalAutogestionE2C {
                     detallecaso.Caso__c = caso.id; 
                     detalleCaso.Cuenta__c = idCuenta; 
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
+                    if(bancoVal <> Null) {
+                    	detalleCaso.Banco__c = bancoVal;
+                    }
                     insertDetalle = true; 
                 } 
                 
@@ -942,6 +962,8 @@ public class ControladorCasosPortalAutogestionE2C {
                         System.debug('Caso de aumento de aporte o Disminución de Aporte');
                         caso.Archivo_Adjunto__c = true;
                         caso.Status = 'Cerrado';
+                        disabledSelect = true; 
+                        disabledSelect2 = true;
                         solicitud = new SolicitudCaso();
                         solicitud = AFPCCasos.upsertCaso(caso);
                         if(solicitud.solicitudExitosa){
@@ -1184,9 +1206,9 @@ public class ControladorCasosPortalAutogestionE2C {
                 } 
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { 
                     if(cTipoCaso.otros) { 
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1]; 
                     } else { 
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1]; 
                     } 
                     p.Ultimo_Caso_Asignado__c = System.now(); 
                     //update p; 

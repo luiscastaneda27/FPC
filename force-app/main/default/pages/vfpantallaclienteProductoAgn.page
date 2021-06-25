@@ -358,7 +358,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                                                                 </label>
                                                                 
@@ -367,7 +367,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                                 </label>
                                                                 
@@ -376,14 +376,14 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                                 </label>
                                                                 <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
                                                                     <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA No Consiente
                                                                 </label>
                                                                 <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckb}" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
    
                                                                     <script>
@@ -1308,7 +1308,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Tipo Dirección
                                                                 </label>                                                                                                                                
-                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_Direccion__c}" style="height:10px; width:170px; margin-left:50px;"/>
+                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_direccion__c}" style="height:10px; width:170px; margin-left:50px;"/>
                                                                 
                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Por defecto
@@ -1690,7 +1690,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>No procede por decisión administra y se debe escalar a Cumplimiento</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             
@@ -2206,7 +2206,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     
                                                     <tr>
                                                         
-                                                        <td width="1100">
+                                                        <td width="1200">
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo Trabajador
@@ -2237,7 +2237,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     
                                                     <tr>
                                                         
-                                                        <td width="450">
+                                                        <td width="1200">
                                                             
                                                             <br/> 
                                                             
@@ -4129,7 +4129,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>No procede por decisión administra y se debe escalar a Cumplimiento</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             

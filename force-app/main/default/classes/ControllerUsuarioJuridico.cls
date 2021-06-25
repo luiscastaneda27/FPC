@@ -390,7 +390,7 @@ public class ControllerUsuarioJuridico {
     
     public void bloqPep(){
         dispep = true; 
-        calificacionRiesgo = '3'; 
+        calificacionRiesgo = '4'; 
         diligenciaAplicada = '3'; 
     }
     public void unblock(){
@@ -884,10 +884,11 @@ public class ControllerUsuarioJuridico {
     public void llenarNivelRiesgo(){
         
         this.NivelRiesgoOptions = new SelectOption[]{};
-        this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
+        //this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
         this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
-        this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
-        this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
+        this.NivelRiesgoOptions.add(new SelectOption('2','MODERADO'));
+        this.NivelRiesgoOptions.add(new SelectOption('3','MEDIO'));
+        this.NivelRiesgoOptions.add(new SelectOption('4','ALTO'));
     }
     
     public SelectOption[] NivelRiesgoOptions
@@ -899,7 +900,7 @@ public class ControllerUsuarioJuridico {
     //*********************Llenar Nivel de Riesgo***********************************
     public void llenaro(){
         this.NiveloOptions = new SelectOption[]{};
-        this.NiveloOptions.add(new SelectOption('','NINGUNO'));
+            this.NiveloOptions.add(new SelectOption('','NINGUNO'));
         this.NiveloOptions.add(new SelectOption('1','NO CONTRIBUTIVO'));             
     }
     

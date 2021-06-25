@@ -543,6 +543,8 @@ public class ControllerPantJuridProduc {
     public boolean OcultarFatca17 {get;set;}  
 	public boolean btnagregar {get;set;}
     
+    public list <ContenidoValidaNivelJ> validaDatos; 
+    
     
     public void ClienteNatural()     
     {  
@@ -756,7 +758,7 @@ public class ControllerPantJuridProduc {
             llenarTipoFondo();
             TipMoneda.Tipo_Moneda__c = null;
             
-            PC_NIVEL_RIESGO = '2';
+            PC_NIVEL_RIESGO = '1';
 			PC_DEBIDA_DELIGENCIA = '2';
             desNacion2 = true; 
             TipoEntidadLLenar();
@@ -792,7 +794,7 @@ public class ControllerPantJuridProduc {
                 
                 if(fcsd.PEP == true||test.isRunningTest()){
                     PEPControlante = fcsd.PEP;
-                    PC_NIVEL_RIESGO = '3';
+                    PC_NIVEL_RIESGO = '4';
                     PC_DEBIDA_DELIGENCIA = '3';
                     //bloqRTN = false;
                     OcultaCarSI = true;
@@ -1061,22 +1063,22 @@ public class ControllerPantJuridProduc {
         try
         {
 
-            propiedadControlUnicoUnico.tipoPersonaControlante = Cliente1.Tipo_Persona__c;
+            //propiedadControlUnicoUnico.tipoPersonaControlante = Cliente1.Tipo_Persona__c;
             propiedadControlUnicoUnico.numControlante = numControlante;
             propiedadControlUnicoUnico.nombreControlante = nombreControlante;
-            propiedadControlUnicoUnico.tipoPersonaControlante = propiedadControlUnicoUnico.tipoPersonaControlante; 
-            propiedadControlUnicoUnico.nacionalidadControlante = propiedadControlUnicoUnico.nacionalidadControlante;
-            propiedadControlUnicoUnico.porcentajeInControlante = propiedadControlUnicoUnico.porcentajeInControlante;
-            decimal total2=decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante);
+            //propiedadControlUnicoUnico.tipoPersonaControlante = propiedadControlUnicoUnico.tipoPersonaControlante; 
+            //propiedadControlUnicoUnico.nacionalidadControlante = propiedadControlUnicoUnico.nacionalidadControlante;
+            //propiedadControlUnicoUnico.porcentajeInControlante = propiedadControlUnicoUnico.porcentajeInControlante;
+            //decimal total2=decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante);
             
-            if (cotizaControlanteSi == true )
+            /*if (cotizaControlanteSi == true )
             {
                  propiedadControlUnicoUnico.cotBolsaControlante = 'S';
             }
             ELSE
             {
                 propiedadControlUnicoUnico.cotBolsaControlante = 'N'; 
-            }
+            }*/
             if (PEPControlante == true )
             {
                  propiedadControlUnicoUnico.PEPControlante = 'S';
@@ -1106,12 +1108,11 @@ public class ControllerPantJuridProduc {
             }
             
             
-            if(propiedadControlUnicoUnico.numControlante != null || propiedadControlUnicoUnico.nombreControlante != null || propiedadControlUnicoUnico.tipoPersonaControlante != null || 
-               propiedadControlUnicoUnico.nacionalidadControlante != null || propiedadControlUnicoUnico.porcentajeDiControlante != null || propiedadControlUnicoUnico.porcentajeInControlante != null )
+            if(propiedadControlUnicoUnico.numControlante != null || propiedadControlUnicoUnico.nombreControlante != null)
             {    
            
              
- 				if( propiedadControlUnicoUnico.nivelControlante == '1')
+ 				/*if( propiedadControlUnicoUnico.nivelControlante == '1')
                 {
                     for(integer i=0; i<ListPropiedadControl.size(); i++)
                 {
@@ -1132,14 +1133,14 @@ public class ControllerPantJuridProduc {
                    for(integer i=0; i<ListPropiedadControl.size(); i++)
                        {
                            total2=0;}
-                    }    
+                    }   */ 
                              
-            if( propiedadControlUnicoUnico.nivelControlante == '1' && total2 >100 )
+            /*if( propiedadControlUnicoUnico.nivelControlante == '1' && total2 >100 )
             {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Puede Agregar, El porcentaje directo es mayor que 100'));
             }
             else
-            {
+            {*/
                 if (mostrarTablaModiControlantes == true)
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
@@ -1161,7 +1162,7 @@ public class ControllerPantJuridProduc {
                     limpiaControlantes(); 
                 } 
                 
-            }
+           // }
                           
             }
             
@@ -1201,7 +1202,7 @@ public class ControllerPantJuridProduc {
     }
     PUBLIC VOID modificarControlantes()
     {	decimal total2=0;
-     	if(propiedadControlUnicoUnico !=null){total2=propiedadControlUnicoUnico.porcentajeDiControlante!=null ?decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante):0;}
+     	//if(propiedadControlUnicoUnico !=null){total2=propiedadControlUnicoUnico.porcentajeDiControlante!=null ?decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante):0;}
          try
          { integer posi;
          	for(integer i=0; i<ListPropiedadControl.size(); i++)
@@ -1211,21 +1212,21 @@ public class ControllerPantJuridProduc {
                      posi=i;
                      numControlante=ListPropiedadControl[i].numControlante;
                      propiedadControlUnicoUnico.nombreControlante = ListPropiedadControl[i].nombreControlante;
-                     Cliente1.Tipo_Persona__c=ListPropiedadControl[i].tipoPersonaControlante;
+                     /*Cliente1.Tipo_Persona__c=ListPropiedadControl[i].tipoPersonaControlante;
                      propiedadControlUnicoUnico.nacionalidadControlante=ListPropiedadControl[i].nacionalidadControlante;
-                     propiedadControlUnicoUnico.nivelControlante=ListPropiedadControl[i].nivelControlante;
+                     propiedadControlUnicoUnico.nivelControlante=ListPropiedadControl[i].nivelControlante;*/
                      propiedadControlUnicoUnico.PEPControlante=ListPropiedadControl[i].PEPControlante;
                      propiedadControlUnicoUnico.FATCAControlante=ListPropiedadControl[i].FATCAControlante;
                      propiedadControlUnicoUnico.FATCANCControlante=ListPropiedadControl[i].FATCANCControlante;
-                     propiedadControlUnicoUnico.porcentajeDiControlante=ListPropiedadControl[i].porcentajeDiControlante;
+                     /*propiedadControlUnicoUnico.porcentajeDiControlante=ListPropiedadControl[i].porcentajeDiControlante;
                      propiedadControlUnicoUnico.porcentajeInControlante=ListPropiedadControl[i].porcentajeInControlante;
-                     propiedadControlUnicoUnico.numIdEmpresaControlante=ListPropiedadControl[i].numIdEmpresaControlante;
+                     propiedadControlUnicoUnico.numIdEmpresaControlante=ListPropiedadControl[i].numIdEmpresaControlante;*/
                      propiedadControlUnicoUnico.cargoControlante=ListPropiedadControl[i].cargoControlante;
-                     propiedadControlUnicoUnico.cotBolsaControlante =ListPropiedadControl[i].cotBolsaControlante;
-                     propiedadControlUnicoUnico.ticSymbolControlante=ListPropiedadControl[i].ticSymbolControlante;
+                     /*propiedadControlUnicoUnico.cotBolsaControlante =ListPropiedadControl[i].cotBolsaControlante;
+                     propiedadControlUnicoUnico.ticSymbolControlante=ListPropiedadControl[i].ticSymbolControlante;*/
                      propiedadControlUnicoUnico.AI_ID_EXTERNO=ListPropiedadControl[i].AI_ID_EXTERNO;
                      
-                     if (propiedadControlUnicoUnico.cotBolsaControlante == 'S')
+                     /*if (propiedadControlUnicoUnico.cotBolsaControlante == 'S')
                      {
                          cotizaControlanteSi = true;
                      }
@@ -1233,7 +1234,7 @@ public class ControllerPantJuridProduc {
                      if (propiedadControlUnicoUnico.cotBolsaControlante == 'N')
                      {
                          cotizaControlanteNo = true;
-                     }
+                     }*/
                      if (propiedadControlUnicoUnico.PEPControlante == 'S' )
                      {
                          PEPControlante = true;
@@ -2113,7 +2114,7 @@ public class ControllerPantJuridProduc {
           OcultarAPNFD = false;
           OcultarAPNFDNO = true;
           NumeroAPNFDBLO = false;
-          PC_NIVEL_RIESGO = '3'; 
+          PC_NIVEL_RIESGO = '4'; 
           PC_DEBIDA_DELIGENCIA = '3';
           dispep =  true;
              
@@ -2144,7 +2145,7 @@ public class ControllerPantJuridProduc {
         if (valorsiONG = true){
             OcultarONGNO = true;
         	activadesacONG = false;
-            PC_NIVEL_RIESGO = '3'; 
+            PC_NIVEL_RIESGO = '4'; 
             PC_DEBIDA_DELIGENCIA = '3';
             dispep = true;
         }
@@ -2167,12 +2168,12 @@ public class ControllerPantJuridProduc {
         	ClienteONG.Monto = 0;
         
 			if (pcPEP == true || pcAPNFDSI == true || ValorContratistasi == true){
-            				PC_NIVEL_RIESGO = '3'; 
+            				PC_NIVEL_RIESGO = '4'; 
             				PC_DEBIDA_DELIGENCIA = '3';
                         	dispep = true;
 							}
             else{
-                     		PC_NIVEL_RIESGO = '2'; 
+                     		PC_NIVEL_RIESGO = '1'; 
             				PC_DEBIDA_DELIGENCIA = '2';
                  			dispep = false;
                  		}
@@ -2194,12 +2195,12 @@ public class ControllerPantJuridProduc {
      
             OcultarONGSI = false;
             if (pcPEP == true || ValorContratistasi == true || pcAPNFDSI == true){
-          					PC_NIVEL_RIESGO = '3'; 
+          					PC_NIVEL_RIESGO = '4'; 
           					PC_DEBIDA_DELIGENCIA = '3';
              				dispep =  true;
          									}
         			 else{
-            				PC_NIVEL_RIESGO = '2'; 
+            				PC_NIVEL_RIESGO = '1'; 
           					PC_DEBIDA_DELIGENCIA = '2';
              				dispep =  false;
          					}
@@ -2210,7 +2211,7 @@ public class ControllerPantJuridProduc {
 					if (ValorContratistasi = true){
 					activadesacContratista = false;
                     OcultarNoContratista = true;
-                    PC_NIVEL_RIESGO = '3'; 
+                    PC_NIVEL_RIESGO = '4'; 
             		PC_DEBIDA_DELIGENCIA = '3';
             		dispep = true;
         					}
@@ -2233,12 +2234,12 @@ public class ControllerPantJuridProduc {
         	      ListDebidaDil = new List<claseDebidaDilContratista>();
                  
                  	if (pcPEP == true || pcAPNFDSI == true || valorsiONG == true){
-            				PC_NIVEL_RIESGO = '3'; 
+            				PC_NIVEL_RIESGO = '4'; 
             				PC_DEBIDA_DELIGENCIA = '3';
                         	dispep = true;
 							}
                  	else{
-                     		PC_NIVEL_RIESGO = '2'; 
+                     		PC_NIVEL_RIESGO = '1'; 
             				PC_DEBIDA_DELIGENCIA = '2';
                  			dispep = false;
                  		}
@@ -2263,12 +2264,12 @@ public class ControllerPantJuridProduc {
           		 		//PC_DEBIDA_DELIGENCIA = '2';
                  		//dispep = false;
                  		if (pcPEP == true || valorsiONG == true || pcAPNFDSI == true){
-          					PC_NIVEL_RIESGO = '3'; 
+          					PC_NIVEL_RIESGO = '4'; 
           					PC_DEBIDA_DELIGENCIA = '3';
              				dispep =  true;
          									}
         			 else{
-            				PC_NIVEL_RIESGO = '2'; 
+            				PC_NIVEL_RIESGO = '1'; 
           					PC_DEBIDA_DELIGENCIA = '2';
              				dispep =  false;
          					}
@@ -2671,13 +2672,13 @@ public class ControllerPantJuridProduc {
          
          IF(pcPEP == true || valorsiONG == true || ValorContratistasi == true)
         {
-            PC_NIVEL_RIESGO = '3'; 
+            PC_NIVEL_RIESGO = '4'; 
             PC_DEBIDA_DELIGENCIA = '3';
             dispep =  true;
         }
         else
         {
-            PC_NIVEL_RIESGO = '2'; 
+            PC_NIVEL_RIESGO = '1'; 
             PC_DEBIDA_DELIGENCIA = '2';   
             dispep =  false;
         }       
@@ -4629,6 +4630,7 @@ public class ControllerPantJuridProduc {
       public pageReference guardar(){
         try{
                 ClassPantJuridicoProduc juridicoEnvio = new ClassPantJuridicoProduc();
+                ValidaRiesgo();
                 juridicoEnvio.numtran = numtran; //Agregado 08/04/2020
                 juridicoEnvio.pcagencia /*Cod_Agencia*/ = pcagencia;
                 juridicoEnvio.pcempresa /*Cod_Agencia*/ = pcempresa;
@@ -5667,7 +5669,7 @@ public class ControllerPantJuridProduc {
                 
                 if(fcsdListas.PEP == true){
                     PEPSocio = fcsdListas.PEP;
-                    PC_NIVEL_RIESGO = '3';
+                    PC_NIVEL_RIESGO = '4';
                     PC_DEBIDA_DELIGENCIA = '3';
                     muestraPopPEP = true;
                 }
@@ -7336,7 +7338,7 @@ public class ControllerPantJuridProduc {
                     
                     if(fcsd.PEP == true){
                         pcPEP = fcsd.PEP;
-                        PC_NIVEL_RIESGO = '3';
+                        PC_NIVEL_RIESGO = '4';
                         PC_DEBIDA_DELIGENCIA = '3';
                         muestraPopPEP = true;
                     }
@@ -7561,13 +7563,13 @@ public class ControllerPantJuridProduc {
 
     public void bloqPep(){
         dispep = true; 
-        PC_NIVEL_RIESGO = '3'; 
+        PC_NIVEL_RIESGO = '4'; 
         PC_DEBIDA_DELIGENCIA = '3'; 
 
     }
         public void unblock(){
         dispep = false; 
-        PC_NIVEL_RIESGO = '0'; 
+        PC_NIVEL_RIESGO = '1'; 
         PC_DEBIDA_DELIGENCIA = '0';    
       //  debidaDiligencviaAplicada = '2'; 
     }
@@ -7648,14 +7650,14 @@ public class ControllerPantJuridProduc {
         //PC_NIVEL_RIESGO = '3'; 
         //PC_DEBIDA_DELIGENCIA = '3';
         dispep = true;
-        if (pcFATCA == true){ PC_NIVEL_RIESGO = '3'; PC_DEBIDA_DELIGENCIA = '3';            
+        if (pcFATCA == true){ PC_NIVEL_RIESGO = '4'; PC_DEBIDA_DELIGENCIA = '3';            
         }
     }
     
     public void MostrarVentanaFATCANO()
     {
         VentanaFatca=false;
-        PC_NIVEL_RIESGO = '0'; 
+        PC_NIVEL_RIESGO = '1'; 
         PC_DEBIDA_DELIGENCIA = '0';
         dispep = false;
     }
@@ -7757,11 +7759,13 @@ public class ControllerPantJuridProduc {
      //*********************Llenar Nivel de Riesgo ***********************************
     public void llenarNivelRiesgo()
     {
-		this.NivelRiesgoOptions = new SelectOption[]{};
-        this.NivelRiesgoOptions.add(new SelectOption('0','NINGUNO'));
+        
+        this.NivelRiesgoOptions = new SelectOption[]{};
+        //this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
         this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
-        this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
-        this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
+        this.NivelRiesgoOptions.add(new SelectOption('2','MODERADO'));
+        this.NivelRiesgoOptions.add(new SelectOption('3','MEDIO'));
+        this.NivelRiesgoOptions.add(new SelectOption('4','ALTO'));
     }
     
     public SelectOption[] NivelRiesgoOptions
@@ -7988,6 +7992,80 @@ public class ControllerPantJuridProduc {
                Indirectoo = false;
            }
     }
+    
+    public void ValidaRiesgo()
+    {
+        try{
+            ClassPantJuridicoProduc naturalEnvio = new ClassPantJuridicoProduc();
+            if(pcAPNFDSI == true)
+            {
+                naturalEnvio.pcAPNFD = 'S';
+            }
+            else
+            {
+                naturalEnvio.pcAPNFD = 'N';
+            }
+            /*if(pcFATCA == true)
+            {
+                naturalEnvio.pcFATCA = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcFATCA = 'N';
+            }*/
+             if(valorsiONG == true){
+             ClienteONG.ClienteONG = 'S';
+            }
+            else{
+                ClienteONG.ClienteONG = 'N';
+            }
+            if(ValorContratistasi == true)
+            {
+             debidaDil.Contratista = 'S';   
+            }
+            else{
+                debidaDil.Contratista = 'N';
+            }     
+            
+            if(pcPEP == true)
+            {
+                naturalEnvio.pcPEP = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcPEP = 'N'; 
+            } 
+            naturalEnvio.pcGiroEmpresaEmpCN /*GiroEmpresa*/ = Cliente25.Sector__c;
+            // naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c; 
+            naturalEnvio.pcTipoFondo = pcTipoFondo;
+            
+            validaDatos = NEW List<ContenidoValidaNivelJ>();                
+            validaDatos.add(new ContenidoValidaNivelJ(naturalEnvio.pcTipoFondo,
+                                                      FECHA_CONSTITUCION,
+                                                      naturalEnvio.pcGiroEmpresaEmpCN,
+                                                      naturalEnvio.pcAPNFD,
+                                                      ClienteONG.ClienteONG,
+                                                      debidaDil.Contratista,
+                                                      naturalEnvio.pcPEP,
+                                                      pcproducto,
+                                                      '100000000001',//pcagencia,
+                                                      pcDeptoCN//Pdepto
+                                                     ));  
+            //  } 
+            enviarValidarNivelJ Enviar = new enviarValidarNivelJ(validaDatos); 
+            string csharp;           
+            csharp=string.valueOf(ControllerApiValidaRiesgo.NivelRiesgoJ(Enviar));            
+            system.debug('PRUEBA1 ' + csharp);         
+            //PC_MEDIDA_APLICADA = csharp.substring(42,43);
+            PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
+            PC_NIVEL_RIESGO = csharp.substring(61,62);
+            //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
+           // system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO + ' ' + naturalEnvio.pcGiroEmpresaEmpCN  + ' '  + naturalEnvio.pcTipoFondo);
+            
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());   
+        }
+    }     
     
     
     

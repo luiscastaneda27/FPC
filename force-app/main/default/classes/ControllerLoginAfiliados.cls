@@ -74,6 +74,7 @@ public class ControllerLoginAfiliados {
     public void cerrar(){
         mostrarlogin=true;
         mostrarhome=false;
+        pagina = '';
     }
     
     public void ClienteNatural()
@@ -260,7 +261,8 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
             resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(usuario);  
             
             system.debug('Resultado2'+ resultado2  );
-            
+            system.debug('resultado del rol desde login: '+resultado2[0].rol );
+            ApexPages.currentPage().getParameters().put('rol',resultado2[0].rol);
             if(resultado2.size()>0)
             {
                 Numcuentas= new list<string>();

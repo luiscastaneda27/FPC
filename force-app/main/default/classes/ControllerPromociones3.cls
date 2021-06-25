@@ -17,7 +17,7 @@ public without sharing class ControllerPromociones3 {
     public void getPaises() {
         listPaises= new list<selectoption>();
         listPaises.add(new selectoption('', ' --Ninguno-- '));
-        for(Pais_R__c c:[Select Id,Name,codigo__c,nombre__c From Pais_R__c Where ActivoAfiliacionExtranjero__C = true order by name asc]){
+        for(Pais_R__c c:[Select Id,Name,codigo__c,nombre__c From Pais_R__c order by name asc]){
             listPaises.add(new selectoption(c.codigo__c,c.nombre__c));
         }
     }
@@ -45,7 +45,7 @@ public without sharing class ControllerPromociones3 {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Móvil excede la cantidad de 8 caracteres permitidos ')); 
                 return;    
             }
-            if(candidato.Telefono_Trabajo__c != null && candidato.Telefono_Trabajo__c.length() > 8){
+            /*if(candidato.Telefono_Trabajo__c != null && candidato.Telefono_Trabajo__c.length() > 8){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Trabajo excede la cantidad de 8 caracteres permitidos '));
                 return ;
             }
@@ -105,7 +105,23 @@ public without sharing class ControllerPromociones3 {
                 //fin
                 candidato.F_Estado__c = itemD.Id;
                 insert candidato;  
-            }
+            }*/
+            Pais_R__c itemP = [SELECT id, name, nombre__c, codigo__c from Pais_R__c where codigo__c =: pais];
+            
+            Departamentos__c itemD = [select id,Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais AND Departamento__c =: depto];
+            
+            candidato.RecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
+            candidato.status = 'En Proceso';
+            candidato.Usuario_Referencia__c = usuario;
+            candidato.LeadSource='Web';
+            candidato.F_Hon_USA_Link_Ref__c = true;
+            //agregado 
+            candidato.F_Pais__c = itemP.Id; 
+            candidato.Departamento__c = itemD.Departamento__c; 
+            candidato.Pais_Residencia__c = itemP.Name;
+            //fin
+            candidato.F_Estado__c = itemD.Id;
+            insert candidato; 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Datos guardados correctamente')); 
             reiniciar(); 
         }catch (exception e){

@@ -31,39 +31,54 @@ public class updateCase {
             List<Case> caso = [Select Id,Status,DAU_Tarjeta_de_Sysde__c,Account.Identificacion__c,DAU_Identidad__c,DAU_No_Cuenta__c,
                                DAU_aprobacion__c From Case Where Id In: detail Limit 1];
             
-            List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Codigo__c From Detalle_caso__c 
+            List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Codigo__c,banco__c From Detalle_caso__c 
                                              Where Caso__c In: casoOrigen Limit 1]; 
             
             List<Detalle_caso__c> dcase = new List<Detalle_caso__c>();
-            dcase.add(new Detalle_caso__c(Caso__c = caso[0].Id,Cuenta__c = detcaso[0].Cuenta__c,Accion__c = 'A2',Tipo_Operacion__c = 'A7',Tipo_saldo_modificar2__c = '10',Banco__c='28'));
+            String banco;
+            if(detcaso[0].banco__c == '28') {
+            	banco = '28';    
+            } else {
+                banco = 'Otros Bancos';
+            } 
+            dcase.add(new Detalle_caso__c(Caso__c = caso[0].Id,Cuenta__c = detcaso[0].Cuenta__c,Accion__c = 'A2',Tipo_Operacion__c = 'A7',Tipo_saldo_modificar2__c = '10',Banco__c=banco));
             
             System.debug('Se actualiza el caso automático de Cancelación');
-            caso[0].DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso[0].Id, detcaso[0].Cuenta__r.Codigo__c);
-            caso[0].DAU_aprobacion__c = true;
-            System.debug('caso[0].Id: '+caso[0].Id);
-            System.debug('DAU_Tarjeta_de_Sysde: '+caso[0].DAU_Tarjeta_de_Sysde__c);
-            System.debug('caso[0].Account.Identificacion: '+caso[0].Account.Identificacion__c);     
-            if(caso[0].DAU_Tarjeta_de_Sysde__c <> Null) {
-                FieldsBankManagement fields = new FieldsBankManagement();
-                fields.tipoGestion = 'valTC';
-                fields.identificacion = '';
-                fields.moneda = '';
-                fields.fechaInicio = '';
-                fields.periodicidad = '';
-                fields.cuentaBancaria = caso[0].DAU_Tarjeta_de_Sysde__c;
-                fields.diaCobro = '';
-                fields.montoDebito = '';            
-                FieldsBankManagement resultJson = ControllerBankManagement.Execute(fields); 
-                caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
-                caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-            }     
-            if(caso[0].DAU_Identidad__c <> Null && caso[0].DAU_No_Cuenta__c <> Null) {
-                System.debug('Llamar a Salesforce Tarjeta');
+            if(banco == '28') { // Banco Ficohsa
+                caso[0].DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso[0].Id, detcaso[0].Cuenta__r.Codigo__c);
+                caso[0].DAU_aprobacion__c = true;
+                System.debug('caso[0].Id: '+caso[0].Id);
+                System.debug('DAU_Tarjeta_de_Sysde: '+caso[0].DAU_Tarjeta_de_Sysde__c);
+                System.debug('caso[0].Account.Identificacion: '+caso[0].Account.Identificacion__c);     
+                if(caso[0].DAU_Tarjeta_de_Sysde__c <> Null) {
+                    FieldsBankManagement fields = new FieldsBankManagement();
+                    fields.tipoGestion = 'valTC';
+                    fields.identificacion = '';
+                    fields.moneda = '';
+                    fields.fechaInicio = '';
+                    fields.periodicidad = '';
+                    fields.cuentaBancaria = caso[0].DAU_Tarjeta_de_Sysde__c;
+                    fields.diaCobro = '';
+                    fields.montoDebito = '';            
+                    FieldsBankManagement resultJson = ControllerBankManagement.Execute(fields); 
+                    caso[0].DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
+                    caso[0].DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
+                }     
+                if(caso[0].DAU_Identidad__c <> Null && caso[0].DAU_No_Cuenta__c <> Null) {
+                    System.debug('Llamar a Salesforce Tarjeta');
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso[0].Id));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                }      
+            } else if(banco == 'Otros Bancos'){
+                caso[0].DAU_aprobacion__c = true;
                 List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                 Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso[0].Id));
                 // Call method to publish events
                 List<Database.SaveResult> results = EventBus.publish(Logs);
-            }                                                                   
+                //DAU_GestionesBac.execute(caso[0].Id, '');
+            }   
             insert dcase;        
             update caso;
         } catch(Exception ex) {

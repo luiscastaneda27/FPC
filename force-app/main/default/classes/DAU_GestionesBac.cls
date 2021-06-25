@@ -44,8 +44,12 @@ public class DAU_GestionesBac {
                     datos.fechaExpiracion = detC.Mes__c+Anio;
                 } 
                 datos.bancoTarjeta = detC.Banco__c;
-                datos.diaCobro = detC.DAU_Dia_de_pago__c;
-                datos.montoDebito = String.valueOf(detC.Nuevo_monto_aporte__c);
+                datos.diaCobro = detC.DAU_Dia_de_pago__c;              
+                if(detC.Tipo_Operacion__c == 'A6') {
+                	datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);    
+                } else {
+                	datos.montoDebito = String.valueOf(detC.Nuevo_monto_aporte__c);    
+                }
                 datos.estadoDebito = estadoDebito;
             } else if(detC.Tipo_Operacion__c == 'A1' || detC.Tipo_Operacion__c == 'A2') {       
                 System.debug('Aumento de Aporte	o Disminución de Aporte');
@@ -62,9 +66,9 @@ public class DAU_GestionesBac {
                 datos.numeroTarjeta = '';                                            
                 datos.fechaExpiracion = '';
                 datos.bancoTarjeta = '';              
-                Date myDate = Date.valueOf(detC.Cuenta__r.Fecha_Aporte__c);
+                Date myDate = Date.valueOf(detC.Nueva_fecha_aporte__c);
                 datos.diaCobro = String.valueOf(myDate.Day());
-                datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);   
+                datos.montoDebito = String.valueOf(detC.Nuevo_monto_aporte__c);   
                 datos.estadoDebito = estadoDebito;                                              
             } else if(detC.Tipo_Operacion__c == 'A4') {       
                 System.debug('Cambio de Fecha de Aporte');
@@ -131,8 +135,18 @@ public class DAU_GestionesBac {
             system.debug('respuesta: '+respuesta);
             
             if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente') {
-                if(detC.Tipo_Operacion__c == 'A7' || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null)) {
+                if(detC.Tipo_Operacion__c == 'A7') {
                 	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta; 
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
+                	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta;     
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
                 } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null) {
                 	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' --- Afiliación: // ' + respuesta; 
                 } else {
@@ -147,7 +161,7 @@ public class DAU_GestionesBac {
                     List<Database.SaveResult> results = EventBus.publish(Logs);
                 }
                 else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c.Contains('Afiliación')) {
-                    System.debug('CCambio de # Tarjeta llama a Sysde');
+                    System.debug('Cambio de # Tarjeta llama a Sysde');
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
                     // Call method to publish events

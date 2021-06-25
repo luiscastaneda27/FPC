@@ -2211,7 +2211,7 @@
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>Este cliente no se puede registrar porque se encuentra en lista AML</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             
@@ -4057,11 +4057,11 @@
                                             </legend>
                                             
                                             <div  class="outer">
-                                                <table width = "900" style="text-align: center;">
+                                                <table width = "1500" style="text-align: center;">
                                                     
                                                     <tr>
                                                         
-                                                        <td width="450">
+                                                        <td width="1500">
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> País
@@ -5109,7 +5109,7 @@ function validarIDU()
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>Este cliente no se puede registrar porque se encuentra en lista AML</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             

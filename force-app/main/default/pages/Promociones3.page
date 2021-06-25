@@ -120,7 +120,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="slds-form-element__row">
+                                            <!--div class="slds-form-element__row">
                                                 <div class="slds-size_1-of-2">
                                                     <div class="slds-form-element">
                                                         <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Numero de Identificación</label>
@@ -137,22 +137,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div-->
                                             <div class="slds-form-element__row">
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-01">Teléfono Trabajo</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputField styleclass="slds-input" value="{!candidato.Telefono_Trabajo__c}" onkeypress="return isNumberKey(event)"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                                 <div class="slds-size_1-of-2">
                                                     <div class="slds-form-element">
                                                         <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Teléfono Móvil</label>
                                                         <div class="slds-form-element__control">
                                                             <apex:inputField required="true" id="Fmovil" styleclass="slds-input" value="{!candidato.Phone}" onkeypress="return isNumberKey(event)" onchange="activate();"/>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-size_1-of-2">
+                                                    <div class="slds-form-element">
+                                                        <!--label class="slds-form-element__label" for="input-01">Teléfono Trabajo</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField styleclass="slds-input" value="{!candidato.Telefono_Trabajo__c}" onkeypress="return isNumberKey(event)"/>
+                                                        </div-->
                                                     </div>
                                                 </div>
                                             </div>

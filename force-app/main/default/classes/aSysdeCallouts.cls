@@ -442,6 +442,7 @@ public class aSysdeCallouts {
                                
                 if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' || detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
+                    Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
                     update cuenta;
                 } else if(detalle.Tipo_Operacion__c == 'A4') {
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;

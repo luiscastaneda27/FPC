@@ -618,7 +618,6 @@
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A1'}" value="Nuevo Monto de Aporte:" /> 
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A3'}" value="Nuevo Canal de Aporte:" />
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!detallecaso.Tipo_Operacion__c='A4'}" value="Nueva Fecha de Aporte:" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input"  rendered="{!detallecaso.Tipo_Operacion__c='A1'}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
@@ -626,59 +625,83 @@
                                     <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
                                     <apex:selectOption itemLabel="Débito a Cuenta de Ahorro/Cheque" itemValue="AH" rendered="{!cuenta.Cuenta_colectiva2__c = null}" />
                                     <apex:selectOption itemLabel="Débito a Tarjeta de Crédito/Débito" itemValue="TA" rendered="{!cuenta.Cuenta_colectiva2__c = null}" />
+                                    <apex:selectOption itemLabel="Debito a Tarjeta de Crédito Otros Bancos" itemValue="TAOB" rendered="{!cuenta.Cuenta_colectiva2__c = null}" />
                                     <apex:selectOption itemLabel="Planilla" itemValue="PL" rendered="{!AND(cuenta.Cuenta_colectiva2__c != null, OR(cuenta.Tipo_Fondo__c == 'P', cuenta.Tipo_Fondo__c == 'N' ))}" />
                                     <apex:actionSupport event="onchange" action="{!AccionVacia2}" reRender="theForm"  status="status"  />
-                                </apex:selectList>
-                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!detallecaso.Tipo_Operacion__c = 'A4'}" showDatePicker="false" type="date" value="{!detalleCaso.Nueva_fecha_aporte__c}" />
+                                </apex:selectList>                               
                             </div>
                             
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Tipo_Operacion__c='A1',detallecaso.Tipo_Operacion__c='A2',detallecaso.Tipo_Operacion__c='A4')}" value="Nueva Fecha de Aporte:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Tipo_Operacion__c = 'A1',detallecaso.Tipo_Operacion__c = 'A2',detallecaso.Tipo_Operacion__c = 'A4')}" showDatePicker="false" type="date" value="{!detalleCaso.Nueva_fecha_aporte__c}" />
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!AND(detalleCaso.Nuevo_canal_aporte__c != Null, detalleCaso.Nuevo_canal_aporte__c != 'AH', detalleCaso.Nuevo_canal_aporte__c != 'TA', OR(detallecaso.Tipo_Operacion__c='A3', detallecaso.Tipo_Operacion__c='A4'))}" value="Banco:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Tipo_Operacion__c='A1', detallecaso.Tipo_Operacion__c='A2', detallecaso.Tipo_Operacion__c='A4', detallecaso.Tipo_Operacion__c='A6')}" value="Banco:" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input RemoveNone" Id="banco" rendered="{!OR(detallecaso.Tipo_Operacion__c='A1', detallecaso.Tipo_Operacion__c='A2', detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Banco__c}" /> 
+                            	<apex:selectList styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" Id="banco" rendered="{!AND(detalleCaso.Nuevo_canal_aporte__c != 'TAOB', OR(detallecaso.Tipo_Operacion__c='A1', detallecaso.Tipo_Operacion__c='A2', detallecaso.Tipo_Operacion__c='A4',detallecaso.Tipo_Operacion__c='A6'))}" size="1" value="{!bancoVal}">
+                                	<apex:selectOptions value="{!BANCO}"/>
+                                </apex:selectList>
+                                <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" Id="banco2" rendered="{!AND(detalleCaso.Nuevo_canal_aporte__c != Null, detalleCaso.Nuevo_canal_aporte__c != 'AH', detalleCaso.Nuevo_canal_aporte__c != 'TA', OR(detallecaso.Tipo_Operacion__c='A1', detallecaso.Tipo_Operacion__c='A2', detallecaso.Tipo_Operacion__c='A3', detallecaso.Tipo_Operacion__c='A4'))}" value="{!detalleCaso.Banco__c}" /> 
                             </div>
                             
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Frecuencia__c}" />
+                                <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Frecuencia__c}" />
                             </div>
+                            
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Número de Tarjeta:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Tipo de Tarjeta:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" />
+                            </div>
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Número de Tarjeta:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Número de Cuenta:" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.N_Cuenta_Bancaria__c}" />
                             </div>
                             
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Nombre Tarjeta Habiente:" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" />
+                            </div>                            
                             
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Día de pago:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Día de pago:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Día de pago:" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Dia_de_pago__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Dia_de_pago__c}" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="POS:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="POS:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="POS:" />
                             </div>  
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.POS__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.POS__c}" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Monto Débito:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Monto Débito:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Monto Débito:" />
                             </div>  
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
                             </div>
                             
-                            
-                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Banco Emisor de la Tarjeta:" />
+                            <!-- div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A6')}" value="Banco Emisor de la Tarjeta:" />
                             </div>
                             <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:selectList value="{!detallecaso.POS__c}" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" styleclass="custom-select-sizing slds-select padding-left-2em" size="1" >
@@ -686,16 +709,17 @@
                                     <apex:selectOption itemLabel="Ficohsa" itemValue="Ficohsa" />
                                     <apex:selectOption itemLabel="Otros Bancos" itemValue="Otros Bancos" />
                                 </apex:selectList>
+                            </div> -->
+                            
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Vencimiento:" />
                             </div>
-                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Vencimiento:" />
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Mes__c}" />&nbsp;
+                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing margin-bottom-0-5x100" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Ano_tarjeta__c}" />
                             </div>
-                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Mes__c}" />&nbsp;
-                                <apex:inputField styleClass="padding-left-2em slds-input custom-date-sizing margin-bottom-0-5x100" style="height: 30px; margin-top: 8px; margin-left: 15px;" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Ano_tarjeta__c}" />
-                            </div>
-                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Inicio de Aporte:" />
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="Fecha de Inicio de Aporte:" />
                             </div>
                             
                             
@@ -708,10 +732,10 @@
                             </div> -->
                             
                             
-                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
+                            <div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleClass="custom-select-sizing padding-left-2em slds-input" showDatePicker="false" type="date" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA',detallecaso.Nuevo_canal_aporte__c='TAOB',detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5', detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Inicio_Fecha_Aporte__c}" />
                             </div>
-                            <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A6', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TA')), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                            <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A6', AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TA'), AND(detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Nuevo_canal_aporte__c = 'TAOB')), 'show', 'hide')} custom-help-text slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
                                 <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha de Aporte permitida (14 ó 26) de cada mes">*</abbr> Fecha de Aporte permitida (14 ó 26) de cada mes</span><br/>
                                 <span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Fecha mínima permitida, tres días próximos a partir de hoy">*</abbr> Fecha mínima permitida a partir de <apex:outputText value="{0, date, dd'/'MM'/'yyyy}"><apex:param value="{!dateTemp}" /></apex:outputText></span>
                             </div>
