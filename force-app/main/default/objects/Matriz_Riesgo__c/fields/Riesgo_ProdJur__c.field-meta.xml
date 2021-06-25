@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Nivel_Riesgo__c</fullName>
+    <fullName>Riesgo_ProdJur__c</fullName>
     <externalId>false</externalId>
-    <label>Nivel Riesgo</label>
+    <label>Riesgo ProdJur</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>4</fullName>
+                <fullName>5</fullName>
                 <default>false</default>
-                <label>ALTO</label>
+                <label>FONDO INDIVIDUAL O CESANTÍA EMPRESARIAL EN LEMPIRAS</label>
             </value>
             <value>
-                <fullName>3</fullName>
+                <fullName>6</fullName>
                 <default>false</default>
-                <label>MEDIO</label>
+                <label>FONDO INDIVIDUAL O CESANTÍA EMPRESARIAL EN DÓLARES</label>
             </value>
             <value>
-                <fullName>1</fullName>
+                <fullName>7</fullName>
                 <default>false</default>
-                <label>BAJO</label>
+                <label>PENSIONES CONTRIBUTIVO</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>8</fullName>
                 <default>false</default>
-                <label>MODERADO</label>
+                <label>PENSIONES NO CONTRIBUTIVO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

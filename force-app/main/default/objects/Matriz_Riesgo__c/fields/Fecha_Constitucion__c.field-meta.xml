@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Nivel_Riesgo__c</fullName>
+    <fullName>Fecha_Constitucion__c</fullName>
     <externalId>false</externalId>
-    <label>Nivel Riesgo</label>
+    <label>Fecha Constitución</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>4</fullName>
-                <default>false</default>
-                <label>ALTO</label>
-            </value>
-            <value>
-                <fullName>3</fullName>
-                <default>false</default>
-                <label>MEDIO</label>
-            </value>
-            <value>
                 <fullName>1</fullName>
                 <default>false</default>
-                <label>BAJO</label>
+                <label>Constituidos antes de 1970</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>MODERADO</label>
+                <label>Constituidos entre 1970 -1990</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Constituidos entre 1980 - 1995</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Constituidos después de 1995</label>
             </value>
         </valueSetDefinition>
     </valueSet>
