@@ -2691,7 +2691,8 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </apex:selectList>
                                                                 <!--apex:inputText disabled="true" value="{!PC_MEDIDA_APLICADA}"  onkeypress="return sololetras(event)" id="pepBl" styleclass="slds-input"  style="height:10px; width:170px; margin-left:35px;  "/>
 																-->
-                                                              
+                                                                <apex:commandButton action="{!ValidaRiesgo}" value="Valida" styleClass="slds-button slds-button--brand" style="margin-left:995px "/> 
+
                                                                 <br/>
                                                             </td>
                                                             

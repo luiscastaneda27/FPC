@@ -226,7 +226,7 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
             
             if (resultado2[j].nombreMetodo == ClienteN)
             {
-                pagina = resultado2[j].nombreMetodo + '?hytrd=' + usuario;
+                pagina = resultado2[j].nombreMetodo + '?hytrd=' + usuario + '&rol='+resultado2[0].rol;
                 Desactivartab(); 
                 
                 //Insertar en la bitacora 
@@ -261,7 +261,8 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
             resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(usuario);  
             
             system.debug('Resultado2'+ resultado2  );
-            
+            system.debug('resultado del rol desde login: '+resultado2[0].rol );
+            ApexPages.currentPage().getParameters().put('rol',resultado2[0].rol);
             if(resultado2.size()>0)
             {
                 Numcuentas= new list<string>();

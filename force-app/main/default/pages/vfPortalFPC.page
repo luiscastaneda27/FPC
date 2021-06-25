@@ -458,9 +458,9 @@
                                                           claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                                                                        
                             
                         <apex:inputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" required="true"
-                                            rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4',true,false)}"/>
+                                            rendered="{!If(OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}"/>
                         
-                        <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" styleclass="removePicklistValue2" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}"/>
+                        <!-- apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" styleclass="removePicklistValue2" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}"/> -->
                             
                         <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
                                                     claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}">
@@ -489,6 +489,14 @@
                         <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}" 
                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
                         
+                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tarjeta_Habiente__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
+                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                        
+                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tipo_Tarjeta__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
+                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                        
+                        <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                            
+ 
                         <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Borrar_Cuotas__c}" 
                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
                                             

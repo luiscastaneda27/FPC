@@ -6781,13 +6781,21 @@ public without sharing class AGN2 {
             {
                 naturalEnvio.pcAPNFD = 'N';
             }
-            if(pcFATCA == true)
+           /* if(pcFATCA == true)
             {
                 naturalEnvio.pcFATCA = 'S';
             } 
             else
             {
                 naturalEnvio.pcFATCA = 'N';
+            }*/
+            if(valorsiCont == true)
+            {
+                debidaDil.Contratista ='S';
+            }
+            else
+            {
+                debidaDil.Contratista = 'N';
             }
             if(pcPEP == true)
             {
@@ -6799,21 +6807,21 @@ public without sharing class AGN2 {
             } 
              
             validaDatos = NEW List<ContenidoValidaNivel>();                
-                    validaDatos.add(new ContenidoValidaNivel(pctipoid,
+                    validaDatos.add(new ContenidoValidaNivel('4',//pctipoid,
                                                               fechanacimiento, 
-                                                              pcrazonsocialempl,                                                       
-                                                              pcNombreempl,                                                               
-                                                              TipoProfesion.Profesi_n_Ocupaci_n__c,
+                                                              'prueba',// pcrazonsocialempl,                                                       
+                                                              'prueba',//pcNombreempl,                                                               
+                                                              '99', //TipoProfesion.Profesi_n_Ocupaci_n__c,
                                                               //pcProfesionOcupacion,
-                                                              naturalEnvio.pcAPNFD,
-                                                              naturalEnvio.pcFATCA,
-                                                              naturalEnvio.pcPEP,
-                                                              Ppais,
+                                                              'N',//naturalEnvio.pcAPNFD,
+                                                              debidaDil.Contratista,//naturalEnvio.pcFATCA,
+                                                              'N',//naturalEnvio.pcPEP,
+                                                              '074',//Ppais,
                                                               //pcTipoFondo,
-                                                              Cuenta20.Tipo_Fondo__c,
-                                                              pcAgn,
-                                                              Pdepto,
-                                                              pcnacionalidad
+                                                              'I',//Cuenta20.Tipo_Fondo__c,
+                                                              '13900000000',//pcAgn,
+                                                              '123',//Pdepto,
+                                                              '080'//pcnacionalidad
                                                              ));  
               //  } 
             enviarValidarNivel Enviar = new enviarValidarNivel(validaDatos); 

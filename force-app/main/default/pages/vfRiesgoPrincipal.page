@@ -1,0 +1,149 @@
+<apex:page controller="controladorRiesgoPrincipal" title="Ficohsa FPC" showheader="false" sidebar="false" cache="false" expires="0"
+           applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Riesgo Principal</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:stylesheet value="{!URLFOR($Resource.SLDS221, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+            <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+            <apex:includeScript value="https://code.jquery.com/jquery-3.1.1.slim.min.js"/>
+            <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"/>
+            <apex:includeScript value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"/>
+            <apex:slds />  
+            
+        </head>
+        <body>  
+            <apex:form >
+                
+                <apex:outputPanel rendered="{!Mostrarhome}">    
+                    <div class="slds-scope">
+                        
+                        <apex:actionFunction action="{!ReporteFechaConsti}" name="ReporteFechaConsti"/>   
+                        <apex:actionFunction action="{!VariablesRiesgo}" name="VariablesRiesgo"/>   
+                        <apex:actionFunction action="{!TipoPersona}" name="TipoPersona"/>   
+                        <apex:actionFunction action="{!RiesgoTPE}" name="RiesgoTPE"/>   
+                        <apex:actionFunction action="{!RiesgoCliente}" name="RiesgoCliente"/>   
+                        <apex:actionFunction action="{!Riesgodocumento}" name="Riesgodocumento"/>   
+                        <apex:actionFunction action="{!RiesgoFechaAfilia}" name="RiesgoFechaAfilia"/> 
+                        <apex:actionFunction action="{!RiesgoFechaConsti}" name="RiesgoFechaConsti"/> 
+                        <apex:actionFunction action="{!RiesgoFechaNacimiento}" name="RiesgoFechaNacimiento"/> 
+                        <apex:actionFunction action="{!RiesgoAPA}" name="RiesgoAPA"/> 
+                        <apex:actionFunction action="{!RiesgoProducto}" name="RiesgoProducto"/> 
+						<apex:actionFunction action="{!RiesgoGeografico}" name="RiesgoGeografico"/>        
+                        <apex:actionFunction action="{!RiesgoVar}" name="RiesgoVar"/>          
+                        
+                        <!--div class="slds-context-bar" -->
+                            
+                            <nav class="slds-context-bar__secondary" role="navigation">
+                                <ul class="slds-grid" style="margin-left:60px;">                           
+                                    
+                                    
+                                    <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger--hover {!Matriz}"  aria-haspopup="true" >
+                                        <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Reportes">
+                                            <span class="slds-truncate">Matriz de Riesgo</span>
+                                        </a>
+                                        <div class="slds-context-bar__icon-action slds-p-left--none" tabindex="0">
+                                            <button class="slds-button slds-button--icon slds-context-bar__button" tabindex="-1" title="Open menu item submenu">
+                                                <svg class="slds-button__icon" aria-hidden="true">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Open menu item submenu</span>
+                                            </button>
+                                        </div>
+                                        <div class="slds-dropdown slds-dropdown--right" >
+                                            <ul class="slds-dropdown__list" role="menu">  
+                                                
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:VariablesRiesgo();" role="menuitem" tabindex="-1" title="Riesgo Total">
+                                                        <span class="slds-truncate" >Riesgo Total</span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoVar();" role="menuitem" tabindex="-1" title="Riesgo Total">
+                                                        <span class="slds-truncate" >Variables Riesgo</span>
+                                                    </a>
+                                                </li>
+                                                 <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoCliente();" role="menuitem" tabindex="-1" title="Riesgo Tipo Cliente">
+                                                        <span class="slds-truncate" >Riesgo Tipo Cliente </span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:TipoPersona();" role="menuitem" tabindex="-1" title="Riesgo Tipo Persona">
+                                                        <span class="slds-truncate" >Riesgo Tipo Persona</span>
+                                                    </a>
+                                                </li>
+                                                 <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:Riesgodocumento();" role="menuitem" tabindex="-1" title="Riesgo Tipo Documento">
+                                                        <span class="slds-truncate" >Riesgo Tipo Documento</span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoFechaAfilia();" role="menuitem" tabindex="-1" title="Riesgo Fecha Afiliación">
+                                                        <span class="slds-truncate" >Riesgo Fecha Afiliación </span>
+                                                    </a>
+                                                </li>
+                                                 <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoFechaNacimiento();" role="menuitem" tabindex="-1" title="Riesgo Fecha Nacimiento">
+                                                        <span class="slds-truncate" >Riesgo Fecha Nacimiento</span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoTPE();" role="menuitem" tabindex="-1" title="Riesgo Trabaja/Pep/Excepciones">
+                                                        <span class="slds-truncate" >Riesgo Trabaja/Pep/Excepciones </span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoAPA();" role="menuitem" tabindex="-1" title="Riesgo Agencia/Profesión/Act.Econ">
+                                                        <span class="slds-truncate" >Riesgo Agencia/Profesión/Act.Econ</span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:ReporteFechaConsti();" role="menuitem" tabindex="-1" title="Riesgo Fecha Constitución">
+                                                        <span class="slds-truncate" >Riesgo Fecha Constitución</span>
+                                                    </a>
+                                                </li>                                                                                              
+                                                
+                                                <!--li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoFechaConsti();" role="menuitem" tabindex="-1" title="Riesgo Fecha Nacimiento">
+                                                        <span class="slds-truncate" >Riesgo Fecha Constitución</span>
+                                                    </a>
+                                                </li-->                                               
+                                                
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoProducto();" role="menuitem" tabindex="-1" title="Riesgo Producto">
+                                                        <span class="slds-truncate" >Riesgo Producto</span>
+                                                    </a>
+                                                </li>
+                                                <li class="slds-dropdown__item" role="presentation">
+                                                    <a href="javascript:RiesgoGeografico();" role="menuitem" tabindex="-1" title="Riesgo Producto">
+                                                        <span class="slds-truncate" >Riesgo Depto/Nacionalidad</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li> 
+                                    
+                                    
+                                    
+                                </ul>
+                            </nav>
+                            
+                        </div>    
+                        
+                    <!--/div-->
+                    
+                    
+                    <div class="slds-grid slds-grid--frame">
+                        <iframe id="contenido" src="{!pagina}" scrolling="false" style="border:none;" width="100%" height="700"/>
+                    </div>
+                    
+                </apex:outputPanel>
+                
+            </apex:form>        
+        </body>
+    </html>
+</apex:page>

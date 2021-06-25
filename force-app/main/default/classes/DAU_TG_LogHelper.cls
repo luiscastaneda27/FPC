@@ -145,7 +145,10 @@ public class DAU_TG_LogHelper {
                     if(c.Tipo_de_Operacion__c == 'A6') {	
                     	if(c.Respuesta_SF_Tarjetas__c == Null) {
                         	DAU_GestionesBac.execute(c.Id, '');  
-                        }	  
+                        }
+                        if(c.Respuesta_SF_Tarjetas__c.contains('Cancelación: // ') && !c.Respuesta_SF_Tarjetas__c.contains(' --- Afiliación: // ')) {
+                        	DAU_GestionesBac.execute(c.Id, '');  
+                        }
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }
@@ -165,7 +168,10 @@ public class DAU_TG_LogHelper {
                     }
                     
                     //Caso de Cancelación
-                    if(c.Tipo_de_Operacion__c == 'A7') {	  
+                    if(c.Tipo_de_Operacion__c == 'A7') {	
+                        if(c.Respuesta_SF_Tarjetas__c == Null) {
+                        	DAU_GestionesBac.execute(c.Id, '');  
+                        }
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }

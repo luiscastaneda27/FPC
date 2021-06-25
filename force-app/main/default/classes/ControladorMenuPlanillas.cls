@@ -34,44 +34,36 @@ public without sharing class ControladorMenuPlanillas {
     
     public ControladorMenuPlanillas(){
         try{
-            
-        
-        Desactivartab(); 
+            Desactivartab(); 
             bandera=0;
-         ActivarModal = false;
-        Codigo_Unico_Banco='No';
-        anio=date.today().year();
-        Usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
-        
-        list<Usuario_X_Empresa__c> u =[select Empresa2__c,Empresa2__r.name 
-        								from Usuario_X_Empresa__c 
-        								where Usuario__c=:usuario and activo__c=true order by Empresa2__r.name asc];
-        
-        if(u.size() == 1)
-        {
-            //Codigo_Unico_Banco= [select Empresa2__c from Usuario_X_Empresa__c where Usuario__c =:usuario and Activo__c=true].Empresa2__c;
-             Codigo_Unico_Banco = u[0].Empresa2__c;
-           
-             MostarPantallas();
-             Home2();
-            //llenarempleados();
+            ActivarModal = false;
+            Codigo_Unico_Banco='No';
+            anio=date.today().year();
+            Usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
             
-        }
-        else
-        { 
-            options = new List<SelectOption>();
-            for(Usuario_X_Empresa__c t: u)
-            {
-                options.add(new SelectOption(t.Empresa2__c,t.Empresa2__r.name));
+            list<Usuario_X_Empresa__c> u =[select Empresa2__c,Empresa2__r.name 
+                                           from Usuario_X_Empresa__c 
+                                           where Usuario__c=:usuario and activo__c=true
+                                           order by Empresa2__r.name asc];
+            system.debug('Lista: '+u.size());
+            if(u.size() == 1) {
+                //Codigo_Unico_Banco= [select Empresa2__c from Usuario_X_Empresa__c where Usuario__c =:usuario and Activo__c=true].Empresa2__c;
+                Codigo_Unico_Banco = u[0].Empresa2__c;
+                
+                MostarPantallas();
+                Home2();
+                //llenarempleados();
+                
+            }else{ 
+                options = new List<SelectOption>();
+                for(Usuario_X_Empresa__c t: u){
+                    options.add(new SelectOption(t.Empresa2__c,t.Empresa2__r.name));
+                }
+                ActivarModal=true;
             }
-            ActivarModal=true;
-        }
-      
-         y2='block';
-        }
-        catch(Exception ex)
-        {
-            system.debug(ex.getMessage());
+            y2='block';
+        } catch(Exception ex) {
+            system.debug(ex.getMessage() +' ------- '+ex.getLineNumber());
         }
         
     }

@@ -117,6 +117,14 @@ public without sharing class ControladorgenerarPlanilla {
         popCuentasAPV = false;
         popCuentasAPX = false;
         popCuentasASV = false;
+        
+        esAPV = false;
+        esAPX = false;
+        esAEV = false;
+        esAPE = false;
+        esASV = false;
+       
+        
         if(banderaTiempo==0)
         {
             registrarTiempo();
@@ -649,15 +657,12 @@ McontenidoPlanilla.add(contenidoPlanilla[i]);
     }
     
     
-    public void CopiarPlanilla()
-    {
+    public void CopiarPlanilla(){
         try{
-            if(banderaTiempo==0)
-            {
+            if(banderaTiempo==0) {
                 registrarTiempo();
             }
-            if(contenidoPlanilla.size()>0)
-            {
+            if(contenidoPlanilla.size()>0){
                 Cargarmeses();
                 planilla = new Planilla__c();
                 planilla.Creado_por__c = Usuario;
@@ -726,9 +731,7 @@ McontenidoPlanilla.add(contenidoPlanilla[i]);
             }
             
             
-        }
-        catch(Exception ex)
-        {
+        }catch(Exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, '¡Ha ocurrido un error!'+ ex.getLineNumber()+'  '+ex.getMessage()));
         }
     }
@@ -757,7 +760,7 @@ McontenidoPlanilla.add(contenidoPlanilla[i]);
                 for(Empresa_x_Empleado__c item: 
                     [Select Empleado2__c,empleado2__r.Identificacion__C ,Salario__c,CurrencyIsoCode From Empresa_x_Empleado__c
                      Where Empresa2__c = : Codigo_Unico_Banco
-                     AND Estado__c = 'Activo' AND Activo_Nueva_Planilla__c=true and 
+                     AND Estado__c = 'Activo' AND Activo_Nueva_Planilla__c = true and 
                      Empleado2__c in (select cliente__C from Cuentas__C where Producto__r.CurrencyIsoCode=:MONEDA)]){
                          if(moneda=='HNL' && item.CurrencyIsoCode=='USD'){
                              item.salario__C=item.salario__C*tasa;
@@ -1267,6 +1270,13 @@ idsalesforce= contenidoplanilla[jj].id;
                 registrarTiempo();
             }
             system.debug('Contenido Paola1: '+ idContenido+' '+esAPV);
+            system.debug('esAPV: '+esAPV);
+            system.debug('esAPX: '+esAPX);
+            system.debug('esAEV: '+esAEV);
+            system.debug('esAPE: '+esAPE);
+            system.debug('esAEV: '+esASV);
+            
+            
             if(esAPV){
                 listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
                 NombreAporte='Aportes Voluntario Patronal';
@@ -1280,7 +1290,7 @@ idsalesforce= contenidoplanilla[jj].id;
             //agregado wp 22-11-2019
             if(esAPX){
                 NombreAporte='Aportes Voluntario Patronal Extraordinario';
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id,Valor_Monto_Patronal_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                listCuentasPlanilla=[select Valor_Monto_Patrono__c ,Calcular_por__c, Codigo_cuenta__c,id,Valor_Monto_Patronal_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
                 if(listCuentasPlanilla.size()>0)
                 {
                     popCuentasAPX = true;
@@ -1291,10 +1301,9 @@ idsalesforce= contenidoplanilla[jj].id;
                 }
             }
             //
-            system.debug('Contenido Paola3: '+ idContenido+' '+esAEV);
             if(esAEV) {
                 NombreAporte='Aportes Voluntario Empleado';
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Patronal_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
                 if(listCuentasPlanilla.size()>0)
                 {
                     popCuentasAEV = true;
@@ -1307,7 +1316,7 @@ idsalesforce= contenidoplanilla[jj].id;
             //agregado wp 22-11-2019
             if(esAPE){
                 NombreAporte='Aportes Voluntario Empleado Extraordinario';
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c , Codigo_cuenta__c,id, Valor_Monto_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
                 if(listCuentasPlanilla.size()>0)
                 {
                     popCuentasAPE = true;
@@ -1317,10 +1326,9 @@ idsalesforce= contenidoplanilla[jj].id;
                     Disponibleguardar=false;
                 }
             }
-            system.debug('Contenido Paola4: '+listCuentasPlanilla);
             if(esASV){
                 NombreAporte='Aportes Seguro de Vida';
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Seguro_Vida__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto_Seguro_Vida__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
                 if(listCuentasPlanilla.size()>0)
                 {
                     popCuentasASV = true;
@@ -1331,13 +1339,13 @@ idsalesforce= contenidoplanilla[jj].id;
                 }
             }
             //
-            system.debug('Contenido Paola5: '+listCuentasPlanilla.size());
             
         }Catch(Exception e){
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'No se han encontrado cuentas asociadas')); 	
         }
     }
+    
     
     public void aceptarCuentas(){
         try{

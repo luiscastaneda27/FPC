@@ -612,16 +612,16 @@
                                 <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto" rendered="{!esAEV}">
-                                <apex:inputText value="{!item.Valor_Monto__c}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column> 
                           
                         </apex:DataTable> 
                                        
                   </div>
-                  <footer class="slds-modal__footer">
-                    <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Confirmar" />&nbsp;
-                    <apex:commandButton value="Aceptar2"  action="{!aceptarCuentas}" styleClass="Confirmar" disabled="{!Disponibleguardar}" />                   
-                  </footer>
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Confirmar" />&nbsp;
+                        <apex:commandButton value="Aceptar"  action="{!aceptarCuentas}" styleClass="Confirmar" disabled="{!Disponibleguardar}" />
+                    </footer>
                 </div>
           </section>
           <div class="slds-backdrop slds-backdrop_open"></div>

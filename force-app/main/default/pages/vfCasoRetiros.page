@@ -105,6 +105,11 @@
                 }       
             }
             $(document).ready( function () {
+                $('select.removePicklistValue2 option[value=24]').remove(); $('select.removePicklistValue2 option[value=2]').remove(); $('select.removePicklistValue2 option[value=30]').remove(); $('select.removePicklistValue2 option[value=6]').remove(); $('select.removePicklistValue2 option[value=15]').remove();
+                $('select.removePicklistValue2 option[value=7]').remove(); $('select.removePicklistValue2 option[value=18]').remove(); $('select.removePicklistValue2 option[value=14]').remove(); $('select.removePicklistValue2 option[value=17]').remove(); $('select.removePicklistValue2 option[value=25]').remove();  
+                $('select.removePicklistValue2 option[value=31]').remove(); $('select.removePicklistValue2 option[value=32]').remove(); $('select.removePicklistValue2 option[value=51]').remove(); $('select.removePicklistValue2 option[value=1]').remove(); $('select.removePicklistValue2 option[value=13]').remove();
+                $('select.removePicklistValue2 option[value=33]').remove(); $('select.removePicklistValue2 option[value=52]').remove();     
+                
                 process();
             }); 
             </script>
@@ -248,7 +253,12 @@
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.Cliente_sigue_Laborando__c}" /> 
                                             </div>
                                             
-                                            <div class="slds-form-element slds-size--2-of-2">                                                                                                                     
+                                            <div class="slds-form-element slds-size--2-of-2">
+                                                <apex:outputPanel rendered="{!detalleCaso.Tipo_retiro__c = '52'}">
+                                                    <label class="slds-form-element__label" >
+                                                    <abbr class="slds-required" title="required">*</abbr>Tipo de TC</label>
+                                                    <apex:inputField styleClass="slds-select removePicklistValue2"  value="{!detalleCaso.Banco__c}" /> 
+                                                </apex:outputPanel>
                                             </div>
                                         </div>
                                     <!--/apex:outputPanel-->

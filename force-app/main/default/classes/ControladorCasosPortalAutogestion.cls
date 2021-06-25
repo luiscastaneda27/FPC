@@ -1,4 +1,4 @@
-public without sharing class ControladorCasosPortalAutogestion{
+public without sharing class ControladorCasosPortalAutogestion {
     
     //Properties
     public claseTipoCaso cTipoCaso{get;set;}
@@ -27,6 +27,20 @@ public without sharing class ControladorCasosPortalAutogestion{
     
     public Boolean popVerificacionCodigo { get; set; }
     
+    public string bancoVal {get;set;}
+    
+    public SelectOption[] BANCO { 
+        public get;
+        private set;
+    }
+    
+    public void llenarBANCO() {
+        this.BANCO = new SelectOption[]{};                
+        this.BANCO.add(new SelectOption('','--Ninguno--'));    
+        this.BANCO.add(new SelectOption('28','Ficohsa'));
+        this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
+    }
+    
     SolicitudCaso solicitud;
     
     public Date dateTemp {
@@ -53,6 +67,7 @@ public without sharing class ControladorCasosPortalAutogestion{
     
     public controladorCasosPortalAutogestion() {
         try {
+            llenarBANCO();
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
             system.debug('Parametro Recibido: '+idCLiente);
             //idCliente = '0801198801163'; 
@@ -387,7 +402,7 @@ public without sharing class ControladorCasosPortalAutogestion{
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
+                }else if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
@@ -449,14 +464,17 @@ public without sharing class ControladorCasosPortalAutogestion{
                     detallecaso.Caso__c = caso.id;
                     detalleCaso.Cuenta__c = idCuenta;
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
+                    if(bancoVal <> Null) {
+                    	detalleCaso.Banco__c = bancoVal;
+                    }
                     insertDetalle = true;
                 }
                 // system.debug('Antes de meterse: '+ cuenta.Forma_Aportacion__c);
-                if(cTipoCaso.aumDisAporte && detallecaso.Banco__c == 'Otros Bancos') {
-                	if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2') {
-                        System.debug('Caso de aumento de aporte o Disminución de Aporte');
+                if(cTipoCaso.aumDisAporte && (detallecaso.Banco__c == 'Otros Bancos' || detallecaso.Nuevo_canal_aporte__c == 'TAOB')) {
+                	if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A3' || detallecaso.Tipo_Operacion__c == 'A4' || detallecaso.Tipo_Operacion__c == 'A6') {
                         caso.Archivo_Adjunto__c = true;
                         caso.Status = 'Cerrado';
+                        caso.Aprobado__c = True;
                         solicitud = new SolicitudCaso();
                         solicitud = AFPCCasos.upsertCaso(caso);
                         if(solicitud.solicitudExitosa){

@@ -220,7 +220,7 @@ public class Api_CambioAsesor {
     }
     
    
-  /*  public class deserializeResponse{
+    public class deserializeResponse{
         public String valor1;
         public String valor2;
       
@@ -281,6 +281,6 @@ public class Api_CambioAsesor {
 		} 
 		return resultado;
         
-    } */
+    } 
    
 }

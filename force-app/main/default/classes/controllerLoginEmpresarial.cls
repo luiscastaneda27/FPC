@@ -9,11 +9,12 @@ public class controllerLoginEmpresarial {
     public controllerLoginEmpresarial(){
         salir();
         anio=date.today().year();
-    }    
-    public void olvide()
-    {
+    }  
+    
+    public void olvide(){
         ActivarModal=true;        
     }
+    
     public void salir()
     {
         TextoBoton='CONTINUAR';
@@ -87,93 +88,74 @@ public class controllerLoginEmpresarial {
     }
     
        
-	public pageReference sesionIniciada(){
+    public pageReference sesionIniciada(){
         try{
-            if(usuario!=null && contrasena!=null)
-            {
+            if(usuario!=null && contrasena!=null) {
                 Usuario_Portal_Empresarial__c usuario2 =[select Contrasena2__c, bloqueado__C from Usuario_Portal_Empresarial__c where Nombre_Usuario__c =:usuario];                
-                       //vefificacion del usuario y conreasenia                       
-               		if(usuario2.Contrasena2__c == contrasena)
+                //vefificacion del usuario y conreasenia                       
+                if(usuario2.Contrasena2__c == contrasena){
+                    //vefificacion del usuario activo
+                    integer u =[select count() from Usuario_X_Empresa__c where Usuario__c =: usuario2.id and activo__c=true];
+                    if(u>0){
+                        if(!usuario2.Bloqueado__c){
+                            Bitacora_Login__c Intentos_Logrado = new Bitacora_Login__c ();
+                            Intentos_Logrado.Usuario__c=usuario2.id;
+                            Intentos_Logrado.Fecha__c= datetime.now();
+                            Intentos_Logrado.Ingreso_Logrado__c=true;
+                            insert Intentos_Logrado; 
+                            
+                            Tiempo_Inactividad__c h= new Tiempo_Inactividad__c();    
+                            u= [select count() from Tiempo_Inactividad__c where usuario__C=:usuario2.id];  
+                            if(u==0) {
+                                h.Usuario__c=usuario2.id;
+                                h.Hora_ultima_consulta__c=datetime.now();
+                                insert h;
+                            }else{
+                                h=[select id, usuario__C from Tiempo_Inactividad__c where usuario__C=:usuario2.id];
+                                h.Hora_ultima_consulta__c=datetime.now();
+                                update h;
+                            }
+                            asysdeportalempresarial.traertasacambio();
+                            return new pageReference('/Apex/vfMenuPrincipalPlanillas?loetdncdhjch=' + usuario2.id +'&MPojknjsdj=0');   
+                        } else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Bloqueado.')); 
+                        }
+                        
+                    }else{
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Inactivo.'));
+                    }                      
+                    
+                }else{
+                    Bitacora_Login__c Intentos_Fallidos = new Bitacora_Login__c ();
+                    Intentos_Fallidos.Usuario__c = usuario2.id; //new Usuario_Portal_Empresarial__c(Nombre_Usuario__c=usuario);
+                    Intentos_Fallidos.Fecha__c=date.today();
+                    Intentos_Fallidos.Ingreso_Logrado__c=false;
+                    insert Intentos_Fallidos;
+                    integer yu=0;
+                    for(Bitacora_Login__c item:[select Ingreso_Logrado__c from Bitacora_Login__c where Usuario__c =:usuario2.id   order by createddate desc limit 3])
                     {
-                             //vefificacion del usuario activo
-                        	integer u =[select count() from Usuario_X_Empresa__c where Usuario__c =: usuario2.id and activo__c=true];
-                            if(u>0)
-                        		{
-                                    if(!usuario2.Bloqueado__c)
-                                    {
-                                     	 Bitacora_Login__c Intentos_Logrado = new Bitacora_Login__c ();
-                                        Intentos_Logrado.Usuario__c=usuario2.id;
-                                        Intentos_Logrado.Fecha__c= datetime.now();
-                                        Intentos_Logrado.Ingreso_Logrado__c=true;
-                                        insert Intentos_Logrado; 
-                                        
-                                        Tiempo_Inactividad__c h= new Tiempo_Inactividad__c();    
-                                        u= [select count() from Tiempo_Inactividad__c where usuario__C=:usuario2.id];  
-                                        if(u==0)
-                                        {
-                                            h.Usuario__c=usuario2.id;
-                                            h.Hora_ultima_consulta__c=datetime.now();
-                                            insert h;
-                                        }
-                                        else
-                                        {
-                                            h=[select id, usuario__C from Tiempo_Inactividad__c where usuario__C=:usuario2.id];
-                                             h.Hora_ultima_consulta__c=datetime.now();
-                                             update h;
-                                        }
-                                        asysdeportalempresarial.traertasacambio();
-                                        return new pageReference('/Apex/vfMenuPrincipalPlanillas?loetdncdhjch=' + usuario2.id +'&MPojknjsdj=0');   
-                                        }
-                                        else
-                                        {
-                                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Bloqueado.')); 
-                                        }
-                                                                   
-                            }
-                            else{
-                                  ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Inactivo.'));
-                            }                      
-                        
-                      }
-                      else
-                      {
-                        Bitacora_Login__c Intentos_Fallidos = new Bitacora_Login__c ();
-                        Intentos_Fallidos.Usuario__c = usuario2.id; //new Usuario_Portal_Empresarial__c(Nombre_Usuario__c=usuario);
-                        Intentos_Fallidos.Fecha__c=date.today();
-				        Intentos_Fallidos.Ingreso_Logrado__c=false;
-                        insert Intentos_Fallidos;
-                          integer yu=0;
-                        for(Bitacora_Login__c item:[select Ingreso_Logrado__c from Bitacora_Login__c where Usuario__c =:usuario2.id   order by createddate desc limit 3])
-                        {
-                            if(!item.Ingreso_Logrado__c)
-                            {
-                              yu++;  
-                            }
+                        if(!item.Ingreso_Logrado__c) {
+                            yu++;  
                         }
-						
-                        if(yu>2)
-                        {
-                            usuario2.bloqueado__C=true;
-                            update usuario2;                                         
-                        } 
-                         // usuario2 = new Usuario_Portal_Empresarial__c();
-                        // usuario2 =[select Contrasena2__c, bloqueado__C from Usuario_Portal_Empresarial__c where Nombre_Usuario__c =:usuario];
-                        if(usuario2.Bloqueado__c)
-                        {
-                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Bloqueado.'));
-                        }
-                          else
-                          {
-                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El usuario o contraseña ingresados no son correctos.')); 
-                          }
-                        
-                       
-                       }                  
-            }else
-              {
-                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario o Contraseña Vacío.')); 
-              }
-                        
+                    }
+                    
+                    if(yu>2) {
+                        usuario2.bloqueado__C=true;
+                        update usuario2;                                         
+                    } 
+                    // usuario2 = new Usuario_Portal_Empresarial__c();
+                    // usuario2 =[select Contrasena2__c, bloqueado__C from Usuario_Portal_Empresarial__c where Nombre_Usuario__c =:usuario];
+                    if(usuario2.Bloqueado__c){
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario Bloqueado.'));
+                    }else{
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El usuario o contraseña ingresados no son correctos.')); 
+                    }
+                    
+                }                  
+            }else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario o Contraseña Vacío.')); 
+            }
+            
         }Catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Usuario o Contraseña no válidos.'));   
         }

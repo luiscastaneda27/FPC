@@ -7412,6 +7412,7 @@ public class Juridico2 {
                                                               naturalEnvio.pcGiroEmpresaEmpCN,
                                                               naturalEnvio.pcAPNFD,
                                                               naturalEnvio.pcFATCA,
+                                                              naturalEnvio.pcFATCA,
                                                               naturalEnvio.pcPEP,
                                                               pcproducto,
                                                               pcagencia,

@@ -9,8 +9,8 @@ public class propiedadControl {
     public string tipoPersonaControlante{get;set;}
     public string nacionalidadControlante{get;set;}
     public string nivelControlante{get;set;}
-    public double porcentajeDiControlante{get;set;}
-    public double porcentajeInControlante{get;set;}
+    public string porcentajeDiControlante{get;set;}
+    public string porcentajeInControlante{get;set;}
     public string numIdEmpresaControlante{get;set;}
     public string cargoControlante{get;set;}
     public string cotBolsaControlante{get;set;}
@@ -18,8 +18,8 @@ public class propiedadControl {
    
     public propiedadControl(decimal idGuardar, string numControlante, string nombreControlante, string PEPControlante,
                             string FATCAControlante, string FATCANCControlante, string tipoPersonaControlante, 
-                            string nacionalidadControlante, string nivelControlante, double porcentajeDiControlante, 
-                            double porcentajeInControlante, string numIdEmpresaControlante, string cargoControlante, 
+                            string nacionalidadControlante, string nivelControlante, string porcentajeDiControlante, 
+                            string porcentajeInControlante, string numIdEmpresaControlante, string cargoControlante, 
                             string cotBolsaControlante, string ticSymbolControlante)
     {
         this.idGuardar = idGuardar;
