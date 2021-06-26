@@ -9,7 +9,7 @@ public class ControllerApiValidaRiesgo {
     public static list<classRespuestaRiesgo> NivelRiesgo(enviarValidarNivel claseEnvio)
     {
         
-        Http http = new Http();
+        Http http = new Http(); 
 		HttpRequest request = new HttpRequest();
 		String url = claseUtil.urlSysde('Test');		
 		request.setMethod('POST');

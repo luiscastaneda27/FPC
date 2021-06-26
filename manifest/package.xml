@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>ControllerPromociones3</members>
-		<members>testPromociones3</members>
+		<members>*</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
-		<members>Promociones3</members>
-		<members>vfPreVentasVer</members>
+		<members>*</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
-		<members>TR_TrasladarProspecto</members>
+		<members>*</members>
 		<name>ApexTrigger</name>
-	</types>
-	<types>
-		<members>Usuarios_para_asignacion_Casos_SAC__c.Objeto__c</members>
-		<name>CustomField</name>
 	</types>
 	<version>51.0</version>
 </Package>

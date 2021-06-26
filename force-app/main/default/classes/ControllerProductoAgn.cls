@@ -1440,11 +1440,11 @@ insert reg;
     public void validarRol() {   
         try {
             list<controllerApiClienteNatural.classRespuestaMenu> resultado2 = new list<controllerApiClienteNatural.classRespuestaMenu>();                    
-            resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(ApexPages.currentPage().getParameters().get('hytrd'));
+            resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(pcUsuarioCN);
             system.debug('Parametro: '+resultado2[0].rol);
             List<String> listRoles = Label.RolesActualizanPantAfilaicion.split(',');
-            for(integer j=0; j<1; j++) {
-                if (listRoles.contains(resultado2[0].rol)){
+            for(integer j=0; j<resultado2.size(); j++) {
+                if (resultado2[j].nombreMetodo == 'vfpantallaclienteProductoAgn' && listRoles.contains(resultado2[j].rol)){
                     MostarActualizar=false;
                     ActNombre = true;
                     ActNombre2 = true;
@@ -1452,6 +1452,7 @@ insert reg;
                     ActApellido2 = true;
                     ActId = true;
                     MostarActualizarFechaSeguro = false;
+                    break;
                 }else{
                     MostarActualizar=true;
                     MostarActualizarFechaSeguro = true;
