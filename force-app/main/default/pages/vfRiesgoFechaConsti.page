@@ -1,0 +1,273 @@
+<apex:page cache="false" expires="0" controller="ControllerSeveridadRiesgo" sidebar="false" showHeader="false" 
+           applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head> 
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>SEVERIDAD RIESGO</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+            <apex:stylesheet value="http://www.w3.org/1999/xlink"/>
+            <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+            <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />  
+            <!--<apex:stylesheet value="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" />-->
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />  
+            
+            
+            
+            <style>
+                html, body{
+                background-color: #F2F2F2;
+                }
+                #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+                }
+                #MenuFormularioPrincipal {
+                position: relative;
+                width: 100%;
+                float: left;
+                }
+                #drop{
+                border:2px dashed #bbb;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:20pt bold,"Vollkorn";color:#bbb
+                }
+                .slds-scope {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+                #b64data{
+                width:100%;
+                }
+                .columna1 {
+                float:left; 
+                width:200px;              
+                padding-left:50px;
+                padding-top:15px;
+                }
+                .columna2 {
+                padding-top:15px;  
+                margin-left:210px;
+                padding-right:15px;                         
+                }
+                
+                #Resumen{
+                margin:0 0 0 0;
+                }
+                #Resumen .Row{
+                width:100%;
+                height:30px;
+                float:left;
+                background:#42c4dd;
+                padding:0px 10px;
+                
+                box-sizing:border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                }
+                #Resumen .Row STRONG{
+                width:60%;
+                float:left;
+                font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-weight:normal;
+                color:#FFF;
+                }
+                #Resumen .Row SPAN{
+                width:40%;
+                float:right;
+                font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+                font-size:14px;
+                line-height:30px;
+                font-variant:normal;
+                text-align:right;
+                text-transform:uppercase;
+                color:#FFF;
+                }
+                
+                label {
+                display: inline-block;
+                text-align: right;
+                }
+                
+                .Aceptar{    
+                font-weight: bolder !important;
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: 	all 0.2s ease;
+                -o-transition: 		all 0.2s ease;
+                transition: 		all 0.2s ease;
+                }
+                .Cancelar{    
+                font-weight: bolder !important;
+                height: 28px;
+                color:white;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: 	all 0.2s ease;
+                -o-transition: 		all 0.2s ease;
+                transition: 		all 0.2s ease;
+                }
+                
+                .Confirmar:hover{
+                background-color:#fff;
+                color: #f78d1c !important;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                }
+                
+            </style>
+            
+        </head> 
+        
+        <body>
+            <div class="slds-scope">
+                
+                <apex:outputPanel >         
+                    <apex:form >
+                        
+                        
+                        
+                        
+                        <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                        
+                        <div class="container" >
+                            
+                            <div style="width:1000px; margin-top:10px;">
+                                <header class="slds-modal__header" style="width:1000px; margin-left:1px;">	
+                                    
+                                    <figure class="row justify-content-center" style="  text-align: center; width: 100%; ">
+                                        <apex:image value="{!$Resource.LogoFPC}" style="height:100%; width:50%;"  />
+                                    </figure> 
+                                </header>
+                            </div>
+                                <h2>
+                                    <span class="slds-text-heading_medium" style="color:#42C4DD;margin-left:900px;"> {!usuario} </span>
+                                </h2>
+                            
+                            <div id="Resumen" style="width:1000px;">
+                                <h3 class="Row">
+                                    <strong>  Riesgo Fecha Constitución </strong>
+                                    <span></span>
+                                </h3>
+                            </div>
+                            
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width:1000px; margin-left: 1px;">
+                                
+                                
+                                <table id="formulario" width = "1000" style="text-align: center; ">
+                                    <tr>
+                                        <td width="450">
+                                            <label class="slds-form-element__label " for="inputSample"  style="margin-left:20px;" >
+                                                <abbr class="slds-required" title="required"></abbr> <p style="display:inline; font-size:1.4em;">Fecha Constitución</p>
+                                            </label>
+                                            <apex:inputField value="{!TipNivel.Fecha_Constitucion__c}" styleclass="slds-input"  id="TipoSaldo"  style="height:10px; width:165px; margin-left:18px" />
+                                            <apex:commandButton style="margin-left: 2px; " action="{!BuscaFechConst}" value="Buscar"  styleClass="Aceptar" />
+                                                                                        
+                                        </td>
+                                    </tr><br/>
+                                    
+                                    
+                                    <tr>
+                                        <td width="450">
+                                            <br/>
+                                                                                        
+                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:25px;">
+                                                <abbr class="slds-required" title="required"></abbr> Descripción
+                                            </label>
+                                            <apex:inputText disabled="true" value="{!CodFechaConstitu}" id="CodFechaConstitu" styleclass="slds-input"  style="height:20px; width: 300px; margin-left:95px;"  />
+                                            
+                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:25px;">
+                                                <abbr class="slds-required" title="required"></abbr> Riesgo
+                                            </label>
+                                            <apex:inputText value="{!RieConstitucion}" id="RieConstitucion" styleclass="slds-input"  style="height:20px; width: 160px; margin-left:22px;"  />
+                                            
+                                        </td>
+                                    </tr> 
+                                    
+                                    
+                                    <tr>
+                                        <td>
+                                            <br/>
+                                        </td>
+                                    </tr>  
+                                    
+                                    
+                                    
+                                </table>
+                                
+                            </div>
+                            
+                            <footer class="slds-modal__footer" style= "width:1000px; margin-left: 1px;">
+                                                                
+                                <apex:actionFunction name="Actualizar"/>
+                                <apex:commandButton style="margin-left: 2px; " action="{!actualizarFechaCosnt}" value="Actualizar"  styleClass="Cancelar" />&nbsp;
+                                
+                                <apex:actionFunction name="Limpiar"/>
+                                <apex:commandButton style="margin-left: 2px; " action="{!Limpiar}" value="Limpiar"  styleClass="Cancelar" />&nbsp;
+
+                            </footer>
+                        </div>
+                    </apex:form>   
+                </apex:outputPanel> 
+                
+                <div style="margin-top; 10px;"></div>
+            </div>
+        </body>
+        
+    </html>  
+</apex:page>

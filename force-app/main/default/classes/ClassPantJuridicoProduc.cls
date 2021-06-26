@@ -11,6 +11,9 @@ public class ClassPantJuridicoProduc {
     public string pcPEP{get;set;}
     public string AML{get;set;} /*ESTE NO EN EL PROCEDIMIENTO*/
     public string pcFATCA{get;set;}
+    public string pcFATCANC{get;set;}
+    //public string AMLControlante{get;set;}
+    //public string pcFATCAControlante{get;set;}
     public string pctipoid /*TipoID*/{get;set;}
     public string pcnroid /*NumeroID*/{get;set;}
     public dateTime pcFechaVencimientoCN /*FechaVencimiento*/{get;set;} /*Se envia nulo*/
@@ -213,15 +216,15 @@ public class ClassPantJuridicoProduc {
                           PUBLIC string NUMID_FIRMAN1 {get;set;}
     				      PUBLIC string NUMID_FIRMAN2 {get;set;}
                           PUBLIC string NUMID_FIRMAN3 {get;set;}
-    PUBLIC string pcnumeroidsoc {get;set;}
-    PUBLIC string tipo_persona {get;set;}
-    PUBLIC string nombresocio {get;set;}
-    PUBLIC string nacionalidad {get;set;}
+    //PUBLIC string pcnumeroidsoc {get;set;}
+    //PUBLIC string tipo_persona {get;set;}
+    //PUBLIC string nombresocio {get;set;}
+    //PUBLIC string nacionalidad {get;set;}
     
     
         				  
     
-                           public string V_fo_cuenta /*Contener La Ijnformacion de cuentas*/ {get;set;}
+                           public string V_fo_cuenta {get;set;}
     
     public List<socios> ListSocios {get;set;}
     public List<SociosTIN> ListSociosTIN {get;set;}
@@ -233,13 +236,15 @@ public class ClassPantJuridicoProduc {
     
 	public List<DebidaDiliClienteONG> ListClienteONG {get;set;}
     public List<claseDebidaDilContratista> ListDebidaDil {get;set;}
+    public List<propiedadControl> ListPropiedadControl {get;set;}
     
     public ClassPantJuridicoProduc()
     {
         ListSocios =new List<socios>(); 
         ListSociosTIN =new List<SociosTIN>();
          ListClienteONG = new List<DebidaDiliClienteONG>(); //Agregado 10-04-2019 
-        ListDebidaDil = new List<claseDebidaDilContratista>(); //Agregado 10-04-2019    
+        ListDebidaDil = new List<claseDebidaDilContratista>(); //Agregado 10-04-2019   
+        ListPropiedadControl =  new List<propiedadControl>();
      }
     
     

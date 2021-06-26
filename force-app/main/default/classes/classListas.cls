@@ -4,6 +4,7 @@ public with sharing class classListas {
     public boolean BLACKLIST{get;set;}
     public boolean AML{get;set;}
     public boolean FATCA{get;set;}   
+    public boolean FATCANC{get;set;} 
     //agregadas 25-10-2019 walvarado
     public String RTN { get; set; }
     public String pctipoid { get; set; }

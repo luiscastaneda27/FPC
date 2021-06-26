@@ -120,7 +120,7 @@ public class ControllerUsuarioNatural {
             
             
             nivelRiesgo = '1'; 
-            debidaDiligencviaAplicada = '2';
+            debidaDiligencviaAplicada = '1';
   			
 		   despN = false;   
             disbot = true; 
@@ -327,13 +327,13 @@ public class ControllerUsuarioNatural {
     
     public void bloqPep(){
         dispep = true; 
-        nivelRiesgo = '3'; 
-        debidaDiligencviaAplicada = '3'; 
+        nivelRiesgo = '1'; 
+        debidaDiligencviaAplicada = '1'; 
     }
         public void unblock(){
         dispep = false; 
         nivelRiesgo = '1'; 
-        debidaDiligencviaAplicada = '2'; 
+        debidaDiligencviaAplicada = '1'; 
     }
     
     public SelectOption[] InstitucionFinancieraOptions
@@ -557,6 +557,7 @@ public class ControllerUsuarioNatural {
             
                if(fcsd.PEP == true){
            	PEP = fcsd.PEP;
+                   nivelRiesgo = '1';
                    }
                if(fcsd.AML == true){
             AML = fcsd.AML;
@@ -601,10 +602,11 @@ public class ControllerUsuarioNatural {
     public void llenarNivelRiesgo(){
 
                 this.NivelRiesgoOptions = new SelectOption[]{};
-        	    this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
+        	    //this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
                 this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
-                this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
-                this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
+        		this.NivelRiesgoOptions.add(new SelectOption('2','MODERADO'));
+                this.NivelRiesgoOptions.add(new SelectOption('3','MEDIO'));
+                this.NivelRiesgoOptions.add(new SelectOption('4','ALTO'));
     }
     
     public SelectOption[] NivelRiesgoOptions
@@ -619,8 +621,7 @@ public class ControllerUsuarioNatural {
                 this.NiveloOptions = new SelectOption[]{};
         	    this.NiveloOptions.add(new SelectOption('','NINGUNO'));
                 this.NiveloOptions.add(new SelectOption('1','SOCIO'));
-                this.NiveloOptions.add(new SelectOption('2','BENEFICIARIO'));    
-                this.NiveloOptions.add(new SelectOption('3','TERCERO'));    
+                this.NiveloOptions.add(new SelectOption('2','BENEFICIARIO'));             
     }
     
     public SelectOption[] NiveloOptions

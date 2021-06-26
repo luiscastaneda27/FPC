@@ -1,6 +1,53 @@
 @isTest
-public class testAGN {
-    
+global class testAGN {
+    global class IT_ServicioConsultaPQR_Test_Mock implements HttpCalloutMock{   
+        global HTTPResponse respond(HTTPRequest request) {
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody( 
+                '{'+
+                '"operacion": "Consulta PQR",'+
+                '"respuesta": {'+
+                '"estado": "OK",'+
+                '"mensaje": "",'+
+                '"tipoExcepcion": 0'+
+                '},'+
+                '"pqrs": ['+
+                '{'+
+                '"fecha": "'+(System.now()).addDays(-25)+'",'+
+                '"tipo": "Quejas",'+
+                '"descripcion": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!",'+
+                '"estado": "Resuelta"'+
+                '},'+
+                '{'+
+                '"fecha": "'+(System.now()).addDays(-20)+'",'+
+                '"tipo": "Quejas",'+
+                '"descripcion": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!",'+
+                '"estado": "Resuelta"'+
+                '},'+
+                '{'+
+                '"fecha": "'+(System.now()).addDays(-15)+'",'+
+                '"tipo": "Quejas",'+
+                '"descripcion": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!",'+
+                '"estado": "Resuelta"'+
+                '},'+
+                '{'+
+                '"fecha": "'+(System.now()).addDays(-10)+'",'+
+                '"tipo": "Quejas",'+
+                '"descripcion": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!",'+
+                '"estado": "Resuelta"'+
+                '},'+
+                '{'+
+                '"fecha": "'+(System.now()).addHours(-5)+'",'+
+                '"tipo": "Quejas",'+
+                '"descripcion": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur est ullam facere commodi necessitatibus inventore excepturi, amet nobis ut, quas blanditiis minus ea nisi pariatur ipsam? Ex facilis quae ad!",'+
+                '"estado": "Resuelta"'+
+                '}]}');
+            response.setStatusCode(200);
+            response.setStatus('OK');
+            return response; 
+        }
+    }
     static testMethod void ControllerProductoAgn(){ 
     test.startTest();
         Estado_Cuenta__c ec= new Estado_Cuenta__c(name = 'Test', CodigoEstado__c = 'A');
@@ -17,7 +64,7 @@ public class testAGN {
         af.Id_Formulario_Sysde__c = 0;
         insert af;
         
-    ControllerProductoAgn cliente = new ControllerProductoAgn();
+        ControllerProductoAgn cliente = new ControllerProductoAgn();
         cliente.iniciarMensaje('mensaje prueba');
         cliente.Pruebax2();
         cliente.usuarioValidacion = '';
@@ -391,7 +438,7 @@ public class testAGN {
         cliente.v_des_procedfds = 'ijljdf';
         cliente.TipoEnvioo.Tipo_EnvioNuevo__c = 'R';
         cliente.pcaplicaseguro = false;
-        cliente.AplicaSeguroNO = true;
+        cliente.AplicaSeguroNO = false;
         cliente.pcTipoSeguro = ' --Ninguno-- ';
         cliente.pcpromotor ='FPC';
         cliente.pcUsuarioCN = '';
@@ -426,7 +473,7 @@ public class testAGN {
         cliente.v_des_procedfds = 'ijljdf';
         cliente.TipoEnvioo.Tipo_EnvioNuevo__c = 'R';
         cliente.pcaplicaseguro = false;
-        cliente.AplicaSeguroNO = true;
+        cliente.AplicaSeguroNO = false;
         cliente.pcTipoSeguro = ' --Ninguno-- ';
         cliente.pcpromotor ='FPC';
         cliente.pcUsuarioCN = 'qqqq';
@@ -843,14 +890,14 @@ public class testAGN {
         p.beneficiarioUnico.primerNombre = '';
         p.beneficiarioUnico.primerApellido = '';
 */       list<beneficiario> bene=new list<beneficiario>(); 
-        bene.add(new beneficiario(0.0, '', '', ' --Ninguno-- ', '', '', '', '', '', '',null,null,null));
+        bene.add(new beneficiario(0.0, '', '', ' --Ninguno-- ', '', '', '', '', '', '', '', '', '',null,null,null));
         p.mostrarTablaModificarC = true;
         p.GUARDAR2();
         p.ModificarD();
         p.EliminarD();
         p.EliminarADD();
         list<beneficiario> beneC=new list<beneficiario>(); 
-        beneC.add(new beneficiario(0.0, '', '', ' --Ninguno-- ', '', '', '', '', '', '',null,null,null));
+        beneC.add(new beneficiario(0.0, '', '', ' --Ninguno-- ', '', '', '', '', '', '', '', '', '',null,null,null));
         p.GUARDAR2C();
         p.ModificarDC();
         p.EliminarDC();
@@ -1943,14 +1990,107 @@ public class testAGN {
         
         C.pcnroid = '0801199411013';
         C.validar125();
-        
-        
+        c.bloqCamposCliente();
+        c.validarBeneficiario();
+        c.validarBeneficiarioC();
+        c.validarRepresentantes();
+        c.mostPopPEP();
+        c.mostPopFATCA();
+        c.mostPopFATCANC();
+        c.hidePopOtros();
 
         controllerHomePortalFPC home = new controllerHomePortalFPC();
         home.Afiliaciones();
         home.anio = 2018;
         home.Gestiones();
         home.pagina = '';        
+        Test.stopTest();
     }
+
+                    @isTest static void testServicioGuardaCliente(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        ClienteNaturales claseEnvio = new ClienteNaturales();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.guardarCliente(claseEnvio);
+        Test.stopTest();
+    }
+    
+                    @isTest static void testServicioActualizaCliente(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        NaturalActualizar claseEnvio = new NaturalActualizar();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.actualizaCliente(claseEnvio);
+        Test.stopTest();
+    }
+     @isTest static void testServicioPDF(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        NaturalActualizar claseEnvio = new NaturalActualizar();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.ConsultaInfoClientePDF('');
+        Test.stopTest();
+    }
+     @isTest static void testServicioConsultaPantalla(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        NaturalActualizar claseEnvio = new NaturalActualizar();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.ConsultaPantallas2('');
+        Test.stopTest();
+    }   
+         @isTest static void testcodClienteConsulta(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        NaturalActualizar claseEnvio = new NaturalActualizar();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.codClienteConsulta('');
+        Test.stopTest();
+    }   
+            @isTest static void testConsultaInfoClienteC(){
+        Test.setMock(HttpCalloutMock.class, new IT_ServicioConsultaPQR_Test_Mock()); 
+        APIClienteJuridico obj = new APIClienteJuridico();
+        
+        NaturalActualizar claseEnvio = new NaturalActualizar();
+        claseEnvio.numtran = '050000';
+          
+        //List<String> lstValor = new List<String>();
+         
+        //lstValor.add(valor);
+        Test.startTest();
+        controllerApiClienteNatural.ConsultaInfoClienteC('');
+        Test.stopTest();
+    }   
 
 }

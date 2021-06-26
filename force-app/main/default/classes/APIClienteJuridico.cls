@@ -50,6 +50,9 @@ public class APIClienteJuridico {
 
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\\"','"');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta' +''+ respuesta); 
@@ -57,7 +60,7 @@ public class APIClienteJuridico {
             if (response.getStatusCode() == 200) 
            {
                 
-	            fcsd = (ClassPantJuridicoProduc)System.JSON.deserialize(response.getBody(), ClassPantJuridicoProduc.class);
+	            fcsd = (ClassPantJuridicoProduc)System.JSON.deserialize(respuesta, ClassPantJuridicoProduc.class);
                
            }
             
@@ -72,6 +75,82 @@ public class APIClienteJuridico {
 		return fcsd;   
     }
      
+     public static classAprobarPEP ConsultaInfoAproPEP() {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');		
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+        request.setEndpoint(url + 'api/ConsultaInfoAproPEP');
+		classAprobarPEP fcsd= new classAprobarPEP();
+		string respuesta = '';
+		system.debug('Entro al REST del EDC');
+		try{
+
+			HttpResponse response = http.send(request);
+	    	respuesta = response.getBody();
+            respuesta = respuesta.replace('"[', '[');
+            respuesta = respuesta.replace(']"', ']');
+            respuesta = respuesta.replace('\\"','"');
+            
+            //fcsd = respuesta.split(',');
+            system.debug('debuggRespuesta' +''+ respuesta); 
+            
+            if (response.getStatusCode() == 200) 
+           {
+                
+	            fcsd = (classAprobarPEP)System.JSON.deserialize(respuesta, classAprobarPEP.class);
+               
+           }
+            
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage()+'   '+e.getLineNumber());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage()+'   '+e.getLineNumber());	
+		} 
+        
+        system.debug('debuggAPI' +' '+ fcsd);
+		return fcsd;   
+    }
+    
+     public static string aprobDenePEP(String numIdentidad, String accion) {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');		
+		request.setMethod('POST');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+		request.setEndpoint(url + 'api/actualizaEstadoPep');
+		envioPEP claseEnviar = new envioPEP();
+        claseEnviar.identificador = numIdentidad;
+        claseEnviar.accion = accion;
+		String respuesta = '';
+		system.debug('Entro al REST del EDC');
+		try{
+			 			
+			classJson envio = new classJson();
+			envio.contenido = JSON.serialize(claseEnviar);
+			String cons = 'contenido=' + envio.contenido;
+			system.debug(cons);		
+			request.setBody(cons);	
+			HttpResponse response = http.send(request);
+	    	respuesta = response.getBody();
+            system.debug(respuesta);      
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage());	
+		} 
+		return respuesta;   
+     
+    }
+    public class envioPEP{
+        public string identificador {get;set;}
+        public string accion {get;set;}
+    }    
     // Consulta El Socio Desde la BD atarvez del numero de ID 
     
     public static classBeneficiariosJuri Consulta_Socio(string pcnumeroidsocc) {

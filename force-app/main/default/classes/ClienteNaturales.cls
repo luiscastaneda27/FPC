@@ -14,6 +14,7 @@ public  with sharing class ClienteNaturales {
     public datetime pdfechasuscripcion /*FechaSuscripcion*/ {get;set;}
     public string pcPEP{get;set;}
     public string pcFATCA{get;set;}
+    public string pcFATCANC{get;set;}
     public string AML{get;set;} /*ESTE NO EN EL PROCEDIMIENTO*/
     public string BLACKLIST{get;set;}
     
@@ -48,6 +49,9 @@ public  with sharing class ClienteNaturales {
     //Actua Tercera persona
     public string pc_ActuaSItercera /*SiActuaTerceraPersona*/ {get;set;}
     public string pcNumeroIDPV /*NumeroIDTerceraPersona*/ {get;set;}
+    public string FATCARepresentante{get;set;}
+    public string FATCANCRepresentante{get;set;}
+    //public boolean AMLRepresentante{get;set;}
     public string pcNombreCompletoPV /*NombreCompletoTerceraPersona*/ {get;set;}
     //public string ParentTerceraPer /*Paren Tercera Persona*/ {get;set;}
     
@@ -57,6 +61,8 @@ public  with sharing class ClienteNaturales {
     public string pcCargoEjercido /*Paren  Persona*/ {get;set;}
     public string pcEjerce_Cargo_Publico {get;set;}
     public string Cargo_Pulbico {get;set;}
+    public string periodoPep {get;set;}
+    public string institucionPep {get;set;}
     
     //DependenciaEconomica
     public string pcDependeSI /*siDependencia*/ {get;set;}

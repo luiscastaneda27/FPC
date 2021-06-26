@@ -6,6 +6,7 @@ public with sharing class NaturalActualizar {
     public string RTN {get;set;}
     public string pcPEP {get;set;}
     public string pcFATCA {get;set;}
+    public string pcFATCANC {get;set;}
     public string pctipoid {get;set;}
     public string pcnroid {get;set;}
     public dateTime pcFechaVencimientoCN {get;set;}
@@ -28,9 +29,14 @@ public with sharing class NaturalActualizar {
     public string PC_NIVEL_RIESGO {get;set;}
     public string pc_ActuaSI {get;set;}
     public string pcNumeroIDPV {get;set;}
+    public string FATCARepresentante{get;set;}
+    public string FATCANCRepresentante{get;set;}
     public string pcNombreCompletoPV {get;set;}
     public string OcultaCarSI {get;set;}
+    public string pcEjerce_Cargo_Publico {get;set;}
     public string pcCargoEjercido {get;set;}
+    public string periodoPep {get;set;}
+    public string institucionPep {get;set;}
     public string pcDependeSI {get;set;}
     public string pcDependeNO {get;set;}
     public string pcTipoIDDependencia {get;set;}

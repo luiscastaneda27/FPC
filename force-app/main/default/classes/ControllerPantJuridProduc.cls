@@ -1,5 +1,39 @@
 public class ControllerPantJuridProduc {
     
+    //Campos propiedad y control, Esteban Romero 04-05-201
+    public boolean disCumplimiento{get;set;}
+    public string rolLogin {get; set;}
+    public string numControlante{get;set;}
+    public string nombreControlante{get;set;} 
+    public boolean cotizaControlanteSi{get;set;} 
+    public boolean cotizaControlanteNo{get;set;}
+    public string numControlanteAsignado{get;set;}
+    public boolean mostrarTablaControlantes{get;set;}
+    public boolean mostrarTablaModiControlantes{get;set;}
+    public boolean disbotControlantes{get;set;}
+    public boolean PEPControlante{get;set;}
+    public boolean AMLControlante{get;set;}
+    public boolean FATCAControlante{get;set;}
+    public boolean FATCANCControlante{get;set;}
+    public boolean TickerOculControlante /*Cotiza_NO*/ {get;set;}
+    
+    public boolean desCheckListas{get;set;}
+    public List<propiedadControl> ListPropiedadControl {get;set;}
+    public propiedadControl propiedadControlUnicoUnico{get;set;}
+    public boolean muestraPopPEP{get;set;}
+    public boolean muestraPopFATCA{get;set;}
+    public boolean muestraPopFATCANC{get;set;}
+    public boolean validadosControlantes{get;set;}
+    
+    //Variables nuevas socios 05/05/2021
+    public boolean PEPSocio{get;set;}
+    public boolean AMLSocio{get;set;}
+    public boolean FATCASocio{get;set;}
+    public boolean FATCANCSocio{get;set;}
+    public boolean validadosSocios{get;set;}
+    /////
+    
+    
     public string CuentaMostrar /*pc_Agencia*/{get;set;}
     public string Activo /*pc_Agencia*/{get;set;}
 
@@ -21,6 +55,9 @@ public class ControllerPantJuridProduc {
     public boolean pcPEP{get;set;}
     public boolean AML{get;set;}
     public boolean pcFATCA{get;set;}
+    public boolean pcFATCANC{get;set;}
+    //public string AMLControlante{get;set;}
+    public string pcFATCAControlante{get;set;}
     public boolean bloqcuenta {get;set;}
     public boolean bloqestado {get;set;}
     public boolean bloqcausa {get;set;}
@@ -508,6 +545,8 @@ public class ControllerPantJuridProduc {
     public boolean OcultarFatca17 {get;set;}  
 	public boolean btnagregar {get;set;}
     
+    public list <ContenidoValidaNivelJ> validaDatos; 
+    
     
     public void ClienteNatural()     
     {  
@@ -526,8 +565,15 @@ public class ControllerPantJuridProduc {
 
         public ControllerPantJuridProduc() 
         {
+            disCumplimiento = true;
+            rolLogin = ApexPages.currentPage().getParameters().get('rol');
+            system.debug('entro al metodo de Iniciar');
+        	system.debug('rol obtenido: '+rolLogin);
+            desCheckListas = true;
             activadesacContratista = true;
         	activadesacONG = true;
+            validadosControlantes = true;
+            validadosSocios = true;
         	ListClienteONG = new List<DebidaDiliClienteONG>();
         	ClienteONG = new DebidaDiliClienteONG(0,'','','','','','','',null);
         	ListDebidaDil = new List<claseDebidaDilContratista>();
@@ -546,6 +592,7 @@ public class ControllerPantJuridProduc {
             bloqbtnpagina=false;
             Indirectoo = true;
             TickerOcul = true;
+            TickerOculControlante = true;
             Paisopera1= true;
             deptoopera1=true;
             ///////
@@ -606,8 +653,9 @@ public class ControllerPantJuridProduc {
             //FIN 
             Cuenta20 = new Cuentas__c();
             Cuenta22 = new Beneficiario__c();
-            socioUnico = new socios(null,'', '', '', '', '', null, null,'','','');
+            socioUnico = new socios(null,'', '', '', '', '', '', '', '', null, null,'','','');
             socioUnicoTIN = new SociosTIN(null,'', '', '', '');
+            propiedadControlUnicoUnico = new propiedadControl(null,'', '', '', '', '', '', '', '', null, null,'','','','');
             
             cuentaUnico = new Class_CuentasTraer('');
              options=new List<SelectOption>();
@@ -630,6 +678,7 @@ public class ControllerPantJuridProduc {
     		
             ListSocios = new List<socios>();
             ListSociosTIN = new List<SociosTIN>();
+            ListPropiedadControl = new List<propiedadControl>();
             ListClass_CuentasTraer = new List<Class_CuentasTraer>();
             options=new List<SelectOption>();
             optionsEmpleado=new List<SelectOption>();
@@ -715,15 +764,20 @@ public class ControllerPantJuridProduc {
             llenarTipoFondo();
             TipMoneda.Tipo_Moneda__c = null;
             
-            PC_NIVEL_RIESGO = '2';
+            PC_NIVEL_RIESGO = '1';
 			PC_DEBIDA_DELIGENCIA = '2';
             desNacion2 = true; 
             TipoEntidadLLenar();
+            
+             /*paso1Cabeza = 'slds-is-complete';
+	            paso1Cuerpo = 'slds-hide';
+	            
+	            paso2Cabeza = 'slds-is-current';
+	            paso2Cuerpo = 'slds-show'; */  
      }
     
    
-      public void iniciar()
-      {    
+    public void iniciar(){    
         paso1Cabeza = 'slds-is-current';
         paso1Cuerpo = 'slds-show';
         
@@ -731,24 +785,80 @@ public class ControllerPantJuridProduc {
         paso2Cuerpo = 'slds-hide';
     }
     
-     public void enviarPagPro()
-       {   
-                paso1Cabeza = 'slds-is-complete';
-	            paso1Cuerpo = 'slds-hide';
-	            
-	            paso2Cabeza = 'slds-is-current';
-	            paso2Cuerpo = 'slds-show';           
-       }
+    public void validarControlantes()
+    {
+
+        try{
+            classListas claseEnvio = new classListas();
+            classListas fcsd = controllerApiClienteNatural.consultaListas(numControlante);
+            
+            if(numControlante ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio'));	
+            }else{
+                
+                system.debug(fcsd.FATCA);
+                
+                if(fcsd.PEP == true||test.isRunningTest()){
+                    PEPControlante = fcsd.PEP;
+                    PC_NIVEL_RIESGO = '4';
+                    PC_DEBIDA_DELIGENCIA = '3';
+                    //bloqRTN = false;
+                    OcultaCarSI = true;
+                    OcultaCarNO_2 = true;
+                    Cargoo = false;
+                    muestraPopPEP = true;
+                }
+                if(fcsd.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCA = true;
+                    FATCAControlante = true;
+                }
+                if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANC = true;
+                    FATCANCControlante = true;
+                }
+                
+                if(fcsd.AML == true||test.isRunningTest()){
+                    AML = fcsd.AML;
+                }
+                if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                    AML = fcsd.BLACKLIST;
+                    actPop = true; 
+                }
+                /*if(fcsd.PEP == true||test.isRunningTest()){
+                    dispep = true;   
+                }*/
+                
+                validadosControlantes = false;
+                validar1 = true;
+                
+            }
+            //String resultado = controllerApiUsuarioNatural.BuscarUsuarioNatural(claseEnvio);
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm,resultado));
+            desCheckb =  true;
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+        }
+    }
+    
+    public void enviarPagPro()
+    {   
+        paso1Cabeza = 'slds-is-complete';
+        paso1Cuerpo = 'slds-hide';
+        
+        paso2Cabeza = 'slds-is-current';
+        paso2Cuerpo = 'slds-show';           
+    }
     
     
-      public void BtnCancelar()
-       {   
-                disbot=false;
-	            paso2Cuerpo = 'slds-hide';
-	            
-	            paso1Cabeza = 'slds-is-current';
-	            paso1Cuerpo = 'slds-show';    
-       }
+    public void BtnCancelar()
+    {   
+        disbot=false;
+        paso2Cuerpo = 'slds-hide';
+        
+        paso1Cabeza = 'slds-is-current';
+        paso1Cuerpo = 'slds-show';    
+    }
 
     //Productos 
     public void llenarProductos(){
@@ -845,7 +955,7 @@ public class ControllerPantJuridProduc {
             socioUnico.tipo_persona= socioUnico.tipo_persona; 
             socioUnico.nacionalidad=socioUnico.nacionalidad;
             socioUnico.POR_PART_INDIRECT=socioUnico.POR_PART_INDIRECT;
-            decimal total2=decimal.valueOf(socioUnico.POR_PART_DIRECT);
+            decimal total2=decimal.valueOf(socioUnico.POR_PART_DIRECT); 
             
             if (pcCotizaSI == true )
             {
@@ -855,7 +965,31 @@ public class ControllerPantJuridProduc {
             {
                 socioUnico.COT_BOLSA = 'N'; 
             }
-            
+            if (PEPSocio== true )
+            {
+                 socioUnico.PEPSocio = 'S';
+            }
+            ELSE
+            {
+                socioUnico.PEPSocio = 'N'; 
+            }
+            if (FATCASocio == true )
+            {
+                 socioUnico.FATCASocio = 'S';
+                if(socioUnico.POR_PART_DIRECT > 10){
+                    pcFATCA = true;
+                }
+            }
+            else{
+                socioUnico.FATCASocio = 'N';
+            }
+            if (FATCANCSocio == true )
+            {
+                 socioUnico.FATCANCSocio = 'S';
+            }
+            else{
+                socioUnico.FATCANCSocio = 'N';
+            }
             
             if(socioUnico.pcnumeroidsoc != null || socioUnico.nombresocio != null || socioUnico.tipo_persona != null || 
                socioUnico.nacionalidad != null || socioUnico.POR_PART_DIRECT != null || socioUnico.POR_PART_INDIRECT != null )
@@ -895,8 +1029,9 @@ public class ControllerPantJuridProduc {
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
                     mostrarTabla = false;
+                    socioUnico.AI_ID_EXTERNO= socioUnico.AI_ID_EXTERNO;
                     ListSocios.add(socioUnico);
-                    socioUnico = new socios(null,'', '', '', '', '', null, null, '', '', '');
+                    socioUnico = new socios(null,'', '', '', '', '', '', '', '', null, null, '', '', '');
                     disbotBene = true;
                     limpiabenefici();
                 } 
@@ -906,7 +1041,7 @@ public class ControllerPantJuridProduc {
                     mostrarTabla = true;
                     mostrarTablaModifi2 = false;
                     ListSocios.add(socioUnico);
-                    socioUnico = new socios(null,'', '', '', '', '', null, null, '', '', '');
+                    socioUnico = new socios(null,'', '', '', '', '', '', '', '', null, null, '', '', '');
                     disbotBene = true; 
                     limpiabenefici(); 
                 } 
@@ -929,7 +1064,296 @@ public class ControllerPantJuridProduc {
             
         }
     }
+	PUBLIC VOID guardarControlante()
+    {
+        try
+        {
 
+            //propiedadControlUnicoUnico.tipoPersonaControlante = Cliente1.Tipo_Persona__c;
+            propiedadControlUnicoUnico.numControlante = numControlante;
+            propiedadControlUnicoUnico.nombreControlante = nombreControlante;
+            //propiedadControlUnicoUnico.tipoPersonaControlante = propiedadControlUnicoUnico.tipoPersonaControlante; 
+            //propiedadControlUnicoUnico.nacionalidadControlante = propiedadControlUnicoUnico.nacionalidadControlante;
+            //propiedadControlUnicoUnico.porcentajeInControlante = propiedadControlUnicoUnico.porcentajeInControlante;
+            //decimal total2=decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante);
+            
+            /*if (cotizaControlanteSi == true )
+            {
+                 propiedadControlUnicoUnico.cotBolsaControlante = 'S';
+            }
+            ELSE
+            {
+                propiedadControlUnicoUnico.cotBolsaControlante = 'N'; 
+            }*/
+            if (PEPControlante == true )
+            {
+                 propiedadControlUnicoUnico.PEPControlante = 'S';
+            }
+            ELSE
+            {
+                propiedadControlUnicoUnico.PEPControlante = 'N'; 
+            }
+            if (FATCAControlante == true )
+            {
+                 propiedadControlUnicoUnico.FATCAControlante = 'S';
+                /*if(propiedadControlUnicoUnico.porcentajeDiControlante > 10){
+                    pcFATCA = true;
+                }*/
+            }
+            ELSE
+            {
+                propiedadControlUnicoUnico.FATCAControlante = 'N'; 
+            }
+            if (FATCANCControlante == true )
+            {
+                 propiedadControlUnicoUnico.FATCANCControlante = 'S';
+            }
+            ELSE
+            {
+                propiedadControlUnicoUnico.FATCANCControlante = 'N'; 
+            }
+            
+            
+            if(propiedadControlUnicoUnico.numControlante != null || propiedadControlUnicoUnico.nombreControlante != null)
+            {    
+           
+             
+ 				/*if( propiedadControlUnicoUnico.nivelControlante == '1')
+                {
+                    for(integer i=0; i<ListPropiedadControl.size(); i++)
+                {
+                    total2 +=decimal.valueOf(ListPropiedadControl[i].porcentajeDiControlante);
+                }
+                }
+              
+            if (propiedadControlUnicoUnico.nivelControlante == '2')
+                {
+                   for(integer j=0; j<ListPropiedadControl.size(); j++)
+                       {
+                           total2=0;
+                          }               
+                }
+                
+            if (propiedadControlUnicoUnico.nivelControlante > '2')
+                {
+                   for(integer i=0; i<ListPropiedadControl.size(); i++)
+                       {
+                           total2=0;}
+                    }   */ 
+                             
+            /*if( propiedadControlUnicoUnico.nivelControlante == '1' && total2 >100 )
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Puede Agregar, El porcentaje directo es mayor que 100'));
+            }
+            else
+            {*/
+                if (mostrarTablaModiControlantes == true)
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
+                    mostrarTablaControlantes = false;
+                    propiedadControlUnicoUnico.AI_ID_EXTERNO= propiedadControlUnicoUnico.AI_ID_EXTERNO;
+                    ListPropiedadControl.add(propiedadControlUnicoUnico);
+                    propiedadControlUnicoUnico = new propiedadControl(null,'', '', '', '', '', '', '', '', null, null, '', '', '', '');
+                    disbotControlantes = true;
+                    limpiaControlantes();
+                } 
+                else
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
+                    mostrarTablaControlantes = true;
+                    mostrarTablaModiControlantes = false;
+                    ListPropiedadControl.add(propiedadControlUnicoUnico);
+                    propiedadControlUnicoUnico = new propiedadControl(null,'', '', '', '', '', '', '', '', null, null, '', '', '', '');
+                    disbotControlantes = true; 
+                    limpiaControlantes(); 
+                } 
+                
+           // }
+                          
+            }
+            
+            else
+            { 
+    
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se permiten campos cacios En Propiedad y Control'));
+                
+              } //FIN DEL IF DE VALIDACION 
+            
+          
+        }
+        catch(exception e)
+        {
+            
+        }
+    }
+    public void limpiaControlantes()
+    {
+        numControlante = null;
+        propiedadControlUnicoUnico.nombreControlante = null;
+        Cliente1.Tipo_Persona__c=null;
+        propiedadControlUnicoUnico.nacionalidadControlante = null;
+        propiedadControlUnicoUnico.nivelControlante = null;
+        propiedadControlUnicoUnico.porcentajeDiControlante = null;
+        propiedadControlUnicoUnico.porcentajeInControlante = null;
+        propiedadControlUnicoUnico.numIdEmpresaControlante = null;
+        propiedadControlUnicoUnico.cargoControlante = null;
+        cotizaControlanteSi = false;
+        cotizaControlanteNo = false;
+        PEPControlante = false;
+        FATCAControlante = false;
+        FATCANCControlante = false;
+        propiedadControlUnicoUnico.ticSymbolControlante = null;
+        validadosControlantes = true;
+        
+    }
+    PUBLIC VOID modificarControlantes()
+    {	decimal total2=0;
+     	if (rolLogin == 'OFSRCU'){
+            //disCumplimiento = false;
+            validadosControlantes = false;
+           }
+     	//if(propiedadControlUnicoUnico !=null){total2=propiedadControlUnicoUnico.porcentajeDiControlante!=null ?decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante):0;}
+         try
+         { integer posi;
+         	for(integer i=0; i<ListPropiedadControl.size(); i++)
+            {
+            	if(ListPropiedadControl[i].numControlante == string.valueOf(numControlanteAsignado))   
+                 {
+                     posi=i;
+                     numControlante=ListPropiedadControl[i].numControlante;
+                     nombreControlante = ListPropiedadControl[i].nombreControlante;
+                     /*Cliente1.Tipo_Persona__c=ListPropiedadControl[i].tipoPersonaControlante;
+                     propiedadControlUnicoUnico.nacionalidadControlante=ListPropiedadControl[i].nacionalidadControlante;
+                     propiedadControlUnicoUnico.nivelControlante=ListPropiedadControl[i].nivelControlante;*/
+                     propiedadControlUnicoUnico.PEPControlante=ListPropiedadControl[i].PEPControlante;
+                     propiedadControlUnicoUnico.FATCAControlante=ListPropiedadControl[i].FATCAControlante;
+                     propiedadControlUnicoUnico.FATCANCControlante=ListPropiedadControl[i].FATCANCControlante;
+                     /*propiedadControlUnicoUnico.porcentajeDiControlante=ListPropiedadControl[i].porcentajeDiControlante;
+                     propiedadControlUnicoUnico.porcentajeInControlante=ListPropiedadControl[i].porcentajeInControlante;
+                     propiedadControlUnicoUnico.numIdEmpresaControlante=ListPropiedadControl[i].numIdEmpresaControlante;*/
+                     propiedadControlUnicoUnico.cargoControlante=ListPropiedadControl[i].cargoControlante;
+                     /*propiedadControlUnicoUnico.cotBolsaControlante =ListPropiedadControl[i].cotBolsaControlante;
+                     propiedadControlUnicoUnico.ticSymbolControlante=ListPropiedadControl[i].ticSymbolControlante;*/
+                     propiedadControlUnicoUnico.AI_ID_EXTERNO=ListPropiedadControl[i].AI_ID_EXTERNO;
+                     
+                     /*if (propiedadControlUnicoUnico.cotBolsaControlante == 'S')
+                     {
+                         cotizaControlanteSi = true;
+                     }
+                     
+                     if (propiedadControlUnicoUnico.cotBolsaControlante == 'N')
+                     {
+                         cotizaControlanteNo = true;
+                     }*/
+                     if (propiedadControlUnicoUnico.PEPControlante == 'S' )
+                     {
+                         PEPControlante = true;
+                     }
+                     ELSE
+                     {
+                         PEPControlante = false; 
+                     }
+                     if (propiedadControlUnicoUnico.FATCAControlante == 'S')
+                     {
+                         FATCAControlante = true;
+                     }
+                     ELSE
+                     {
+                         FATCAControlante = false; 
+                     }
+                     if (propiedadControlUnicoUnico.FATCANCControlante == 'S')
+                     {
+                         FATCANCControlante = true ;
+                     }
+                     ELSE
+                     {
+                         FATCANCControlante = false; 
+                     }
+                 }
+            }
+          
+          if(posi != null)
+          {
+              ListPropiedadControl.remove(posi);
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificará El Controlante!'));
+              mostrarTablaControlantes = false;
+              disbotControlantes = false;
+          	  total2=0;
+          }
+             
+           
+         }
+        
+         catch(exception e)
+         {
+            
+        }
+                    
+        
+     }
+    PUBLIC VOID eliminarControlantes() 
+    {	
+        decimal total2=0;
+        if(propiedadControlUnicoUnico !=null){total2=propiedadControlUnicoUnico.porcentajeDiControlante!=null ?decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante):0;}
+        try
+         { integer pos;
+          
+          for(integer i=0; i<ListPropiedadControl.size(); i++)
+          {
+              if(ListPropiedadControl[i].numControlante == string.valueOf(numControlanteAsignado)) 
+              {
+                  pos=i;
+              } 
+              
+          }
+          if(pos != null)
+          {
+              ListPropiedadControl.remove(pos);
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se eliminó El Controlante!'));
+              mostrarTablaControlantes = false;
+              disbotControlantes = false;
+              total2=0;
+          }
+             
+           
+         }
+         catch(exception e)
+         {
+            
+        }    
+     } 
+    PUBLIC VOID eliminarControlantesOtro() 
+    {
+    	decimal total2=0;
+        try
+         { integer pos;
+          	system.debug('ListPropiedadControl: '+ ListPropiedadControl.size());
+         	for(integer i=0; i<ListPropiedadControl.size(); i++)
+            {
+                system.debug('ListPropiedadControl: '+ ListPropiedadControl[i].numControlante);
+                system.debug('numControlanteAsignado: '+ numControlanteAsignado);
+                if (ListPropiedadControl[i].numControlante == string.valueOf(numControlanteAsignado))
+                 {
+                        pos=i;
+                  } 
+              
+            }
+          if(pos != null)
+          {
+              ListPropiedadControl.remove(pos);
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se eliminó el Controlante.'));
+              mostrarTablaControlantes = true;
+              //propiedadControlUnicoUnico.porcentajeDiControlante = 100;
+              total2=0;
+          }
+             
+           
+         }
+         catch(exception e)
+         {
+            
+        }    
+     } 
     
     public void limpiabenefici()
     {
@@ -943,39 +1367,77 @@ public class ControllerPantJuridProduc {
         socioUnico.NUMERO_ID_EMPRESA=null;
         pcCotizaSI=false;
         pcCotizaNO=false;
+        PEPSocio = false;
+        FATCASocio = false;
+        FATCANCSocio = false;
         socioUnico.TIC_SYMBOL=null;
-        
+        validadosSocios = true;
     }
     
     PUBLIC VOID ModificarD()
     {	decimal total2=0;
+     	if (rolLogin == 'OFSRCU'){
+            //disCumplimiento = false;
+            validadosSocios = false;
+           }
      	if(socioUnico !=null){total2=socioUnico.POR_PART_DIRECT!=null ?decimal.valueOf(socioUnico.POR_PART_DIRECT):0;}
          try
          { integer posi;
          	for(integer i=0; i<ListSocios.size(); i++)
             {
             	if(ListSocios[i].pcnumeroidsoc == string.valueOf(Num_identidadProducto))   
-             {
-                 posi=i;
-                 pcnumeroidsocc=ListSocios[i].pcnumeroidsoc;socioUnico.nombresocio=ListSocios[i].nombresocio;
-                 Cliente1.Tipo_Persona__c=ListSocios[i].tipo_persona;socioUnico.nacionalidad=ListSocios[i].nacionalidad;
-                 socioUnico.NIVEL=ListSocios[i].NIVEL;
-                 socioUnico.POR_PART_DIRECT=ListSocios[i].POR_PART_DIRECT;
-                 socioUnico.POR_PART_INDIRECT=ListSocios[i].POR_PART_INDIRECT;
-                 socioUnico.NUMERO_ID_EMPRESA=ListSocios[i].NUMERO_ID_EMPRESA;
-                 socioUnico.COT_BOLSA =ListSocios[i].COT_BOLSA;
-                 socioUnico.TIC_SYMBOL=ListSocios[i].TIC_SYMBOL;
-                 
-                 if (socioUnico.COT_BOLSA=='S')
                  {
-                     pcCotizaSI=true;
+                     posi=i;
+                     pcnumeroidsocc=ListSocios[i].pcnumeroidsoc;
+                     socioUnico.nombresocio=ListSocios[i].nombresocio;
+                     Cliente1.Tipo_Persona__c=ListSocios[i].tipo_persona;
+                     socioUnico.nacionalidad=ListSocios[i].nacionalidad;
+                     socioUnico.NIVEL=ListSocios[i].NIVEL;
+                     socioUnico.PEPSocio=ListSocios[i].PEPSocio;
+                     socioUnico.FATCASocio=ListSocios[i].FATCASocio;
+                     socioUnico.FATCANCSocio=ListSocios[i].FATCANCSocio;
+                     socioUnico.POR_PART_DIRECT=ListSocios[i].POR_PART_DIRECT;
+                     socioUnico.POR_PART_INDIRECT=ListSocios[i].POR_PART_INDIRECT;
+                     socioUnico.NUMERO_ID_EMPRESA=ListSocios[i].NUMERO_ID_EMPRESA;
+                     socioUnico.COT_BOLSA =ListSocios[i].COT_BOLSA;
+                     socioUnico.TIC_SYMBOL=ListSocios[i].TIC_SYMBOL;
+                     socioUnico.AI_ID_EXTERNO=ListSocios[i].AI_ID_EXTERNO;
+                     
+                     if (socioUnico.COT_BOLSA=='S')
+                     {
+                         pcCotizaSI=true;
+                     }
+                     
+                     if (socioUnico.COT_BOLSA=='N')
+                     {
+                         pcCotizaNO=TRUE;
+                     }
+                     if (socioUnico.PEPSocio == 'S' )
+                     {
+                         PEPSocio = true;
+                     }
+                     ELSE
+                     {
+                         PEPSocio = false; 
+                     }
+                     if (socioUnico.FATCASocio == 'S')
+                     {
+                         FATCASocio = true;
+                     }
+                     ELSE
+                     {
+                         FATCASocio = false; 
+                         pcFATCA = false;
+                     }
+                     if (socioUnico.FATCANCSocio == 'S')
+                     {
+                         FATCANCSocio = true ;
+                     }
+                     ELSE
+                     {
+                         FATCANCSocio = false; 
+                     }
                  }
-                 
-                 if (socioUnico.COT_BOLSA=='N')
-                 {
-                     pcCotizaNO=TRUE;
-                 }
-             }
             }
           
           if(posi != null)
@@ -1667,7 +2129,7 @@ public class ControllerPantJuridProduc {
           OcultarAPNFD = false;
           OcultarAPNFDNO = true;
           NumeroAPNFDBLO = false;
-          PC_NIVEL_RIESGO = '3'; 
+          PC_NIVEL_RIESGO = '4'; 
           PC_DEBIDA_DELIGENCIA = '3';
           dispep =  true;
              
@@ -1698,7 +2160,7 @@ public class ControllerPantJuridProduc {
         if (valorsiONG = true){
             OcultarONGNO = true;
         	activadesacONG = false;
-            PC_NIVEL_RIESGO = '3'; 
+            PC_NIVEL_RIESGO = '4'; 
             PC_DEBIDA_DELIGENCIA = '3';
             dispep = true;
         }
@@ -1721,12 +2183,12 @@ public class ControllerPantJuridProduc {
         	ClienteONG.Monto = 0;
         
 			if (pcPEP == true || pcAPNFDSI == true || ValorContratistasi == true){
-            				PC_NIVEL_RIESGO = '3'; 
+            				PC_NIVEL_RIESGO = '4'; 
             				PC_DEBIDA_DELIGENCIA = '3';
                         	dispep = true;
 							}
             else{
-                     		PC_NIVEL_RIESGO = '2'; 
+                     		PC_NIVEL_RIESGO = '1'; 
             				PC_DEBIDA_DELIGENCIA = '2';
                  			dispep = false;
                  		}
@@ -1748,12 +2210,12 @@ public class ControllerPantJuridProduc {
      
             OcultarONGSI = false;
             if (pcPEP == true || ValorContratistasi == true || pcAPNFDSI == true){
-          					PC_NIVEL_RIESGO = '3'; 
+          					PC_NIVEL_RIESGO = '4'; 
           					PC_DEBIDA_DELIGENCIA = '3';
              				dispep =  true;
          									}
         			 else{
-            				PC_NIVEL_RIESGO = '2'; 
+            				PC_NIVEL_RIESGO = '1'; 
           					PC_DEBIDA_DELIGENCIA = '2';
              				dispep =  false;
          					}
@@ -1764,7 +2226,7 @@ public class ControllerPantJuridProduc {
 					if (ValorContratistasi = true){
 					activadesacContratista = false;
                     OcultarNoContratista = true;
-                    PC_NIVEL_RIESGO = '3'; 
+                    PC_NIVEL_RIESGO = '4'; 
             		PC_DEBIDA_DELIGENCIA = '3';
             		dispep = true;
         					}
@@ -1787,12 +2249,12 @@ public class ControllerPantJuridProduc {
         	      ListDebidaDil = new List<claseDebidaDilContratista>();
                  
                  	if (pcPEP == true || pcAPNFDSI == true || valorsiONG == true){
-            				PC_NIVEL_RIESGO = '3'; 
+            				PC_NIVEL_RIESGO = '4'; 
             				PC_DEBIDA_DELIGENCIA = '3';
                         	dispep = true;
 							}
                  	else{
-                     		PC_NIVEL_RIESGO = '2'; 
+                     		PC_NIVEL_RIESGO = '1'; 
             				PC_DEBIDA_DELIGENCIA = '2';
                  			dispep = false;
                  		}
@@ -1817,12 +2279,12 @@ public class ControllerPantJuridProduc {
           		 		//PC_DEBIDA_DELIGENCIA = '2';
                  		//dispep = false;
                  		if (pcPEP == true || valorsiONG == true || pcAPNFDSI == true){
-          					PC_NIVEL_RIESGO = '3'; 
+          					PC_NIVEL_RIESGO = '4'; 
           					PC_DEBIDA_DELIGENCIA = '3';
              				dispep =  true;
          									}
         			 else{
-            				PC_NIVEL_RIESGO = '2'; 
+            				PC_NIVEL_RIESGO = '1'; 
           					PC_DEBIDA_DELIGENCIA = '2';
              				dispep =  false;
          					}
@@ -2225,13 +2687,13 @@ public class ControllerPantJuridProduc {
          
          IF(pcPEP == true || valorsiONG == true || ValorContratistasi == true)
         {
-            PC_NIVEL_RIESGO = '3'; 
+            PC_NIVEL_RIESGO = '4'; 
             PC_DEBIDA_DELIGENCIA = '3';
             dispep =  true;
         }
         else
         {
-            PC_NIVEL_RIESGO = '2'; 
+            PC_NIVEL_RIESGO = '1'; 
             PC_DEBIDA_DELIGENCIA = '2';   
             dispep =  false;
         }       
@@ -3444,6 +3906,7 @@ public class ControllerPantJuridProduc {
          pcPEP = null;
          AML = null;
          pcFATCA = null;
+        pcFATCANC = null;
          MTO_APROX_ACTIVO=null;
          PAIS1=null;
         DEPTO1=null;
@@ -3477,6 +3940,7 @@ public class ControllerPantJuridProduc {
 		mostrarTabla = false;
         ListSociosTIN=null;
         ListSocios=null;
+        ListPropiedadControl = null;
         NombreRL=null;
         
         ListDebidaDil  = null;
@@ -4173,7 +4637,7 @@ public class ControllerPantJuridProduc {
     public date fechaVencimiento{get;set;}
     public date fechaNacimiento{get;set;}
     public date fechaLabor{get;set;}
-    public date fechaValida{get;set;}
+    public date fechaValida{get;set;} 
     public date fechaBeneficiario{get;set;}
     
     //METODO EL CUAL ENVIARA TODA LA INFORMACION 
@@ -4181,6 +4645,7 @@ public class ControllerPantJuridProduc {
       public pageReference guardar(){
         try{
                 ClassPantJuridicoProduc juridicoEnvio = new ClassPantJuridicoProduc();
+                ValidaRiesgo();
                 juridicoEnvio.numtran = numtran; //Agregado 08/04/2020
                 juridicoEnvio.pcagencia /*Cod_Agencia*/ = pcagencia;
                 juridicoEnvio.pcempresa /*Cod_Agencia*/ = pcempresa;
@@ -4208,7 +4673,14 @@ public class ControllerPantJuridProduc {
                 {
                     juridicoEnvio.pcFATCA = 'N';
                 }
-            
+            	if(pcFATCANC == true)
+                 {
+                     juridicoEnvio.pcFATCANC = 'S';
+                 }
+                else
+                {
+                    juridicoEnvio.pcFATCANC = 'N';
+                }
                 juridicoEnvio.pcprimernombre /*primerNombre*/ = pcprimernombre;
                 juridicoEnvio.pcsegundonombre /*SegundoNombre*/ = pcsegundonombre;
                 juridicoEnvio.pcsegundoapellido /*SegundoApellido*/ = pcsegundoapellido;
@@ -4519,6 +4991,7 @@ public class ControllerPantJuridProduc {
              juridicoEnvio.NumeroID_Fiscal_OtroPais = NumeroID_Fiscal_OtroPais;
              juridicoEnvio.ListSocios = ListSocios;
              juridicoEnvio.ListSociosTIN = ListSociosTIN;
+             juridicoEnvio.ListPropiedadControl = ListPropiedadControl;
                 //Agregado 10-04-2019
              juridicoEnvio.ListClienteONG = ListClienteONG;
              juridicoEnvio.ListDebidaDil = ListDebidaDil;
@@ -4709,7 +5182,7 @@ public class ControllerPantJuridProduc {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
      	}
        return null;   
-     }
+     } 
     
     
     public pageReference actualizar(){
@@ -4734,7 +5207,15 @@ public class ControllerPantJuridProduc {
                     else
                     {
                         juridicoEnvio.pcFATCA = 'N';
-                    }    
+                    } 
+            	if(pcFATCANC == true)
+                 {
+                     juridicoEnvio.pcFATCANC = 'S';
+                 }
+                else
+                {
+                    juridicoEnvio.pcFATCANC = 'N';
+                }
             	JuridicoEnvio.pcrazonsocialempl /*Cod_Agencia*/ = pcrazonsocialempl;
                 juridicoEnvio.pcNombreempl /*Cod_Agencia*/ = pcNombreempl;
             
@@ -4868,7 +5349,10 @@ public class ControllerPantJuridProduc {
                         {
                             juridicoEnvio.ListSociosTIN = ListSociosTIN;
                         }
-            			
+            			if (ListPropiedadControl.size() > 0)
+                        {
+                            juridicoEnvio.ListPropiedadControl = ListPropiedadControl;
+                        }
                         juridicoEnvio.GIIN= GIIN;
                          if(ENTIDADSI == true)
                          {
@@ -5188,34 +5672,71 @@ public class ControllerPantJuridProduc {
      public string pcnumeroidsocc {get;set;}  
     
     
-     public void buscarSocio(){
-       try{
-                       
-           APIClienteJuridico.classBeneficiariosJuri fcsd = new APIClienteJuridico.classBeneficiariosJuri();
-           fcsd = APIClienteJuridico.Consulta_Socio(pcnumeroidsocc);   
-           system.debug('respuesta fcsd'+ fcsd);
-            
-           if(pcnumeroidsocc!= null)
-           {
-            socioUnico.nombresocio = fcsd.nombresocio;
-            socioUnico.nacionalidad = fcsd.nacionalidad;
-           }  
-           else{
-           		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ID No Encontrada'));	    
-           }
-            if (socioUnicoTIN.PCNumeroID_TIN!= null)
-             {
-                 socioUnicoTIN.pcNombreCompleto_TIN=socioUnicoTIN.pcNombreCompleto_TIN;
-                 socioUnicoTIN.PCNumeroID_TIN=socioUnicoTIN.PCTIN_TIN;
-                 socioUnicoTIN.pcDireccion_TIN=socioUnicoTIN.pcDireccion_TIN;
-              }
+    public void buscarSocio(){
+        try{
+            classListas claseEnvio = new classListas();
+            classListas fcsdListas = controllerApiClienteNatural.consultaListas(pcnumeroidsocc);
+            system.debug('entro al metosi de validacion de listas');
+            if(pcnumeroidsocc ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nro ID Vacio'));}
             else{
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ID No Encontrada'));
+                system.debug(fcsdListas.FATCA);
+                
+                if(fcsdListas.PEP == true){
+                    PEPSocio = fcsdListas.PEP;
+                    PC_NIVEL_RIESGO = '4';
+                    PC_DEBIDA_DELIGENCIA = '3';
+                    muestraPopPEP = true;
                 }
+                if(fcsdListas.FATCA == true ){
+                    FATCASocio = true;
+                    muestraPopFATCA = true;
+                }
+                if(fcsdListas.FATCANC == true){
+                    FATCANCSocio = true;   
+                    muestraPopFATCANC = true;
+                }
+                /*if(fcsdListas.AML == true){
+                    AMLSocio = true; 
+                    actPop = true;
+                }*/
+                system.debug('respuesta AML: '+fcsdListas.AML+','+fcsdListas.BLACKLIST);
+                if(fcsdListas.AML == true){
+                    AMLSocio = fcsdListas.AML;
+                }
+                if(fcsdListas.BLACKLIST == true||test.isRunningTest()){
+                    AMLSocio = fcsdListas.BLACKLIST;
+                    actPop = true; 
+                }
+                validadosSocios = false;
+            }
+            
+            APIClienteJuridico.classBeneficiariosJuri fcsd = new APIClienteJuridico.classBeneficiariosJuri();
+            fcsd = APIClienteJuridico.Consulta_Socio(pcnumeroidsocc);   
+            system.debug('respuesta fcsd'+ fcsd);
+            if(pcnumeroidsocc!= null)
+            {
+                socioUnico.nombresocio = fcsd.nombresocio;
+                socioUnico.nacionalidad = fcsd.nacionalidad;
+            }  
+            else{
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ID No Encontrada'));	    
+            }
+            if (socioUnicoTIN.PCNumeroID_TIN!= null)
+            {
+                socioUnicoTIN.pcNombreCompleto_TIN=socioUnicoTIN.pcNombreCompleto_TIN;
+                socioUnicoTIN.PCNumeroID_TIN=socioUnicoTIN.PCTIN_TIN;
+                socioUnicoTIN.pcDireccion_TIN=socioUnicoTIN.pcDireccion_TIN;
+            }
+            else{
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ID No Encontrada'));
+            }
+            
+            
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	   
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	   
         }
     } 
     
@@ -5364,6 +5885,10 @@ public class ControllerPantJuridProduc {
     public void buscarInfoCuenta(){
        try{	
            limpiar();
+           if (rolLogin == 'OFSRCU'){
+            disCumplimiento = false;
+            validadosControlantes = false;
+           }
             string temporal = pc_codCuenta;
         	ClassPantJuridicoProduc claseEnvio = new ClassPantJuridicoProduc();
         	ClassPantJuridicoProduc fcsd = APIClienteJuridico.ConsultaInfoCliente(MostrarCUENTT);
@@ -5441,7 +5966,13 @@ public class ControllerPantJuridProduc {
                 {
                     pcFATCA = false;
                 }    
-                
+                IF (fcsd.pcFATCANC =='S'){ 
+                    pcFATCANC = TRUE;
+                }
+                else 
+                {
+                    pcFATCANC = false;
+                }  
                  IF (fcsd.ACC_10DE_CONTROL =='N' && fcsd.pcFATCA =='S')
                 {
                     ACC_10DE_CONTROLNO = TRUE;
@@ -5508,7 +6039,9 @@ public class ControllerPantJuridProduc {
                    pcNombreempl = fcsd.pcNombreempl;
                 }
                 
-                 IF (fcsd.pcAPNFD =='S') { pcAPNFDSI = TRUE;
+                 IF (fcsd.pcAPNFD =='S') { 
+                     pcAPNFDSI = TRUE;
+                                          
                 }
                 else
                 {
@@ -5602,11 +6135,13 @@ public class ControllerPantJuridProduc {
                 pcMunicipioCN = fcsd.pcMunicipioCN;
                 opcionColonia = new list <selectOption>();
                 opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (Colonias_U__c item:[select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: fcsd.pccodpais and codigo_departamento__c =: fcsd.pcDeptoCN
+                if (fcsd.pcColoniaCN != null){
+                    for (Colonias_U__c item:[select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: fcsd.pccodpais and codigo_departamento__c =: fcsd.pcDeptoCN
                                        AND codigo_municipio__c =: fcsd.pcMunicipioCN and codigo_colonia__c =: fcsd.pcColoniaCN]) 
-                {
-                    opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
-                }   
+                    {
+                        opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
+                    } 
+                }
                 if (fcsd.pcColoniaCN != 'null')
                 {
                   pcColoniaCN = fcsd.pcColoniaCN;
@@ -5934,6 +6469,7 @@ public class ControllerPantJuridProduc {
                 //fin
                 ListSocios = fcsd.ListSocios;
                 ListSociosTIN=fcsd.ListSociosTIN; 
+                ListPropiedadControl = fcsd.ListPropiedadControl;
                 
                 system.debug('Nuevo: '+fcsd.ListSocios);
                 if (fcsd.ListSocios == null )
@@ -5952,6 +6488,13 @@ public class ControllerPantJuridProduc {
                 }else{
                     mostrarTablaModificar = true;
                 } 
+                
+                if (fcsd.ListPropiedadControl == null )
+                { 
+                    mostrarTablaControlantes = true;
+                }else{
+                    mostrarTablaModiControlantes = true;
+                }
                 system.debug('MostraTablaSociosTIN: '+MostraTablaSociosTIN+'   mostrarTablaModificar: '+mostrarTablaModificar);
                 
                 MostrarVentanaFATCA(); 
@@ -5968,13 +6511,13 @@ public class ControllerPantJuridProduc {
             	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente No Encontrado'));	    
             }  
 			salirCuenta(); }Catch(Exception e){
-            system.debug('Error al buscar: ' + e.getMessage());
+            system.debug('Error al buscar: ' + e.getMessage() + 'Linea: ' + e.getLineNumber());
         	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
         }
     }
     
     public void buscarInfoCuentaC(){
-       try{	
+       try{
            limpiar(); 
            string temporal = MostrarCUENTT;
             ClassPantJuridicoProduc claseEnvio = new ClassPantJuridicoProduc();
@@ -6010,7 +6553,13 @@ public class ControllerPantJuridProduc {
                 {
                     pcFATCA = false;
                 }                
-                               
+                IF (fcsd.pcFATCANC =='S'){ 
+                    pcFATCANC = TRUE;
+                }
+                else 
+                {
+                    pcFATCANC = false;
+                }                 
                 IF (fcsd.ACTIV_PASIVO =='A')
                 {
                     ACTIVA = TRUE;
@@ -6397,6 +6946,7 @@ public class ControllerPantJuridProduc {
                 
                ListSocios = fcsd.ListSocios;
                 ListSociosTIN=fcsd.ListSociosTIN; 
+                ListPropiedadControl = fcsd.ListPropiedadControl;
                // system.debug('Nuevo: '+fcsd.ListSocios);
                 if (fcsd.ListSocios == null ){mostrarTabla = true;
                 }else{
@@ -6411,7 +6961,12 @@ public class ControllerPantJuridProduc {
                     mostrarTablaModificar = true;
                 } 
                 //system.debug('MostraTablaSociosTIN: '+MostraTablaSociosTIN+'   mostrarTablaModificar: '+mostrarTablaModificar);
-                
+                if (fcsd.ListPropiedadControl == null )
+                { 
+                    mostrarTablaControlantes = true;
+                }else{
+                    mostrarTablaModiControlantes = true;
+                } 
                 MostrarVentanaFATCA(); 
                 bloqeListEnti= false;
                 
@@ -6638,7 +7193,9 @@ public class ControllerPantJuridProduc {
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
                 //}
                 /*cargo politico*/
-                IF (fcsd.pcEjerce_Cargo_Publico =='S')   { OcultaCarSI_1 = TRUE;
+                IF (fcsd.pcEjerce_Cargo_Publico =='S'){ 
+                    OcultaCarSI_1 = TRUE;
+                    
                 }
                 else
                 {
@@ -6792,51 +7349,55 @@ public class ControllerPantJuridProduc {
         }
     }
    
-   public void validar125(){
-       try{
+    public void validar125(){
+        try{
             
             classListas claseEnvio = new classListas();
             classListas fcsd = controllerApiClienteNatural.consultaListas(pcnroid);
-           
-           if(pcnroid ==''){
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nro ID Vacio'));}else{//stem.debug(fcsd.FATCA);
-               system.debug(fcsd.FATCA);
             
-               if(fcsd.PEP == true){
-                pcPEP = fcsd.PEP;
-                PC_NIVEL_RIESGO = '3';
-                PC_DEBIDA_DELIGENCIA = '3';
-               }
-               if(fcsd.AML == true){
-                AML = fcsd.AML;
-               }
-               if(fcsd.BLACKLIST == true||test.isRunningTest()){
-                    AML = fcsd.BLACKLIST;
-                    actPop = true; 
-                }    
-               if(fcsd.FATCA == true ){
-                pcFATCA = fcsd.FATCA;
-                   
-               }
-                   
-               if(fcsd.PEP == true || fcsd.AML == true || fcsd.FATCA == true){
+            if(pcnroid ==''){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nro ID Vacio'));}else{//stem.debug(fcsd.FATCA);
+                    system.debug(fcsd.FATCA);
+                    
+                    if(fcsd.PEP == true){
+                        pcPEP = fcsd.PEP;
+                        PC_NIVEL_RIESGO = '4';
+                        PC_DEBIDA_DELIGENCIA = '3';
+                        muestraPopPEP = true;
+                    }
+                    if(fcsd.AML == true){
+                        AML = fcsd.AML;
+                    }
+                    if(fcsd.BLACKLIST == true||test.isRunningTest()){
+                        AML = fcsd.BLACKLIST;
+                        actPop = true; 
+                    }
+                    if(fcsd.FATCA == true ){
+                        pcFATCA = fcsd.FATCA;
+                        muestraPopFATCA = true;
+                    }
+                    if(fcsd.FATCANC == true ){
+                        pcFATCANC = fcsd.FATCANC;
+                        muestraPopFATCANC = true;
+                    }
+                    if(fcsd.PEP == true || fcsd.AML == true || fcsd.FATCA == true){
                         desCheckb = true; 
+                    }
+                    
+                    if(fcsd.PEP == true){
+                        dispep = true;   
+                        
+                    }
+                    if(fcsd.AML == true){
+                        actPop = true; 
+                    }
+                    disbot = false;
+                    validar1 = true;
                 }
-
-           if(fcsd.PEP == true){
-               dispep = true;   
-               
-           }
-           if(fcsd.AML == true){
-              actPop = true; 
-           }
-           disbot = false;
-           validar1 = true;
-               }
-
+            
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
-        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontró Cliente'));	    
         }
     }
     
@@ -6864,7 +7425,18 @@ public class ControllerPantJuridProduc {
     {
         actPop = true; 
     }
-    
+    public void mostPopPEP()
+    {
+        muestraPopPEP = true;
+    }
+    public void mostPopFATCA()
+    {
+        muestraPopFATCA = true;
+    }
+    public void mostPopFATCANC()
+    {
+        muestraPopFATCANC = true;
+    }
     public void mostPopVentana()
     {
         MostraVentana = true; 
@@ -6882,9 +7454,16 @@ public class ControllerPantJuridProduc {
 /*boton*/
     public void desBtn(){
         cleanRiesgo();
-        disbot = true; 
-        
-    }    
+        disbot = true;
+    }  
+    
+    public void desBtnControlantes(){
+        validadosControlantes = true;
+    } 
+    public void desBtnSocios(){
+        validadosSocios = true;
+    } 
+    
      
     public void BloqBotonCU(){
         
@@ -6906,7 +7485,12 @@ public class ControllerPantJuridProduc {
         public void hidePop(){
         limpiar(); 
         actPop = false;
-        actPopAgregarCliente = false;    
+        muestraPopPEP = false;   
+    }
+    public void hidePopOtros(){
+        muestraPopPEP = false;
+        muestraPopFATCA = false;
+        muestraPopFATCANC = false;
     }
     
      public void hideVentana(){
@@ -7002,13 +7586,13 @@ public class ControllerPantJuridProduc {
 
     public void bloqPep(){
         dispep = true; 
-        PC_NIVEL_RIESGO = '3'; 
+        PC_NIVEL_RIESGO = '4'; 
         PC_DEBIDA_DELIGENCIA = '3'; 
 
     }
         public void unblock(){
         dispep = false; 
-        PC_NIVEL_RIESGO = '0'; 
+        PC_NIVEL_RIESGO = '1'; 
         PC_DEBIDA_DELIGENCIA = '0';    
       //  debidaDiligencviaAplicada = '2'; 
     }
@@ -7089,14 +7673,14 @@ public class ControllerPantJuridProduc {
         //PC_NIVEL_RIESGO = '3'; 
         //PC_DEBIDA_DELIGENCIA = '3';
         dispep = true;
-        if (pcFATCA == true){ PC_NIVEL_RIESGO = '3'; PC_DEBIDA_DELIGENCIA = '3';            
+        if (pcFATCA == true){ PC_NIVEL_RIESGO = '4'; PC_DEBIDA_DELIGENCIA = '3';            
         }
     }
     
     public void MostrarVentanaFATCANO()
     {
         VentanaFatca=false;
-        PC_NIVEL_RIESGO = '0'; 
+        PC_NIVEL_RIESGO = '1'; 
         PC_DEBIDA_DELIGENCIA = '0';
         dispep = false;
     }
@@ -7198,11 +7782,13 @@ public class ControllerPantJuridProduc {
      //*********************Llenar Nivel de Riesgo ***********************************
     public void llenarNivelRiesgo()
     {
-		this.NivelRiesgoOptions = new SelectOption[]{};
-        this.NivelRiesgoOptions.add(new SelectOption('0','NINGUNO'));
+        
+        this.NivelRiesgoOptions = new SelectOption[]{};
+        //this.NivelRiesgoOptions.add(new SelectOption('','NINGUNO'));
         this.NivelRiesgoOptions.add(new SelectOption('1','BAJO'));
-        this.NivelRiesgoOptions.add(new SelectOption('2','MEDIO'));
-        this.NivelRiesgoOptions.add(new SelectOption('3','ALTO'));
+        this.NivelRiesgoOptions.add(new SelectOption('2','MODERADO'));
+        this.NivelRiesgoOptions.add(new SelectOption('3','MEDIO'));
+        this.NivelRiesgoOptions.add(new SelectOption('4','ALTO'));
     }
     
     public SelectOption[] NivelRiesgoOptions
@@ -7398,6 +7984,23 @@ public class ControllerPantJuridProduc {
                pcCotizaoOcultarNO = false;
            }
     }
+    
+   
+    
+     public void ocultarCotizaControlante()
+    {
+       if (cotizaControlanteSi == true ) 
+       { 
+           //pcCotizaoOcultarNo =  true; 
+           //pcCotizaSI = false; 
+           TickerOculControlante = false;
+           }
+      if (cotizaControlanteNo == true ) 
+           {
+               TickerOculControlante = true;
+               //pcCotizaoOcultar = true;
+           }
+    }
 
 
     public void OcultarPorcentajeIndi()
@@ -7412,6 +8015,80 @@ public class ControllerPantJuridProduc {
                Indirectoo = false;
            }
     }
+    
+    public void ValidaRiesgo()
+    {
+        try{
+            ClassPantJuridicoProduc naturalEnvio = new ClassPantJuridicoProduc();
+            if(pcAPNFDSI == true)
+            {
+                naturalEnvio.pcAPNFD = 'S';
+            }
+            else
+            {
+                naturalEnvio.pcAPNFD = 'N';
+            }
+            /*if(pcFATCA == true)
+            {
+                naturalEnvio.pcFATCA = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcFATCA = 'N';
+            }*/
+             if(valorsiONG == true){
+             ClienteONG.ClienteONG = 'S';
+            }
+            else{
+                ClienteONG.ClienteONG = 'N';
+            }
+            if(ValorContratistasi == true)
+            {
+             debidaDil.Contratista = 'S';   
+            }
+            else{
+                debidaDil.Contratista = 'N';
+            }     
+            
+            if(pcPEP == true)
+            {
+                naturalEnvio.pcPEP = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcPEP = 'N'; 
+            } 
+            naturalEnvio.pcGiroEmpresaEmpCN /*GiroEmpresa*/ = Cliente25.Sector__c;
+            // naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c; 
+            naturalEnvio.pcTipoFondo = pcTipoFondo;
+            
+            validaDatos = NEW List<ContenidoValidaNivelJ>();                
+            validaDatos.add(new ContenidoValidaNivelJ(naturalEnvio.pcTipoFondo,
+                                                      FECHA_CONSTITUCION,
+                                                      naturalEnvio.pcGiroEmpresaEmpCN,
+                                                      naturalEnvio.pcAPNFD,
+                                                      ClienteONG.ClienteONG,
+                                                      debidaDil.Contratista,
+                                                      naturalEnvio.pcPEP,
+                                                      pcproducto,
+                                                      '100000000001',//pcagencia,
+                                                      pcDeptoCN//Pdepto
+                                                     ));  
+            //  } 
+            enviarValidarNivelJ Enviar = new enviarValidarNivelJ(validaDatos); 
+            string csharp;           
+            csharp=string.valueOf(ControllerApiValidaRiesgo.NivelRiesgoJ(Enviar));            
+            system.debug('PRUEBA1 ' + csharp);         
+            //PC_MEDIDA_APLICADA = csharp.substring(42,43);
+            PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
+            PC_NIVEL_RIESGO = csharp.substring(61,62);
+            //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
+           // system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO + ' ' + naturalEnvio.pcGiroEmpresaEmpCN  + ' '  + naturalEnvio.pcTipoFondo);
+            
+        }Catch(Exception e){
+            system.debug('Error al buscar: ' + e.getMessage());   
+        }
+    }     
     
     
     
