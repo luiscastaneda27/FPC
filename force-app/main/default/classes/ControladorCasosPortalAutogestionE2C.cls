@@ -245,7 +245,7 @@ public class ControladorCasosPortalAutogestionE2C {
             }
             
             //Inicio obtener y actualizar - usuario asignación casos
-            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
             List<Usuarios_para_asignacion_Casos_SAC__c> updateUserAsigna = new List<Usuarios_para_asignacion_Casos_SAC__c>();
             if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                 for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
@@ -332,7 +332,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 }
                 
                 //Inicio obtener y actualizar - usuario asignación casos
-                List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+                List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
                 
                 if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                     for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
@@ -523,7 +523,7 @@ public class ControladorCasosPortalAutogestionE2C {
                 } 
             }
             
-            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal order by Ultimo_Caso_Asignado__c asc limit 1]; 
+            List<Usuarios_para_asignacion_Casos_SAC__c> usuarioAsigna = [Select id, usuario__c, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c Where zona__c =: zonaVal And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c asc limit 1]; 
             if(!usuarioAsigna.IsEmpty() && caso01[0].RecordType.Name == 'Email to Case') { 
                 for(Usuarios_para_asignacion_Casos_SAC__c upac : usuarioAsigna) { 
                     upac.Ultimo_Caso_Asignado__c = System.now(); 
@@ -1206,9 +1206,9 @@ public class ControladorCasosPortalAutogestionE2C {
                 } 
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet || (cTipoCaso.constancias && Caso.Constancia__c == 'A4')) { 
                     if(cTipoCaso.otros) { 
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto() And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1]; 
                     } else { 
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada order by Ultimo_Caso_Asignado__c  asc limit 1]; 
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1]; 
                     } 
                     p.Ultimo_Caso_Asignado__c = System.now(); 
                     //update p; 

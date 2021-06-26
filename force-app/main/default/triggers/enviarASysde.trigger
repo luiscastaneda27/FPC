@@ -117,7 +117,10 @@ trigger enviarASysde on Case (before update) {
                  
             }
             if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Devuelto' && item.OwnerId == Label.IdOwnerCase){
-                   Usuarios_para_asignacion_Casos_SAC__c p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ClasseUtilNueva.ZonaPorDepto(item.AccountId) order by Ultimo_Caso_Asignado__c  asc limit 1];
+                   Usuarios_para_asignacion_Casos_SAC__c p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c 
+                                                              where zona__c = :ClasseUtilNueva.ZonaPorDepto(item.AccountId)
+                                                              And Objeto__c = 'Case' And Usuario__r.IsActive = true
+                                                              order by Ultimo_Caso_Asignado__c  asc limit 1];
                    item.ownerId = p.usuario__c; 
                    ClasseUtilNueva.CasoDevuelto(p.id, item.Casenumber, p.usuario__r.email);                        
                    

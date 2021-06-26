@@ -1,183 +1,88 @@
-@isTest(seeAllData = true)
-public class testPromociones3 
-{
-   static testMethod void ControllerPromociones3()
-   {
-      Account aa = new Account(Identificacion__c='0122199012345',Name='carlo');
-        insert aa;
+@isTest
+public class testPromociones3 {
+    static testMethod void ControllerPromociones3(){
+        Account cuenta = new Account();
+        cuenta.lastname='Doanire';
+        cuenta.firstname='Luis';
+        cuenta.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
+        cuenta.Identificacion__c='00000000000000';
+        cuenta.Tipo_Identificacion__c='Cedula de identidad';
+        cuenta.Sexo__c='Masculino';
+        cuenta.CurrencyIsoCode = 'HNL';
+        cuenta.Estado_Civil__pc='Soltero';
+        insert cuenta;
         
-        Account ba = new Account(Identificacion__c='123',Name='adasd', Cliente_Unico_Banco__C='1896'  );
-        insert ba;   
-      
-        test.startTest();
-        ControllerPromociones3 pro =  new ControllerPromociones3();
-       
-        List<SelectOption> selOpts = pro.getPaises();
-        List<SelectOption> selOpts2 = pro.getDepart();
+        PreVenta__c  PV = new PreVenta__c ();
+        PV.FirstName__c = 'test';
+        PV.LastName__c = 'Test';
+        PV.Identificacion__c = '00000000000001';
+        insert PV;
         
-        pro.candidato = new Lead();
+        Pais_R__c pais = new Pais_R__c();
+        pais.codigo__c = '052';
+        pais.nombre__c = 'Pais Name';
+        insert pais;
         
-		//pro.candidato = new task();
-        pro.pcDeptoCN = 'depto';
-        pro.candidato.FirstName = 'carlo';
-        pro.candidato.LastName = 'escoto';
-        pro.candidato.Identificacion__c='0801185687456';
-        pro.guardarPop();
-       
-        pro.candidato.FirstName = 'carlos';
-        pro.candidato.LastName = 'escotos';
-        pro.candidato.Identificacion__c=null;
-        pro.guardarPop();
+        pais = new Pais_R__c();
+        pais.codigo__c = '123';
+        pais.nombre__c = 'Pais Name';
+        //pais.ActivoAfiliacionExtranjero__C = true;
+        insert pais;
         
-        pro.candidato.Phone = '886125101465';
-        pro.candidato.Telefono_Trabajo__c = '227524005454';
-        pro.candidato.Departamento__c = '--Ninguno--';
-		pro.guardarPop();
-       //pro.preven = [select id from Account where Identificacion__c ='0122199012345'];
-       
-        pro.candidato.Phone = '88612510';
-        pro.candidato.Telefono_Trabajo__c = '2275240044644';
-        pro.candidato.Identificacion__c = null;
-        pro.guardarPop();
-
-        pro.candidato.Phone = '88612510';
-        pro.candidato.Telefono_Trabajo__c = '22752400';
-        pro.candidato.Identificacion__c = null;
-        pro.guardarPop();
-        pro.candidato.Identificacion__c = '0801199411013';
-        pro.candidato.Identificacion__c = '';
-        pro.candidato.Motivo_Contacto__c = 'BONO SEPT GFF';
-        //prospecto.RecordTypeId = '';
-        pro.candidato.Status = 'En Proceso';
-        pro.candidato.LeadSource = 'Web';
-        pro.candidato.RecordTypeid = [Select id From RecordType Where DeveloperName ='Natural' and SObjectType = 'Lead'].id; 
-        pro.guardarPop();
+        Departamentos__c dep =new Departamentos__c();
+        dep.codigo_departamento__c = '123';
+        dep.codigo_pais__c = '123';
+        dep.Name = 'Nombre D';
+        dep.Departamento__c = '123';
+        insert dep;
         
-       
-        pro.candidato.Departamento__c = 'Francisco Morazan';
+        Usuarios_para_asignacion_Casos_SAC__c usuarioAS = new Usuarios_para_asignacion_Casos_SAC__c();
+        usuarioAS.Usuario__c = userInfo.getUserId();
+        usuarioAS.Objeto__c = 'Lead';
+        insert usuarioAS;
         
-      
+        ApexPages.currentPage().getParameters().put('idPage:theForm:Fpais','123');
+        ControllerPromociones3 controlador = new ControllerPromociones3();
+        controlador.candidato.Identificacion__c = '123';
+        controlador.depto = '0';
+        controlador.guardar();
         
-        pro.candidato.Identificacion__c = '0122199012345';
-        pro.Activi=new task();  
-       // pro.preven='1';
-        pro.activi.OwnerId = '005j000000BiDwQ';
-        pro.activi.Subject= 'PROMOCIONES';
-        pro.activi.Status= 'No Iniciado';
-        pro.activi.Priority='Normal';
-          insert pro.Activi;
-        pro.guardarPop();
+        controlador.getDepartamento();
+        controlador.depto = '123';
+        controlador.pais = '052';
+        controlador.candidato.Phone = '123456789';
+        controlador.guardar();
+        
+        controlador.pais = '052';
+        controlador.candidato.Phone = '12345678';
+        controlador.candidato.Telefono_Trabajo__c = '123456789';
+        controlador.guardar();
+        
+        controlador.candidato.Telefono_Trabajo__c = '12345678';
+        controlador.pais = '123';
+        controlador.candidato.FirstName = 'Test';
+        controlador.candidato.LastName = 'Test';
+        controlador.guardar();
+        
+        controlador.candidato.Telefono_Trabajo__c = '12345678';
+        controlador.pais = '123';
+        controlador.candidato.Identificacion__c = '00000000000000';
+        controlador.candidato.FirstName = 'Test';
+        controlador.candidato.LastName = 'Test';
+        controlador.candidato.Phone = '1232321';
+        controlador.guardar();
+        
+        controlador.candidato.Telefono_Trabajo__c = '12345678';
+        controlador.pais = '123';
+        controlador.candidato.Identificacion__c = '00000000000001';
+        controlador.candidato.FirstName = 'Test';
+        controlador.candidato.LastName = 'Test';
+        controlador.candidato.Phone = '1232321';
+        controlador.guardar();
+        
+        controlador.guardar();
          
-        pro.candidato.Identificacion__c = '0501199012478';
-        
-       
-        pro.Actividad=new task();
-        //pro.prev=select id from PreVenta__c where Identificacion__c = '0501199012478' ];
-        pro.Actividad.OwnerId = '005j000000BiDwQ';
-        pro.Actividad.Subject= 'PROMOCIONES';
-        pro.Actividad.Status= 'No Iniciado';
-        pro.Actividad.Priority='Normal'; 
-        insert pro.Actividad;
-        //pro.Actividad.WhatId = '0501199012478';
-        
-   		pro.candidato.Telefono_Trabajo__c = '227524005454';   
-        pro.guardarPop();
-        
-        pro.pop3= true;
-        list<Lead> lista = new list<Lead>();
-
-        //pro.guardarPop();
-        pro.reiniciar();
-        pro.guardarPop();
-        
-        test.stopTest();
-        
-   
     }
-   
-   static testMethod void ControllerPromociones33()
-   {
-        PreVenta__c aa = new PreVenta__c(Identificacion__c='0122199012345',Name='carlo');
-        insert aa;
-        
-        PreVenta__c ba = new PreVenta__c(Identificacion__c='123',Name='adasd', Cliente_Unico_Banco__C='1896'  );
-        insert ba;        
-      
-        test.startTest();
-        ControllerPromociones3 pro =  new ControllerPromociones3();
-        
-        pro.candidato = new Lead();
-        
-		//pro.candidato = new task();
-        
-        pro.candidato.FirstName = 'carlo';
-        pro.candidato.LastName = 'escoto';
-        pro.candidato.Identificacion__c='0801185687456';
-      
-        pro.guardarPop();
-        
-        pro.candidato.Phone = '886125101465';
-        pro.candidato.Telefono_Trabajo__c = '227524005454';
-        pro.candidato.Departamento__c = 'N/A';
-		
-       //pro.preven = [select id from Account where Identificacion__c ='0122199012345'];
-       
-        
-
-        pro.candidato.Phone = '88612510';
-        pro.candidato.Telefono_Trabajo__c = '22752400';
-        pro.candidato.Identificacion__c = null;
-        pro.guardarPop();
-        pro.candidato.Identificacion__c = '0801199411013';
-        pro.candidato.Identificacion__c = '';
-        pro.candidato.Motivo_Contacto__c = 'BONO SEPT GFF';
-        //prospecto.RecordTypeId = '';
-        pro.candidato.Status = 'En Proceso';
-        pro.candidato.LeadSource = 'Web';
-        pro.candidato.RecordTypeid = [Select id From RecordType Where DeveloperName ='Natural' and SObjectType = 'Lead'].id; 
-        pro.guardarPop();
-        
-       
-        pro.candidato.Departamento__c = 'Francisco Morazan';
-        
-      
-        
-        pro.candidato.Identificacion__c = '0122199012345';
-        pro.Activi=new task();
-       // pro.preven='1';
-        pro.activi.OwnerId = '005j000000BiDwQ';
-        pro.activi.Subject= 'PROMOCIONES';
-        pro.activi.Status= 'No Iniciado';
-        pro.activi.Priority='Normal';
-          insert pro.Activi;
-        pro.guardarPop();
-         
-        pro.candidato.Identificacion__c = '0501199012478';
-        
-       
-        pro.Actividad=new task();
-        //pro.prev=select id from PreVenta__c where Identificacion__c = '0501199012478' ];
-        pro.Actividad.OwnerId = '005j000000BiDwQ';
-        pro.Actividad.Subject= 'PROMOCIONES';
-        pro.Actividad.Status= 'No Iniciado';
-        pro.Actividad.Priority='Normal'; 
-        insert pro.Actividad;
-        //pro.Actividad.WhatId = '0501199012478';
-        
-   		pro.candidato.Telefono_Trabajo__c = '227524005454';   
-        pro.guardarPop();
-        
-        pro.pop3= true;
-        list<Lead> lista = new list<Lead>();
-
-        //pro.guardarPop();
-        pro.reiniciar();
-        pro.guardarPop();
-        
-        test.stopTest();
-        
-   
-    }
-   
+    
     
 }
