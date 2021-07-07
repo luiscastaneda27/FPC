@@ -8,7 +8,7 @@ public class testApiRiesgo {
         ContenidoValidaNivelJ Validaj = new ContenidoValidaNivelJ('',null,'','','','','','','','');
         ContenidoValidaNivel Valida = new ContenidoValidaNivel('',null,'','','','','','', '','','', '','');
         
-        //enviarValidarNivelJ env = new enviarCambioAsesor(validaDatos); 
+        //enviarValidarNivelJ env = new enviarValidarNivelJ(validaDatos); 
           //                      
                                     
                        

@@ -1,18 +1,19 @@
 public without sharing class controladorRiesgoPrincipal {
     
-   
+    
     public String usuario { get; set; }
+    public String usuarioM { get; set; }
     
     
     //Variable de la pantalla HOME
     public static string Matriz{get;set;}
     //public static string Grafico{get;set;}
     public static string Var{get;set;}
-  //  public static string Var1{get;set;}
+    //  public static string Var1{get;set;}
     /*public static string Var2{get;set;}
-    public static string Var3{get;set;}
-    public static string Var4{get;set;}
-    public static string Var5{get;set;}*/
+public static string Var3{get;set;}
+public static string Var4{get;set;}
+public static string Var5{get;set;}*/
     
     public string pagina{get;set;}
     
@@ -20,9 +21,10 @@ public without sharing class controladorRiesgoPrincipal {
     
     public controladorRiesgoPrincipal()
     {
-        //usuario = '';
+        usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+        usuarioM = usuario;
         //contrasena = '';     
-       mostrarhome=true;  
+        mostrarhome=true;  
         
     }
     
@@ -74,11 +76,11 @@ public without sharing class controladorRiesgoPrincipal {
         pagina = 'vfRiesgoProductos?hytrd='+usuario;
         Var = 'slds-is-active';   
     }
-     public void RiesgoGeografico(){
+    public void RiesgoGeografico(){
         pagina = 'vfRiesgoNacionalidad?hytrd='+usuario;
         Var = 'slds-is-active';   
     }
-     public void RiesgoVar(){
+    public void RiesgoVar(){
         pagina = 'vfFactorRM?hytrd='+usuario;
         Var = 'slds-is-active';   
     }

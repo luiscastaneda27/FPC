@@ -399,7 +399,7 @@ function validacionFormTel(e, field) {
                                                         </figure><br/>
                                                     </header>
                                                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" align="center">
-                                                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Su gestión ya ha si sido ingresada con éxito.</h2>    
+                                                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Su gestión ha sido ingresada con éxito.</h2>    
                                                     </div>
                                                 </div>
                                             </section>   

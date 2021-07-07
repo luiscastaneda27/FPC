@@ -370,7 +370,7 @@ public class ControllerAdministracionIntereses {
                           String hy = EncodingUtil.base64Encode(Comprobante);  
                           //system.debug('Imagen_a_Enviar' + hy); 
                           imagenComp.Imagen = hy;
-                          
+                          system.debug('mandamos: '+hy);
                           //system.debug('Imagen_a_Enviar_fabrisio--'+' ' + imagenComp); 
                           ControllerAPIPagoIntereses.GuardarImagen(imagenComp);
                       }

@@ -451,6 +451,8 @@ public without sharing class ControllerProductoAgn {
     public string idAfiliacion{get; set;}
     public Reporte_calidad__C Afiliacion {get;set;}
     public string rolLogin {get; set;}
+    public String userLogin;
+    
     
     public ControllerProductoAgn() {  
         disCumplimiento = true;
@@ -464,7 +466,8 @@ public without sharing class ControllerProductoAgn {
         pcUsuarioCN =  ApexPages.currentPage().getParameters().get('hytrd');
         idAfiliacion =  ApexPages.currentPage().getParameters().get('idAfiliacion');
         rolLogin = ApexPages.currentPage().getParameters().get('rol');
-        system.debug('entro al metodo de Agn');
+        userLogin = pcUsuarioCN;
+        system.debug('entro al metodo de Agn'+idAfiliacion);
         system.debug('rol obtenido: '+rolLogin);
         Afiliacion =new Reporte_calidad__C();
         if(idAfiliacion!=null){
@@ -1184,18 +1187,18 @@ public without sharing class ControllerProductoAgn {
             }else{
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }
-            if(idAfiliacion!=null){
-                pcprimernombre = afiliacion.name;
-                pcNombreempl = afiliacion.Empresa__r.name;
-                fechaValida=afiliacion.Fecha_Validacion__c;
-                pcsegundonombre = afiliacion.Segundo_Nombre__c;
-                pcprimerapellido = afiliacion.Primer_Apellido__c;
-                pcsegundoapellido = afiliacion.Segundo_Apellido__c;
-                pctipoid = afiliacion.Tipo_Identificacion__c;
-                pcnroid = afiliacion.Identificacion__c;
-                Cuenta20.Tipo_Fondo__c = 'I';
-                
-            }
+            
+        }
+        if(idAfiliacion!=null){
+            pcprimernombre = afiliacion.name;
+            pcNombreempl = afiliacion.Empresa__r.name;
+            fechaValida=afiliacion.Fecha_Validacion__c;
+            pcsegundonombre = afiliacion.Segundo_Nombre__c;
+            pcprimerapellido = afiliacion.Primer_Apellido__c;
+            pcsegundoapellido = afiliacion.Segundo_Apellido__c;
+            pctipoid = afiliacion.Tipo_Identificacion__c;
+            pcnroid = afiliacion.Identificacion__c;
+            Cuenta20.Tipo_Fondo__c = 'I';
             
         }
     }
@@ -1440,10 +1443,11 @@ insert reg;
     public void validarRol() {   
         try {
             list<controllerApiClienteNatural.classRespuestaMenu> resultado2 = new list<controllerApiClienteNatural.classRespuestaMenu>();                    
-            resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(pcUsuarioCN);
-            system.debug('Parametro: '+resultado2[0].rol);
+            resultado2 =  controllerApiClienteNatural.ConsultaPantallas2(userLogin);
+            system.debug('Usuario: '+userLogin);
             List<String> listRoles = Label.RolesActualizanPantAfilaicion.split(',');
             for(integer j=0; j<resultado2.size(); j++) {
+                system.debug(resultado2[j].rol +' ------- '+resultado2[j].nombreMetodo);
                 if (resultado2[j].nombreMetodo == 'vfpantallaclienteProductoAgn' && listRoles.contains(resultado2[j].rol)){
                     MostarActualizar=false;
                     ActNombre = true;
@@ -1910,6 +1914,7 @@ insert reg;
                             disbotBene = true; 
                         }
                         limpiabeneficiario();
+                        validadosBeneficiarios = true;
                         return null;
                     }
                     
@@ -1950,6 +1955,7 @@ insert reg;
                         disbotBene = true;  
                     }
                     limpiabeneficiario();
+                    validadosBeneficiarios = true;
                     return null;
                 }
                 else
@@ -2038,6 +2044,7 @@ insert reg;
                             beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true;
                             limpiabeneficiarioConti();
+                            validadosBeneficiariosC = true;
                         }
                         else
                         {
@@ -2059,7 +2066,9 @@ insert reg;
                             beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true; 
                             limpiabeneficiarioConti();
+                            validadosBeneficiariosC = true;
                         }
+                        
                         return null;
                     }
                     
@@ -2103,6 +2112,7 @@ insert reg;
                     PEPbeneficiarioC = null;
                     FATCAbeneficiarioC = null;
                     FATCANCbeneficiarioC = null;
+                    validadosBeneficiariosC = true;
                     return null;
                 }
                 //limpiabeneficiarioConti();
@@ -2855,6 +2865,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             for (Municipio__c item:[select nombre_municipio__c, codigo_municipio__c from Municipio__c where codigo_pais__c =: pccodpais and     codigo_departamento__c =: pcDeptoCN])
             {
                 opcionMunicipio.add(new selectOption(item.codigo_municipio__c, item.nombre_municipio__c));
+            }
+            if(pcDeptoCN != null && opcionMunicipio.size() == 1){
+                opcionMunicipio[0].setValue('000');
+                opcionMunicipio[0].setLabel('NO DEFINIDO');
+                opcionColonia = new list <selectOption>();
+                opcionColonia.add(new selectOption('000', 'NO DEFINIDO'));
             }
         }catch(exception e){
             
@@ -4866,7 +4882,7 @@ return null;
                 pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
                 naturalEnvio.pnnrocertificado = pnnrocertificado;
                 String resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
-                update af;
+                
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
                 // bloqBotonGuardar();
@@ -4878,6 +4894,7 @@ return null;
                 if((idAfiliacion !=null || checkcorreo) &&resultado.contains('Proceso realizado Correctamente')){
                     respuesta= aSysdeReporteCalidad.infoCliente(pcnroid);
                 }
+                update af;
                 if(idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')){
                     afiliacion.Periodicidad__c = Cuenta20.Frecuencia_Aportacion__c;
                     afiliacion.Forma_Pago__c = pcformapago;
@@ -6725,8 +6742,8 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                     PC_DEBIDA_DELIGENCIA = '3';
                     bloqRTN = false;
                     OcultaCarSI = true;
-                    OcultaCarSI_1 = true;
-                    OcultaCarNO_2 = true;
+                    //OcultaCarSI_1 = true;
+                    //OcultaCarNO_2 = true;
                     Cargoo = false;
                     muestraPopPEP = true;
                 }

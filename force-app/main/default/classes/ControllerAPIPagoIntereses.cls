@@ -224,11 +224,10 @@ public class ControllerAPIPagoIntereses {
 		//request.setEndpoint(url + 'api/GuardarImagen/');
 		//request.setEndpoint(url + 'api/RegistrarImagen/');
 		request.setEndpoint(url + 'api/conciliacion/');
-		
-        classImagenReferencia fcsd= new classImagenReferencia();
+		classImagenReferencia fcsd= new classImagenReferencia();
 		//string respuesta = '';
          
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del EDC: '+claseEnvio.Imagen.length());
 		try{
 						
 			classJson envio = new classJson();

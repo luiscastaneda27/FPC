@@ -27,16 +27,14 @@ public without sharing class ControllerPromociones3 {
         system.debug('pais: '+pais);
         listDepartamento= new list<selectoption>();
         listDepartamento.add(new selectoption('0', ' --Ninguno-- '));   
-        for( Departamentos__c c:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais order by Departamento__c asc]){
-            listDepartamento.add(new selectoption(c.Departamento__c,c.Departamento__c));
+        for( Departamentos__c c:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais And codigo_departamento__c not in('0000','000') order by Departamento__c asc]){
+            listDepartamento.add(new selectoption(c.codigo_departamento__c,formatName(c.Departamento__c)));
         }   
     }
     
     public void guardar(){
         
         try{
-            
-            
             if(pais == '0' || depto == '0') { 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pais == '0' ? 'Debe seleccionar un País ' : 'Debe seleccionar un Estado/Departamento '));
                 return;    
@@ -111,7 +109,7 @@ public without sharing class ControllerPromociones3 {
                                                              order by Ultimo_Caso_Asignado__c  asc limit 1];
             Pais_R__c itemP = [SELECT id, name, nombre__c, codigo__c from Pais_R__c where codigo__c =: pais];
             
-            Departamentos__c itemD = [select id,Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais AND Departamento__c =: depto];
+            Departamentos__c itemD = [select id,Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais AND codigo_departamento__c =: depto];
             
             candidato.RecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
             candidato.status = 'En Proceso';
@@ -120,20 +118,33 @@ public without sharing class ControllerPromociones3 {
             candidato.F_Hon_USA_Link_Ref__c = true;
             //agregado 
             candidato.F_Pais__c = itemP.Id; 
-            candidato.Departamento__c = itemD.Departamento__c; 
-            candidato.Pais_Residencia__c = itemP.Name;
+            candidato.Departamento__c = formatName(itemD.Departamento__c); 
+            candidato.Pais_Residencia__c = formatName(itemP.Name);
             //fin
             candidato.F_Estado__c = itemD.Id;
             candidato.OwnerId = usuarioAsig.usuario__C;
             insert candidato; 
             usuarioAsig.Ultimo_Caso_Asignado__c = system.now();
             update usuarioAsig;
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Datos guardados correctamente')); 
-            reiniciar(); 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Su solicitud ha sido enviada. Pronto lo estaremos contactando.')); 
+            //reiniciar(); 
         }catch (exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'ha ocurrido un error.')); 
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ha ocurrido un error.')); 
             system.debug(e.getLineNumber()+e.getMessage());
         }
+    }
+    
+    public String formatName(String nombre){
+        String respuesta = '';
+        nombre =  nombre.toLowerCase();
+        if(nombre.contains(' ')){
+            for(String p : nombre.split(' ')){
+                respuesta += p.toUpperCase().substring(0,1) + p.substring(1,p.length()) + ' ';
+            }
+        }else{
+            respuesta = nombre.toUpperCase().substring(0,1) + nombre.substring(1,nombre.length()) + ' ';
+        }
+        return respuesta.trim();
     }
     
     public void reiniciar(){      
@@ -143,7 +154,9 @@ public without sharing class ControllerPromociones3 {
         listPaises= new list<selectoption>();
         listPaises.add(new selectoption('0', ' --Ninguno-- '));
         candidato.Motivo_Contacto__c = 'Hondureños en el Extranjero';
-        candidato.Departamento__c  = 'N/A';  
+        candidato.Departamento__c  = 'N/A'; 
+        pais = '0';
+        depto = '0';
         
     }        
 }

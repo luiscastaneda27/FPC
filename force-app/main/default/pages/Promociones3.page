@@ -48,6 +48,7 @@
             
         </head>
         <body>    
+            
             <div class="demo-only demo-only--sizing slds-grid slds-wrap">
                 
                 <div class="slds-size_3-of-12">
@@ -90,104 +91,84 @@
                                         </div>
                                     </header>
                                 </div>
-                                <div class="slds-form-element__group">
-                                    <div class="slds-form-element__row">
-                                        <div class="slds-form-element slds-size_1-of-1">
-                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>                           
+                                <apex:outputPanel id="idPanel">
+                                    <div class="slds-form-element__group">
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-form-element slds-size_1-of-1">
+                                                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>                           
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- CARD BODY = TABLE -->
-                                <div class="slds-card__body">
-                                    <fieldset class="slds-form-element slds-form-element_compound">
-                                        <div class="slds-form-element__control slds-m-around_x-large">
-                                            <div class="slds-form-element__row">
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Nombres</label>
-                                                        <div class="slds-form-element__control">
-                                                            <!-- input type="text" id="input-01" class="slds-input" / -->
-                                                            <apex:inputField required="true" id="Fnombre" styleclass="slds-input" value="{!candidato.FirstName}"/>
+                                    <!-- CARD BODY = TABLE -->
+                                    <div class="slds-card__body">
+                                        <fieldset class="slds-form-element slds-form-element_compound">
+                                            <div class="slds-form-element__control slds-m-around_x-large">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Nombres</label>
+                                                            <div class="slds-form-element__control">
+                                                                <!-- input type="text" id="input-01" class="slds-input" / -->
+                                                                <apex:inputField required="true" id="Fnombre" styleclass="slds-input" value="{!candidato.FirstName}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Apellidos</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField required="true" id="Fapellido" styleclass="slds-input" value="{!candidato.LastName}"/>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Apellidos</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputField required="true" id="Fapellido" styleclass="slds-input" value="{!candidato.LastName}"/>
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Teléfono Móvil</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField required="true" id="Fmovil" styleclass="slds-input" value="{!candidato.Phone}" onkeypress="return isNumberKey(event)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Pais</label>
+                                                            <div class="slds-form-element__control"> 
+                                                                <apex:selectList styleclass="slds-select" required="true" id="Fpais" size="1" value="{!pais}">
+                                                                    <apex:selectOption itemLabel="--Ninguno--" itemValue="0" />
+                                                                    <apex:selectOption itemLabel="Estados Unidos" itemValue="053" />
+                                                                    <apex:selectOption itemLabel="España" itemValue="052" />
+                                                                    <apex:actionSupport event="onchange" reRender="Fciudad" status="status" action="{!getDepartamento}" immediate="true" />
+                                                                </apex:selectList>                   
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-size_1-of-2">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Estado/Provincia</label>
+                                                            <div class="slds-form-element__control">                                        
+                                                                <apex:selectList styleclass="slds-select" required="true" size="1" value="{!depto}" id="Fciudad">
+                                                                    <apex:selectoptions value="{!listDepartamento}"/>
+                                                                </apex:selectList>                                        
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                              
                                             </div>
-                                            <!--div class="slds-form-element__row">
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Numero de Identificación</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputText required="true" id="Finden" styleclass="slds-input" value="{!candidato.Identificacion__c}" /> 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Correo electrónico</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputField required="true" id="Femail" styleclass="slds-input" value="{!candidato.Email}" onkeyup="javascript:this.value=this.value.toLowerCase();" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div-->
-                                            <div class="slds-form-element__row">
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-02"><abbr class="slds-required" title="required">* </abbr>Teléfono Móvil</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputField required="true" id="Fmovil" styleclass="slds-input" value="{!candidato.Phone}" onkeypress="return isNumberKey(event)" onchange="activate();"/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <!--label class="slds-form-element__label" for="input-01">Teléfono Trabajo</label>
-                                                        <div class="slds-form-element__control">
-                                                            <apex:inputField styleclass="slds-input" value="{!candidato.Telefono_Trabajo__c}" onkeypress="return isNumberKey(event)"/>
-                                                        </div-->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="slds-form-element__row">
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Pais</label>
-                                                        <div class="slds-form-element__control"> 
-                                                            <apex:selectList styleclass="slds-select" required="true" id="Fpais" size="1" value="{!pais}">
-                                                                <apex:selectOption itemLabel="--Ninguno--" itemValue="0" />
-                                                                <apex:selectOption itemLabel="ESTADOS UNIDOS" itemValue="053" />
-                                                                <apex:selectOption itemLabel="ESPAÑA" itemValue="052" />
-                                                                <apex:actionSupport event="onchange" reRender="Fciudad" status="status" action="{!getDepartamento}" immediate="true" />
-                                                            </apex:selectList>                   
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="slds-size_1-of-2">
-                                                    <div class="slds-form-element">
-                                                        <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Estado/Departamento</label>
-                                                        <div class="slds-form-element__control">                                        
-                                                            <apex:selectList styleclass="slds-select" required="true" size="1" value="{!depto}" id="Fciudad">
-                                                                <apex:selectoptions value="{!listDepartamento}"/>
-                                                            </apex:selectList>                                        
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                              
-                                        </div>
-                                    </fieldset>    
-                                </div>
-                                <!-- / CARD BODY = SECTION + TABLE -->
-                                <div class="slds-card__footer">
-                                    <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand" /> 
-                                </div>
+                                        </fieldset>    
+                                    </div>
+                                    <!-- / CARD BODY = SECTION + TABLE -->
+                                    <div class="slds-card__footer">
+                                        <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand" reRender="idPanel" status="status" rendered="{!candidato.id = null}" /> 
+                                    </div>
+                                </apex:outputPanel>
                             </article>
                         </apex:form>
                     </div>

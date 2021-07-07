@@ -288,9 +288,9 @@ public class testNivelRiesgo {
         factor.ValorRiesgoGiroEmpresa = '';
         factor.ValorRiesgoUbicacionEmpresa = '';
         
-        classAcualizaFechaAporte fa = new classAcualizaFechaAporte(); 
+       /* classAcualizaFechaAporte fa = new classAcualizaFechaAporte(); 
        fa.numDocumento ='';
-       fa.nuevafecha = '';
+       fa.nuevafecha = '';*/
     
         
         //  controllerApiClienteNatural apii = new controllerApiClienteNatural();

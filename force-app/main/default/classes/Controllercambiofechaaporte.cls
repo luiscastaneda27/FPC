@@ -169,7 +169,7 @@ public class Controllercambiofechaaporte {
         }
     }
     
-    Public void Actualizar(){
+    Public void Actualizar(){ 
         Try{
             //declaracion 
             contador = 0;
