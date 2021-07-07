@@ -45,8 +45,6 @@
                                   
                                         <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
                                             Datos de Casos Registrados
-                                            
-                                            
                                         </legend>
                                         
                                         <apex:dataTable style="text-align: center;" rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListIntRegistrados}" var="item">
@@ -74,7 +72,9 @@
                                                 <apex:outputText value="{!item.Tipodepago}" />
                                             </apex:column>
                                             <apex:column style="text-align: center;" headerValue="Estado" >
-                                                <apex:outputText value="{!item.EstadoAprobacion}" />
+                                                <!--apex:outputText value="{!item.EstadoAprobacion}" /-->
+                                                <apex:outputText value="{!IF(item.estado = 'I', 'Inactivo', 'Activo')}" />
+                                                
                                             </apex:column>
                                             <apex:column style="text-align: center;" headerValue="Fecha de Reg" >
                                                 <apex:outputText value="{!item.LEE_ERRORES}" />
@@ -87,11 +87,14 @@
                                                 <apex:outputText value="{!item.Diadepago}" />
                                             </apex:column>
                                             <apex:column style="text-align: center;" headerValue="Comprobante" >
-                                                <apex:commandLink action="{!MostrarImagen}" >  
+                                                <apex:commandLink rendered="{!!item.tieneArchivoSF}" action="{!MostrarImagen}"  >  
                                                     <apex:image value="{!$Resource.Lupa}" width="40" height="40"/>
-                                                    <!--   <apex:param value="{!item.Cuenta}" AssignTo="{!ID_Referencia}"  name="APV1APROBACION" /> 
---> <apex:param value="{!item.Cuenta}" AssignTo="{!ID_Referencia}"  name="APV1APROBACION" />  
-                                                </apex:commandLink>   
+                                                    <apex:param value="{!item.Cuenta}" AssignTo="{!ID_Referencia}"  name="APV1APROBACION" />  
+                                                </apex:commandLink> 
+                                                 <apex:commandLink rendered="{!item.tieneArchivoSF}" action="{!MostrarImagen}" target="_blank" >  
+                                                    <apex:image value="{!$Resource.Lupa}" width="40" height="40"/> 
+                                                    <apex:param value="{!item.Cuenta}" AssignTo="{!IdPagoInteresesFIle}"  name="IdPagoIntereses" />
+                                                </apex:commandLink> 
                                             </apex:column>
                                             <apex:column style="text-align: center; " headerValue="Denegar" >
                                                 <apex:commandLink action="{!MostrarVentanaDenegacion}" >  
@@ -155,7 +158,7 @@
                                 <!--Mostrar Modal Denegacion-->
                                 <!--Mostrar Modal VerImagen-->
                                 <div class="slds-scope" >   
-                                    <apex:outputPanel rendered="{!DenegarImagen}"> 
+                                    <apex:outputPanel rendered="{!OR(DenegarImagen,false)}"> 
                                         
                                         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                             <div class="slds-modal__container">
@@ -174,17 +177,13 @@
                                                     
                                                     <div class="slds-form-element__group slds-text-align_center">
                                                         <div class="slds-form-element__row slds-text-align_center">
-                                                            
-                                                            <!--   <apex:image value="data:image/Png;base64,{!DesconvertirImagen}" width="800px" height="400px"/>
---> <apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
-                                                            
+                                                            <apex:image rendered="{!pngId = null}" value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
+                                                            <apex:image rendered="{!pngId != null}" url="/sfc/servlet.shepherd/version/download/{!pngId}" width="800px" height="400px/" />
                                                         </div>
                                                     </div> 
                                                 </div>
                                                 <footer class="slds-modal__footer">
-                                                    
                                                     <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
-                                                    
                                                 </footer>
                                                 
                                             </div>
@@ -215,15 +214,7 @@
                                                                             <abbr class="slds-required" title="required"></abbr> <p style="display:inline; font-size:1.4em;">Cuenta</p>
                                                                         </label>
                                                                         <apex:inputText id="Cuenta_un" disabled="true" maxlength="15" styleclass="slds-input"  style="height:10px; width:160px; margin-left:10px;"  value="{!Cuentaun}" />
-                                                                        <!-- <apex:commandButton style="margin-left: 2px; " action="{!BuscarInfor}" value="Buscar"  styleClass="Aceptar" />
---> 
-                                                                        <!--    <label class="slds-form-element__label" for="inputSample"  style="margin-left:50px; " >
-<abbr class="slds-required" title="required"></abbr>Fecha
-</label>
-<apex:outputText value="{!FechaActual}" id="Fecha_actual" styleclass="slds-input"  style="height:10px; width:160px; margin-left:27px;" />
-<apex:inputText disabled="true" value="{!FechaActual}" id="Fecha_actual" styleclass="slds-input"  style="height:10px; width:160px; margin-left:27px;" /> 
-<!--        <apex:input disabled="true" type="date" styleClass="slds-input" style="height:10px; width:160px; margin-left:30px;" value="{!FechaActual}"/>
--->
+                                                                       
                                                                     </td>
                                                                 </tr><br/>
                                                                 <!--NOMBRE/IDENTIDAD/FONDO-->
@@ -268,13 +259,11 @@
                                                                             <abbr class="slds-required" title="required"></abbr> Total Fondo
                                                                         </label>
                                                                         <apex:outputText value="{!Total_Fondo}" id="Total_Fondo" styleclass="slds-input"  style="height:10px; width:160px; margin-left:45px;" />
-                                                                        <!--  <apex:inputText disabled="true" id="Total_Fondo" styleclass="slds-input"  style="height:10px; width:160px; margin-left:45px;" value="{!Total_Fondo}"  />
--->     <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
+                                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:15px;">
                                                                         <abbr class="slds-required" title="required"></abbr> Monto Pignorado
                                                                         </label>
                                                                         <apex:outputText value="{!Fondo_pignorado}" id="Fondo_pignorado" styleclass="slds-input"  style="height:10px; width:160px; margin-left:0px;" />
-                                                                        <!--   <apex:inputText disabled="true" id="Fondo_pignorado" styleclass="slds-input"  style="height:10px; width:160px; margin-left: 0px;" value="{!Fondo_pignorado}" />
--->   <br/><br/>
+                                                                          <br/><br/>
                                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:22px;" >
                                                                             <abbr class="slds-required" title="required"></abbr> Moneda
                                                                         </label>
@@ -311,98 +300,7 @@
                                                                             <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p> ¿Se Cobrara Cheque?
                                                                         </label>
                                                                         <apex:inputText disabled="true" value="{!cobrarcheque}" id="cobrar_cheque" styleclass="slds-input"  style="height:10px; width:160px; margin-left:21px;" />       
-                                                                        <!--      
-<label class="slds-form-element__label" for="inputSample" style="margin-left:1px;">
-<abbr class="slds-required" title="required"></abbr> Si
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!Bloqueachequesi}"  onclick="bloquearCampochequesi()" value="{!Cobrarchequesi}" id="vc_Cobrarchequesi" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label> 
-<label class="slds-form-element__label" for="inputSample" style="margin-left:8px;">
-<abbr class="slds-required" title="required"></abbr> No
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!bloqueachequeno}" onclick="bloquearCampochequeno()"  value="{!Cobrarchequeno}" id="vc_Cobrarchequeno" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label>
--->  
-                                                                        
-                                                                        <!--      
-<label class="slds-form-element__label" for="inputSample" style="margin-left:16px;">
-<abbr class="slds-required" title="required"></abbr> Si
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!Bloqueasiach}"  onclick="bloquearCampoachsi()" value="{!CobrarACHsi}" id="vc_CobrarACHsi" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label> 
-<label class="slds-form-element__label" for="inputSample" style="margin-left:8px;">
-<abbr class="slds-required" title="required"></abbr> No
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!bloquenoach}" onclick="bloquearCampoachno()"  value="{!CobrarACHno}" id="vc_CobrarACHno" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label>
--->  
-                                                                        <!--       
-<label class="slds-form-element__label" for="inputSample" style="margin-left:5px;">
-<abbr class="slds-required" title="required"></abbr> Si
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!Bloqueasitsp}"  onclick="bloquearCampotspsi()" value="{!CobrarTSPsi}" id="vc_CobrarTSPsi" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label> 
-<label class="slds-form-element__label" for="inputSample" style="margin-left:8px;">
-<abbr class="slds-required" title="required"></abbr> No
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!bloquenotsp}" onclick="bloquearCampotspno()"  value="{!CobrarTSPno}" id="vc_CobrarTSPno" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label>     
--->   
-                                                                        
-                                                                        <!--
-<label class="slds-form-element__label" for="inputSample" style="margin-left:5px;">
-<abbr class="slds-required" title="required"></abbr> Si
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!Bloqueasi}"  onclick="bloquearCampoSi()" value="{!CAPITAL_SI}" id="vc_CAPITALSI" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label> 
-<label class="slds-form-element__label" for="inputSample" style="margin-left:8px;">
-<abbr class="slds-required" title="required"></abbr> No
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!bloquenoo}" onclick="bloquearCampoNo()"  value="{!CAPITAL_NO}" id="vc_CAPITALNO" styleclass="slds-input" />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label>
-<br/>
--->
-                                                                        
-                                                                        
-                                                                        <!--
-<label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
-<abbr class="slds-required" title="required"></abbr> FIJO
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!BloqueaFIJO}"  onclick="bloquearCampoFIJO()" value="{!FIJO_SI}" id="vc_FIJO" styleclass="slds-input"    />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label> 
-<label class="slds-form-element__label" for="inputSample" style="margin-left:8px;">
-<abbr class="slds-required" title="required"></abbr> CALCULADO
-</label>
-<label class="slds-checkbox">
-<apex:inputcheckbox disabled="{!BloqueaCALCULADO}" onclick="bloquearCampoCALCULADO()"  value="{!CALCULADO_SI}" id="vc_CALCULADO" styleclass="slds-input"    />
-<span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
-</label>  -->
-                                                                        
-                                                                        <!--    <apex:commandButton style="margin-left: 80px; " action="{!MostrarVentanaDenegacion}" id="denegados" value="Ver Denegados"  styleClass="Cancelar" />&nbsp;
--->
-                                                                        <!-- <apex:outputPanel rendered="{!ActivaAlertas}">
-<apex:commandLink action="{!MostrarVentanaDenegacion}" >  
-<apex:image value="{!$Resource.Mensaje}" width="50" height="50" style="margin-left:340px;"/>
-</apex:commandLink> 
-</apex:outputPanel> -->
+                                                                       
                                                                     </td>
                                                                 </tr>
                                                                 
@@ -413,15 +311,13 @@
                                                                             <p style="color:red; display:inline; font-size:2em;">*</p> Monto de Pago
                                                                         </label>
                                                                         <apex:outputText value="L.{!Monto_pago}" id="Monto_pago" styleclass="slds-input"  style="height:10px; width:160px; margin-left:12px;" />
-                                                                        <!--    <apex:inputText disabled="true" id="Monto_pago" styleclass="slds-input"  style="height:10px; width:160px; margin-left:12px;" value="{!Monto_pago}"  />
-<!--disabled="{!ActivarMonto}"-->
+                                                                       
                                                                         <br/><br/>
                                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:22px;">
                                                                             <abbr class="slds-required" title="required"></abbr> Ajuste  
                                                                         </label>
                                                                         <apex:outputText value="{!Ajuste}" id="Ajuste" styleclass="slds-input"  style="height:10px; width:160px; margin-left:73px;" />
-                                                                        <!--    <apex:inputText disabled="true" id="Ajuste" styleclass="slds-input"  style="height:10px; width:160px; margin-left:73px;" value="{!Ajuste}" />
--->  
+                                                                          
                                                                         <label class="slds-form-element__label" for="inputSample"  style="margin-left:22px;" >
                                                                             <abbr class="slds-required" title="required"></abbr><p style="color:red; display:inline; font-size:2em;">*</p> Dia de Pago
                                                                         </label>
@@ -431,18 +327,11 @@
                                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:4px;">
                                                                                 <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p> Forma de Pago
                                                                             </label>
-                                                                            <apex:selectList disabled="{!ActivaFormadePago}" required="true" styleclass="slds-input" id="FormaPago" size="1" value="{!Forma_Pago}" style="height:10px; width:205px; margin-left:28px;">
-                                                                                <apex:selectOptions value="{!ListFormPag}"/>
-                                            </apex:selectList>
-                                                                        <!-- <apex:selectList disabled="{!ActivaFormadePago}" required="true" styleclass="slds-input" id="FormaPago" size="1" value="{!Forma_Pago}" style="height:10px; width:160px; margin-left:18px;">
-<!--    <apex:selectOptions value="{!ListFormPag}"/>
-<!--  <apex:actionSupport event="onchange" action="{!MostrarCamposFormPago}"/> 
-</apex:selectList> -->
-                                                                        <!--            
-<apex:selectList disabled="{!ActivaCalculoSobre}" styleclass="slds-input" id="Calculo_Sobre" size="1" value="{!CalculoSobre}" style="height:10px; width:160px; margin-left:32px; " >
-<apex:selectOptions value="{!ListCalculoSobre}"/>
-</apex:selectList>
--->
+                                                                        <apex:selectList disabled="{!ActivaFormadePago}" required="true" styleclass="slds-input" id="FormaPago" size="1" value="{!Forma_Pago}" style="height:10px; width:205px; margin-left:28px;">
+                                                                            <apex:selectOptions value="{!ListFormPag}"/>
+                                                                        </apex:selectList>
+                                                                        
+
                                                                     </td>
                                                                 </tr>
                                                                 
@@ -485,15 +374,7 @@
                                                                 </tr>     
                                                                 <tr>
                                                                     <td>
-                                                                        <br/><!--
-                                                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
-                                                                            <abbr class="slds-required" title="required"></abbr> Banco
-                                                                        </label>
-                                                                        <apex:outputText value="{!Nombre_Banco}" id="Nombre_Banco" styleclass="slds-input"  style="height:10px; width:160px; margin-left:76px;" />
-                                                                        <!--   <apex:inputText disabled="true" value="{!Nombre_Banco}" id="Nombre_Banco" styleclass="slds-input"  style="height:10px; width:160px; margin-left:76px;" /> 
-<!--    <apex:selectList disabled="{!ActivaBanco}" styleclass="slds-input" id="Nombre_Banco" size="1" value="{!Nombre_Banco}" style="height:10px; width:160px; margin-left:76px;">
-<!--<apex:selectOptions value="{!ListBancos}"/>                         
-</apex:selectList>
+                                                                        <br/>
 -->                                                                     <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
                                                                             <abbr class="slds-required" title="required"></abbr> Banco
                                                                         </label>
@@ -504,17 +385,12 @@
                                                                             <abbr class="slds-required" title="required"></abbr> Cuenta
                                                                         </label>
                                                                         <apex:outputText value="{!Cuenta_Banco}" id="Cuenta_Banco" styleclass="slds-input"  style="height:10px; width:160px; margin-left:24px;" />
-                                                                        <!--    <apex:inputText disabled="true" onkeypress="return isNumberKey(event)" value="{!Cuenta_Banco}" id="Cuenta_Banco" styleclass="slds-input"  style="height:10px; width:160px; margin-left:24px;" />    
--->    <br/><br/>
+                                                                           <br/><br/>
                                                                         <label class="slds-form-element__label" for="inputSample" style="margin-left: 20px;">
                                                                             <abbr class="slds-required" title="required"></abbr> Tipo de Cuenta
                                                                         </label>
                                                                         <apex:outputText value="{!Tipo_Cuenta}" id="Tipo_Cuenta" styleclass="slds-input"  style="height:10px; width:160px; margin-left:24px;" />
-                                                                        <!--  <apex:inputText disabled="true" value="{!Tipo_Cuenta}" id="Tipo_Cuenta" styleclass="slds-input"  style="height:10px; width:160px; margin-left:22px;" /> 
-<!--            <apex:selectList disabled="{!ActivaTipoCuenta}" styleclass="slds-input" id="Tipo_Cuenta" size="1" value="{!Tipo_Cuenta}" style="height:10px; width:160px; margin-left:22px; " >
-<!--<apex:selectOptions value="{!ListTipoCuentas}"/>  
-</apex:selectList>
--->
+                                                                       
                                                                         <br/><br/>
                                                                         
                                                                     </td>
@@ -524,9 +400,7 @@
                                                                     
                                                                     
                                                                     <td>
-                                                                        
-                                                                        <!--    <apex:inputFile disabled="{!ActivaFormadePago}" style="cursor: pointer; margin-left:7px;" styleclass="btn  btn-choose info"  value="{!Comprobante}"> </apex:inputFile>
--->
+                                                                      
                                                                     </td>
                                                                 </tr>
                                                             </table>          
@@ -535,20 +409,7 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <!--
-<div class="slds-form-element__group slds-text-align_left">
-<div class="slds-form-element__row slds-text-align_left">
-<label class="slds-form-element__label"> Referencia </label> <br/>
-<apex:inputText disabled="true" value="{!codcliente}" styleclass="slds-input"   style="height:9px; width:170px; margin-left:1px; "/>
-<br/>
-
-<label class="slds-form-element__label"> Motivo </label> <br/>
-<apex:inputTextarea styleclass="slds-input"   value="{!Motivo}"  />        
-
-</div>
-</div> 
-</div>
--->
+                                                   
                                                     <footer class="slds-modal__footer">
                                                         <apex:commandButton value="Salir" action="{!popsalir}" styleClass="slds-button slds-button_neutral" />
                                                         <!--      <apex:commandButton value="Denegar"   action="{!Denegar}"  styleClass="slds-button slds-button_neutral" />  

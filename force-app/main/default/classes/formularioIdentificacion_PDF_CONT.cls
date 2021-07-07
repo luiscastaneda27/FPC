@@ -3,14 +3,14 @@ public class formularioIdentificacion_PDF_CONT {
    
     public String tel {get;set;}
     public String telD {get;set;}
-    public String telRes {get;set;}
+    public String telRes {get;set;} 
     public string telTrab {get;set;}
     public Decimal extTrab {get;set;}
     public String dir {get;set;}
     public String depto {get;set;}
     public String mun {get;set;}
     public String col {get;set;}
-    public String pais {get;set;}
+    public String pais {get;set;} 
     public String P {get;set;}
     public string PFis {get;set;}
     public string PFisNacionalidad {get;set;}    
@@ -18,6 +18,8 @@ public class formularioIdentificacion_PDF_CONT {
     public String Mu {get;set;}
     public String Co {get;set;}
     public string Nac {get;set;}
+    public string Nac2 {get;set;}
+    public string Nac3 {get;set;}
     public datetime fechaForm {get;set;}
     
     /*public string pcUsuarioCN {get;set;}
@@ -84,30 +86,19 @@ public class formularioIdentificacion_PDF_CONT {
             
             if(!(info.ListBeneficiarios!=null && info.ListBeneficiarios.size()>0)){
                 List<beneficiario> ltem=new List<beneficiario>();
-                for(Integer i=0;i<info.ListBeneficiarios.size();i++)
-                {
-                   ltem.add(new beneficiario(null, ' ', ' ',' ',' ', ' ',' ',' ',' ', ' ',null, null, null));                  
+                for(Integer i=0;i<info.ListBeneficiarios.size();i++) {
+                   ltem.add(new beneficiario(null, ' ', ' ',' ', ' ', ' ',' ',' ', ' ',' ',' ',' ', ' ',null, null, null));                  
                 }
                 info.ListBeneficiarios=ltem;
-                //ListBeneficiariosC=ltemC;
             }
             List<beneficiario> ltemD=new List<beneficiario>();
             List<beneficiario> ltemC=new List<beneficiario>();
             for(Integer i=0;i<info.ListBeneficiarios.size();i++){
-                 if(info.ListBeneficiarios[i].tipoBeneficiario == 'D')
-                    {
-                        ltemD.add(new beneficiario(info.ListBeneficiarios[i].idExterno, info.ListBeneficiarios[i].tipoId, info.ListBeneficiarios[i].numeroId,info.ListBeneficiarios[i].tipoBeneficiario,info.ListBeneficiarios[i].genero, info.ListBeneficiarios[i].primerNombre,info.ListBeneficiarios[i].segundoNombre,info.ListBeneficiarios[i].primerApellido,info.ListBeneficiarios[i].segundoApellido, info.ListBeneficiarios[i].Parentesco,info.ListBeneficiarios[i].Distribucion, info.ListBeneficiarios[i].Grado, info.ListBeneficiarios[i].fechaBeneficiario));             
-                    }
-                    /*else if(info.ListBeneficiarios[i].tipoBeneficiario == 'C')
-                    {
-                        ltemC.add(new beneficiario(info.ListBeneficiarios[i].idExterno, info.ListBeneficiarios[i].tipoId, info.ListBeneficiarios[i].numeroId,info.ListBeneficiarios[i].tipoBeneficiario,info.ListBeneficiarios[i].genero, info.ListBeneficiarios[i].primerNombre,info.ListBeneficiarios[i].segundoNombre,info.ListBeneficiarios[i].primerApellido,info.ListBeneficiarios[i].segundoApellido, info.ListBeneficiarios[i].Parentesco,info.ListBeneficiarios[i].Distribucion, info.ListBeneficiarios[i].Grado, info.ListBeneficiarios[i].fechaBeneficiario));  
-                    }*/
-            }
-            for(Integer i=0;i<info.ListBeneficiariosC.size();i++){
-                 if(info.ListBeneficiariosC[i].tipoBeneficiario == 'C')
-                    {
-                        ltemC.add(new beneficiario(info.ListBeneficiariosC[i].idExterno, info.ListBeneficiariosC[i].tipoId, info.ListBeneficiariosC[i].numeroId,info.ListBeneficiariosC[i].tipoBeneficiario,info.ListBeneficiariosC[i].genero, info.ListBeneficiariosC[i].primerNombre,info.ListBeneficiariosC[i].segundoNombre,info.ListBeneficiariosC[i].primerApellido,info.ListBeneficiariosC[i].segundoApellido, info.ListBeneficiariosC[i].Parentesco,info.ListBeneficiariosC[i].Distribucion, info.ListBeneficiariosC[i].Grado, info.ListBeneficiariosC[i].fechaBeneficiario));  
-                    }
+                if(info.ListBeneficiarios[i].tipoBeneficiario == 'D'){
+                    ltemD.add(info.ListBeneficiarios[i]);
+                }else if(info.ListBeneficiarios[i].tipoBeneficiario == 'C') {
+                    ltemC.add(info.ListBeneficiarios[i]);
+                }
             }
             info.ListBeneficiarios=ltemD;
             ListBeneficiariosC=ltemC;
@@ -194,18 +185,18 @@ public class formularioIdentificacion_PDF_CONT {
 				PFisNacionalidad = mapNaFis.get(info.PaisResidenciaEfectosFiscales );                  
                 //NACIONALIDAD
                 
-                /*for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
-                    mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+               /* for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.pcnacionalidad limit 1]){
+                 nac=   mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
                 }
-                nac=mapNac.get(info.ListDirecciones[i].paisDir);*/
-                 for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
-                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
-                nac= itemNA.nacionalidad__c;
-                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad );
-            	}
+                */
                 //info.pcnacionalidad2=mapNaci.get(info.pcnacionalidad2);
                 //info.pcnacionalidad3=mapNaci.get(info.pcnacionalidad3);
-                
+                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
+                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+                nac= itemNA.nacionalidad__c;
+                //info.pcnacionalidad2 = itemNA.nacionalidad__c;    
+                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad + info.pcnacionalidad2 + Nac2);
+            	}
                 //DEPARTAMENTO
                 
                 for (Departamentos__c itemDe:[SELECT Departamento__c, codigo_departamento__c,codigo_pais__c from Departamentos__c where codigo_pais__c =: info.ListDirecciones[i].paisDir

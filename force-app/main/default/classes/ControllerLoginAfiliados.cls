@@ -223,10 +223,9 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
         
         for(integer j=0; j<resultado2.size(); j++)
         {
-            
-            if (resultado2[j].nombreMetodo == ClienteN)
+            if ( resultado2[j].nombreMetodo == ClienteN)
             {
-                pagina = resultado2[j].nombreMetodo + '?hytrd=' + usuario + '&rol='+resultado2[0].rol;
+                pagina = resultado2[j].nombreMetodo + '?hytrd=' + usuario + '&rol='+resultado2[j].rol;
                 Desactivartab(); 
                 
                 //Insertar en la bitacora 

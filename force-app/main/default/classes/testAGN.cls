@@ -1926,6 +1926,8 @@ global class testAGN {
         c.pcNombreCompletoPV = 'wwww';
         c.OcultaCarSI = true;
         c.pcCargoEjercido = '';
+        //C.periodoPep = '';
+        //C.institucionPep = '';
         c.enviarPagPro();
         c.pctipoid = '1';
         c.pcnroid = '0801199411013';
@@ -1953,8 +1955,11 @@ global class testAGN {
         c.OcultaTerSI = false;
         c.pcNumeroIDPV = '5552';
         c.pcNombreCompletoPV = 'wwww';
-        c.OcultaCarSI = false;
+        c.OcultaCarSI = TRUE;
         c.pcCargoEjercido = 'corrupto';
+        //c.pcCargoEjercido = '';
+        C.periodoPep = '';
+        C.institucionPep = '';
         c.fechaLabor = date.valueOf('2021-08-29');
         c.enviarPagPro();
         c.pctipoid = '1';
@@ -1983,8 +1988,10 @@ global class testAGN {
         c.OcultaTerSI = false;
         c.pcNumeroIDPV = '5552';
         c.pcNombreCompletoPV = 'wwww';
-        c.OcultaCarSI = false;
+        c.OcultaCarSI = TRUE;
         c.pcCargoEjercido = 'corrupto';
+        C.periodoPep = '2010-2015';
+        C.institucionPep = '';
         c.fechaLabor = date.today();
         c.enviarPagPro();
         

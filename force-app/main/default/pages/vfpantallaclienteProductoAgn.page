@@ -4281,7 +4281,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                     <apex:actionFunction action="{!llenarCausas}" name="llenarCausas" /> 
                     <apex:actionFunction action="{!llenarNacionalidad}" name="llenarNacionalidad" />
                     <apex:actionFunction action="{!llenarDepartamento}" name="llenarDepartamento" reRender="Depto" status="status" />
-                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici" status="status"/>
+                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici,colon" status="status"/>
                     <apex:actionFunction action="{!llenarColonia}" name="llenarColonia" reRender="colon" status="status"/>  
                     <!--
 <apex:actionFunction action="{!buscarColectiva}" name="buscarColectiva"/>

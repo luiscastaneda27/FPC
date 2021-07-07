@@ -229,17 +229,25 @@
                                 <table id="formulario" width = "1000" style="text-align: center; ">
                                     <tr>
                                         <td width="450">
-                                            <label class="slds-form-element__label " for="inputSample"  style="margin-left:20px;" >
-                                                <abbr class="slds-required" title="required"></abbr> <p style="display:inline; font-size:1.4em;">Cuenta</p>
-                                            </label>
-                                            <apex:inputText onkeypress="return isNumberKey(event)" id="Cuenta"  maxlength="15" styleclass="slds-input"  style="height:10px; width:160px; margin-left:52px;"  value="{!Cuenta}" />
-                                            <apex:commandButton style="margin-left: 2px; " action="{!BuscarInfor}" value="Buscar"  styleClass="Aceptar" />
-                                            
-                                            <label class="slds-form-element__label" for="inputSample"  style="margin-left:175px; " >
-                                                <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p> Fecha de la Gestión
-                                            </label>
-                                            <apex:input disabled="{!ActivaFechPago}" type="date" styleClass="slds-input" style="height:10px; width:160px; margin-left:30px;" value="{!FechInicioPago}"/>
-                                            
+                                            <table>
+                                                <tr>
+                                                    <td style="width:17%;">
+                                                        <label class="slds-form-element__label " for="inputSample" >
+                                                            <abbr class="slds-required" title="required"></abbr> <p style="display:inline; font-size:1.4em;">Cuenta</p>
+                                                        </label>
+                                                        <apex:inputText onkeypress="return isNumberKey(event)" id="Cuenta"  maxlength="15" styleclass="slds-input"  style="height:10px; width:160px;"  value="{!Cuenta}" />
+                                                    </td>
+                                                    <td style="width:20%;">
+                                                        <apex:commandButton action="{!BuscarInfor}" value="Buscar"  styleClass="Aceptar" style="margin-top:30px;" />
+                                                    </td>
+                                                    <td style="width:63%;">
+                                                        <label class="slds-form-element__label" for="inputSample"  ><br/>
+                                                            <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p> Fecha Inicial del Cálculo Pago de Intereses
+                                                        </label>
+                                                        <apex:input disabled="{!ActivaFechPago}" type="date" styleClass="slds-input" style=" width:40%;" value="{!FechInicioPago}"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr><br/>
                                     <!--NOMBRE/IDENTIDAD/FONDO-->
@@ -299,6 +307,75 @@
                                 
                                 <table id="formulario" width = "1000" style="text-align: center;">
                                     <tr>
+                                        <br/>
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td style="width:33%;">
+                                                        <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                            <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p>  Estado Pago de Intereses
+                                                        </label><br/>
+                                                        <apex:selectList disabled="{!pagoInteres.NombreCompleto == null}" styleclass="slds-input"  size="1" value="{!pagoInteres.estadoAprobacion}" style="height:10px; width:160px; margin-left:10px;" >
+                                                            <apex:selectOption itemLabel="--Ninguno--" itemValue=""   />
+                                                            <!--apex:selectOption itemLabel="Aprobación" itemValue="R" /-->
+                                                            <apex:selectOption itemLabel="Activo" itemValue="A" />
+                                                            <apex:selectOption itemLabel="Inactivo" itemValue="I" rendered="{!ActivaModificar}"  />
+                                                            <!--apex:selectOption itemLabel="Rechazado" itemValue="D" /-->
+                                                        </apex:selectList>
+                                                    </td>
+                                                    <td style="width:33%;">
+                                                        <label class="slds-form-element__label" for="inputSample" >
+                                                            Última Fecha de Pago de Intereses
+                                                        </label><br/>
+                                                        <apex:outputText value="{0, date, dd/MM/yyyy}"> <apex:param value="{!pagoInteres.ultFec_inclusion}" /> </apex:outputText>
+                                                    </td>
+                                                    <td style="width:34%;">
+                                                        <label class="slds-form-element__label" for="inputSample" >
+                                                            Monto último pago
+                                                        </label><br/>
+                                                        <apex:outputText value="{0,number,###,###.##}"> 
+                                                            <apex:param value="{!pagoInteres.ultPagoView}" />
+                                                        </apex:outputText> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label class="slds-form-element__label" for="inputSample" >
+                                                            Creado por
+                                                        </label><br/>
+                                                        <apex:outputText value="{!pagoInteres.usuarioRegis}" />
+                                                    </td>
+                                                    <td>
+                                                        <label class="slds-form-element__label" for="inputSample" >
+                                                            Última modificación por 
+                                                        </label><br/>
+                                                        <apex:outputText value="{!pagoInteres.ultUsuCaso}" />
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                            <!--label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                <abbr class="slds-required" title="required"></abbr> <p style="color:red; display:inline; font-size:2em;">*</p>  Pago de Pensión
+                                            </label><br/>
+                                            <apex:selectList disabled="{!pagoInteres.NombreCompleto == null}" styleclass="slds-input"  size="1" value="{!pagoInteres.estadoAprobacion}" style="height:10px; width:160px; margin-left:10px;" >
+                                                <apex:selectOption itemLabel="Inactivo" itemValue="I" />
+                                                <apex:selectOption itemLabel="Activo" itemValue="A" />
+                                            </apex:selectList>
+                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                 Última Fecha de Pago de Intereses
+                                            </label>
+                                            <apex:outputText value="{0, date, yyyy/MM/dd HH:mm}"> <apex:param value="{!pagoInteres.ultFec_inclusion}" /> </apex:outputText>
+                                            <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                 Último pago
+                                            </label>
+                                            <apex:outputText value="{!pagoInteres.ultPago}" /> 
+                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
+                                                 Usuario
+                                            </label>
+                                            <apex:outputText value="{!pagoInteres.usuarioRegis}" /--> 
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <br/>
                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
@@ -336,13 +413,7 @@
                                                 <apex:inputcheckbox disabled="{!bloquenoo}" onclick="bloquearCampoNo()"  value="{!CAPITAL_NO}" id="vc_CAPITALNO" styleclass="slds-input" />
                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                             </label>
-                                            <!-- 	<apex:commandButton style="margin-left: 80px; " action="{!MostrarVentanaDenegacion}" id="denegados" value="Ver Denegados"  styleClass="Cancelar" />&nbsp;
--->  
-                                            <!-- <apex:outputPanel rendered="{!ActivaAlertas}">
-<apex:commandLink action="{!MostrarVentanaDenegacion}" >  
-<apex:image value="{!$Resource.Mensaje}" width="50" height="50" style="margin-left:340px;"/>
-</apex:commandLink> 
-</apex:outputPanel> -->
+                                            
                                         </td>
                                     </tr>
                                     
@@ -379,11 +450,7 @@
                                                 <apex:selectOptions value="{!ListFormPag}"/>
                                                 <apex:actionSupport event="onchange" action="{!MostrarCamposFormPago}"/> 
                                             </apex:selectList>
-                                            <!--            
-<apex:selectList disabled="{!ActivaCalculoSobre}" styleclass="slds-input" id="Calculo_Sobre" size="1" value="{!CalculoSobre}" style="height:10px; width:160px; margin-left:32px; " >
-<apex:selectOptions value="{!ListCalculoSobre}"/>
-</apex:selectList>
--->
+                                            
                                         </td>
                                     </tr>
                                     
@@ -510,7 +577,7 @@
                                         
                                         
                                         <td>
-                                            <apex:inputFile style="cursor: pointer;" styleclass="btn  btn-choose"  value="{!Comprobante}"> </apex:inputFile>
+                                            <apex:inputFile style="cursor: pointer;" styleclass="btn  btn-choose"   value="{!Comprobante}" fileName="{!nombreArchivo}" > </apex:inputFile>
                                             <!--	<apex:inputFile disabled="{!ActivaFormadePago}" style="cursor: pointer; margin-left:7px;" styleclass="btn  btn-choose info"  value="{!Comprobante}"> </apex:inputFile>
 -->				<apex:commandButton style="margin-left: 190px; " action="{!MostrarVentanaDenegacion}" id="denegados" value="Ver Denegados"  styleClass="Cancelar" />&nbsp;							
                                         </td>

@@ -143,12 +143,14 @@ public without sharing class ControllerSeveridadRiesgo {
     {	
         TipNivel = new Matriz_Riesgo__c();
         opcionNivelRiesgo = new List<SelectOption>();  
-        //usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+        usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
         //usuarioM = ApexPages.currentPage().getParameters().get('hytrd'); 
-        usuario = 'HN24633';
+        //usuario = 'HN24633';
         usuarioM = usuario;       
         Profesion = new Account();
         Agencia = new PreVenta__c();
+
+            system.debug('usuario' + usuario);
         
         opcionDepartamento = new list <selectOption>();
         opcionNacionalidad = new list <selectOption>();
@@ -160,9 +162,11 @@ public without sharing class ControllerSeveridadRiesgo {
     
     public void BuscaRiesgo()
     {
-         
+        
         try{	
-             decimal prueba;
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;    
+            decimal prueba;
             ClaseNivelDeRiesgo NivelDeRiesgo= new ClaseNivelDeRiesgo();
             NivelDeRiesgo.CodRiesgo= Decimal.valueOf(TipNivel.NivelRiesgo__c);
             prueba= NivelDeRiesgo.CodRiesgo;
@@ -173,9 +177,9 @@ public without sharing class ControllerSeveridadRiesgo {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ingresar Nivel de Riesgo'));
                 //return null;    
             }           
-           
+            
             system.debug('RespuestarNIVEL: '+fcsd +fcsd.NivelRiesgo );
-                
+            
             if (fcsd.NivelRiesgo != 'null') 
             {          
                 if(fcsd.NivelRiesgo != 'null')
@@ -200,19 +204,21 @@ public without sharing class ControllerSeveridadRiesgo {
             }  
             limpiar1();
             system.debug('NIVEL: ' + prueba ); 
-      
+            
         }
         Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));	    
         }
-       // return null;
+        // return null;
     }    
     
      public void BuscaFactor()
     {
          
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             FactorClase Factores= new FactorClase();
             Factores.Cod_Riesgo= TipNivel.Factor_Variables__c;
@@ -272,7 +278,9 @@ public without sharing class ControllerSeveridadRiesgo {
     public void BuscaTipCl()
     {
         
-        try{	     
+        try{	 
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseTipoCliente TipoDeCliente= new ClaseTipoCliente();
             TipoDeCliente.TipoCliente= TipNivel.Tipo_Cliente__c;
@@ -318,7 +326,9 @@ public without sharing class ControllerSeveridadRiesgo {
     public void BuscaTipPer()
     {
         
-        try{	     
+        try{	 
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
              string prueba;
             ClaseTipoPersona TipoDePersona= new ClaseTipoPersona();
             TipoDePersona.TipoPersona= TipNivel.Tipo_Persona__c;
@@ -366,6 +376,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseFechaNac FechaNac= new ClaseFechaNac();
             FechaNac.CodFechaNacimiento = TipNivel.Fecha_Nacimiento__c;
@@ -412,7 +424,9 @@ public without sharing class ControllerSeveridadRiesgo {
     public void BuscaFecAfilia()
     {
         
-        try{	     
+        try{	    
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseFechaAfilia FechaAfilia= new ClaseFechaAfilia();
             FechaAfilia.CodFechaAfilia = TipNivel.Fecha_Afilia__c;
@@ -459,6 +473,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseTipDoc TipDocum= new ClaseTipDoc();
             TipDocum.TipoDoc = TipNivel.Tipo_Documento__c;
@@ -505,6 +521,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseTrabaja Trab= new ClaseTrabaja();
             Trab.Trabaja = TipNivel.Riesgo_Trabaja__c;
@@ -545,6 +563,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClasePep esPep= new ClasePep();
             esPep.PEP = TipNivel.Riesgo_Pep__c;
@@ -586,6 +606,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	     
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
              string prueba;
             ClaseExcepciones ListaExc= new ClaseExcepciones();
             ListaExc.EsExcep = TipNivel.Riesgo_Exc__c;
@@ -626,6 +648,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseRiesgoProducto ListaProd= new ClaseRiesgoProducto();
             ListaProd.TipoProducto = TipNivel.Riesgo_ProductoNat__c;
@@ -668,6 +692,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
              string prueba;
             ClaseRiesgoProducto ListaProd= new ClaseRiesgoProducto();
             ListaProd.TipoProducto = TipNivel.Riesgo_ProdJur__c;
@@ -709,7 +735,9 @@ public without sharing class ControllerSeveridadRiesgo {
     public void BuscaCanal()
     {
         
-        try{	     
+        try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseRiesgoCanal ListaCanal= new ClaseRiesgoCanal();
             ListaCanal.TipoCanal = Agencia.Agencia_Refiere__c;
@@ -749,7 +777,9 @@ public without sharing class ControllerSeveridadRiesgo {
     public void BuscaProfesion()
     {
         
-        try{	  
+        try{	 
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
              string prueba;
             ClaseRiesgoProfesion ListaProfesion= new ClaseRiesgoProfesion();
             ListaProfesion.TipoProfesion = Profesion.Profesi_n_Ocupaci_n__c;
@@ -792,6 +822,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
              string prueba;
             ClaseRiesgoActEcon ListaActividad= new ClaseRiesgoActEcon();
             ListaActividad.TipoActividad = Profesion.Sector__c;
@@ -831,6 +863,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             string prueba;
             ClaseFechaConsti ListaFechaConst= new ClaseFechaConsti();
             ListaFechaConst.CodFechaConstitu = TipNivel.Fecha_Constitucion__c;
@@ -904,6 +938,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             codNacionalidad = null;
             if( codDepto == ' --Ninguno-- ')
             {       
@@ -949,7 +985,8 @@ public without sharing class ControllerSeveridadRiesgo {
     {
         
         try{	
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             if(codNacionalidad == ' --Ninguno-- ')
             {       
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Seleccione Nacionalidad'));
@@ -1127,7 +1164,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizarRiesgo()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaNivelRiesgo naturalEnvio = new classActualizaNivelRiesgo();  
             
             string guarda;
@@ -1181,7 +1219,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizaFactor()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             ClassActualizaFactor naturalEnvio = new ClassActualizaFactor();  
             
             string guarda;
@@ -1236,7 +1275,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizarRiesgoCliente()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaTipoCliente naturalEnvio = new classActualizaTipoCliente();  
             
             string guarda;
@@ -1270,7 +1310,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoPersona()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaTipoPersona EnvioPersona = new classActualizaTipoPersona();  
             
             //string guarda;
@@ -1304,7 +1345,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizarFechaNac()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaFechaNac EnvioPersona = new classActualizaFechaNac();  
             
             //string guarda;
@@ -1338,7 +1380,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizarFechaAfilia()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaFechaAfilia EnvioPersona = new classActualizaFechaAfilia();              
             
             EnvioPersona.CodFechaAfilia = TipNivel.Fecha_Afilia__c;
@@ -1370,7 +1413,8 @@ public without sharing class ControllerSeveridadRiesgo {
 	public void actualizarTipDoc()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaTipDoc EnvioPersona = new classActualizaTipDoc();              
             
             EnvioPersona.TipoDoc = TipNivel.Tipo_Documento__c;
@@ -1402,7 +1446,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoTrabaja()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaTrabaja naturalEnvio = new classActualizaTrabaja();  
             
           	naturalEnvio.Trabaja = TipNivel.Riesgo_Trabaja__c;
@@ -1436,7 +1481,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoPep()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaPep naturalEnvio = new classActualizaPep();  
             
           	naturalEnvio.PEP = TipNivel.Riesgo_Pep__c;
@@ -1469,7 +1515,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoExcep()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaExcep naturalEnvio = new classActualizaExcep();  
             
           	naturalEnvio.EsExcep = TipNivel.Riesgo_Exc__c;
@@ -1502,7 +1549,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoProdN()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaProducto naturalEnvio = new classActualizaProducto();  
             
           	naturalEnvio.TipoProducto = TipNivel.Riesgo_ProductoNat__c;
@@ -1535,7 +1583,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoProdJ()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaProducto naturalEnvio = new classActualizaProducto();  
             
           	naturalEnvio.TipoProducto = TipNivel.Riesgo_ProdJur__c;
@@ -1568,7 +1617,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoCanal()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaCanal naturalEnvio = new classActualizaCanal();  
             
           	naturalEnvio.TipoCanal = Agencia.Agencia_Refiere__c;
@@ -1601,7 +1651,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoProfesion()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaProfesion naturalEnvio = new classActualizaProfesion();  
             
           	naturalEnvio.TipoProfesion = Profesion.Profesi_n_Ocupaci_n__c;
@@ -1634,7 +1685,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarRiesgoActEcon()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaActEcon naturalEnvio = new classActualizaActEcon();  
             
           	naturalEnvio.TipoActividad = Profesion.Profesi_n_Ocupaci_n__c;
@@ -1667,7 +1719,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizarFechaCosnt()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaFechaConsti naturalEnvio = new classActualizaFechaConsti();  
             
           	naturalEnvio.CodFechaConstitu = TipNivel.Fecha_Constitucion__c;
@@ -1700,7 +1753,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizaRiesgoDepto()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             if( codDepto == ' --Ninguno-- ')
             {       
                 codDepto = null;
@@ -1743,7 +1797,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizaRiesgoNac()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             if( codNacionalidad == ' --Ninguno-- ')
             {       
                 codNacionalidad = null;
@@ -1784,7 +1839,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public void actualizarFactorRiesgo()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             classActualizaNivelRiesgo naturalEnvio = new classActualizaNivelRiesgo();  
             
             string guarda;
@@ -1838,7 +1894,8 @@ public without sharing class ControllerSeveridadRiesgo {
     public pageReference actualizaVariablesFactor()
     {
         try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             controllerActualizaVarFactor naturalEnvio = new controllerActualizaVarFactor();  
             
             //IF()
@@ -1895,7 +1952,8 @@ public without sharing class ControllerSeveridadRiesgo {
     
     public void EnviaMR(){
        try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             ClassInsertaNivelDeRiesgo naturalEnvio = new ClassInsertaNivelDeRiesgo();  
             
             //string guarda;
@@ -1949,7 +2007,8 @@ public without sharing class ControllerSeveridadRiesgo {
     
     public void EnviaFactor(){
        try{
-            
+            usuario = ApexPages.currentPage().getParameters().get('hytrd'); 
+            usuarioM = usuario;  
             FactorClase naturalEnvio = new FactorClase();  
             
             //string guarda;

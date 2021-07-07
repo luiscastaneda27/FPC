@@ -55,7 +55,7 @@ public class testaprobarCambioFechaAporte {
           
             classAcualizaFechaAporte s = new classAcualizaFechaAporte();
              s.numDocumento = 'sdda';
-        s.nuevafecha = date.valueOf(dateTime.now());
+             s.nuevafecha = null;
            
         }
 }

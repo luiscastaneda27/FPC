@@ -17,7 +17,7 @@ public class Controlleraprobarfechaaporte {
     public List<SelectOption> opcionesCuentas{get;set;}
 	public integer contador {get;set;}
  	public date FCsysde {get; set;}
-    public boolean DenegarImagen {get; set;}   
+    public boolean DenegarImagen {get; set;}    
     public string ID_Referencia {get; set;}
     public Transient string Ver_Imagen {get;set;}
     public boolean DenegarVentana  {get;set;}
@@ -29,7 +29,7 @@ public class Controlleraprobarfechaaporte {
     public string estadEmail {get;set;}
     
     //AGREGADO 22082019
-    public boolean MuestraTabla {get;set;}
+    public boolean MuestraTabla {get;set;} 
 	
     //variables de aprobar
     public string accion {get;set;}
@@ -114,8 +114,8 @@ public class Controlleraprobarfechaaporte {
             //afa.nuevafecha = nuevafecha; 
             for(integer i=0; i<ListData.size(); i++){
                 if(ListData[i].num_doc__c == num_doc){
-                    afa.nuevafecha = ListData[i].Nuevafecha__c;
-                    afa.numDocumento = (num_doc+ '/' +accion);
+                    afa.nuevafecha =ListData[i].Nuevafecha__c;
+                    afa.numDocumento = (num_doc+ '/' +accion); 
                     system.debug(num_doc+ '/' +accion);
                     //afa.Accion = accion;
                     //modificacion  fechaporte aSysdeCallouts.fechaCierreSysde(date.today()) afa.nuevafecha==null ||

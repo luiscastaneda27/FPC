@@ -470,7 +470,7 @@
                           </apex:outputPanel>
                           
                           <apex:outputPanel rendered="{!mostrarUSD}">
-                              <SUP>1</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br/>
+                              <SUP>*</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br/>
                           </apex:outputPanel>
                           </p></td>
                       <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; line-height:20px;"><p><br/>Identificación: {!cuentas.identificacion}<br />
