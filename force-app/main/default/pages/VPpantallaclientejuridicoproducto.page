@@ -3385,7 +3385,7 @@
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="pepPop()" value="{!PEPControlante}" id="PEPControlante"  styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="pepPop()" value="{!PEPControlante}" id="PEPControlante"  styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                                                             </label>
                                                             
@@ -3394,7 +3394,7 @@
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="amlPop()" value="{!AMLControlante}" id="AMLControlante" styleclass="slds-input"    />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AMLControlante}" id="AMLControlante" styleclass="slds-input"    />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                             </label>
                                                             
@@ -3403,7 +3403,7 @@
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaPop()" value="{!FATCAControlante}" id="FATCAControlante" styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaPop()" value="{!FATCAControlante}" id="FATCAControlante" styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                             </label>
                                                             <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
@@ -3411,7 +3411,7 @@
                                                             </label>
                                                             
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaNcPop()" value="{!FATCANCControlante}" id="FATCANCControlante" styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaNcPop()" value="{!FATCANCControlante}" id="FATCANCControlante" styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                             </label>
                                                             
@@ -3592,7 +3592,7 @@
                                                         <apex:outputText value="{!item.nombreControlante}" />
                                                     </apex:column>
                                                     
-                                                    <apex:column headerValue="Tipo Persona" >
+                                                    <!--apex:column headerValue="Tipo Persona" >
                                                         <apex:outputText value="{!item.tipoPersonaControlante}" />
                                                     </apex:column>
                                                     
@@ -3614,17 +3614,17 @@
                                                     
                                                     <apex:column headerValue="Còdigo Empresa" >
                                                         <apex:outputText value="{!item.numIdEmpresaControlante}" />
-                                                    </apex:column>
+                                                    </apex:column-->
                                                     <apex:column headerValue="Cargo" >
                                                         <apex:outputText value="{!item.cargoControlante}" />
                                                     </apex:column>
-                                                    <apex:column headerValue="Cotiza Bolsa" >
+                                                    <!--apex:column headerValue="Cotiza Bolsa" >
                                                         <apex:outputText value="{!item.cotBolsaControlante}" />
                                                     </apex:column>
                                                     
                                                     <apex:column headerValue="# ticker Symbol" >
                                                         <apex:outputText value="{!item.ticSymbolControlante}" />
-                                                    </apex:column>
+                                                    </apex:column-->
                                                     <apex:column headerValue="Eliminar" >
                                                         <apex:commandLink value="Eliminar" action="{!eliminarControlantesOtro}">
                                                             <!--    <apex:param value="{!item.idGuardar}" AssignTo="{!Num_identidadProducto}" name="APV2" />      -->
@@ -3671,7 +3671,7 @@
                                                         <apex:outputText value="{!item.nombreControlante}" />
                                                     </apex:column>
                                                     
-                                                    <apex:column headerValue="Tipo Persona" >
+                                                    <!--apex:column headerValue="Tipo Persona" >
                                                         <apex:outputText value="{!item.tipoPersonaControlante}" />
                                                     </apex:column>
                                                     
@@ -3693,17 +3693,17 @@
                                                     
                                                     <apex:column headerValue="Còdigo Empresa" >
                                                         <apex:outputText value="{!item.numIdEmpresaControlante}" />
-                                                    </apex:column>
+                                                    </apex:column-->
                                                     <apex:column headerValue="Cargo" >
                                                         <apex:outputText value="{!item.cargoControlante}" />
                                                     </apex:column>
-                                                    <apex:column headerValue="Cotiza Bolsa" >
+                                                    <!--apex:column headerValue="Cotiza Bolsa" >
                                                         <apex:outputText value="{!item.cotBolsaControlante}" />
                                                     </apex:column>
                                                     
                                                     <apex:column headerValue="# ticker Symbol" >
                                                         <apex:outputText value="{!item.ticSymbolControlante}" />
-                                                    </apex:column>
+                                                    </apex:column-->
                                                     <apex:column headerValue="Modificar" >
                                                         <apex:commandLink value="Modificar" action="{!modificarControlantes}">
                                                             <!--  <apex:param value="{!item.AI_ID_EXTERNO}" AssignTo="{!Num_identidadProducto}" name="APV1" />  -->
@@ -4745,7 +4745,7 @@ function validarIDU()
                                         </label>
                                         
                                         <label class="slds-checkbox">
-                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="pepPop()" value="{!PEPSocio}" id="PEPSocio"  styleclass="slds-input"  />
+                                            <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="pepPop()" value="{!PEPSocio}" id="PEPSocio"  styleclass="slds-input"  />
                                             <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                                         </label>
                                         
@@ -4754,7 +4754,7 @@ function validarIDU()
                                         </label>
                                         
                                         <label class="slds-checkbox">
-                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="amlPop()" value="{!AMLSocio}" id="AMLSocio" styleclass="slds-input"    />
+                                            <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AMLSocio}" id="AMLSocio" styleclass="slds-input"    />
                                             <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                         </label>
                                         
@@ -4763,7 +4763,7 @@ function validarIDU()
                                         </label>
                                         
                                         <label class="slds-checkbox">
-                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaPop()" value="{!FATCASocio}" id="FATCASocio" styleclass="slds-input"  />
+                                            <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaPop()" value="{!FATCASocio}" id="FATCASocio" styleclass="slds-input"  />
                                             <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                         </label>
                                         <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
@@ -4771,7 +4771,7 @@ function validarIDU()
                                         </label>
                                         
                                         <label class="slds-checkbox">
-                                            <apex:inputcheckbox disabled="{!desCheckListas}" onclick="fatcaNcPop()" value="{!FATCANCSocio}" id="FATCANCSocio" styleclass="slds-input"  />
+                                            <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaNcPop()" value="{!FATCANCSocio}" id="FATCANCSocio" styleclass="slds-input"  />
                                             <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                         </label>
                                         <br/>
@@ -4929,7 +4929,7 @@ function validarIDU()
                         <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
                             
                             <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
-                                Datos de los Beneficiarios
+                                Datos de Composición accionaria / Beneficiario Final
                             </legend>
                             <br/>
                             
@@ -5018,7 +5018,7 @@ function validarIDU()
                         <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
                             
                             <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style="width:1200px">
-                                Datos de los Beneficiarios
+                                Datos de Composición accionaria / Beneficiario Final
                             </legend>
                             <br/>
                             

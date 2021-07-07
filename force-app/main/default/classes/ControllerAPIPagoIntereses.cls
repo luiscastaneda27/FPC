@@ -228,7 +228,7 @@ public class ControllerAPIPagoIntereses {
         classImagenReferencia fcsd= new classImagenReferencia();
 		//string respuesta = '';
          
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del EDC '+claseEnvio.Imagen.length());
 		try{
 						
 			classJson envio = new classJson();

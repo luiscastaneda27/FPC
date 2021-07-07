@@ -120,7 +120,7 @@ public class ControllerUsuarioNatural {
             
             
             nivelRiesgo = '1'; 
-            debidaDiligencviaAplicada = '3';
+            debidaDiligencviaAplicada = '1';
   			
 		   despN = false;   
             disbot = true; 
@@ -327,13 +327,13 @@ public class ControllerUsuarioNatural {
     
     public void bloqPep(){
         dispep = true; 
-        nivelRiesgo = '3'; 
-        debidaDiligencviaAplicada = '3'; 
+        nivelRiesgo = '1'; 
+        debidaDiligencviaAplicada = '1'; 
     }
         public void unblock(){
         dispep = false; 
         nivelRiesgo = '1'; 
-        debidaDiligencviaAplicada = '2'; 
+        debidaDiligencviaAplicada = '1'; 
     }
     
     public SelectOption[] InstitucionFinancieraOptions
@@ -557,7 +557,7 @@ public class ControllerUsuarioNatural {
             
                if(fcsd.PEP == true){
            	PEP = fcsd.PEP;
-                   nivelRiesgo = '3';
+                   nivelRiesgo = '1';
                    }
                if(fcsd.AML == true){
             AML = fcsd.AML;

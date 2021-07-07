@@ -162,7 +162,9 @@
                                                         <label class="slds-form-element__label" for="input-01"><abbr class="slds-required" title="required">* </abbr>Pais</label>
                                                         <div class="slds-form-element__control"> 
                                                             <apex:selectList styleclass="slds-select" required="true" id="Fpais" size="1" value="{!pais}">
-                                                                <apex:selectoptions value="{!listPaises}"/>
+                                                                <apex:selectOption itemLabel="--Ninguno--" itemValue="0" />
+                                                                <apex:selectOption itemLabel="ESTADOS UNIDOS" itemValue="053" />
+                                                                <apex:selectOption itemLabel="ESPAÑA" itemValue="052" />
                                                                 <apex:actionSupport event="onchange" reRender="Fciudad" status="status" action="{!getDepartamento}" immediate="true" />
                                                             </apex:selectList>                   
                                                         </div>
@@ -174,7 +176,6 @@
                                                         <div class="slds-form-element__control">                                        
                                                             <apex:selectList styleclass="slds-select" required="true" size="1" value="{!depto}" id="Fciudad">
                                                                 <apex:selectoptions value="{!listDepartamento}"/>
-                                                                <!-- apex:actionSupport event="onchange" reRender="states"/ -->
                                                             </apex:selectList>                                        
                                                         </div>
                                                     </div>
@@ -185,7 +186,7 @@
                                 </div>
                                 <!-- / CARD BODY = SECTION + TABLE -->
                                 <div class="slds-card__footer">
-                                    <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand" /> 
+                                    <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand"  /> 
                                 </div>
                             </article>
                         </apex:form>

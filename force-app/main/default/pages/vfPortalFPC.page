@@ -37,7 +37,7 @@
     <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
     <script>
         $(document).ready( function () { 
-        
+               
         });
         
     	function activate() { //alert('Entra');
@@ -64,7 +64,6 @@
                $('select.removePicklistValue option[value=27]').remove(); $('select.removePicklistValue option[value=28]').remove(); $('select.removePicklistValue option[value=29]').remove(); $('select.removePicklistValue option[value=30]').remove(); $('select.removePicklistValue option[value=31]').remove();   
            } 
         }
-
     </script>
     
     <SCRIPT>
@@ -420,7 +419,7 @@
                         <apex:inputField style="witdh:100%;" value="{!claseCasoD.Caso.Description}"/>  
                         <apex:outputField value="{!claseCasoD.Caso.Subject}" />  
                     </apex:pageBlockSection>
-                                       
+                    
                     <apex:pageBlockSection title="Detalle" id="blockAD" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.aumDisAporte)}">
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="Tipo de operación" />
@@ -434,27 +433,35 @@
                             <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}" required="true" 
                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2')}"/>
                         
-                            <apex:pageBlockSectionItem >
+                            <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}">
                                 <apex:outputLabel value="Nuevo canal de aporte" />
                                 <apex:actionRegion >
-                                <apex:inputField id="CanalAporte" value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" required="true">
-                                    <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia2}" status="status" reRender="BACFields"/>
+                                <apex:inputField id="CanalAporte" value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" required="true" onchange="process();">
+                                    <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia2}" status="status" reRender="blockAD"/>
                                 </apex:inputField>  
-                                </apex:actionRegion>                               
+                                </apex:actionRegion>
+                                
+                                <!-- apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Nuevo canal de aporte" />
+                                    <apex:actionRegion >
+                                        <apex:inputField id="CanalAporte" value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" required="true"> 
+                                            <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia}" status="status" reRender="blockAD"/>
+                                        </apex:inputField> 
+                                    </apex:actionRegion>
+                                </apex:pageBlockSectionItem> -->
+                                
                             </apex:pageBlockSectionItem>
-                        
-                        <apex:inputField id="Frecuencia" value="{!claseCasoD.detalleCaso.Frecuencia__c}" 
-                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                                                                                            
-                        
+                            
                         <apex:inputField label="# Cuenta bancaria / # Tarjeta" value="{!claseCasoD.detalleCaso.N_Cuenta_Bancaria__c}" 
                                                 required="true"
                                                 rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',
-                                                          claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                                                          claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                                                                        
+                            
+                        <apex:inputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" required="true"
+                                            rendered="{!If(OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}"/>
                         
-                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Dia_de_pago__c}" styleclass="removePicklistValue"
-                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/> 
-                        
+                        <!-- apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" styleclass="removePicklistValue2" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}"/> -->
+                            
                         <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
                                                     claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}">
                             <apex:outputLabel value="Fecha de vencimiento" />
@@ -463,26 +470,47 @@
                                 <apex:inputField value="{!claseCasoD.detalleCaso.Ano_tarjeta__c}" />
                            </apex:outputPanel>
                         </apex:pageBlockSectionItem>
+                            
+                        <apex:inputField id="Frecuencia" value="{!claseCasoD.detalleCaso.Frecuencia__c}" 
+                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+
+                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Dia_de_pago__c}" styleclass="removePicklistValue"
+                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/> 
+                        
+                        <!-- apex:inputField value="{!claseCasoD.detalleCaso.Mes__c}" 
+                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                        
+                        <apex:inputField value="{!claseCasoD.detalleCaso.Ano_tarjeta__c}" 
+                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/> -->
                         
                         <apex:inputField value="{!claseCasoD.detalleCaso.POS__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}" />
-                        
-                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tarjeta_Habiente__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
-                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
-                        
-                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tipo_Tarjeta__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
-                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
                         
                         <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}" 
                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
                         
-                        <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                            
-                            
-                        <apex:inputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" required="true"
-                                            rendered="{!If(OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}"/>
+                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tarjeta_Habiente__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
+                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                        
+                        <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tipo_Tarjeta__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',
+                                                    claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
+                          
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Banco" />
+                            <apex:outputPanel >
+                                <apex:selectList styleclass="slds-input" Id="banco" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A7')}" size="1" value="{!claseCasoD.bancoVal}">
+                                    <apex:selectOptions value="{!claseCasoD.BANCO}"/>
+                                </apex:selectList>
+                                <apex:inputField value="{!claseCasoD.detalleCaso.Banco__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>                            
+                           </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
                         
                         <apex:inputField value="{!claseCasoD.detalleCaso.DAU_Borrar_Cuotas__c}" 
                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/>
-                                                                            
+                                            
+                        <!-- apex:inputField value="{!claseCasoD.detalleCaso.DAU_Tarjeta_Habiente__c}" 
+                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Tipo_Operacion__c = 'A8')}"/> -->                    
+                                                            
                     </apex:pageBlockSection>
                     
                     <apex:pageBlockSection title="Detalle" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.estadoCuenta)}">

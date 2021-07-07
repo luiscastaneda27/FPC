@@ -33,6 +33,7 @@ public with sharing class NaturalActualizar {
     public string FATCANCRepresentante{get;set;}
     public string pcNombreCompletoPV {get;set;}
     public string OcultaCarSI {get;set;}
+    public string pcEjerce_Cargo_Publico {get;set;}
     public string pcCargoEjercido {get;set;}
     public string periodoPep {get;set;}
     public string institucionPep {get;set;}

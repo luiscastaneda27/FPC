@@ -565,7 +565,7 @@
                                     <tr>
                                         
                                         
-                                        <td>
+                                        <td> {!nombreArchivo}
                                             <apex:inputFile style="cursor: pointer;" styleclass="btn  btn-choose"   value="{!Comprobante}" fileName="{!nombreArchivo}" > </apex:inputFile>
                                             <!--	<apex:inputFile disabled="{!ActivaFormadePago}" style="cursor: pointer; margin-left:7px;" styleclass="btn  btn-choose info"  value="{!Comprobante}"> </apex:inputFile>
 -->				<apex:commandButton style="margin-left: 190px; " action="{!MostrarVentanaDenegacion}" id="denegados" value="Ver Denegados"  styleClass="Cancelar" />&nbsp;							

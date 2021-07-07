@@ -1,6 +1,8 @@
 public class ControllerPantJuridProduc {
     
     //Campos propiedad y control, Esteban Romero 04-05-201
+    public boolean disCumplimiento{get;set;}
+    public string rolLogin {get; set;}
     public string numControlante{get;set;}
     public string nombreControlante{get;set;} 
     public boolean cotizaControlanteSi{get;set;} 
@@ -563,6 +565,10 @@ public class ControllerPantJuridProduc {
 
         public ControllerPantJuridProduc() 
         {
+            disCumplimiento = true;
+            rolLogin = ApexPages.currentPage().getParameters().get('rol');
+            system.debug('entro al metodo de Iniciar');
+        	system.debug('rol obtenido: '+rolLogin);
             desCheckListas = true;
             activadesacContratista = true;
         	activadesacONG = true;
@@ -1090,9 +1096,9 @@ public class ControllerPantJuridProduc {
             if (FATCAControlante == true )
             {
                  propiedadControlUnicoUnico.FATCAControlante = 'S';
-                if(propiedadControlUnicoUnico.porcentajeDiControlante > 10){
+                /*if(propiedadControlUnicoUnico.porcentajeDiControlante > 10){
                     pcFATCA = true;
-                }
+                }*/
             }
             ELSE
             {
@@ -1202,6 +1208,10 @@ public class ControllerPantJuridProduc {
     }
     PUBLIC VOID modificarControlantes()
     {	decimal total2=0;
+     	if (rolLogin == 'OFSRCU'){
+            //disCumplimiento = false;
+            validadosControlantes = false;
+           }
      	//if(propiedadControlUnicoUnico !=null){total2=propiedadControlUnicoUnico.porcentajeDiControlante!=null ?decimal.valueOf(propiedadControlUnicoUnico.porcentajeDiControlante):0;}
          try
          { integer posi;
@@ -1211,7 +1221,7 @@ public class ControllerPantJuridProduc {
                  {
                      posi=i;
                      numControlante=ListPropiedadControl[i].numControlante;
-                     propiedadControlUnicoUnico.nombreControlante = ListPropiedadControl[i].nombreControlante;
+                     nombreControlante = ListPropiedadControl[i].nombreControlante;
                      /*Cliente1.Tipo_Persona__c=ListPropiedadControl[i].tipoPersonaControlante;
                      propiedadControlUnicoUnico.nacionalidadControlante=ListPropiedadControl[i].nacionalidadControlante;
                      propiedadControlUnicoUnico.nivelControlante=ListPropiedadControl[i].nivelControlante;*/
@@ -1265,7 +1275,7 @@ public class ControllerPantJuridProduc {
           if(posi != null)
           {
               ListPropiedadControl.remove(posi);
-              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificara El Socio!'));
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Modificará El Controlante!'));
               mostrarTablaControlantes = false;
               disbotControlantes = false;
           	  total2=0;
@@ -1299,7 +1309,7 @@ public class ControllerPantJuridProduc {
           if(pos != null)
           {
               ListPropiedadControl.remove(pos);
-              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se eliminó El Socio!'));
+              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se eliminó El Controlante!'));
               mostrarTablaControlantes = false;
               disbotControlantes = false;
               total2=0;
@@ -1333,7 +1343,7 @@ public class ControllerPantJuridProduc {
               ListPropiedadControl.remove(pos);
               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se eliminó el Controlante.'));
               mostrarTablaControlantes = true;
-              propiedadControlUnicoUnico.porcentajeDiControlante = 100;
+              //propiedadControlUnicoUnico.porcentajeDiControlante = 100;
               total2=0;
           }
              
@@ -1366,6 +1376,10 @@ public class ControllerPantJuridProduc {
     
     PUBLIC VOID ModificarD()
     {	decimal total2=0;
+     	if (rolLogin == 'OFSRCU'){
+            //disCumplimiento = false;
+            validadosSocios = false;
+           }
      	if(socioUnico !=null){total2=socioUnico.POR_PART_DIRECT!=null ?decimal.valueOf(socioUnico.POR_PART_DIRECT):0;}
          try
          { integer posi;
@@ -1413,6 +1427,7 @@ public class ControllerPantJuridProduc {
                      ELSE
                      {
                          FATCASocio = false; 
+                         pcFATCA = false;
                      }
                      if (socioUnico.FATCANCSocio == 'S')
                      {
@@ -5870,6 +5885,10 @@ public class ControllerPantJuridProduc {
     public void buscarInfoCuenta(){
        try{	
            limpiar();
+           if (rolLogin == 'OFSRCU'){
+            disCumplimiento = false;
+            validadosControlantes = false;
+           }
             string temporal = pc_codCuenta;
         	ClassPantJuridicoProduc claseEnvio = new ClassPantJuridicoProduc();
         	ClassPantJuridicoProduc fcsd = APIClienteJuridico.ConsultaInfoCliente(MostrarCUENTT);
@@ -6020,7 +6039,9 @@ public class ControllerPantJuridProduc {
                    pcNombreempl = fcsd.pcNombreempl;
                 }
                 
-                 IF (fcsd.pcAPNFD =='S') { pcAPNFDSI = TRUE;
+                 IF (fcsd.pcAPNFD =='S') { 
+                     pcAPNFDSI = TRUE;
+                                          
                 }
                 else
                 {
@@ -6496,7 +6517,7 @@ public class ControllerPantJuridProduc {
     }
     
     public void buscarInfoCuentaC(){
-       try{	
+       try{
            limpiar(); 
            string temporal = MostrarCUENTT;
             ClassPantJuridicoProduc claseEnvio = new ClassPantJuridicoProduc();
@@ -7172,7 +7193,9 @@ public class ControllerPantJuridProduc {
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
                 //}
                 /*cargo politico*/
-                IF (fcsd.pcEjerce_Cargo_Publico =='S')   { OcultaCarSI_1 = TRUE;
+                IF (fcsd.pcEjerce_Cargo_Publico =='S'){ 
+                    OcultaCarSI_1 = TRUE;
+                    
                 }
                 else
                 {

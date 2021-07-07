@@ -26,7 +26,7 @@ public class testPromociones3 {
         pais = new Pais_R__c();
         pais.codigo__c = '123';
         pais.nombre__c = 'Pais Name';
-        pais.ActivoAfiliacionExtranjero__C = true;
+        //pais.ActivoAfiliacionExtranjero__C = true;
         insert pais;
         
         Departamentos__c dep =new Departamentos__c();
@@ -35,6 +35,11 @@ public class testPromociones3 {
         dep.Name = 'Nombre D';
         dep.Departamento__c = '123';
         insert dep;
+        
+        Usuarios_para_asignacion_Casos_SAC__c usuarioAS = new Usuarios_para_asignacion_Casos_SAC__c();
+        usuarioAS.Usuario__c = userInfo.getUserId();
+        usuarioAS.Objeto__c = 'Lead';
+        insert usuarioAS;
         
         ApexPages.currentPage().getParameters().put('idPage:theForm:Fpais','123');
         ControllerPromociones3 controlador = new ControllerPromociones3();

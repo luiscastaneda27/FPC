@@ -48,6 +48,7 @@
                     <apex:outputField value="{!PreVenta__c.LeadSource__c}" />
                     <apex:outputField value="{!PreVenta__c.Email__c}"/>
                     <apex:outputField value="{!PreVenta__c.Telefono_actual__c}"/>
+                    <apex:outputField value="{!PreVenta__c.Pais_Residencia__c}" rendered="{!PreVenta__c.Pais_Residencia__c != null}" />
                     <apex:outputField value="{!PreVenta__c.Departamento__c}"/>
                     <apex:outputField value="{!PreVenta__c.Motivo_Contacto__c}"/>
                     <apex:outputField value="{!PreVenta__c.Monto_inicial_probable__c}"/>

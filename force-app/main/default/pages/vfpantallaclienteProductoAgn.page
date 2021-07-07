@@ -3916,7 +3916,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             
                                                             <TD>
-                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiariosC,tablaBeneModificarC,infoAfiliado, pantProductosP, BTNGuardar,idShowBeneficiciariosCon" status="status" />
+                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneModificarC,tablaBeneficiariosC,infoAfiliado,pantProductosP,BTNGuardar,idShowBeneficiciariosCon,datodBene" status="status" />
                                                                 <!--
 <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                                              
@@ -4281,7 +4281,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                     <apex:actionFunction action="{!llenarCausas}" name="llenarCausas" /> 
                     <apex:actionFunction action="{!llenarNacionalidad}" name="llenarNacionalidad" />
                     <apex:actionFunction action="{!llenarDepartamento}" name="llenarDepartamento" reRender="Depto" status="status" />
-                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici" status="status"/>
+                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici,colon" status="status"/>
                     <apex:actionFunction action="{!llenarColonia}" name="llenarColonia" reRender="colon" status="status"/>  
                     <!--
 <apex:actionFunction action="{!buscarColectiva}" name="buscarColectiva"/>

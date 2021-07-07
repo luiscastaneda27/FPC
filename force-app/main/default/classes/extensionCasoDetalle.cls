@@ -111,8 +111,25 @@ public class extensionCasoDetalle {
     Public String Nueva_fecha_aporte {get;set;}
     Public Boolean Fechas_disponibles {get;set;}
     
+    public string bancoVal {get;set;}
+    
+    public SelectOption[] BANCO { 
+        public get;
+        private set;
+    }
+    
+    public void llenarBANCO() {
+        this.BANCO = new SelectOption[]{};                
+        this.BANCO.add(new SelectOption('','--Ninguno--'));    
+        this.BANCO.add(new SelectOption('28','Ficohsa'));
+        this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
+    }
+    
     public extensionCasoDetalle(ApexPages.StandardController controller) {
-      
+        //Inicio - Se usa en controllerPortalFPC
+        llenarBANCO();
+        //Fin - Se usa en controllerPortalFPC
+        
         montoaRetirar = 0.00; montoPatOrd = 0.00; montoPatExtOrd = 0.00; montoPerOrd = 0.00; montoPerExtOrd = 0.00; porcCobroIndiv = 0.00; aplicaComi = false;
     
         CasoSTD = (Case)controller.getRecord();
@@ -1285,6 +1302,11 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             }
             
             if(cTipoCaso.aumDisAporte) { 
+                
+                if(bancoVal <> Null) {
+                	detalleCaso.Banco__c = bancoVal;
+                }
+                
                 System.debug('Id Cuenta: '+idCuenta + '---' + 'Forma de Aportación: '+cuentaCliente.Forma_Aportacion__c);
                 List<Cuentas__c> cuentaClie = [Select Id, Forma_Aportacion__c,Codigo__C From Cuentas__c Where Id =: idCuenta Limit 1];
                 System.debug('cuentaClie: '+cuentaClie);
@@ -1381,7 +1403,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         upsert cuentasCaso;
                     }
                     
-                }else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
+                } else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
     
                     if(detalleCaso.Nuevo_canal_aporte__c == 'TA' /*|| detalleCaso.Banco__c == '28'*/) {
                         if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
@@ -1694,6 +1716,14 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                 solicitud = AFPCCasos.upsertCaso(caso);
                             }
                         }
+                        
+                        if(detalleCaso.Nuevo_canal_aporte__c == 'TAOB' || detalleCaso.Banco__c == 'Otros Bancos') {
+                            if(detalleCaso.Tipo_Operacion__c == 'A7') {
+                                    caso.DAU_aprobacion__c = false;    
+                            } 
+                            solicitud = AFPCCasos.upsertCaso(caso);
+                        }
+                        
                     }
                     //  system.debug('Se metio sin querer'+ cTipoCaso.otros+'   '+ cTipoCaso.reposicionCarnet +'  '+caso.Origin  );
                     if(((cTipoCaso.otros || cTipoCaso.reposicionCarnet) && caso.Origin != 'Agencias_Banco') || test.isRunningTest() ) {

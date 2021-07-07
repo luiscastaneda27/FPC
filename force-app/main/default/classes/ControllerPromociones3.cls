@@ -27,7 +27,7 @@ public without sharing class ControllerPromociones3 {
         system.debug('pais: '+pais);
         listDepartamento= new list<selectoption>();
         listDepartamento.add(new selectoption('0', ' --Ninguno-- '));   
-        for( Departamentos__c c:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais]){
+        for( Departamentos__c c:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais order by Departamento__c asc]){
             listDepartamento.add(new selectoption(c.Departamento__c,c.Departamento__c));
         }   
     }
@@ -106,6 +106,9 @@ public without sharing class ControllerPromociones3 {
                 candidato.F_Estado__c = itemD.Id;
                 insert candidato;  
             }*/
+            Usuarios_para_asignacion_Casos_SAC__c usuarioAsig = [Select Id, usuario__C, Ultimo_Caso_Asignado__c
+                                                             from Usuarios_para_asignacion_Casos_SAC__c where Objeto__c = 'Lead' And Usuario__r.IsActive = true
+                                                             order by Ultimo_Caso_Asignado__c  asc limit 1];
             Pais_R__c itemP = [SELECT id, name, nombre__c, codigo__c from Pais_R__c where codigo__c =: pais];
             
             Departamentos__c itemD = [select id,Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pais AND Departamento__c =: depto];
@@ -121,7 +124,10 @@ public without sharing class ControllerPromociones3 {
             candidato.Pais_Residencia__c = itemP.Name;
             //fin
             candidato.F_Estado__c = itemD.Id;
+            candidato.OwnerId = usuarioAsig.usuario__C;
             insert candidato; 
+            usuarioAsig.Ultimo_Caso_Asignado__c = system.now();
+            update usuarioAsig;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Datos guardados correctamente')); 
             reiniciar(); 
         }catch (exception e){
