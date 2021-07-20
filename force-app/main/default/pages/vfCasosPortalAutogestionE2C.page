@@ -823,14 +823,17 @@ function validacionFormTel(e, field) {
                                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="Frecuencia:" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                        <apex:inputField styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}" value="{!detalleCaso.Frecuencia__c}" />
+                                        <apex:selectList styleclass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" Id="Frecuencia" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A6')}" size="1" value="{!frecuenciaVal}">
+                                            <apex:selectOptions value="{!FRECUENCIA}"/>
+                                        </apex:selectList>
+                                        <apex:inputField id="Frecuencia2" styleClass="margin-bottom-0-5x100 custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='PL', detallecaso.Nuevo_canal_aporte__c='AH', detallecaso.Tipo_Operacion__c='A5')}" value="{!detalleCaso.Frecuencia__c}" />
                                     </div>
                                     
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Tipo de Tarjeta:" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                        <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" />
+                                        <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" />
                                     </div>
                                     
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
@@ -845,7 +848,7 @@ function validacionFormTel(e, field) {
                                         <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Nombre Tarjeta Habiente:" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                        <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" />
+                                        <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" />
                                     </div>
                                     
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
@@ -911,6 +914,13 @@ function validacionFormTel(e, field) {
                                                 <apex:param value="{!dateTemp}" />
                                             </apex:outputText>
                                         </span>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                        <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB')))}"  value="Borrar cuotas pendientes:" />
+                                    </div>  
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                        <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB')))}"  value="{!detalleCaso.DAU_Borrar_Cuotas__c}" />
                                     </div>
                                 </div>
                             </apex:outputPanel>

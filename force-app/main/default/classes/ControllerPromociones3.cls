@@ -39,10 +39,10 @@ public without sharing class ControllerPromociones3 {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,pais == '0' ? 'Debe seleccionar un País ' : 'Debe seleccionar un Estado/Departamento '));
                 return;    
             }            
-            if(candidato.Phone.length() > 8 && pais == '052') { 
+           /* if(candidato.Phone.length() > 8 && pais == '052') { 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Móvil excede la cantidad de 8 caracteres permitidos ')); 
                 return;    
-            }
+            }*/
             /*if(candidato.Telefono_Trabajo__c != null && candidato.Telefono_Trabajo__c.length() > 8){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Trabajo excede la cantidad de 8 caracteres permitidos '));
                 return ;
