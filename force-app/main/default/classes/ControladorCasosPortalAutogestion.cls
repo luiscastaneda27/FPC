@@ -41,6 +41,19 @@ public without sharing class ControladorCasosPortalAutogestion {
         this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
     }
     
+    public string frecuenciaVal {get;set;}
+    
+    public SelectOption[] FRECUENCIA { 
+        public get;
+        private set;
+    }
+    
+    public void llenarFRECUENCIA() {
+        this.FRECUENCIA = new SelectOption[]{};                
+        this.FRECUENCIA.add(new SelectOption('','--Ninguno--'));    
+        this.FRECUENCIA.add(new SelectOption('M','Mensual'));
+    }
+    
     SolicitudCaso solicitud;
     
     public Date dateTemp {
@@ -68,6 +81,7 @@ public without sharing class ControladorCasosPortalAutogestion {
     public controladorCasosPortalAutogestion() {
         try {
             llenarBANCO();
+            llenarFRECUENCIA();
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
             system.debug('Parametro Recibido: '+idCLiente);
             //idCliente = '0801198801163'; 
@@ -466,6 +480,9 @@ public without sharing class ControladorCasosPortalAutogestion {
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
                     if(bancoVal <> Null) {
                     	detalleCaso.Banco__c = bancoVal;
+                    }
+                    if(frecuenciaVal <> Null) {
+                    	detalleCaso.Frecuencia__c = frecuenciaVal;
                     }
                     insertDetalle = true;
                 }

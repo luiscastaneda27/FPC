@@ -266,7 +266,7 @@ trigger enviarASysde on Case (before update) {
                     } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'TAOB' || lstDetCase[0].Banco__c == 'Otros Bancos') {
                         System.debug('Entra 5');
                         DAU_GestionesBac.execute(item.Id, ''); 
-                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || (lstDetCase[0].Tipo_Operacion__c == 'A2' && lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH')) {
+                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') {
                         System.debug('Entra 6');
                         ControllerServiciosCuentaAhorro.execute(item.id);  
                     } else if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3') {

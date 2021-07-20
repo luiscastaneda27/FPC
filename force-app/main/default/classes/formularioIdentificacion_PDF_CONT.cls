@@ -53,8 +53,7 @@ public class formularioIdentificacion_PDF_CONT {
     public CPAWP cpa{get;set;}
     public Decimal comiSaldo {get;set;}
     public Decimal comiAporte {get;set;}
-    public List<beneficiario> ListBeneficiariosC {get;set;}
-    
+
     public formularioIdentificacion_PDF_CONT(){   
         fechaform= date.today();
         try{
@@ -89,17 +88,6 @@ public class formularioIdentificacion_PDF_CONT {
                 }
                 info.ListBeneficiarios=ltem;
             }
-            List<beneficiario> ltemD=new List<beneficiario>();
-            List<beneficiario> ltemC=new List<beneficiario>();
-            for(Integer i=0;i<info.ListBeneficiarios.size();i++){
-                if(info.ListBeneficiarios[i].tipoBeneficiario == 'D'){
-                    ltemD.add(info.ListBeneficiarios[i]);
-                }else if(info.ListBeneficiarios[i].tipoBeneficiario == 'C') {
-                    ltemC.add(info.ListBeneficiarios[i]);
-                }
-            }
-            info.ListBeneficiarios=ltemD;
-            ListBeneficiariosC=ltemC;
             system.debug('Beneficiarios' + info.ListBeneficiarios);
             
             if(!(info.ListDebidaDil!=null&&info.ListDebidaDil.size()>0)){

@@ -91,20 +91,7 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                     vcaso[0].Enviar_aprobacion_AD__c = true; 
                     update vcaso;
                 } 
-                
-                /*if(dt[0].Tipo_Operacion__c == 'A7' && dt[0].Caso__r.ParentId <> Null) {
-                    System.debug('Se actualiza el caso automático de Cancelación');
-                    cs[0].DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(cs[0].Id, dt[0].Cuenta__r.Codigo__c);
-                    Update cs;
-                	updateCase.wrapperClass wc = new updateCase.wrapperClass();
-                    wc = updateCase.validarIdentidad(cs[0].Id, cs[0].DAU_Tarjeta_de_Sysde__c, cs[0].Account.Identificacion__c);
-                    System.debug('validar Identidad: '+wc);
-                    cs[0].DAU_Identidad__c = wc.DAU_Identidad;
-                    cs[0].DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
-                    cs[0].DAU_aprobacion__c = true;
-                    Update cs;
-                }*/
-                
+                               
             }
         }
     }

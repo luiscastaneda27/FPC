@@ -131,7 +131,7 @@ public class DAU_GestionesBac {
 			request.setBody(cons);	
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            //respuesta = 'Débito modificado correctamente';
+            //respuesta = 'Débito creado correctamente'; 
             system.debug('respuesta: '+respuesta);
             
             if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente') {

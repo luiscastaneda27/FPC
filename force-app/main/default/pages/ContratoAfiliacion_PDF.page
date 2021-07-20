@@ -1307,7 +1307,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <apex:repeat value="{!ListBeneficiariosC}" var="benC" >
+                            <apex:repeat value="{!info.ListBeneficiariosC}" var="benC" >
                                 <tr>
                                     <td>{!benC.primerNombre}&nbsp;</td>
                                     <td>{!benC.segundoNombre}</td>

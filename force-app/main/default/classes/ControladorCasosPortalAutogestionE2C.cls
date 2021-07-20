@@ -79,6 +79,19 @@ public class ControladorCasosPortalAutogestionE2C {
         this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
     }
     
+    public string frecuenciaVal {get;set;}
+    
+    public SelectOption[] FRECUENCIA { 
+        public get;
+        private set;
+    }
+    
+    public void llenarFRECUENCIA() {
+        this.FRECUENCIA = new SelectOption[]{};                
+        this.FRECUENCIA.add(new SelectOption('','--Ninguno--'));    
+        this.FRECUENCIA.add(new SelectOption('M','Mensual'));
+    }
+    
     //Fin nuevo 4/05/2020
     
     public ControladorCasosPortalAutogestionE2C(ApexPages.StandardController controller) {
@@ -113,6 +126,7 @@ public class ControladorCasosPortalAutogestionE2C {
         try { 
             
             llenarBANCO();
+            llenarFRECUENCIA();
             
             disabledSelect = true; disabledSelect2 = true; noRecibeToken = false; styleDiv = 'display:none;'; styleIngresaToken = 'display:none;'; styleNumCel = 'display:none;';
             
@@ -953,6 +967,9 @@ public class ControladorCasosPortalAutogestionE2C {
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode; 
                     if(bancoVal <> Null) {
                     	detalleCaso.Banco__c = bancoVal;
+                    }
+                    if(frecuenciaVal <> Null) {
+                    	detalleCaso.Frecuencia__c = frecuenciaVal;
                     }
                     insertDetalle = true; 
                 } 

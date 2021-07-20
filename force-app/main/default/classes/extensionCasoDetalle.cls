@@ -1180,7 +1180,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             for(SelectOption item:listCuentas){
                 String codecuenta = item.getLabel();
                 codecuenta = codecuenta.contains(' ') ? codecuenta.split(' ')[0] : item.getLabel();
-                if(item.getValue() == idCuenta &&!AumentoDisminucionHelper.verifiacarEstadoCuenta(codecuenta)){
+                if(item.getValue() == idCuenta && !AumentoDisminucionHelper.verifiacarEstadoCuenta(codecuenta)){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
                     return ;
                 }
@@ -1304,7 +1304,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             if(cTipoCaso.aumDisAporte) { 
                 
                 if(bancoVal <> Null) {
-                	detalleCaso.Banco__c = bancoVal;
+                    detalleCaso.Banco__c = bancoVal;
                 }
                 
                 System.debug('Id Cuenta: '+idCuenta + '---' + 'Forma de Aportación: '+cuentaCliente.Forma_Aportacion__c);
@@ -1405,7 +1405,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                     
                 } else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
     
-                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' /*|| detalleCaso.Banco__c == '28'*/) {
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Nuevo_canal_aporte__c == 'AH' /*|| detalleCaso.Banco__c == '28'*/) {
                         if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1662,7 +1662,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             }
                             solicitud = AFPCCasos.upsertCaso(caso);
                         }   
-                        if(detallecaso.Nuevo_canal_aporte__c == 'TA' && (detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8')) {                     
+                        if((detallecaso.Nuevo_canal_aporte__c == 'AH' && detalleCaso.Tipo_Operacion__c == 'A8') || (detallecaso.Nuevo_canal_aporte__c == 'TA' && (detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8'))) {                     
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             System.debug('Caso.Id: '+Caso.Id+'-detalleCaso.N_Cuenta_Bancaria__c: '+detalleCaso.N_Cuenta_Bancaria__c+'-Identidad: '+Identidad);
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1913,6 +1913,11 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
     public void verCaso(){
         try{
             system.debug('Entro al ver');
+            system.debug('Id Cuenta: '+idCuenta);
+            if(idCuenta != Null) {
+            	cuentaCliente = mapCuentas.get(idCuenta);
+            	System.debug('Forma de Aportación de la Cuenta: '+cuentaCliente.Forma_Aportacion__c);
+            }    
             if(idCaso !=null){
                 Caso = [Select Status, Priority, Origin, Mostrar_Asignar__C,CaseNumber, Type,Subject, CreatedDate, RecordTypeID,RecordType.DeveloperName,
                         Description,Lugar_Nacimiento__c,account.Departamento_Residencia2__c ,Nacionalidad__c,Estado_Civil__c,Telefono_Casa__c,Telefono_Trabajo__c,Telefono_Movil__c,

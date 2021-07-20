@@ -620,7 +620,7 @@
                                           <table class="chart" width="100%" border="0" cellspacing="0" cellpadding="0">
                                           <tr>
                                             <td scope="col">
-                                                <img src = "{!$Resource.PruebaLogo}" /> 
+                                                <img src = "{!$Resource.LogoEstadoCuenta}" /> 
                                                <!--  <img id="publicidad" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002wU6z&oid=00Dj0000001rVac&lastMod=1539276939000" /> -->
                                                  <!--img id="publicidad" src="https://ficohsafpc--fpc32--c.cs40.visual.force.com/resource/1625427473000/Pruebas?" /-->
                                             </td>
