@@ -209,13 +209,10 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 //Verifica si es cuenta colectiva
                 // esColectiva = cuenta.Colectiva__c;
                 // }
-                
+                list<String> tipoDeResgitros = label.TipoCasoPortalAutogestion.split(',');
                 //boolean esColectiva = [Select Colectiva__c, CurrencyIsoCode from cuentas__c where id = :idCuenta].Colectiva__c;
-                for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' Order By name ASC]) {
-                    if(item.developerName == 'Estados_Cuenta' || item.developerName == 'Constancia' ||
-                       item.developerName == 'Aumento_Disminucion_Aportes' 
-                       || item.developerName == 'Actualizacion_informacion'
-                       || item.developerName == 'Reposicion_Carnet') {
+                for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' AND isactive = true Order By name ASC]) {
+                    if(tipoDeResgitros.contains(item.developerName)) {
                            if(item.developerName != 'Aumento_Disminucion_Aportes') {
                                listTipoCaso.add(new SelectOption(item.id, item.name));
                            } else if(cuenta.cuenta_colectiva2__C == null) {

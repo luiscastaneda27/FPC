@@ -441,7 +441,6 @@ public class aSysdePortalEmpresarial {
             for(integer i=0; i<todos.size(); i++)
             {
                 individual = new list<string>();
-                integer g=0;
                 nueva = new classAportesPlanilla();
                 string gt=todos[i];
                 individual=gt.split(',');
@@ -451,57 +450,45 @@ public class aSysdePortalEmpresarial {
                 nueva.cuentaColectiva =individual[2];
                 nueva.rezago= rezago;
                 nueva.codigoReferencia = codigo;
-                //nueva.cuenta=individual[3];
+                nueva.cuenta=individual[3];
                 //nueva.codigoCuenta=integer.valueOf(individual[4]);
                 nueva.codigoMoneda=individual[5];
-                boolean bande=false;
-                if(decimal.valueOf(individual[6])>0)
-                {
-                   nueva.aportePersonalVoluntario=decimal.valueOf(individual[6]);
-                    g=5;
-                   bande=true; 
+                
+                boolean bandera = false;
+                if(decimal.valueOf(individual[6]) > 0){
+                    nueva.aportePersonalVoluntario=decimal.valueOf(individual[6]);
+                    bandera = true; 
                 }
-                if(decimal.valueOf(individual[7])>0)
-                {
-                     nueva.aportePatronalVoluntario=decimal.valueOf(individual[7]); 
-                    g=5;
-                    bande=true;
+                if(decimal.valueOf(individual[7]) > 0) {
+                    nueva.aportePatronalVoluntario=decimal.valueOf(individual[7]); 
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[8])>0)
-                {
-                      nueva.aportePersonalObligatorio=decimal.valueOf(individual[8]);
-                    g=5;
+                if(decimal.valueOf(individual[8]) > 0) {
+                    nueva.aportePersonalObligatorio=decimal.valueOf(individual[8]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[9])>0)
-                {
-                      nueva.aportePatronalObligatorio=decimal.valueOf(individual[9]);
-                    g=5;
+                if(decimal.valueOf(individual[9]) > 0) {
+                    nueva.aportePatronalObligatorio=decimal.valueOf(individual[9]);
+                    bandera = true;
                 }
                 //
-                if(decimal.valueOf(individual[10])>0)
-                {
-                      nueva.aportePersonalExtraordinario=decimal.valueOf(individual[10]);
-                    g=5;
+                if(decimal.valueOf(individual[10]) > 0) {
+                    nueva.aportePersonalExtraordinario=decimal.valueOf(individual[10]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[11])>0)
-                {
-                      nueva.aportePatronalExtraordinario=decimal.valueOf(individual[11]);
-                    g=5;
+                if(decimal.valueOf(individual[11]) > 0){
+                    nueva.aportePatronalExtraordinario=decimal.valueOf(individual[11]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[12])>0)
-                {
-                      nueva.aporteSeguroVida=decimal.valueOf(individual[12]);
-                    g=5;
+                if(decimal.valueOf(individual[12]) > 0){
+                    nueva.aporteSeguroVida=decimal.valueOf(individual[12]);
+                    bandera = true;
                 }
-                //
-                if(bande)
-                {
-                    nueva.cuenta=individual[3];
-                }
+                
                 nueva.periodoAporte=periodoaporte;
                 nueva.fechaRecaudo=fecha;
-                if(g>0)
-                {
+                
+                if(bandera)  {
                     claseenvio.add(nueva); 
                 }
                

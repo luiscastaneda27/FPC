@@ -259,5 +259,5 @@ trigger enviarASysde on Case (before update) {
             }
         }
         
-    }      
+    }    
 }
