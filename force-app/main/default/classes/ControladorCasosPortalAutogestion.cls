@@ -224,7 +224,7 @@ public without sharing class ControladorCasosPortalAutogestion {
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
                 cuenta = [Select Id, Name, Colectiva__c, Codigo__c, Cliente__r.Name, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
-                          Forma_Aportacion__c, Tipo_Fondo__c from cuentas__c where id = :idCuenta];
+                          Forma_Aportacion__c, Tipo_Fondo__c, Producto__c from cuentas__c where id = :idCuenta];
                 if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
                     idCuenta = '--';
@@ -240,12 +240,10 @@ public without sharing class ControladorCasosPortalAutogestion {
                 
                 
                 
+                list<String> tipoDeResgitros = label.TipoCasoPortalAutogestion.split(',');
                 //boolean esColectiva = [Select Colectiva__c, CurrencyIsoCode from cuentas__c where id = :idCuenta].Colectiva__c;
-                for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' Order By name ASC]) {
-                    if(item.developerName == 'Estados_Cuenta' || item.developerName == 'Constancia' ||
-                       item.developerName == 'Aumento_Disminucion_Aportes' 
-                       || item.developerName == 'Actualizacion_informacion'
-                       || item.developerName == 'Reposicion_Carnet') {
+                for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' AND isactive = true Order By name ASC]) {
+                    if(tipoDeResgitros.contains(item.developerName)) {
                            if(item.developerName != 'Aumento_Disminucion_Aportes') {
                                listTipoCaso.add(new SelectOption(item.id, item.name));
                            } else if(cuenta.cuenta_colectiva2__C == null) {
@@ -488,7 +486,22 @@ public without sharing class ControladorCasosPortalAutogestion {
                 }
                 // system.debug('Antes de meterse: '+ cuenta.Forma_Aportacion__c);
                 if(cTipoCaso.aumDisAporte && (detallecaso.Banco__c == 'Otros Bancos' || detallecaso.Nuevo_canal_aporte__c == 'TAOB')) {
-                	if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A3' || detallecaso.Tipo_Operacion__c == 'A4' || detallecaso.Tipo_Operacion__c == 'A6') {
+                    if(detallecaso.Tipo_Operacion__c == 'A6') {
+                    	caso.Archivo_Adjunto__c = true;
+                        caso.Enviar_aprobacion_AD__c = true;
+                        caso.DAU_aprobacion__c = false;
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                            if(solicitud.solicitudExitosa){
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                            }else{
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                            }
+                        }    
+                    }
+                	if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A3' || detallecaso.Tipo_Operacion__c == 'A4') {
                         caso.Archivo_Adjunto__c = true;
                         caso.Status = 'Cerrado';
                         caso.Aprobado__c = True;
@@ -623,7 +636,57 @@ public without sharing class ControladorCasosPortalAutogestion {
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
                         }                                   
                     }
+                    if(detallecaso.Nuevo_canal_aporte__c == 'AH' || cuenta.Forma_Aportacion__c == 'AH') {
+                    	if(detallecaso.Tipo_Operacion__c == 'A8' || detallecaso.Tipo_Operacion__c == 'A3') {
+                            FieldsAHManagement fields = new FieldsAHManagement();
+                            fields = ControllerValidateIdentityAH.execute(detalleCaso.N_Cuenta_Bancaria__c);
+                            System.debug('fields: '+fields.CURRENCY_VAL);
+                            List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuenta.Producto__c];
+                            System.debug('prod: '+prod[0].CurrencyIsoCode);
+                            if(fields.CURRENCY_VAL != prod[0].CurrencyIsoCode) {
+                                caso.addError('La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque');	    
+                            } else {
+                                caso.DAU_Identidad__c = fields.LEGAL_ID;  
+                                System.debug('Identidades: '+fields.LEGAL_ID+'---'+caso.Account.Identificacion__c);
+                                if(fields.LEGAL_ID != caso.Account.Identificacion__c) {
+                                    caso.Archivo_Adjunto__c = true;
+                                    caso.Viene_Portal_Autogestion__c = false;
+                                    caso.Enviar_aprobacion_AD__c = true;
+                                    caso.DAU_aprobacion__c = false;
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa){
+                                        solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                                        if(solicitud.solicitudExitosa){
+                                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                                        }else{
+                                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                        }
+                                    }
+                                } else {
+                                    caso.Archivo_Adjunto__c = true;
+                                    caso.Reason = 'Otro';
+                                    caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa){
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    }else{
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                    }
+                                }
+                            }
+                        }
+                        solicitud = new SolicitudCaso();
+                        solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                        }	
+                    }                    
                 }
+                
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet) {
                     Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c();
                     if(cTipoCaso.otros){

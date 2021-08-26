@@ -459,7 +459,7 @@
                                                 <apex:inputText styleclass="slds-input" value="{!detalleCaso.N_Cuenta_Bancaria__c}" /> 
                                             </apex:outputPanel>                             
                                             
-                                            <apex:outputPanel id="dateField" rendered="{!If(OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}">
+                                            <apex:outputPanel id="dateField" rendered="{!If(OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Tipo_Operacion__c = 'A8'),true,false)}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Nueva fecha de aporte</label>
                                                 <!-- apex:input type="date" value="{!FechaAporte}" styleclass="slds-input" -->

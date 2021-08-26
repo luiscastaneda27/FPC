@@ -1405,7 +1405,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                     
                 } else if(cTipoCaso.aumDisAporte && saveTrue == true) {                                                           
     
-                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' || detalleCaso.Nuevo_canal_aporte__c == 'AH' /*|| detalleCaso.Banco__c == '28'*/) {
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'TA' /*|| detalleCaso.Nuevo_canal_aporte__c == 'AH' || detalleCaso.Banco__c == '28'*/) {
                         if((detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8') && caso.DAU_No_Cuenta__c == Null) {
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1466,8 +1466,35 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         // Call method to publish events
                         List<Database.SaveResult> results = EventBus.publish(Logs);
                     }
-                    update Caso;    
-                    upsert detalleCaso;
+                    if(detalleCaso.Nuevo_canal_aporte__c == 'AH' || cuentaCLiente.Forma_Aportacion__c == 'AH') {
+                        if(detalleCaso.Tipo_Operacion__c == 'A7') {
+                            System.debug('Cancelación AH');
+                            caso.DAU_aprobacion__c = false; 
+                        }
+                    	if((detalleCaso.Tipo_Operacion__c == 'A8' || detalleCaso.Tipo_Operacion__c == 'A3') /*&& caso.DAU_Identidad__c == Null*/) {
+                            FieldsAHManagement fields = new FieldsAHManagement();
+                            fields = ControllerValidateIdentityAH.execute(detalleCaso.N_Cuenta_Bancaria__c);
+                            System.debug('fields: '+fields.CURRENCY_VAL);
+                            List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuentaCliente.Producto__c];
+                            System.debug('prod: '+prod[0].CurrencyIsoCode);
+                            if(fields.CURRENCY_VAL != prod[0].CurrencyIsoCode) {
+                                saveTrue = false;
+                            	caso.addError('La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque');	    
+                            } else {
+                            	caso.DAU_Identidad__c = fields.LEGAL_ID;  
+                                System.debug('Identidades: '+fields.LEGAL_ID+'---'+Caso.Account.Identificacion__c);
+                                if(fields.LEGAL_ID != Caso.Account.Identificacion__c) {
+                                	caso.DAU_aprobacion__c = false;    
+                                } else {
+                                    caso.DAU_aprobacion__c = true;
+                                }
+                            }
+                        }                            
+                    }
+                    if(saveTrue) {
+                    	update Caso;    
+                    	upsert detalleCaso;
+                    }    
                 }else if(cTipoCaso.actInformacion){
                     upsert cuentasCaso;
                     
@@ -1622,6 +1649,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             mostrarEnviarAprobacion= true;
                             solicitud = AFPCCasos.upsertCaso(caso);
                         } 
+                        
                         if(detallecaso.Tipo_Operacion__c == 'A2') {  
                             System.debug('Caso de disminución de aporte');
                             List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: mapcuentas.get(idCuenta).Producto__c];
@@ -1646,7 +1674,8 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                     solicitud = AFPCCasos.upsertCaso(caso);
                                 }
                             }    
-                        } 
+                        }
+                        
                         if(detalleCaso.Tipo_Operacion__c == 'A4' && detalleCaso.Banco__c == '28') {
                             System.debug('Cambio de Fecha de Aporte');
                             Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
@@ -1662,7 +1691,8 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             }
                             solicitud = AFPCCasos.upsertCaso(caso);
                         }   
-                        if((detallecaso.Nuevo_canal_aporte__c == 'AH' && detalleCaso.Tipo_Operacion__c == 'A8') || (detallecaso.Nuevo_canal_aporte__c == 'TA' && (detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8'))) {                     
+                        
+                        if(detallecaso.Nuevo_canal_aporte__c == 'TA' && (detalleCaso.Tipo_Operacion__c == 'A3' || detalleCaso.Tipo_Operacion__c == 'A8')) {                     
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             System.debug('Caso.Id: '+Caso.Id+'-detalleCaso.N_Cuenta_Bancaria__c: '+detalleCaso.N_Cuenta_Bancaria__c+'-Identidad: '+Identidad);
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1676,6 +1706,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                 solicitud = AFPCCasos.upsertCaso(caso);
                             }    
                         }
+                        
                         if(detalleCaso.Tipo_Operacion__c == 'A6' && detallecaso.Banco__c == '28') {                     
                             System.debug('Cambio de # Tarjeta');
                             caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, mapcuentas.get(idCuenta).Codigo__c);
@@ -1701,6 +1732,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                 }
                             }    
                         }
+                        
                         if(detalleCaso.Tipo_Operacion__c == 'A7' && detallecaso.Banco__c == '28') {
                             System.debug('Cancelación'); 
                             Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
@@ -1724,6 +1756,33 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             solicitud = AFPCCasos.upsertCaso(caso);
                         }
                         
+                        if(detalleCaso.Nuevo_canal_aporte__c == 'AH' || cuentaCLiente.Forma_Aportacion__c == 'AH') {
+                            if(detalleCaso.Tipo_Operacion__c == 'A7') {
+                                System.debug('Cancelación AH');
+                                caso.DAU_aprobacion__c = false; 
+                            }
+                            if((detalleCaso.Tipo_Operacion__c == 'A8' || detalleCaso.Tipo_Operacion__c == 'A3') /*&& caso.DAU_Identidad__c == Null*/) {
+                                FieldsAHManagement fields = new FieldsAHManagement();
+                                fields = ControllerValidateIdentityAH.execute(detalleCaso.N_Cuenta_Bancaria__c);
+                                System.debug('fields: '+fields.CURRENCY_VAL);
+                                List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuentaCliente.Producto__c];
+                                System.debug('prod: '+prod[0].CurrencyIsoCode);
+                                if(fields.CURRENCY_VAL != prod[0].CurrencyIsoCode) {
+                                    saveTrue = false;
+                                    caso.addError('La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque');	    
+                                } else {
+                                    caso.DAU_Identidad__c = fields.LEGAL_ID;  
+                                    System.debug('Identidades: '+fields.LEGAL_ID+'---'+Identidad);
+                                    if(fields.LEGAL_ID != Identidad) {
+                                        caso.DAU_aprobacion__c = false;
+                                        caso.Enviar_aprobacion_AD__c = true;
+                                    } else {
+                                        caso.DAU_aprobacion__c = true;
+                                    }
+                                }
+                            }
+                            solicitud = AFPCCasos.upsertCaso(caso);                            
+                        }
                     }
                     //  system.debug('Se metio sin querer'+ cTipoCaso.otros+'   '+ cTipoCaso.reposicionCarnet +'  '+caso.Origin  );
                     if(((cTipoCaso.otros || cTipoCaso.reposicionCarnet) && caso.Origin != 'Agencias_Banco') || test.isRunningTest() ) {
