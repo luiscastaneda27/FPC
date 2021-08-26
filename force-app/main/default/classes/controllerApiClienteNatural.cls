@@ -251,6 +251,7 @@ public class controllerApiClienteNatural {
             respuesta = respuesta.replace(']"', ']');
             respuesta = respuesta.replace('\\"','"');
             respuesta = respuesta.replace('\"','"');
+            respuesta = respuesta.replace(':"T00:00:00"',':null');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta: ' + respuesta); 

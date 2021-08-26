@@ -101,6 +101,7 @@ public without sharing class ControllerConciliacionAprobacionM {
     public string correoEmpleado {get;set;}//correo del empleado
     Public string nombreOficial {get;set;}
     Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
+    Public String ValorCuota {get;set;}
     
     public ControllerConciliacionAprobacionM(){
         p_Mensaje_error = '';
@@ -505,8 +506,7 @@ public without sharing class ControllerConciliacionAprobacionM {
                 system.debug('Rezago Si/No: '+sino);
                 if(sino=='SI' || sino=='Si' || sino=='si' || sino=='S'){ 
                     rezagoEnvio.Tipo = 'AP';
-                    //Para obtener el valor cuota del dia 
-                    String ValorCuota = ControllerApiRezagos.ConsultaCuotaSal();
+                    //Para obtener el valor cuota del dia
                     List <String> ValorCuotaStr = new List<String>();
                     ValorCuotaStr = ValorCuota.split('},');
                     String valcuosal;
@@ -600,32 +600,36 @@ public without sharing class ControllerConciliacionAprobacionM {
                 if(RespuestaRetiro.contains('Su retiro ha sido registrado')){
                 	RespuestaRetiro='OK';
                 }else{
-                    RespuestaRetiro='Failure';
                 	System.debug('Error al aplicar Retiro: '+CuentaOrigen+' - '+Mon+' - '+MonCalc);
-                    p_Mensaje_error = 'Error al aplicar Retiro: '+CuentaOrigen+' - '+Mon+' - '+MonCalc;
+                    String m;
+                    if(Mon=='1'){m='HLN';}else{m='USD';}
+                    p_Mensaje_error = 'Error al aplicar Retiro:<br/>Cuenta : '+CuentaOrigen+ ' - Monto : '+MonCalc+' '+m+'<br/><br/>'+RespuestaRetiro;
                     MensajeErr = true;
+                    return;
                 }
             }
-
+            
             if( rezagoEnvio.Tipo == 'AD'){
                 System.debug('Ejecutamos el Metodo AD');
                 result = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);
             }
-            if(rezagoEnvio.Tipo == 'AP' && RespuestaRetiro=='OK'){
-                System.debug('Ejecutamos el Metodo AP');
-                result = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);  
-            }
-            if(result=='"OK"' || test.isRunningTest()){
-                System.debug('Ejecutamos el Metodo de la Partida Contable: '+AplicaRez.fondo+' - '+AplicaRez.valAporteCalculado+' - '+AplicaRez.codCuenta+' - '+ComDol+' - '+FechaD);
-                AplicaPartida = AplicaPartida(AplicaRez.fondo, AplicaRez.valAporteCalculado, AplicaRez.codCuenta, ComDol, FechaD);
-                if(AplicaPartida!='OK'){
-                    p_Mensaje_error = AplicaPartida;
+            if(RespuestaRetiro == 'OK'){
+                if(rezagoEnvio.Tipo == 'AP'){
+                    System.debug('Ejecutamos el Metodo AP');
+                    result = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);  
+                }
+                if(result=='"OK"' || test.isRunningTest()){
+                    System.debug('Ejecutamos el Metodo de la Partida Contable: '+AplicaRez.fondo+' - '+AplicaRez.valAporteCalculado+' - '+AplicaRez.codCuenta+' - '+ComDol+' - '+FechaD);
+                    AplicaPartida = AplicaPartida(AplicaRez.fondo, AplicaRez.valAporteCalculado, AplicaRez.codCuenta, ComDol, FechaD);
+                    if(AplicaPartida!='OK'){
+                        p_Mensaje_error = AplicaPartida;
+                        MensajeErr = true;
+                    }
+                    system.debug('Aplica Partida Result: '+AplicaPartida);
+                }else{
+                    p_Mensaje_error = 'Error al Aplicar Rezago: '+result;
                     MensajeErr = true;
                 }
-                system.debug('Aplica Partida Result: '+AplicaPartida);
-            }else{
-                p_Mensaje_error = 'Error al Aplicar Rezago: '+result;
-                MensajeErr = true;
             }
         }catch(exception ex){
             System.debug('Error al aplicar Rezago: '+ ex.getMessage() + ' Linea: ' + ex.getLineNumber());
@@ -748,8 +752,6 @@ public without sharing class ControllerConciliacionAprobacionM {
             this.Oficial = Oficial;
             this.DolarSI=DolarSI;
             this.Comprobante=Comprobante;
-            
-            
         }
     }
     
@@ -952,6 +954,7 @@ public without sharing class ControllerConciliacionAprobacionM {
     public void AprobarAporte() {    
         try{    
             //agregado 28-03-2019 - Obtiene la fecha de deposito para Actualizar la fecha de deposito
+            ValorCuota = ControllerApiRezagos.ConsultaCuotaSal();
             rezago = null;
             system.debug('01- Entramos a AprobarAporte');
             Pantalla_Aportes__c modifi = new Pantalla_Aportes__c ();	
@@ -1036,12 +1039,22 @@ public without sharing class ControllerConciliacionAprobacionM {
                             p_num_movim_sysde = resultado.p_num_movim_sysde;
                             p_nombre = resultado.p_nombre;
                             
+                            if(p_codigo_error == '0'){
+                                System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
+                                if(Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false){
+                                    BTNAplicar=true;
+                                    AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                                }else{
+                                    System.debug('Rezago NO Aplicado');
+                                }
+                            }
+                            
                             //actualizar la fecha de deposito
                             modifi = [select Fecha_Deposito__c from Pantalla_Aportes__c where Codigo_Referencia__c =: Num_CodReferenciaDenegado ];
                             modifi.Fecha_Deposito__c = fechadeposito;
                             update modifi;
                             
-                            if (p_codigo_error == '0' || test.isRunningTest()){
+                            if(p_codigo_error == '0' || test.isRunningTest()){
                                 system.debug('07 - Entra Codigo Error 0');    
                                 ListRespuesta = [select cuenta__c, Tasa__c, Tipo_MonedaN__c, Monto_Deposito__c, Fecha_Deposito__c, Tipo_SaldoN__c ,
                                                  Forma_PagoN__c, Codigo_Referencia__c, Aplica_Comision_SI__c,Codigo_Referencia_Rez__c,
@@ -1140,13 +1153,6 @@ public without sharing class ControllerConciliacionAprobacionM {
                         }
                     }
                 }
-            }
-            System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
-            if(Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false){
-                BTNAplicar=true;
-            	AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
-            }else{
-                System.debug('Rezago NO Aplicado');
             }
             IF(MensajeVF == true || MensajeErr == true){
                 System.debug('Reiniciamos al terminar AprobarAporte');
@@ -1257,13 +1263,20 @@ public without sharing class ControllerConciliacionAprobacionM {
                         p_Mensaje_error =  resultado.p_mensaje_error;   
                         p_num_movim_sysde = resultado.p_num_movim_sysde;
                         p_nombre = resultado.p_nombre;
-                        if(resultado.p_mensaje_error!='OK' && !Test.isRunningTest() ){
-                            system.debug('04- Error al aportar: '+resultado.p_mensaje_error);
-                            p_Mensaje_error = 'Error al Aprobar el aporte en el Metodo: AprobarAporte2SinComision. <br/><br/>'+p_Mensaje_error;
+                        
+                        if(p_codigo_error == '0'){
+                            System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
+                            if(Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false){
+                                BTNAplicar=true;
+                                AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                            }
+                        }else{
+                            System.debug('Rezago NO Aplicado');
+                            system.debug('Guardar Aporte Entra Codigo Error: '+p_codigo_error+' Mensaje: '+p_Mensaje_error);    
+                            p_Mensaje_error = 'Error al Guardar el Aporte en el Metodo: AprobarAporte2SinComision. <br/><br/> (Sysde) : '+p_Mensaje_error;
                             MensajeErr = true;
                             return;
                         }
-                        
                         
                         //actualizar la fecha de deposito
                         modifi = [select Fecha_Deposito__c from Pantalla_Aportes__c where Codigo_Referencia__c =: Num_CodReferenciaDenegado ];
@@ -1337,12 +1350,11 @@ public without sharing class ControllerConciliacionAprobacionM {
                                 VentanaEmergenteNo = false;
                                 MensajeVF = true;
                             }
-                        }
-                        if(Num_CodReferencia_Rez != 'Sin Registro' && MensajeErr == false && BTNAplicar != True){   
-                            BTNAplicar = True;
-                            AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago                        
                         }else{
-                            System.debug('Rezago no aplicado en AprobarAporte2SinComision');
+                            system.debug('07 - Entra Codigo Error: '+p_codigo_error+' Mensaje: '+p_Mensaje_error);    
+                            p_Mensaje_error = 'Error al Aprobar el aporte en el Metodo: AprobarAporte2SinComision. <br/>'+p_Mensaje_error;
+                            MensajeErr = true;
+                            return;
                         }
                     } 
                 }
@@ -1449,11 +1461,15 @@ public without sharing class ControllerConciliacionAprobacionM {
                         p_Mensaje_error =  resultado.p_mensaje_error;   
                         p_num_movim_sysde = resultado.p_num_movim_sysde;
                         p_nombre = resultado.p_nombre;
-                        if(resultado.p_mensaje_error!='OK'){
-                            system.debug('04- Error al aportar: '+resultado.p_mensaje_error);
-                            p_Mensaje_error='<br/>Error al Guardar Aporte: '+p_Mensaje_error;
-                            p_Mensaje_error = 'Error al Aprobar el aporte en el Metodo: CambioTasa. <br/>Mensaje: '+p_Mensaje_error;
-                            MensajeErr = true;
+                        
+                        if(p_codigo_error == '0'){
+                            System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
+                            if(Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false){
+                                BTNAplicar=true;
+                                AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                            }else{
+                                System.debug('Rezago NO Aplicado');
+                            }
                         }
                         
                         //actualizar la fecha de deposito
@@ -1521,7 +1537,11 @@ public without sharing class ControllerConciliacionAprobacionM {
                             MostrarTasa = true;
                             update ane;
                             
-                        } 
+                        }else{
+                            system.debug('07 - Entra Codigo Error: '+p_codigo_error+' Mensaje: '+p_Mensaje_error);    
+                            p_Mensaje_error = 'Error al Aprobar el aporte en el Metodo: CambioTasa. <br/>'+p_Mensaje_error;
+                            MensajeErr = true;
+                        }
                     }	                 
                     
                 }

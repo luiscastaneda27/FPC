@@ -422,9 +422,13 @@
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tipo_Tarjeta__c}" /> 
                                             </apex:outputPanel>
                                             
-                                            <apex:outputPanel rendered="{!OR(AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8'),
-                                                                        detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), detalleCaso.Tipo_Operacion__c = 'A1', detalleCaso.Tipo_Operacion__c = 'A2', 
-                                                                        detalleCaso.Tipo_Operacion__c = 'A4', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A7')}">
+                                            <apex:outputPanel rendered="{!OR(AND(OR(detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A8'),
+                                                detalleCaso.Nuevo_canal_aporte__c = 'TAOB', cuentaCliente.Forma_Aportacion__c != 'AH'), 
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A1', cuentaCliente.Forma_Aportacion__c != 'AH'),
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A2', cuentaCliente.Forma_Aportacion__c != 'AH'),                        
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A4', cuentaCliente.Forma_Aportacion__c != 'AH'), 
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A6', cuentaCliente.Forma_Aportacion__c != 'AH'),
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A7', cuentaCliente.Forma_Aportacion__c != 'AH'))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Banco</label>
                                                 <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 
@@ -455,7 +459,7 @@
                                                 <apex:inputText styleclass="slds-input" value="{!detalleCaso.N_Cuenta_Bancaria__c}" /> 
                                             </apex:outputPanel>                             
                                             
-                                            <apex:outputPanel id="dateField" rendered="{!If(OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}">
+                                            <apex:outputPanel id="dateField" rendered="{!If(OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Tipo_Operacion__c = 'A8'),true,false)}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Nueva fecha de aporte</label>
                                                 <!-- apex:input type="date" value="{!FechaAporte}" styleclass="slds-input" -->

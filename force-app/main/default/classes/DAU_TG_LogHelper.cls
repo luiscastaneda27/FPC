@@ -177,7 +177,7 @@ public class DAU_TG_LogHelper {
                         }
                     }
                     
-                } else if(detailCase[0].Nuevo_canal_aporte__c == 'AH' || (c.Tipo_de_Operacion__c == 'A2' && detailCase[0].Cuenta__r.Forma_Aportacion__c == 'AH')) {              
+                } else if(detailCase[0].Nuevo_canal_aporte__c == 'AH' || detailCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') {              
                     System.debug('Tipo AH');
                     if(st[0].DAU_EjecutarSYSDE__c == true) {
                     	aSysdeCallouts.aumentoDisminucion(c.id); 

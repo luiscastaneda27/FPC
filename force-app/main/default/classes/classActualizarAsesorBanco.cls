@@ -1,4 +1,4 @@
-public class classActualizarAsesorBanco {
+public without sharing class classActualizarAsesorBanco {
     
    // public string numDocumento {get;set;}
     public string nuevoCodAsesor {get; set;}

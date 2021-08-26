@@ -287,8 +287,9 @@ public class ControllerApiRezagos {
             
         }catch(System.CalloutException e){
             system.debug('Error de conexion: '+e.getMessage());
+            respuesta = 'Error de conexion: '+e.getMessage();
         }Catch(Exception e){
-            system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());   
+            system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());
         }
         return respuesta;
     }

@@ -243,6 +243,8 @@ trigger enviarASysde on Case (before update) {
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
                 } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
                     List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
+                    System.debug('lstDetCase: '+lstDetCase.size()+'...'+lstDetCase);
+                    System.debug('Nuevo Canal de aporte y Banco: '+lstDetCase[0].Nuevo_canal_aporte__c+'...'+lstDetCase[0].Banco__c);
                     if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
                         if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
                             System.debug('Entra 1'); 
@@ -263,13 +265,16 @@ trigger enviarASysde on Case (before update) {
                             // Call method to publish events
                             List<Database.SaveResult> results = EventBus.publish(Logs);    
                         } 
-                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'TAOB' || lstDetCase[0].Banco__c == 'Otros Bancos') {
+                    } 
+                    else if(lstDetCase[0].Nuevo_canal_aporte__c == 'TAOB' || lstDetCase[0].Banco__c == 'Otros Bancos') {
                         System.debug('Entra 5');
                         DAU_GestionesBac.execute(item.Id, ''); 
-                    } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') {
+                    } 
+                    else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') {
                         System.debug('Entra 6');
                         ControllerServiciosCuentaAhorro.execute(item.id);  
-                    } else if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3') {
+                    } 
+                    else if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3') {
                     	System.debug('Entra 7');
                         aSysdeCallouts.aumentoDisminucion(item.id); 
                     } 

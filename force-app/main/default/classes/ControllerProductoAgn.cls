@@ -1292,6 +1292,10 @@ public without sharing class ControllerProductoAgn {
                 }
                 
             }
+            if(ListDirecciones == null || ListDirecciones.size() == 0 ){          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos una dirección.'));
+                return null;    
+            }
             if( ES_Residente_EfectosMi == TRUE || ES_Residente == true||pccodpais == '053'||pccodpais == '144'||
                pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144')
             {         

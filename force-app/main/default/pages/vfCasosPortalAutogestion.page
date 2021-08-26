@@ -695,11 +695,11 @@
                                 <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.POS__c}" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6')}"  value="Monto Débito:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB')}"  value="Monto Débito:" />
                                 <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c = 'AH', detallecaso.Tipo_Operacion__c = 'A5')}"  value="Monto Débito:" />
                             </div>  
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5',detallecaso.Tipo_Operacion__c='A6')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(detallecaso.Nuevo_canal_aporte__c='AH',detallecaso.Nuevo_canal_aporte__c='TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c='A5')}"  value="{!detalleCaso.Nuevo_monto_aporte__c}" />
                             </div>
                             
                             <!-- div style="display: {!IF(OR(detallecaso.Nuevo_canal_aporte__c = 'TA', detallecaso.Nuevo_canal_aporte__c='TAOB', detallecaso.Tipo_Operacion__c = 'A6'), ' block;', ' none;')}" class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
@@ -745,10 +745,10 @@
                             </div>
                             
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB')))}"  value="Borrar cuotas pendientes:" />
+                                <apex:outputLabel styleClass="padding-left-2em fontStyle" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB',detallecaso.Nuevo_canal_aporte__c = 'AH')), detallecaso.Tipo_Operacion__c = 'A6')}"  value="Borrar cuotas pendientes:" />
                             </div>  
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB')))}"  value="{!detalleCaso.DAU_Borrar_Cuotas__c}" />
+                                <apex:inputField style="margin-bottom: 0.6%;" styleClass="custom-select-sizing padding-left-2em slds-input" rendered="{!OR(AND(detallecaso.Tipo_Operacion__c = 'A3', OR(detallecaso.Nuevo_canal_aporte__c = 'TA',detallecaso.Nuevo_canal_aporte__c = 'TAOB',detallecaso.Nuevo_canal_aporte__c = 'AH')), detallecaso.Tipo_Operacion__c = 'A6')}"  value="{!detalleCaso.DAU_Borrar_Cuotas__c}" />
                             </div>
                         </div>
                     </apex:outputPanel>

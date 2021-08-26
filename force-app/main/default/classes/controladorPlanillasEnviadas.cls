@@ -408,7 +408,7 @@ public class controladorPlanillasEnviadas {
             planilla__c planillaTemp=new planilla__C();
             planillaTemp=[select respuesta_desde_sysde_aportes__C from planilla__C where id=:Id_Planilla];
             string estadoplanilla=planillaTemp.respuesta_desde_sysde_aportes__C;
-            //system.debug('Si lo llama P: '+ todosEmpleados);
+            system.debug('todosEmpleados: '+ todosEmpleados);
             if(estadoPlanilla==null || !estadoplanilla.contains('200')){
                 if(planilla.ServicioEjecutado__c == null || planilla.ServicioEjecutado__c == 1){
                     aSysdePortalEmpresarial.EnviarAportesEmpleados(todosEmpleados, integer.valueOf(gt), datetime.newInstance(fecha.year(), fecha.month(), fecha.day()), Id_Planilla, planilla.rezago__c, planilla.Cod_Referencia__c);

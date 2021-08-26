@@ -1,0 +1,500 @@
+<apex:page cache="false" expires="0" controller="controllerpignorados"  sidebar="false" showHeader="false" 
+	applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+	
+      <head>
+	  <meta charset="utf-8" />
+	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+	  <title>Aprobación de Fondos Pignorados</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      
+	  <meta charset="utf-8" />
+	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+          
+	  <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
+    
+	  	<!-- Import the Design System style sheet -->
+	 	<apex:slds />  
+          
+
+        <style>
+         html, body{
+            	background-color: #F2F2F2;
+            }
+			#topMenuZonaTransaccional {
+			    position: relative;
+		    	width: 100%;
+		    	float: left;
+			}
+	        #drop{
+	            border:2px dashed #bbb;
+	            -moz-border-radius:5px;
+	            -webkit-border-radius:5px;
+	            border-radius:5px;
+	            padding:25px;
+	            text-align:center;
+	            font:20pt bold,"Vollkorn";color:#bbb
+	        }
+            .slds-scope {
+    			font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+	        #b64data{
+	            width:100%;
+	        }
+	        .columna1 {
+	              float:left; 
+	              width:200px;              
+	              padding-left:50px;
+	              padding-top:15px;
+	        }
+	        .columna2 {
+	              padding-top:15px;  
+	              margin-left:210px;
+	              padding-right:15px;                         
+	        }
+	        
+            #Resumen{
+            margin:0 0 0 0;
+            }
+            #Resumen .Row{
+            width:100%;
+            height:30px;
+            float:left;
+            background:#42c4dd;
+            padding:0px 10px;
+            
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            }
+            #Resumen .Row STRONG{
+            width:60%;
+            float:left;
+            font-family: "Open Sans Bold",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-weight:normal;
+            color:#FFF;
+            }
+            #Resumen .Row SPAN{
+            width:40%;
+            float:right;
+            font-family: "Open Sans Light",Helvetica,Arial,sans-serif;
+            font-size:14px;
+            line-height:30px;
+            font-variant:normal;
+            text-align:right;
+            text-transform:uppercase;
+            color:#FFF;
+            }
+            
+            .Aceptar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            .Cancelar{    
+            font-weight: bolder !important;
+            height: 28px;
+            color:white;
+            cursor: pointer;
+            border: medium none;
+            font-weight: bold;
+            position: relative;
+            background-color: #f78d1c;
+            color: #FFFFFF !important;
+            font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+            font-size: 13px;
+            padding: 5px 10px;
+            margin: 15px 0 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 28px;
+            
+            -webkit-appearance: button;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            
+            -webkit-transition: all 0.2s ease;
+            -moz-transition: 	all 0.2s ease;
+            -o-transition: 		all 0.2s ease;
+            transition: 		all 0.2s ease;
+            }
+            
+            .Confirmar:hover{
+            background-color:#fff;
+            color: #f78d1c !important;
+            -webkit-border-radius: 0px;
+            -moz-border-radius: 0px;
+            border-radius: 0px;
+            }
+            
+            
+         <!--STYLE PARA MENSAJES-->
+           
+            
+         </style>
+        
+   </head> 
+         
+   <body>
+    <div class="slds-scope" >
+        
+              
+    <apex:form >
+       
+        	 
+        <div id="topMenuZonaTransaccional">
+            <article class="slds-card slds-theme_default" style="border:0;" >
+        
+                <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                <div class="slds-card__header slds-grid" style="background-color: #F2F2F2;padding-left: 0;padding-right: 0;">
+                 
+                 <header class="slds-media slds-media_center slds-has-flexi-truncate" style="background-color: #FFFFFF;margin-bottom: 30px;padding-bottom:20px;padding-left:30px;">
+                   
+                    <div class="slds-media__figure">
+                        <h2>
+                                    <br/>
+                                    <span class="slds-text-heading_medium"> FICOHSA PENSIONES/ PANTALLA APROBACIÓN PIGNORADOS </span>
+                                    <br/>
+                                    
+                         </h2>
+                        <br/>
+                        <span class="slds-text-heading_medium" > Total de Aportes: {!total} </span>
+                       
+                     </div>
+                     
+                            <div class="slds-media__body" >
+                                    <br/>
+                                    
+                                    <br/>
+                                
+                            </div>
+                            <div style="text-align:right;padding-right:3%;">
+                                <h2>
+                                  <br/>
+                                    <span class="slds-text-heading_medium" style="color:#42C4DD;"> {!usuario}</span> 
+                                 <br/>
+                                   
+                                </h2>
+                            </div>
+                     
+                    
+              </header>
+ 					
+                <div style="height:50px;background-color: #F2F2F2;">
+			      <br/>
+                  <br/>
+                </div>
+                              
+			  </div>
+			  
+            </article>
+		
+        </div>
+      
+            
+        
+         <div id="Resumen">
+                <h3 class="Row">
+                    <strong>  LISTA DE FONDOS A APROBAR </strong>
+                    <span>
+                    </span>
+                </h3>
+        </div>
+        
+
+        <div style="height:50px;background-color: #F2F2F2;">
+			      <br/>
+                  <br/>
+           
+        </div>
+        
+        <div style="width:100%; overflow-x:scroll; height: 100%">
+            
+       
+        <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+			<thead>
+			 
+			    <tr class="slds-text-heading--label ">
+			      
+			      <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Cuenta"><strong>Código de Cuenta</strong></div>
+			      </th>  
+			      <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Pignorado"><strong>Monto Pignorado</strong></div>
+			      </th>
+			      <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha De Pignoracion"><strong>Fecha de Pignoración</strong></div>
+			      </th>
+			        <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha de Liberacion"><strong>Fecha de Liberación</strong> </div>
+			        </th>
+                     <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Numero de Prestamo"><strong>Numero de Prestamo</strong> </div>
+			        </th>
+                     <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Total Fondos"><strong>Total Fondos</strong> </div>
+			        </th>
+                    <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto de Prestamo"><strong>Monto de Prestamo</strong> </div>
+			        </th>
+                    
+                    <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Estatus"><strong>Estatus</strong> </div>
+			        </th>
+                    <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Estado"><strong>Estado</strong> </div>
+			        </th>
+                    
+                    <th scope="col">
+			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Usuario"><strong>Usuario</strong> </div>
+			        </th>
+                    
+                    <th scope="col">
+                        <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
+                    </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Denegar"><strong>Denegar</strong></div>
+                      </th>
+                    
+			    </tr>
+		  </thead>
+		  <tbody>
+          
+              <apex:repeat value="{!McontenidoPign}" var="item">
+              
+               <!--SON 7 <TD> los que se colocaran aqui para que muestre al final los dos botones de aceptar o denegar-->
+               <tr>
+               <td scope="row" data-label="Cuenta" style= "text-align: center;">
+				        <div class="slds-truncate" > 
+                   			{!item.Cuenta__c}
+                        </div>
+			   </td> 
+                <td scope="row" data-label="Monto Pignorado" style= "text-align: center;">
+				        <div class="slds-truncate" > 
+                            <apex:outputField value="{!item.Monto_Pignorado__c}" />
+                        </div>
+			   </td>  
+                 
+                <td scope="row" data-label="Fecha Pignoracion" style= "text-align: center;">
+				        <div class="slds-truncate" >   
+                        <apex:inputField type="datetime-local" id="fechapignoracion" value="{!item.Fecha_Pignoracion__c}" showDatePicker="false" styleclass="slds-input" style="height:30px; width:165px; margin-left:10px;"/>
+                        </div>
+			   </td>  
+               
+               <td scope="row" data-label="Fecha Liberacion" style= "text-align: center;">
+				        <div class="slds-truncate" >   
+                        <apex:inputField type="datetime-local" id="fechaliberacion" value="{!item.Fecha_Liberacion__c}" showDatePicker="false" styleclass="slds-input" style="height:30px; width:165px; margin-left:10px;"/>
+                        </div>
+			   </td>          
+                   
+               <td scope="row" data-label="NumeroPrestamo" style= "text-align: center;">
+				        <div class="slds-truncate" > 
+                          {!item.Numero_Prestamo__c}
+                        </div>
+			   </td>  
+                   
+               <td scope="row" data-label="Total Fondos" style= "text-align: center;">
+				        <div class="slds-truncate" > 
+                            <apex:outputField value="{!item.Total_Fondos__c}" />
+                        </div>
+			   </td>  
+                   
+               <td scope="row" data-label="Monto de Prestamo" style= "text-align: center;">
+				        <div class="slds-truncate" > 
+                   			<apex:outputField value="{!item.Monto_Prestamo__c}" />
+                        </div>
+			   </td>  
+                   
+               <td scope="row" data-label="Estatus" style= "text-align: center;">
+				        <div class="slds-truncate" >
+                   		{!item.Estatus__c}
+                   		</div>
+			   </td>      
+                       
+                   
+               <td scope="row" data-label="Estado" style= "text-align: center;">
+				        <div class="slds-truncate" >
+                   		{!item.Estado__c}
+                   	    </div>
+			   </td>
+                   
+     
+             
+                   
+               <td scope="row" data-label="Usuario" style= "text-align: center;">
+				        <div class="slds-truncate" >
+                   		{!item.Usuario__c}
+                   	    </div>
+			   </td>    
+               
+               
+    	
+              
+		
+              
+               <td  style= "text-align: center;">
+                     
+                    <div >
+                     <apex:commandLink action="{!Autorizar}" >  
+                         <apex:image value="{!$Resource.Acep}" width="40" height="40"/>
+                         <apex:param value="{!item.Id}" AssignTo="{!cod_obj}"  name="APROBACION" />  
+                     </apex:commandLink>
+                     </div>
+                	  
+              </td>
+ 
+                   
+                 <td style= "text-align: center;">
+                	
+                      <div class="slds-scope">
+                          
+                    <apex:commandLink action="{!MostrarVentanaDenegacion}">
+                          <apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
+                          <apex:param value="{!item.Id}" AssignTo="{!cod_obj}"  name="APV2DENEGACION" />  
+                          <apex:param value="{!item.Numero_Prestamo__c}" AssignTo="{!num_prest}"  name="DENEGACION" /> 	
+                    </apex:commandLink>      
+                  
+                     </div> 
+                       
+                   
+                </td>
+              </tr>
+            </apex:repeat>
+        </tbody>
+		</table>
+  </div>
+         
+ 
+        
+      <div class="slds-scope" >	
+	      	<apex:outputPanel rendered="{!DenegarImagen}"> 
+	
+                  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				    <div class="slds-modal__container">
+                       <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+       
+                      <header class="slds-modal__header">
+               
+                      	<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Fondo Pignorado</h1>			        
+	      			  </header>
+				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                              <div class="slds-form-element__row slds-text-align_center">
+                                <div class="slds-form-element slds-size_1-of-1">
+                                
+                                </div>
+                              </div>
+                      
+                            <div class="slds-form-element__group slds-text-align_center">
+                              <div class="slds-form-element__row slds-text-align_center">
+                            
+                               
+        						<apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
+             
+                              </div>
+                            </div> 
+			    		</div>
+				      <footer class="slds-modal__footer">
+				      	
+                          <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
+                          
+                        </footer>
+
+				    </div>
+			  </section>
+			  <div class="slds-backdrop slds-backdrop_open"></div>
+			
+			</apex:outputPanel>	
+       </div>  
+        
+        
+        
+      
+      <div class="slds-scope"  >	
+	      	<apex:outputPanel rendered="{!DenegarVentana}"> 
+				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				    <div class="slds-modal__container">
+                       <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+       
+                      <header class="slds-modal__header">
+               
+                      	<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Denegar Despignoración</h1>			        
+	      			  </header>
+				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                              <div class="slds-form-element__row slds-text-align_center">
+                                <div class="slds-form-element slds-size_1-of-1">
+                                
+                                </div>
+                              </div>
+                      
+                            <div class="slds-form-element__group slds-text-align_left">
+                              <div class="slds-form-element__row slds-text-align_left">
+                            <label class="slds-form-element__label"> Numero de Prestamo </label> <br/>
+						  	<apex:inputText disabled="true" value="{!num_prest}" styleclass="slds-input"   style="height:9px; width:170px; margin-left:1px; "/>
+                             <br/>
+                                  
+                         <label class="slds-form-element__label"> Motivo </label> <br/>
+						 <apex:inputTextarea styleclass="slds-input"   value="{!Motivo}"  />        
+                                  
+                              </div>
+                            </div> 
+			    		</div>
+				      <footer class="slds-modal__footer">
+				      	<apex:commandButton value="Salir" action="{!popDenegarSalir}" styleClass="slds-button slds-button_neutral" />
+                        <apex:commandButton value="Denegar"   action="{!DenegarLista}"  styleClass="slds-button slds-button_neutral" />  
+                          
+                          
+                        </footer>
+
+				    </div>
+			  </section>
+			  <div class="slds-backdrop slds-backdrop_open"></div>
+			
+			</apex:outputPanel>	
+       </div>  
+      
+        
+</apex:form>   
+      
+       </div>
+       </body>
+	
+  </html>  
+</apex:page>

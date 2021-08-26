@@ -1,4 +1,4 @@
-public class ControllerAprobacionCambioAsesorBanco {
+public without sharing class ControllerAprobacionCambioAsesorBanco {
     /*variables*/
     public List <Cambio_Asesor_Banco__c>Listdata{get;set;} 
     public string codCuenta {get;set;}

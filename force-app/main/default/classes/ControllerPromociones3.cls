@@ -1,8 +1,9 @@
 public without sharing class ControllerPromociones3 {
     public Lead candidato {get;Set;}
-    private string usuario;
-    public string pais {get; set;}
-    public string depto {get; set;}
+    private String usuario;
+    public String pais {get; set;}
+    public String depto {get; set;}
+    public Boolean existente {get; set;}
     
     //varibales Nuevas
     public List<selectoption> listPaises {get;set;}
@@ -123,9 +124,12 @@ public without sharing class ControllerPromociones3 {
             //fin
             candidato.F_Estado__c = itemD.Id;
             candidato.OwnerId = usuarioAsig.usuario__C;
-            insert candidato; 
-            usuarioAsig.Ultimo_Caso_Asignado__c = system.now();
-            update usuarioAsig;
+            existente = validarPreventaExistente(candidato.FirstName, candidato.LastName, candidato.Phone);
+            if(!existente){
+                insert candidato; 
+                usuarioAsig.Ultimo_Caso_Asignado__c = system.now();
+                update usuarioAsig;
+            }
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Su solicitud ha sido enviada. Pronto lo estaremos contactando.')); 
             //reiniciar(); 
         }catch (exception e){
@@ -147,6 +151,32 @@ public without sharing class ControllerPromociones3 {
         return respuesta.trim();
     }
     
+    public static Boolean validarPreventaExistente(String nombre, String apellido, String telefono){
+        Map<String, Preventa__c> mapPreventas = new Map<String, Preventa__c>();
+        for(Preventa__c item: 
+            [Select Owner.Name,Owner.Email, Id, Name from Preventa__c
+             Where FirstName__c = :nombre AND LastName__c =:apellido
+             AND Phone__c = :telefono limit 1]){
+                 String textoEmail = 'Estimado Asesor, '+item.Owner.Name+'.\n\n';
+                 textoEmail += 'Te informamos que el cliente '+ item.Name + ' que tienes asignado como preventa en salesforce nuevamente ha solicitado información.';
+                 textoEMail += '\n\nPor favor ponte en contacto para brindarle la información solicitada.';
+                 textoEMail += '\n\nLink de la preventa: '+claseUtil.urlSysde('Salesforce') + item.Id;
+                 Messaging.singleEmailMessage email = new Messaging.singleEmailMessage();
+                 email.setSubject('Seguimiento a Preventa en Salesforce - '+item.Name); 
+                 email.setToAddresses(new string[] {item.Owner.Email});
+                 email.setPlainTextBody(textoEMail);
+                 List<Messaging.Emailfileattachment> fileAttachments = new List<Messaging.Emailfileattachment>();
+                 OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];
+                 email.setOrgWideEmailAddressId(owea.get(0).Id);
+                 Messaging.SingleEmailMessage[] listEmail = new List<Messaging.SingleEmailMessage>(); 
+                 listEmail.add(email); 
+                 system.debug('Tamano de lista: '+listEmail.size());
+                 Messaging.SendEmailResult[] results = Messaging.sendEmail(listEmail, false);
+                 return true;
+             }
+        return false;
+    }
+    
     public void reiniciar(){      
         candidato = new Lead();
         listDepartamento= new list<selectoption>();
@@ -157,6 +187,7 @@ public without sharing class ControllerPromociones3 {
         candidato.Departamento__c  = 'N/A'; 
         pais = '0';
         depto = '0';
+        existente = false;
         
     }        
 }

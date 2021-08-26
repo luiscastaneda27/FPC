@@ -166,7 +166,7 @@
                                     </div>
                                     <!-- / CARD BODY = SECTION + TABLE -->
                                     <div class="slds-card__footer">
-                                        <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand" reRender="idPanel" status="status" rendered="{!candidato.id = null}" /> 
+                                        <apex:commandButton value="Enviar Solicitud" action="{!guardar}" styleClass="slds-button slds-button--brand" reRender="idPanel" status="status" rendered="{!AND(candidato.id = null, !existente)}" /> 
                                     </div>
                                 </apex:outputPanel>
                             </article>

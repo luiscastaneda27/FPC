@@ -63,7 +63,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web'];
                 OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com']; 
                 
-                if((casos[0].RecordType.Name == 'Reposición de Carnet' || casos[0].RecordType.Name == 'Modificación de aportes' || casos[0].RecordType.Name == 'Otros' || (casos[0].RecordType.Name == 'Constancia' && casos[0].Constancia__c == 'A4')) && casos[0].AccountId != null && casos[0].SuppliedEmail != null && (casos[0].Status == 'Nuevo' || casos[0].Status == 'Pendiente de aprobación') && casos[0].Caso_Ingresado__c == false) { 
+                if((casos[0].RecordType.Name == 'Reposición de Carnet' || /*casos[0].RecordType.Name == 'Modificación de aportes' ||*/ casos[0].RecordType.Name == 'Otros' || (casos[0].RecordType.Name == 'Constancia' && casos[0].Constancia__c == 'A4')) && casos[0].AccountId != null && casos[0].SuppliedEmail != null && (casos[0].Status == 'Nuevo' || casos[0].Status == 'Pendiente de aprobación') && casos[0].Caso_Ingresado__c == false) { 
                     //Start send email        
                     List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Email Caso Asignado'];            
                     String htmlBody = lstEmailTemplates[0].HtmlValue; System.debug('htmlBody: '+htmlBody);
@@ -121,10 +121,10 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     }    
                 }
                 
-                //if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
-                //    lstCase[0].DAU_aprobacion__c = false; 
-                //    update lstCase;
-                //}
+                /*if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
+                    lstCase[0].DAU_aprobacion__c = false; 
+                    update lstCase;
+                }*/
                                 
                 if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
                     String Identidad = lstCase[0].DAU_Identidad__c;
@@ -143,7 +143,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     }    
                 } 
                 
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' ) {
+                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' /*&& lstCase[0].Respuesta_SF_Tarjetas__c == null*/) {
                     //Adición
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
                     if(!detailCase.isEmpty()) { 

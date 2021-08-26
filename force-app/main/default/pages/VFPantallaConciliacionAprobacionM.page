@@ -617,7 +617,7 @@
                                             <br/><br/>
                                             <div class="modal-footer">
                                                 <apex:commandButton styleClass="btn btn-danger"  action="{!cerrar}"  value="Cerrar" oncomplete="Clean();" />      
-                                                <apex:commandButton styleClass="btn btn-secondary" style="color:#fff; position: relative; background: #42c4dd;" action="{!AprobarAporte2SinComision}"  value="Aceptar" oncomplete="Clean();" /> 
+                                                <apex:commandButton styleClass="btn btn-secondary" style="color:#fff; position: relative; background: #42c4dd;" action="{!AprobarAporte2SinComision}"  value="Aceptar"/> 
                                             </div>
                                         </header>
                                     </div>

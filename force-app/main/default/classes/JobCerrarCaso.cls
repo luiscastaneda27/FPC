@@ -6,7 +6,7 @@ global without sharing class JobCerrarCaso implements Schedulable {
             item.Status = 'Cerrado';
             listCasos.add(item);
         }
-        Database.update(listCasos, false);
+        Database.update(listCasos, true);
         CronClass.deleteCron('CerrarCasos');
     }
 }

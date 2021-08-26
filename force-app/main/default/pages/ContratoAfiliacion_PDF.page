@@ -554,7 +554,8 @@
                     <!--parentesco-->
                 </div>
             </div><br/>
-            <div style="margin-top:5px;">
+            
+            <!--div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;">
                     ¿Usted o un familiar(esposo(a)o compañero(a) de hogar, padres hijos/hijos del conyúge o hermano(a)),ejerce o ha ejercido un cargo público nacional o internacional?
                     <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',false,true)}">
@@ -572,15 +573,50 @@
                     </apex:outputPanel>
                     No
                 </div>
-            </div>
-            <div style="margin-top:5px;">
+            </div-->
+            <!--div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;width:345px;">
                     En caso de responder "Si", ¿Cuál es el cargo que ejerce o ha ejercido?
                 </div>
                 <div style="border-bottom:1px solid black;width:415px;display:inline-block;">
-                    <!--{!info.pcCargoEjercido}-->
                     {!info.Cargo_Pulbico}
                 </div>
+            </div-->
+            <div>
+            	¿Ejerce o ha ejercido un cargo público nacional o internacional?&nbsp;&nbsp;
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_unchecked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    Si
+                </div>
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_unchecked.gif "/>
+                    </apex:outputPanel>
+                    No
+                </div><br/>
+                <table width="100%" >
+                    <tr>
+                        <td style="width:40%;">
+                            Cargo que ejerce o ha ejercido: {!info.pcCargoEjercido}
+                        </td>
+                        <td style="width:25%;">
+                            Periodo: {!info.periodoPep}
+                        </td>
+                        <td style="width:35%;">
+                            Institución: {!info.institucionPep}
+                        </td>
+                    </tr>
+                    
+                </table>
+                  
             </div>
         </div>
         <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
@@ -778,6 +814,45 @@
                 pensiones y cesantías a que pueda dar por terminado este contrato sin ninguna responsbilidad para
                 dicha empresa ante mí en caso de demostrarse falso testimonio en la información declarada.
             </div><br/><br/><br/><br/><br/><br/>
+            <!--div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
+                INFORMACIÓN PEP
+            </div><br/>
+            <div>
+            	¿Ejerce o ha ejercido un cargo público nacional o internacional?&nbsp;&nbsp;
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_unchecked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    Si
+                </div>
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_unchecked.gif "/>
+                    </apex:outputPanel>
+                    No
+                </div><br/>
+                <table width="100%" >
+                    <tr>
+                        <td style="width:40%;">
+                            Cargo que ejerce o ha ejercido: {!info.pcCargoEjercido}
+                        </td>
+                        <td style="width:25%;">
+                            Periodo: {!info.periodoPep}
+                        </td>
+                        <td style="width:35%;">
+                            Institución: {!info.institucionPep}
+                        </td>
+                    </tr>
+                    
+                </table>
+                  
+            </div--><br/><br/>
             <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
                 INFORMACIÓN DEL EMPLEADOR O NEGOCIO PROPIO
             </div><br/>
