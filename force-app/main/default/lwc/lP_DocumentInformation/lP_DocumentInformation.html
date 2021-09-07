@@ -1,0 +1,79 @@
+<template>
+    <p class="mobile-title">{labels.text.title.stepFive}</p>
+    <div class="first-container">
+        <div class="card-container">
+            <div class="text-img">
+                <div class="card">
+                    <img src="" class="card_img" />
+                </div>
+                <div class="info-container">
+                    <p class="title1">{labels.text.title.lVisaAproved}</p>
+                    <p class="number">{amount} -</p>
+                    <p class="small-text"> {labels.text.title.lVisaAprovedWorld}</p>
+                </div>
+            </div>
+            <div class="check-cont">
+                <input type="checkbox" class="btnCheck" onclick={onCheckbox} checked>
+                <p class="terms"><lightning-formatted-rich-text value={labels.text.title.lSignDocuments}></lightning-formatted-rich-text></p>
+            </div>
+            <div class="button-cont">
+                <button class="btn1" onclick={prevStep}>{labels.button.lBtnCancel}</button>
+                <button class="btn2" onclick={nextStep}>{labels.text.title.lOpenTarget}</button>
+            </div>
+
+        </div>
+        <div class="doc-container">
+            <div class="docs-title">
+                <p class="title1">{labels.text.title.lReadSignDocuments}</p>
+                <p class="subtitle">{labels.text.title.lReadSignDocumentsSubTitle}</p>
+            </div>
+            <div class="doc">
+                <div class="icons">
+                    <img src={icon.iPreview} class="icon" onclick={previewDocFour}/>
+                    <img src={icon.iDownload} class="icon" onclick={downloadDocFour}/>
+                    <a class="downloadDocFour" style="visibility: hidden;"></a>
+                </div>
+                <div class="txt">
+                    <p class="title1">{labels.text.title.summary}</p>
+                    <p class="small-text">{labels.text.subtitle.summary}</p>
+                </div>
+            </div>
+            <div class="doc">
+                <div class="icons">
+                    <img src={icon.iPreview} class="icon" onclick={previewDocTwo}/>
+                    <img src={icon.iDownload} class="icon" onclick={downloadDocTwo}/>
+                    <a class="downloadDocTwo" style="visibility: hidden;"></a>
+                </div>
+                <div class="txt">
+                    <p class="title1">{labels.text.title.contract}</p>
+                    <p class="small-text">{labels.text.subtitle.contract}</p>
+                </div>
+            </div>
+            <div class="doc">
+                <div class="icons">
+                    <img src={icon.iPreview} class="icon" onclick={previewDocThree}/>
+                    <img src={icon.iDownload} class="icon" onclick={downloadDocThree}/>
+                    <a class="downloadDocThree" style="visibility: hidden;"></a>
+                </div>
+                <div class="txt">
+                    <p class="title1">{labels.text.title.mandate}</p>
+                    <p class="small-text">{labels.text.subtitle.mandate}</p>
+                </div>
+            </div>
+            <div class="doc">
+                <div class="icons">
+                    <img src={icon.iPreview} class="icon" onclick={previewDocOne}/>
+                    <img src={icon.iDownload} class="icon" onclick={downloadDocOne}/>
+                    <a class="downloadDocOne" style="visibility: hidden;"></a>
+                </div>
+                <div class="txt">
+                    <p class="title1">{labels.text.title.authorization}</p>
+                    <p class="small-text">{labels.text.subtitle.authorization}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <c-l-P_-Document-List></c-l-P_-Document-List>
+    </div>
+</template>

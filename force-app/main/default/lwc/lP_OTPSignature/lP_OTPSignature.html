@@ -1,0 +1,96 @@
+<!--*********************************************************************************
+Project      : Sodimac Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 07/07/2021
+Description  : Lightning web component - OTP Signature
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Rodrigo Salinas Oye         RSO
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0      RSO	        07/07/2021		initial version
+********************************************************************************/-->
+<template>
+    <div class="page-container">
+        <h1 class="mobile-title">{labels.label.lValidateSignDoc}</h1>
+        <p class="text">{labels.text.description}</p>
+        <form method="get" class="form">
+            <br/>
+            <label class="mail"><span class="asterisk">*</span> {labels.label.mobilePhone}
+            </label>
+            <div class="input-btns">
+                <label class="num-label">+56 
+                    <input type="tel" name="celular" minlength="9" maxlength="9" class="number-input" placeholder="9 8888 8888" required onkeyup={validatePhone} value={mobilePhone} readonly>
+                    <!--<button type="reset" class="button1"><img src={iconOTP.iRedEdit} class="active-button" /></button>-->
+                    <button type="button" class="button2" onclick={handleSendOTP}>{labels.button.send}
+                        <img alt="" class="active-button2" />
+                    </button>
+                </label>
+                <p class="error-message">{labels.label.lMobileformat}</p>
+                <p class="text-mistake">{labels.text.mistake} {labels.text.numberAttempts} {labels.text.mistake2}</p>
+            </div>
+        </form>
+        <div class="code-container">
+            <div class="icon-text">
+                <img src={iconOTP.iMobilePhone} class="icon2" />
+                <p class="text">{labels.text.mobilePhone1} <b class="num-weight">+56 {mobilePhone}</b> {labels.text.mobilePhone2}</p>
+            </div>
+            <div class="codes">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+            </div>
+            <div class="final-container">
+                <template if:true={showAttemps}>    <!-- Se muestra el mensaje de intentos restantes-->
+                    <p class="text2">{labels.text.tried1} <b>{labels.text.numberAttempts}</b> {labels.text.tried2}</p>
+                </template>
+                <template if:false={showAttemps}>   <!-- Se muestra el mensaje de error en la validacion -->
+                    <p class="text2"><b>{labels.label.lInvalidCode}</b></p>
+                    <p class="text2"><!-- <b>{labels.text.validationTitleError}</b><br/><br/> -->
+                        {labels.text.validationMessageError1} <u>{labels.text.validationMessageError2}</u> {labels.text.validationMessageError3}
+                    </p>
+                </template>
+                <div class="button-justify">
+                    <button class="button3" type="button" onclick={validateOTPCode}
+                        disabled>{labels.button.checkCode}</button>
+                    <img src={iconOTP.iSuccess} class="active-button3" />
+                </div>
+            </div>
+        </div>
+        <div class="buttons-container">
+            <button class="prev-page-btn" onclick={prevStep}>{labels.button.prev}</button>
+            <button class="next-page-btn" onclick={nextStep} disabled>{labels.button.next}</button>
+        </div>
+    </div>
+    <template if:true={showError}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+            aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close">
+                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">{labels.button.close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{labels.text.modalTitle}
+                    </h2>
+                    <p class="slds-m-top_x-small">{labels.text.modalSubTitle}</p>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>{labels.text.msgError1}<br/>{labels.text.msgError2}<b>{labels.text.msgError3}</b>{labels.text.msgError4}</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick={nextStep}>{labels.button.understood}</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

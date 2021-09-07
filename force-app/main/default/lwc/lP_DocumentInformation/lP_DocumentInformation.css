@@ -1,0 +1,178 @@
+@font-face {
+    font-family: 'Nunito', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+} 
+.mobile-title{
+    display: none;
+}
+.first-container{
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.card-container{
+    margin-right: 134px;
+}
+.text-img{
+    display: flex;
+    flex-direction: row;
+    color: #333333;
+    margin-bottom: 64px;
+}
+.card_img{
+    width: 171px;
+    height: 272px;
+}
+.info-container{
+    width: 266px;
+    margin-left: 40px;
+}
+.title1{
+    font-size: 16px;
+    font-weight: 400;
+}
+.small-text{
+    font-size: 16px;
+    margin-top: -8px;
+}
+.number{
+    margin: 40px 0;
+    font-size: 34px;
+    font-weight: 600;
+}
+.subtitle{
+    margin-top: -8px;
+    font-size: 16px;
+    color: #888888;
+}
+.check-cont{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 56px;
+}
+input{
+    border: #D9DBDD 1px solid;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    margin-top: 16px;
+}
+.terms{
+    width: 453px;
+}
+.btn1{
+    width: 124px;
+    height: 32px;
+    border: #DDDBDA 1px solid;
+    border-radius: 4px;
+    color: #C23934;
+    background-color: #FFFFFF;
+    margin-right: 24px;
+    font-weight: 600;
+}
+.btn2{
+    width: 329px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background-color: #C23934;
+    font-weight: 600;
+}
+.btn2:disabled{
+    width: 329px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background-color: #dddbda;
+    font-weight: 600;
+}
+.doc-container{
+    width: 545px;
+}
+.icons{
+    display: flex;
+    flex-direction: row;
+}
+.icon{
+    width: 40px;
+    height: 40px;
+    margin-right: 24px;
+    cursor: pointer;
+}
+.doc{
+    margin-top: 32px;
+}
+.txt{
+    border-bottom: #D9DBDD 1px solid;
+}
+@media (min-width: 320px) and (max-width: 976px) {
+    .mobile-title{
+      display: block;
+      color: #D00E2A;
+      font-size: 34px;
+      font-family: 'Nunito', sans-serif;
+      margin-bottom: 30px;
+      width: 360px;
+      font-weight: 600;
+    }
+    .first-container{
+        display: flex;
+        flex-direction: column;
+        height: 1200px;
+    }
+    .card-container{
+        width: 328px;
+    }
+    .card_img{
+        width: 116px;
+        height: 184px;
+    }
+    .info-container{
+        margin-left: 24px;
+    }
+    .text-img {
+        margin-bottom: 32px;
+    }
+    .title1{
+        margin-top: 0;
+    }
+    .number{
+        font-size: 30px;
+        margin: 16px 0 24px 0;
+    }
+    .small-text{
+        font-size: 14px;
+        /* margin-top: -8px; */
+    }
+    .button-cont{
+        position: absolute;
+        margin-top: 900px;
+        width: 360px;
+    }
+    .btn1{
+        width: 84px;
+        margin-right: 16px;
+        font-size: 12px;
+    }
+    .btn2{
+        width: 228px;
+        font-size: 12px;
+    }
+    .check-cont{
+        position: absolute;
+        margin-top: 750px;
+        margin-bottom: 40px;
+        width: 328px;
+    }
+    .doc-container{
+        width: 328px;
+    }
+    .icons{
+        margin-bottom: 24px;
+    }
+    
+}

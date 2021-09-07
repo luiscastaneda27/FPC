@@ -1,0 +1,288 @@
+<!--*********************************************************************************
+Project      : La Polar Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 27/05/2021
+Description  : Lightning web component - Personal Information
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Leonardo Muñoz              NL
+Alan Sanhueza               AS
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       LM-AS	     27/04/2021		initial version
+********************************************************************************/-->
+<template>
+
+    <template if:true={formDatPerson}>
+        <h1 class="mobile-title">{msg.text.titleMobile}</h1>
+        <h1 class="title">{menssageText}</h1>
+        <div class="father-container">
+
+            <form method="get" class="form">
+                <template if:true={fields}>
+                    <div class="form-container">
+                        <div class='cont_block1'> 
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.FirstName.label}</label>
+                            <input type="text" name="nombre" id="nombreId" value={objLead.FirstName} class="input-cont" disabled>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LastName.label}</label>
+                            <input type="text" name="apellidoPaterno" value={objLead.LastName} class="input-cont" disabled>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_ApellidoMaterno__c.label} </label>
+                            <input type="text" name="apellidoMaterno" value={objLead.LP_ApellidoMaterno__c} class="input-cont" disabled>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Rut__c.label}</label>
+                            <input type="text" name="RUT" value={objLead.LP_Rut__c} class="input-cont" disabled>
+                        </div>
+                        </div>
+                        <div class='cont_block1'> 
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Nacionalidad__c.label} </label>
+                            <lightning-record-edit-form object-api-name="Lead">
+                                <lightning-input-field name='nacionalidad'
+                                    variant="label-hidden" field-name="LP_Nacionalidad__c"
+                                    value={objLead.LP_Nacionalidad__c} 
+                                    disabled>
+                                </lightning-input-field>
+                            </lightning-record-edit-form>
+                        </div>
+                        <div class="gen-input">
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Genero__c.label}</label>
+                            <input type="text" name="genero" value={objLead.LP_Genero__c} class="input-cont" disabled>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.Email.label}</label>
+                            <input type="email" name="mail" id="emailId" value={objLead.Email} class="input-cont" disabled>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.MobilePhone.label}</label>
+                            <label class="num-label">+56 
+                            <input type="tel" name="celular" minlength="9" maxlength="9" value={objLead.MobilePhone} class="number-input" disabled>
+                            </label>
+                        </div>
+                        </div>
+                        <div class='cont_block1'> 
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.Address.label} </label>
+                            <div class="slds-form-element__control" >
+                                <div class="_container slds-size_small">
+                                    <div class={combox.address.cssOpenClose}  aria-expanded={combox.address.expanded} aria-haspopup="listbox" role="combobox">
+                                    <div role="none">
+                                        <input type="text" name="direccion" placeholder="Ingresa tu calle y numeración" class="input-cont" 
+                                            value={objLead.Street} onkeyup={autoCompleteAddress} onfocusout={validateAddress} >
+                                        <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div id="listbox-id-4" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                        <template if:true={addresses}>
+                                        <ul class="slds-listbox slds-listbox_vertical" role="presentation" >
+                                            <template for:each={addresses} for:item="opt">
+                                                <li key={opt.label} onclick={selectAddress} data-record={opt.label}    
+                                                    data-placeid={opt.placeId} role="presentation" class="slds-listbox__item"  >
+                                                    <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                        <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                        <span class="slds-media__body">
+                                                        <span class="slds-truncate" title={opt.value}>{opt.label} </span>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                        </template>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <template if:true={addressValidation}>
+                                <p class="error-message">{msg.text.enterAddress}</p>
+                            </template>
+                        </div>
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{msg.text.titleComuna}</label>
+                            <input type="text" name="comuna" placeholder="Comuna" value={objLead.City} class="input-cont" disabled>
+                        </div>
+                        <div>       
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LP_Ciudad__c.label} </label>
+                            <lightning-record-edit-form object-api-name="Lead">
+                                <lightning-input-field name='ciudad'
+                                    variant="label-hidden" field-name="LP_Ciudad__c"
+                                    value={objLead.LP_Ciudad__c} onchange={validateCity}
+                                    placeholder="Ingresa tu Ciudad">
+                                </lightning-input-field>
+                             </lightning-record-edit-form>
+                             <template if:true={ciuB}>
+                                <p class="error-message">{msg.text.InfoAtLeast3letter}</p>
+                            </template>
+                        </div> 
+                        <div>
+                            <label class="input-title"><span class="asterisk">*&nbsp;</span>{msg.text.titleProvinState}</label>
+                            <input type="text" name="provincia" placeholder="Región" value={objLead.State} class="input-cont" disabled>
+                        </div>
+                        </div>
+                                                                <!-- ROW 4-->
+                        <div class='cont_block1'> 
+                            <div>
+                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_NumDeptoCasa__c.label}</label>
+                                <input type="number" name="numDeptoCasa" placeholder="Num Depto/casa" value={objLead.LP_NumDeptoCasa__c} onchange={validateNumDepto} class="input-cont">
+                            </div>
+
+                            <div class="gen-input">
+                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_FechaPago__c.label}</label>
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-combobox_container slds-size_small">
+                                        <div class={combox.paymentDate.cssOpenClose}  aria-expanded={combox.paymentDate.expanded} aria-haspopup="listbox" role="combobox">
+                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                            <div class="space"></div>
+                                            <input value={LP_FechaPago__c_Label} onclick={listPaymentDateOpen}  type="text" class="slds-input slds-combobox__input" 
+                                                id="combobox-id-2" aria-controls="listbox-id-1" autocomplete="off" role="textbox" 
+                                                placeholder="Elige tu fecha de pago" readonly="" />
+                                            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                            </svg>
+                                            </span>
+                                        </div>
+                                        <div id="listbox-id-2" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                            <template if:true={paymentDatePicklistValues.data}>
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation" >
+                                                <template for:each={paymentDatePicklistValues.data.values} for:item="opt">
+                                                    <li key={opt.value} data-value={opt.value} data-label={opt.label} role="presentation" class="slds-listbox__item" 
+                                                        onclick={validatePaymentDate} >
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                            <span class="slds-media__body">
+                                                            <span class="slds-truncate" title={opt.value}>{opt.label} </span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                            </template>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={paymentDateValidation}>
+                                    <p class="error-message2">{msg.text.selectDatePay}</p>
+                                </template>
+                            </div>
+    
+                            <div class="gen-input">
+                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Ocupacion__c.label}</label>
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-combobox_container slds-size_small">
+                                        <div class={combox.ocupation.cssOpenClose}  aria-expanded={combox.ocupation.expanded} aria-haspopup="listbox" role="combobox">
+                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                            <div class="space"></div>
+                                            <input value={objLead.LP_Ocupacion__c} onclick={listOcupationOpen}  type="text" class="slds-input slds-combobox__input" 
+                                                id="combobox-id-1" aria-controls="listbox-id-1" autocomplete="off" role="textbox" 
+                                                placeholder="Selecciona tu ocupación" readonly="" title={objLead.LP_Ocupacion__c} />
+                                            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                            </svg>
+                                            </span>
+                                        </div>
+                                        <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                            <template if:true={occupationPicklistValues.data}>
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation" >
+                                                <template for:each={occupationPicklistValues.data.values} for:item="opt">
+                                                    <li key={opt.value} data-value={opt.value} role="presentation" class="slds-listbox__item" 
+                                                        onclick={validateOccupation} >
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                            <span class="slds-media__body">
+                                                            <span class="slds-truncate_container_75" title={opt.value}>{opt.label} </span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                            </template>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={occupationValidation}>
+                                    <p class="error-message2">{msg.text.selectOcupation}</p>
+                                </template>
+                            </div>
+                            <div class="gen-input">
+                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_NivelEducacional__c.label}</label>
+                                <div class="slds-form-element__control" >
+                                    <div class="slds-combobox_container slds-size_small">
+                                        <div class={combox.education.cssOpenClose}  aria-expanded={combox.education.expanded} aria-haspopup="listbox" role="combobox">
+                                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                                            <div class="space"></div>
+                                            <input value={objLead.LP_NivelEducacional__c} onclick={listEducationOpen}  type="text" class="slds-input slds-combobox__input" 
+                                                id="combobox-id-3" aria-controls="listbox-id-1" autocomplete="off" role="textbox" 
+                                                placeholder="Elige tu nivel educacional" readonly="" />
+                                            <span class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                                            <svg class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default" aria-hidden="true">
+                                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                            </svg>
+                                            </span>
+                                        </div>
+                                        <div id="listbox-id-3" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+                                            <template if:true={educationalLevelPicklistValues.data}>
+                                            <ul class="slds-listbox slds-listbox_vertical" role="presentation" >
+                                                <template for:each={educationalLevelPicklistValues.data.values} for:item="opt">
+                                                    <li key={opt.value} data-value={opt.value} role="presentation" class="slds-listbox__item" 
+                                                        onclick={validateEducationalLevel} >
+                                                        <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small" role="option">
+                                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                                            <span class="slds-media__body">
+                                                            <span class="slds-truncate" title={opt.value}>{opt.label} </span>
+                                                            </span>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                            </template>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <template if:true={educationalLevelValidation}>
+                                    <p class="error-message2">{msg.text.selectLevelEduc}</p>
+                                </template>
+                            </div>
+                    </div>
+
+
+                    <div class="form-container">
+                        <div class="check-container">
+                                <input type="checkbox" class="checkbox" checked="checked">
+                                <div class="text1">
+                                <label class="checkbox-text">{labels.mnsjOpt.acept}</label><br>
+                                <label class="checkbox-text2">{labels.mnsjOpt.noAcept}</label>
+                                </div>
+                         </div>
+                        </div>
+                    </div>
+
+
+                    <div class="buttons-container">
+                        <button class="prev-page-btn" onclick={prevStep}>{labels.button.prev}</button>
+                        <button disabled={disabledSubmit} class="button" type="button" onclick={submitData}>{labels.button.next}</button>
+                    </div>
+                </template>
+            </form>
+        </div>
+    </template>
+
+    <template if:true={formValidResponse}>
+        <div class="video">
+            <c-l-P_-Waiting-Response onsetnextstep={nextStep} obj-lead-in={objLead} trans-ref={transRef}></c-l-P_-Waiting-Response>
+        </div>
+    </template>
+
+</template>

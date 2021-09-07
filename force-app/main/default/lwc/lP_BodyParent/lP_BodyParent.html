@@ -1,0 +1,61 @@
+<!--*********************************************************************************
+Project      : Sodimac Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 23/04/2021
+Description  : Lightning web component - Body Parent
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Nelson Lepiqueo               NL
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       NL	     23/04/2021		initial version
+********************************************************************************/-->
+<template>
+        <div class="background">
+                <div class="body-container">
+                        <h1 class="title">{stepLayout.title}</h1>
+                        <p class="breadcrumbs"><lightning-formatted-rich-text value={stepLayout.lSubTitle}></lightning-formatted-rich-text></p>
+                        <template if:true={stepLayout.showPath}>
+                                <div class="path">
+                                        <c-l-p_-credit-card-path onsetsteplayout={getCaseLayoutSteps} class="slds-show slds-is-relative"> </c-l-p_-credit-card-path>
+                                </div>
+                        </template>
+                        <br>
+                        <br>
+                        <template if:true={stepLayout.step1}>
+                                <c-l-P_-Personal-Information  onsetsteplayout={getCaseLayoutSteps} obj-lead-in={objLead}>
+                                </c-l-P_-Personal-Information>
+                        </template>
+                        <template if:true={stepLayout.step2}>
+                                <c-l-P_-O-T-P-Validation onsetsteplayout={getCaseLayoutSteps} email={mail} obj-lead={objLead}></c-l-P_-O-T-P-Validation>
+                        </template>
+                        <template if:true={stepLayout.step3}>
+                                <c-l-P_-Identity-Validation onsetsteplayout={getCaseLayoutSteps} obj-lead={objLead}>
+                                </c-l-P_-Identity-Validation>
+                        </template>
+                        <template if:true={stepLayout.step4}>
+                                <c-l-P_-Information-Personal-Data  onsetsteplayout={getCaseLayoutSteps} obj-lead-in={objLead}  trans-ref={paramNextStep}>
+                                </c-l-P_-Information-Personal-Data>
+                        </template>
+                        <template if:true={stepLayout.step5}>
+                                <c-l-P_-Document-Information onsetsteplayout={getCaseLayoutSteps} obj-lead={objLead}>
+                                </c-l-P_-Document-Information>
+                        </template>
+                        <template if:true={stepLayout.step6}>
+                                <c-l-P_-O-T-P-Signature onsetsteplayout={getCaseLayoutSteps} obj-lead={objLead}>
+                                </c-l-P_-O-T-P-Signature >
+                        </template>  
+                        <template if:true={stepLayout.step7}>
+                                <c-l-P_-Internet-Password onsetsteplayout={getCaseLayoutSteps} onsteptitle={getSteps7Title}  obj-lead={objLead}>
+                                </c-l-P_-Internet-Password >
+                        </template>                        
+                        <template if:true={stepLayout.error}>
+                                <c-l-P_-Error-Onboarding onsetsteplayout={getCaseLayoutSteps}
+                                        get-origin-error={paramchildError}>
+                                </c-l-P_-Error-Onboarding>
+                        </template>
+
+                </div>
+        </div>
+</template>
