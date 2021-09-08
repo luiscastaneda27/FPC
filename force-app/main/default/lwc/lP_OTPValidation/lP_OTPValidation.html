@@ -34,12 +34,12 @@ VERSION  AUTHOR         DATE            Description
                 <p class="text">{labels.text.email} <b class="num-weight">{email}</b></p>
             </div>
             <div class="codes">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
-                <input type="text" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
+                <input type="text" pattern="\d*" maxlength="1" minlength="1" class="code-input" onkeyup={numericValidation} value="">
             </div>
             <div class="final-container">
                 <template if:true={otpInvalidCode}>

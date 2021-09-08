@@ -1,0 +1,39 @@
+<!--*********************************************************************************
+Project      : Sodimac Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 14/05/2021
+Description  : Lightning web component - Error
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Leonardo Muñoz               LM
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       NL	     27/04/2021		initial version
+********************************************************************************/-->
+<template>
+    <div class="first-container">
+        <div class="img-cont">
+            <img src={iconSM.iTarjetaLP} class="card-img"/>
+        </div>
+        <div class="text-container">
+            <template if:true={showErrClientExist}>
+                <p class='titles'>Lo sentimos</p>
+                <p class="text">{label.lTexto11} 
+                <a  href={label.lLaPolarErrorUrl}> {label.lTextoTienda}</a>  {label.lTexto12} <b class="number">{label.lTextoPhono}</b><a href="tel:6003913000" class="number-mobile">600 391 3000</a></p>
+                <button class="button" onclick={navigateToLP}>{label.lButton}</button>
+            </template>
+            <template if:true={showErrNoCard}>
+                <p class='titles'>¡Hola de nuevo!</p>
+                <p class="text">{label.lTexto21} &nbsp;
+                <a href={label.lLaPolarUrl}> {label.lTextoTienda}</a>&nbsp;  {label.lTexto22}</p>
+                <button class="button" onclick={navigateToLP} >{label.lButton}</button>
+            </template>
+            <template if:true={showErrSystem}>
+                <p class='titles'>Lo sentimos, hubo un error inesperado</p>
+                <p class="text"> {label.lTexto31}</p>
+                <button class="button"  onclick={returnInit}>{label.lButtonIni}</button>
+            </template>
+        </div>
+    </div>
+</template>

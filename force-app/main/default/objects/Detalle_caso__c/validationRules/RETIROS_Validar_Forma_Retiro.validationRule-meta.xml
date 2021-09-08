@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>RETIROS_Validar_Forma_Retiro</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Retiros&apos;, Cabeza_retiro__c,  ISPICKVAL(Forma_Retiro__c,&apos;&apos;))</errorConditionFormula>
-    <errorDisplayField>Forma_Retiro__c</errorDisplayField>
-    <errorMessage>Debes establecer una Forma de retiro</errorMessage>
-</ValidationRule>

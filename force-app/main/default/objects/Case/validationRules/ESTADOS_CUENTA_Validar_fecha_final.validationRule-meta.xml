@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ESTADOS_CUENTA_Validar_fecha_final</fullName>
-    <active>false</active>
-    <description>Para cuando se selecciona estado de cuenta detallado personalizado.</description>
-    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Estados_Cuenta&apos;, ISPICKVAL(Estado_Cuenta_Detallado__c, &apos;Personalizado&apos;), ISBLANK(Fecha_hasta__c))</errorConditionFormula>
-    <errorDisplayField>Fecha_hasta__c</errorDisplayField>
-    <errorMessage>Debes estipular una fecha final</errorMessage>
-</ValidationRule>

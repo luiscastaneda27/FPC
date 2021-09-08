@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'Nunito', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+} 
+
+.title{
+  color: #D00E2A;
+  font-family: 'Nunito', sans-serif;
+  font-size: 34px;
+}
+.first-container{
+  display:flex;
+  flex-direction:row;
+  /* flex-wrap:wrap;
+  justify-content: center; */
+  margin: 0 69px;
+}
+.titles{
+  display: none;
+}
+.img-cont{
+  /* width: 30%; */
+  width: 219px;
+  height: 331px;
+  /* display:flex;
+  flex-direction:row; */
+}
+.card-img{
+  width: 219px;
+  height: 331px;
+}
+.text-container{
+  /* width: 70%; */
+  /* width: 651px; */
+  /* height: 44px; */
+  display:flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  padding-left: 13px;
+  padding-top: 100px;
+}
+.text{
+  display: inline;
+  flex-direction: row;
+  /*flex-wrap: wrap; */
+}
+
+a{
+    color: #000000;
+    font-weight: bold;
+}
+.number-mobile{
+  display:none;
+}
+.button{
+  background-color: #D00E2A;
+  color: #FFFFFF;
+  border: none;
+  width: 185px;
+  height: 32px;
+  border-radius: 4px;
+  margin-top: 78px;
+  font-size: 12px;
+}
+@media (min-width: 320px) and (max-width: 976px) {
+  .first-container{
+    display:flex;
+    flex-direction:row;
+    /* flex-wrap:wrap;
+    justify-content: center; */
+    width: 100%;
+    margin: 0px;
+  }
+  .titles{
+    display: block;
+    color: #D00E2A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 34px;
+  }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 230px;
+    justify-content: center;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+    margin-top: 32px;
+  }
+  .text-container{
+    padding: 40px 16px 0 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -15px;
+  }
+  .text{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .number{
+    display: none;
+  }
+  .number-mobile{
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .button{
+    width: 177px;
+    margin-top: 271px;
+    /*align-self:flex-end;*/
+    margin-left: 160px;
+    /*margin-right: 50px;*/
+  }
+}

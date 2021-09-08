@@ -236,15 +236,15 @@ export default class LP_OTPValidation extends LightningElement {
         //var isValid = window.phoneFormat(value);
         // is input valid code?
         if(isValid){
-            let maxlenght = parseInt(inputCmp.maxLength, 10);
+            var maxlenght = parseInt(inputCmp.maxLength, 10);
             if(inputCmp.value.length == maxlenght) {
-                let next = inputCmp.nextElementSibling;
+                var next = inputCmp.nextElementSibling;
                 if (next != null) {
                     next.focus();
                 }
             }
             else if(inputCmp.value.length == 0) {
-                let previous = inputCmp.previousElementSibling;
+                var previous = inputCmp.previousElementSibling;
                 if (previous != null) {
                     previous.focus();
                 }

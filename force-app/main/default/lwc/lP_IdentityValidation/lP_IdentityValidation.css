@@ -1,0 +1,123 @@
+@font-face {
+    font-family: 'Nunito', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+} 
+
+.mobile-title{
+    display: none;
+}
+.first-container{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content: center;
+}
+.img-cont{
+  /* width: 30%; */
+  width: 219px;
+  height: 331px;
+  /* display:flex;
+  flex-direction:row; */
+}
+.card-img{
+  width: 219px;
+  height: 331px;
+}
+.text-container{
+  /* width: 70%; */
+  width: 651px;
+  /* height: 44px; */
+  display:flex;
+  flex-direction: column;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  padding-left: 43px;
+  padding-top: 100px;
+  color: #333333;
+}
+.text{
+    font-weight: bold;
+}
+.text2{
+    padding-top: 16px;
+}
+.button-container{
+    display: flex;
+    flex-direction: row;
+}
+.button{
+    background-color: #FFFFFF;
+    color: #D00E2A;
+    border: #DDDBDA 1px solid;
+    width: 100px;
+    height: 32px;
+    border-radius: 4px;
+    margin-top: 48px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 24px;
+  }
+.button2{
+  background-color: #D00E2A;
+  color: #FFFFFF;
+  border: none;
+  width: 189px;
+  height: 32px;
+  border-radius: 4px;
+  margin-top: 48px;
+  font-size: 12px;
+  font-weight: bold;
+}
+button2.button:active {
+    background-color: #D00E2A;
+}
+button2.button:enabled {
+    background-color: #D00E2A;
+}
+@media (min-width: 320px) and (max-width: 480px) {
+    .mobile-title{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:34px;
+        color: #D00E2A;
+        margin-bottom: 47px;
+        width: 350px;
+        /* text-align: start; */
+    }
+    .first-container{
+      width: 300px;
+    }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 100px;
+    justify-content: center;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+  }
+  .text-container{
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .text2{
+      padding-top:300px;
+  }
+  .button-container{
+   margin-top: 40px;
+}
+  .button{
+    width: 177px;
+    margin-top: 0;
+    /*align-self:flex-end;*/
+    /* margin-left: 160px; */
+    /*margin-right: 50px;*/
+  }
+  .button2{
+    width: 236px;
+    margin-top: 0;
+  }
+}

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ADA_monto_de_aporte_igual</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Aumento_Disminucion_Aportes&apos;,Nuevo_monto_aporte__c =  Cuenta__r.Monto_aporte__c , OR(ISPICKVAL( Tipo_Operacion__c , &apos;A1&apos;), ISPICKVAL( Tipo_Operacion__c , &apos;A2&apos;)))</errorConditionFormula>
-    <errorDisplayField>Nuevo_monto_aporte__c</errorDisplayField>
-    <errorMessage>El nuevo monto de aporte especificado es igual al original</errorMessage>
-</ValidationRule>

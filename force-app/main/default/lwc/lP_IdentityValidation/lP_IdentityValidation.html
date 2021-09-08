@@ -1,0 +1,30 @@
+<!--*********************************************************************************
+Project      : Sodimac Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 09/06/2021
+Description  : Lightning web component
+History      : PCRM-15
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Eilhert Andrade A.          EAA
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       EAA	     09/06/2021		initial version
+********************************************************************************/-->
+
+<template>
+    <h1 class="mobile-title">{label.text.lStepTitle}</h1>
+    <div class="first-container">
+        <div class="img-cont">
+            <img src={iconSM.iTarjetaLP} class="card-img"/>
+        </div>
+        <div class="text-container">
+                <p class="text">{label.text.lTexto1}</p>
+                <p class="text2">{label.text.lTexto2}</p>
+                <div class="button-container">
+                <button class="button"  onclick={returnInit}>{label.button.lButtonIni}</button>
+                <button disabled={disabledSubmit} class="button2"  type="button" onclick={IdentityValidation}>{label.button.lButtonCompIdent}</button>
+            </div>
+        </div>
+    </div>
+</template>

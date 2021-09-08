@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Visualizar_Membrete</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(Viene_Portal_Autogestion__c,  RecordType.Name =&apos;Constancia&apos;,  
-  !ISPICKVAL(Constancia__c, &apos;Saldo&apos;), !ISPICKVAL(Constancia__c, &apos;A1&apos;))</errorConditionFormula>
-    <errorDisplayField>Viene_Portal_Autogestion__c</errorDisplayField>
-    <errorMessage>Para este tipo de constancia no se permite usar membrete</errorMessage>
-</ValidationRule>

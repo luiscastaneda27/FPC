@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CONSTANCIAS_Monto_compromiso_aporte</fullName>
-    <active>true</active>
-    <description>Validar que no sea negativo</description>
-    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Constancia&apos;,  Monto_compromiso_aporte__c &lt; 0 )</errorConditionFormula>
-    <errorDisplayField>Monto_compromiso_aporte__c</errorDisplayField>
-    <errorMessage>Este valor no puede ser negativo</errorMessage>
-</ValidationRule>

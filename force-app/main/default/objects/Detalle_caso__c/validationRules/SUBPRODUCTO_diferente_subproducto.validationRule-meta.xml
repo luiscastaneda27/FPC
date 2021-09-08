@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SUBPRODUCTO_diferente_subproducto</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(Caso__r.RecordType.DeveloperName = &apos;Cambio_Subproducto&apos;,  Cuenta__r.Subproducto__c = Nuevo_Subproducto__c, ISPICKVAL( Accion__c , &apos;A2&apos;))</errorConditionFormula>
-    <errorDisplayField>Nuevo_Subproducto__c</errorDisplayField>
-    <errorMessage>No puedes seleccionar el mismo subproducto</errorMessage>
-</ValidationRule>

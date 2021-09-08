@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Validacion_de_tabla_Retiro_anticipado</fullName>
-    <active>true</active>
-    <errorConditionFormula>IF((!Comision_retiro_anticipado__c &amp;&amp; OR(!ISBLANK(De_01_anos__c), !ISBLANK(De_12_anos__c), !ISBLANK(De_23_anos__c), !ISBLANK(De_34_anos__c), !ISBLANK(De_45_anos__c), !ISBLANK(Mas_5_anos__c))), true, false)</errorConditionFormula>
-    <errorMessage>Si llena la tabla tiene que marcar el check de comisión por retiro Anticipado</errorMessage>
-</ValidationRule>

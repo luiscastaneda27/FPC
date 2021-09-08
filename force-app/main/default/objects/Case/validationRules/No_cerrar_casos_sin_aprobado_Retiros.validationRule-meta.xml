@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>No_cerrar_casos_sin_aprobado_Retiros</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Retiros&apos; , OR(!Aprobado__c, !Segunda_aprobacion__c),  ISCHANGED(Status),  ISPICKVAL(Status, &apos;Cerrado&apos;))</errorConditionFormula>
-    <errorDisplayField>Status</errorDisplayField>
-    <errorMessage>El caso debe estar aprobado para poder cerrarlo</errorMessage>
-</ValidationRule>

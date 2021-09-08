@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>LP_APIAutenticacionSelector</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
 		<members>lP_BodyParent</members>
 		<members>lP_DocumentInformation</members>
+		<members>lP_ErrorOnboarding</members>
+		<members>lP_IdentityValidation</members>
 		<members>lP_InformationPersonalData</members>
 		<members>lP_OTPSignature</members>
 		<members>lP_OTPValidation</members>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Validacion_de_Cobro</fullName>
-    <active>true</active>
-    <errorConditionFormula>IF((Cobro_Individual_CRA__c &amp;&amp; Comision_retiro_anticipado__c ), true, false)</errorConditionFormula>
-    <errorMessage>Esta seleccionando el cobro individual y el cobro por retiro anticipado, por favor solo seleccionar un</errorMessage>
-</ValidationRule>

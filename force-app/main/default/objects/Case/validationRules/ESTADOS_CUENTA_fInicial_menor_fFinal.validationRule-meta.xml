@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ESTADOS_CUENTA_fInicial_menor_fFinal</fullName>
-    <active>false</active>
-    <errorConditionFormula>AND(OR(RecordType.DeveloperName = &apos;Estados_Cuenta&apos;, RecordType.DeveloperName = &apos;Constancia&apos;), Fecha_desde__c &gt;= Fecha_hasta__c)</errorConditionFormula>
-    <errorDisplayField>Fecha_hasta__c</errorDisplayField>
-    <errorMessage>La fecha final no debe ser igual o menor a la inicial</errorMessage>
-</ValidationRule>

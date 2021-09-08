@@ -1,2 +1,0 @@
-<apex:page controller="aElectronicaController" action="{!validar}">
-</apex:page>

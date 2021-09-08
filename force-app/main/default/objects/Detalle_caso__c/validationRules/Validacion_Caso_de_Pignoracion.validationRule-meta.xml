@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Validacion_Caso_de_Pignoracion</fullName>
-    <active>true</active>
-    <errorConditionFormula>AND(TEXT(Caso__r.Constancia__c) = &apos;P1&apos;, OR(Monto_Prestamo__c =0, Monto_Prestamo__c = null))</errorConditionFormula>
-    <errorMessage>Debe escribir un monto de prestamo</errorMessage>
-</ValidationRule>

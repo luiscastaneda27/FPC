@@ -1,3 +1,0 @@
-<apex:page standardController="Case" extensions="extensionRedirigirEDC" action="{!redirigir}">
-
-</apex:page>

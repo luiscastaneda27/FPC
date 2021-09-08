@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CONSTANCIAS_Usuario_firmador</fullName>
-    <active>false</active>
-    <description>Llenar usuario firmador</description>
-    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Constancia&apos;,  ISPICKVAL( Constancia__c ,&apos;A4&apos;),  ISBLANK( Usuario_firmador__c ) )</errorConditionFormula>
-    <errorDisplayField>Usuario_firmador__c</errorDisplayField>
-    <errorMessage>Debes establecer un usuario</errorMessage>
-</ValidationRule>
