@@ -2850,11 +2850,11 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <td width="450">
                                                             <label class="slds-form-element__label" for="inputSample">
-                                                                <abbr class="slds-required" title="required"></abbr> Monto Aporte 10
+                                                                <abbr class="slds-required" title="required"></abbr> Aporte Ordinario
                                                             </label>
                                                             <apex:inputText value="{!pnmontoaporte}" id="pnmontoaporte" styleclass="slds-input"  style="height:10px; width:170px; margin-left:27px;" onkeypress="return isNumberKey(event)" />
                                                             <label class="slds-form-element__label" for="inputSample">
-                                                                <abbr class="slds-required" title="required"></abbr> Monto Aporte 12
+                                                                <abbr class="slds-required" title="required"></abbr> Aporte Extraordinario
                                                             </label>
                                                             <apex:inputText value="{!pnmontoaporte12}" id="pnmontoaporte12" styleclass="slds-input"  style="height:10px; width:170px; margin-left:8px;" onkeypress="return isNumberKey(event)" />
 
@@ -3323,7 +3323,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                             <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">
                                                 
                                                 <legend id="newexpenseform" class="slds-text-heading--small slds-p-vertical--medium" style=" width:1200px;">
-                                                    INFORMACIÓN DEL OFICIAL
+                                                    OFICIAL AFILIA CUENTA
                                                 </legend>
                                                 <div  class="outer">
                                                     <table width = "1500" style="text-align: center;">

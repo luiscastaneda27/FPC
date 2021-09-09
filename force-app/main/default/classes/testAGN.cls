@@ -202,6 +202,7 @@ global class testAGN {
         cliente.enviarPagPro();
 		cliente.guardar();
         cliente.pcsubproducto = subp.Codigo__c;
+        cliente.checkcorreo = true;
         cliente.obtieneCodSub();
         cliente.bloqBotonGuardar();
         

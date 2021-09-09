@@ -7,17 +7,27 @@ public class DAU_GestionesBac {
         Case c = [Select Id,Status,Respuesta_SF_Tarjetas__c,Account.Identificacion__c,Account.Name,Account.PersonEmail,Account.Celular__c,
                       Account.Sexo__c From Case Where Id =: CaseId];
             
-        System.debug('caso: '+c);
+        System.debug('caso a procesar BAC: '+c);
         
         try{
-        
+                  
             System.debug('Caso: '+CaseId);
             
             Detalle_caso__c detC = [Select Id,Cuenta__r.Name,Cuenta__r.Monto_aporte__c,Cuenta__r.Fecha_Aporte__c,N_Cuenta_Bancaria__c,Mes__c,Ano_tarjeta__c,DAU_Dia_de_pago__c, Tipo_Operacion__c,	
-                                    DAU_Tarjeta_Habiente__c,DAU_Tipo_Tarjeta__c,Nuevo_monto_aporte__c,toLabel(Banco__c), Nueva_fecha_aporte__c 
+                                    DAU_Tarjeta_Habiente__c,DAU_Tipo_Tarjeta__c,Nuevo_monto_aporte__c,toLabel(Banco__c), Nueva_fecha_aporte__c, Cuenta__r.Fondo_Inversion__c 
                                     From Detalle_caso__c Where Caso__c =: c.Id];
             
             System.debug('Detalle Caso: '+detC);
+            
+            //Start Get Metadata
+            String servicio;
+            DAU_BAC_Tipos_de_Fondos__mdt[] mdt = [SELECT MasterLabel,Codigo__c FROM DAU_BAC_Tipos_de_Fondos__mdt];
+            For(DAU_BAC_Tipos_de_Fondos__mdt m : mdt) {
+                if(m.Codigo__c == detC.Cuenta__r.Fondo_Inversion__c) {
+                    servicio = m.MasterLabel;   
+                }
+            }
+            //End Get Metadata
                        
             String tipoGestion = '';
             String montoDebito = '0';
@@ -33,7 +43,7 @@ public class DAU_GestionesBac {
                 datos.email = c.Account.PersonEmail;
                 datos.celular = c.Account.Celular__c;
                 datos.sexo = c.Account.Sexo__c;
-                datos.servicio = 'Pensiones';
+                datos.servicio = servicio;
                 datos.cuentaPensiones = detC.Cuenta__r.Name;
                 datos.tipoTarjeta = detC.DAU_Tipo_Tarjeta__c;
                 datos.nombreTarjetaHabiente = detC.DAU_Tarjeta_Habiente__c;
@@ -131,7 +141,7 @@ public class DAU_GestionesBac {
 			request.setBody(cons);	
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            //respuesta = 'Débito modificado correctamente';
+            //respuesta = 'Débito creado correctamente'; 
             system.debug('respuesta: '+respuesta);
             
             if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente') {
@@ -182,13 +192,13 @@ public class DAU_GestionesBac {
                     List<Database.SaveResult> results = EventBus.publish(Logs);    
                 }
             } else if(respuesta.contains('Error')){
-            	c.Respuesta_SF_Tarjetas__c = respuesta;
+            	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' ' + respuesta;
                 update c;    
             }
 		}catch(System.CalloutException e){
 			system.debug('Mensaje Conexión: '+e.getMessage());
             respuesta = e.getMessage();
-            c.Respuesta_SF_Tarjetas__c = respuesta;
+            c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' ' + respuesta;
             update c; 
         }
 		//return respuesta;     

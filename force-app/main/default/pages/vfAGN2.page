@@ -1,7 +1,7 @@
 <!--apex:page controller="ControllerProducto"  title="Ficohsa FPC" showheader="false" sidebar="false" cache="false" expires="0"
 standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page"  applyBodyTag="false" -->
 <apex:page showHeader="false" standardStylesheets="true"  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
-           title="Ficohsa FPC" cache="false" expires="0" Controller="AGN2" showQuickActionVfHeader="true" id="page"> 
+           title="Ficohsa FPC" cache="false" expires="0" Controller="ControllerProductoAgn2" showQuickActionVfHeader="true" id="page"> 
     <apex:slds />
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
         <head>
@@ -329,11 +329,11 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                 </legend>
                                                 
                                                 <div  class="outer">
-                                                    <table  style="text-align: center; width = 1500">
+                                                    <table  style="text-align: center;" width = "1500">
                                                         <tr>
                                                             
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Id Formulario
@@ -358,7 +358,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                                                                 </label>
                                                                 
@@ -367,7 +367,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                                 </label>
                                                                 
@@ -376,14 +376,14 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!desCheckb}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"  />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                                 </label>
                                                                 <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
                                                                     <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA No Consiente
                                                                 </label>
                                                                 <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!desCheckb}" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"  />
+                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"  />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
    
                                                                     <script>
@@ -688,7 +688,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <apex:outputPanel rendered="{!OcultarCuenta1}">
                                                             
                                                             <tr >
-                                                                <td  width = "450">
+                                                                <td width = "1500">
                                                                     
                                                                     <br/> 
                                                                     
@@ -735,7 +735,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <tr>
                                                             <br/>
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <br/>
                                                                 
@@ -784,7 +784,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         
                                                         <tr>
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Primer Nombre
                                                                 </label>
@@ -813,7 +813,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         </tr>
                                                         
                                                         <tr>
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample" style="margin-left:1px;">
                                                                     <abbr class="slds-required" title="required"></abbr> Fecha Nacimiento
@@ -847,7 +847,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <tr>
                                                             
-                                                            <td width="450">
+                                                            <td width = "1500">
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Profesion/Ocupacion
@@ -984,7 +984,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <tr>
                                                             
-                                                            <td weidth= "450">
+                                                            <td width = "1500">
                                                                 
                                                                 <!--
 <apex:inputField value="{!TipoProfesion1.Profesi_n_Ocupaci_n__c}" styleclass="slds-input" style="height:10px; width:170px; margin-left:2px;"/>      
@@ -1039,7 +1039,18 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                     <apex:selectOptions value="{!opcionNacionalidadTerceros}"></apex:selectOptions> 
                                                                     <apex:actionSupport event="onchange" action="{!NacionalidadFatca}" /> 
                                                                 </apex:selectList> 
+                                                                <br/>
+                                                                 <label class="slds-form-element__label" for="inputSample" style = "margin-left:1px">
+                                                                    <abbr class="slds-required" style="height:15px; width:15px;"></abbr> ¿Reside en el extranjero?
+                                                                </label> 
                                                                 
+                                                                
+                                                                <label class="slds-checkbox">
+                                                                    
+                                                                    <apex:inputCheckbox styleclass="slds-input" value="{!checkcorreo}" /> 
+                                                                   
+                                                                    <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span> 
+                                                                </label>
                                                                 
                                                                 <br/>
                                                                 <br/>
@@ -1050,7 +1061,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     </table>
                                                 </div>
                                                 
-                                            </fieldset>  <!--FIN DEL FIELDSET PRINCIPAL-->
+                                            </fieldset>   <!--FIN DEL FIELDSET PRINCIPAL-->
                                         </apex:outputPanel>   
                                         <!--Info Teléfono-->
                                         
@@ -1618,7 +1629,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             </label>
                                                             <!--apex:inputField id="TipoIdUSER"  value="{!ClienteTipoIdDepende.Tipo_Identificacion__c}" styleclass="slds-input"    style="height:10px; width:170px; margin-left:1px;  "  /-->
                                                             
-                                                            <apex:selectList styleclass="slds-input" id="pcTipoIDDependencia" size="1" value="{!pcTipoIDDependencia}" style="height:10px; width:170px; margin-left:64px; " >
+                                                            <apex:selectList styleclass="slds-input" disabled="{!Dis_OcultarDependenciaCampos}" id="pcTipoIDDependencia" size="1" value="{!pcTipoIDDependencia}" style="height:10px; width:170px; margin-left:64px; " >
                                                                 <apex:selectOptions value="{!listaTipoId}"/> 
                                                             </apex:selectList>        
                                                             
@@ -1679,7 +1690,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>No procede por decisión administra y se debe escalar a Cumplimiento</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             
@@ -2130,7 +2141,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <td>
                                                             <label class="slds-form-element__label" for="inputSample" style="margin-left:1px;  ">
                                                                 <abbr class="slds-required" title="required"></abbr> 
-                                                                ¿Usted o un familiar (Esposo(a) o compañero(a) de hogar, padres hijos(as) del cónyuge o hermano(a) ), ejerce o ha ejercido un cargo público nacional o internacional?
+                                                                ¿Ejerce o ha ejercido un cargo público nacional o internacional?
                                                             </label> 
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
@@ -2195,7 +2206,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     
                                                     <tr>
                                                         
-                                                        <td width="1100">
+                                                        <td width="1200">
                                                             
                                                             <label class="slds-form-element__label" for="inputSample">
                                                                 <abbr class="slds-required" title="required"></abbr> Tipo Trabajador
@@ -2226,7 +2237,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                     
                                                     <tr>
                                                         
-                                                        <td width="450">
+                                                        <td width="1200">
                                                             
                                                             <br/> 
                                                             
@@ -2674,25 +2685,21 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
-                                                                    <abbr class="slds-required" title="required"></abbr> Nivel riesgo
+                                                                    <abbr class="slds-required" title="required"></abbr> Riesgo del cliente
                                                                 </label>
                                                                 
-                                                               <apex:selectList disabled="true" styleclass="slds-input" id="pepSel" size="1" value="{!PC_NIVEL_RIESGO}" style="height:10px; width:170px; margin-left:34px;" >
+                                                                <apex:selectList disabled="true" styleclass="slds-input" id="pepSel" size="1" value="{!PC_NIVEL_RIESGO}" style="height:10px; width:170px; margin-left:34px;" >
                                                                     <apex:selectOptions value="{!NivelRiesgoOptions}"/>
                                                                 </apex:selectList>
                                                                 
-                                                                <!--apex:inputText disabled="true" value="{!PC_NIVEL_RIESGO}"  onkeypress="return sololetras(event)" id="pepSe" styleclass="slds-input"  style="height:10px; width:170px; margin-left:39px;  "/>
-																-->								
+                                                                
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Medida Aplicada
                                                                 </label>    
                                                                 <apex:selectList disabled="true" styleclass="slds-input" id="pepBlo" value="{!PC_DEBIDA_DELIGENCIA}"  size="1" style="height:10px; width:170px; margin-left:2px;" >
                                                                     <apex:selectOptions value="{!DeligenciaOptions}" />
                                                                 </apex:selectList>
-                                                                <!--apex:inputText disabled="true" value="{!PC_MEDIDA_APLICADA}"  onkeypress="return sololetras(event)" id="pepBl" styleclass="slds-input"  style="height:10px; width:170px; margin-left:35px;  "/>
-																-->
-                                                                <apex:commandButton action="{!ValidaRiesgo}" value="Valida" styleClass="slds-button slds-button--brand" style="margin-left:995px "/> 
-
+                                                                
                                                                 <br/>
                                                             </td>
                                                             
@@ -3346,7 +3353,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                     <apex:selectOptions value="{!AgenciaOptions}"/>
                                                                 </apex:selectList>
                                                             </td>    
-                                                           <apex:commandButton action="{!ValidaRiesgo}" value="Valida Riesgo"  styleClass="slds-button slds-button--brand" style="height:35px; width:150px; margin-left:10px "/>        
+                                                                  
                                                         
                                                     </table>
                                                     <br/>
@@ -3525,7 +3532,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             
                                                             <TD>
-                                                                <apex:commandButton disabled="{!validadosBeneficiarios}" action="{!GUARDAR2}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiarios,infoAfiliado, pantProductosP, BTNGuardar,datodBene" status="status" />
+                                                                <apex:commandButton disabled="{!validadosBeneficiarios}" action="{!GUARDAR2}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiarios,tablaBeneModificar,infoAfiliado, pantProductosP, BTNGuardar,datodBene" status="status" />
                                                                 <!--
 <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                                              
@@ -3909,7 +3916,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                             
                                                             
                                                             <TD>
-                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneficiariosC,infoAfiliado, pantProductosP, BTNGuardar,idShowBeneficiciariosCon" status="status" />
+                                                                <apex:commandButton disabled="{!validadosBeneficiariosC}" action="{!GUARDAR2C}" value="Agregar Beneficiario"  styleClass="slds-button slds-button--brand" style="margin-left: 1015px " reRender="tablaBeneModificarC,tablaBeneficiariosC,infoAfiliado,pantProductosP,BTNGuardar,idShowBeneficiciariosCon,datodBene" status="status" />
                                                                 <!--
 <apex:commandButton disabled="{!disbotBene}" action="{!mostPopVentana}" value="Agregar Varios Beneficiarios"  styleClass="slds-button slds-button--brand" style="margin-left:3px "/>
 -->                                              
@@ -4122,7 +4129,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                                                             <div class="slds-form-element__row slds-text-align_center">
                                                                 <div class="slds-form-element slds-size_1-of-1">
-                                                                    <h4>No procede por decisión administra y se debe escalar a Cumplimiento</h4>
+                                                                    <h4>No procede por Decisión Administrativa y se debe escalar a Cumplimiento</h4>
                                                                 </div>
                                                             </div>
                                                             
@@ -4252,7 +4259,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning"/>
                                                         <br/><br/>
                                                         <apex:commandButton value="Agregar Cuenta" disabled="{!btnGuardar}" action="{!guardar}" styleClass="slds-button slds-button--brand" style="height:40px; width:200px; margin-left:255px"  reRender="infoAfiliado, pantProductosP, BTNGuardar" status="status" />
-                                                        <apex:commandButton disabled="true" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
+                                                        <apex:commandButton disabled="{!MostarActualizar}" value="Actualizar" action="{!actualizar}"  styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:50px "/>
                                                         <apex:commandButton value="Cancelar" action="{!limpiar}" styleClass="slds-button slds-button--brand" style=" height:40px; width:200px; margin-left:52px "/>                                                        
                                                     </div>
                                                 </div>
@@ -4274,7 +4281,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                     <apex:actionFunction action="{!llenarCausas}" name="llenarCausas" /> 
                     <apex:actionFunction action="{!llenarNacionalidad}" name="llenarNacionalidad" />
                     <apex:actionFunction action="{!llenarDepartamento}" name="llenarDepartamento" reRender="Depto" status="status" />
-                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici" status="status"/>
+                    <apex:actionFunction action="{!llenarMunicipio}" name="llenarMunicipio" reRender="munici,colon" status="status"/>
                     <apex:actionFunction action="{!llenarColonia}" name="llenarColonia" reRender="colon" status="status"/>  
                     <!--
 <apex:actionFunction action="{!buscarColectiva}" name="buscarColectiva"/>

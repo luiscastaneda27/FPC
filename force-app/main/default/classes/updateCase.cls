@@ -31,16 +31,18 @@ public class updateCase {
             List<Case> caso = [Select Id,Status,DAU_Tarjeta_de_Sysde__c,Account.Identificacion__c,DAU_Identidad__c,DAU_No_Cuenta__c,
                                DAU_aprobacion__c From Case Where Id In: detail Limit 1];
             
-            List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Codigo__c,banco__c From Detalle_caso__c 
-                                             Where Caso__c In: casoOrigen Limit 1]; 
+            List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Codigo__c,banco__c,Cuenta__r.Forma_Aportacion__c 
+                                             From Detalle_caso__c Where Caso__c In: casoOrigen Limit 1]; 
             
             List<Detalle_caso__c> dcase = new List<Detalle_caso__c>();
             String banco;
-            if(detcaso[0].banco__c == '28') {
-            	banco = '28';    
-            } else {
-                banco = 'Otros Bancos';
-            } 
+            if(detcaso[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
+                if(detcaso[0].banco__c == '28') {
+                    banco = '28';    
+                } else { 
+                    banco = 'Otros Bancos';
+                } 
+            }
             dcase.add(new Detalle_caso__c(Caso__c = caso[0].Id,Cuenta__c = detcaso[0].Cuenta__c,Accion__c = 'A2',Tipo_Operacion__c = 'A7',Tipo_saldo_modificar2__c = '10',Banco__c=banco));
             
             System.debug('Se actualiza el caso automático de Cancelación');
@@ -79,6 +81,14 @@ public class updateCase {
                 List<Database.SaveResult> results = EventBus.publish(Logs);
                 //DAU_GestionesBac.execute(caso[0].Id, '');
             }   
+            if(detcaso[0].Cuenta__r.Forma_Aportacion__c == 'AH') {
+                System.debug('Forma de aportación de la cuenta a la cual se le hace el retiro total es AH');  
+                caso[0].DAU_aprobacion__c = true;
+                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso[0].Id));
+                // Call method to publish events
+                List<Database.SaveResult> results = EventBus.publish(Logs);
+            }
             insert dcase;        
             update caso;
         } catch(Exception ex) {

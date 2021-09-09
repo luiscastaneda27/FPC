@@ -169,7 +169,7 @@ public class DAU_TG_LogHelper {
                     
                     //Caso de Cancelación
                     if(c.Tipo_de_Operacion__c == 'A7') {	
-                        if(c.Respuesta_SF_Tarjetas__c == Null) {
+                        if(c.Respuesta_SF_Tarjetas__c == Null && !c.Respuesta_SF_Tarjetas__c.contains('Cancelación: // ')) {
                         	DAU_GestionesBac.execute(c.Id, '');  
                         }
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
@@ -179,6 +179,9 @@ public class DAU_TG_LogHelper {
                     
                 } else if(detailCase[0].Nuevo_canal_aporte__c == 'AH' || detailCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') {              
                     System.debug('Tipo AH');
+                    if(c.Tipo_de_Operacion__c == 'A7' && c.Respuesta_SF_Tarjetas__c == Null && c.ParentId != Null) {
+                    	ControllerServiciosCuentaAhorro.execute(c.id);     
+                    }
                     if(st[0].DAU_EjecutarSYSDE__c == true) {
                     	aSysdeCallouts.aumentoDisminucion(c.id); 
                     }    
