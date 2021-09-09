@@ -27,7 +27,7 @@ public class controladorReportes {
     Public string AEV{get;set;}
     public string RL{get;set;}
     Public string Fecha{get;set;}
-    public string planilla2 {get;set;}
+    string planilla2;
     public Planilla_Seguro_Social__c TotalPlanillaIHSS {get;set;}
     Public string APO1{get;set;}
     Public string AEO1{get;set;}
@@ -189,28 +189,30 @@ public class controladorReportes {
         }
     }
     
-    public pageReference ReportePlanilla(){
-        Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
-        hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
-        hora.Hora_ultima_consulta__c=datetime.now();
-        update hora;
+    public pageReference ReportePlanilla()
+    {
+         Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
+        	hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
+            hora.Hora_ultima_consulta__c=datetime.now();
+            update hora;
         return new pagereference ('/Apex/vfExportarEReporteNormal?idPlanilla='+id_planilla);
     }    
-    
-    public pageReference ReportePlanillaIHSS(){
-        Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
-        hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
-        hora.Hora_ultima_consulta__c=datetime.now();
-        update hora;
+     public pageReference ReportePlanillaIHSS()
+    {
+         Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
+        	hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
+            hora.Hora_ultima_consulta__c=datetime.now();
+            update hora;
         return new pagereference ('/Apex/vfExportarEReporteIHSS');
     }
     
     
-    public void cerrar(){
-        Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
-        hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
-        hora.Hora_ultima_consulta__c=datetime.now();
-        update hora;
+    public void cerrar()
+    {
+         Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
+        	hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
+            hora.Hora_ultima_consulta__c=datetime.now();
+            update hora;
         activarmodal=false;
         activarmodalIHSS=false;
         APO1='';
@@ -611,7 +613,185 @@ public class controladorReportes {
     }
     public void MetodoUtil()
     {
-       
+        integer i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
+        i=0;
     }
 
 }

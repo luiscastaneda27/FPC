@@ -8,7 +8,7 @@ public class ContenidoValidaNivel {
     public string pcProfesionOcupacion {get;set;}  
     //public string pcExcepciones {get;set;}   
     public string pcAPNFD {get;set;}  
-    public string ContratistaDelEstado{get;set;}
+    public string pcFATCA{get;set;}
     public string pcPEP{get;set;}
     public string pccodpais /*Pais_Direccion*/ {get;set;}
     //PRODUCTO
@@ -20,7 +20,7 @@ public class ContenidoValidaNivel {
     public string pcnacionalidad /*Nacionalidad1_Direccion*/ {get;set;}
     
     public ContenidoValidaNivel(string pctipoid,dateTime pdfechanacimiento,string pcrazonsocialempl,string pcNombreempl,string pcProfesionOcupacion,
-                                string pcAPNFD,string ContratistaDelEstado,string pcPEP, string pccodpais, string pcTipoFondo,string pcagencia, string pcMunicipioCN, string pcnacionalidad){
+                                string pcAPNFD,string pcFATCA,string pcPEP, string pccodpais, string pcTipoFondo,string pcagencia, string pcMunicipioCN, string pcnacionalidad){
                                     
                                     this.pctipoid=pctipoid;
                                     this.pdfechanacimiento=pdfechanacimiento;
@@ -28,7 +28,7 @@ public class ContenidoValidaNivel {
                                     this.pcNombreempl=pcNombreempl;
                                     this.pcProfesionOcupacion =pcProfesionOcupacion;
                                     this.pcAPNFD=pcAPNFD;
-                                    this.ContratistaDelEstado=ContratistaDelEstado;                      
+                                    this.pcFATCA=pcFATCA;                      
                                     this.pcPEP= pcPEP; 
                                     this.pccodpais= pccodpais;  
                                     this.pcTipoFondo =pcTipoFondo;

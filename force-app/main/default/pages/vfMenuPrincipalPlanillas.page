@@ -270,10 +270,12 @@
             <div class="dropdown" style="display:{!MPlanilla};">
 			    <button class="dropbtn" id="principal" title="Pago de Pensiones y Reserva Laboral" >Pago de Pensiones </button>
 			    <div class="dropdown-content">
-			      <a href="javascript:GenerarPlanillaHNL();" title="Generación de Planillas HNL">Generación de Planillas HNL</a>
-			      <a href="javascript:CargarPlanillaHNL();" title="Carga de Planilla HNL">Carga de Planilla HNL</a>
-			      <a href="javascript:GenerarPlanillaUSD();" title="Generación de Planillas USD">Generación de Planillas USD</a>
-			         <a href="javascript:CargarPlanillaUSD();" title="Carga de Planilla USD">Carga de Planilla USD</a>
+			    	<a href="javascript:GenerarPlanillaHNL();" title="Generación de Planillas HNL">Generación de Planillas HNL</a>
+			      	<a href="javascript:CargarPlanillaHNL();" title="Carga de Planilla HNL">Carga de Planilla HNL</a>
+			      	<a href="javascript:GenerarPlanillaUSD();" title="Generación de Planillas USD">Generación de Planillas USD</a>
+			        <a href="javascript:CargarPlanillaUSD();" title="Carga de Planilla USD">Carga de Planilla USD</a>
+                    <a href="javascript:CargarRezagos();" title="Carga de Rezagos USD">Carga de Rezagos USD</a>
+                    <a href="javascript:CargarRezagosHNL();" title="Carga de Rezagos HNL">Carga de Rezagos HNL</a>
 			    </div>
 			</div> 
                      
@@ -349,6 +351,8 @@
             <apex:actionFunction action="{!GenerarPlanillaUSD}" name="GenerarPlanillaUSD"/> 
             <apex:actionFunction action="{!CargarSalarios}" name="CargarSalarios"/>
             <apex:actionFunction action="{!CargarPlanillaUSD}" name="CargarPlanillaUSD"/>
+          	<apex:actionFunction action="{!CargarRezagos}" name="CargarRezagos"/>
+            <apex:actionFunction action="{!CargarRezagosHNL}" name="CargarRezagosHNL"/>
             <apex:actionFunction action="{!CargarPlanillaHNL}" name="CargarPlanillaHNL"/>
             <apex:actionFunction action="{!GenerarSalarios}" name="GenerarSalarios"/>
             <apex:actionFunction action="{!GenerarPersonal}" name="GenerarPersonal"/>
@@ -388,9 +392,6 @@
                                 
                               </div>
                             </div>
-                                          
-                                            
-                             
                            </fieldset>
                         </div>
 			      		        

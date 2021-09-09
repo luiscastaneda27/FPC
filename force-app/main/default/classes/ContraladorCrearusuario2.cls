@@ -1,5 +1,5 @@
 public class ContraladorCrearusuario2 {
-
+    
     public list<Usuario_X_Empresa__c> listUsuarios{get;set;}
     public string Num_identidad{get;set;}
     public string Codigo_unico_banco{get;set;}
@@ -17,57 +17,51 @@ public class ContraladorCrearusuario2 {
     public string contrasenaNueva{get;set;}
     public string contrasenaRepetida{get;set;}
     public string Nombre_Empresa{get;set;}
-    public ContraladorCrearusuario2()
-    {
-        try
-        {
+    public ContraladorCrearusuario2(){
+        try{
             Codigo_Unico_Banco=ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
-         	Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
+            Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
             popModificar=false;
             banderaTiempo=0;
             Nombre_Empresa=[select name from Account where id=:Codigo_unico_banco].name;
             Permisos = [Select Aceptar_Planilla__c, Crear_Usuarios__c, Aprobacion_Usuarios__c,Cargar_Generar_Planilla__c,
-						Usuario__c, Usuario__r.Contrasena2__c 
-                         From Usuario_x_Empresa__c 
-                         Where empresa2__c =: Codigo_Unico_Banco 
-                         And Usuario__c =: Usuario];
+                        Usuario__c, Usuario__r.Contrasena2__c 
+                        From Usuario_x_Empresa__c 
+                        Where empresa2__c =: Codigo_Unico_Banco 
+                        And Usuario__c =: Usuario];
             
             //MostrarNuevousuario=Permisos.Crear_Usuarios__c;
             //Autorizacionusuario=Permisos.Aprobacion_Usuarios__c; 
             
             Cargarusuarios();
-           popModificar=false;
+            popModificar=false;
             popCambioContrasena = False;
             
             contrasenaActual = '';
             contrasenaNueva = '';
             contrasenaRepetida = '';
-        		
+            
         }
         catch(exception ex)
         {
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente')); 
+                                                       'Lo sentimos, hubo un error intentelo nuevamente')); 
         }
     }
-     public void registrarTiempo()
+    public void registrarTiempo()
     {
-        try
-        {
+        try{
             Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
-        	hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
+            hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
             hora.Hora_ultima_consulta__c=datetime.now();
             update hora;
         }
-        catch(Exception ex)
-        {
-            
-        }
+        catch(Exception ex){}
     }
+    
     public void Cargarusuarios()
     {
         try{
-             
             listUsuarios = new list<Usuario_X_Empresa__c> ();
             listAprobacionesPendientes= new list<Usuario_Empresa_Temporal__c> ();
             listUsuarios=[select id,Usuario__r.name, Usuario__r.Identidad__c, Usuario__r.Apellidos__C, Aceptar_Planilla__c, Activo__c,
@@ -76,31 +70,29 @@ public class ContraladorCrearusuario2 {
                           from Usuario_X_Empresa__c where empresa2__c=:codigo_Unico_banco];
             
             listAprobacionesPendientes = [select  id,Usuario__r.name, Usuario__r.Apellidos__C, Usuario__r.Identidad__c, Aprobacion_Usuarios__c ,activo__c,Usuario__r.Email__c ,Cargar_Generar_Planilla__c, Aceptar_Planilla__c,Calculo_De_Pilares__c,
-                  Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
-                  Reportes__c from Usuario_Empresa_Temporal__c where Estado__c=0 and empresa2__c=:codigo_Unico_banco];
-            if(listUsuarios.size()>0 && Permisos.Crear_Usuarios__c)
-            {
+                                          Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
+                                          Reportes__c from Usuario_Empresa_Temporal__c where Estado__c=0 and empresa2__c=:codigo_Unico_banco];
+            if(listUsuarios.size()>0 && Permisos.Crear_Usuarios__c){
                 MostrarNuevousuario=true;
             }
-            if(listAprobacionesPendientes.size()>0 && Permisos.Aprobacion_Usuarios__c)
-            {
+            if(listAprobacionesPendientes.size()>0 && Permisos.Aprobacion_Usuarios__c){
                 Autorizacionusuario=true;
             }
-             
+            
         }catch(exception ex)
         {
-              ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente'));
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
+                                                       'Lo sentimos, hubo un error intentelo nuevamente'));
         }
     }
-	
+    
     public void Cancelar()
     {
         try{
-             if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        } 
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            } 
             popModificar=false;
             popCambioContrasena = False;
             
@@ -111,13 +103,13 @@ public class ContraladorCrearusuario2 {
         }
         catch(exception ex)
         {
-              ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente'));
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
+                                                       'Lo sentimos, hubo un error intentelo nuevamente'));
         }
     }
     
     public void verCambioContrasena(){
-          if(banderaTiempo==0)
+        if(banderaTiempo==0)
         {
             registrarTiempo();
         }
@@ -126,65 +118,65 @@ public class ContraladorCrearusuario2 {
     
     public void cambiarContrasena(){
         try{
-              if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        }
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            }
             if(contrasenaActual != null && contrasenaActual != ''){
-            		if(contrasenaActual == Permisos.Usuario__r.Contrasena2__c){ 
-            			if(claseUtilPlanillas.validarContrasena(contrasenaNueva)){
-            				if(contrasenaNueva == contrasenaRepetida){
-            					Usuario_Portal_Empresarial__c usuarioCambioC = [Select id 
-            													From Usuario_Portal_Empresarial__c 
-            													Where id =: Permisos.Usuario__c];
-            				 									
-            					usuarioCambioC.Contrasena2__c = contrasenaNueva;
-            					update usuarioCambioC;
-            					
-            					Cancelar();
-            					ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, 'Se ha actualizado su contrasena'));    	
-            				}else{
-            					ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Las Contraseñas Nuevas no coinciden')); 	
-            				}
-            			}
-            		}else{
-            			ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Contraseña Actual no coincide'));   
-            		}	
+                if(contrasenaActual == Permisos.Usuario__r.Contrasena2__c){ 
+                    if(claseUtilPlanillas.validarContrasena(contrasenaNueva)){
+                        if(contrasenaNueva == contrasenaRepetida){
+                            Usuario_Portal_Empresarial__c usuarioCambioC = [Select id 
+                                                                            From Usuario_Portal_Empresarial__c 
+                                                                            Where id =: Permisos.Usuario__c];
+                            
+                            usuarioCambioC.Contrasena2__c = contrasenaNueva;
+                            update usuarioCambioC;
+                            
+                            Cancelar();
+                            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, 'Se ha actualizado su contrasena'));    	
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Las Contraseñas Nuevas no coinciden')); 	
+                        }
+                    }
+                }else{
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Contraseña Actual no coincide'));   
+                }	
             }else{
-            		ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Debes llenar tu contraseña actual'));   
+                ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Debes llenar tu contraseña actual'));   
             }
             
         }Catch(Exception e){
-        		ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Ha ocurrido un error'));    
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
+                                                       'Ha ocurrido un error'));    
         }
     }
     
     public void ActivarModalModificarusuario()
     {
         try{
-             if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        }
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            }
             Url_pagina='/apex/vfNuevousuario?Eldudhdhyudb=' + Codigo_Unico_Banco + '&jsdhvfuyssdfyuv=1&iden='+Num_identidad;
-          popModificar=true;            
+            popModificar=true;            
         }
         catch(exception ex)
         {
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente'));
-             popModificar=false;  
+                                                       'Lo sentimos, hubo un error intentelo nuevamente'));
+            popModificar=false;  
         }
     }
     
     public void ActivarModalCrearusuario()
     {
         try{
-              if(banderaTiempo==0)
-        	{
-           	 	registrarTiempo();
-        	}
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            }
             Url_pagina='/apex/vfNuevousuario?Eldudhdhyudb=' + Codigo_Unico_Banco + '&loetdncdhjch=' + usuario+ '&jsdhvfuyssdfyuv=0';
             system.debug(url_PAGINA);
             popModificar=true;            
@@ -192,68 +184,68 @@ public class ContraladorCrearusuario2 {
         catch(exception ex)
         {
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente'));
+                                                       'Lo sentimos, hubo un error intentelo nuevamente'));
             SYSTEM.debug(EX.getMessage()+' '+EX.getLineNumber());
-             popModificar=false;  
+            popModificar=false;  
         }
     }
     
-	public void Denegar()
+    public void Denegar()
     {
-         try{
-              if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        }
-             boolean Modificado = [select Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_banco ].Modificado__C;
-             if(!Modificado)
-             {
-                 integer contador =[select count() from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad];
-                 
-                 if(contador==1)
-                 {
-                     delete ([select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad]);
-                     delete ([select id from Usuario_Temporal__c where identidad__C=:Num_Identidad]);
-                 }
-                 else
-                 {
-                     delete ([select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco]);
-                 }
-             }
-             else
-             {
-                 Usuario_Empresa_Temporal__c yeah= new Usuario_Empresa_Temporal__c();
-                 string idN=[select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id; 
-                 yeah.id=idn;
-                 yeah.Estado__c=1;
-                 update yeah;
-                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Cambios guardados exitosamente'));
+        try{
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            }
+            boolean Modificado = [select Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_banco ].Modificado__C;
+            if(!Modificado)
+            {
+                integer contador =[select count() from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad];
+                
+                if(contador==1)
+                {
+                    delete ([select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad]);
+                    delete ([select id from Usuario_Temporal__c where identidad__C=:Num_Identidad]);
+                }
+                else
+                {
+                    delete ([select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco]);
+                }
+            }
+            else
+            {
+                Usuario_Empresa_Temporal__c yeah= new Usuario_Empresa_Temporal__c();
+                string idN=[select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id; 
+                yeah.id=idn;
+                yeah.Estado__c=1;
+                update yeah;
+                ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
+                                                           'Cambios guardados exitosamente'));
                 // Cargarusuarios();
-             }
-             Cargarusuarios();
-         }
+            }
+            Cargarusuarios();
+        }
         Catch(Exception ex)
         {
             
         }
-    
+        
     }    
     
     public void Aprobar()
     {
         try{
-              if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        }
+            if(banderaTiempo==0)
+            {
+                registrarTiempo();
+            }
             boolean Modificado = [select Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_banco ].Modificado__C;
             Usuario_Empresa_Temporal__C Usuariotemporal=new Usuario_Empresa_Temporal__C();
             Usuariotemporal = [select  id,Usuario__r.name, Usuario__r.Apellidos__C, Usuario__r.Identidad__c, Aprobacion_Usuarios__c ,activo__c,Usuario__r.Email__c ,Cargar_Generar_Planilla__c, Aceptar_Planilla__c,Calculo_De_Pilares__c,
-                  Crear_Usuarios__c, Usuario__r.bloqueado__C, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
-                  Reportes__c, Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_identidad];
+                               Crear_Usuarios__c, Usuario__r.bloqueado__C, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
+                               Reportes__c, Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_identidad];
             if(!Modificado)
-             {
+            {
                 integer bandera=1;
                 string Nombre_usuario;
                 string IdUser;
@@ -263,30 +255,29 @@ public class ContraladorCrearusuario2 {
                     while(bandera==1)
                     {
                         Nombre_usuario='';
-                      for(integer i=0; i<19; i++)
-                      {
-                          Nombre_usuario +=string.valueOf(Math.round(Math.random() * 10));
-                      }
+                        for(integer i=0; i<19; i++)
+                        {
+                            Nombre_usuario +=string.valueOf(Math.round(Math.random() * 10));
+                        }
                         bandera=[select count() from Usuario_Portal_Empresarial__c where Nombre_usuario__c=:Nombre_usuario];
-                   }
-                   Usuario_Portal_Empresarial__c User= new Usuario_Portal_Empresarial__c();
-                   User.Name=Usuariotemporal.Usuario__r.name;
-                   user.Apellidos__c=Usuariotemporal.Usuario__r.Apellidos__c;
-                   user.Email__c=Usuariotemporal.Usuario__r.Email__c;
-                   user.Identidad__c=Num_Identidad;
-                   user.Nombre_Usuario__c=Nombre_usuario;
-                  user.Bloqueado__c=false;
-                   insert user;  
-                   IdUser=user.id;
+                    }
+                    Usuario_Portal_Empresarial__c User= new Usuario_Portal_Empresarial__c();
+                    User.Name=Usuariotemporal.Usuario__r.name;
+                    user.Apellidos__c=Usuariotemporal.Usuario__r.Apellidos__c;
+                    user.Email__c=Usuariotemporal.Usuario__r.Email__c;
+                    user.Identidad__c=Num_Identidad;
+                    user.Nombre_Usuario__c=Nombre_usuario;
+                    user.Bloqueado__c=false;
+                    insert user;  
+                    IdUser=user.id;
                 }
                 else
                 {
                     IdUser=[select id  from Usuario_Portal_Empresarial__c where Identidad__c=:Num_Identidad].id;
                 }
                 
-               u=[select count()  from Usuario_X_Empresa__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco];
-                if(u==0)
-                {
+                u=[select count()  from Usuario_X_Empresa__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco];
+                if(u==0) {
                     Usuario_X_Empresa__c UserEmpre = new Usuario_X_Empresa__c();
                     UserEmpre.Aceptar_Planilla__c=Usuariotemporal.Aceptar_Planilla__c;
                     UserEmpre.Calculo_De_Pilares__c=Usuariotemporal.Calculo_De_Pilares__c;
@@ -308,46 +299,45 @@ public class ContraladorCrearusuario2 {
                     yeah6.Estado__c=2;
                     update yeah6;
                 }
-             }
-            else
-            {
+            }
+            else{
                 string hola =[select id  from Usuario_X_Empresa__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id;
-            	usuario_Portal_Empresarial__c yeah1=[select id, bloqueado__C  from usuario_Portal_Empresarial__c where Identidad__c=:Num_Identidad];
-            
-                   Usuario_X_Empresa__c UserEmpre = new Usuario_X_Empresa__c();
-                   usuario_Portal_Empresarial__c User = new usuario_Portal_Empresarial__c();
-            		user.name=Usuariotemporal.Usuario__r.name;
-            		user.Apellidos__c=Usuariotemporal.Usuario__r.Apellidos__c;
-            		user.Email__c=Usuariotemporal.Usuario__r.Email__c;
-            		user.Id=yeah1.id;
-                	if(yeah1.Bloqueado__c)
-                    {
-                       user.bloqueado__C = Usuariotemporal.Usuario__r.bloqueado__C; 
-                    }
-            		update user;		
-            
-                   UserEmpre.Aceptar_Planilla__c=Usuariotemporal.Aceptar_Planilla__c;
-                   UserEmpre.Calculo_De_Pilares__c=Usuariotemporal.Calculo_De_Pilares__c;
-                   UserEmpre.Cargar_Generar_Planilla__c=Usuariotemporal.Cargar_Generar_Planilla__c;
-                   userEmpre.Crear_Usuarios__c=Usuariotemporal.Crear_Usuarios__c;
-                   userEmpre.Aprobacion_Usuarios__c=Usuariotemporal.Aprobacion_Usuarios__c;
-                   UserEmpre.empresa2__c=Codigo_Unico_banco;
-                   UserEmpre.Nuevo_Personal__c=Usuariotemporal.Nuevo_Personal__c;
-                   UserEmpre.Nuevos_Salarios__c=Usuariotemporal.Nuevos_Salarios__c;
-                   UserEmpre.Planilla_Seguro_Social__c=Usuariotemporal.Planilla_Seguro_Social__c;
-                   UserEmpre.Activo__c=Usuariotemporal.Activo__c;
-                   UserEmpre.Reportes__c=Usuariotemporal.Reportes__c;
-                   UserEmpre.id=hola; 
-                   update UserEmpre; 
+                usuario_Portal_Empresarial__c yeah1=[select id, bloqueado__C  from usuario_Portal_Empresarial__c where Identidad__c=:Num_Identidad];
                 
-                     Usuario_Empresa_Temporal__c yeah6= new Usuario_Empresa_Temporal__c();
-                    string hy= [select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id; 
-                    yeah6.id=hy;
-                     yeah6.Estado__c=2;
-                     update yeah6;
+                Usuario_X_Empresa__c UserEmpre = new Usuario_X_Empresa__c();
+                usuario_Portal_Empresarial__c User = new usuario_Portal_Empresarial__c();
+                user.name=Usuariotemporal.Usuario__r.name;
+                user.Apellidos__c=Usuariotemporal.Usuario__r.Apellidos__c;
+                user.Email__c=Usuariotemporal.Usuario__r.Email__c;
+                user.Id=yeah1.id;
+                if(yeah1.Bloqueado__c)
+                {
+                    user.bloqueado__C = Usuariotemporal.Usuario__r.bloqueado__C; 
+                }
+                update user;		
+                
+                UserEmpre.Aceptar_Planilla__c=Usuariotemporal.Aceptar_Planilla__c;
+                UserEmpre.Calculo_De_Pilares__c=Usuariotemporal.Calculo_De_Pilares__c;
+                UserEmpre.Cargar_Generar_Planilla__c=Usuariotemporal.Cargar_Generar_Planilla__c;
+                userEmpre.Crear_Usuarios__c=Usuariotemporal.Crear_Usuarios__c;
+                userEmpre.Aprobacion_Usuarios__c=Usuariotemporal.Aprobacion_Usuarios__c;
+                UserEmpre.empresa2__c=Codigo_Unico_banco;
+                UserEmpre.Nuevo_Personal__c=Usuariotemporal.Nuevo_Personal__c;
+                UserEmpre.Nuevos_Salarios__c=Usuariotemporal.Nuevos_Salarios__c;
+                UserEmpre.Planilla_Seguro_Social__c=Usuariotemporal.Planilla_Seguro_Social__c;
+                UserEmpre.Activo__c=Usuariotemporal.Activo__c;
+                UserEmpre.Reportes__c=Usuariotemporal.Reportes__c;
+                UserEmpre.id=hola; 
+                update UserEmpre; 
+                
+                Usuario_Empresa_Temporal__c yeah6= new Usuario_Empresa_Temporal__c();
+                string hy= [select id from Usuario_Empresa_Temporal__c where usuario__r.identidad__C=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id; 
+                yeah6.id=hy;
+                yeah6.Estado__c=2;
+                update yeah6;
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Cambios guardados exitosamente'));
-                 
+                                                           'Cambios guardados exitosamente'));
+                
                 
                 
             }

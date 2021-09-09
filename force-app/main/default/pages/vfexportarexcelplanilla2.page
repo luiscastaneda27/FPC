@@ -53,17 +53,8 @@
          <apex:column headerValue="Patronal" >
            <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_Voluntario__c}"/> 
          </apex:column>
-         <apex:column headerValue="Patronal Extraordinario" >
-           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_Extraordinario__c}"/> 
-         </apex:column>
          <apex:column headerValue="Empleado" >
            <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Voluntario__c}"/> 
-         </apex:column>
-         <apex:column headerValue="Empleado Extraordinario" >
-           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Extraordinario__c}"/> 
-         </apex:column>
-         <apex:column headerValue="Seguro Vida" >
-           <apex:outputField styleclass="slds-input" value="{!Item.Aporte_Seguro_de_Vida__c}"/> 
          </apex:column>
         </apex:dataTable>
         
@@ -95,16 +86,7 @@
             <apex:column headerValue="{!planilla.TA_Patrono_Voluntario__c}">
            <apex:outputText styleclass="slds-input" value=""/>
          </apex:column>
-            <apex:column headerValue="{!planilla.TA_Patrono_Extraordinario__c}">
-           <apex:outputText styleclass="slds-input" value=""/>
-         </apex:column>
             <apex:column headerValue="{!planilla.TA_Empleado_Voluntario__c}" >
-           <apex:outputText styleclass="slds-input" value=""/>
-         </apex:column>
-            <apex:column headerValue="{!planilla.TA_Empleado_Extraordinario__c}" >
-           <apex:outputText styleclass="slds-input" value=""/>
-         </apex:column>
-            <apex:column headerValue="{!planilla.TA_Seguro_de_Vida__c}" >
            <apex:outputText styleclass="slds-input" value=""/>
          </apex:column>
         </apex:dataTable>

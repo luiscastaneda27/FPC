@@ -9,7 +9,7 @@ public class AumentoDisminucionHelper {
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setTimeout(120000);
         EstadoCuenta respuesta = new EstadoCuenta();
-        System.debug('request: '+request);
+        
         try {
             HttpResponse response = new HttpResponse();// http.send(request);
             if(!test.isRunningTest()){
@@ -23,7 +23,7 @@ public class AumentoDisminucionHelper {
                 respuesta = (EstadoCuenta)System.JSON.deserialize(response.getBody(), EstadoCuenta.class);
                 return  respuesta.EST_CUENTA == 'I' ? false : true;             
             }
-            System.debug('response: '+response);
+            
         } Catch(Exception e) {
             system.debug('Error' +e.getMessage() + ' linea ' + e.getLineNumber());
         }

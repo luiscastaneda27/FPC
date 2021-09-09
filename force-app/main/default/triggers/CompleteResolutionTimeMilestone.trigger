@@ -120,12 +120,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     	Salesforce_Tarjetas.processCase(caso,'ADI',lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
                     }    
                 }
-                
-                /*if(lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].ParentId <> '' && lstCase[0].DAU_aprobacion__c == true) {
-                    lstCase[0].DAU_aprobacion__c = false; 
-                    update lstCase;
-                }*/
-                                
+                                               
                 if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
                     String Identidad = lstCase[0].DAU_Identidad__c;
                     List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];

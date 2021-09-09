@@ -15,6 +15,7 @@ public class ExtensionEmpresasEDC {
             Empresas.add(new SelectOption(item.nombreEmpresa, item.nombreEmpresa));
         }
         Empresas.sort();
+        system.debug('total EMpresas: '+empresas.size());
     }
     
     public PageReference ImprimirEDC(){

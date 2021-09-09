@@ -345,7 +345,7 @@
                         <apex:outputField value="{!claseCasoD.Caso.Priority}" />
                         <apex:inputField label="Código Empleado *" value="{!claseCasoD.Caso.Codigo_empleado__c}" OnKeyPress="return CampoNumeroRTN(event, this)" />
                         <apex:inputField label="Nombre Empleado *" value="{!claseCasoD.Caso.Nombre_Empleado__c }" />
-                        <apex:inputField label="Correo Electronico *" value="{!claseCasoD.Caso.Correo_electronico_empleado__c}" />
+                        <apex:inputField label="Correo Electronico *" value="{!claseCasoD.Caso.Correo_Electronico_Empleado__c}" />
                         <apex:inputField label="Agencia *" value="{!claseCasoD.caso.Nombre_agencia__c }" rendered="{!claseCasoD.caso.Origin = 'Agencias_Banco'}" />
                                                  
                          <!--apex:outputField value="{!claseCasoD.Caso.Origin}"/>

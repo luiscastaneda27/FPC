@@ -2,13 +2,13 @@
     <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.Menu_Public, 'menu.css')}" media="screen"/>
     <apex:sectionHeader title="Configuración de Usuarios"/>          
     <div id="menu"> 
-        <ul>     
-            <li><a href="/apex/vfCrearRubro">Rubros<br/><span>Click para ver / configurar los rubros</span></a></li>
+    		<ul>     
+                <li><a href="/apex/vfCrearRubro">Rubros<br/><span>Click para ver / configurar los rubros</span></a></li>
         </ul> 
         <ul>     
             <li><a href="/{!URLFOR($ObjectType.Usuario_Portal_Empresarial__c)}">Usuario<br/><span>Click para ver / configurar los usuarios</span></a></li>
         </ul>      
-        
+ 
         <ul>     
             <li><a href="/{!URLFOR($ObjectType.Usuario_X_Empresa__c )}">Usuario por Empresa<br/><span>Click para editar los usuarios por empresas</span></a></li>
         </ul>  
@@ -25,12 +25,12 @@
             <li><a href="/{!URLFOR($ObjectType.Pregunta_Seguridad__c)}">Preguntas de Seguridad<br/><span>Click para ver / configurar las Preguntas de Seguridad</span></a></li>
         </ul> 
     </div>
-    
-    <!--apex:sectionHeader title="Seguridad portal planilla"/>          
-<div id="menu">
-<ul>     
-<li><a href="/{!URLFOR($ObjectType.Seguridad_portal__mdt)}">Seguridad de inicio de sesión<br/><span>Click para ver / configurar la seguridad del portal</span></a></li>
-</ul> 
-
-</div-->
+     
+   <!--apex:sectionHeader title="Seguridad portal planilla"/>          
+    <div id="menu">
+        <ul>     
+            <li><a href="/{!URLFOR($ObjectType.Seguridad_portal__mdt)}">Seguridad de inicio de sesión<br/><span>Click para ver / configurar la seguridad del portal</span></a></li>
+        </ul> 
+               
+    </div-->
 </apex:page>

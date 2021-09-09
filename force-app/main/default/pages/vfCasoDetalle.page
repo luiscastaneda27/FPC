@@ -650,7 +650,7 @@
                                                         
                                                     </div>
                                                 </div> 
-                                                <!--apex:outputPanel rendered="{!caso.mostrar_tasa_cambio__c ='Si'}" >
+                                                <!--apex:outputPanel rendered="{!caso.Mostrar_tasa_Cambio__c ='Si'}" >
                                                     <div class="slds-form-element__row">
                                                         <div class="slds-form-element slds-size--1-of-2">
                                                             <label class="slds-form-element__label">
@@ -676,7 +676,7 @@
                                                
                                             </div>
                                         </div>
-                                        <apex:outputPanel rendered="{!caso.mostrar_tasa_cambio__c ='Si'}" >
+                                        <apex:outputPanel rendered="{!caso.Mostrar_tasa_Cambio__c ='Si'}" >
                                             <div class="slds-form-element__row">
                                                 <div class="slds-form-element slds-size--1-of-2">
                                                     Tipo de Transacción: {!IF(monedaCuenta = 'USD','Compra de Dólares','Venta de Dólares')}<br/>

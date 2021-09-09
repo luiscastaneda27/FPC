@@ -108,16 +108,46 @@ public class Controller_AprobacionPagoInteres {
     public string Ver_Imagen {get;set;}
     public boolean ActivaFechPago {get;set;}
     public date FechInicioPago {get;set;}
-    
+    /*
+public date fecha_retiro {get;set;}
+public datetime fechaSysdeRetiros {get;set;}
+public boolean mostrarTablaRetiros {get;Set;}
+public boolean mostrarTablaRetirosC {get;Set;}
+public List<cuadreRetiros> ListPagos {get;set;}
+public List<cuadreRetirosC> ListPagosC {get;set;}
+public string fecha {get;set;}
+public string Num_CodReferencia {get;set;}
+public List<Retiro_Aprobacion__c> ListPagosConciliados {get;set;}
+public List<Retiro_Aprobacion__c> ListEnvioTotal {get;set;}
+public List<Retiro_Aprobacion__c> ListEnvioRepetidos {get;set;}
+public List<string> ListaEnvioRefere {get;set;}
+
+public date fecha2{get;set;} 
+public date fecha3{get;set;} */
     
     public Controller_AprobacionPagoInteres(){
         Usuario =  ApexPages.currentPage().getParameters().get('hytrd');
         MuestraRegistrados();
         
     }
-    
-    Map<String, String> mapEstado{get;set;}
-    
+    /*
+public void enviarPagPro()
+{   
+
+paso1Cabeza = 'slds-is-complete';
+paso1Cuerpo = 'slds-hide';
+
+paso2Cabeza = 'slds-is-current';
+paso2Cuerpo = 'slds-show';
+
+}*/
+    /*
+    public pageReference MostarPantalla()
+    {
+        
+        return new pageReference('/apex/vfIntereses_Administrativa_2');  
+        
+    } */
     
     
     public void MuestraRegistrados(){
@@ -126,43 +156,28 @@ public class Controller_AprobacionPagoInteres {
             
             classAdmInteres claseRecibida = new classAdmInteres();
             classAdmInteres AdmInteres = controllerAPIinteresAprobados.TraerRegistrados();
-             mapEstado = new map<String, String>();
             list<String> listIds = new list<String>();
-            if(!test.isRunningTest()){
-               ListIntRegistrados = AdmInteres.ListIntRegistrados; 
-            }
-            
+            ListIntRegistrados = AdmInteres.ListIntRegistrados;
             
             for(integer i=0; i<ListIntRegistrados.size(); i++){
                 DateTime dT = ListIntRegistrados[i].fechadeRegistro;
                 fecha = string.valueOf(string.valueOf(dT.year())+'-'+string.valueOf(dT.month())+'-'+string.valueOf(dT.day()));
                 ListIntRegistrados[i].LEE_ERRORES = fecha;
-                listIds.add(String.valueOf(Integer.valueOf( ListIntRegistrados[i].cuenta )));
-                mapEstado.put(ListIntRegistrados[i].cuenta, 'A');
+                listIds.add(String.valueOf(Integer.valueOf( ListIntRegistrados[i].Id_pagointeres )));
             }
-            system.debug('Nuevo '+ListIntRegistrados);
-            system.debug('Nuevo '+listIds);
             Map<String, String> mapObjectFiles = new Map<String, String>();
             List<String> ListObjct = new List<String>();
-            for(ObjectoReferenciaArchivos__c item: [Select Id, Name,Estado__C From ObjectoReferenciaArchivos__c Where Name in :listIds]){
+            for(ObjectoReferenciaArchivos__c item: [Select Id, Name From ObjectoReferenciaArchivos__c Where Name in :listIds]){
                 mapObjectFiles.put(item.Name, item.Id);
                 ListObjct.add(item.Id);
-                if(item.Estado__C != null){
-                    mapEstado.put(item.Name, item.Estado__C);
-                }
-            }
-            for(integer i=0; i<ListIntRegistrados.size(); i++){
-                ListIntRegistrados[i].estado = mapEstado.get(ListIntRegistrados[i].cuenta);
             }
             Map<String, String> mapFiles = new Map<String, String>();
-            if(ListObjct.size() > 0){
-                for(ContentDocumentLink item :  [Select Id,LinkedEntityId From ContentDocumentLink Where LinkedEntityId in :ListObjct ]){
-                    mapFiles.put(item.LinkedEntityId, item.LinkedEntityId);
-                }
-                for(integer i=0; i<ListIntRegistrados.size(); i++){
-                    String idPagoInteres = String.valueOf(Integer.valueOf( ListIntRegistrados[i].cuenta ));
-                    ListIntRegistrados[i].tieneArchivoSF = mapFiles.ContainsKey(mapObjectFiles.get(idPagoInteres));
-                }
+            for(ContentDocumentLink item :  [Select Id,LinkedEntityId From ContentDocumentLink Where LinkedEntityId in :ListObjct ]){
+                mapFiles.put(item.LinkedEntityId, item.LinkedEntityId);
+            }
+            for(integer i=0; i<ListIntRegistrados.size(); i++){
+                String idPagoInteres = String.valueOf(Integer.valueOf( ListIntRegistrados[i].Id_pagointeres ));
+                ListIntRegistrados[i].tieneArchivoSF = mapFiles.ContainsKey(mapObjectFiles.get(idPagoInteres));
             }
             Control = ListIntRegistrados.size();
             if(Control>0){ mostrarRegistrados = true;
@@ -186,8 +201,7 @@ public class Controller_AprobacionPagoInteres {
                 if(ListIntRegistrados[i].Id_pagointeres == Decimal.valueOf(ID_Referencia)){
                     classPagoInteresesRegA RA = new classPagoInteresesRegA();
                     RA = Cambio_de_clase(ListIntRegistrados[i]);
-                    //RA.EstadoAprobacion = 'A';
-                    RA.EstadoAprobacion = mapEstado.get(RA.Cuenta);
+                    RA.EstadoAprobacion = 'A';
                     RA.fechadeActivacion = datetime.now();
                     CuentaAprobadoD = RA.Cuenta;
                     cuenta = RA.Cuenta;
@@ -203,7 +217,7 @@ public class Controller_AprobacionPagoInteres {
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             MuestraRegistrados();
             EnvioCorreoAprobado();
-            //delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c = :cuenta ]);
+            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c = :cuenta ]);
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, 'PAGO DE INTERESES APROBADO'));
         }catch(Exception e){ 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
@@ -428,8 +442,7 @@ public class Controller_AprobacionPagoInteres {
                 classPagoInteresesRegA RA = new classPagoInteresesRegA();
                 RA = Cambio_de_clase(ListIntRegistrados[i]);
                 listIds.add(ListIntRegistrados[i].Cuenta);                                           
-                //RA.EstadoAprobacion = 'A';
-                RA.EstadoAprobacion = mapEstado.get(ListIntRegistrados[i].Cuenta);
+                RA.EstadoAprobacion = 'A';
                 RA.fechadeActivacion = datetime.now();
                 listS.add(RA);
                 Bitacora(RA);                
@@ -439,7 +452,7 @@ public class Controller_AprobacionPagoInteres {
             String resultado = controllerAPIinteresAprobados.pagaInteres(EnvioInteres);
             
             MuestraRegistrados(); 
-          //  delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c in :listIds ]);
+            delete([Select Id From ObjectoReferenciaArchivos__c Where Cuenta__c in :listIds ]);
         }catch(Exception e){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
         }
     }
@@ -475,20 +488,19 @@ public class Controller_AprobacionPagoInteres {
                 Integer count = 0;
                 for(ObjectoReferenciaArchivos__c item: [Select Id From ObjectoReferenciaArchivos__c Where Name = :String.valueOf(p)]){
                     listIdAcc.add(item.Id);
+                    
                 }
                 String nameFile;
                 String IdFile;
-                if(listIdAcc.size() > 0){
-                    for(ContentDocumentLink item :  [Select Id,ContentDocumentId,ContentDocument.Title From ContentDocumentLink Where LinkedEntityId in :listIdAcc  ]){
-                        count++;
-                        IdFile = item.ContentDocumentId;
-                        nameFile = item.ContentDocument.Title;
-                        
-                    }
+                for(ContentDocumentLink item :  [Select Id,ContentDocumentId,ContentDocument.Title From ContentDocumentLink Where LinkedEntityId in :listIdAcc  ]){
+                    count++;
+                    IdFile = item.ContentDocumentId;
+                    nameFile = item.ContentDocument.Title;
+                    
                 }
                 if(count == 1 && nameFile.toUpperCase().contains('PNG')){
-                    pngId = IdFile;
-                }else if(count > 0){
+                    pngId = nameFile;
+                }else if(count > 1){
                     return new PageReference('/'+listIdAcc[0]);
                 }
             }  

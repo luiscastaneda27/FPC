@@ -17,15 +17,22 @@ public class controladorReporteCalidad_BFH_PM_FIC {
     
     public controladorReporteCalidad_BFH_PM_FIC(){
         try{
+            mapAsesoresPremier = new map<string, String>();
             usuario = ApexPages.currentPage().getParameters().get('usuario');
             tipoPantalla = ApexPages.currentPage().getParameters().get('idPantalla');
             oficial = new Oficial_X_Asesor__c();
             oficial = [select Oficial_SAC__r.name, Zona__c  from Oficial_X_Asesor__c where Codigo_Oficial_SAC__c =:usuario limit 1];
-            system.debug('Correo sin problemas '+usuario + '   '+tipoPantalla);
+            mapAsesoresOficiales = new map<string, Oficial_X_Asesor__c>();
+            for(Oficial_X_Asesor__c item: [select Codigo_Asesor__c ,Oficial_SAC__r.name, Codigo_Oficial_SAC__c,Asesor__r.name from Oficial_X_Asesor__c]){
+                mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
+            }
+            nombreTipoPantalla =   tipoPantalla == 'BFK' ? 'Agencias BFH' : tipoPantalla == 'PM' ? 'Premier': 'Ficopen';
+            for(AsesoresPremier__mdt item: [Select AsesorPremier__c, AsesorFPC__c from AsesoresPremier__mdt] ){
+                mapAsesoresPremier.put(item.AsesorPremier__c, item.AsesorFPC__c);
+            }
+            
         }catch(exception ex){
-            String error = 'Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber();
-            system.debug(error);
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error, por favor contacte su admin.... '+error));
+              ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error, por favor contacte su admin.'));
         }
          
     }
@@ -78,20 +85,12 @@ public class controladorReporteCalidad_BFH_PM_FIC {
     public void traerClientes(){
         try{
             listAfiliaciones = new list<Reporte_calidad__C>();
-            mapAsesoresOficiales = new map<string, Oficial_X_Asesor__c>();
-            mapAsesoresPremier = new map<string, String>();
-            for(Oficial_X_Asesor__c item: [select Codigo_Asesor__c ,Oficial_SAC__r.name, Codigo_Oficial_SAC__c,Asesor__r.name from Oficial_X_Asesor__c]){
-                mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
-            }
-            nombreTipoPantalla =   tipoPantalla == 'BFK' ? 'Agencias BFH' : tipoPantalla == 'PM' ? 'Premier': 'Ficopen';
-            for(AsesoresPremier__mdt item: [Select AsesorPremier__c, AsesorFPC__c from AsesoresPremier__mdt] ){
-                mapAsesoresPremier.put(item.AsesorPremier__c, item.AsesorFPC__c);
-            }
             list<aSysdeReporteCalidad.ConsultaCliente> listRespuesta = aSysdeReporteCalidad.infoClientes(tipoPantalla);
             Map<String, String> mapAGN = new Map<String, String>();
             for(Agencia__c item : [Select name, Codigo_T24__c from agencia__C]){
                 mapAGN.put(item.Codigo_T24__c, item.name);
             }
+            system.debug('REspuesta de traer cliente '+listRespuesta);
             List<String> listIdentidades = new List<String>();
             for(aSysdeReporteCalidad.ConsultaCliente respuesta: listRespuesta){
                 listIdentidades.add(respuesta.identificacion != null ? respuesta.Identificacion.replace('-','') : 'A');
@@ -103,11 +102,9 @@ public class controladorReporteCalidad_BFH_PM_FIC {
             Oficial_X_Asesor__c asesor;
             for(aSysdeReporteCalidad.ConsultaCliente respuesta: listRespuesta){
                 if(respuesta.identificacion != null && !mapClientes.containsKey(respuesta.Identificacion.replace('-','')+respuesta.numCuenta)){
+                    String identificaicon = respuesta.Identificacion.replace('-','');
                     asesor = new Oficial_X_Asesor__c();
                     if(tipoPantalla=='BFK'){
-                        system.debug('Asesor: '+respuesta.asesor);
-                        system.debug('Asesor: '+mapAsesoresOficiales);
-                        system.debug('Asesor: '+mapAsesoresOficiales.containsKey(respuesta.asesor));
                         asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();
                     }else{
                         respuesta.asesor = mapAsesoresPremier.get(respuesta.asesor);

@@ -63,7 +63,7 @@ public class aSysdeReporteCalidad {
             
             InformeReporteCalidad a = new InformeReporteCalidad();
             a.accion=accion;
-            a.desde = date.today().addDays(-10);
+            a.desde = date.today().addMonths(-2);
             //a.desde = date.valueOf(datetime.newInstance(2018, 1, 1));
             a.hasta = date.today();
             /*a.hasta = date.valueOf(datetime.newInstance(2019, 5, 20));
@@ -80,7 +80,7 @@ public class aSysdeReporteCalidad {
            
             HttpRequest request = new HttpRequest();
             String url = claseUtilPlanillas.urlSysde('Test'); 
-            url='http://190.5.68.49:9090/';
+            //url='http://190.5.68.49:9090/';
             request.setEndpoint(url + 'api/clientes/reportes');
             request.setMethod('POST');
             request.setBody(cons);

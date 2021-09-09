@@ -17,8 +17,8 @@ public class controllerApiClienteNatural {
 			envio.contenido = JSON.serialize(claseEnvio);
 			String cons = 'contenido=' + envio.contenido;
 			system.debug(cons);		
-			request.setBody(cons);
-            HttpResponse response = new HttpResponse();
+			request.setBody(cons);	
+			HttpResponse response = new HttpResponse();
             if(!test.isRunningTest()){
                 response = http.send(request);
             }else{
@@ -265,10 +265,7 @@ public class controllerApiClienteNatural {
                
            }
             
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage()+'   '+e.getLineNumber());
-	
-        }Catch(Exception e){
+		}Catch(Exception e){
 			system.debug(e.getMessage()+'   '+e.getLineNumber());	
 		} 
         
@@ -437,6 +434,7 @@ public class controllerApiClienteNatural {
          system.debug('debuggAPICO' +' '+ fcsd);
 		 return fcsd;   
     }
+    
     
     
     

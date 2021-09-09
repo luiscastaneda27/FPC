@@ -1,0 +1,461 @@
+<apex:page showHeader="false" standardStylesheets="false" id="page" sidebar="false"  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" title="Ficohsa FPC" cache="false" expires="0"  controller="afiliacionElectronicaController1">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <apex:slds />
+            
+            <style type="text/css">
+                html, body {
+                background:#FFFFFF;
+                font-family:1em 'Open Sans Light', Helvetica, Arial, sans-serif;
+                }
+                
+                #topMenuZonaTransaccional {
+                /*position: relative;
+                width: 100%;
+                float: left;*/
+                }
+                
+                .Confirmar, .ConfirmarSecond {
+                font-weight: bolder !important;
+                height: 28px;
+                cursor: pointer;
+                border: medium none;
+                font-weight: bold;
+                position: relative;
+                background-color: #f78d1c;
+                color: #FFFFFF !important;
+                font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                }
+                
+                .Confirmar:hover, .ConfirmarSecond:hover {
+                color:#fff;
+                background-color: #666 !important;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                }
+                
+                /* .ConfirmarSecond {
+                font-weight: bolder !important;
+                height: 28px;
+                cursor: pointer;
+                border: medium solid;
+                font-weight: bold;
+                position: relative;
+                background-color:#fff;
+                color: #f78d1c !important;
+                font-family: 'Open Sans Bold', Helvetica, Arial,sans-serif;
+                font-size: 13px;
+                padding: 5px 10px;
+                margin: 15px 0 0;
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 28px;
+                
+                -webkit-appearance: button;
+                -webkit-border-radius: 0px;
+                -moz-border-radius: 0px;
+                border-radius: 0px;
+                
+                box-sizing: border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                
+                -webkit-transition: all 0.2s ease;
+                -moz-transition:    all 0.2s ease;
+                -o-transition:      all 0.2s ease;
+                transition:         all 0.2s ease;
+                } */
+                
+                .messageText{
+                	font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                    font-size: 22px !important;
+                    color: #ffffff !important;
+                    font-weight: 350;
+                }
+                
+                .letra {
+                font-size: 14px;
+                font-weight: 560;
+                }
+                
+                .padding-left-0-5em {
+                padding-left: 0.5em !important;
+                }
+                
+                .padding-left-1em {
+                padding-left: 1em !important;
+                }
+                
+                .padding-left-2em {
+                padding-left: 2em !important;
+                }
+                
+                .margin-top-1em {
+                margin-top: 1em !important;
+                }
+                
+                .margin-bottom-0-5x100 {
+                margin-bottom: 0.5% !important;
+                }
+                
+                .font-title {
+                font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 22px !important;
+                color: #42c4dc !important;
+                font-weight: 350;
+                }
+                
+                .font-titleMessage {
+                font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 22px !important;
+                color: #ffffff !important;
+                font-weight: 350;
+                }
+                
+                .font-subtitle {
+                font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 16px !important;
+                color: #42c4dc !important;
+                font-weight: 350 !important;
+                }
+                
+                .fontStyle {
+                font-family: 1em 'Open Sans', Helvetica, Arial, sans-serif !important;
+                color: #666 !important;
+                font-weight: 560 !important;
+                font-size: 14px !important;
+                }
+                .fontStyles {
+                font-family: 1em 'Open Sans', Helvetica, Arial, sans-serif !important;
+                color: #666 !important;
+                font-weight: normal;
+                font-size: 16px !important;
+                text-align: justify;
+                }
+                
+                .slds-grid_align-center {
+                margin-left: 0.5m;
+                }
+                
+                .custom-alignment {
+                margin-left: 0%;
+                }
+                
+                .custom-checkbox-aligment {
+                margin-bottom: 0em;
+                }
+                
+                .custom-help-text {
+                margin-left: 0%;
+                }
+                
+                .custom-overflow-text {
+                overflow: hidden !important;
+                white-space: nowrap !important;
+                text-overflow: ellipsis !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center;
+                width: 21.5%;
+                }
+                
+                .slds-textarea {
+                min-height: 4em;
+                }
+                
+                .hide {
+                display: none !important;
+                }
+                
+                .show {
+                display: block !important;
+                }
+                
+                .slds-notify__close {
+                width: 7% !important;
+                top: 15% !important;
+                }
+                
+                /* Extra small devices (phones, 600px and down) */
+                @media only screen and (max-width: 600px) {
+                .custom-select-sizing {
+                width: 90% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 42.6% !important;
+                }
+                
+                .Confirmar {
+                width: 50% !important;
+                text-align: center !important;
+                margin: 1em 0em 0em auto !important;
+                background-color: #f78d1c !important;
+                }
+                
+                .custom-alignment {
+                margin-left: 4% !important;
+                }
+                
+                .padding-left-2em {
+                padding-left: 1em !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 100% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 4% !important;
+                }
+                }
+                
+                /* Small devices (portrait tablets and large phones, 600px and up) */
+                /*@media only screen and (min-width: 600px) {
+                
+                }*/
+                
+                /* Medium devices (landscape tablets, 768px and up) */
+                @media only screen and (min-width: 768px) {
+                .custom-checkbox-aligment {
+                margin: 0.5em 0em !important;
+                }
+                
+                .custom-select-sizing {
+                width: 60% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 28.4% !important;
+                }
+                
+                .custom-alignment {
+                margin-left: 2% !important;
+                }
+                
+                .Confirmar {
+                width: 50% !important;
+                margin: 1em 0em 0em auto !important;
+                background-color: #f78d1c !important;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 53% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 27% !important;
+                }
+                }
+                
+                /* Large devices (laptops/desktops, 992px and up) */
+                /*@media only screen and (min-width: 992px) {
+                
+                }*/
+                
+                /* Extra large devices (large laptops and desktops, 1200px and up) */
+                @media only screen and (min-width: 1024px) {
+                .custom-alignment {
+                margin-left: 1% !important;
+                }
+                
+                .custom-checkbox-aligment {
+                margin: 1em 0em !important;
+                }
+                
+                .custom-select-sizing {
+                width: 30% !important;
+                height: 30px !important;
+                margin-left: 15px !important;
+                }
+                
+                .custom-date-sizing {
+                width: 14.1% !important;
+                }
+                
+                .Confirmar {
+                width: 40% !important;
+                height:40px;
+                background-color: #f78d1c !important;
+                border-radius: 5px;
+                }
+                
+                .custom-help-text {
+                margin-left: 17.7%;
+                }
+                
+                .custom-sizing-button {
+                text-align: center !important;
+                width: 21.5% !important;
+                }
+                
+                .slds-text-title {
+                margin-left: 0.1% !important;
+                }
+                }
+                table.exceptionText td {
+                 font-style:italic;
+                 font-size:16px;
+                 font-weight:bold;
+                 text-align:center;
+                 color:red;}
+                
+            </style>
+            
+    		<script src="https://www.google.com/recaptcha/api.js"></script>
+            <script>
+                function timestamp() { 
+                var response = document.getElementById("g-recaptcha-response"); 
+                if (response == null || response.value.trim() == "") {
+                    var elems = JSON.parse(document.getElementsByName("captcha_settings")[0].value);elems["ts"] = JSON.stringify(new Date().getTime());document.getElementsByName("captcha_settings")[0].value = JSON.stringify(elems); } } setInterval(timestamp, 500); 
+            </script>
+                                    
+            <script>
+            function isNumberKey(evt)
+            {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            }
+            </script>
+        </head>
+        <body>
+            <div class="slds-scope">
+                <!-- Alerta para dar aviso de los navegadores soportados -->              
+                <apex:form id="theForm">
+                    <form action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST"></form>
+                    <apex:actionStatus id="status">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
+                            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 45px;">
+                                    <img src="http://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1570731998000/load_gif" style="float: left; margin: 8px; width: 25px;" />
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    
+                    <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large" style="&quot; width:900px&quot;&gt;">
+                        <legend id="newexpenseform" class="padding-left-0-5em font-title" style="width:500px; ">
+                            Afiliación digital desde donde te encuentres
+                        </legend>
+                        <!--header class="slds-modal__header"-->
+                   <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>
+                    <!--h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Fico </h2-->
+                  <!--/header-->
+                        	<!--apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
+                font-size: 22px !important;
+                color: #ffffff !important;
+                font-weight: 350;"/-->  
+                        <br/><br/>
+                        <abbr class="fontStyles">Por motivos de seguridad, ingresa tu número de identificación para generar un token que recibirás
+                                                en tu teléfono celular. Ingresa este token y luego de su validación, recibirás un correo electrónico
+                                                para afiliarte a nuestro Fondo de Pensión.</abbr>
+                        <br/><br/>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <font class="padding-left-0em fontStyle">Ingresa tu Identificación: </font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <apex:inputText value="{!idCliente}" styleclass="slds-input" style="height:10px; width:400px; margin-left:-118px;"  />
+                            </div>
+                        </div><br/>
+                        
+                        
+                        <apex:outputPanel id="id_Sec_Datos" rendered="{!mostrarCampos}" >
+                        <font class="padding-left-0em font-subtitle">Ingresa tus Datos</font>
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <font class="padding-left-0em fontStyle">Correo Electrónico:</font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <apex:inputText value="{!correoCliente}" styleclass="slds-input" required="true" style="height:10px; width:400px; margin-left:-118px;"  />                            
+                            </div>
+                            <br/><br/>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <font class="padding-left-0em fontStyle">Teléfono Celular:</font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <apex:inputText maxlength="8" onkeypress="return isNumberKey(event)" value="{!telefonoCelular}" styleclass="slds-input" required="true" style="height:10px; width:400px; margin-left:-118px;"  />
+                            </div>                           
+                            </div><br/>
+                    </apex:outputPanel>
+                        <apex:outputPanel id="id_Sec_Token" rendered="{!mostrarToken}" >
+                        <div class="margin-top-1em slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <font class="padding-left-0em fontStyle">Token de Seguridad:</font>
+                                <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_5-of-12">
+                                <apex:inputText value="{!token}" styleclass="slds-input" required="true" style="height:10px; width:400px; margin-left:-118px;"  />                            
+                            </div>
+                            </div><br/>
+                        </apex:outputPanel>
+                        
+                        
+                    <apex:outputPanel id="id_Sec_botnSoli" rendered="{!botonEnviarSolicitud}" >    
+                        <div class="slds-form-element" align="center">
+                            <div class="slds-form-element__control">
+                                <apex:commandButton status="status" value="ENVIAR SOLICITUD" action="{!validar}" reRender="theForm" styleClass="Confirmar" />
+                           
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="id_Sec_botnDatos" rendered="{!botonValidarDatos}" >    
+                        <div class="slds-form-element" align="center">
+                            <div class="slds-form-element__control">
+                                <apex:commandButton status="status" value="VALIDAR DATOS"  styleClass="Confirmar" action="{!validarDatos}" reRender="theForm" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="id_Sec_botnToken" rendered="{!botonValidarToken}" >  
+                        <abbr class="fontStyles">Al dar click en el botón "Aceptar", usted otorga su consentimiento expreso e inequívoco a FICOHSA PENSIONES Y CESANTÍAS para que, directamente o a través de terceros, le envíe SMS a su teléfono móvil registrado en cualquier hora del día.</abbr>
+                        <br/><br/>
+                        <div class="slds-form-element" align="center">
+                            <div class="slds-form-element__control">
+                                <apex:commandButton status="status" value="ACEPTAR"  styleClass="Confirmar" action="{!validarToken}" reRender="theForm" />
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    </fieldset>
+                </apex:form>
+            </div>
+        </body>
+    </html>
+</apex:page>

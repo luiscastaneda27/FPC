@@ -95,7 +95,7 @@ public class controllerAprobarCasos {
             req2.setComments(comentarios);
             req2.setAction(accion);
             req2.setNextApproverIds(new Id[] {User1.id});
-            
+            system.debug('newWorkItemIds: '+newWorkItemIds);
             req2.setWorkitemId(newWorkItemIds);
             
             Approval.ProcessResult result2 =  Approval.process(req2);          
@@ -104,6 +104,7 @@ public class controllerAprobarCasos {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.Confirm, 'Gracias.!')); 
             mbAprobado = False; 
         }Catch(Exception e){
+            system.debug('Error: '+e.getMessage()+', Linea: '+e.getLineNumber());
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.FATAL, 'Error: No existe proceso de aprobación pendiente'));        
         }
     }

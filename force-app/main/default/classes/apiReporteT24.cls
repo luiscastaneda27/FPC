@@ -32,31 +32,18 @@ public class apiReporteT24 {
 			 			
 			classJson envio = new classJson();
 			envio.contenido = JSON.serialize(claseEnvio);
-			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
-			request.setBody(cons);	
+            String cons = 'contenido=' + envio.contenido.replace('" ', '"');
             
-		HttpResponse response;/* = http.send(request);*/
-             if(test.isRunningTest())
-            { 
+            request.setBody(cons);	
+            system.debug('Mandamos: '+cons);	
+            HttpResponse response;/* = http.send(request);*/
+            if(test.isRunningTest()){ 
                 respuesta='{"classRespuestaT24":[{"Certificado":null,"Mensaje":"A"}]}';
-            	fcsd = (classRespuestaT24)System.JSON.deserialize(respuesta, classRespuestaT24.class);
-            }
-            
-            else{
+                fcsd = (classRespuestaT24)System.JSON.deserialize(respuesta, classRespuestaT24.class);
+            }else{
                 response = http.send(request); 
             }
-	    //	respuesta = response.getBody();
-            
-            //fcsd = respuesta.split(',');
-                        
-          /*  if (response.getStatusCode() == 200) 
-           {
-                
-	            fcsd = (classRespuestaT24)System.JSON.deserialize(response.getBody(), classRespuestaT24.class);
-               
-           }*/
-	    	//respuesta = response.getBody();
+            system.debug('Respuesta desde sysde: '+response.getBody());
 
 			
             resultado = (list<classRespuestaT24>)JSON.deserialize(response.getBody(), list<classRespuestaT24>.class);

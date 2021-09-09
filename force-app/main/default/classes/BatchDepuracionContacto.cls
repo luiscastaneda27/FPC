@@ -1,15 +1,11 @@
 global without sharing class BatchDepuracionContacto implements Database.Batchable<sObject>, Database.AllowsCallouts{
     
-    public Decimal totalContact;
-    public Integer countEjecuciones;
     public DateTime desde;
     public DateTime hasta;
     
     global BatchDepuracionContacto(Integer countEjecuciones, DateTime desde, DateTime hasta){
-        this.countEjecuciones = countEjecuciones;
         this.desde = desde;
         this.hasta = hasta;
-        totalContact = [select Count() from contact];
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC){
@@ -17,7 +13,7 @@ global without sharing class BatchDepuracionContacto implements Database.Batchab
                                         '(Select Id, CreatedDate '+
                                         ' From EmailStatuses '+
                                         'where Task.Subject = \'Correo electrónico: Estado de cuenta\')'+ 
-                                        ' From Contact order by LastModifiedDate asc limit 10000');
+                                        ' From Contact ');
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> scope) {
@@ -31,15 +27,9 @@ global without sharing class BatchDepuracionContacto implements Database.Batchab
     } 
     
     global void finish(Database.BatchableContext bc) {
-       countEjecuciones ++;
-        system.debug('Final '+totalContact / 10000 +'    '+ countEjecuciones);
-        if(totalContact / 10000 > countEjecuciones){
-            BatchDepuracionContacto l = new BatchDepuracionContacto(countEjecuciones, desde, hasta);
-            Id batchprocessid = Database.executeBatch(l);
-        }else{
-            BatchDatosInformeEDC l = new BatchDatosInformeEDC(desde, hasta);
-            Id batchprocessid = Database.executeBatch(l, 200);
-        }
+        BatchDatosInformeEDC l = new BatchDatosInformeEDC(desde, hasta);
+        Id batchprocessid = Database.executeBatch(l, Integer.valueOf(Label.BatchSize));
+        
         
     }
 }

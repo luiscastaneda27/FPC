@@ -1,63 +1,21 @@
 public class controladorPlanillasEnviadas {
     
-    // Rezagos
-    public String CodRef{get;set;}
-    public String CodRefTest{get;set;}
-    public String Existe{get;set;}
-    public String Rezagosn{get;set;}
-    public String Monto{get;set;}
-    public String Moneda{get;set;}
-    public boolean displayPopup {get; set;}
-    List <String> ValorCuotaStr {get;set;}
-    public String ValorCuotaDia {get;set;}
-    public String ValorCuotaFondo {get;set;}
-    Public String Cod_Planilla {get;set;}
-    Public String Total {get;set;}
-    public string Num_CodReferencia_Rez{get;set;}
-    //public List<ClientesRez> ListClientesRez {get;set;}    
-    //public ClientesRez AplicaRez{get;set;}
-    public string Rez_SI_NO{get;set;}//Setear a 0
-    public string Monto_Calculado{get;set;}//Setear a 0
-    public string Num_CodCuenta_Rez{get;set;}//Setear a 0
-    public string Monto_Sal{get;set;}//Setear a 0
-    public string Compra_Dolar{get;set;}//Setear a 0
-    public String Correcto {get;set;}
-    Public Boolean BTNAplicar {get;set;}
-    Public Decimal ValCuoEntrada{get;set;}
-    Public Decimal ValCuoSalida{get;set;}
-    // 
-    Public List<Planilla> Planillas{get;set;}
+    Public list<Planilla> Planillas{get;set;}
     Public string Id_Planilla{get;set;}
     public List<SelectOption> options {get;set;}
     private integer contador;
-    Date fecha;
+    date fecha;
     string Bandera;
     Public boolean mostrarPan{get;set;}
     Public string Id_PANTALLA{get;set;}
     public boolean popTasa{get;set;}
-    public String MensajeError {get;set;}
-    public boolean MensajeErr {get;set;}
-    Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
     
     public controladorPlanillasEnviadas() {
-        MensajeError='';
         options=new List<SelectOption>();
         options.add(new SelectOption('1','Pendientes'));
         options.add(new SelectOption('2','Aprobadas'));
-        
-        mapInfoRezagos = new Map<String,InfoRezagos>();           
-        for(InfoRezagos.clientes IRc : ControllerApiRezagos.ConsultaRezagos()){
-            InfoRezagos Rez = new InfoRezagos();
-            Rez.clientes.add(IRc);
-            mapInfoRezagos.put(IRc.codReferencia,Rez);
-        }
-        
         CargarPlanillas();
         contador=0;
-        //Para obtener el valor cuota del dia al iniciar el programa
-        String ValorCuota = ControllerApiRezagos.ConsultaCuotaSal();
-        ValorCuotaStr = new List<String>();
-        ValorCuotaStr = ValorCuota.split('},');
     }
     
     public void cerrar(){
@@ -104,44 +62,32 @@ public class controladorPlanillasEnviadas {
             }
             
         }Catch(Exception ex){
-            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
-            MensajeError = 'Error al Cargar Planillas en el Metodo: CargarPlanillasAprobadas. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-            MensajeErr = true;
+            system.debug('Error'+ex.getLineNumber());
         }
     } 
     
     Public void CargarPlanillas() {
         try{
-            System.debug('Se ejecuta el Cargar Planillas');
             mostrarPan=true;
             list<Planilla__C> TodasPlanillas=new list<Planilla__C>();
             planillas = new list<Planilla>();
-            TodasPlanillas=[select id,empresa2__r.name, tasa_compra__C, tipo_planilla__c,name, Estado2__c,
+            TodasPlanillas=[select id,empresa2__r.name,tasa_compra__C, tipo_planilla__c,name, Estado2__c,
                             TA_Empleado_Obligatorio__c, TA_Patrono_obligatorio__c, TA_Empleado_Voluntario__c, 
                             TA_Patrono_Voluntario__c, Total_Reserva_Laboral2__c, TA_Empleado_Extraordinario__c,
                             TA_Patrono_Extraordinario__c, TA_Seguro_de_Vida__c, fecha__C, CurrencyIsoCode 
                             from planilla__c where estado2__c='Pendiente aprobación Ficohsa' order by name asc];
-            
             for(integer i=0; i<TodasPlanillas.size(); i++){
-                decimal TotalPilares = TodasPlanillas[i].TA_Empleado_Obligatorio__c + TodasPlanillas[i].TA_Patrono_obligatorio__c + 
-                    TodasPlanillas[i].TA_Empleado_Voluntario__c + TodasPlanillas[i].TA_Patrono_Voluntario__c + 
-                    TodasPlanillas[i].Total_Reserva_Laboral2__c + TodasPlanillas[i].TA_Empleado_Extraordinario__c + 
-                    TodasPlanillas[i].TA_Patrono_Extraordinario__c + TodasPlanillas[i].TA_Seguro_de_Vida__c;
-                
+                decimal TotalPilares =TodasPlanillas[i].TA_Empleado_Obligatorio__c + TodasPlanillas[i].TA_Patrono_obligatorio__c + TodasPlanillas[i].TA_Empleado_Voluntario__c + TodasPlanillas[i].TA_Patrono_Voluntario__c + TodasPlanillas[i].Total_Reserva_Laboral2__c + TodasPlanillas[i].TA_Empleado_Extraordinario__c + TodasPlanillas[i].TA_Patrono_Extraordinario__c + TodasPlanillas[i].TA_Seguro_de_Vida__c;
                 if(TodasPlanillas[i].tasa_compra__C==0){
-                    planillas.add(new Planilla(TodasPlanillas[i].id, TodasPlanillas[i].empresa2__r.name, date.today(),TodasPlanillas[i].name,
-                                               TotalPilares,'true','false',TodasPlanillas[i].CurrencyIsoCode , null, 'Sin Informacion',''));
+                    planillas.add(new Planilla(TodasPlanillas[i].id, TodasPlanillas[i].empresa2__r.name, date.today(),TodasPlanillas[i].name,TotalPilares,'true','false',TodasPlanillas[i].CurrencyIsoCode , null, null));
                 }else{
-                    planillas.add(new Planilla(TodasPlanillas[i].id, TodasPlanillas[i].empresa2__r.name, TodasPlanillas[i].fecha__C,
-                                               TodasPlanillas[i].name,TotalPilares,'false','true',TodasPlanillas[i].CurrencyIsoCode, null, 'Sin Informacion',''));
+                    planillas.add(new Planilla(TodasPlanillas[i].id, TodasPlanillas[i].empresa2__r.name, TodasPlanillas[i].fecha__C,TodasPlanillas[i].name,TotalPilares,'false','true',TodasPlanillas[i].CurrencyIsoCode, null, null));
                 }
             }
-            
             if(contador>0){
-                System.debug('Entramos al Contador>0');
                 contador=0;
                 Bandera='Correctamente';
-                planilla__c planilla = new planilla__C();
+                planilla__c planilla=new planilla__C();
                 planilla=[select respuesta_desde_sysde_aportes__C from planilla__C where id=:Id_Planilla];
                 string estadoplanilla=planilla.respuesta_desde_sysde_aportes__C;
                 if(estadoplanilla==null || !estadoplanilla.contains('200')) {
@@ -149,64 +95,59 @@ public class controladorPlanillasEnviadas {
                 }
             }
         }Catch(Exception ex){
-            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
-            MensajeError = 'Error al Cargar Planillas en el Metodo: CargarPlanillas. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-            MensajeErr = true;
+            system.debug('Error en llamar metodo'+ex.getLineNumber()+ex.getMessage());
         }
     }
     
-    public void OrdenarPlanilla(){
-        try{
-            System.debug('Entramos a OrdenarPlanilla'+ ' ----- '+id_planilla);
-            Integer FlagCount = 0; //Esta variable sirve para contar si se ejecutaron ambos procesos de los aportes.
-            list<string> listIds = new list<string>();
-            
-            Planilla__c planilla = [Select cod_referencia__C, rezago__C, empresa2__C,respuesta_desde_sysde_aportes__C,
-                                    ServicioEjecutado__c,
-                                    (Select Id from Contenidos_Planilla__r)
-                                    From Planilla__C
-                                   Where Id = :id_planilla];
-            
+    public  void OrdenarPlanilla(){
+        try
+        {
+            list<string> idcontenido = new list<string>();
+            string empresa;
+            string rezago;
+            string codigo;
+            for(Contenido_planilla__C item:
+                [select id, planilla__r.cod_referencia__C,planilla__r.rezago__C, planilla__r.empresa2__C,planilla__r.respuesta_desde_sysde_aportes__C 
+                 from contenido_planilla__C where planilla__C=:id_planilla]){
+                     idcontenido.add(item.id);
+                     empresa=item.planilla__r.empresa2__C;
+                     rezago=item.planilla__r.rezago__C;
+                     codigo=item.planilla__r.cod_referencia__C;
+                 }
             
             Autonumerico_cuentas_Syste__c Numerosformularios=[select id, Id_Formulario_Sysde__c from Autonumerico_cuentas_Syste__c limit 1];
-            decimal abc = Numerosformularios.Id_Formulario_Sysde__c;
-            
-            System.debug('Autonumerico Planillas: '+String.valueOf(abc));
-            
+            decimal abc=Numerosformularios.Id_Formulario_Sysde__c;
             list<cuenta_planilla__C> cuentas = New list<cuenta_planilla__C>();
-            cuentas =[Select Codigo_cuenta__c, valor_monto__C, Valor_Monto_Patrono__c, Valor_Monto_Extraordinario__c, Valor_Monto_Patronal_Extraordinario__c, 
-                      Valor_Monto_Seguro_Vida__c, contenido_planilla__r.empleado2__r.identificacion__C 
-                      From cuenta_planilla__C
-                      Where contenido_planilla__c  in :planilla.Contenidos_Planilla__r ];
-            
+            cuentas =[select  Codigo_cuenta__c, valor_monto__C, Valor_Monto_Patrono__c, Valor_Monto_Extraordinario__c, Valor_Monto_Patronal_Extraordinario__c, Valor_Monto_Seguro_Vida__c, contenido_planilla__r.empleado2__r.identificacion__C from cuenta_planilla__C
+                      where contenido_planilla__C in :(idcontenido)];
+            idcontenido.clear();
             for(cuenta_planilla__C item : cuentas){
-                listIds.add(item.Codigo_cuenta__c); 
+                idcontenido.add(item.Codigo_cuenta__c); 
             }
-            list<cuentas__C> cuentas_salesforce = new list<cuentas__C>();
-            
-            cuentas_salesforce=[Select Producto__r.CurrencyIsoCode, 
-                                cliente__r.identificacion__C, 
-                                Cuenta_colectiva2__r.codigo__C,
-                                Codigo__c, Aporte_Dolares_Flag__c 
-                                from cuentas__C 
-                                where codigo__C in :(listIds)];
-            
-            map<String, list<cuentas__C>> mapCuentas= new map<String, list<cuentas__C>>();
-            
+            list<cuentas__C> cuentas_salesforce =new list<cuentas__C>();
+            cuentas_salesforce=[select Producto__r.CurrencyIsoCode, cliente__r.identificacion__C,
+                                Cuenta_colectiva2__r.codigo__C, Codigo__c from cuentas__C
+                                where codigo__C in :(idcontenido)];
+            map<string, list<cuentas__C>> mapCuentas= new map<string, list<cuentas__C>>();
             for(integer i=0; i<cuentas_salesforce.size(); i++){
-                list<cuentas__C> listCuentas = mapCuentas.containsKey(cuentas_salesforce[i].cliente__r.identificacion__C) ?
-                    mapCuentas.get(cuentas_salesforce[i].cliente__r.identificacion__C) :
-                new list<cuentas__C>();
-                listCuentas.add(cuentas_salesforce[i]);
-                mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C,listCuentas);
-                
+                list<cuentas__C> listCuentas = new list<cuentas__C>();
+                if(mapCuentas.containsKey(cuentas_salesforce[i].cliente__r.identificacion__C)){
+                    listCuentas=mapCuentas.get(cuentas_salesforce[i].cliente__r.identificacion__C);
+                    listCuentas.add(cuentas_salesforce[i]);
+                    mapCuentas.remove(cuentas_salesforce[i].cliente__r.identificacion__c);
+                    mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C,listCuentas);
+                    
+                }else{
+                    listCuentas.add(cuentas_salesforce[i]);
+                    mapCuentas.remove(cuentas_salesforce[i].cliente__r.identificacion__c);
+                    mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C,listCuentas);
+                }
             }
             list<classAportesPlanilla> claseenvio = new list<classAportesPlanilla>();
             classAportesPlanilla nueva;
             string todosEmpleados='';
-            
             for(integer i=0; i<cuentas.size(); i++){
-                cuentas_salesforce = new list<cuentas__C>();
+                cuentas_salesforce =new list<cuentas__C>();
                 if(mapCuentas.containsKey(cuentas[i].contenido_planilla__r.empleado2__r.identificacion__C)){
                     cuentas_salesforce=mapCuentas.get(cuentas[i].contenido_planilla__r.empleado2__r.identificacion__C);
                 }
@@ -219,30 +160,17 @@ public class controladorPlanillasEnviadas {
                         nueva.cuenta=cuentas[i].Codigo_cuenta__c;
                         nueva.codigoCuenta=integer.valueOf(cuentas[i].Codigo_cuenta__c);
                         nueva.codigoMoneda = cuentas_salesforce[jj].Producto__r.CurrencyIsoCode=='HNL' ? '1':'2';
+                        nueva.aportePersonalVoluntario=cuentas[i].valor_monto__C;
+                        nueva.aportePatronalVoluntario=cuentas[i].valor_monto_patrono__C;
                         //
-                        if(Planilla.rezago__c=='S'){
-                            System.debug('01 Es un rezago SI, calculamos los saldos con los valores de cuota: '+String.valueOf(ValCuoEntrada)+'-'+String.valueOf(ValCuoSalida));
-                            nueva.aportePersonalVoluntario=cuentas[i].valor_monto__C/ValCuoEntrada*ValCuoSalida;
-                            nueva.aportePatronalVoluntario=cuentas[i].valor_monto_patrono__C/ValCuoEntrada*ValCuoSalida;
-                            nueva.aportePersonalExtraordinario=cuentas[i].Valor_Monto_Extraordinario__c/ValCuoEntrada*ValCuoSalida;
-                            nueva.aportePatronalExtraordinario=cuentas[i].Valor_Monto_Patronal_Extraordinario__c/ValCuoEntrada*ValCuoSalida;
-							System.debug('Aportes registrados APEV-APAV-APEX-APAX: '+nueva.aportePersonalVoluntario+'-'+nueva.aportePatronalVoluntario+'-'+
-                                         nueva.aportePersonalExtraordinario+'-'+nueva.aportePatronalExtraordinario);
-                        }else{
-                            System.debug('01 Es un rezago NO: '+i);
-                            nueva.aportePersonalVoluntario=cuentas[i].valor_monto__C;
-                            nueva.aportePatronalVoluntario=cuentas[i].valor_monto_patrono__C;
-                            nueva.aportePersonalExtraordinario=cuentas[i].Valor_Monto_Extraordinario__c;
-                            nueva.aportePatronalExtraordinario=cuentas[i].Valor_Monto_Patronal_Extraordinario__c;
-                            System.debug('Aportes registrados APEV-APAV-APEX-APAX: '+nueva.aportePersonalVoluntario+'-'+nueva.aportePatronalVoluntario+'-'+
-                                         nueva.aportePersonalExtraordinario+'-'+nueva.aportePatronalExtraordinario);
-                        }
-                        //
+                        nueva.aportePersonalExtraordinario=cuentas[i].Valor_Monto_Extraordinario__c;
+                        nueva.aportePatronalExtraordinario=cuentas[i].Valor_Monto_Patronal_Extraordinario__c;
                         nueva.aporteSeguroVida=cuentas[i].Valor_Monto_Seguro_Vida__c;
                         //
                         nueva.aportePersonalObligatorio=0;
                         nueva.aportePatronalObligatorio=0;
-
+                       // nueva.rezago = rezago;
+                        //nueva.codigoReferencia = codigo;
                         claseenvio.add(nueva);
                         
                         todosEmpleados +=nueva.idSalesforce+',';
@@ -258,39 +186,44 @@ public class controladorPlanillasEnviadas {
                         todosEmpleados +=nueva.aportePersonalExtraordinario+',';
                         todosEmpleados +=nueva.aportePatronalExtraordinario+',';
                         todosEmpleados +=nueva.aporteSeguroVida+'::::';
+                        //todosEmpleados +=nueva.rezago+',';
+                        //todosEmpleados +=nueva.codigoReferencia+'::::';
                         
-                        cuentas_salesforce[jj].Aporte_Dolares_Flag__c = true;
                     }
                 }
+                
             }
-            listIds.clear();
+            idcontenido.clear();
             map<string, string> banderamapa = new map<string, string>();
             map<string, string> banderamapa2 = new map<string, string>();
-            for(Cuentas_colectivas__C item: [Select codigo__C, Tipo_cuenta__C 
-                                             From Cuentas_colectivas__C 
-                                             Where empresa__c=:Planilla.Empresa2__c And tipo_cuenta__C !='Voluntarias']){
-                                                 
-                                                 listIds.add(item.codigo__C);
+            for(Cuentas_colectivas__C item: [select codigo__C, Tipo_cuenta__C from Cuentas_colectivas__C where empresa__c=:empresa
+                                             and tipo_cuenta__C !='Voluntarias']){
+                                                 idcontenido.add(item.codigo__C);
                                                  banderamapa.put(item.codigo__C, item.tipo_cuenta__C);
                                              }
             cuentas_salesforce.clear();
             
             cuentas_salesforce=[select Producto__r.CurrencyIsoCode, cliente__r.identificacion__C,
-                                Cuenta_colectiva2__r.codigo__C, Codigo__c 
-                                from cuentas__C
-                                where Cuenta_colectiva2__r.codigo__C in :(listIds)];
-            //mapCuentas.clear();
+                                Cuenta_colectiva2__r.codigo__C, Codigo__c from cuentas__C
+                                where Cuenta_colectiva2__r.codigo__C in :(idcontenido)];
+            mapCuentas.clear();
             for(integer i=0; i<cuentas_salesforce.size(); i++){
-                list<cuentas__C> litsCuentas = mapCuentas.containsKey(cuentas_salesforce[i].cliente__r.identificacion__C)?
-                    mapCuentas.get(cuentas_salesforce[i].cliente__r.identificacion__C):
-                new list<cuentas__C>();
-                litsCuentas.add(cuentas_salesforce[i]);
-                mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C, litsCuentas);
-                
+                list<cuentas__C> litsCuentas = new list<cuentas__C>();
+                if(mapCuentas.containsKey(cuentas_salesforce[i].cliente__r.identificacion__C)) {
+                    litsCuentas=mapCuentas.get(cuentas_salesforce[i].cliente__r.identificacion__C);
+                    litsCuentas.add(cuentas_salesforce[i]);
+                    mapCuentas.remove(cuentas_salesforce[i].cliente__r.identificacion__c);
+                    mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C,litsCuentas);
+                    
+                }else{
+                    litsCuentas.add(cuentas_salesforce[i]);
+                    mapCuentas.remove(cuentas_salesforce[i].cliente__r.identificacion__c);
+                    mapCuentas.put(cuentas_salesforce[i].cliente__r.identificacion__C,litsCuentas);
+                }
             }
             list<contenido_planilla__C> contenido= new list<contenido_planilla__C>();
             contenido.addAll([select empleado2__r.Identificacion__C, Aporte_Empleado_Obligatorio__c, Aporte_Patrono_obligatorio__c,
-                              Reserva_Laboral__c from contenido_planilla__C where Aporte_Empleado_Obligatorio__c>0 and planilla__C=:id_planilla  
+                              Reserva_Laboral__c from contenido_planilla__C where Aporte_Empleado_Obligatorio__c>0 and planilla__C=:id_planilla
                              ]);
             list<string> vf= new List<string>();
             for(integer i=0; i<contenido.size(); i++){
@@ -298,13 +231,13 @@ public class controladorPlanillasEnviadas {
             }
             contenido.addAll([select empleado2__r.Identificacion__C, Aporte_Empleado_Obligatorio__c, Aporte_Patrono_obligatorio__c,
                               Reserva_Laboral__c from contenido_planilla__C where Aporte_Patrono_obligatorio__c>0 and planilla__C=:id_planilla
-                              and empleado2__r.Identificacion__C not in :(vf) ]);
+                              and empleado2__r.Identificacion__C not in :(vf)]);
             for(integer i=0; i<contenido.size(); i++){
                 vf.add(contenido[i].empleado2__r.Identificacion__C);
             }
             contenido.addAll([select empleado2__r.Identificacion__C, Aporte_Empleado_Obligatorio__c, Aporte_Patrono_obligatorio__c,
                               Reserva_Laboral__c from contenido_planilla__C where reserva_laboral__c>0 and planilla__C=:id_planilla
-                              and empleado2__r.Identificacion__C not in :(vf) AND Aporte_Dolares_Flag__c!=true ]);
+                              and empleado2__r.Identificacion__C not in :(vf)]);
             for(integer i=0; i<contenido.size(); i++){
                 cuentas_salesforce =new list<cuentas__C>();
                 if(mapCuentas.containsKey(contenido[i].empleado2__r.identificacion__C)){
@@ -320,21 +253,10 @@ public class controladorPlanillasEnviadas {
                             nueva.cuenta=cuentas_salesforce[j].Codigo__c;
                             nueva.codigoCuenta=integer.valueOf(cuentas_salesforce[j].Codigo__c);
                             nueva.codigoMoneda = cuentas_salesforce[j].Producto__r.CurrencyIsoCode=='HNL' ? '1' :'2';
-                            //
                             nueva.aportePersonalVoluntario=0;
                             nueva.aportePatronalVoluntario=0;
-                            //
-                            if(planilla.rezago__c=='S'){
-                                System.debug('02 Es un rezago SI, calculamos los saldos con los valores de cuota: '+String.valueOf(ValCuoEntrada)+'-'+String.valueOf(ValCuoSalida));
-                                nueva.aportePersonalObligatorio=contenido[i].Aporte_Empleado_Obligatorio__c/ValCuoEntrada*ValCuoSalida;
-                                nueva.aportePatronalObligatorio=contenido[i].Aporte_Patrono_Obligatorio__c/ValCuoEntrada*ValCuoSalida;
-                                System.debug('Aportes registrados APEO-APAO: '+nueva.aportePersonalObligatorio+'-'+nueva.aportePatronalObligatorio);
-                            }else{
-                                System.debug('02 Es un rezago NO: '+i);
-                                nueva.aportePersonalObligatorio=contenido[i].Aporte_Empleado_Obligatorio__c;
-                                nueva.aportePatronalObligatorio=contenido[i].Aporte_Patrono_Obligatorio__c;
-                                System.debug('Aportes registrados APEO-APAO: '+nueva.aportePersonalObligatorio+'-'+nueva.aportePatronalObligatorio);
-                            }
+                            nueva.aportePersonalObligatorio=contenido[i].Aporte_Empleado_Obligatorio__c;
+                            nueva.aportePatronalObligatorio=contenido[i].Aporte_Patrono_Obligatorio__c;
                             //
                             nueva.aportePersonalExtraordinario=0;
                             nueva.aportePatronalExtraordinario=0;
@@ -355,6 +277,8 @@ public class controladorPlanillasEnviadas {
                             todosEmpleados +=nueva.aportePersonalExtraordinario+',';
                             todosEmpleados +=nueva.aportePatronalExtraordinario+',';
                             todosEmpleados +=nueva.aporteSeguroVida+'::::';
+                            //todosEmpleados +=rezago+',';
+                            //todosEmpleados +=codigo+'::::';
                         }else {
                             nueva = new classAportesPlanilla();
                             nueva.idSalesforce ='SF'+string.valueOf((ABC++));
@@ -385,15 +309,17 @@ public class controladorPlanillasEnviadas {
                             todosEmpleados +=nueva.aportePersonalExtraordinario+',';
                             todosEmpleados +=nueva.aportePatronalExtraordinario+',';
                             todosEmpleados +=nueva.aporteSeguroVida+'::::';
+                            //todosEmpleados +=rezago+',';
+                            //todosEmpleados +=codigo+'::::';
                         }
                     }
                 }
             }   
-
-            Numerosformularios.Id_Formulario_Sysde__c = abc;
+            
+            
+            Numerosformularios.Id_Formulario_Sysde__c=abc;
             update Numerosformularios;
             STRING MES=[SELECT MES_APORTE__c FROM PLANILLA__c WHERE ID=:Id_Planilla].MES_aPORTE__c;
-            system.debug('IDPLANILLA: ' + Id_Planilla + 'MES: '+ MES + 'todos: '+ todosEmpleados);
             string gt =string.valueOf(fecha.year());
             if(INTEGER.valueOf(MES)>fecha.month()){
                 gt =string.valueOf((fecha.year()-1));  
@@ -408,164 +334,74 @@ public class controladorPlanillasEnviadas {
             planilla__c planillaTemp=new planilla__C();
             planillaTemp=[select respuesta_desde_sysde_aportes__C from planilla__C where id=:Id_Planilla];
             string estadoplanilla=planillaTemp.respuesta_desde_sysde_aportes__C;
-            system.debug('todosEmpleados: '+ todosEmpleados);
+            system.debug('Si lo llama P: '+ todosEmpleados);
             if(estadoPlanilla==null || !estadoplanilla.contains('200')){
-                if(planilla.ServicioEjecutado__c == null || planilla.ServicioEjecutado__c == 1){
-                    aSysdePortalEmpresarial.EnviarAportesEmpleados(todosEmpleados, integer.valueOf(gt), datetime.newInstance(fecha.year(), fecha.month(), fecha.day()), Id_Planilla, planilla.rezago__c, planilla.Cod_Referencia__c);
-                }                       
-                System.debug('Antes de aplicar el rezago: '+planilla.Cod_Referencia__c+'-'+num_CodCuenta_Rez+'-'+Monto_Calculado+'-'+Monto_Sal+'-'+Moneda+'-'+Compra_Dolar);
-                if(planilla.Cod_Referencia__c!='NoAplica'){
-                    System.debug('Se aplica el rezago a: '+planilla.Cod_Referencia__c);
-                    AplicarRezago(planilla.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);//Aplica El Rezago
-                }            
-            }            
+                aSysdePortalEmpresarial.EnviarAportesEmpleados(todosEmpleados, integer.valueOf(gt), datetime.newInstance(fecha.year(), fecha.month(), fecha.day()), Id_Planilla, rezago, codigo);
+            }
             id_planilla='';
             
         }catch(Exception ex){
-            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
-            MensajeError = 'Error al Ordenar Planilla en el Metodo: OrdenarPlanilla. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-            MensajeErr = true;
+            system.debug('error en si lo llama: '+ ex.getLineNumber() + ex.getMessage());
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un Error'));
         }
     }
-    
     public classDolares.classRespuestaDolares respuesta{get;set;}
-    
     public void Aprobarplanilla(){
         try{
-            System.debug('Entramos al aprobar Planilla');
             Planilla__c PlanillaAprobada = new Planilla__C();
-            list<string> fechacierra = aSysdePortalEmpresarial.fechaCierreSysde();
-            
+            date fcsd =aSysdePortalEmpresarial.fechaCierreSysde();
             integer tasa = 1;
             string nombreEmpresa;
             string rezago;
             string codigo;
-            
             for(integer i=0; i<planillas.size(); i++){
                 if(id_planilla==planillas[i].id_cambiarSalario){
                     PlanillaAprobada.fecha__C = planillas[i].Planilla_Aprobada;
-                    fecha = planillas[i].Planilla_Aprobada;
-                    tasa = planillas[i].Primer_Apellido =='true' ? 0 : 1;
+                    fecha=planillas[i].Planilla_Aprobada;
+                    tasa = planillas[i].Primer_Apellido =='true' ? 0 :1;
                     nombreEmpresa = planillas[i].Primer_Nombre;
-                    
-                    //rezago = planillas[i].rezago;//Set Rezagos desde VF
-                    rezago = Rez_SI_NO;
-                    if(rezago=='Si'){
-                        rezago='S';
-                    }else{
-                        rezago='N';
-                    }
-                    codigo = Num_CodReferencia_Rez.trim();
-                    if(codigo.trim() =='Sin Informacion'){
-                        codigo = 'NoAplica';//Set codigo de Referencia desde VF
-                    }else{
-                        System.debug('Antes de Calcular las cuotas: '+rezago+'-'+codigo);
-                        if(rezago=='S'){
-                            //Validar si el contenido es valido
-                            InfoRezagos resultado = new InfoRezagos();
-                            if(mapInfoRezagos.containsKey(codigo)){
-                                resultado = mapInfoRezagos.get(codigo); 
-                            }
-                            
-                            if(resultado.clientes != null && resultado.clientes.size() == 1){
-                                //Obtengo el valor cuota de entrada
-                                String valcuoent = resultado.clientes[0].valorCuotaEntrada;
-                                if(valcuoent=='' || valcuoent==null){valcuoent='1';}
-                                system.debug('Valor Cuota de Entrada: '+valcuoent);
-                                ValCuoEntrada= Decimal.valueOf(valcuoent);
-                                
-                                //Para obtener el valor cuota de salida, primero obtengo el fondo
-                                String fondor = resultado.clientes[0].fondo;
-                                system.debug('Fondo: '+fondor);
-                                //Ahora busco el valor cuota salida
-                                String valcuosal='';
-                                String ValorCuota = ControllerApiRezagos.ConsultaCuotaSal();
-                                List <String> ValorCuotaStr = new List<String>();
-                                ValorCuotaStr = ValorCuota.split('},');
-                                for(Integer count1=0;count1<ValorCuotaStr.size();count1++){
-                                    String rez = ValorCuotaStr[count1];
-                                    String ValorCuotaDia = rez.substringBeforeLast('}');
-                                    ValorCuotaDia = ValorCuotaDia.substringAfterLast(':');
-                                    String ValorCuotaFondo = rez.substringBeforeLast('",');
-                                    ValorCuotaFondo = ValorCuotaFondo.substringAfterLast('"');
-                                    if(fondor==ValorCuotaFondo){valcuosal = ValorCuotaDia;}
-                                }
-                                ValCuoSalida = Decimal.valueOf(valcuosal);
-                            }
-                        }
-                    }
-                    
-                    System.debug('01 - rezago - codigo - tasa: '+rezago+' - '+codigo+' - '+tasa);
-                    if( Num_CodReferencia_Rez.trim()=='Sin Informacion' && planillas[i].rezago == 'S'){
-                        MensajeError = 'Debe Asignar un codigo de Referencia de Rezago.';
-                        MensajeErr = true;
+                    //id_planilla.toUpperCase()
+                    rezago= planillas[i].rezago;
+                    codigo = planillas[i].codigoReferencia;
+                    if( (planillas[i].codigoReferencia == null || planillas[i].codigoReferencia.trim() =='') &&  planillas[i].rezago == 'S' ){
+                         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Favor llenar escribir la referencia'));
                         return;
                     }
                 }
             }
-
-            if((integer.valueOf(fechacierra[0].replace('"','')) == fecha.year() &&
-                integer.valueOf(fechacierra[1])==fecha.month() &&
-                integer.valueOf(fechacierra[2])==fecha.day() && tasa == 0) || tasa==1 || test.isRunningTest()){
-                    Planilla__C planilla = [select Id, CurrencyIsoCode, Total__C,estado2__c,
-                                            rezago__c,Cod_Referencia__c,
-                                            ErrorPlanillasEnviadas__c, ServicioEjecutado__c
-                                            From planilla__C Where id=:id_planilla];
-                    if(tasa == 0 && (Planilla.ServicioEjecutado__C == null || Planilla.ServicioEjecutado__C == 0)){//Cuando es compra de dolar tasa es igual a 0
-                        
+            //PlanillaAprobada.fecha__C = date.valueOf('2019-05-23');
+            system.debug('fecha SYSDE: '+fcsd+' '+fecha);
+            if(fcsd == fecha || tasa ==0 || test.isRunningTest()){
+                    if(tasa == 0){
+                        Planilla__C planilla = [select CurrencyIsoCode, total__C from planilla__C where id=:id_planilla];
                         respuesta = new classDolares.classRespuestaDolares ();
-                        
-                        if(test.isRunningTest()){
-                            respuesta.tasaCambio='1';
-                        }else {
-                            for(Planilla item:Planillas ){
-                                if(item.id_cambiarSalario==id_planilla){
-                                    Monto_calculado = (Item.rezago == null || Item.rezago == 'N') ? String.valueOf(Item.Salario) : Item.Monto_Calculado;
-                                }
-                            }
-                            
-                            system.debug('Monto Calculado: '+ Monto_calculado);
-                            respuesta = aSysdePortalEmpresarial.CompraVentaDolares(planilla.CurrencyIsoCode, Decimal.valueof(Monto_Calculado), nombreEmpresa);
-                        }
-                        if(respuesta.tasaCambio != null){
+                        respuesta = aSysdePortalEmpresarial.CompraVentaDolares(planilla.CurrencyIsoCode, planilla.total__C, nombreEmpresa);
+                        if(respuesta.tasaCambio !=null){
                             decimal tasaDivision = decimal.valueOf(respuesta.tasaCambio);
                             if(planilla.CurrencyIsoCode=='USD'){
                                 tasaDivision = 1/tasaDivision;
                             }
                             CambioTasa(planilla.CurrencyIsoCode, decimal.valueOf(respuesta.tasaCambio) ,tasaDivision, rezago, codigo);
-                            
                             popTasa = true;
                         }else{
-                            planilla.ErrorPlanillasEnviadas__c='Error Cambio de tasa';
-                            Planilla.ServicioEjecutado__C = 0;
-                            Update planilla;
-                            MensajeError = 'Error al aplicar Compra y Venta de Dolares. <br/>Tasa de Cambio devuelve Null';
-                            MensajeErr = true;
-                            return;
+                            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error en la compra venta de la dolares, por favor intente mas tarde.'));
                         }
                     }else{
-                        System.debug('Entramos a tasa!=0');
                         PlanillaAprobada.Id=id_planilla;
-                        PlanillaAprobada.estado2__c = 'Cerrada';
+                        PlanillaAprobada.estado2__c='Cerrada';
                         PlanillaAprobada.rezago__c = rezago;
-                        PlanillaAprobada.Cod_Referencia__c = codigo;
-                        system.debug('Antes de actualizar la planilla: '+rezago+'-'+codigo);
-                        
                         update PlanillaAprobada;
-                        contador = 1;
+                        contador=1;
                         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Datos Guardados con Exito'));
                         CargarPlanillas();
                     }
                 }else{
-                    MensajeError = 'Error al Aprobar Planilla en el Metodo: AprobarPlanilla. <br/>La fecha de la planilla no coincide con la fecha de cierre de Sysde: '+fechacierra[0];
-                    MensajeErr = true;
-                    return;
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'La fecha de la planilla no coinside con la fecha de cierre de Sysde'));
                 }
         }
-        catch(Exception ex){
-            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
-            MensajeError = 'Error al Aprobar Planilla en el Metodo: AprobarPlanilla. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-            MensajeErr = true;
+        catch(Exception ex)
+        {
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error'));
         }
     }
     
@@ -580,43 +416,33 @@ public class controladorPlanillasEnviadas {
             CargarPlanillas();
         }catch(Exception ex){
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-            MensajeError = 'Error al Denegar Planilla en el Metodo: DenegarPlanilla. <br/>Mensaje: '+ ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-           	MensajeErr = true;
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ocurrio un error, intente nuevamente')); 
         }
     }
     
     public void CambioTasa(string moneda, decimal tasaPlanilla, decimal tasa, string rezago, string codigo){
         try{
             //decimal tasa=tasaDivision;
-            System.debug('Entramos a CambioTasa');
             list<string> idContenidoPlanilla= new list<string>();    
             List<Contenido_Planilla__C> ContenidoPlnilla = new List<Contenido_Planilla__C>();
-            ContenidoPlnilla =[select id, Aporte_Empleado_Obligatorio__c, Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c, Aporte_Patrono_Voluntario__c, 
-                               Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c, Reserva_Laboral__c, Aporte_Dolares_Flag__c
-                               from Contenido_Planilla__C 
-                               where planilla__c=:Id_planilla AND Aporte_Dolares_Flag__c!=true];
+            ContenidoPlnilla =[select id, Aporte_Empleado_Obligatorio__c, Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c, Aporte_Patrono_Voluntario__c, Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c, Reserva_Laboral__c from Contenido_Planilla__C where planilla__c=:Id_planilla];
             for(integer i=0; i<ContenidoPlnilla.size(); i++){
                 idContenidoPlanilla.add(ContenidoPlnilla[i].id);
             }
             List<Cuenta_planilla__C> Cuenta_planilla = new List<Cuenta_planilla__C>();
-            Cuenta_planilla =[select id, Valor_Monto__c, Valor_Monto_Patrono__c, Valor_Monto_Seguro_Vida__c, Aporte_Dolares_Flag__c,
-                              Valor_Monto_Patronal_Extraordinario__c , Valor_Monto_Extraordinario__c 
-                              from Cuenta_planilla__C 
-                              where Contenido_Planilla__c in :idContenidoPlanilla AND Aporte_Dolares_Flag__c!=true];
-            
+            Cuenta_planilla =[select id, Valor_Monto__c, Valor_Monto_Patrono__c, Valor_Monto_Seguro_Vida__c, 
+                              Valor_Monto_Patronal_Extraordinario__c , Valor_Monto_Extraordinario__c from Cuenta_planilla__C where Contenido_Planilla__c in :idContenidoPlanilla];
             if(tasa > 0){
                 for(integer i=0; i<Cuenta_planilla.size(); i++){
-                        Cuenta_planilla[i].Valor_Monto__c = Cuenta_planilla[i].Valor_Monto__c != null ? (Cuenta_planilla[i].Valor_Monto__c / tasa).setscale(2) :0;
-                        Cuenta_planilla[i].Valor_Monto_Patrono__c  =Cuenta_planilla[i].Valor_Monto_Patrono__c !=null ? (Cuenta_planilla[i].Valor_Monto_Patrono__c / tasa).setscale(2) : 0;
-                        //VARIABLES AGREGADAS POR WP 10/11/19
-                        Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c = Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c !=null ? (Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c / tasa).setscale(2) : 0;
-                        Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c = Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c !=null ? (Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c / tasa).setscale(2) : 0;
-                        Cuenta_planilla[i].Valor_Monto_Extraordinario__c = Cuenta_planilla[i].Valor_Monto_Extraordinario__c !=null ? (Cuenta_planilla[i].Valor_Monto_Extraordinario__c / tasa).setscale(2) : 0;
-                        
-                    Cuenta_planilla[i].Aporte_Dolares_Flag__c = true;
+                    Cuenta_planilla[i].Valor_Monto__c = Cuenta_planilla[i].Valor_Monto__c !=null ? (Cuenta_planilla[i].Valor_Monto__c / tasa).setscale(2) :0;
+                    Cuenta_planilla[i].Valor_Monto_Patrono__c  =Cuenta_planilla[i].Valor_Monto_Patrono__c !=null ? (Cuenta_planilla[i].Valor_Monto_Patrono__c / tasa).setscale(2) : 0;
+                    //VARIABLES AGREGADAS POR WP 10/11/19
+                    Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c  =Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c !=null ? (Cuenta_planilla[i].Valor_Monto_Seguro_Vida__c / tasa).setscale(2) : 0;
+                    Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c  =Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c !=null ? (Cuenta_planilla[i].Valor_Monto_Patronal_Extraordinario__c / tasa).setscale(2) : 0;
+                    Cuenta_planilla[i].Valor_Monto_Extraordinario__c  =Cuenta_planilla[i].Valor_Monto_Extraordinario__c !=null ? (Cuenta_planilla[i].Valor_Monto_Extraordinario__c / tasa).setscale(2) : 0;
+                    //
                 }
                 for(integer i=0; i<ContenidoPlnilla.size(); i++){
-                    
                     ContenidoPlnilla[i].Aporte_Empleado_Obligatorio__c = (ContenidoPlnilla[i].Aporte_Empleado_Obligatorio__c / tasa).setscale(2);
                     ContenidoPlnilla[i].Aporte_Empleado_Voluntario__c  = (ContenidoPlnilla[i].Aporte_Empleado_Voluntario__c / tasa).setscale(2);
                     ContenidoPlnilla[i].Aporte_Patrono_obligatorio__c  = (ContenidoPlnilla[i].Aporte_Patrono_obligatorio__c / tasa).setscale(2);
@@ -624,32 +450,28 @@ public class controladorPlanillasEnviadas {
                     ContenidoPlnilla[i].Reserva_Laboral__c  = (ContenidoPlnilla[i].Reserva_Laboral__c / tasa).setscale(2);
                     
                     // VARIABLE AGREGADAS EL 10/11/19 POR WP
+                    
                     ContenidoPlnilla[i].Aporte_Empleado_Extraordinario__c  = (ContenidoPlnilla[i].Aporte_Empleado_Extraordinario__c / tasa).setscale(2);
                     ContenidoPlnilla[i].Aporte_Patrono_Extraordinario__c  = (ContenidoPlnilla[i].Aporte_Patrono_Extraordinario__c / tasa).setscale(2);
-                    ContenidoPlnilla[i].Aporte_Seguro_de_Vida__c  = (ContenidoPlnilla[i].Aporte_Seguro_de_Vida__c / tasa).setscale(2);//no se debe reajustar
+                    ContenidoPlnilla[i].Aporte_Seguro_de_Vida__c  = (ContenidoPlnilla[i].Aporte_Seguro_de_Vida__c / tasa).setscale(2);
                     //
-                    ContenidoPlnilla[i].Aporte_Dolares_Flag__c = true;
                 }
                 update Cuenta_planilla;
                 update ContenidoPlnilla;
                 Planilla__c planilla = new Planilla__C();
-                planilla.Id = id_planilla; 
-                planilla.Tasa_compra__c = tasaPlanilla;
-                planilla.CurrencyIsoCode = Moneda =='HNL' ? 'USD':'HNL';
-                planilla.estado2__c = 'Cerrada';
+                planilla.Id=id_planilla; 
+                planilla.Tasa_compra__c=tasaPlanilla;
+                planilla.CurrencyIsoCode=Moneda =='HNL' ? 'USD':'HNL';
+                planilla.estado2__c='Cerrada';
                 planilla.Rezago__c = rezago;
-                planilla.ServicioEjecutado__c = 1;
                 planilla.Cod_Referencia__c = codigo;
-                System.debug('Antes de Actualizar la Planilla: '+rezago+'-'+codigo);
                 update planilla;
-                contador = 1;
+                contador=1;
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Datos Guardados con Exito'));
                 CargarPlanillas();
             } 
         }catch(Exception ex){
-            system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-            MensajeError = 'Error en Compra/Venta de Dolares en el Metodo: CambioTasa. <br/>Mensaje: '+ ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-           	MensajeErr = true;
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error, '+ex.getMessage()+', Linea: '+ex.getLineNumber()));
         }
     }
     
@@ -674,402 +496,5 @@ public class controladorPlanillasEnviadas {
         public Decimal aporteSeguroVida { get; set; }
     }
     
-    //REZAGOS
-    public PageReference SearchValores(){
-        BTNAplicar = false;
-        String consulta = CodRefTest.trim();
-        InfoRezagos resultado = new InfoRezagos();
-        if(mapInfoRezagos.containsKey(consulta)){
-            resultado = mapInfoRezagos.get(consulta); 
-        }
-        
-        Existe='';
-        
-        if(resultado.clientes != null && resultado.clientes.size() == 1){
-            
-            String mntpen = resultado.clientes[0].montoPendienteAplicar;
-            if(mntpen=='0' || mntpen==''){
-                String mnt = resultado.clientes[0].montoRezago;
-                system.debug('Monto: '+mnt);
-                Monto = mnt;              
-            }else{
-                Monto = mntpen;
-                Existe = ' Corresponde a un Monto pendiente.';
-            }
-            
-            String mon = resultado.clientes[0].codigoMoneda;
-            system.debug('Moneda: '+mon);
-            Moneda = mon;
-            
-            String rez = resultado.clientes[0].rezagoSINO;
-            system.debug('Rezago SI/NO: '+rez);
-            Rezagosn = rez;
-            
-            String estador = resultado.clientes[0].estado;
-            if(estador=='Pagado'){
-                Existe='Rezago ya Aplicado. PAGADO.';
-                Monto='';
-                Moneda='';
-                Rezagosn='';
-            }else{
-                Existe='Datos de Muestra. '+Existe;
-                BTNAplicar=true;
-            }
-        }
-        if(Existe==''){
-            Existe='Codigo inexistente o ya Aplicado. Favor Revisar.';
-            Monto='';
-            Moneda='';
-            Rezagosn='';
-        }
-        return null;
-    }
     
-    public void closePopup() {        
-        displayPopup = false;
-        Rezagosn='';
-        Monto='';
-        Moneda='';
-        Existe='';
-        BTNAplicar=false;
-    }
-    
-    public PageReference showPopup() {        
-        displayPopup = true;
-        Existe='';
-        BTNAplicar=false;
-        return null;
-    }
-    
-    //Aplicar el codigo seleccionado al Cod Rezago 
-    public void aplicar(){
-        String MontoSTR = '';
-        Decimal MontoAp = 0;
-        Decimal MontoRez = Decimal.valueOf(Monto);
-        system.debug('Variables: '+MontoRez+' - '+Cod_Planilla+' - '+CodRef+' - '+Total);
-        for(integer count=0;count<planillas.size();count++){
-            system.debug('Segundo Nombre: '+planillas[count].Segundo_Nombre+' - Salario: '+planillas[count].Salario);
-            if(planillas[count].Segundo_Nombre == Cod_Planilla){
-                MontoAp = planillas[count].Salario;
-            }
-        }
-        
-        if(MontoAp<=MontoRez){
-            
-            String fond='';
-            Decimal valcuosal=0;
-            Decimal valcuoent=0;
-            Decimal mnt=0;
-            String consulta = CodRefTest.trim();
-            
-            InfoRezagos resultado = new InfoRezagos();
-            if(mapInfoRezagos.containsKey(consulta)){
-                resultado = mapInfoRezagos.get(consulta); 
-            } 
-            
-            if(resultado.clientes != null && resultado.clientes.size() == 1){
-                
-                Rezagosn = resultado.clientes[0].rezagoSINO;
-                
-                if(Rezagosn=='SI' || Rezagosn=='Si' || Rezagosn=='si'){ 
-                    
-                    fond = resultado.clientes[0].fondo;
-                    System.debug('Fondo: '+fond);
-                    
-                    String valent = resultado.clientes[0].valorCuotaEntrada;
-
-                    if(valent == '' || valent == null){valent = '1';}
-                    System.debug('Valor Cuota Entrada: '+valent);
-                    valcuoent = Decimal.valueOf(valent);
-                    
-                    for(Integer count1=0;count1<ValorCuotaStr.size();count1++){
-                        String rez = ValorCuotaStr[count1];
-                        
-                        ValorCuotaDia = rez.substringBeforeLast('}');
-                        ValorCuotaDia = ValorCuotaDia.substringAfterLast(':');
-                        
-                        ValorCuotaFondo = rez.substringBeforeLast('",');
-                        ValorCuotaFondo = ValorCuotaFondo.substringAfterLast('"');
-                        
-                        if(fond==ValorCuotaFondo){valcuosal = Decimal.valueOf(ValorCuotaDia);}
-                        
-                    }
-                    System.debug('Valor Cuota Salida: ' + String.valueOf(valcuosal));
-                    System.debug('Monto: '+MontoAp);
-                    mnt = MontoAp/valcuoent*valcuosal;
-                    mnt = mnt.setScale(2);
-                    MontoStr = String.valueOf(mnt);
-                    System.debug('Monto Calculado: '+MontoStr);
-                }else{
-                    Rezagosn = 'N/A';
-                }
-            }
-            System.debug('Cod Referencia desde Search: '+CodRefTest);
-            for(integer count=0;count<planillas.size();count++){
-                if(planillas[count].Segundo_Nombre == Cod_Planilla){
-                    planillas[count].codigoReferencia=CodRefTest;
-                    if(Rezagosn != 'N/A'){
-                        planillas[count].Monto_Calculado = MontoSTR;
-                        planillas[count].rezago = 'Si';
-                    }else{
-                        planillas[count].rezago = 'No';
-                    }
-                }
-            }
-        }else{
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El Monto del Rezago NO puede ser inferior al Monto del Aporte '));
-        }
-        closePopup();
-    }
-    
-    //@future(callout = true)
-    public /*static*/ void AplicarRezago(String NumCodRez, String NumCodCue, String MonCalc, String MonDep, String User, String Mon, String ComDol) {
-        String result='';
-        String valAporteCalculado='';
-        if(MonCalc=='' || MonCalc==null || MonCalc=='0'){
-            valAporteCalculado = MonDep;
-        }else{
-            valAporteCalculado = MonCalc;
-        }
-        try{
-            ClassClientesRez rezagoEnvio = new ClassClientesRez();
-            String CodRezago = NumCodRez;
-            InfoRezagos resultado = new InfoRezagos();
-            if(mapInfoRezagos.containsKey(CodRezago)){
-                resultado = mapInfoRezagos.get(CodRezago);
-            }
-
-            List<ClientesRez> ListClientesRez = new List<ClientesRez>();
-            ClientesRez AplicaRez = new ClientesRez('','','','','','','','','','','','','');
-            
-            String idr = resultado.clientes[0].idRezago;
-            system.debug('idRezago: '+idr);
-            AplicaRez.idRezago = idr;// Añado el Id Rezago
-            
-            String montor = resultado.clientes[0].montoRezago;
-            system.debug('Monto Rezago: '+montor);
-            AplicaRez.montoRezago = montor;// Añado el Monto del Rezago
-            
-            String fondor = resultado.clientes[0].fondo;
-            system.debug('Fondo: '+fondor);
-            AplicaRez.fondo = fondor;// Añado el Fondo del Rezago
-            
-            String codrefr = resultado.clientes[0].codReferencia;
-            system.debug('Codigo Referencia Rezago: '+codrefr);
-            AplicaRez.codReferencia = codrefr;// Añado el Codigo de referencia del Rezago
-            
-            system.debug('Numero de Cuenta: ');
-            AplicaRez.codCuenta = '';// Añado el Codigo de Cuenta
-            
-            system.debug('Codigo de Planilla: '+NumCodCue);
-            AplicaRez.codPlanilla = NumCodCue;// Añado el Codigo de Planilla
-            
-            String valcuoent = resultado.clientes[0].valorCuotaEntrada;
-            if(valcuoent=='' || valcuoent==null){valcuoent='1';}
-            system.debug('Valor Cuota de Entrada: '+valcuoent);
-            AplicaRez.valorCuotaEntrada = valcuoent;// Añado el Valor de la cuota de entrada
-            
-            //Para obtener el valor cuota del dia
-            String ValorCuota = ControllerApiRezagos.ConsultaCuotaSal();
-            if(test.isRunningTest()){
-                ValorCuota = '[{"fechaValor":"2020-01-30T00:00:00","codInversion":"101","valCuota":340.69913612},{"fechaValor":"2020-01-30T00:00:00","codInversion":"106","valCuota":127.52636724},{"fechaValor":"2020-01-30T00:00:00","codInversion":"113","valCuota":125.16183919}]';
-            }
-            List <String> ValorCuotaStr = new List<String>();
-            ValorCuotaStr = ValorCuota.split('},');
-            String valcuosal;
-            for(Integer count1=0;count1<ValorCuotaStr.size();count1++){
-                String rez = ValorCuotaStr[count1];
-                
-                String ValorCuotaDia = rez.substringBeforeLast('}');
-                ValorCuotaDia = ValorCuotaDia.substringAfterLast(':');
-                
-                String ValorCuotaFondo = rez.substringBeforeLast('",');
-                ValorCuotaFondo = ValorCuotaFondo.substringAfterLast('"');
-                
-                if(AplicaRez.fondo==ValorCuotaFondo){valcuosal=String.valueOf(ValorCuotaDia);}                   
-            }
-            
-            system.debug('Valor Cuota de Salida: '+valcuosal);
-            AplicaRez.valorCuotaSalida = valcuosal;//valcuosal;// Añado el Valor de la cuota de Salida
-            
-            String estador = resultado.clientes[0].estado;
-            system.debug('Estado: '+estador);
-            AplicaRez.estado = estador;// Añado el Estado del Rezago
-            
-            String sino = resultado.clientes[0].rezagoSINO;
-            if(sino=='SI' || sino=='Si' || sino=='si'){ 
-                rezagoEnvio.Tipo = 'AP';
-            }else{
-                AplicaRez.valorCuotaSalida = '';
-                rezagoEnvio.Tipo = 'AD';
-            }
-            system.debug('Valor Aporte Calculado: '+valAporteCalculado);
-            AplicaRez.valAporteCalculado = valAporteCalculado;// Añado el Aporte Calculado
-            
-            Decimal mparapl;
-            Decimal mpenapl;
-            String mntpen = resultado.clientes[0].montoPendienteAplicar;
-            Decimal mntr = 0;
-            if(mntpen == '0' || mntpen == ''){
-                mntr = Decimal.valueOf(montor);                
-            }else{
-                mntr = Decimal.valueOf(mntpen);
-            }
-            Decimal mnt = 0;
-            if(test.isRunningTest()){
-                mnt = mntr;
-            }else{
-                mnt = Decimal.valueOf(MonDep);
-            }
-            if(mnt<mntr){//Si el monto del aporte es menor al del rezago
-                mparapl = mnt; //Se aplica un monto parcial
-                mpenapl = mntr-mnt;//Queda un monto pendiente que pasa a ser el Monto del rezago
-                AplicaRez.estado = 'Pendiente';
-            }else{//Sino es menor se aplican los parciales y pendientes en 0
-                mparapl = 0;
-                mpenapl = 0;
-                AplicaRez.estado = 'Pagado';
-            }
-            
-            system.debug('Valor Monto Parcial: '+String.valueOf(mparapl));
-            AplicaRez.montoParcialAplicado = String.valueOf(mparapl);//Añado el Monto Parcial Aplicado
-            
-            system.debug('Valor Monto Pendiente: '+String.valueOf(mpenapl));
-            AplicaRez.montoPendienteAplicar = String.valueOf(mpenapl);//Añado el Monto Pendiente a Aplicar
-            
-            List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
-            System.debug('User: '+usr[0].Name);///////Marcooo
-            String usuario = usr[0].Name;
-            System.debug('Modificado por: '+usuario);
-            AplicaRez.modificadoPor = usuario; 
-            
-            ListClientesRez.add(AplicaRez);
-            
-            String FechaD = resultado.clientes[0].fechaDeposito;
-            
-            rezagoEnvio.clientes = ListClientesRez;
-            system.debug('Tipo: '+rezagoEnvio.Tipo);
-            
-            String CuentaOrigen='';
-            try{
-                List<Cuenta_Rezago__mdt> codigo = new List<Cuenta_Rezago__mdt>();
-                codigo = [select cuenta__c from Cuenta_Rezago__mdt where fondo__c =: AplicaRez.fondo limit 1];
-                if(codigo.size()>0){
-                    CuentaOrigen = codigo[0].cuenta__c ;//Insertar el codigo de cuenta de FPC Rezagos
-                }
-            }catch(Exception ex){
-                system.debug('Error al Aplicar Rezago: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-            }
-            String RespuestaRetiro='OK';
-            String AplicaPartida='';
-            if( rezagoEnvio.Tipo == 'AP'){
-            	RespuestaRetiro = ControllerApiRezagos.AplicaRetiroRezagos(CuentaOrigen, Mon, valAporteCalculado);
-                if(RespuestaRetiro.contains('Su retiro ha sido registrado')){
-                	RespuestaRetiro='OK';
-                }else{
-                    RespuestaRetiro='Failure';
-                	System.debug('Error al aplicar Retiro: '+CuentaOrigen+' - '+Mon+' - '+valAporteCalculado);
-                }
-            }
-            
-            if(RespuestaRetiro=='OK' || test.isRunningTest()){
-                if( rezagoEnvio.Tipo == 'AD'){
-                    result = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);
-                }else{
-                    //Cargar metodo para enviar el rezago en caso que sea un rezago SI.-
-                    system.debug('Antes de Ejecutar el Metodo AP: '+rezagoEnvio);
-                    result = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);
-                }
-                if(result=='"OK"' || test.isRunningTest()){
-                    AplicaPartida = AplicaPartida(AplicaRez.fondo, valAporteCalculado, AplicaRez.codPlanilla, ComDol, FechaD);
-                    system.debug('Aplica Partida Result: '+AplicaPartida);
-                    IF(AplicaPartida!='OK'){
-                        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Error en Metodo AplicaPartida. Mensaje: '+ AplicaPartida));
-                    }
-                }
-            }
-        }catch(exception ex){
-            system.debug('Error al Aplicar Rezago: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-        }
-    }
-    
-    public static String AplicaPartida(String Fon, String Mon, String Cue, String CompDol, String FechD){
-        
-        String fondo = Fon;
-        String montocal = Mon;
-        String cuent = cue;
-        
-        FieldsPartidadContables clase = new FieldsPartidadContables();
-        
-        FieldsPartidadContables.Partida envioDatos = new FieldsPartidadContables.Partida();
-        clase.partidas = new List<FieldsPartidadContables.Partida>();
-        
-        envioDatos = new FieldsPartidadContables.Partida();
-        
-        List<Partida_Rezago__mdt> partida = new List<Partida_Rezago__mdt>();
-        
-        try{
-            if(CompDol=='True'){
-                partida = [SELECT Cuenta_Debito__c, Descripcion__c, Id_Banco__c, Moneda__c, Sub_Aplicacion__c, Tipo_Nota__c, Tipo_Transaccion__c 
-                           FROM Partida_Rezago__mdt WHERE Fondo__c =: fondo AND Compra_Dolar__c =: 'S' AND  Cuenta__c = 'P' LIMIT 1];
-            }else{
-                partida = [SELECT Cuenta_Debito__c, Descripcion__c, Id_Banco__c, Moneda__c, Sub_Aplicacion__c, Tipo_Nota__c, Tipo_Transaccion__c 
-                           FROM Partida_Rezago__mdt WHERE Fondo__c =: fondo AND Compra_Dolar__c =: 'N' AND  Cuenta__c = 'P' LIMIT 1];
-            }
-        }catch(Exception ex){
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Verifique que el fondo este asociado a una Partida. :'+fondo));
-        }
-        if(partida.size()>0){
-            //Clase con todos los campos
-            envioDatos.Id_banco = partida[0].Id_Banco__c;
-            envioDatos.Monto = montocal;
-            envioDatos.cta_contable_debito = partida[0].Cuenta_Debito__c;
-            envioDatos.cta_contable_credito = NULL;
-            if(partida[0].Moneda__c=='Lempiras'){envioDatos.moneda = '1';}else{envioDatos.moneda = '2';}
-            envioDatos.Modulo = 'BCO';
-            if(partida[0].Tipo_Nota__c=='Debito'){envioDatos.tip_nota = 'D';}else{envioDatos.tip_nota = 'C';}
-            envioDatos.tip_nota = 'D';
-            
-            String cuentax = '';//Busca la cuenta de FPC Rezagos
-            String fechax='';
-            if(test.isRunningTest()){
-                fechax = '2020-01-01';
-            }else{
-            	fechax = FechD;
-                cuentax = partida[0].Descripcion__c ;
-                cuentax = cuentax.replace('cuentax', cuent);
-            }
-            cuentax = cuentax.replace('fechax', fechax);
-            envioDatos.observacion = cuentax;
-            envioDatos.observacion_c = cuentax;
-            
-            envioDatos.tip_transac = partida[0].Tipo_Transaccion__c;
-            envioDatos.sub_aplicacion = partida[0].Sub_Aplicacion__c;
-            if(CompDol=='True'){
-                envioDatos.fecha = Datetime.now();
-            }else{
-                envioDatos.fecha = NULL;
-            }
-            //envioDatos.fecha = null;
-            system.debug('Envio Datos: '+envioDatos);
-            clase.partidas.Add(envioDatos);
-        }
-        String resultJson;
-        if(test.isRunningTest()){
-            resultJson = 'OK';
-        }else{
-        	resultJson = controllerApiIntergationPartidas.generarPartidas(clase);    
-        }
-        
-        System.debug('resultJson: '+resultJson);
-        String resultado='';
-        if(resultJson.contains('OK')) {
-            resultado='OK';
-        } else if(resultJson.contains('Read timed out')){
-            resultado='Aplicar Partida. Tiempo de respuesta exedio el Limite.';
-        } else {    
-            resultado='Aplicar Partida. Falla de Conexion.';
-        }
-        return resultado;
-    } 
 }

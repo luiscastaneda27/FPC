@@ -44,7 +44,7 @@ public class ControllerAPIPagoIntereses {
         system.debug(Cuenta); 
 		classPagoInteresesFPC fcsds= new classPagoInteresesFPC();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del BuscarCuenta');
 		try{
 
 			HttpResponse response =new HttpResponse();//
@@ -81,7 +81,7 @@ public class ControllerAPIPagoIntereses {
         system.debug(Cuenta); 
 		classPagoInteresesFPC fcsd= new classPagoInteresesFPC();
 		string respuesta = '';
-		system.debug('Entro al REST BuscarCuenta2');
+		system.debug('Entro al REST del BuscarCuenta2 ');
 		try{
 			
 			HttpResponse response =new HttpResponse();//
@@ -95,9 +95,9 @@ public class ControllerAPIPagoIntereses {
 	    	respuesta = response.getBody();
             
             //fcsd = respuesta.split(',');
-            system.debug('Respuesta: '+respuesta); 
+            system.debug(respuesta); 
             if (response.getStatusCode() == 200) {
-                fcsd = (classPagoInteresesFPC)System.JSON.deserialize(respuesta, classPagoInteresesFPC.class); 
+	            fcsd = (classPagoInteresesFPC)System.JSON.deserialize(response.getBody(), classPagoInteresesFPC.class);         
 	        }
 		}catch(System.CalloutException e){
 			system.debug(e.getMessage());
@@ -119,7 +119,7 @@ public class ControllerAPIPagoIntereses {
 		request.setEndpoint(url + 'api/InsertarPago');
 		
 		String respuesta = '';
-		system.debug('Entro al REST del EDC');
+		system.debug('Entro al REST del INSERTAINFO');
 		try{
 						
 			classJson envio = new classJson();
@@ -224,10 +224,11 @@ public class ControllerAPIPagoIntereses {
 		//request.setEndpoint(url + 'api/GuardarImagen/');
 		//request.setEndpoint(url + 'api/RegistrarImagen/');
 		request.setEndpoint(url + 'api/conciliacion/');
-		classImagenReferencia fcsd= new classImagenReferencia();
+		
+        classImagenReferencia fcsd= new classImagenReferencia();
 		//string respuesta = '';
          
-		system.debug('Entro al REST del EDC: '+claseEnvio.Imagen.length());
+		system.debug('Entro al REST del EDC '+claseEnvio.Imagen.length());
 		try{
 						
 			classJson envio = new classJson();

@@ -190,7 +190,7 @@
                         <apex:pageMessages />
                         <apex:pageBlockSection columns="1"  title="Reporte de Seguimiento">
                             
-                            <apex:dataTable style="width:6000px;" rendered="{!filtroAfilicion = 'I'}"  value="{!listReporte}" var="item">
+                            <apex:dataTable styleClass="slds-table slds-table_bordered slds-table_col-bordered" rendered="{!filtroAfilicion = 'I'}"  value="{!listReporte}" var="item">
                                 
                                 <apex:column headerValue="No">
                                     <apex:outputField value="{!item.Num__c}" />
@@ -198,18 +198,18 @@
                                 
                                  <apex:column headerValue="Aprobado">
                                     <apex:inputField value="{!item.Aprobado__c}" >
-                                        <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
+                                        <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion2" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                         
                                      </apex:inputField>
                                 </apex:column>
                                 
                                  <apex:column headerValue="Rechazado">
                                     <apex:inputField value="{!item.Rechazado__c}" >
-                                         <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
+                                         <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                      </apex:inputField>
                                 </apex:column>
                                 
@@ -504,22 +504,22 @@
                                 
                             </apex:dataTable>
                             
-                            <apex:dataTable style="width:6000px;" rendered="{!filtroAfilicion = 'F'}"  value="{!listReporte}" var="item">
+                            <apex:dataTable styleClass="slds-table slds-table_bordered slds-table_col-bordered" rendered="{!filtroAfilicion = 'F'}"  value="{!listReporte}" var="item">
                                 
                                 <apex:column rendered="false" headerValue="Aprobado">
                                     <apex:inputField value="{!item.Aprobado__c}" >
-                                        <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
+                                        <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion2" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                         
                                     </apex:inputField>
                                 </apex:column>
                                 
                                 <apex:column headerValue="Rechazado">
                                     <apex:inputField value="{!item.Rechazado__c}" >
-                                        <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
+                                        <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                     </apex:inputField>
                                 </apex:column>
                                 
@@ -564,22 +564,22 @@
                             </apex:dataTable>
                             
                             
-                            <apex:dataTable style="width:6000px;" rendered="{!filtroAfilicion = 'M'}"  value="{!listReporte}" var="item">
+                            <apex:dataTable styleClass="slds-table slds-table_bordered slds-table_col-bordered" rendered="{!filtroAfilicion = 'M'}"  value="{!listReporte}" var="item">
                                 
                                 <apex:column headerValue="Aprobado">
                                     <apex:inputField value="{!item.Aprobado__c}" >
-                                        <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
+                                        <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectAprobar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion2" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                         
                                     </apex:inputField>
                                 </apex:column>
                                 
                                 <apex:column headerValue="Rechazado">
                                     <apex:inputField value="{!item.Rechazado__c}" >
-                                        <!--apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
+                                        <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectRechazar}"  >
                                             <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-                                        </apex:actionSupport-->
+                                        </apex:actionSupport>
                                     </apex:inputField>
                                 </apex:column>
                                 
@@ -674,15 +674,6 @@
                                                     </table>
                                                     <br/>
                                                     <footer class="slds-modal__footer">
-                                                        <apex:actionStatus id="mySaveStatus1">
-                                                            <apex:facet name="stop">
-                                                                <apex:commandbutton styleclass="slds-button slds-button_brand" action="{!guardar}"  value="Verificar"
-                                                                                    disabled="false" rerender="theForm" status="mySaveStatus1"/>
-                                                            </apex:facet>
-                                                            <apex:facet name="start">
-                                                                <apex:commandButton styleclass="slds-button slds-button_neutral" status="mySaveStatus1" value="Validando..." disabled="true"/>
-                                                            </apex:facet>
-                                                        </apex:actionStatus>                  
                                                         <apex:commandButton status="status" reRender="theForm" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!guardar}"  />
                                                     </footer>
                                                     

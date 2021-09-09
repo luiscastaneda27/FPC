@@ -1205,7 +1205,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Tipo Dirección
                                                                 </label>                                                                                                                                
-                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_Direccion__c}" style="height:10px; width:170px; margin-left: 42px;"/>
+                                                                <apex:inputField id="TipoDirEmple" styleclass="slds-input" value="{!Cliente25.Tipo_direccion__c}" style="height:10px; width:170px; margin-left: 42px;"/>
                                                                 
                                                                 <!--label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Por defecto 

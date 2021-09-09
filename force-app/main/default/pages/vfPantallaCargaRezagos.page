@@ -156,6 +156,15 @@
             -moz-border-radius: 0px;
             border-radius: 0px;
             }
+            .table {
+            table-layout:fixed;
+            }
+            
+            .table td {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            }
          </style>
    </head> 
    <body>
@@ -176,23 +185,14 @@
                                 <h2>
                                     <br/>
                                     <span class="slds-text-heading_medium"> FICOHSA PENSIONES / CARGAR NO IDENTIFICADOS</span>
-                                    <br/><br/>
+                                    <br/>
                                 </h2>
-                                <h6>
-                                    <apex:variable var="Fecha" value="{!FCS}" />
-                                    <span class="slds-text-heading_medium"> Fecha Cierre Sysde : <apex:outputText value="{0, date, dd'-'MM'-'yyyy}">
-                                        <apex:param value="{!Fecha.Fecha_cierre__c}" /> 
-                                        </apex:outputText>
-                                    </span>
-                                    <br/><br/>
-                                </h6>
+                                
                             </div>
-                            
                         </header>
                         
                         <div style="height:50px;background-color: #F2F2F2;">
                             <br/>
-                            
                             <br/>
                         </div>
                         
@@ -208,7 +208,7 @@
                             </h3>
                         </div>
                         <br/>
-  
+                        
                         <article class="slds-card slds-theme_default" style="border:0;">                
                             <div class="slds-card__header slds-grid">
                                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
@@ -233,77 +233,62 @@
                             <strong>Lista de No Identificados</strong>
                         </h3>
                     </div>
-                    <div style="width:100%; overflow-x:scroll; height: 100%">
-                    <table class="table slds-table slds-table_bordered slds-table_col-bordered" 
-                           style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+                    <table class="table slds-table slds-table_bordered slds-table_col-bordered" style="border-top:0px;">
                         <thead>
-                            <tr class="slds-text-heading--label">                     
+                            <tr class="slds-text-title_caps">                     
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" id="fondo" title="Fondo"><strong>Fondo</strong></div>
+                                    <div class="slds-truncate" id="fondo" title="Fondo"><strong></strong>Fondo</div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="Referencia"><strong>Referencia</strong></div>
+                                    <div class="slds-truncate" title="Referencia"><strong>Referencia</strong></div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="fdeposito"><strong>Fecha del <br/>Deposito</strong></div>
+                                    <div class="slds-truncate" title="fdeposito"><strong>Fecha del <br/>Deposito</strong></div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="mdeposito"><strong>Moneda del <br/>Deposito</strong></div>
+                                    <div class="slds-truncate" title="mdeposito"><strong>Moneda del <br/>Deposito</strong></div>
                                 </th>
                                 <th scope="col" >
-                                    <div class="slds-truncate slds-align_absolute-center" title="montodeposito"><strong>Monto del <br/>Deposito</strong></div>
+                                    <div class="slds-truncate" title="montodeposito"><strong>Monto del <br/>Deposito</strong></div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="desc"><strong>Descripción</strong></div>
+                                    <div class="slds-truncate" title="desc"><strong>Descripción</strong></div>
                                 </th>
                                 <th scope="col" >
-                                    <div class="slds-truncate slds-align_absolute-center" title="descnota"><strong>Descripción <br/>nota</strong></div>
+                                    <div class="slds-truncate" title="descnota"><strong>Descripción <br/>nota</strong></div>
                                 </th>
                                 <th scope="col" >
-                                    <div class="slds-truncate slds-align_absolute-center" title="banco"><strong>Banco</strong></div>
+                                    <div class="slds-truncate" title="banco"><strong>Banco</strong></div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="agenorig"><strong>Agencia Origen</strong></div>
+                                    <div class="slds-truncate" title="agenorig"><strong>Agencia Origen</strong></div>
                                 </th>
                                 <th scope="col">
-                                    <div class="slds-truncate slds-align_absolute-center" title="asesor"><strong>Asesor</strong></div>
+                                    <div class="slds-truncate" title="asesor"><strong>Asesor</strong></div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Fondo"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Referencia"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Fecha"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Moneda"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Monto"></span></div></td>
-                                <td scope="row" style= "text-align: center;">
-                                    <div class="slds-truncate" style="width: 110px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                        <span id="Desc"></span>
-                                    </div>
-                                </td>
-                                <td scope="row" style= "text-align: center;">
-                                    <div class="slds-truncate" style="width: 110px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
-                                        <span id="DescNota"></span>
-                                    </div>
-                                </td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Banco"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="AOrigen"></span></div></td>
-                                <td scope="row" style= "text-align: center;"><div class="slds-truncate" ><span id="Asesor"></span></div></td>
+                                <td style="text-align:right;"><span id="Fondo"></span></td>
+                                <td style="text-align:right;"><span id="Referencia"></span></td>
+                                <td style="text-align:right;"><span id="Fecha"></span></td>
+                                <td style="text-align:right;"><span id="Moneda"></span></td>
+                                <td style="text-align:right;"><span id="Monto"></span></td>
+                                <td style="text-align:right;"><span id="Desc"></span></td>
+                                <td style="text-align:right;"><span id="DescNota"></span></td>
+                                <td style="text-align:right;"><span id="Banco"></span></td>
+                                <td style="text-align:right;"><span id="AOrigen"></span></td>
+                                <td style="text-align:right;"><span id="Asesor"></span></td>
                             </tr>           
                         </tbody>
                     </table>
-                </div>
+                    
                     <br/>
-                    <div id="Resumen">
-                        <div id="pqr" style="Display:none;">
-                            <apex:commandLink action="{!Guardar}" status="status" reRender="theForm" oncomplete="reload()" >  
-                                <apex:commandButton style="width: 250px; color:#fff; height: 40px;position: relative;background: #42c4dd;" value="Cargar Datos" reRender="theForm" /> 
-                            </apex:commandLink>
-                            <apex:commandLink status="status" reRender="theForm">  
-                                <apex:commandButton style="width: 250px; color:#fff; height: 40px;position: relative;background: #42c4dd;" value="Limpiar Tabla" reRender="theForm" onclick="Clean();" /> 
-                            </apex:commandLink>
-                        </div>
+                    <div id="pqr" style="Display:none;">
+                        <h3 class="Row">
+                            <apex:commandButton action="{!Guardar}" value="Cargar Datos"/>
+                        </h3>
                     </div>
                 </apex:outputPanel>
             </apex:form>
@@ -311,14 +296,6 @@
         </body>
 
     <script type="text/javascript">
-        function reload(){
-            setTimeout(function(){
-                window.location.reload(1);
-            }, 5000);
-        }
-        function Clean(){
-            window.location.reload(1);
-        }
         var outputData = "";
         function SubirArchivo(){
             Visualforce.remoting.Manager.invokeAction(
@@ -327,51 +304,27 @@
                 function(result, event){
                     if (event.status) {
                         //Se insertan los datos en la tabla
-                        var er='';
-                        for(b=0;b<result.length;b++){
-                            document.getElementById('Fondo').innerHTML += result[b].Fondo__c +'<br/>';
-                            if(result[b].Fondo__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Fondo').style.color = "red";
-                            }
-                            
-                            document.getElementById('Referencia').innerHTML += result[b].Referencia__c +'<br/>';
-                            if(result[b].Referencia__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Referencia').style.color = "red";
-                            }
-                            if(result[b].Fecha_del_deposito__c == null){
-                                document.getElementById('Fecha').innerHTML += 'ERROR: Fecha Incorrecta o campo Vacio.' + '<br/>';
-                                document.getElementById('Fecha').style.color = "red";
-                                er='ERROR';
-                            }else{
-                                var dateobj = new Date(result[b].Fecha_del_deposito__c);
-                                //alert('Fecha de la lista a mostrar antes de transformar'+dateobj);
-                                var dd = dateobj.getDate();
-                                var mm = dateobj.getMonth() + 1;
-                                var yyyy = dateobj.getFullYear();
-                                if(dd<10){dd='0'+dd;}
-                                if(mm<10){mm='0'+mm;}
-                                var B = dd + '/' + mm + '/' + yyyy;
-                                document.getElementById('Fecha').innerHTML += B + '<br/>';
-                            }
-                            document.getElementById('Moneda').innerHTML += result[b].Moneda_del_deposito__c +'<br/>';
-                            if(result[b].Moneda_del_deposito__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Moneda').style.color = "red";
-                            }
-                            document.getElementById('Monto').innerHTML += result[b].Monto_del_deposito__c +'<br/>';
-                            if(result[b].Monto_del_deposito__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Monto').style.color = "red";
-                            }
-                            document.getElementById('Desc').innerHTML += result[b].Descripcion__c +'<br/>';
-                            document.getElementById('DescNota').innerHTML += result[b].Descripcion_Nota__c +'<br/>';
-                            document.getElementById('Banco').innerHTML += result[b].Banco__c +'<br/>';
-                            if(result[b].Banco__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Banco').style.color = "red";
-                            }
-                            document.getElementById('AOrigen').innerHTML += result[b].Agencia_Origen__c +'<br/>';
-                            document.getElementById('Asesor').innerHTML += result[b].Asesor_Rezago__c +'<br/>';
-                            if(result[b].Asesor_Rezago__c.includes('ERROR')){
-                                er='ERROR';document.getElementById('Asesor').style.color = "red";
-                            }
+                        for(a=0;a<result.length;a++){                        
+                            document.getElementById('Fondo').innerHTML += result[a].Fondo__c +'<br/>';
+                            document.getElementById('Referencia').innerHTML += result[a].Referencia__c +'<br/>';
+                            //Pasamos la fecha de DateTime a String y la seteamos al formato del cliente
+                            var dateobj = new Date(result[a].Fecha_del_deposito__c);
+                            var dd = dateobj.getDate();
+                            var mm = dateobj.getMonth() + 1;
+                            var yyyy = dateobj.getFullYear();
+                            if(dd<10){dd='0'+dd;}
+                            if(mm<10){mm='0'+mm;}
+                            var B = dd + '/' + mm + '/' + yyyy;
+                            //var B = dateobj.toString();
+                            //alert(B);
+                            document.getElementById('Fecha').innerHTML += B + '<br/>';
+                            document.getElementById('Moneda').innerHTML += result[a].Moneda_del_deposito__c +'<br/>';
+                            document.getElementById('Monto').innerHTML += result[a].Monto_del_deposito__c +'<br/>';
+                            document.getElementById('Desc').innerHTML += result[a].Descripcion__c +'<br/>';
+                            document.getElementById('DescNota').innerHTML += result[a].Descripcion_Nota__c +'<br/>';
+                            document.getElementById('Banco').innerHTML += result[a].Banco__c +'<br/>';
+                            document.getElementById('AOrigen').innerHTML += result[a].Agencia_Origen__c +'<br/>';
+                            document.getElementById('Asesor').innerHTML += result[a].Asesor_Rezago__c +'<br/>';
                         }
                         //Muestra el boton luego de cargar los datos.
                         var x = document.getElementById("pqr");
@@ -379,11 +332,7 @@
                         //desaparece la ruedita de Load
                         $('#imgLoad').attr('hidden', 'hidden');
                         //Envia el mensaje de confirmacion
-                        if(er=='ERROR'){
-                            alert('Datos Cargados con errores, por favor verificar Tabla.');
-                        }else{
-                        	alert('Datos Cargados Exitosamente.');
-                        }
+                        alert('Datos Cargados');
                         guardarDatos(result);
                     }
                 }, 

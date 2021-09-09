@@ -4265,7 +4265,7 @@ paso2Cuerpo = 'slds-hide';
             system.debug(pcPEP);
             if( pnnrocertificado == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacio'));
                 return null;    
             }
             if( bloqRTN == false )
@@ -4279,51 +4279,46 @@ paso2Cuerpo = 'slds-hide';
             }
             if( pctipoid == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de ID Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de ID Vacio'));
                 return null;    
             }
             
             if( pcnroid == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Vacio'));
                 return null;    
             }
             
             if( pcprimernombre == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Vacio'));
                 return null;    
             }
             
             if( pcprimerapellido == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacio'));
                 return null;    
             }
             if( fechaNacimiento == null || fechaNacimiento >= date.today())
             {        
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Válida'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
                 return null;    
             }
             if( pdLugarNacimientoCN == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
                 return null;    
             }
             if( TipoSexo.Sexo__c == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Género Vacío'));
-                return null;    
-            }
-            if( TipoProfesion.Profesi_n_Ocupaci_n__c == ' --Ninguno-- ' || TipoProfesion.Profesi_n_Ocupaci_n__c == null )
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Profeción/Ocupación Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Genero Vacio'));
                 return null;    
             }
             
             if( pcnacionalidad == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nacionalidad Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nacionalidad Vacio'));
                 return null;    
             }
             
@@ -4331,7 +4326,7 @@ paso2Cuerpo = 'slds-hide';
             {         
                 if (pcnacionalidad2 == '' || pcnacionalidad3 == '' )
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Segunda Nacionalidad Vacía'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Segunda Nacionalidad Vacia'));
                     return null; 
                 }
                 
@@ -4353,114 +4348,84 @@ paso2Cuerpo = 'slds-hide';
                 }
                 
             }     
-            //TELEFONO
-            if(ListTelefonos == null || ListTelefonos.size() == 0 ){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos un teléfono.'));
-                return null;    
-            }
-            //DIRECCION
-            if(ListDirecciones == null || ListDirecciones.size() == 0 ){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos una dirección.'));
-                return null;    
-            }
-            //REFERENCIAS
+            
             if( pcPrimerNombreReferi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Referido Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Referido Vacio'));
                 return null;    
             }
             
             if( pcPrimerApellidoReferi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacio'));
                 return null;    
             }
             if( pcTelefono_Referido1Referi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Primer Referido Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Primer Referido Vacio'));
                 return null;    
             }
             if( pcPrimerNombreReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre De Referido dos Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre De Referido dos Vacio'));
                 return null;    
             }
             if( pcPrimerApellidoReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido De Referido dos Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido De Referido dos Vacio'));
                 return null;    
             }
             if( pcTelefono_ReferidoReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Segundo Referido Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Segundo Referido Vacio'));
                 return null;    
-            }         
-            //DEPENDENCIA ECONÓMICA
-            if( pcDependeSI == false && pcDependeNO == false)
-            { 
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Completar Dependencia económica'));
-                return null;
-            }
-            
-            if( pcDependeSI == true)
-            { 
-                if (pcTipoIDDependencia == '' && pcNumeroIDDependencia == '' && pcNombreCompletoDependencia ==''){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Debe completar los datos de Dependencia económica'));
-                return null;
-                }
-            }
-            
-            //DATOS DEL TERCERO
+            }               
             if( OcultaTerSI == true)
             {
                 if (pcNumeroIDPV == '')
                 {    
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Tercera Persona Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Tercera Persona Vacio'));
                     return null;  
                 }
                 
                 if (pcNombreCompletoPV == '')
                 {    
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre Completo Tercera Persona Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre Completo Tercera Persona Vacio'));
                     return null;  
                 }
             }
-            //DATOS PEP
             if( OcultaCarSI == false && OcultaCarNO == false)
             { 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Completar pregunta PEP '));
                 return null;
             }
             SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
-            
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Cargo que ejerce o ha ejercido Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Cargo que ejerce o ha ejercido vacio'));
                     return null; 
                 }
-                //NUEVO
-                ELSE if(periodoPep == '')
+                if(periodoPep == '')
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Período Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Periodo vacio'));
                     return null; 
                 }
-                ELSE if(institucionPep == '')
+                if(institucionPep == '')
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
                     return null; 
                 }
                 
             }
-            //ACTIVIDAD ECONÓMICA O FUENTE DE INGRESOS
             if(fechaLabor > date.today())
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha de ingreso a empresa no puede ser mayor a hoy'));
                 return null;    
             } 
             /*SECUENCIA RTN*/
-            if(pcrncempl == null || pcrncempl == '' && pcNombreempl !=null)
+            if(pcrncempl == null || pcrncempl == ''&& pcNombreempl !=null)
             {
                 Secuencia_rtn__c acct = new Secuencia_rtn__c();
                 
@@ -4469,21 +4434,16 @@ paso2Cuerpo = 'slds-hide';
                     pcrncempl=item.name;
                 }    
             }
-             if(pcrncempl == ''|| pcNombreempl == '' || pcCargoEmpresaEmpCN == '' || pcmailempl == '' || ClienteTipoId.Tipo_Empresa__c == '' || pcrazonsocialempl == '' )
-             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ingrese información Laboral'));
-                return null;   
-             }
-            //DEBIDA DILIGENCIA INCREMENTADA
+            
             if( valorsiCont == false && valornoCont == false)
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Contratista del Estado Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Contratista del Estado vacio'));
                 return null;    
             }
-            //VALIDACIÓN DE DATOS
-            if(pcAPNFDSI == false && pcAPNFDNO == false)
+            
+            if(pcAPNFDSI == null && pcAPNFDNO == null)
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'APNFD Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'APNFD vacio'));
                 return null;    
             }
             if(pcAPNFDSI == true && PCNumeroAPNFD == null)
@@ -4819,35 +4779,31 @@ paso2Cuerpo = 'slds-hide';
             naturalEnvio.ListTelefonos= ListTelefonos;
             naturalEnvio.ListDirecciones= ListDirecciones;
             if( pcproducto == '' || pcproducto == ' --Ninguno-- '){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Producto  Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Producto  Vacio'));
                 return null;    
             }
             if( pcsubproducto == ''|| pcsubproducto == null){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Subroducto  Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Subroducto  Vacio'));
                 return null;    
             }
             if( Cuenta20.Tipo_Fondo__c == ''|| Cuenta20.Tipo_Fondo__c == ' --Ninguno-- ' || Cuenta20.Tipo_Fondo__c == null)
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Fondo Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Fondo Vacio'));
                 return null;    
             }
             if( pcTipoMoneda == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Moneda Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Moneda Vacio'));
                 return null;    
             }
             if( Cuenta20.Frecuencia_Aportacion__c == ''|| Cuenta20.Frecuencia_Aportacion__c == ' --Ninguno-- '|| Cuenta20.Frecuencia_Aportacion__c == null)
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Periocidad Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Periocidad Vacio'));
                 return null;    
-            }  
-            if (numtran == '' || numtran ==null){
-                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número Transacciones Vacío'));
-                return null;    
-            }
+            }            
             if( pcformapago == ''|| pccuentapago == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Forma de pago Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Forma de pago Vacio'));
                 return null;    
             }
             if( pcformapago == 'AH' && pccuentapago == '')
@@ -4857,7 +4813,7 @@ paso2Cuerpo = 'slds-hide';
             }
             if( pcformapago == 'TA' && pccuentapago == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'#Cta/TC Vacio'));
                 return null;    
             }
             if( v_des_procedfds == ''|| v_des_procedfds == null)
@@ -4867,14 +4823,14 @@ paso2Cuerpo = 'slds-hide';
             }
             if( TipoEnvioo.Tipo_EnvioNuevo__c == ''|| TipoEnvioo.Tipo_EnvioNuevo__c == ' --Ninguno-- ' || TipoEnvioo.Tipo_EnvioNuevo__c == null)
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Envio Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de Envio Vacio'));
                 return null;    
             } 
             if(pcaplicaseguro == true)
             {                
                 if(pcTipoSeguro == ' --Ninguno-- '||pcTipoSeguro == null)
                 {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro Vacío'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Tipo Seguro vacio'));
                     return null; 
                 }                 
             }
@@ -4886,22 +4842,22 @@ return null;
 } */
             if(pcpromotor ==' --Ninguno-- ' || pcpromotor ==null || pcpromotor == '')
             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Oficial de negocio Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Oficial de negocio vacio'));
                 return null;    
             }
-            if( pcUsuarioCN == '' || pcUsuarioCN == null)
+            if( pcUsuarioCN == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Código de Empleado GFF Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Código de Empleado GFF vacio'));
                 return null;    
             }
-            if( pcUsuNombreCN == '' || pcUsuNombreCN == null)
+            if( pcUsuNombreCN == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre de Empleado GFF Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre de Empleado GFF vacio'));
                 return null;    
             }
-            if( pcAgn == ' --Ninguno-- ' || pcAgn == null)
+            if( pcAgn == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agencia GFF Vacío'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agencia GFF vacio'));
                 return null;    
             }
             decimal totalBene= 0;
@@ -5006,7 +4962,7 @@ return null;
                         insert reg;
                     }
                     
-                   if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
+                    if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');

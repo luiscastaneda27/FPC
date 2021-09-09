@@ -1,6 +1,6 @@
 trigger CreacionSaldos on Opportunity (After update, After insert) {
 
-    list<Detalle_Oportunidad__c> DetOpp = new list<Detalle_Oportunidad__c>();
+   /* list<Detalle_Oportunidad__c> DetOpp = new list<Detalle_Oportunidad__c>();
     list<Detalle_Oportunidad__c> DetBorrar = new list<Detalle_Oportunidad__c>();
     list<Id> Borrar = new list<Id>();
     Map<Id, List<Saldo__c>> MapaSaldo = new Map<Id, List<Saldo__c>>();
@@ -44,6 +44,6 @@ trigger CreacionSaldos on Opportunity (After update, After insert) {
     
     DetBorrar = [Select Id From Detalle_Oportunidad__c Where Oportunidad__c In :Borrar];
     database.delete(DetBorrar);
-    database.insert(DetOpp);
+    database.insert(DetOpp);*/
 
 }

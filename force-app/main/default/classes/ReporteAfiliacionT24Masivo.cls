@@ -631,11 +631,7 @@ global class ReporteAfiliacionT24Masivo {
     }
     
     public static String llenarObjetosMonetarios(string prueba){     
-        try{
-            Decimal.valueOf(prueba);
-        }catch(Exception ex){
-            prueba = '0';
-        }
+        //prueba= '0.00';
         return prueba;
     }
     
@@ -643,7 +639,7 @@ global class ReporteAfiliacionT24Masivo {
     public static String fechas(string fecha){     
         string fechaFinal=null;
         date myDate = date.today();
-        system.debug('fecha: '+fecha);
+        system.debug('fecha '+myDate);
         if(fecha!=NULL){
             
             list<string> a1;            
@@ -1104,7 +1100,7 @@ global class ReporteAfiliacionT24Masivo {
             system.debug('String recibido: '+stringCSV);
             clientes = stringCSV.split('\n');
             string stringNuevo ='2121';
-            string noContiene = '0123456789".,-';
+            string noContiene = '0123456789".,';
             string commilla = '"';
             
             if(clientes.size() > 1){

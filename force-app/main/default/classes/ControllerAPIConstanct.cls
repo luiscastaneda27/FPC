@@ -141,11 +141,14 @@ public class ControllerAPIConstanct {
                 HttpResponse response = http.send(request);
                 respuesta = response.getBody();
                 system.debug('Respuesta Sysde '+response.getBody());
-                if (response.getStatusCode() == 200) {
+                if (response.getStatusCode() == 200) 
+                {
                     resultado = (list<classCorreosAniversario>)JSON.deserialize(response.getBody(), list<classCorreosAniversario>.class);
                 } 
-            }else{
-                classCorreosAniversario mo = new classCorreosAniversario();
+            }
+            else
+            {
+                 classCorreosAniversario mo = new classCorreosAniversario();
                 mo.P_ERROR = 'qw';
                 mo.P_FechaInclusion = date.today();
                 mo.V_APELLIDO = 'sadsad';

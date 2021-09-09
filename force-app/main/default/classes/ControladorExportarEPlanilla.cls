@@ -14,21 +14,17 @@ public class ControladorExportarEPlanilla {
     public PAgeReference CArgarPlanilla()
     {
         try{   
-            
+            system.debug('LLego lanilla');
             planilla=[select name, TA_Salarios__c, TA_Empleado_Obligatorio__c,
                       TA_Empleado_Voluntario__c, TA_Patrono_obligatorio__c,
-                      TA_Patrono_Voluntario__c, Total_Reserva_Laboral2__c, 
-                      /*AGREGADO WP 06-12-2019*/
-                      TA_Empleado_Extraordinario__c, TA_Patrono_Extraordinario__c, TA_Seguro_de_Vida__c
+                      TA_Patrono_Voluntario__c, Total_Reserva_Laboral2__c 
                       From planilla__C Where id =:idPlanilla];
             contenidoPlanilla = [Select Empleado2__c, Empleado2__r.Identificacion__c,
                         Empleado2__r.Firstname, Empleado2__r.LastName, Salario__c,Aporte_Empleado_Obligatorio__c,
                         Aporte_Empleado_Voluntario__c, Aporte_Patrono_obligatorio__c,Aporte_Patrono_Voluntario__c,
-                        Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount,
-                        /*AGREGADO WP 06-12-2019*/
-                        Aporte_Empleado_Extraordinario__c, Aporte_Patrono_Extraordinario__c, Aporte_Seguro_de_Vida__c
+                        Planilla__c, Reserva_Laboral__c,Empleado2__r.IsPersonAccount
                         From Contenido_Planilla__c Where Planilla__c =:idPlanilla
-                        Order by Empleado2__r.Firstname
+                        Order by Empleado2__r.Firstname limit 1320
                     ];
            /* planilla.Salario__c=0;
             uncontenido.Reserva_Laboral__c=0;
@@ -49,7 +45,7 @@ public class ControladorExportarEPlanilla {
         }
         catch(Exception ex)
         {
-            
+            system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
         }
         return null;
         //return new PageReference ('/Apex/vfGenerarPlanilla?Eldudhdhyudb=0011100001NsuTM&loetdncdhjch=a0S11000005FKgl&Moneda=HNL');

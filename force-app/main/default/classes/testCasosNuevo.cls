@@ -117,15 +117,15 @@ public class testCasosNuevo {
             controlActinfo.verAportes();
             controlActinfo.selecAporte();
             controlActinfo.guardar();
-            controlActinfo.updateCasoRetiros();
-            controlActinfo.addPagoBene2(); 
+            //controlActinfo.updateCasoRetiros();
+            //controlActinfo.addPagoBene2(); 
             
             extensionCasoDetalle controlSubproducto = new extensionCasoDetalle(new ApexPages.StandardController(casos[1]));
             controlSubproducto.accionSubproducto();
             controlSubproducto.buscarCuentaC();
             controlSubproducto.buscarSubPro();
             controlSubproducto.guardar();
-            controlSubproducto.updateCasoRetiros();
+            //controlSubproducto.updateCasoRetiros();
 
             extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casos[2]));                                  
             controlConsta.agregarCuenta();
@@ -133,7 +133,7 @@ public class testCasosNuevo {
             controlConsta.idDetalleEliminar = cuentaIndi.id;        
             controlConsta.eliminarCuenta();             
             controlConsta.guardar();
-            controlConsta.updateCasoRetiros();
+            //controlConsta.updateCasoRetiros();
             /*
             extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
             controlRetiro.verPropietarioCuenta();            
@@ -193,17 +193,17 @@ public class testCasosNuevo {
             cuentaIndiColec.fecha_apertura__c = date.today() - 950;
             update cuentaIndiColec;
             extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
-            controlRetiro2.selecCuentaRetiros();
+            //controlRetiro2.selecCuentaRetiros();
             controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro2.selecTipoRetiro();
+            //controlRetiro2.selecTipoRetiro();
             controlRetiro2.guardar();
-            controlRetiro2.actualizarSaldoPatronalCons();
+           // controlRetiro2.actualizarSaldoPatronalCons();
             controlRetiro2.detalleCaso.Fecha_Despido_Empresa__c = date.today();
             controlRetiro2.detalleCaso.Fecha_Ingreso_Empresa__c = date.today().AddMonths(-21);
-            controlRetiro2.calculoSaldoPatronales();
+            //controlRetiro2.calculoSaldoPatronales();
             controlRetiro2.detalleCaso.Prestamo_anterior__c = '12321';
             controlRetiro2.VerificacionPreatamoRefinanciar();
-            controlRetiro2.updateCasoRetiros();
+           // controlRetiro2.updateCasoRetiros();
             
             controlRetiro2.detallecaso.No_es_primer_prestamo__c=true;
             controlRetiro2.detallecaso.Es_Refinanciamiento__c=true;
@@ -217,14 +217,14 @@ public class testCasosNuevo {
             controlRetiro2.detallecaso.N_Cuenta_Bancaria__c = '21';
             controlRetiro2.verPropietarioCuenta();
             
-            controlRetiro2.calculoSaldoPatronales2();
+          //  controlRetiro2.calculoSaldoPatronales2();
             
             Pago_Beneficiario__c p = new Pago_Beneficiario__c(Caso__c = controlRetiro2.Caso.id);
             insert p;
-            controlRetiro2.verBeneficiarios2();
-            controlRetiro2.upsertPagosBeneficiarios();
-            controlRetiro2.upsertBeneficiarios();
-            controlRetiro2.upsertBeneficiarios();
+           // controlRetiro2.verBeneficiarios2();
+            //controlRetiro2.upsertPagosBeneficiarios();
+            //controlRetiro2.upsertBeneficiarios();
+            //controlRetiro2.upsertBeneficiarios();
             
             controlRetiro2.verMovimientos();
             
@@ -248,7 +248,7 @@ public class testCasosNuevo {
             controlADA.esCallcenter = true;
             controlADA.detalleCaso.Nuevo_monto_aporte__c = 7000;
             controlADA.guardar();
-            controlADA.updateCasoRetiros();
+            //controlADA.updateCasoRetiros();
             
             controlADA.detalleCaso.Subtipo_transaccion__c='C1';
             controlADA.mostrar();
@@ -309,17 +309,17 @@ public class testCasosNuevo {
             //controlada.movimientoSeleccionado.;
             controlada.cambioMontoC1();
             controlada.cambioMonto();
-            controlada.actualizardetalleCaso();
+            //controlada.actualizardetalleCaso();
             //controlada.actualizarSaldoPatronalCons();
             controlada.getListAgentsByZone();
             controlada.actualizarRezago();
             //controlada.montoExoneradoAlDia();
-            controlada.ModificarSaldoPrestamo();
+           // controlada.ModificarSaldoPrestamo();
             
-            Integer rowNum = 1;
+            //Integer rowNum = 1;
             controlada.delRow();
             Integer rowNum2 = 1;
-            controlada.delRow2();
+            //controlada.delRow2();
             
             extensionCasoDetalle re= new extensionCasoDetalle();
             extensionCasoDetalle.metodoutil();
@@ -447,37 +447,37 @@ public class testCasosNuevo {
             extensionCasoDetalle controlActinfo = new extensionCasoDetalle(new ApexPages.StandardController(Casos[0]));
             controlActinfo.selecCuenta();
             controlActinfo.llenarCuentasDesdeSysde();
-            controlActinfo.verBeneficiarios2();
+           // controlActinfo.verBeneficiarios2();
             if(controlActinfo.listBeneficiarios.size()>0){
                 controlActinfo.listBeneficiarios[0].Casilla__c = true;
             }
             controlActinfo.agregarBeneficiarios();
-            controlActinfo.upsertBeneficiarios();
-            controlActinfo.verPagosBeneficiarios2();
-            controlActinfo.upsertPagosBeneficiarios();
-            controlActinfo.addPagoBene();         
+           // controlActinfo.upsertBeneficiarios();
+           // controlActinfo.verPagosBeneficiarios2();
+            //controlActinfo.upsertPagosBeneficiarios();
+            //controlActinfo.addPagoBene();         
             
             extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
             controlRetiro.verPropietarioCuenta();            
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
             controlRetiro.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro.selecTipoRetiro();
+           // controlRetiro.selecTipoRetiro();
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
-            controlRetiro.selecTipoRetiro();
+           // controlRetiro.selecTipoRetiro();
             controlRetiro.verMovimientos();
             controlRetiro.selecMovimiento(); 
             //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales();
-            controlRetiro.calculoSaldoPatronales2();
+           // controlRetiro.calculoSaldoPatronales();
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales(); 
-            controlRetiro.calculoSaldoPatronales2();
+            //controlRetiro.calculoSaldoPatronales(); 
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '12',Tipo_retiro__c = '51',
                                                               Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
             
-            controlRetiro.ValidacionSaldoPatronales();
+            //controlRetiro.ValidacionSaldoPatronales();
             controlretiro.caso.Aplica_Saldo_patronal__c=true;
             controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
             controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
@@ -513,9 +513,9 @@ public class testCasosNuevo {
             cuentaIndiColec.fecha_apertura__c = date.today() - 950;
             update cuentaIndiColec;
             extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
-            controlRetiro2.selecCuentaRetiros();
+           // controlRetiro2.selecCuentaRetiros();
             controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro2.selecTipoRetiro();
+            //controlRetiro2.selecTipoRetiro();
             controlRetiro2.guardar();
             
             extensionCasoDetalle controlADA2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[4]));

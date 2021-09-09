@@ -11,7 +11,6 @@ public class Planilla {
     public string Segundo_Nombre{get;set;}
     public string Primer_Apellido{get;set;}
     public string Segundo_Apellido{get;set;}
-    
     public Decimal Salario{get;set;}
     public Decimal APO{get;set;}
     public Decimal AEO{get;set;}
@@ -41,8 +40,11 @@ public class Planilla {
     public string ColorAPO{get; set;}
     public string ColorAEO{get; set;}
     public string ColorRL{get; set;}
-     public string Num_cuenta{get; set;}
-     public string IdSalesforce{get; set;}
+    public string Num_cuenta{get; set;}
+    public string IdSalesforce{get; set;}
+    public string rezago{get;set;}
+    public string codigoReferencia{get;set;}
+    
     
     //IHSS
      public Planilla(string id,string rtn,string NP,string Ident, string PN, string SN,string PA,string SA, date fecha ,
@@ -318,24 +320,21 @@ public class Planilla {
         
     }
     
-    public string rezago{get;set;}
-    public string codigoReferencia{get;set;}
-    public string Monto_Calculado{get;set;}//Para los Rezagos
+   
     //Planillas Aprobadas
-    Public Planilla(string id, string PN, date fecha, string tipo ,Decimal total,string PA,string SA, string moneda, string rezago, string codReferencia, string Monto_Calculado)
+    Public Planilla(string id, string PN, date fecha, string tipo ,Decimal total,string PA,string SA, string moneda, string rezago, string codReferencia)
     {
         this.id_cambiarSalario=id;
         this.Primer_Nombre=PN;
-        this.Planilla_Aprobada=fecha;
         this.segundo_Nombre=tipo;
-        this.Salario=total;
+        this.Planilla_Aprobada=fecha;
         this.Primer_Apellido=PA;
         this.Segundo_Apellido=SA;
+        this.APO=0.0;
+        this.Salario=total;
         this.a=moneda;
         this.rezago = rezago;
         this.codigoReferencia = codReferencia;
-        this.Monto_Calculado = Monto_Calculado;
-        this.APO=0.0;
     }
     
      //Cambio de salario

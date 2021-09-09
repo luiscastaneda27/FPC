@@ -28,7 +28,7 @@ public without sharing class ControladorgenerarPlanilla {
     public boolean esAPX{get;set;}
     public boolean esASV{get;set;}
     //
-    public list<Cuenta_planilla__c> listCuentasPlanilla{get;set;}
+    //public list<Cuenta_planilla__c> listCuentasPlanilla{get;set;}
     public string horafecha{get;set;}
     map<Id, Planilla__c> mapPlanillas;
     map<Id, Id> mapEmpleados;
@@ -233,14 +233,11 @@ From Contenidos_Planilla__r order by Empleado2__r.Firstname asc
             }
             //if(identidadesconsulta.size()>1000){controladoraportes=1;}
             //totalEmpleados=0;
-            if(controladoraportes ==0 && identidadesconsulta.size()<1000)
-            {
+            if(controladoraportes ==0 && identidadesconsulta.size()<1000) {
                 list<claseaportaciones> listAportes2=new list<claseaportaciones>();
                 list<string> identidadesconsultaTemp= new list<string> ();
                 for(integer i=0; i<identidadesconsulta.size(); i++)
-                    //for(integer i=0; i<5; i++)
                 {
-                    //identidadesconsultaTemp= new list<string> ();
                     identidadesconsultaTemp.add(identidadesconsulta[i]);
                     if(identidadesconsultaTemp.size()==500 || (i+1)==identidadesconsulta.size())
                     {
@@ -248,26 +245,10 @@ From Contenidos_Planilla__r order by Empleado2__r.Firstname asc
                         {
                             listAportes.add(item); 
                         }
+                        validarAportes();
                         identidadesconsultaTemp= new list<string>();
-                        /*if(listAportes2!=null && listAportes2.size()>0)
-{
-listAportes.addAll(listAportes2);
-totalEmpleados++;
-}
-listAportes2=new list<claseaportaciones>();*/
                     }
                 }
-                /*if(identidadesconsultaTemp.size()>0)
-{
-//listAportes2 = aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco);
-for(claseaportaciones item:aSysdePortalEmpresarial.ConsultalAportesPatronales(identidadesconsultaTemp, codigo_unico_banco))
-{
-listAportes.add(item); 
-}
-identidadesconsultaTemp= new list<string>();
-
-}*/
-                
                 controladoraportes=1;
             }
             
@@ -279,7 +260,17 @@ identidadesconsultaTemp= new list<string>();
     public Contenido_Planilla__c contenidoTotal {get;set;}
     
     
-    
+    public void validarAportes(){
+        if(listAportes != null){
+            for(Integer i = 0; i< listAportes.size(); i++){
+                listAportes[i].apv = listAportes[i].apv != null ? listAportes[i].apv : 0.0;
+                listAportes[i].aev = listAportes[i].aev != null ? listAportes[i].aev : 0.0;
+                listAportes[i].ape = listAportes[i].ape != null ? listAportes[i].ape : 0.0;
+                listAportes[i].apx = listAportes[i].apx != null ? listAportes[i].apx : 0.0;
+                listAportes[i].asv = listAportes[i].asv != null ? listAportes[i].asv : 0.0;
+            }
+        }
+    }
     
     public void traerContenido(){
         try{
@@ -959,22 +950,36 @@ idsalesforce= contenidoplanilla[jj].id;
         return New PageReference ('/Apex/vfexportarexcelplanilla');
     }
     
-    
+    public List<EmpleadosPorEmpresa> listEmpleadosPorEmpresa{get;set;}
     public void mostrarAgregarEmpleado(){
         try{
             if(banderaTiempo==0)
             {
                 registrarTiempo();
             }
+            listEmpleadosPorEmpresa = new List<EmpleadosPorEmpresa>();
             if(hayPlanilla()){
                 
                 listEmpleadosEmpresa = [Select Eliminado__c, Empleado2__r.FirstName, Empleado2__r.LastName, Empleado2__r.Identificacion__c
-                                        ,Empleado2__r.Sexo__c, Empleado2__r.PersonBirthDate, Salario__c,Empleado2__c
+                                        ,toLabel(Empleado2__r.Sexo__c), Empleado2__r.PersonBirthDate, Salario__c,Empleado2__c
                                         From Empresa_x_Empleado__c
                                         Where Empresa2__c =: Codigo_Unico_Banco 
                                         AND Empleado2__c Not In: mapEmpleados.keySet()
                                         AND Estado__c = 'Activo' and 
                                         Empleado2__c in (select cliente__C from Cuentas__C where Producto__r.CurrencyIsoCode=:MONEDA)];
+                for(Empresa_x_Empleado__c item: listEmpleadosEmpresa){
+                    EmpleadosPorEmpresa empleado = new EmpleadosPorEmpresa();
+                    empleado.seleccionado = false;
+                    empleado.nombres = item.Empleado2__r.FirstName;
+                    empleado.apellidos = item.Empleado2__r.LastName;
+                    empleado.identificacion = item.Empleado2__r.Identificacion__c;
+                    empleado.sexo = item.Empleado2__r.Sexo__c;
+                    empleado.fechaNacimiento = item.Empleado2__r.PersonBirthDate;
+                    empleado.empleadoId = item.Empleado2__c;
+                    empleado.salario = item.Salario__c;
+                    listEmpleadosPorEmpresa.add(empleado);
+                    
+                }
                 
                 if(listEmpleadosEmpresa.isEmpty()){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, '¡No existen empleados disponibles para agregar')); 		
@@ -995,7 +1000,15 @@ idsalesforce= contenidoplanilla[jj].id;
             {
                 registrarTiempo();
             }
+            system.debug('Llego');
             list <string> idempleados= new list<string>();
+            for(EmpleadosPorEmpresa item:listEmpleadosPorEmpresa){
+                for(Empresa_x_Empleado__c empleadoObj : listEmpleadosEmpresa){
+                    if(empleadoObj.Empleado2__C == item.empleadoId && item.seleccionado){
+                        empleadoObj.Eliminado__c = true;
+                    }
+                }
+            }
             For(Empresa_x_Empleado__c item : listEmpleadosEmpresa){
                 if(item.Eliminado__c){
                     contenidoPlanilla.add(new Contenido_Planilla__c(Planilla__c = planilla.id, Empleado2__c = item.Empleado2__c,
@@ -1028,6 +1041,7 @@ idsalesforce= contenidoplanilla[jj].id;
             listcuentasEmpleados = [select  Cliente__r.Identificacion__C, Codigo__c, cliente__C, cuenta_colectiva2__C,id
                                     from cuentas__c where Cliente__C in :cuentas24 
                                     and cuenta_colectiva2__r.codigo__C in : cuentas2];
+            system.debug('listcuentasEmpleados: '+listcuentasEmpleados);
             list<Cuenta_planilla__c> listcuentasEmpleadosPlanilla = new list<Cuenta_planilla__c>();
             Cuenta_planilla__c cuentasEmpleadosPlanilla;
             for(integer i=0; i<listcuentasEmpleados.size(); i++)
@@ -1045,7 +1059,7 @@ idsalesforce= contenidoplanilla[jj].id;
                             {
                                 idsalesforce= contenidoplanilla[jj].id;
                                 juio=jj;
-                                
+                                system.debug('Validaciones');
                                 if(contenidoplanilla[jj].aporte_patrono_voluntario__C ==null ||contenidoplanilla[jj].aporte_patrono_voluntario__C <0)
                                 {
                                     contenidoplanilla[jj].aporte_patrono_voluntario__C =0;
@@ -1066,6 +1080,10 @@ idsalesforce= contenidoplanilla[jj].id;
                                 if(contenidoplanilla[jj].aporte_Seguro_de_Vida__c ==null || contenidoplanilla[jj].aporte_Seguro_de_Vida__c <0)
                                 {
                                     contenidoplanilla[jj].aporte_Seguro_de_Vida__c =0;
+                                }
+                                if(contenidoplanilla[jj].aporte_Patrono_Extraordinario__c == null || contenidoplanilla[jj].aporte_Patrono_Extraordinario__c < 0)
+                                {
+                                    contenidoplanilla[jj].aporte_Patrono_Extraordinario__c = 0;
                                 }
                                 //
                             }
@@ -1095,11 +1113,10 @@ idsalesforce= contenidoplanilla[jj].id;
                             //
                             cuentasEmpleadosPlanilla.Calcular_por__c='Monto';
                             listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
-                        }
-                        else
-                        {
-                            
+                        }else{
+                            system.debug(listaportes[j].apx +' AL else: '+contenidoplanilla[juio].aporte_Patrono_Extraordinario__c);
                             //listcuentasEmpleadosPlanilla.add(new cuenta_planilla__C(Valor_Monto_Patrono__c=listaportes[j].apv, Calcular_por__c='Monto',  Valor_Monto__c=listaportes[j].aev, Tipo__c='Empresa', Cuenta__c= listcuentasEmpleados[i].id, Contenido_Planilla__c=idsalesforce, Codigo_cuenta__c=listaportes[j].Num_cuenta));cuentasEmpleadosPlanilla.Codigo_cuenta__c=listaportes[j].Num_cuenta;
+                            cuentasEmpleadosPlanilla.Codigo_cuenta__c = listcuentasEmpleados[i].Codigo__c;
                             cuentasEmpleadosPlanilla.Contenido_Planilla__c=idsalesforce;
                             cuentasEmpleadosPlanilla.Cuenta__c= listcuentasEmpleados[i].id;
                             cuentasEmpleadosPlanilla.Tipo__c='Empresa';
@@ -1125,16 +1142,18 @@ idsalesforce= contenidoplanilla[jj].id;
                             cuentasEmpleadosPlanilla.Valor_Monto_Seguro_Vida__c=listaportes[j].asv;
                             //
                             listcuentasEmpleadosPlanilla.add(cuentasEmpleadosPlanilla);
+                            system.debug('listcuentasEmpleadosPlanilla: '+listcuentasEmpleadosPlanilla);
                         }
                     }
                 }
             }
-            
+            system.debug('Finalizo');
             insert listcuentasEmpleadosPlanilla;
-            
+            update contenidoplanilla;
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Confirm, '¡Empleado(s) agregado(s) correctamente!'));	
             
-        }Catch(Exception e){
+        }Catch(Exception ex){
+            system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ha ocurrido un error!')); 	
         }
     }
@@ -1262,9 +1281,11 @@ idsalesforce= contenidoplanilla[jj].id;
     
     
     Contenido_planilla__c contenidoPFinal;
+    public List<AporteCuenta> listAportesCuenta {get;set;}
     public void mostrarCuentas(){
         try{
-            listCuentasPlanilla = new list<Cuenta_planilla__c>();
+            //listCuentasPlanilla = new list<Cuenta_planilla__c>();
+            listAportesCuenta = new List<AporteCuenta>();
             Disponibleguardar=true;
             if(banderaTiempo==0){
                 registrarTiempo();
@@ -1275,12 +1296,31 @@ idsalesforce= contenidoplanilla[jj].id;
             system.debug('esAEV: '+esAEV);
             system.debug('esAPE: '+esAPE);
             system.debug('esAEV: '+esASV);
-            
+            String query = 'Select Id, Calcular_por__c, Codigo_cuenta__c,Tipo__c,Valor_Monto__c,  ';
+            query += 'Valor_Monto_Extraordinario__c, Valor_Monto_Patronal_Extraordinario__c, ';
+            query += 'Valor_Monto_Patrono__c, Valor_Monto_Seguro_Vida__c ';
+            query += 'From Cuenta_planilla__c Where Contenido_Planilla__c = \''+idContenido+'\' ';
+            if(esAPV){
+                query += ' And Tipo__c = \'Empresa\'';
+            }
+            for(Cuenta_planilla__c item: Database.query(query)){
+                AporteCuenta aporte = new AporteCuenta();
+                aporte.id = item.Id;
+                aporte.calcularPor = item.Calcular_por__c;
+                aporte.cuenta = item.Codigo_cuenta__c;
+                aporte.tipo = item.Tipo__c;
+                aporte.valorMonto = item.Valor_Monto__c;
+                aporte.valorMontoExtraordinario = item.Valor_Monto_Extraordinario__c;
+                aporte.valorMontoPatronalExtraordinario = item.Valor_Monto_Patronal_Extraordinario__c;
+                aporte.valorMontoPatrono = item.Valor_Monto_Patrono__c;
+                aporte.valorMontoSeguroVida = item.Valor_Monto_Seguro_Vida__c;
+                listAportesCuenta.add(aporte);
+            }
             
             if(esAPV){
-                listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
+                //listCuentasPlanilla=[select Calcular_por__c, Codigo_cuenta__c,id, Valor_Monto_Patrono__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido and tipo__c='Empresa'];
                 NombreAporte='Aportes Voluntario Patronal';
-                if(listCuentasPlanilla.size()>0){
+                if(listAportesCuenta.size()>0){
                     popCuentasAPV = true;
                 }
                 if(planilla.estado2__C=='Nueva'){
@@ -1290,8 +1330,8 @@ idsalesforce= contenidoplanilla[jj].id;
             //agregado wp 22-11-2019
             if(esAPX){
                 NombreAporte='Aportes Voluntario Patronal Extraordinario';
-                listCuentasPlanilla=[select Valor_Monto_Patrono__c ,Calcular_por__c, Codigo_cuenta__c,id,Valor_Monto_Patronal_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
-                if(listCuentasPlanilla.size()>0)
+                //listCuentasPlanilla=[select Valor_Monto_Patrono__c ,Calcular_por__c, Codigo_cuenta__c,id,Valor_Monto_Patronal_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listAportesCuenta.size()>0)
                 {
                     popCuentasAPX = true;
                 }
@@ -1303,8 +1343,8 @@ idsalesforce= contenidoplanilla[jj].id;
             //
             if(esAEV) {
                 NombreAporte='Aportes Voluntario Empleado';
-                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Patronal_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
-                if(listCuentasPlanilla.size()>0)
+                //listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Patronal_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listAportesCuenta.size()>0)
                 {
                     popCuentasAEV = true;
                 }
@@ -1316,8 +1356,8 @@ idsalesforce= contenidoplanilla[jj].id;
             //agregado wp 22-11-2019
             if(esAPE){
                 NombreAporte='Aportes Voluntario Empleado Extraordinario';
-                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c , Codigo_cuenta__c,id, Valor_Monto_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
-                if(listCuentasPlanilla.size()>0)
+                //listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c , Codigo_cuenta__c,id, Valor_Monto_Extraordinario__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listAportesCuenta.size()>0)
                 {
                     popCuentasAPE = true;
                 }
@@ -1328,8 +1368,8 @@ idsalesforce= contenidoplanilla[jj].id;
             }
             if(esASV){
                 NombreAporte='Aportes Seguro de Vida';
-                listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto_Seguro_Vida__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
-                if(listCuentasPlanilla.size()>0)
+                //listCuentasPlanilla=[select Calcular_por__c,Valor_Monto_Patrono__c ,Valor_Monto_Extraordinario__c , Codigo_cuenta__c,id, Valor_Monto_Seguro_Vida__c from Cuenta_planilla__c where Contenido_Planilla__c=:idContenido]; 
+                if(listAportesCuenta.size()>0)
                 {
                     popCuentasASV = true;
                 }
@@ -1349,11 +1389,28 @@ idsalesforce= contenidoplanilla[jj].id;
     
     public void aceptarCuentas(){
         try{
+            system.debug('llego');
             decimal totalaporte=0;
             if(banderaTiempo==0)
             {
                 registrarTiempo();
             }
+            List<Cuenta_planilla__c> listCuentasPlanilla = new List<Cuenta_planilla__c>();
+            for(AporteCuenta aporte: listAportesCuenta){
+                Cuenta_planilla__c item = new Cuenta_planilla__c();
+                item.Id = aporte.id;
+                item.Calcular_por__c = aporte.calcularPor ;
+                item.Codigo_cuenta__c = aporte.cuenta;
+                item.Tipo__c = aporte.tipo ;
+                item.Valor_Monto__c = aporte.valorMonto;
+                item.Valor_Monto_Extraordinario__c = aporte.valorMontoExtraordinario;
+                item.Valor_Monto_Patronal_Extraordinario__c = aporte.valorMontoPatronalExtraordinario;
+                item.Valor_Monto_Patrono__c = aporte.valorMontoPatrono;
+                item.Valor_Monto_Seguro_Vida__c = aporte.valorMontoSeguroVida;
+                listCuentasPlanilla.add(item);
+            }
+            
+            
             contenido_planilla__c contenidotemporal = new contenido_planilla__c();
             if(esAPV)
             {
@@ -1465,7 +1522,7 @@ idsalesforce= contenidoplanilla[jj].id;
             popCuentasAPV = false;
             popCuentasAPX = false;
             popCuentasASV = false;
-            
+            system.debug('Exitoso');
             
         }Catch(Exception e){
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
@@ -1516,6 +1573,31 @@ idsalesforce= contenidoplanilla[jj].id;
             system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, '¡Ha ocurrido un error!')); 	
         }
+    }
+    
+    public class AporteCuenta{
+        public String id{get;set;}
+        public String cuenta{get;set;}
+        public String calcularPor{get;set;}
+        public String tipo{get;set;}
+        public Decimal valorMonto{get;set;}
+        public Decimal valorMontoExtraordinario {get;set;}
+        public Decimal valorMontoPatronalExtraordinario {get;set;}
+        public Decimal valorMontoPatrono {get;set;}
+        public Decimal valorMontoSeguroVida {get;set;}
+        
+    }
+    public class EmpleadosPorEmpresa {
+        
+        public Boolean seleccionado {get;set;}
+        public String nombres {get;set;}
+        public String apellidos {get;set;}
+        public String identificacion {get;set;}
+        public String sexo {get;set;}
+        public Date fechaNacimiento {get;set;}
+        public String empleadoId {get;set;}
+        public Decimal salario {get;set;}
+        
     }
     
     public void metodoutil(){

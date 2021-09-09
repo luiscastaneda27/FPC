@@ -1,0 +1,8 @@
+<apex:page controller="prueba" title="Ficohsa FPC" showheader="false" sidebar="false" cache="false" expires="0"
+           applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+    
+   <apex:form >
+    
+    <apex:inputField value="{!cc.Phone}" />
+    </apex:form>
+</apex:page>

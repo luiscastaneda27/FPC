@@ -12,7 +12,7 @@ public class testinteresadministrativa2 {
          g.ach = ''; 
     	 g.ck = '';
          g.Datos=null;
-         //g.hy = '';
+         g.hy = '';
          g.Respuesta = '';
          g.vc_CAPITALSI = '';
          g.vc_CobrarTSPsi = '';
@@ -31,7 +31,6 @@ public class testinteresadministrativa2 {
          g.FechaActual = null;
     	 g.fecha ='';
     	 g.ListRegUsuario = null;
-         g.pagoInteres.estadoAprobacion ='R';
          g.MostrarVentanaDenegacion();
          g.DesactivaModificar();
          g.eleccionachno();
@@ -68,17 +67,10 @@ public class testinteresadministrativa2 {
          g.InteresesEspecificos = null;
    		 g.ListBeneficiarios = null;
     	 g.beneficiarioUnico = null;
-		
-         ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = '12345', Cuenta__c = '12345');
-         upsert a Cuenta__c;
-         
+
          ControllerAdministracionIntereses gaa = new ControllerAdministracionIntereses();
 		 gaa.FechInicioPago = date.valueof(Datetime.now()).addDays(1);
-         gaa.pagoInteres.estadoAprobacion ='R';
          gaa.Guardar(); 
-         gaa.nombreArchivo = 'test';
-         gaa.insertFIle(Blob.valueOf('test'), gaa.nombreArchivo, a.Id);
-         gaa.insertFIle(null, gaa.nombreArchivo, a.Id);
          
          ControllerAdministracionIntereses gur = new ControllerAdministracionIntereses();
 		 gur.Forma_Pago = 'AR';
@@ -106,47 +98,30 @@ public class testinteresadministrativa2 {
          
                   
          ControllerAdministracionIntereses modifica1 = new ControllerAdministracionIntereses();
-         modifica1.pagoInteres.estadoAprobacion ='R';
          modifica1.Modificar();
          
          ControllerAdministracionIntereses modifica2 = new ControllerAdministracionIntereses();
          modifica2.DiadePagos = ' --Ninguno-- ';
-         modifica2.pagoInteres.estadoAprobacion ='R';
          modifica2.Modificar();
          
          ControllerAdministracionIntereses modifica3 = new ControllerAdministracionIntereses();
          modifica3.Forma_Pago = ' --Ninguno-- ';
-         modifica3.pagoInteres.estadoAprobacion ='R';
          modifica3.Modificar();
          
          ControllerAdministracionIntereses modifica4 = new ControllerAdministracionIntereses();
          modifica4.Forma_Pago = 'ACH';
          modifica4.Nombre_Banco = ' --Ninguno-- ';
-         modifica4.pagoInteres.estadoAprobacion ='R';
          modifica4.Modificar();
          
          ControllerAdministracionIntereses modifica5 = new ControllerAdministracionIntereses();
          modifica5.Forma_Pago = 'AH';
          modifica5.Cuenta_Banco = '';
-         modifica5.pagoInteres.estadoAprobacion ='R';
          modifica5.Modificar();
          
          ControllerAdministracionIntereses modifica6 = new ControllerAdministracionIntereses();
          modifica6.Forma_Pago = 'ACH';
          modifica6.Cuenta_Banco = '';
-         modifica6.pagoInteres.estadoAprobacion ='R';
-         modifica6.Cuenta = '4343';
-         modifica6.NombreCompleto = 'ds';
-         modifica6.Identidad = '43';
-         modifica6.TipoFondo ='M';
-         modifica6.CausaDescripcion ='ds';
-         
-          modifica6.EstadoCuenta = '43';
-         modifica6.Forma_Pago ='M';
-         modifica6.DiadePagos ='';
-         
          modifica6.Modificar();
-         
          
          classPagoInteresesFPC pagoFPC = new classPagoInteresesFPC();
          pagoFPC.Cuenta = '36253';
@@ -256,10 +231,6 @@ public class testinteresadministrativa2 {
          img.codigo = 32;
          img.imagen = 'sdas';
          img.mensaje = 'holaaaa';
-         
-         Blob file = Blob.valueOf('test');
-         
-         
      }
 
 

@@ -105,43 +105,7 @@ public class testcontrollerAfiliacionBFH {
         controller.BuscarEmpresa();
         controller.SelectSubProducto();
         controller.SelectSubProductoPop();
-        /*controller.NombreProducto = 'testProducto';
         
-        controller.Enviar();
-        controller.nombreAfiiacion = 'testAfiliación';
-        controller.cerrar();
-        controller.EliminarAfiliacion();
-        controller.selectEmpresa();
-        controller.SelectPopEliminar();
-        controller.ValidacionIdentidad();
-        controller.afiliacion.Identificacion__c = afiliacion.Identificacion__c.replace('-','');
-        controller.ValidacionIdentidad();
-        controller.guardar();
-        
-        controller.Afiliacion.name = 'PN';
-        controller.Afiliacion.primer_apellido__C = 'PA';
-        controller.Afiliacion.Tipo_Identificacion__c='1';
-        controller.Afiliacion.Identificacion__c = '12345445';
-        controller.afiliacion.empresa__c = empresa.id;
-        controller.selectEmpresa();
-        controller.Afiliacion.Tiene_Id__c = 'S';
-        controller.Afiliacion.RTN__c = 'N';
-        controller.Afiliacion.FATCA__c = 'N';
-        controller.Afiliacion.WAIVER__c = 'N';
-        controller.Afiliacion.PEP__c = 'N';
-        controller.Afiliacion.Procedencia__c = 'N';
-        controller.Afiliacion.Addendum__c = 'N';
-        controller.Afiliacion.Tipo_Fondo__c = 'M';
-        controller.Afiliacion.espediente_completo__C = 'S';
-        controller.guardar();
-        controller.Afiliacion.Formulario_Completo__c = 'S';
-        controller.guardar();
-        
-        
-        controller.accionVacia();
-        controller.BuscarEmpresa();
-        controller.SelectSubProducto();
-        controller.SelectSubProductoPop();*/
 
         
     }

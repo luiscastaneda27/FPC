@@ -1048,7 +1048,7 @@ public class TestPortalEmpresarial {
        insert empleado;  
       test.startTest();
         //     TEST LOGIN
-   /*   controllerLoginEmpresarial tr= new controllerLoginEmpresarial();
+      controllerLoginEmpresarial tr= new controllerLoginEmpresarial();
       tr.usuario='Chema';
       tr.Contrasena='Cualquiera';
       tr.Cambiousuario='Chema';
@@ -1090,8 +1090,8 @@ public class TestPortalEmpresarial {
       menu.MostarPantallas();
       menu.cerrar();
       menu.metodoutil();
-      menu.metodoutil2();*/
-      //TEST GENERAR PLANILLA
+      menu.metodoutil2();
+     /* //TEST GENERAR PLANILLA
       ApexPages.currentPage().getParameters().put('Eldudhdhyudb',empresaprueba.id);
       ApexPages.currentPage().getParameters().put('loetdncdhjch',usuario.id); 
       ApexPages.currentPage().getParameters().put('Moneda','HNL');   

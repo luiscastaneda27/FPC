@@ -72,9 +72,7 @@
                                                 <apex:outputText value="{!item.Tipodepago}" />
                                             </apex:column>
                                             <apex:column style="text-align: center;" headerValue="Estado" >
-                                                <!--apex:outputText value="{!item.EstadoAprobacion}" /-->
-                                                <apex:outputText value="{!IF(item.estado = 'I', 'Inactivo', 'Activo')}" />
-                                                
+                                                <apex:outputText value="{!item.EstadoAprobacion}" />
                                             </apex:column>
                                             <apex:column style="text-align: center;" headerValue="Fecha de Reg" >
                                                 <apex:outputText value="{!item.LEE_ERRORES}" />

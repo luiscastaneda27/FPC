@@ -3,5 +3,5 @@
     <apiVersion>51.0</apiVersion>
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
-    <label>vfAprobarClientesPep</label>
+    <label>vfAprobarClientesPEP</label>
 </ApexPage>

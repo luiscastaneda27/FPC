@@ -16,21 +16,32 @@ public class extensionPreVenta {
     
     public List<SelectOption> getItems() {
         
-        List<sObject> cuentas = new List<sObject>();
-        List<List<SObject>> lstCuentas = [FIND :preventa.Name IN ALL FIELDS RETURNING Account(ID,Name,FirstName,LastName,Nombre_Comercial__C)  ];
+        List<sObject> cuentas;
+        List<List<SObject>> lstCuentas;
+        lstCuentas = [FIND :preventa.Name IN ALL FIELDS RETURNING Account(ID,Name,FirstName,LastName,Nombre_Comercial__C)  ];
         
         
-        if (lstCuentas.size() > 0) {
+        if (lstCuentas != null)
+        {
         	cuentas = ((List<Account>)lstCuentas[0]);
         }
-        if (cuentas != null){    
+            
+        if (cuentas != null)
+        {    
             lstDetalle= [SELECT id,name from Account
-                         where id in: cuentas 
+                         where id in: cuentas
                         ];
         }
         options.add(new SelectOption(preventa.id,'Crear Nuevo Cliente: ' + preventa.name)); 
+        
         for (Account detConId: lstDetalle ){
-            options.add(new SelectOption(detconId.id,'Adjuntar a existente: ' + detconId.Name)); 
+            
+            
+            if (detconId.id != preventa.id)
+            {     
+                options.add(new SelectOption(detconId.id,'Adjuntar a existente: ' + detconId.Name)); 
+            }
+            
         }
         
         return options; 
@@ -114,7 +125,7 @@ public class extensionPreVenta {
                                       ,Nombre_Empresa__c,Phone__c,Convertir_Tarea__c,Convertir_Fecha_Vencimiento__c,Convertir_Comentario__c,Nombre_Comercial__C,Company__C
                                       ,Tipo_Identificacion__c,identificacion__c,Telefono_Trabajo__c, Referido_por__c, Motivo_Contacto__c, Canal_que_Refiere__c, Agencia_Refiere__c
                                       FROM Preventa__c where id =: preventa.id ];
-        system.debug('Natural: '+natural);
+        
         for(PreVenta__c acct :acctList){
             
             
@@ -123,7 +134,7 @@ public class extensionPreVenta {
             
             if (natural)      
             {
-                rctid = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
+                rctid = [Select id,developerName From RecordType where   sObjectType = 'Account' and name = 'Natural'].id;
                 obj = new Account (            
                     Cliente_Localizable__pc = acct.Cliente_Localizable__c,
                     FirstName = acct.FirstName__c,
@@ -154,6 +165,7 @@ public class extensionPreVenta {
                     recordTypeid = rctid //acct.RecordTypeId
                     //owner = acct.owner
                 );  
+                
             }
             else{
                 rctid = [Select id,developerName From RecordType where   sObjectType = 'Account' and name = 'Juridico'].id;
@@ -179,17 +191,17 @@ public class extensionPreVenta {
                 );      
             }
             
-            String personContactId;
+            
             if (preventa.id == clientes)  //Escogio crear nuevo
             {
                 insert obj;
             }  
             else
             {
-                obj.Id = clientes;
+                
                 //Actualizamos el cliente
                 List<Account> acctListCliente = [select id,Usuario_Convirtio__c,Fecha_Convirtio__c,Nombre_Comercial__C,Referido_por__c, Motivo_de_Contacto__c,
-                                                 Canal_que_Refiere__c, Agencia_Refiere__c, PersonLeadSource, Description__c,PersonContactId
+                                                 Canal_que_Refiere__c, Agencia_Refiere__c, PersonLeadSource, Description__c
                                                  from Account where id =:  clientes];
                 
                 for(Account acctc :acctListCliente){
@@ -201,7 +213,7 @@ public class extensionPreVenta {
                     acctc.Agencia_Refiere__c = acct.Agencia_Refiere__c;
                     acctc.Usuario_Convirtio__c = UserInfo.getUserId();
                     acctc.Fecha_Convirtio__c = Datetime.now();
-                    personContactId = acctc.PersonContactId;
+                    
                 }
 
                 update acctListCliente;
@@ -304,11 +316,11 @@ public class extensionPreVenta {
             system.debug('prevenID' + preventa.id);
             system.debug('Clientes' + clientes);
             */
-            for(integer i=0; i<ListEvento.size(); i++){
+             for(integer i=0; i<ListEvento.size(); i++)
+             {
                 Event e = new Event();
-                
+
                 E.WhatId = obj.id;
-                E.WhoId = personContactId;
                 //E.Id = evento.Id;
                 E.Subject = ListEvento[i].Subject;
                 E.Asunto__c = ListEvento[i].Asunto__c;
@@ -319,10 +331,10 @@ public class extensionPreVenta {
                 E.Location = ListEvento[i].Location;
                 E.IsAllDayEvent = ListEvento[i].IsAllDayEvent;
                 Listnu.add(E);
-            }
-            
+             }
+            /*
             system.debug('ListNU' + Listnu);
-            
+            */
             insert Listnu;
            
             
@@ -333,7 +345,7 @@ public class extensionPreVenta {
             delete acctListno;
             
             
-            system.debug('Id CLiente: '+obj.Id);
+            
             if (preventa.id == clientes)
             {
                 PageReference pg = new PageReference('/' + obj.id );
