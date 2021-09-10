@@ -18,13 +18,13 @@ VERSION  AUTHOR         DATE            Description
         </div>
         <div class="text-container">
             <template if:true={showErrClientExist}>
-                <p class='titles'>Lo sentimos</p>
+                <p class='titles'>¡Hola de nuevo!</p>
                 <p class="text">{label.lTexto11} 
-                <a  href={label.lLaPolarErrorUrl}> {label.lTextoTienda}</a>  {label.lTexto12} <b class="number">{label.lTextoPhono}</b><a href="tel:6003913000" class="number-mobile">600 391 3000</a></p>
+                <a  href={label.lLaPolarErrorUrl}> {label.lTextoTienda}</a> {label.lTexto12} <b class="number">{label.lTextoPhono}</b><a href="tel:6003913000" class="number-mobile">600 391 3000</a></p>
                 <button class="button" onclick={navigateToLP}>{label.lButton}</button>
             </template>
             <template if:true={showErrNoCard}>
-                <p class='titles'>¡Hola de nuevo!</p>
+                <p class='titles'>Lo sentimos</p>
                 <p class="text">{label.lTexto21} &nbsp;
                 <a href={label.lLaPolarUrl}> {label.lTextoTienda}</a>&nbsp;  {label.lTexto22}</p>
                 <button class="button" onclick={navigateToLP} >{label.lButton}</button>
