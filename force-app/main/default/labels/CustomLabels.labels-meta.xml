@@ -1,0 +1,2772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>LP_AbrirTarjeta</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_AbrirTarjeta</shortDescription>
+        <value>ABRIR MI TARJETA LA POLAR VISA</value>
+    </labels>
+    <labels>
+        <fullName>LP_AceptaEstadoPorCorreos</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AceptaEstadoPorCorreos</shortDescription>
+        <value>Acepto recibir mi estado de cuenta mensual por email.</value>
+    </labels>
+    <labels>
+        <fullName>LP_AceptaEstadoPorCorreos_No</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AceptaEstadoPorCorreos_No</shortDescription>
+        <value>De lo contrario lo recibirás impresa en tu domicilio ingresado</value>
+    </labels>
+    <labels>
+        <fullName>LP_AceptarTerminos</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_AceptarTerminos</shortDescription>
+        <value>Debes aceptar los términos y condiciones para continuar tu solicitud.</value>
+    </labels>
+    <labels>
+        <fullName>LP_AdicionalBT</fullName>
+        <categories>BLOQUEO TARJETA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AdicionalBT</shortDescription>
+        <value>Adicional</value>
+    </labels>
+    <labels>
+        <fullName>LP_ApellidoMaternoMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ApellidoMaternoMP</shortDescription>
+        <value>APELLIDO MATERNO</value>
+    </labels>
+    <labels>
+        <fullName>LP_ApellidoPaternoMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ApellidoPaternoMP</shortDescription>
+        <value>APELLIDO PATERNO</value>
+    </labels>
+    <labels>
+        <fullName>LP_ApellidoValido</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP ApellidoValido</shortDescription>
+        <value>Tu apellido no tiene un formato válido</value>
+    </labels>
+    <labels>
+        <fullName>LP_AprovechaOfertaExclusivasCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AprovechaOfertaExclusivasCalugas</shortDescription>
+        <value>APROVECHA OFERTAS EXCLUSIVAS</value>
+    </labels>
+    <labels>
+        <fullName>LP_AutorizacionEspecial</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Documento Autorización Especial</shortDescription>
+        <value>Autorización Especial</value>
+    </labels>
+    <labels>
+        <fullName>LP_AvanceEnEfectivoMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AvanceEnEfectivoMC</shortDescription>
+        <value>AVANCE EN EFECTIVO</value>
+    </labels>
+    <labels>
+        <fullName>LP_AvanceXLMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_AvanceXLMC</shortDescription>
+        <value>AVANCE XL</value>
+    </labels>
+    <labels>
+        <fullName>LP_AyudaCreacionClave</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Ayuda Creación Clave</shortDescription>
+        <value>Tu clave de internet debe tener &lt;br/&gt; 8 carácteres compuestos por números y letras.</value>
+    </labels>
+    <labels>
+        <fullName>LP_BasesLegalesBL</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BasesLegalesBL</shortDescription>
+        <value>Bases Legales</value>
+    </labels>
+    <labels>
+        <fullName>LP_BienvenidoHome</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BienvenidoHome</shortDescription>
+        <value>Bienvenido/a</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjeta</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjeta</shortDescription>
+        <value>https://micuenta.tarjetalapolar.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjetaBT</fullName>
+        <categories>BLOQUEO TARJETA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjetaBT</shortDescription>
+        <value>Bloqueo de Mi Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjetaFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjetaFooter</shortDescription>
+        <value>BLOQUEO DE TARJETAS</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjetaHome</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjetaHome</shortDescription>
+        <value>BLOQUEO DE TARJETA</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjetaNro</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjetaNro</shortDescription>
+        <value>800 395 800</value>
+    </labels>
+    <labels>
+        <fullName>LP_BloqueoTarjetaText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BloqueoTarjetaText</shortDescription>
+        <value>BLOQUEO DE TARJETA</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnCambiarContrasenaRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnCambiarContraseñaRC</shortDescription>
+        <value>Cambiar Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnCancelar</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnCancelar</shortDescription>
+        <value>CANCELAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnCrearCuentaCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnCrearCuentaCC</shortDescription>
+        <value>Crear Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnFinalizarCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnFinalizarCC</shortDescription>
+        <value>Finalizar</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnIngresarCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnIngresarCC</shortDescription>
+        <value>INGRESAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnIngresarLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnIngresarLogin</shortDescription>
+        <value>INGRESAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnPagarMiCuentaRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnPagarMiCuentaRTC</shortDescription>
+        <value>PAGAR MI CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnRecordarLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnRecordarLogin</shortDescription>
+        <value>RECORDAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnReenviarCodigoRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnReenviarCodigoRC</shortDescription>
+        <value>Reenviar código</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnSaberMasDetallesCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnSaberMasDetallesCalugas</shortDescription>
+        <value>SABER MÁS DETALLES</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnSiguienteRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnSiguienteRC</shortDescription>
+        <value>Siguiente</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnSimularCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnSimularCalugas</shortDescription>
+        <value>SIMULAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnSimularPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnSimularPC</shortDescription>
+        <value>SIMULAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnValidarRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnValidarRC</shortDescription>
+        <value>Validar</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnVerEstadodeCuentaCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnVerEstadodeCuentaCalugas</shortDescription>
+        <value>VER ESTADO DE CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnVerSeguroFullSaludCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnVerSeguroFullSaludCalugas</shortDescription>
+        <value>VER SEGURO FULL SALUD</value>
+    </labels>
+    <labels>
+        <fullName>LP_BtnVolverSimularPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_BtnVolverSimularPC</shortDescription>
+        <value>VOLVER A SIMULAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_CMFChile</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CMFChile</shortDescription>
+        <value>http://www.cmfchile.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_CMFFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CMFFooter</shortDescription>
+        <value>Infórmese sobre las entidades autorizadas para emitir Tarjetas de Pago en el país, quienes se encuentran inscritas en los Registros de Emisores de Tarjetas que lleva la CMF, en &lt;a Style=&quot;color: #FFFFFF; &quot; href=&quot;http://www.cmfchile.cl/&quot; target =&quot;_blank&quot;&gt;www.cmfchile.cl&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_CMFText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CMFText</shortDescription>
+        <value>www.cmfchile.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_CallCenter</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CallCenter</shortDescription>
+        <value>600 391 3000</value>
+    </labels>
+    <labels>
+        <fullName>LP_CardInformation</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_CardInformation</shortDescription>
+        <value>“Otorgamiento de Tarjetas La Polar está sujeto a evaluación crediticia del cliente y al cumplimiento de las Políticas Comerciales y de Riesgo vigentes al momento de la solicitud, puede informarse de ellas en cualquier Centro Financiero de Tiendas La Polar y en &lt;a href=&quot;https://www.tarjetalapolar.cl/s/&quot; class=&quot;info-link&quot; target =&quot;_blank&quot;&gt;www.tarjetalapolar.cl &lt;/a&gt;
+. Tarjetas La Polar son emitidas por Inversiones LP S.A., Infórmese sobre la garantía estatal de sus depósitos en su banco o en &lt;a href=&quot;http://www.cmfchile.cl/&quot; class=&quot;info-link&quot; target =&quot;_blank&quot;&gt;www.cmfchile.cl&lt;/a&gt;&quot;</value>
+    </labels>
+    <labels>
+        <fullName>LP_CelularComienzo</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP CelularComienzo</shortDescription>
+        <value>Tu celular debe comenzar con el dígito 9</value>
+    </labels>
+    <labels>
+        <fullName>LP_CelularCon9Digitos</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP CelularCon9Digitos</shortDescription>
+        <value>Recuerda que el número debe ser de 9 dígitos</value>
+    </labels>
+    <labels>
+        <fullName>LP_CelularNumeroEntero</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP CelularNumeroEntero</shortDescription>
+        <value>Tu celular debe tener solo números enteros</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClaveDebil</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Clave Débil</shortDescription>
+        <value>Débil</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClaveFuerte</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Clave Fuerte</shortDescription>
+        <value>Fuerte</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClaveIntermedia</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Clave Intermedia</shortDescription>
+        <value>Intermedio</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClaveLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ClaveLogin</shortDescription>
+        <value>CLAVE</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClaveNoCoincide</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Clave no Coincide</shortDescription>
+        <value>Clave ingresada no coincide, ingresa nuevamente</value>
+    </labels>
+    <labels>
+        <fullName>LP_ClavesNoCoinciden</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Claves No Coinciden</shortDescription>
+        <value>Clave ingresada no coincide, ingresa nuevamente</value>
+    </labels>
+    <labels>
+        <fullName>LP_CodigoIncorrectoRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CodigoIncorrectoRC</shortDescription>
+        <value>Código incorrecto</value>
+    </labels>
+    <labels>
+        <fullName>LP_ComprasMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ComprasMC</shortDescription>
+        <value>COMPRAS</value>
+    </labels>
+    <labels>
+        <fullName>LP_ComprobantePagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ComprobantePagosPC</shortDescription>
+        <value>QUIERO RECIBIR COMPROBANTE DE PAGO EN MI CORREO</value>
+    </labels>
+    <labels>
+        <fullName>LP_ComprobarIdentidad</fullName>
+        <categories>Onboarding - Identity Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_ComprobarIdentidad</shortDescription>
+        <value>COMPROBAR IDENTIDAD</value>
+    </labels>
+    <labels>
+        <fullName>LP_ComunaMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ComunaMP</shortDescription>
+        <value>COMUNA</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConfirmarClave</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Confirmar Clave</shortDescription>
+        <value>CONFIRMA TU CLAVE DE INTERNET</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConfirmarContrasenaRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ConfirmarContraseñaRC</shortDescription>
+        <value>Confirmar Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConsultaReclamoEmail</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ConsultaReclamoEmail</shortDescription>
+        <value>consultasyreclamos@lapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConsultaReclamoEmailURL</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ConsultaReclamoEmailURL</shortDescription>
+        <value>mailto:consultasyreclamos@lapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConsultasReclamos</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ConsultasReclamos</shortDescription>
+        <value>https://www.tarjetalapolar.cl/s/contactsupport3</value>
+    </labels>
+    <labels>
+        <fullName>LP_ConsultasyReclamosMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ConsultasyReclamosMenu</shortDescription>
+        <value>Consultas y reclamos</value>
+    </labels>
+    <labels>
+        <fullName>LP_Continuar</fullName>
+        <categories>Onboarding</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding: Botón continuar</shortDescription>
+        <value>CONTINUAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContinuarSolicitud</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_ContinuarSolicitud</shortDescription>
+        <value>CONTINUAR SOLICITUD</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContrasenaCambiadaRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ContrasenaCambiadaRC</shortDescription>
+        <value>Clave cambiada con éxito</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContrasenaRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ContraseñaRC</shortDescription>
+        <value>Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContrasenasNoCoincidenRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ContraseñasNoCoincidenRC</shortDescription>
+        <value>Las claves no coinciden, por favor intentar nuevamente</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContratoAperturaCredito</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Documento Contrato Apertura Credito</shortDescription>
+        <value>Contrato Apertura Credito</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContratoAperturaLineaCredito</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Documento Contrato Apertura Linea Credito</shortDescription>
+        <value>Contrato Apertura Linea Credito</value>
+    </labels>
+    <labels>
+        <fullName>LP_ContratosPlanesDescuentoCP</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ContratosPlanesDescuentoCP</shortDescription>
+        <value>Contratos y Plan de Descuentos</value>
+    </labels>
+    <labels>
+        <fullName>LP_CorreoElectronicoMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CorreoElectronicoMP</shortDescription>
+        <value>CORREO ELECTRÓNICO</value>
+    </labels>
+    <labels>
+        <fullName>LP_CorreoUsoFormato</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP CorreoUsoFormato</shortDescription>
+        <value>Usa el formato micorreo@mail.com</value>
+    </labels>
+    <labels>
+        <fullName>LP_CreaNuevaClaveRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CreaNuevaClaveRC</shortDescription>
+        <value>CREA TU NUEVA CLAVE</value>
+    </labels>
+    <labels>
+        <fullName>LP_CreaTuCuentaCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CreaTuCuentaCC</shortDescription>
+        <value>CREA TU CLAVE</value>
+    </labels>
+    <labels>
+        <fullName>LP_CrearCuentaLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CrearCuentaLogin</shortDescription>
+        <value>Crear Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_CuentaCreadaCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CuentaCreadaCC</shortDescription>
+        <value>Clave creada con éxito</value>
+    </labels>
+    <labels>
+        <fullName>LP_CuotaMesTablaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CuotaMesTablaMC</shortDescription>
+        <value>Cuota Mes</value>
+    </labels>
+    <labels>
+        <fullName>LP_CuotasRefinanciarPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CuotasRefinanciarPC</shortDescription>
+        <value>CUOTAS</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupoDisponibleMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupoDisponibleMC</shortDescription>
+        <value>Cupo Disponible:</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupoDisponibleRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupoDisponibleRTC</shortDescription>
+        <value>CUPO DISPONIBLE:</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupoDisponibleTablaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupoDisponibleTablaMC</shortDescription>
+        <value>Cupo Disponible</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupoUtilizadoMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupoUtilizadoMC</shortDescription>
+        <value>Cupo Utilizado:</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupoUtilizadoRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupoUtilizadoRTC</shortDescription>
+        <value>CUPO UTILIZADO:</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupodeCompraRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupodeCompraRTC</shortDescription>
+        <value>CUPO DE COMPRA:</value>
+    </labels>
+    <labels>
+        <fullName>LP_CupodisponibleCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_CupodisponibleCalugas</shortDescription>
+        <value>Cupo disponible</value>
+    </labels>
+    <labels>
+        <fullName>LP_DatosLaPolarFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DatosLaPolarFooter</shortDescription>
+        <value>© La Polar 2021 — Avda. Santa Clara 207, Huechuraba, Santiago. / Servicio al Cliente 600 391 3000 - consultasyreclamos@lapolar.cl - Bloqueo de Tarjeta 800 395 800. / Empresas La Polar, todos los derechos reservados. / Inversiones LP S.A. Rut: 76.265.724-4, representante legal: Marcelo Arancibia Rodriguez.</value>
+    </labels>
+    <labels>
+        <fullName>LP_DatosParticulatesMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DatosParticulatesMP</shortDescription>
+        <value>DATOS PARTICULARES</value>
+    </labels>
+    <labels>
+        <fullName>LP_DatosPersonalesMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DatosPersonalesMP</shortDescription>
+        <value>DATOS PERSONALES</value>
+    </labels>
+    <labels>
+        <fullName>LP_DatosSimulacionPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DatosSimulacionPC</shortDescription>
+        <value>Datos de simulación total</value>
+    </labels>
+    <labels>
+        <fullName>LP_DescargarEstadoCuentaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DescargarEstadoCuentaMC</shortDescription>
+        <value>Descarga Documento PDF</value>
+    </labels>
+    <labels>
+        <fullName>LP_DescargarTasasInteresRef</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DescargarTasasInteresRef</shortDescription>
+        <value>Descargar tasas de interés.</value>
+    </labels>
+    <labels>
+        <fullName>LP_DetalleMovNoFacturadosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DetalleMovNoFacturadosMC</shortDescription>
+        <value>Detalle</value>
+    </labels>
+    <labels>
+        <fullName>LP_DeudaFacturadaPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DeudaFacturadaPC</shortDescription>
+        <value>Deuda Facturada:</value>
+    </labels>
+    <labels>
+        <fullName>LP_DireccionMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DireccionMP</shortDescription>
+        <value>DIRECCIÓN, CALLE Y NÚMERO</value>
+    </labels>
+    <labels>
+        <fullName>LP_DisponibleMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DisponibleMC</shortDescription>
+        <value>Disponible</value>
+    </labels>
+    <labels>
+        <fullName>LP_DocImportantesMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DocImportantesMP</shortDescription>
+        <value>Todos mis documentos importantes en un solo lugar.</value>
+    </labels>
+    <labels>
+        <fullName>LP_DondeUsarModalSP</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_DondeUsarModalSP</shortDescription>
+        <value>https://www.lapolar.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_ERR_EXIST_CLIENT</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_ERR_EXIST_CLIENT</shortDescription>
+        <value>ERR_EXIST_CLIENT</value>
+    </labels>
+    <labels>
+        <fullName>LP_ERR_NOCARD</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_ERR_NOCARD</shortDescription>
+        <value>ERR_NOCARD</value>
+    </labels>
+    <labels>
+        <fullName>LP_ERR_SYSTEM</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_ERR_SYSTEM</shortDescription>
+        <value>ERR_SYSTEM</value>
+    </labels>
+    <labels>
+        <fullName>LP_EmailConfirmado</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_EmailConfirmado</shortDescription>
+        <value>Hemos registrado tu email como válido en nuestros sistemas durante una solicitud anterior, por lo que puedes continuar con el siguiente paso para comprobar tu identidad en línea.</value>
+    </labels>
+    <labels>
+        <fullName>LP_EmailValidado</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_EmailValidado</shortDescription>
+        <value>EMAIL VALIDADO ANTERIORMENTE</value>
+    </labels>
+    <labels>
+        <fullName>LP_EmpresaFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_EmpresaFooter</shortDescription>
+        <value>EMPRESA</value>
+    </labels>
+    <labels>
+        <fullName>LP_Entendido</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_Entendido</shortDescription>
+        <value>ENTENDIDO</value>
+    </labels>
+    <labels>
+        <fullName>LP_EnterAddress</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_EnterAddress</shortDescription>
+        <value>Ingrese su dirección</value>
+    </labels>
+    <labels>
+        <fullName>LP_EnviarCodigoOTP</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_EnviarCodigoOTP</shortDescription>
+        <value>Enviaremos un código de verificación al celular que tienes registrado</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnbButton</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnbButton</shortDescription>
+        <value>IR A TIENDAS LA POLAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnbButtonIni</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnbButtonIni</shortDescription>
+        <value>VOLVER AL INICIO</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnbTitle_Exist</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnbTitle_Exist</shortDescription>
+        <value>¡Hola de nuevo!</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnbTitle_NoCard</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnbTitle_NoCard</shortDescription>
+        <value>Lo sentimos, no es posible continuar con tu solicitud</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnbTitle_System</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnbTitle_System</shortDescription>
+        <value>Lo sentimos, hubo un problema en el sistema</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_nroPhone</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_nroPhone</shortDescription>
+        <value>600 391 3000.</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_txt11</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_txt11</shortDescription>
+        <value>Según nuestros registros ya eres cliente de La Polar, si tienes algún problema por favor acércate a una</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_txt12</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_txt12</shortDescription>
+        <value>o llama a</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_txt21</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_txt21</shortDescription>
+        <value>En este momento no es posible continuar con tu solicitud, por favor acércate a tu</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_txt22</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_txt22</shortDescription>
+        <value>más cercana.</value>
+    </labels>
+    <labels>
+        <fullName>LP_ErrorOnb_txt31</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ErrorOnb_txt31</shortDescription>
+        <value>Disculpa, no hemos podido completar tu solicitud por intermitencias en nuestros sistemas. Te recomendamos recargar la página web o volver al inicio.</value>
+    </labels>
+    <labels>
+        <fullName>LP_Escribe3Letras</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_Escribe3Letras</shortDescription>
+        <value>Escribe al menos las 3 primeras letras</value>
+    </labels>
+    <labels>
+        <fullName>LP_EstadodeCuentaCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_EstadodeCuentaCalugas</shortDescription>
+        <value>ESTADO DE CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_EstadodeCuentaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_EstadodeCuentaMC</shortDescription>
+        <value>ESTADO DE CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_EstadodeCuentaMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_EstadodeCuentaMenu</shortDescription>
+        <value>Estado de cuenta</value>
+    </labels>
+    <labels>
+        <fullName>LP_Facebook</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_Facebook</shortDescription>
+        <value>https://www.facebook.com/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>LP_FechaHistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FechaHistorialPagosPC</shortDescription>
+        <value>Fecha</value>
+    </labels>
+    <labels>
+        <fullName>LP_FechaMovNoFacturadosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FechaMovNoFacturadosMC</shortDescription>
+        <value>Fecha</value>
+    </labels>
+    <labels>
+        <fullName>LP_FechaNacimientoMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FechaNacimientoMP</shortDescription>
+        <value>FECHA DE NACIMIENTO</value>
+    </labels>
+    <labels>
+        <fullName>LP_FirmaDocumentos</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_FirmaDocumentos</shortDescription>
+        <value>Por este acto &lt;b&gt;acepto firmar&lt;/b&gt; simultáneamente los siguientes documentos: Resumen de Contrato, Contrato de Apertura (Anexo 1 y 2), Mandato y Autorización Especial</value>
+    </labels>
+    <labels>
+        <fullName>LP_FooterBloqueoTarjeta</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FooterBloqueoTarjeta</shortDescription>
+        <value>tel:800 395 800</value>
+    </labels>
+    <labels>
+        <fullName>LP_FooterCallCenter</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FooterCallCenter</shortDescription>
+        <value>tel:600 391 3000</value>
+    </labels>
+    <labels>
+        <fullName>LP_FooterColumnEmpresa</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FooterColumnEmpresa</shortDescription>
+        <value>Información de la Empresa|http://www.nuevapolar.cl/| _blank,
+Canal de denuncias y ética|https://lapolar.ines.cl/lapolar/formulario/| _blank,
+Inversionistas|http://www.nuevapolar.cl/| _blank,
+Trabajar en La Polar|http://lapolar.trabajando.cl/| _blank,
+Bases Legales|https://devn2-tarjetalapolar.cs195.force.com/SitioPrivado/s/bases-legales,
+Ubicaciones de Tiendas|https://www.lapolar.cl/tiendas/?showMap=true| _blank,
+Tiendas Abiertas y Horarios|https://www.lapolar.cl/tiendas-abiertas.html| _blank</value>
+    </labels>
+    <labels>
+        <fullName>LP_FooterColumnLaPolar</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FooterColumnLaPolar</shortDescription>
+        <value>LAPOLAR.CL|https://www.lapolar.cl/,
+Información de despacho|https://www.lapolar.cl/info/despacho/despacho.html,
+Seguimiento de despacho|https://www.lapolar.cl/Seguimiento-Despacho/,
+Más Protección|https://documentos.tarjetalapolar.cl/seguros/mas-proteccion/|_blank,
+Términos y Condiciones|https://www.lapolar.cl/info/terminos-y-condiciones/Terminos-condiciones-01.html</value>
+    </labels>
+    <labels>
+        <fullName>LP_FooterColumnTarjetaLaPolar</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_FooterColumnTarjetaLaPolar</shortDescription>
+        <value>Dónde usarla,Tasas de Interés|https://lapolartarjeta--devn2.my.salesforce.com/sfc/p/020000008ocP/a/020000008Q2w/9ev7.9ZGoeA.m_8OiLIbG23ulw6rDkNq5N.rOU6KuM4|_blank,Ofertas Exclusivas|https://tienda.lapolar.cl/|_blank,
+Seguros|https://www.tarjetalapolar.cl/s/seguros-y-asistencias|_blank,Consultas y Reclamos|https://www.tarjetalapolar.cl/s/contactsupport|_blank,Preguntas Frecuentes|https://www.tarjetalapolar.cl/s/sac-preguntas-frecuentes?tabset-d61d4=2|_blank,Términos y Condiciones|https://lapolartarjeta--devn2.my.salesforce.com/sfc/p/020000008ocP/a/020000008QUM/U.2Qy5RPylltV7r1_.Jmv6D8kRcVzaRD2eantTP99uA|_blank,Contratos y Plan de Descuentos|https://devn2-tarjetalapolar.cs195.force.com/SitioPrivado/s/contratos-plan-descuentos|_blank</value>
+    </labels>
+    <labels>
+        <fullName>LP_FormatoCelular</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_FormatoCelular</shortDescription>
+        <value>Tu número de celular debe contener nueve dígitos en total y comenzar en el número 9. Ejemplo 9 1234 5678</value>
+    </labels>
+    <labels>
+        <fullName>LP_FormatoCorreo</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_FormatoCorreo</shortDescription>
+        <value>Ingresa tu correo electrónico en formato tradicional incluyendo arroba (@) y al menos un punto (.)</value>
+    </labels>
+    <labels>
+        <fullName>LP_FormatoDeptoCasa</fullName>
+        <categories>Onboarding - Step 4</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_FormatoDeptoCasa</shortDescription>
+        <value>Ingresa tu número de departamento o casa, sino vuleve a ingresar el número de tu dirección</value>
+    </labels>
+    <labels>
+        <fullName>LP_HistorialPagosMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_HistorialPagosMenu</shortDescription>
+        <value>Historial de pagos</value>
+    </labels>
+    <labels>
+        <fullName>LP_HistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_HistorialPagosPC</shortDescription>
+        <value>HISTORIAL DE PAGOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_IdentityValidation_Txt1</fullName>
+        <categories>Onboarding - Identity Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_IdentityValidation_Txt1</shortDescription>
+        <value>POR TU SEGURIDAD, TE INVITAMOS A VALIDAR TU IDENTIDAD</value>
+    </labels>
+    <labels>
+        <fullName>LP_IdentityValidation_Txt2</fullName>
+        <categories>Onboarding - Identity Validation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_IdentityValidation_Txt2</shortDescription>
+        <value>¿Quieres comprobar tu identidad, para continuar con tu solicitud de Tarjeta La Polar?</value>
+    </labels>
+    <labels>
+        <fullName>LP_Ingresa9Digitos</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Ingresa9Digitos</shortDescription>
+        <value>Ingresa los 9 dígitos de tu celular</value>
+    </labels>
+    <labels>
+        <fullName>LP_IngresaCorreo</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP IngresaCorreo</shortDescription>
+        <value>Ingresa tu correo electrónico</value>
+    </labels>
+    <labels>
+        <fullName>LP_IngresaTuCuentaLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_IngresaTuCuentaLogin</shortDescription>
+        <value>Ingresar a Tu Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>LP_IngresarClave</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Ingresar Clave</shortDescription>
+        <value>INGRESA TU CLAVE DE INTERNET</value>
+    </labels>
+    <labels>
+        <fullName>LP_InicioBodyParent</fullName>
+        <categories>Onboarding BodyParent</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Inicio BodyParent</shortDescription>
+        <value>Inicio &lt;b&gt;&gt;&lt;/b&gt; Pide tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_InicioPideTarjeta</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_InicioPideTarjeta</shortDescription>
+        <value>Inicio &lt;b&gt;&gt;&lt;/b&gt; Pide tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_Inversionista</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_Inversionista</shortDescription>
+        <value>https://www.nuevapolar.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_InversionistaText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_InversionistaText</shortDescription>
+        <value>Inversionistas</value>
+    </labels>
+    <labels>
+        <fullName>LP_LaPolar</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LaPolar</shortDescription>
+        <value>https://www.lapolar.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_LaPolarAprobada</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LaPolarAprobada</shortDescription>
+        <value>Podrás usar tu Tarjeta La Polar en todas nuestras tiendas y en nuestro sitio La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_LaPolarFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LaPolarFooter</shortDescription>
+        <value>LAPOLAR.CL</value>
+    </labels>
+    <labels>
+        <fullName>LP_LaPolarText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LaPolarText</shortDescription>
+        <value>LaPolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_LaPolarTiendasAbiertas</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LaPolarTiendasAbiertas</shortDescription>
+        <value>https://www.lapolar.cl/tiendas-abiertas.html</value>
+    </labels>
+    <labels>
+        <fullName>LP_LeerFimarDocumentos</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_LeerFimarDocumentos</shortDescription>
+        <value>LEE Y FIRMA LOS SIGUIENTES DOCUMENTOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_LeerFirmarSubTitulo</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_LeerFirmarSubTitulo</shortDescription>
+        <value>para continuar con la apertura de tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_LinkCommunityOnboarding</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Link de Comunidad OnBoarding</shortDescription>
+        <value>https://devn2-tarjetalapolar.cs195.force.com/OnboardingTarjetaLaPolar</value>
+    </labels>
+    <labels>
+        <fullName>LP_LinkTiendaLaPolar</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LinkTiendaLaPolar</shortDescription>
+        <value>tienda La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_LlamarBloqueoTarjetaBT</fullName>
+        <categories>BLOQUEO TARJETA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_LlamarBloqueoTarjetaBT</shortDescription>
+        <value>LLAMAR AL 800-395-800</value>
+    </labels>
+    <labels>
+        <fullName>LP_Mandato</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Documento Mandato</shortDescription>
+        <value>Mandato</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiCuenta</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiCuenta</shortDescription>
+        <value>https://micuenta.tarjetalapolar.cl/?_ga=2.180750639.960375092.1587739877-1993435803.1582886534</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiCuentaHome</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiCuentaHome</shortDescription>
+        <value>MI CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiCuentaText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiCuentaText</shortDescription>
+        <value>MI CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiPerfilHome</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiPerfilHome</shortDescription>
+        <value>MI PERFIL</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiPerfilMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiPerfilMP</shortDescription>
+        <value>MI PERFIL</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiPerfilMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiPerfilMenu</shortDescription>
+        <value>Mi perfil</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiProfileMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiProfileMP</shortDescription>
+        <value>MI PERFIL</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiTarjetaDigitalMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiTarjetaDigitalMC</shortDescription>
+        <value>MI TARJETA DIGITAL</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiTarjetaDigitalMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Barra Navegación SP</shortDescription>
+        <value>Mi tarjeta digital</value>
+    </labels>
+    <labels>
+        <fullName>LP_MiTarjetaLaPolarMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MiTarjetaLaPolarMC</shortDescription>
+        <value>MI TARJETA LA POLAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_MisCuposMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MisCuposMC</shortDescription>
+        <value>MIS CUPOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_MisCuposMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MisCuposMenu</shortDescription>
+        <value>Mis cupos</value>
+    </labels>
+    <labels>
+        <fullName>LP_MisDocumentosMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MisDocumentosMP</shortDescription>
+        <value>MIS DOCUMENTOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_MisDocumentosMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MisDocumentosMenu</shortDescription>
+        <value>Mis documentos</value>
+    </labels>
+    <labels>
+        <fullName>LP_ModalSP</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ModalSP</shortDescription>
+        <value>https://www.lapolar.cl/</value>
+    </labels>
+    <labels>
+        <fullName>LP_MontoDisponibleCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MontoDisponibleCalugas</shortDescription>
+        <value>Monto disponible:</value>
+    </labels>
+    <labels>
+        <fullName>LP_MontoPagadoPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MontoPagadoPC</shortDescription>
+        <value>Monto Pagado</value>
+    </labels>
+    <labels>
+        <fullName>LP_MontoPagarPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MontoPagarPC</shortDescription>
+        <value>MONTO A PAGAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_MontosRefinanciarPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MontosRefinanciarPC</shortDescription>
+        <value>MONTO A REFINANCIAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_MostrarDatosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MostrarDatosMC</shortDescription>
+        <value>MOSTRAR DATOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_MovNoFacturadosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MovNoFacturadosMC</shortDescription>
+        <value>MOVIMIENTOS NO FACTURADOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_MovNoFacturadosMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MovNoFacturadosMenu</shortDescription>
+        <value>Movimientos no facturados</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjAprovechaOfertasCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjAprovechaOfertasCalugas</shortDescription>
+        <value>Aprovecha nuestras ofertas exclusivas</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjBloquearTarjetaFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjBloquearTarjetaFooter</shortDescription>
+        <value>Para bloquear tu tarjeta, también puedes llamar a Servicio al Cliente y marca opción 3</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjCreacionCuentaCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjCreacionCuentaCC</shortDescription>
+        <value>Ingresa tu Rut para iniciar el proceso de creación de clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjCuentaBloqueadaRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjCuentaBloqueadaRC</shortDescription>
+        <value>Tu cuenta ha quedado bloqueada por 24 horas debido a que has superado la cantidad de intentos fallidos al ingresar. Por favor intenta más tarde.</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjEnviarCodigoOTP</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjEnviarCodigoOTP</shortDescription>
+        <value>Si este no es tu celular, actualízalo llamando al 600 391 3000 o en nuestras Tiendas La Polar.</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjEstadoCuentaCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjEstadoCuentaCalugas</shortDescription>
+        <value>No tienes deudas pendientes. Si necesitas hablar con un ejecutivo, llámanos al 600 391 3000</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjExisteCuentaCC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjExisteCuentaCC</shortDescription>
+        <value>Según nuestros registros, el Rut ingresado ya posee una cuenta.</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjIntentosReenviarCod</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjIntentosReenviarCod</shortDescription>
+        <value>intentos para reenviar el mensaje</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjMovNoFacturadosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjMovNoFacturadosMC</shortDescription>
+        <value>La información que se muestra corresponde a los movimientos no facturados posteriores al último Estado de Cuenta emitido. En esta sección figuran como máximo los últimos 30 movimientos no facturados. Infórmese sobre la garantía estatal de los depósitos en su banco o en &lt;a href=&quot;http://www.cmfchile.cl/&quot;&gt;Inicio - CMF Chile - Comisión para el Mercado Financiero Chile (portal). &lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjNoEcuentraRegistroRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjNoEcuentraRegistroRC</shortDescription>
+        <value>&lt;p style = &quot;font-size: 12px;
+    color: #C23934;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align:center;&quot;&gt;Según nuestros registros, no posees una tarjeta La Polar de crédito. Solicita tu tarjeta &lt;a style = &quot;font-size: 12px;
+    color: #C23934;
+    text-decoration: underline;&quot; href=&quot;https://devn2-tarjetalapolar.cs195.force.com/OnboardingTarjetaLaPolar/s&quot; target=&quot;_blank&quot;&gt;aquí.&lt;/a&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjNoMovimientosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjNoMovimientosMC</shortDescription>
+        <value>No presentas movimientos por facturar</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjPideHoyCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjPideHoyCalugas</shortDescription>
+        <value>No te pierdas la oferta de nuestro seguro</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjProxVencimientosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjProxVencimientosMC</shortDescription>
+        <value>Los montos aquí indicados son calculados a la fecha de tu última facturación, por lo que pueden ser distintos para la próxima.</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjRecuperarTuClaveRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjRecuperarTuClaveRC</shortDescription>
+        <value>Para recuperar tu clave vamos a necesitar que ingreses tu RUT</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjRefinanciamientoPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjRefinanciamientoPC</shortDescription>
+        <value>Simulación vigente por 24hrs hábiles. Valor referencial, sujeto a evaluación crediticia y disponibilidad de cupo del cliente personal e intransferible. Solicitar directamente en Tiendas La Polar. Operación afecta a impuesto de timbre y estampilla.</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjRutClaveInvalidos</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjRutClaveInvalidos</shortDescription>
+        <value>Tu Rut o clave no son válidos, al tercer intento tu clave será bloqueada temporalmente</value>
+    </labels>
+    <labels>
+        <fullName>LP_MsjSinIntentosOtpRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MsjSinIntentosOtpRC</shortDescription>
+        <value>Has superado la cantidad máxima de intentos fallidos. Seleciona reenviar código.</value>
+    </labels>
+    <labels>
+        <fullName>LP_NCuotaTablaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NCuotaTablaMC</shortDescription>
+        <value>N° Cuota</value>
+    </labels>
+    <labels>
+        <fullName>LP_NCuotasCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NCuotasCalugas</shortDescription>
+        <value>N° CUOTAS:</value>
+    </labels>
+    <labels>
+        <fullName>LP_NTarjetaLaPolarMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NTarjetaLaPolarMC</shortDescription>
+        <value>N° Tarjeta La Polar:</value>
+    </labels>
+    <labels>
+        <fullName>LP_NecesitasRefinanciarPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NecesitasRefinanciarPC</shortDescription>
+        <value>¿Necesitas refinanciar?</value>
+    </labels>
+    <labels>
+        <fullName>LP_NombreMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NombreMP</shortDescription>
+        <value>NOMBRE</value>
+    </labels>
+    <labels>
+        <fullName>LP_NombreValido</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP NombreValido</shortDescription>
+        <value>Tu nombre no tiene un formato válido</value>
+    </labels>
+    <labels>
+        <fullName>LP_NroTarjetaLaPolarBT</fullName>
+        <categories>BLOQUEO TARJETA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NroTarjetaLaPolarBT</shortDescription>
+        <value>Nro Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_NumeroDireccionMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_NumeroDireccionMP</shortDescription>
+        <value>NÚMERO DEPTO, OFICINA O CASA</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_CodigoEnviado</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Botón código enviado</shortDescription>
+        <value>CÓDIGO ENVIADO</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_DescripcionPaso6</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Paso 6: Descripcion</shortDescription>
+        <value>Con este código estarás validando la firma de todos los documentos del paso anterior</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_EnviarCodigo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Botón enviar código</shortDescription>
+        <value>ENVIAR CÓDIGO</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_EtiquetaCelular</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Paso 6: Etiqueta Celular</shortDescription>
+        <value>CELULAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_EtiquetaCorreo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Etiqueta Correo Electrónico</shortDescription>
+        <value>CORREO ELECTRÓNICO</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalCelularMensaje</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Celular Modal: Mensaje</shortDescription>
+        <value>Serás redirigido a la visualización de tus contratos para comenzar de nuevo el proceso de firma. Revisa que tu número esté bien ingresado ya que para validar tu firma enviaremos tu código a tu celular por SMS.
+#Recuerda que #tendrás 3 oportunidades para enviar el código de validación# a tu celular y deberás ingresarlo correctamente.</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalCelularSubTitulo</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Celular Modal: Sub título</shortDescription>
+        <value>HAS SUPERADO EL MÁXIMO DE INTENTOS PERMITIDOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalCelularTitulo</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Celular Modal: Título de fallo</shortDescription>
+        <value>Falló la validación de firma</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalCerrar</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP Sección Modal: Botón Cerrar</shortDescription>
+        <value>Cerrar</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalEntendido</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP Sección Modal: Botón Entendido</shortDescription>
+        <value>ENTENDIDO</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalMensaje</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP Sección Modal: Mensaje de error</shortDescription>
+        <value>Serás redirigido al primer paso para solicitar tu Tarjeta La Polar. Verifica que tu correo esté correcto y/o revisa tu casilla de SPAM</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalSubTitulo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP Sección Modal: Sub título</shortDescription>
+        <value>HAS SUPERADO EL MÁXIMO DE INTENTOS PERMITIDOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_ModalTitulo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP Sección Modal: Título de fallo</shortDescription>
+        <value>Falló la validación del correo</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoCantidaDeIntento</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto informativo</shortDescription>
+        <value>Te quedan # intentos</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoCelular</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto informativo Celular</shortDescription>
+        <value>Enviaremos un código de 6 números al celular # para validar tu firma</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoCorreo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto informativo</shortDescription>
+        <value>Enviaremos un código de 6 números para validar tu email</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoErrorMensajeValidacionCelular</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto Mensaje Error Validacion Celular</shortDescription>
+        <value>Usa el botón #ENVIAR CÓDIGO# para recibir otro código e intenta nuevamente</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoErrorTituloValidacionCelular</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto Titulo Error Validacion Celular</shortDescription>
+        <value>El código ingresado no es válido</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoIntento</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto informativo</shortDescription>
+        <value>Si te equivocas, tienes # oportunidades para que te envíen un nuevo código a tu correo</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_TextoIntentoCelular</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Texto informativo Celular</shortDescription>
+        <value>Si te equivocas, tienes # oportunidades para enviar un nuevo código a tu celular</value>
+    </labels>
+    <labels>
+        <fullName>LP_OTP_VerificarCodigo</fullName>
+        <categories>Onboarding - OTP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - OTP: Botón verificar código</shortDescription>
+        <value>VERIFICAR CÓDIGO</value>
+    </labels>
+    <labels>
+        <fullName>LP_OcultarDatosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_OcultarDatosMC</shortDescription>
+        <value>OCULTAR DATOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_OfertasExclusivasCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_OfertasExclusivasCalugas</shortDescription>
+        <value>OFERTAS EXCLUSIVAS</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso1</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso1</shortDescription>
+        <value>paso-1</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso2</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso2</shortDescription>
+        <value>paso-2</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso3</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso3</shortDescription>
+        <value>paso-3</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso4</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso4</shortDescription>
+        <value>paso-4</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso5</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso5</shortDescription>
+        <value>paso-5</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso6</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso6</shortDescription>
+        <value>paso-6</value>
+    </labels>
+    <labels>
+        <fullName>LP_OnboardingPaso7</fullName>
+        <categories>Onboarding</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_OnboardingPaso7</shortDescription>
+        <value>paso-7</value>
+    </labels>
+    <labels>
+        <fullName>LP_OrdenarFechaMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_OrdenarFechaMP</shortDescription>
+        <value>Ordenar por fecha</value>
+    </labels>
+    <labels>
+        <fullName>LP_OrdenarNombreMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_OrdenarNombreMP</shortDescription>
+        <value>Ordenar por nombre</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagaTuCuotaCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagaTuCuotaCalugas</shortDescription>
+        <value>PAGA TU CUOTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagarCuotaPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagarCuotaPC</shortDescription>
+        <value>PAGA TU CUOTA DE MANERA FÁCIL Y SEGURA</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagarTuCuotaMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagarTuCuotaMenu</shortDescription>
+        <value>Pagar tu cuota</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagarTuCuotaPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagarTuCuotaPC</shortDescription>
+        <value>PAGA TU CUOTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagarantesdeCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagarantesdeCalugas</shortDescription>
+        <value>Pagar antes de:</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagaroAbonarPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagaroAbonarPC</shortDescription>
+        <value>PAGAR O ABONAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagosHome</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagosHome</shortDescription>
+        <value>PAGOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagosMensualesPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagosMensualesPC</shortDescription>
+        <value>PAGOS MENSUALES</value>
+    </labels>
+    <labels>
+        <fullName>LP_PagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PagosPC</shortDescription>
+        <value>PAGOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_PersonalDataText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PersonalDataText</shortDescription>
+        <value>Mientras esperamos la validación en línea, te invitamos a completar tus datos personales.</value>
+    </labels>
+    <labels>
+        <fullName>LP_PideHoyCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PideHoyCalugas</shortDescription>
+        <value>PIDE HOY</value>
+    </labels>
+    <labels>
+        <fullName>LP_PreguntasFrecuentesMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PreguntasFrecuentesMenu</shortDescription>
+        <value>Preguntas frecuentes</value>
+    </labels>
+    <labels>
+        <fullName>LP_PreguntasFrencuentes</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_PreguntasFrencuentes</shortDescription>
+        <value>https://www.tarjetalapolar.cl/s/sac-preguntas-frecuentes?tabset-d61d4=2</value>
+    </labels>
+    <labels>
+        <fullName>LP_PrivateSiteURL</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_PrivateSiteURL</shortDescription>
+        <value>https://devn2-tarjetalapolar.cs195.force.com/SitioPrivado</value>
+    </labels>
+    <labels>
+        <fullName>LP_ProxVencimientosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ProxVencimientosMC</shortDescription>
+        <value>Próximo Vencimiento:</value>
+    </labels>
+    <labels>
+        <fullName>LP_ProxVencimientosMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ProxVencimientosMenu</shortDescription>
+        <value>Próximos vencimientos</value>
+    </labels>
+    <labels>
+        <fullName>LP_ProximosVencimientosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ProximosVencimientosMC</shortDescription>
+        <value>PRÓXIMOS VENCIMIENTOS</value>
+    </labels>
+    <labels>
+        <fullName>LP_RecuperarClaveLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RecuperarClaveLogin</shortDescription>
+        <value>Recuperar Clave</value>
+    </labels>
+    <labels>
+        <fullName>LP_RecuperarClaveRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RecuperarClaveRC</shortDescription>
+        <value>RECUPERAR CLAVE</value>
+    </labels>
+    <labels>
+        <fullName>LP_RefinanciamientoCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RefinanciamientoCalugas</shortDescription>
+        <value>REFINANCIAMIENTO</value>
+    </labels>
+    <labels>
+        <fullName>LP_RefinanciamientoMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RefinanciamientoMenu</shortDescription>
+        <value>Refinanciamientos</value>
+    </labels>
+    <labels>
+        <fullName>LP_RefinanciamientoPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RefinanciamientoPC</shortDescription>
+        <value>REFINANCIAMIENTO</value>
+    </labels>
+    <labels>
+        <fullName>LP_RefinanciarMontoCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RefinanciarMontoCalugas</shortDescription>
+        <value>REFINANCIAR MONTO:</value>
+    </labels>
+    <labels>
+        <fullName>LP_Regresar</fullName>
+        <categories>Onboarding</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding : Botón regresar</shortDescription>
+        <value>REGRESAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_ResumenContratoApertura</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Documento Resumen Contrato Apertura</shortDescription>
+        <value>Resumen Contrato Apertura</value>
+    </labels>
+    <labels>
+        <fullName>LP_ResumendeTuCuentaRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ResumendeTuCuentaRTC</shortDescription>
+        <value>RESUMEN DE TU CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>LP_RevisarEstadoCuentaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RevisarEstadoCuentaMC</shortDescription>
+        <value>Selecciona el mes que quieres revisar tu Estado de Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>LP_RutLogin</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RutLogin</shortDescription>
+        <value>RUT</value>
+    </labels>
+    <labels>
+        <fullName>LP_RutMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_RutMP</shortDescription>
+        <value>RUT</value>
+    </labels>
+    <labels>
+        <fullName>LP_RutSinPuntosGuiones</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP RutSinPuntosGuiones</shortDescription>
+        <value>Ingresa tu Rut sin puntos y con guión</value>
+    </labels>
+    <labels>
+        <fullName>LP_RutValido</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP RutValido</shortDescription>
+        <value>Ingresa un Rut válido</value>
+    </labels>
+    <labels>
+        <fullName>LP_SACText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SACText</shortDescription>
+        <value>SERVICIO AL CLIENTE</value>
+    </labels>
+    <labels>
+        <fullName>LP_SeOcultaraMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SeOcultaraMC</shortDescription>
+        <value>Se ocultará en</value>
+    </labels>
+    <labels>
+        <fullName>LP_SeguroFullSaludCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SeguroFullSaludCalugas</shortDescription>
+        <value>SEGURO FULL SALUD</value>
+    </labels>
+    <labels>
+        <fullName>LP_SeleccionaGenero</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_SeleccionaGenero</shortDescription>
+        <value>Selecciona el género que te identifica</value>
+    </labels>
+    <labels>
+        <fullName>LP_SelectDatePay</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_SelectDatePay</shortDescription>
+        <value>Selecciona fecha de pago</value>
+    </labels>
+    <labels>
+        <fullName>LP_SelectOcupation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_SelectOcupation</shortDescription>
+        <value>Selecciona tu ocupación</value>
+    </labels>
+    <labels>
+        <fullName>LP_SelectedLevelEducation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_SelectedLevelEducation</shortDescription>
+        <value>Selecciona tu nivel educacional</value>
+    </labels>
+    <labels>
+        <fullName>LP_ServicioCliente</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ServicioCliente</shortDescription>
+        <value>https://www.tarjetalapolar.cl/s/contactsupport</value>
+    </labels>
+    <labels>
+        <fullName>LP_ServicioalClienteFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ServicioalClienteFooter</shortDescription>
+        <value>SERVICIO AL CLIENTE</value>
+    </labels>
+    <labels>
+        <fullName>LP_ServicioalClienteHome</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ServicioalClienteHome</shortDescription>
+        <value>SERVICIO AL CLIENTE</value>
+    </labels>
+    <labels>
+        <fullName>LP_SiguenosenFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SiguenosenFooter</shortDescription>
+        <value>Siguenos en:</value>
+    </labels>
+    <labels>
+        <fullName>LP_SimularAvance</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SimularAvance</shortDescription>
+        <value>https://avance.tarjetalapolar.cl/tarjetalapolar/s/login/?language=es_CL&amp;startURL=%2Ftarjetalapolar%2Fs%2F&amp;ec=302</value>
+    </labels>
+    <labels>
+        <fullName>LP_SimularAvanceCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SimularAvanceCalugas</shortDescription>
+        <value>SIMULA TU AVANCE</value>
+    </labels>
+    <labels>
+        <fullName>LP_SimularAvanceXLCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SimularAvanceXLCalugas</shortDescription>
+        <value>SIMULA TU AVANCE XL</value>
+    </labels>
+    <labels>
+        <fullName>LP_SitioSeguroFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_SitioSeguroFooter</shortDescription>
+        <value>Sitio 100% Seguro, Privacidad y Seguridad Garatizada</value>
+    </labels>
+    <labels>
+        <fullName>LP_SolicitaTarjeta</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_SolicitaTarjeta</shortDescription>
+        <value>1. Solicita tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_SolicitaTarjeta2</fullName>
+        <categories>Onboarding Step 1</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_SolicitaTarjeta2</shortDescription>
+        <value>SOLICITA TU TARJETA</value>
+    </labels>
+    <labels>
+        <fullName>LP_SubtituloAutorizacionEspecial</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Subtitulo Autorización Especial</shortDescription>
+        <value>A través de este documento autorizas la cesión de créditos a terceros</value>
+    </labels>
+    <labels>
+        <fullName>LP_SubtituloContratoApertura</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Subtitulo Contrato Apertura</shortDescription>
+        <value>Contiene todas las condiciones de tu contrato en detalle</value>
+    </labels>
+    <labels>
+        <fullName>LP_SubtituloMandato</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Subtitulo Mandato</shortDescription>
+        <value>A través de este documento te comprometes a respetar tu fecha de pago</value>
+    </labels>
+    <labels>
+        <fullName>LP_SubtituloResumenContrato</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Subtitulo Resumen Contrato</shortDescription>
+        <value>Contiene las condiciones generales de tu contrato</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolar</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TarjetaLaPolar</shortDescription>
+        <value>https://www.tarjetalapolar.cl/s/</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarBajada</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Bajada</shortDescription>
+        <value>Con este proceso terminado, podrás realizar &lt;br/&gt; compras en nuestro sitio &lt;a href=&quot;https://www.lapolar.cl/&quot;&gt;La Polar&lt;/a&gt; ingresando los &lt;br/&gt; datos de tu tarjeta que se muestran en &lt;a href=&quot;https://micuenta.tarjetalapolar.cl/&quot;&gt;tu cuenta&lt;/a&gt;. &lt;br/&gt;Además con tu huella puedes comprar &lt;br/&gt; presencialmente en cualquier &lt;a href=&quot;https://www.lapolar.cl/tiendas-abiertas.html&quot;&gt;tienda La Polar.&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TarjetaLaPolarFooter</shortDescription>
+        <value>TARJETA LA POLAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TarjetaLaPolarRTC</shortDescription>
+        <value>TARJETA LA POLAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarSubTitulo</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar SubTítulo</shortDescription>
+        <value>Ahora crearás una clave de internet para ingresar a tu cuenta y ver la información de tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarText</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TarjetaLaPolarText</shortDescription>
+        <value>www.tarjetalapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarTextoBotonContinuar</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Texto Boton Continuar</shortDescription>
+        <value>Serás redireccionado
+&lt;br/&gt;&lt;br/&gt;
+Te redireccionaremos para que ingreses a tu cuenta, desde ahí podrás crear tu clave de 4 dígitos y ver los datos de tu tarjeta digital.</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarTitulo</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Título</shortDescription>
+        <value>¡Felicitaciones! Tienes tu Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarVisaBajada</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Visa Bajada</shortDescription>
+        <value>Con este proceso terminado, podrás realizar &lt;br/&gt; compras por internet ingresando los &lt;br/&gt; datos de tu tarjeta que se muestran en &lt;a href=&quot;https://micuenta.tarjetalapolar.cl/&quot;&gt;tu cuenta.&lt;/a&gt; &lt;br/&gt; Además con tu huella puedes comprar &lt;br/&gt; presencialmente en cualquier &lt;a href=&quot;https://www.lapolar.cl/tiendas-abiertas.html&quot;&gt;tienda La Polar.&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarVisaSubTitulo</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Visa SubTitulo</shortDescription>
+        <value>Ahora crearás una clave de internet para ingresar a tu cuenta y ver la información de tu tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarVisaTextoBotonContinuar</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Visa Texto Boton Continuar</shortDescription>
+        <value>Serás redireccionado
+&lt;br/&gt;&lt;br/&gt;
+Te redireccionaremos para que ingreses a tu cuenta, desde ahí podrás crear tu clave PIN y ver los datos de tu tarjeta digital para compras.</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaLaPolarVisaTitulo</fullName>
+        <categories>Onboarding Step 7</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP Tarjeta La Polar Visa Titulo</shortDescription>
+        <value>¡Felicitaciones! Tienes tu Tarjeta La Polar Visa</value>
+    </labels>
+    <labels>
+        <fullName>LP_TarjetaVisaLaPolarRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TarjetaVisaLaPolarRTC</shortDescription>
+        <value>TARJETA VISA LA POLAR</value>
+    </labels>
+    <labels>
+        <fullName>LP_TasasInteresRefinanciamiento</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TasasInteresRefinanciamiento</shortDescription>
+        <value>https://lapolartarjeta--devn2.my.salesforce.com/sfc/p/020000008ocP/a/020000008Q2w/9ev7.9ZGoeA.m_8OiLIbG23ulw6rDkNq5N.rOU6KuM4</value>
+    </labels>
+    <labels>
+        <fullName>LP_TelefonoFijoMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TelefonoFijoMP</shortDescription>
+        <value>TELÉFONO FIJO</value>
+    </labels>
+    <labels>
+        <fullName>LP_TelefonoMovilMP</fullName>
+        <categories>MI PERFIL SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TelefonoMovilMP</shortDescription>
+        <value>TELÉFONO MÓVIL</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic</shortDescription>
+        <value>https://lapolartarjeta--devn2.my.salesforce.com/sfc/p/020000008ocP/a/020000008Pq2/qyBb3tj1lGEhJv4m07rCsoGJOvOjXB1ZSJ3BM8_Okmw</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic_PI</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic PI</shortDescription>
+        <value>https://lapolartarjeta--devn2.my.salesforce.com/sfc/p/020000008ocP/a/020000008Pq7/9cPRuYuvEQBx3f5JnI3El.t4uT12dD8C3xnlQYBh3sg</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic_Txt1</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic Txt1</shortDescription>
+        <value>He leído y acepto los</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic_Txt2</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic Txt2</shortDescription>
+        <value>términos y condiciones para realizar evaluación crediticia</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic_Txt3</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic Txt3</shortDescription>
+        <value>, así como los</value>
+    </labels>
+    <labels>
+        <fullName>LP_TerminoCondic_Txt4</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TerminoCondic Txt4</shortDescription>
+        <value>términos y condiciones para el tratamiento de mis datos personales</value>
+    </labels>
+    <labels>
+        <fullName>LP_TextBloqueoTarjeta</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TextBloqueoTarjeta</shortDescription>
+        <value>&lt;p&gt;El bloqueo de tu tarjeta será solo temporal, puedes habilitarla para su uso desbloqueándolo por el mismo medio. El bloqueo temporal te permitirá comprar en páginas web y en &lt;a Style=&quot;color: #FF0000; &quot; href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot;&gt;Tiendas La Polar&lt;/a&gt; a través de tu huella. Para bloqueo permanente, debes solicitarlo directamente en &lt;a Style=&quot;color: #FF0000; &quot; href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot;&gt;Tiendas La Polar&lt;/a&gt; o llamando a nuestro número telefónico.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>LP_TiendasLaPolarMenu</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TiendasLaPolarMenu</shortDescription>
+        <value>Tiendas La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_TiendasLaPolarURL</fullName>
+        <categories>Barra Navegación SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TiendasLaPolarURL</shortDescription>
+        <value>https://www.lapolar.cl/Tiendas/?showMap=true</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitleComuna</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitleComuna</shortDescription>
+        <value>COMUNA</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitleProvinState</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitleProvinState</shortDescription>
+        <value>REGIÓN</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitleSolicCard</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitleSolicCard</shortDescription>
+        <value>Solicita tu Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitleStepFourMobile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitleStepFourMobile</shortDescription>
+        <value>4. Estamos validando tu identidad</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitleValidatingIdentity</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitleValidatingIdentity</shortDescription>
+        <value>Estamos validando tu identidad</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitularBT</fullName>
+        <categories>BLOQUEO TARJETA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitularBT</shortDescription>
+        <value>Titular</value>
+    </labels>
+    <labels>
+        <fullName>LP_TitularMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TitularMC</shortDescription>
+        <value>Titular:</value>
+    </labels>
+    <labels>
+        <fullName>LP_TituloAutorizacionEspecial</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Titulo Autorización Especial</shortDescription>
+        <value>AUTORIZACIÓN ESPECIAL</value>
+    </labels>
+    <labels>
+        <fullName>LP_TituloContratoApertura</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Titulo Contrato Apertura</shortDescription>
+        <value>CONTRATO DE APERTURA (ANEXO 1 Y 2)</value>
+    </labels>
+    <labels>
+        <fullName>LP_TituloMandato</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Titulo Mandato</shortDescription>
+        <value>MANDATO</value>
+    </labels>
+    <labels>
+        <fullName>LP_TituloPasoCinco</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Titulo de paso 5 de la ruta</shortDescription>
+        <value>5. Tienes Aprobada tu Tarjeta La Polar Visa</value>
+    </labels>
+    <labels>
+        <fullName>LP_TituloResumenContrato</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Onboarding - Step 5: Titulo Resumen Contrato</shortDescription>
+        <value>RESUMEN CONTRATO</value>
+    </labels>
+    <labels>
+        <fullName>LP_TotalPagarMovNoFacturadosMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TotalPagarMovNoFacturadosMC</shortDescription>
+        <value>Total a Pagar</value>
+    </labels>
+    <labels>
+        <fullName>LP_TotalTablaMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TotalTablaMC</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>LP_TotalaPagarRTC</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TotalaPagarRTC</shortDescription>
+        <value>TOTAL A PAGAR:</value>
+    </labels>
+    <labels>
+        <fullName>LP_TotalapagarCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TotalapagarCalugas</shortDescription>
+        <value>Total a pagar</value>
+    </labels>
+    <labels>
+        <fullName>LP_Twitter</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_Twitter</shortDescription>
+        <value>https://twitter.com/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>LP_URLSaberMasDetallesCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_URLSaberMasDetallesCalugas</shortDescription>
+        <value>https://www.lapolar.cl/especial/ofertas-exclusivas/</value>
+    </labels>
+    <labels>
+        <fullName>LP_URLVerSeguroFullSaludCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_URLVerSeguroFullSaludCalugas</shortDescription>
+        <value>https://www.tarjetalapolar.cl/s/seguros-y-asistencias?tabset-9a2d8=f74aa</value>
+    </labels>
+    <labels>
+        <fullName>LP_UbicacionTiendas</fullName>
+        <categories>Sitio Privado</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_UbicacionTiendas</shortDescription>
+        <value>&lt;b&gt;¿Cómo puedo modificar mis datos?&lt;/b&gt;&lt;/br&gt;
+Para modificar tus datos personales debes dirigirte a cualquiera de nuestras &lt;a Style=&quot;color: #FF0000; &quot; href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot;&gt;Tiendas La Polar&lt;/a&gt; para que uno de nuestros ejecutivos te ayude.</value>
+    </labels>
+    <labels>
+        <fullName>LP_UltimaConexionHome</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_UltimaConexionHome</shortDescription>
+        <value>Última conexión:</value>
+    </labels>
+    <labels>
+        <fullName>LP_UltimaFacturacionCalugas</fullName>
+        <categories>HOME SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_UltimaFacturacionCalugas</shortDescription>
+        <value>Última Facturación:</value>
+    </labels>
+    <labels>
+        <fullName>LP_UrlPrivateSite</fullName>
+        <categories>LP_OnboardingStepSeven</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_UrlPrivateSite</shortDescription>
+        <value>https://devn2-tarjetalapolar.cs195.force.com/SitioPrivado/s/</value>
+    </labels>
+    <labels>
+        <fullName>LP_UtilizadoMC</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_UtilizadoMC</shortDescription>
+        <value>Utilizado</value>
+    </labels>
+    <labels>
+        <fullName>LP_ValidaEmail</fullName>
+        <categories>Onboarding Step 2</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP ValidaEmail</shortDescription>
+        <value>2. Valida tu email</value>
+    </labels>
+    <labels>
+        <fullName>LP_ValidaFirmaDocs</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_ValidaFirmaDocs</shortDescription>
+        <value>6. Valida tu firma de documentos</value>
+    </labels>
+    <labels>
+        <fullName>LP_ValidacionIdentidad</fullName>
+        <categories>Onboarding Step 3</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP ValidacionIdentidad</shortDescription>
+        <value>3. Validación de identidad</value>
+    </labels>
+    <labels>
+        <fullName>LP_ValidaciondeClaveRC</fullName>
+        <categories>LOG IN SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ValidaciondeClaveRC</shortDescription>
+        <value>Debes ingresar una clave que contenga letras y números, con un largo de 8 caracteres.</value>
+    </labels>
+    <labels>
+        <fullName>LP_ViewPdfURL</fullName>
+        <categories>MI CUENTA SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ViewPdfURL</shortDescription>
+        <value>https://devn2-tarjetalapolar.cs195.force.com/SitioPrivado/apex/pdfViewer?rut=</value>
+    </labels>
+    <labels>
+        <fullName>LP_VisaAprobada</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_VisaAprobada</shortDescription>
+        <value>TU TARJETA LA POLAR VISA FUE APROBADA CON CUPO</value>
+    </labels>
+    <labels>
+        <fullName>LP_VisaAprobadaMundo</fullName>
+        <categories>Onboarding - Step 5</categories>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LP_VisaAprobadaMundo</shortDescription>
+        <value>Podrás usar tu Tarjeta Visa La Polar para compras presenciales u online en Chile y en todo el mundo.</value>
+    </labels>
+    <labels>
+        <fullName>LP_WaitingResponseText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_WaitingResponseText</shortDescription>
+        <value>Nos preocupa tu seguridad, seguimos esperando la validación en línea de tu identidad.</value>
+    </labels>
+    <labels>
+        <fullName>LP_Whatsapp</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_Whatsapp</shortDescription>
+        <value>https://api.whatsapp.com/send?phone=+56%209%209885%207500</value>
+    </labels>
+    <labels>
+        <fullName>LP_WhatsappFooter</fullName>
+        <categories>FOOTER SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_WhatsappFooter</shortDescription>
+        <value>WHATSAPP</value>
+    </labels>
+    <labels>
+        <fullName>LP_WhatsappNro</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_WhatsappNro</shortDescription>
+        <value>+56 9 98857500</value>
+    </labels>
+    <labels>
+        <fullName>LP_Youtube</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_Youtube</shortDescription>
+        <value>https://www.youtube.com/user/lapolarchile</value>
+    </labels>
+</CustomLabels>
