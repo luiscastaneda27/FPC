@@ -113,6 +113,11 @@
 .num-weight{
     font-weight: 600;
 }
+.text-email{
+    hyphens: auto;
+    word-wrap: break-word;
+    word-break: break-word;
+}
 .icon2{
     width: 64px;
     height: 64px;
@@ -300,6 +305,11 @@ button.next-page-btn:enabled{
     }
     .num-weight{
         font-size: 11px;
+    }
+    .text-email{
+        hyphens: auto;
+        word-wrap: break-word;
+        word-break: break-word;
     }
     /* .modal{
         width: 340px;

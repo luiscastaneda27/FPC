@@ -62,7 +62,6 @@
 .cont_block1{
     display:flex;
     flex-direction: row;
-    height: 110px;
     /* flex-wrap: wrap; */
 }
 .asterisk{
@@ -198,7 +197,7 @@ input:after:invalid{
     text-align: center;
     letter-spacing: 1px;
     /* padding-left: 1%; */
-    width: 100px;
+    width: 110px;
     height: 32px;
     border-radius: 4px;
 }
@@ -207,6 +206,12 @@ button.button:active {
 }
 button.button:enabled {
     background-color: #D00E2A;
+}
+
+@media (min-width:976px) {
+    .cont_block1{
+        height: 110px;
+    }
 }
 
 @media (min-width: 320px) and (max-width:976px) {
