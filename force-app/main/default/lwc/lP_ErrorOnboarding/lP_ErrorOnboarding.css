@@ -115,9 +115,6 @@ a{
   .button{
     width: 177px;
     margin-top: 311px;
-    /*align-self:flex-end;
-    margin-left: 160px;
-    /*margin-right: 50px;*/
-    text-align: center;
+    margin-left: 220px;
   }
 }

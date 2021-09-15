@@ -1,0 +1,170 @@
+<!--*********************************************************************************
+Project      : Sodimac Salesforce Service Cloud
+Created By   : Deloitte
+Created Date : 27/04/2021
+Description  : Lightning web component - Personal Information
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Nelson Lepiqueo               NL
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       NL	     27/04/2021		initial version
+********************************************************************************/-->
+<template>
+
+    <div class="father-container">
+        <h1 class="mobile-title">{labels.lRequestCard}</h1>
+        <!--Basic Information-->
+        <form method="get" class="form">
+            <template if:true={fields}>
+             <div class="form-container">
+
+                <div class='cont_block1'> 
+                    <div>
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.FirstName.label}  </label>
+                        <input type="text" name="nombre" id="nombreId" placeholder="Pedro" class="input-cont" onfocusout={validateName} value={objLead.FirstName}>
+                        <template if:true={nameB}>
+                            <p class="error-message">{msg.text.firstName}</p>
+                        </template>
+                    </div>
+                    <div>
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LastName.label} </label>
+                        <input type="text" name="apellidoPaterno" placeholder="Olivos" class="input-cont" onfocusout={validateLastName} 
+                            value={objLead.LastName}>
+                        <template if:true={apePB}>
+                            <p class="error-message">{msg.text.lastName}</p>
+                        </template>
+                    </div>
+                    <div>    
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LP_ApellidoMaterno__c.label} </label>
+                        <input type="text" name="apellidoMaterno" placeholder="Pérez" class="input-cont" onfocusout={validateApellidoMaterno} 
+                            value={objLead.LP_ApellidoMaterno__c}>
+                        <template if:true={apeMB}>
+                            <p class="error-message">{msg.text.secName}</p>
+                        </template>
+                    </div>
+                </div>
+                <div class='cont_block1'> 
+                    <div>
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Rut__c.label} 
+                        <lightning-helptext content="Escribe tu RUT sin puntos, recuerda incluir un guión y el dígito verificador que le sigue. Ejemplo 12345678-9"></lightning-helptext> </label>
+                        <input type="text" name="RUT" minlength="9" maxlength="10" placeholder="12345678-9" class="input-cont" onfocusout={validateRut} 
+                            value={objLead.LP_Rut__c}>
+                        <template if:true={rutB}>
+                            <p class="error-message">{msg.text.rut}</p>
+                        </template>
+                    </div>
+                    <div>       
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LP_Nacionalidad__c.label} 
+                        <lightning-helptext content={labels.lWrite3Letters}></lightning-helptext></label>
+                         <lightning-record-edit-form object-api-name="Lead">
+                            <lightning-input-field name='nacionalidad'
+                                variant="label-hidden" field-name="LP_Nacionalidad__c"
+                                value={objLead.LP_Nacionalidad__c} onchange={validateCountry}
+                                placeholder="Ingresa tu Nacionalidad" class="lp-nacionalidad">
+                            </lightning-input-field>
+                        </lightning-record-edit-form>
+                         <template if:true={nacB}>
+                            <p class="error-message">{labels.lWrite3Letters}</p>
+                        </template>
+                    </div> 
+                    <div class="gen-input">
+                        <label class="input-title"><span class="asterisk">*&nbsp;</span>
+                            <template if:true={generoPicklistValues.data}>
+                                <lightning-combobox name="genero"
+                                                    label="GÉNERO"
+                                                    value={objLead.LP_Genero__c}
+                                                    placeholder="Selecciona tu género"
+                                                    options={generoPicklistValues.data.values}
+                                                    onchange={validateSex} >
+                                </lightning-combobox>
+                            </template>
+                        </label>
+                        <br>
+                        <template if:true={sexB}>
+                            <p class="error-message2">{labels.lGender}</p>
+                        </template>
+                    </div>
+                </div>
+                <div class='cont_block1'>
+                    <div>
+                        <label class="input-title2"><span class="asterisk">*&nbsp;</span> {fields.Lead.Email.label}
+                        <lightning-helptext content={labels.lEmailFormat}></lightning-helptext></label>
+                        <input type="email" name="mail" placeholder="micorreo@mail.com" id = "emailId" class="input-cont" onfocusout={validateEmail} pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+                            value={objLead.Email}>
+                        <template if:true={mailB}>
+                            <p class="error-message">{msg.text.email}</p>
+                        </template>
+                    </div>
+                    <div>   
+                        <label class="input-title2"><span class="asterisk">*&nbsp;</span> {fields.Lead.MobilePhone.label}
+                            <lightning-helptext content={labels.lPhoneFormat}></lightning-helptext> </label>
+                            <label class="num-label">+56 
+                                <input type="tel" name="celular" minlength="9" maxlength="9" class="number-input" placeholder="9 8888 8888"  onfocusout={validateCelPhone} 
+                                    value={objLead.MobilePhone}>
+                            </label>
+                            <template if:true={celB}>
+                                <!--p class="error-message">Ingresa los 9 dígitos de tu celular</p-->
+                                <p class="error-message">{msg.text.celPhone}</p>
+                            </template>
+                    </div>
+                </div>
+
+                </div>
+                        <div class="checkbox-container">
+                            <c-l-P_-Terms-Condition oncallpasstoparent={passToParentTermCond} val-term-condic={marcaTerCond}></c-l-P_-Terms-Condition>
+                            <template if:true={showErrTermCond}>
+                                <p class="error-message">{labels.lAcceptTerms}</p>
+                            </template>
+                        </div>
+                        <!-- Google ReCaptcha V2 -->
+                        <div class="last-container">
+                        <div class="recaptchaCheckbox"></div>
+                        <!--<div class="button-container">
+                            <button disabled={disabledSubmit} class="button" type="button" onclick={doSubmit}>Submit</button>
+                        </div>-->
+    
+                        <div class="button-container">
+                            <button disabled={disabledSubmit} class="button" type="button" onclick={submitData}>{labels.lRequestCardTwo}</button>
+                        </div>
+                        </div>
+                        <div>
+                            <c-l-P_-Card-Information></c-l-P_-Card-Information>
+                        </div>
+                    <!-- </div>    
+                </div> -->
+                </template>
+            </form>
+            <template if:true={formValidEmail}>
+                <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+                aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close icon-black"
+                        title="Cerrar">
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="Cerrar"
+                            variant="warning"
+                            size="small" 
+                            onclick={closeModal}
+                            >
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Cerrar</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">{labels.lContinueRequest}
+                        </h2>
+                        <p class="slds-m-top_x-small">{labels.lValidEmail}</p>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p> {labels.lCorrectEmail} </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_brand" onclick={nextStep}>{labels.lUnderstood}</button>
+                    </footer>
+                </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+</template>
