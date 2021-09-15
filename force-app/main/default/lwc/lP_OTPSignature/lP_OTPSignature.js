@@ -172,7 +172,7 @@ export default class LP_OTPSignature extends LightningElement {
                     previous.focus();
                 }
             }
-            input.setCustomValidity(""); // if there was a custom error before, reset it
+            inputCmp.setCustomValidity(""); // if there was a custom error before, reset it
         } else {
             inputCmp.value = '';
             inputCmp.setCustomValidity("Debe ser numérico");

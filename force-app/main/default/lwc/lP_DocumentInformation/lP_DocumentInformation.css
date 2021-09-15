@@ -1,3 +1,5 @@
+/* --- CONVERSION A REM Y VH/VW LISTA --- */
+
 @font-face {
     font-family: 'Nunito', sans-serif;
     src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
@@ -12,13 +14,13 @@
     flex-wrap: wrap;
 }
 .card-container{
-    margin-right: 134px;
+    margin-right: 8.375rem;
 }
 .text-img{
     display: flex;
     flex-direction: row;
     color: #333333;
-    margin-bottom: 64px;
+    margin-bottom: 4rem;
 }
 .card_img{
     width: 171px;
@@ -26,38 +28,38 @@
 }
 .info-container{
     width: 266px;
-    margin-left: 40px;
+    margin-left: 2.5rem;
 }
 .title1{
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 400;
 }
 .small-text{
-    font-size: 16px;
-    margin-top: -8px;
+    font-size: 1rem;
+    margin-top: -0.5rem;
 }
 .number{
-    margin: 40px 0;
-    font-size: 34px;
+    margin: 2.5rem 0rem;
+    font-size: 2.125rem;
     font-weight: 600;
 }
 .subtitle{
-    margin-top: -8px;
-    font-size: 16px;
+    margin-top: -0.5rem;
+    font-size: 1rem;
     color: #888888;
 }
 .check-cont{
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    margin-bottom: 56px;
+    margin-bottom: 3.5rem;
 }
 input{
     border: #D9DBDD 1px solid;
     width: 16px;
     height: 16px;
-    margin-right: 8px;
-    margin-top: 16px;
+    margin-right: 0.5rem;
+    margin-top: 1rem;
 }
 .terms{
     width: 453px;
@@ -66,17 +68,17 @@ input{
     width: 124px;
     height: 32px;
     border: #DDDBDA 1px solid;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     color: #C23934;
     background-color: #FFFFFF;
-    margin-right: 24px;
+    margin-right: 1.5rem;
     font-weight: 600;
 }
 .btn2{
     width: 329px;
     height: 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     color: #FFFFFF;
     background-color: #C23934;
     font-weight: 600;
@@ -85,7 +87,7 @@ input{
     width: 329px;
     height: 32px;
     border: none;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     color: #FFFFFF;
     background-color: #dddbda;
     font-weight: 600;
@@ -100,11 +102,11 @@ input{
 .icon{
     width: 40px;
     height: 40px;
-    margin-right: 24px;
+    margin-right: 1.5rem ;
     cursor: pointer;
 }
 .doc{
-    margin-top: 32px;
+    margin-top: 2rem;
 }
 .txt{
     border-bottom: #D9DBDD 1px solid;
@@ -113,66 +115,66 @@ input{
     .mobile-title{
       display: block;
       color: #D00E2A;
-      font-size: 34px;
+      font-size: 2.125rem;
       font-family: 'Nunito', sans-serif;
-      margin-bottom: 30px;
+      margin-bottom: 1.875rem;
       width: 360px;
       font-weight: 600;
     }
     .first-container{
         display: flex;
         flex-direction: column;
-        height: 1200px;
+        height: 151.51vh;
     }
     .card-container{
-        width: 328px;
+        width: 44.87vw;
     }
     .card_img{
         width: 116px;
         height: 184px;
     }
     .info-container{
-        margin-left: 24px;
+        margin-left: 1.5rem;
     }
     .text-img {
-        margin-bottom: 32px;
+        margin-bottom: 2rem;
     }
     .title1{
-        margin-top: 0;
+        margin-top: 0px;
     }
     .number{
-        font-size: 30px;
-        margin: 16px 0 24px 0;
+        font-size: 1.875rem;
+        margin: 1rem 0rem 1.5rem 0rem;
     }
     .small-text{
-        font-size: 14px;
+        font-size: 0.875rem;
         /* margin-top: -8px; */
     }
     .button-cont{
         position: absolute;
-        margin-top: 900px;
+        margin-top: 56.25rem;
         width: 360px;
     }
     .btn1{
         width: 84px;
-        margin-right: 16px;
-        font-size: 12px;
+        margin-right: 1rem;
+        font-size: 0.75rem;
     }
     .btn2{
         width: 228px;
-        font-size: 12px;
+        font-size: 0.75rem;
     }
     .check-cont{
         position: absolute;
-        margin-top: 750px;
-        margin-bottom: 40px;
+        margin-top: 46.875rem;
+        margin-bottom: 2.5rem;
         width: 328px;
     }
     .doc-container{
         width: 328px;
     }
     .icons{
-        margin-bottom: 24px;
+        margin-bottom: 1.5rem;
     }
     
 }

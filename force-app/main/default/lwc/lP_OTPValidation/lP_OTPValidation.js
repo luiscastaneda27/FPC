@@ -13,6 +13,7 @@ VERSION  AUTHOR         DATE            Description
 ********************************************************************************/
 import { LightningElement, wire, track, api } from 'lwc';
 import getCall from '@salesforce/apex/LP_OnboardingStepTwoController.callToOtpService';
+import getCodeValidation from '@salesforce/apex/LP_OnboardingStepTwoController.otpCodeValidation';
 import getUpdateObj from '@salesforce/apex/LP_OnboardingStepTwoController.updateObjs';
 import getExpBaseValidation from '@salesforce/apex/LP_OnboardingStepTwoController.expressBaseValidation';
 import getCustomerAssetLaundering from '@salesforce/apex/LP_OnboardingStepTwoController.customerAssetLaundering';
@@ -53,6 +54,7 @@ export default class LP_OTPValidation extends LightningElement {
     @api email;
     @api showError;
     @api objLead;
+    @api inputOtp;
     @track objList;
     @track otpValidation;
 	@track otpInvalidCode;
@@ -157,30 +159,39 @@ export default class LP_OTPValidation extends LightningElement {
         this.template.querySelectorAll('.code-input').forEach(element => {
             input+= element.value;
         });
-        if (input === this.otpValidation) {
-            activebtn3.style.display = "block";
-            activebtn3.src = this.iconOTP.iSuccess;
-            btn3.style.display = "none";
-            textMistake.style.display = "none";            
-            nextbtn.disabled = false;
-			this.otpInvalidCode = false;
-            this.setUpdate(event);
-        } else {
-            this.template.querySelectorAll('.code-input').forEach(element => {
-                element.value = '';
+        this.inputOtp = input;
+        console.log('this.inputOtp: ' + this.inputOtp);
+        console.log('cipherCode: ' + this.otpValidation);
+        getCodeValidation({inputCode: this.inputOtp, cipherCode: this.otpValidation})
+            .then((result) => {
+                activebtn3.style.display = "block";
+                activebtn3.src = this.iconOTP.iSuccess;
+                btn3.style.display = "none";
+                textMistake.style.display = "none";            
+                nextbtn.disabled = false;
+                this.otpInvalidCode = false;
+                this.setUpdate(event);
+            })
+            .catch((error) => {
+                this.error = error;
+                var message = JSON.parse(error.body.message);
+                console.log('error.message: ' + JSON.stringify(message));
+                console.log('message.cause: ' + message.cause);
+                this.template.querySelectorAll('.code-input').forEach(element => {
+                    element.value = '';
+                });
+                this.template.querySelector(".button2").disabled = false;
+                this.labels.button.send = lBtnSend;
+                this.template.querySelector(".active-button2").src = '';
+                this.labels.text.numberAttempts = this.labels.text.numberAttempts - 1;
+                this.showError = this.labels.text.numberAttempts == 0 ? true : false;           
+                this.otpInvalidCode = true;
+                activebtn3.src = this.iconOTP.iError;
+                activebtn3.style.display = "block";
+                btn3.style.display = "none";
+                textMistake.style.display = "block";
+                nextbtn.disabled = true;
             });
-            this.template.querySelector(".button2").disabled = false;
-            this.labels.button.send = lBtnSend;
-            this.template.querySelector(".active-button2").src = '';
-            this.labels.text.numberAttempts = this.labels.text.numberAttempts - 1;
-            this.showError = this.labels.text.numberAttempts == 0 ? true : false;           
-			this.otpInvalidCode = true;
-            activebtn3.src = this.iconOTP.iError;
-            activebtn3.style.display = "block";
-            btn3.style.display = "none";
-            textMistake.style.display = "block";
-            nextbtn.disabled = true;
-        }
     }
 
     /**
@@ -271,6 +282,9 @@ export default class LP_OTPValidation extends LightningElement {
             }else{
                 console.log('LEAD: '+JSON.stringify(this.objLead));
                 nextbtn.disabled = true;
+                const prevResult = await getCodeValidation({
+                    inputCode: this.inputOtp, cipherCode: this.otpValidation
+                });
                 const result1 = await getExpBaseValidation({
                     objLead: this.objLead
                 });

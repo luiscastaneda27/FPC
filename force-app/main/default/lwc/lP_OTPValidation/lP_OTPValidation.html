@@ -19,7 +19,7 @@ VERSION  AUTHOR         DATE            Description
                 <lightning-helptext content={labels.label.lEmailFormat}></lightning-helptext>
             </label>
             <div class="input-btns">
-                <input type="mail" placeholder="pedro.olivos@mail.com" value={email} name="mail" class="input-space" onkeyup={validateEmail} required>
+                <input type="mail" placeholder="pedro.olivos@mail.com" value={email} name="mail" maxlength="80" class="input-space" onkeyup={validateEmail} required>
                 <button type="reset" class="button1"><img src={iconOTP.iRedEdit} class="active-button" /></button>
                 <button type="button" class="button2" onclick={handleSearch}>{labels.button.send}
                     <img alt="" class="active-button2" />

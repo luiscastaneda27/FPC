@@ -83,7 +83,8 @@ a{
     display:flex;
     position:absolute;
     margin-top: 230px;
-    justify-content: center;
+    /*justify-content: center;*/
+    margin-left: 132px;
   }
   .card-img{
     width: 116px;
@@ -113,9 +114,10 @@ a{
   }
   .button{
     width: 177px;
-    margin-top: 271px;
-    /*align-self:flex-end;*/
+    margin-top: 311px;
+    /*align-self:flex-end;
     margin-left: 160px;
     /*margin-right: 50px;*/
+    text-align: center;
   }
 }

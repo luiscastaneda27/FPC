@@ -1,8 +1,11 @@
+/* --- QUEDO TODO EN REM Y VW / VH  ---*/
+
 /* body {
     background-color: white;
     color: black;
     padding-left: 0.5px;
     } */
+
 .background{
     width: 100%;
     background-color: #F2F4F7;
@@ -11,15 +14,16 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: -25px;
-    padding: 62px 40px;
+    margin-top: -1.6rem;
+    padding: 0.75rem 2.5rem;
 }
+
 .body-container{
-    width: 1270px;
+    width: 86.9vw;
     height: auto;
     background-color: #FFFFFF;
-    border-radius: 15px;
-    padding: 50px 39px 47px 39px;
+    border-radius: 0.9rem;
+    padding: 3.1rem 2.4rem 3rem 2.4rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -27,24 +31,69 @@
 .title{
     display:block;
     color: #D00E2A;
-    font-size: 34px;
+    font-size: 2.1rem;
     font-weight: 500;
-    margin-bottom: 18px;
+    margin-bottom: 1.1rem;
 }
 .breadcrumbs{
     display:block;
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #888888;
-    margin-bottom: 30px;
+    margin-bottom: 1.9rem;
 }
 b{
     color: #080707;
 }
 .path{
-    width: 830px;
-    height: 32px
+    width: 60vw;
+    height: 4.04vh;
 }
-@media (min-width: 320px) and (max-width: 976px) {
+/* TABLET VERSION */
+@media (min-width: 976px) and (max-width: 1250px){
+    .background{
+        width: 100%;
+        background-color: #F2F4F7;
+        /*background-color: colorFondo;*/
+        /* height: 100%; */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: -1.6rem;
+        padding: 4rem 2.5rem;
+    }
+    .body-container{
+        width: 86.9vw;
+        height: auto;
+        background-color: #FFFFFF;
+        border-radius: 0.9rem;
+        padding: 3.1rem 2.4rem 3rem 2.4rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .title{
+        display:block;
+        color: #D00E2A;
+        font-size: 2.1rem;
+        font-weight: 500;
+        margin-bottom: 1.1rem;
+    }
+    .breadcrumbs{
+        display:block;
+        font-size: 0.75rem;
+        color: #888888;
+        margin-bottom: 1.9rem;
+    }
+    b{
+        color: #080707;
+    }
+    .path{
+        width: 67vw;
+        height: 4.04vh;
+    }
+}
+/* MOBILE VERSION */
+@media (min-width: 320px) and (max-width: 975px) {
     br{
         display:none;
     }
@@ -54,7 +103,7 @@ b{
         height: 100%;
         display: flex;
         justify-content: start;
-        margin-top: -60px;
+        margin-top: -3.75rem;
         padding: 0;
     }
     .body-container{

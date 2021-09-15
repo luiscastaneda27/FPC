@@ -25,6 +25,7 @@ import updateLeadOrAccount from '@salesforce/apex/LP_OnboardingStepFourControlle
 import updateOnboardingStep from '@salesforce/apex/LP_OnboardingStepFourController.updateOnboardingStep';
 import step3 from '@salesforce/label/c.LP_OnboardingPaso3';
 import ERR_NOCARD from '@salesforce/label/c.LP_ERR_NOCARD';
+import lDeptoCasaFormat from '@salesforce/label/c.LP_FormatoDeptoCasa';
 
 export default class LP_InformationPersonalData extends LightningElement {
     steps = {step3};
@@ -42,7 +43,8 @@ export default class LP_InformationPersonalData extends LightningElement {
         mnsjOpt : {
             acept : msgAceptStatusMail,
             noAcept : msgAceptStatusMailNO
-        }
+        },
+        lDeptoCasaFormat
     }
     @track msg = {
         text : {

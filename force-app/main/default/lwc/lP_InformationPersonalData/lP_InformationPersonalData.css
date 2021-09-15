@@ -1,13 +1,14 @@
+/* --- CONVERSION A REM Y VH/VW LISTA --- */
 @font-face {
     font-family: 'Nunito', sans-serif;
     src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 } 
 .space{
-    width: 10px;
+    width: 0.625rem;
 }
 .title{
     font-family: 'Nunito', sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     color: #333333;
 }
 .father-container{
@@ -62,7 +63,7 @@
 .cont_block1{
     display:flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
+    flex-wrap: wrap;
 }
 .asterisk{
     color:#A61A14;
@@ -70,66 +71,70 @@
 .input-title{
     color: #3E3E3C;
     font-family: 'Nunito', sans-serif;
-    font-size: 12px;
+    font-size: 0.75rem;
     display:flex;
     flex-direction: row;
-    margin-top: 48px;
-    margin-bottom: 8px;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
     /* margin: 15% 5% 9px 0; */
     font-weight: 400;
 }
 .check{
-    width: 15px;
-    height: 15px;
+    width: 0.938rem;
+    height:0.938rem;
     margin: 0% 3% 0% 5%;
     border-color:#DDDBDA 1px solid;
 }
 .check-container{
-    margin-top: 48px;
+    margin-top: 3rem;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
 }
 .text1{
-    margin-left: 8px;
+    margin-left: 0.5rem;
 }
 .checkbox-text{
     font-family: 'Nunito', sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
     margin-left: 0;
     color: #333333;
 }
 .checkbox-text2{
     font-family: 'Nunito', sans-serif;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #888888;
-    margin-left: 0px;
+    margin-left: 0rem;
 }
 .input-cont{
     width: 220px;
+
     height: 32px;
-    padding-left: 8px;
-    margin-right: 48px;
-    font-size: 14px;
+
+    padding-left: 0.5rem;
+    margin-right: 3.125rem;
+    font-size: 0.875rem;
     font-family: 'Nunito', sans-serif;
     font-weight:normal;
 }
 .num-label{
     font-family: 'Nunito', sans-serif;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1rem;
     color: #333333;
 }
 .number-input{
+
     width: 183px;
     height: 32px;
+    
     padding-left: 5%;
-    margin-left: 8px;
+    margin-left: 0.5rem;
 }
 
 input, select{
     border: #DDDBDA 1px solid;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     outline-color: #D00E2A;
 }
 input:after:invalid{
@@ -144,46 +149,47 @@ input:after:invalid{
     width:100%;
 }
 .error-message, .error-message2{
-    font-size: 12px;
+    font-size: 0.75rem;
     color: #C23934;
 }
 .error-message2{
-    margin-top: -3px;
+    margin-top: -0.188rem;
 }
 .last-container{
     display: flex;
     flex-direction: row;
-    padding-left: 39px;
+    padding-left: 2.438rem;
     align-items: center;
 }
 .recaptchaCheckbox{
-    margin-right: 53px;
+    margin-right: 3.313rem;
 }
 .buttons-container{
     display:flex;
     flex-direction: row;
     justify-content: flex-end;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-family: 'Nunito', sans-serif;
     font-weight:bold;
-    padding-right: 100px;
-    margin-top: 16px;
+    padding-right: 6.25rem;
+    margin-top: 1rem;
 }
 .prev-page-btn{
     background-color: #FFFFFF;
     color: #C23934;
     border: #DDDBDA 1px solid;
-    border-radius: 4px;
-    font-size: 12px;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
     font-family: 'Nunito', sans-serif;
     width: 100px;
     height: 32px;
-    margin-right: 25px;
+ 
+    margin-right: 1.563rem;
     font-weight:bold;
 }
 .buttons-container{
-    margin-right: 0;
-    margin-top:32px;
+    margin-right: 0rem;
+    margin-top:2rem;
     display: flex;
     flex-wrap: wrap;
 }
@@ -192,14 +198,15 @@ input:after:invalid{
     border: none;
     color: #FFFFFF;
     font-family: 'Nunito', sans-serif;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 600;
     text-align: center;
-    letter-spacing: 1px;
+    letter-spacing: 0.063rem;
     /* padding-left: 1%; */
-    width: 110px;
+
+    width: 100px;
     height: 32px;
-    border-radius: 4px;
+    border-radius: 0.25rem;
 }
 button.button:active {
     background-color: #D00E2A;
@@ -209,9 +216,9 @@ button.button:enabled {
 }
 
 @media (min-width:976px) {
-    .cont_block1{
-        height: 110px;
-    }
+    /* .cont_block1{
+        height: 13.88vh;
+    } */
 }
 
 @media (min-width: 320px) and (max-width:976px) {
@@ -227,16 +234,16 @@ button.button:enabled {
         width: 100%;
         padding-right: 0;
         padding-left: 0;
-        grid-template-rows: 41px;
+        grid-template-rows: 2.563rem;
     }
     .form-container2{
         display:flex;
         grid-template-columns: 100%;
         width: 100%;
-        padding-right: 0;
-        padding-left: 0;
-        grid-template-rows: 41px;
-        margin-top: 20px;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        grid-template-rows: 2.563rem;
+        margin-top: 1.25rem;
     }
     .cont_block1{
         flex-direction: column;
@@ -244,29 +251,31 @@ button.button:enabled {
     .mobile-title{
         display: block;
         font-family: 'Nunito', sans-serif;
-        font-size:34px;
+        font-size:2.125rem;
         color: #D00E2A;
-        margin-bottom: 47px;
+        margin-bottom: 2.938rem;
         width: 350px;
+
+
         /* text-align: start; */
     }
     .input-title{
         margin: 0;
         font-weight: 400;
-        margin-top: 32px;
+        margin-top: 2rem;
     }
     .gen-input{
-        margin-bottom: 25px;
+        margin-bottom: 1.563rem;
     }
     lightning-helptext{
         display: none;
     }
     .check-container{
-        margin-top: 0;
+        margin-top: 0rem;
         /* grid-template-columns: 20% 80%; */
         display: flex;
         flex-wrap: wrap;
-        margin-right: 24px;
+        margin-right: 1.5rem;
     }
     .text1{
         display: flex;
@@ -274,16 +283,16 @@ button.button:enabled {
     }
     .checkbox-text,
     .checkbox-text2{
-        margin-left: 0;
+        margin-left: 0rem;
     }
     .last-container{
         flex-direction: column;
         justify-content: center;
-        padding: 35px 0;
+        padding:2.188rem 0rem;
     }
     .buttons-container{
-        margin-right: 4px;
-        margin-top:32px;
+        margin-right: 0.25rem;
+        margin-top:2rem;
         display: flex;
         flex-wrap: wrap;
     }

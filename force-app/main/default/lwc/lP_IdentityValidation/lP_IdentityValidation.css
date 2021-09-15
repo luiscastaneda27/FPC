@@ -1,3 +1,5 @@
+/* --- CONVERSION A REM Y VH/VW LISTA --- */
+
 @font-face {
     font-family: 'Nunito', sans-serif;
     src: url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
@@ -25,37 +27,37 @@
 }
 .text-container{
   /* width: 70%; */
-  width: 651px;
+  width: 89.056vw;
   /* height: 44px; */
   display:flex;
   flex-direction: column;
   font-family: 'Nunito', sans-serif;
-  font-size: 16px;
-  padding-left: 43px;
-  padding-top: 100px;
+  font-size: 1rem;
+  padding-left: 2.688rem;
+  padding-top: 6.25rem;
   color: #333333;
 }
 .text{
-    font-weight: bold;
+  font-weight: bold;
 }
 .text2{
-    padding-top: 16px;
+  padding-top: 1rem;
 }
 .button-container{
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 .button{
-    background-color: #FFFFFF;
-    color: #D00E2A;
-    border: #DDDBDA 1px solid;
-    width: 100px;
-    height: 32px;
-    border-radius: 4px;
-    margin-top: 48px;
-    font-size: 12px;
-    font-weight: bold;
-    margin-right: 24px;
+  background-color: #FFFFFF;
+  color: #D00E2A;
+  border: #DDDBDA 1px solid;
+  width: 100px;
+  height: 32px;
+  border-radius: 0.25rem;
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-right: 1.5rem;
   }
 .button2{
   background-color: #D00E2A;
@@ -63,25 +65,25 @@
   border: none;
   width: 189px;
   height: 32px;
-  border-radius: 4px;
-  margin-top: 48px;
-  font-size: 12px;
+  border-radius: 0.25rem;
+  margin-top: 3rem;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 button2.button:active {
-    background-color: #D00E2A;
+  background-color: #D00E2A;
 }
 button2.button:enabled {
-    background-color: #D00E2A;
+  background-color: #D00E2A;
 }
 @media (min-width: 320px) and (max-width: 480px) {
-    .mobile-title{
-        display: block;
-        font-family: 'Nunito', sans-serif;
-        font-size:34px;
-        color: #D00E2A;
-        margin-bottom: 47px;
-        width: 350px;
+  .mobile-title{
+      display: block;
+      font-family: 'Nunito', sans-serif;
+      font-size: 2.125rem;
+      color: #D00E2A;
+      margin-bottom: 2.938rem;
+      width: 350px;
         /* text-align: start; */
     }
     .first-container{
@@ -90,7 +92,7 @@ button2.button:enabled {
   .img-cont{
     display:flex;
     position:absolute;
-    margin-top: 100px;
+    margin-top: 6.25rem;
     justify-content: center;
   }
   .card-img{
@@ -99,25 +101,25 @@ button2.button:enabled {
   }
   .text-container{
     width: 100%;
-    padding: 0;
+    padding: 0rem;
     display: flex;
     justify-content: center;
   }
   .text2{
-      padding-top:300px;
+    padding-top:18.75rem;
   }
   .button-container{
-   margin-top: 40px;
+   margin-top: 2.5rem;
 }
   .button{
     width: 177px;
-    margin-top: 0;
+    margin-top: 0rem;
     /*align-self:flex-end;*/
     /* margin-left: 160px; */
     /*margin-right: 50px;*/
   }
   .button2{
     width: 236px;
-    margin-top: 0;
+    margin-top: 0rem;
   }
 }
