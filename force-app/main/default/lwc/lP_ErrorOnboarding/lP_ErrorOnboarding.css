@@ -64,6 +64,9 @@ a{
   margin-top: 78px;
   font-size: 12px;
 }
+.div-button{
+  display: block;
+}
 @media (min-width: 320px) and (max-width: 976px) {
   .first-container{
     display:flex;
@@ -115,9 +118,10 @@ a{
   .button{
     width: 177px;
     margin-top: 310px;
-    /*align-self:flex-end;*/
-    margin-left: 220px;
-    /*margin-right: 20px;
-    /*text-align: center;*/
+  }
+  .div-button{
+    text-align: right; 
+    width: 100%;
+    display: block;
   }
 }

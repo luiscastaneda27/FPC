@@ -47,12 +47,17 @@ import getSetDocuments from '@salesforce/apex/LP_OnboardingStepFiveController.se
 import getDocs from '@salesforce/apex/LP_OnboardingStepFiveController.getDocuments';
 import getNxtStep from '@salesforce/apex/LP_OnboardingStepFiveController.getNextStep';
 
+import CLIENT_FORM_FACTOR from '@salesforce/client/formFactor';
+
 export default class LP_DocumentInformation extends LightningElement {
     @api objLead;
     @api creditCardType;
     @api typeDoc;
     @api amount;
     steps = {step1}
+    hideSpinner = true;
+    showDocuments = CLIENT_FORM_FACTOR == 'Large' ? true : false;
+    isPhone = CLIENT_FORM_FACTOR != 'Large' ? true : false;
     @track labels = {
         button : {
             lBtnCancel
@@ -102,6 +107,8 @@ export default class LP_DocumentInformation extends LightningElement {
     connectedCallback() {
         getSetDocuments({ lead: this.objLead })
         .then(result => {
+            this.hideSpinner = false;
+            this.showDocuments = true;
             this.creditCardType = result.leadObj.LP_TipoTarjeta__c;
             this.typeDoc = result.codeDocuments;
             var amountAux = new Intl.NumberFormat('es-CL', {currency: 'CLP', style: 'currency'}).format(result.leadObj.LP_CupoDisponible__c);
@@ -119,28 +126,17 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.labels.text.title["lOpenTarget"] = lOpenTarget;
             }
         }).catch(error => {
-            this.creditCardType = '01';
-            if(this.creditCardType == '01'){
-                this.labels.text.title["lVisaAproved"] =  lVisaAproved.replace("VISA ", "");
-                this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
-                this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
-                this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
-            }
-            else{
-                this.labels.text.title["lVisaAproved"] =  lVisaAproved;
-                this.labels.text.title["lVisaAprovedWorld"] = lVisaAprovedWorld;
-                this.labels.text.title["lOpenTarget"] = lOpenTarget;
-            }
-            this.template.querySelector(".card_img").src = this.creditCardType == '02' ? this.icon.iTLPVisa : this.icon.iTLP;
-            // this.error = error;
-            // var message = JSON.parse(error.body.message);
-            // console.log('error.message: ' + JSON.stringify(message));
-            // console.log('message.cause: ' + message.cause);
-            // const pathEvent = new CustomEvent('setsteplayout', {detail: 
-            //                                                     {step: message.cause,
-            //                                                     param: this.objLead.Email,
-            //                                                     objLead: this.objLead}});
-            // this.dispatchEvent(pathEvent);
+            this.hideSpinner = false;
+            this.showDocuments = true;
+            this.error = error;
+            var message = JSON.parse(error.body.message);
+            console.log('error.message: ' + JSON.stringify(message));
+            console.log('message.cause: ' + message.cause);
+            const pathEvent = new CustomEvent('setsteplayout', {detail: 
+                                                                {step: message.cause,
+                                                                param: this.objLead.Email,
+                                                                objLead: this.objLead}});
+            this.dispatchEvent(pathEvent);
         });
     }
 
@@ -150,6 +146,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
     previewDocOne() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.one];
         this.callGetDocs(str, false, null);
@@ -161,6 +158,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	previewDocTwo() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.creditCardType == '02' ? this.labels.doc.twoVisa : this.labels.doc.two];
         this.callGetDocs(str, false, null);
@@ -172,6 +170,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	previewDocThree() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.three];
         this.callGetDocs(str, false, null);
@@ -183,6 +182,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	previewDocFour() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.four];
         this.callGetDocs(str, false, null);
@@ -200,8 +200,10 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.downloadDocument(result, element);
             } else {
                 window.open(result);
-            }            
+            }
+            this.hideSpinnerDocumentos();            
         }).catch(error => {
+            this.hideSpinnerDocumentos(); 
             this.error = error;
             var message = JSON.parse(error.body.message);
             console.log('error.message: ' + JSON.stringify(message));
@@ -236,6 +238,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
     downloadDocOne() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.one];
         var element = { class : this.template.querySelector('.downloadDocOne'), fileName : this.labels.doc.one }
@@ -248,6 +251,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	downloadDocTwo() {
+        this.displaySpinner();
         var str;
         var name = this.creditCardType == '02' ? this.labels.doc.twoVisa : this.labels.doc.two;
         str = this.typeDoc[name];
@@ -261,6 +265,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	downloadDocThree() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.three];
         var element = { class : this.template.querySelector('.downloadDocThree'), fileName : this.labels.doc.three }
@@ -273,6 +278,7 @@ export default class LP_DocumentInformation extends LightningElement {
     *  @Date:        12/07/2021
     */
 	downloadDocFour() {
+        this.displaySpinner();
         var str;
         str = this.typeDoc[this.labels.doc.four];
         var element = { class : this.template.querySelector('.downloadDocFour'), fileName : this.labels.doc.four }
@@ -324,6 +330,28 @@ export default class LP_DocumentInformation extends LightningElement {
     prevStep(event) {
         const pathEvent = new CustomEvent('setsteplayout', {detail: {step: this.steps.step1, param: '', objLead: this.objLead}});
         this.dispatchEvent(pathEvent);
+    }
+
+    /**
+    *  @Description: Method to display spinner
+    *  @Autor:       Luis Castaneda, Deloitte
+    *  @Date:        16/09/2021
+    */
+     displaySpinner() {
+        this.hideSpinner = true;
+        if(this.isPhone){
+            this.showDocuments = false;
+        }
+    }
+
+    /**
+    *  @Description: Method to hide spinner and document section.
+    *  @Autor:       Luis Castaneda, Deloitte
+    *  @Date:        16/09/2021
+    */
+     hideSpinnerDocumentos() {
+        this.hideSpinner = false;
+        this.showDocuments = true;
     }
 
 

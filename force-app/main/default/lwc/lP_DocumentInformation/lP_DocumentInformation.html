@@ -1,25 +1,39 @@
+<!--*********************************************************************************
+Project      : La Polar - Onboarding
+Created By   : Deloitte
+Created Date : 12/07/2021
+Description  : Lightning web component - Document Information/Step 5
+History      :
+**************************ACRONYM OF AUTHORS************************************
+AUTHOR                      ACRONYM
+Abdon Tejos O.              ATO
+********************************************************************************
+VERSION  AUTHOR         DATE            Description
+1.0       ATO	     12/07/2021		initial version
+********************************************************************************/-->
 <template>
-    <p class="mobile-title">{labels.text.title.stepFive}</p>
-    <div class="first-container">
-        <div class="card-container">
-            <div class="text-img">
-                <div class="card">
-                    <img src="" class="card_img" />
+    <template if:true={showDocuments}>
+        <p class="mobile-title">{labels.text.title.stepFive}</p>
+        <div class="first-container">
+            <div class="card-container">
+                <div class="text-img">
+                    <div class="card">
+                        <img src="" class="card_img" />
+                    </div>
+                    <div class="info-container">
+                        <p class="title1">{labels.text.title.lVisaAproved}</p>
+                        <p class="number">{amount} -</p>
+                        <p class="small-text"> {labels.text.title.lVisaAprovedWorld}</p>
+                    </div>
                 </div>
-                <div class="info-container">
-                    <p class="title1">{labels.text.title.lVisaAproved}</p>
-                    <p class="number">{amount} -</p>
-                    <p class="small-text"> {labels.text.title.lVisaAprovedWorld}</p>
+                <div class="check-cont">
+                    <input type="checkbox" class="btnCheck" onclick={onCheckbox} checked>
+                    <p class="terms"><lightning-formatted-rich-text value={labels.text.title.lSignDocuments}></lightning-formatted-rich-text></p>
                 </div>
-            </div>
-            <div class="check-cont">
-                <input type="checkbox" class="btnCheck" onclick={onCheckbox} checked>
-                <p class="terms"><lightning-formatted-rich-text value={labels.text.title.lSignDocuments}></lightning-formatted-rich-text></p>
-            </div>
-            <div class="button-cont">
-                <button class="btn1" onclick={prevStep}>{labels.button.lBtnCancel}</button>
-                <button class="btn2" onclick={nextStep}>{labels.text.title.lOpenTarget}</button>
-            </div>
+                <div class="button-cont">
+                    <button class="btn1" onclick={prevStep}>{labels.button.lBtnCancel}</button>
+                    <button class="btn2" onclick={nextStep}>{labels.text.title.lOpenTarget}</button>
+                </div>
 
         </div>
         <div class="doc-container">
@@ -73,7 +87,14 @@
             </div>
         </div>
     </div>
-    <div>
-        <c-l-P_-Document-List></c-l-P_-Document-List>
-    </div>
+    </template>
+    <template if:true={hideSpinner}>
+        <div id="activityIndicator" class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading, Please Wait...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+     </template>
 </template>
