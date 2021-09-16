@@ -212,6 +212,7 @@ export default class LP_OTPSignature extends LightningElement {
             .then((result) => {
                 //console.log('handleSendOTP: result = ' + result);
                 this.otpCode = result;
+                console.log("Resultado: "+this.otpCode);
                 // si el codigo es 0, el numero esta quemado
                 if(this.otpCode == 0) {
                     this.showError = true;

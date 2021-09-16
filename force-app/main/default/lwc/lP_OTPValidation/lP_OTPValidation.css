@@ -186,7 +186,7 @@
     color: #FFFFFF;
     font-weight: 400;
     text-align: center;
-    position: absolute;
+    /* position: absolute; */
     margin-top: 0.6rem;
 }
 .button3:enabled{
@@ -352,6 +352,7 @@ button.next-page-btn:enabled{
         height: 20rem;
         margin-top: 3rem;
         padding: 2.5rem;
+        height: auto;
     }
     .icon-text{
         display:flex;
@@ -432,7 +433,7 @@ button.next-page-btn:enabled{
         color: #FFFFFF;
         font-weight: 400;
         text-align: center;
-        position: absolute;
+        /* position: absolute; */
         margin-top: 0.6rem;
     }
     .button3:enabled{
@@ -531,6 +532,7 @@ button.next-page-btn:enabled{
         width: 100%;
         margin-top: 2.5rem;
         padding: 5% 4% 2% 4%;
+        height: auto;
     }
     .text-email{
         font-size: 0.87rem;
@@ -567,7 +569,7 @@ button.next-page-btn:enabled{
         color: #FFFFFF;
         font-weight: 400;
         text-align: center;
-        position: absolute;
+        /* position: absolute; */
         margin-top: 1.5rem;
     }
     .buttons-container{
