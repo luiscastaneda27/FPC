@@ -114,7 +114,10 @@ a{
   }
   .button{
     width: 177px;
-    margin-top: 311px;
+    margin-top: 310px;
+    /*align-self:flex-end;*/
     margin-left: 220px;
+    /*margin-right: 20px;
+    /*text-align: center;*/
   }
 }

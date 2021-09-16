@@ -15,7 +15,7 @@ import { LightningElement, wire, track, api } from 'lwc';
 import getCodeOTP from '@salesforce/apex/LP_OnboardingStepSixController.getOTPCode';
 import validateOTPCode from '@salesforce/apex/LP_OnboardingStepSixController.validateOTPCode';
 import processDocuments from '@salesforce/apex/LP_OnboardingStepSixController.validateDocuments';
-import processCreateCustomer from '@salesforce/apex/LP_OnboardingStepSevenController.customerCreate';
+import processCreateCustomer from '@salesforce/apex/LP_OnboardingStepSixController.customerCreate';
 //Import Static Resource
 import iCheck from '@salesforce/resourceUrl/LP_IconoCheckOTP';
 import iMobilePhone from '@salesforce/resourceUrl/LP_IconoCelularOTP';
@@ -212,7 +212,6 @@ export default class LP_OTPSignature extends LightningElement {
             .then((result) => {
                 //console.log('handleSendOTP: result = ' + result);
                 this.otpCode = result;
-                console.log("Resultado: "+this.otpCode);
                 // si el codigo es 0, el numero esta quemado
                 if(this.otpCode == 0) {
                     this.showError = true;
@@ -317,7 +316,7 @@ export default class LP_OTPSignature extends LightningElement {
                 const result2 = await processCreateCustomer({objLead: this.objLead});
                 //console.log('processDocuments result: ' + JSON.stringify(result2));
 
-                const pathEvent = new CustomEvent('setsteplayout', {detail: {step: result1, objLead: this.objLead}});
+                const pathEvent = new CustomEvent('setsteplayout', {detail: {step: result2, objLead: this.objLead}});
                 this.dispatchEvent(pathEvent);
             }
         } catch (error) {

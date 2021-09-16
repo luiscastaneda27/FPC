@@ -47,6 +47,7 @@ VERSION  AUTHOR         DATE            Description
                                 <lightning-input-field name='nacionalidad'
                                     variant="label-hidden" field-name="LP_Nacionalidad__c"
                                     value={objLead.LP_Nacionalidad__c} 
+                                    class="lp-nacionalidad"
                                     disabled>
                                 </lightning-input-field>
                             </lightning-record-edit-form>
@@ -115,6 +116,7 @@ VERSION  AUTHOR         DATE            Description
                                 <lightning-input-field name='ciudad'
                                     variant="label-hidden" field-name="LP_Ciudad__c"
                                     value={objLead.LP_Ciudad__c} onchange={validateCity}
+                                    class="lp-nacionalidad"
                                     placeholder="Ingresa tu Ciudad">
                                 </lightning-input-field>
                              </lightning-record-edit-form>
@@ -130,7 +132,8 @@ VERSION  AUTHOR         DATE            Description
                                                                 <!-- ROW 4-->
                         <div class='cont_block1'> 
                             <div>
-                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_NumDeptoCasa__c.label}</label>
+                                <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_NumDeptoCasa__c.label}
+                                <lightning-helptext content={labels.lDeptoCasaFormat}></lightning-helptext></label>
                                 <input type="number" name="numDeptoCasa" placeholder="Num Depto/casa" value={objLead.LP_NumDeptoCasa__c} onchange={validateNumDepto} class="input-cont">
                             </div>
 
