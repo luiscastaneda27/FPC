@@ -13,6 +13,8 @@
   flex-direction:row;
   flex-wrap:wrap;
   justify-content: center;
+  margin: 80px 0px 100px 0px;
+  
 }
 .img-cont{
   /* width: 30%; */
@@ -27,7 +29,9 @@
 }
 .text-container{
   /* width: 70%; */
-  width: 89.056vw;
+  /* width: 89.056vw; */
+  
+
   /* height: 44px; */
   display:flex;
   flex-direction: column;
@@ -76,50 +80,182 @@ button2.button:active {
 button2.button:enabled {
   background-color: #D00E2A;
 }
-@media (min-width: 320px) and (max-width: 480px) {
+@media (min-width: 475px) and (max-width: 974px){
   .mobile-title{
-      display: block;
-      font-family: 'Nunito', sans-serif;
-      font-size: 2.125rem;
-      color: #D00E2A;
-      margin-bottom: 2.938rem;
-      width: 350px;
-        /* text-align: start; */
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-size:2.125rem;
+    color: #D00E2A;
+    width: 100%;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    font-weight: 600;
+    margin-bottom: 33px;
     }
     .first-container{
-      width: 300px;
+      width: 100vw;
+      margin: 30px 0px 40px 0px;
+      justify-content: flex-start;
+  
     }
   .img-cont{
     display:flex;
     position:absolute;
     margin-top: 6.25rem;
     justify-content: center;
+    padding-left: 50px;
   }
   .card-img{
     width: 116px;
     height: 176px;
   }
   .text-container{
+    /* width: 100%; */
+    padding: 0rem;
+    display: flex;
+    justify-content: center;
+  }
+  /* .text{
+    width: 360px;
+  } */
+  .text2{
+    padding-top:18.75rem;
+    width: 95vw;
+    /* width: 320px; */
+  }
+  .button-container{
+   margin-top: 2.5rem;
+}
+  .button{
+    width: 100px;
+    border-radius: 4px;
+    margin-top: 0rem;
+    /*align-self:flex-end;*/
+    /* margin-left: 160px; */
+    margin-right: 1.5rem;
+  }
+  .button2{
+    border-radius: 0px;
+    width: 204px;
+    margin-top: 0rem;
+  }
+
+}
+@media (min-width: 353px) and (max-width: 475px){
+  .mobile-title{
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-size:2.125rem;
+    color: #D00E2A;
     width: 100%;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    font-weight: 600;
+    margin-bottom: 33px;
+    }
+    .first-container{
+      width: 100vw;
+      margin: 30px 0px 40px 0px;
+      justify-content: flex-start;
+  
+    }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 6.25rem;
+    justify-content: center;
+    padding-left: 50px;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+  }
+  .text-container{
+    /* width: 100%; */
+    padding: 0rem;
+    display: flex;
+    justify-content: center;
+  }
+  .text{
+    width: 360px;
+  }
+  .text2{
+    padding-top:18.75rem;
+    width: 320px;
+  }
+  .button-container{
+   margin-top: 2.5rem;
+}
+  .button{
+    width: 100px;
+    border-radius: 4px;
+    margin-top: 0rem;
+    /*align-self:flex-end;*/
+    /* margin-left: 160px; */
+    margin-right: 1.5rem;
+  }
+  .button2{
+    border-radius: 0px;
+    width: 204px;
+    margin-top: 0rem;
+  }
+
+}
+@media (min-width: 320px) and (max-width: 353px) {
+  .mobile-title{
+    display: block;
+    font-family: 'Nunito', sans-serif;
+    font-size:2.125rem;
+    color: #D00E2A;
+    width: 100%;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    font-weight: 600;
+    margin-bottom: 33px;
+    }
+    .first-container{
+      width: 100vw;
+      margin: 30px 0px 40px 0px;
+      justify-content: flex-start;
+    }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 6.25rem;
+    justify-content: center;
+    padding-left: 50px;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+  }
+  .text-container{
+    /* width: 100%; */
     padding: 0rem;
     display: flex;
     justify-content: center;
   }
   .text2{
     padding-top:18.75rem;
+    width: 280px;
+  }
+  .text{
+    width: 280px;
   }
   .button-container{
+    width: 270px;
    margin-top: 2.5rem;
 }
   .button{
-    width: 177px;
+    width: 100px;
+    border-radius: 4px;
     margin-top: 0rem;
     /*align-self:flex-end;*/
     /* margin-left: 160px; */
-    /*margin-right: 50px;*/
   }
   .button2{
-    width: 236px;
+    border-radius: 0px;
+    width: 190px;
     margin-top: 0rem;
   }
 }
