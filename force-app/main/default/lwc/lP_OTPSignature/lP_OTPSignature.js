@@ -15,7 +15,7 @@ import { LightningElement, wire, track, api } from 'lwc';
 import getCodeOTP from '@salesforce/apex/LP_OnboardingStepSixController.getOTPCode';
 import validateOTPCode from '@salesforce/apex/LP_OnboardingStepSixController.validateOTPCode';
 import processDocuments from '@salesforce/apex/LP_OnboardingStepSixController.validateDocuments';
-import processCreateCustomer from '@salesforce/apex/LP_OnboardingStepSixController.customerCreate';
+
 //Import Static Resource
 import iCheck from '@salesforce/resourceUrl/LP_IconoCheckOTP';
 import iMobilePhone from '@salesforce/resourceUrl/LP_IconoCelularOTP';
@@ -313,10 +313,10 @@ export default class LP_OTPSignature extends LightningElement {
                 const result1 =  await processDocuments({objLead: this.objLead, otpCode: this.otpCode});
                 //console.log('processDocuments result: ' + JSON.stringify(result1));
 
-                const result2 = await processCreateCustomer({objLead: this.objLead});
+                //const result2 = await processCreateCustomer({objLead: this.objLead});
                 //console.log('processDocuments result: ' + JSON.stringify(result2));
 
-                const pathEvent = new CustomEvent('setsteplayout', {detail: {step: result2, objLead: this.objLead}});
+                const pathEvent = new CustomEvent('setsteplayout', {detail: {step: result1, objLead: this.objLead}});
                 this.dispatchEvent(pathEvent);
             }
         } catch (error) {

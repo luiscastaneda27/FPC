@@ -8,8 +8,11 @@
 }
 .title{
     font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
     color: #333333;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
 }
 .father-container{
     display:flex;
@@ -90,6 +93,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: baseline;
 }
 .text1{
     margin-left: 0.5rem;
@@ -171,7 +175,7 @@ input:after:invalid{
     font-size: 0.75rem;
     font-family: 'Nunito', sans-serif;
     font-weight:bold;
-    padding-right: 6.25rem;
+    /* padding-right: 6.25rem; */
     margin-top: 1rem;
 }
 .prev-page-btn{
@@ -183,8 +187,8 @@ input:after:invalid{
     font-family: 'Nunito', sans-serif;
     width: 100px;
     height: 32px;
- 
     margin-right: 1.563rem;
+    padding: 1px 16px;
     font-weight:bold;
 }
 .buttons-container{
@@ -203,10 +207,9 @@ input:after:invalid{
     text-align: center;
     letter-spacing: 0.063rem;
     /* padding-left: 1%; */
-
-    width: 100px;
+    padding: 1px 16px;
+    width: 108px;
     height: 32px;
-    border-radius: 0.25rem;
 }
 button.button:active {
     background-color: #D00E2A;
@@ -220,8 +223,93 @@ button.button:enabled {
         height: 13.88vh;
     } */
 }
+@media (min-width: 360px) and (max-width:976px) {
+    .father-container{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width:100%;
+    }
+    .form-container{
+        display:flex;
+        grid-template-columns: 100%;
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+        grid-template-rows: 2.563rem;
+    }
+    .form-container2{
+        display:flex;
+        grid-template-columns: 100%;
+        width: 100%;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        grid-template-rows: 2.563rem;
+        margin-top: 1.25rem;
+    }
+.space{
+    width: 0px;
+}
+    .mobile-title{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:2.125rem;
+        color: #D00E2A;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 32px;
+        /* text-align: start; */
+    }
+   
+    .input-title{
+        margin: 0;
+        font-weight: 400;
+        margin-top: 2rem;
+    }
+    .gen-input{
+        margin-bottom: 1.563rem;
+    }
+    lightning-helptext{
+        display: none;
+    }
+    .check-container{
+        margin-top: 0rem;
+        /* grid-template-columns: 20% 80%; */
+        display: flex;
+        flex-wrap: nowrap;
+        margin-right: 1.5rem;
+    }
+    .text1{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin-top: 56px;
+    }
+    .checkbox-text,
+    .checkbox-text2{
+        margin-left: 0rem;
+    }
+    .checkbox-text2{
+        margin-left: 0rem;
+    margin-top: -20px;
+    }
+    .last-container{
+        flex-direction: column;
+        justify-content: center;
+        padding:2.188rem 0rem;
+    }
+    .buttons-container{
+        margin-right: 0.25rem;
+        margin-top:40px;
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
 
-@media (min-width: 320px) and (max-width:976px) {
+@media (min-width: 320px) and (max-width:360px) {
     .father-container{
         display:flex;
         flex-direction: column;
@@ -253,11 +341,17 @@ button.button:enabled {
         font-family: 'Nunito', sans-serif;
         font-size:2.125rem;
         color: #D00E2A;
-        margin-bottom: 2.938rem;
-        width: 350px;
-
-
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 32px;
         /* text-align: start; */
+    }
+    .space{
+        width: 0px;
+    }
+    .title{
+        width: 280px;
     }
     .input-title{
         margin: 0;
@@ -274,12 +368,13 @@ button.button:enabled {
         margin-top: 0rem;
         /* grid-template-columns: 20% 80%; */
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         margin-right: 1.5rem;
     }
     .text1{
         display: flex;
         flex-wrap: wrap;
+        margin-top: 56px;
     }
     .checkbox-text,
     .checkbox-text2{
@@ -292,7 +387,8 @@ button.button:enabled {
     }
     .buttons-container{
         margin-right: 0.25rem;
-        margin-top:2rem;
+        margin-top:40px;
+        margin-bottom: 40px;
         display: flex;
         flex-wrap: wrap;
     }

@@ -20,7 +20,7 @@
     font-family: 'Nunito', sans-serif;
 }
 .input-btns{
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     align-content: center;
 }
@@ -79,21 +79,28 @@
 .button2:disabled{
     background-color: #FFFFFF;
     color: #D00E2A;
-    /* align-content: center; */
     border: #DDDBDA 1px solid;
     font-family: 'Nunito', sans-serif;
     font-weight: bold;
     font-size: 0.75rem;
-    width:135px;
+    width: 169px;
     height: 32px;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 8px 10px;
+
 
 }
 .button2:disabled .active-button2{
-    width:135px;
-    height: 32px;
+    width: 14px;
+    /* height: 10px; */
     display: none;
     margin-left: 8.4rem;
-    margin-top: -1.2rem;
+    margin-top: -1rem;
 }
 .code-container{
     display: flex;
@@ -103,7 +110,7 @@
     border-radius: 0.6rem;
     font-family: 'Nunito', sans-serif;
     width: 28rem;
-    height: 20rem;
+    height: auto;
     margin-top: 3rem;
     padding: 2.5rem;
 }
@@ -140,7 +147,7 @@
     font-family: 'Nunito', sans-serif;
     font-size:0.75rem;
     color: #000000;
-    margin-left: 15.3rem;
+    margin-left: 17.8rem;
     margin-top: 0.3rem;
 }
 .active-button3{
@@ -213,9 +220,9 @@ button.button3:active {
     border-radius: 0.25rem;
     font-size: 0.75rem;
     font-family: 'Nunito', sans-serif;
-    width: 13.7vw;
-    height: 4.1vh;
-    margin-right: 1.6rem;
+    width: 108px;
+    height: 32px;
+    margin-right: 1.5rem;
     font-weight:bold;
 }
 .next-page-btn{
@@ -225,8 +232,8 @@ button.button3:active {
     border-radius: 0.25rem;
     font-size: 0.75;
     font-family: 'Nunito', sans-serif;
-    width: 13.7vw;
-    height: 4.1vh;
+    width: 108px;
+    height: 32px;
     font-weight:bold;
 }
 button.next-page-btn:active{
@@ -258,14 +265,22 @@ button.next-page-btn:enabled{
 }
 
 /* TABLET VERSION  */
-@media (min-width: 976px) and (max-width: 1250px){
+@media (min-width: 974px) and (max-width: 1250px){
     .page-container{
         display:flex;
         flex-direction: column;
         flex-wrap: wrap;
     }
     .mobile-title{
-        display:none;
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:2.125rem;
+        color: #D00E2A;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 33px;
     }
     .form{
         display:flex;
@@ -452,6 +467,7 @@ button.next-page-btn:enabled{
         font-size: 0.75rem;
         font-family: 'Nunito', sans-serif;
         font-weight:bold;
+        margin-top: 32px;
     }
     .prev-page-btn{
         background-color: #FFFFFF;
@@ -505,22 +521,58 @@ button.next-page-btn:enabled{
     }
 
 }
-
-/* MOBILE VERSION */
-@media  (min-width:  320px) and (max-width: 975px) {
-    /* .mobile-title{
+@media  (min-width:  497px) and (max-width: 974px) {
+    
+    .mobile-title{
         display: block;
         font-family: 'Nunito', sans-serif;
-        font-size:34px;
+        font-size:2.125rem;
         color: #D00E2A;
-        margin-bottom: 47px;
-        /* text-align: start; */
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 33px;
+     }
+     .button3{
+         margin: 24px 0px;
+     }
+     .buttons-container{
+         margin: 32px 0px 40px 0px;
+     }
+    .code-input{
+        width: 40px;
+        height: 40px;
     
+    }
+}
+
+/* MOBILE VERSION */
+@media  (min-width:  320px) and (max-width: 497px) {
+
+     .mobile-title{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:2.125rem;
+        color: #D00E2A;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 33px;
+     }
         .input-btns{
             display: flex;
               flex-direction: row;
             flex-wrap: wrap;
+            width: 100%;
   
+        }
+        .input-space{
+            margin-right: 8px;
+            margin-bottom: 16px;
+            padding: 6px 12px;
+          
         }
     .code-container{
         display: flex;
@@ -530,12 +582,18 @@ button.next-page-btn:enabled{
         border-radius: 0.6rem;
         font-family: 'Nunito', sans-serif;
         width: 100%;
-        margin-top: 2.5rem;
-        padding: 5% 4% 2% 4%;
+        /* margin-top: 2.5rem; */
+        padding: 1.5rem;
         height: auto;
     }
+    .codes{
+        flex-wrap: nowrap;
+    }
     .text-email{
-        font-size: 0.87rem;
+        font-size: 16px;
+    }
+    .text2{
+        font-size: 14px;
     }
     .icon2{
         width: 8.8vw;
@@ -551,14 +609,15 @@ button.next-page-btn:enabled{
         padding-bottom: 1.5rem;
     }
     .code-input{
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 30px;
+        height: 30px;
         border: #888888 1px solid;
         border-radius: 0.25rem;
         font-size: 2.12rem;
         font-weight: 600;
         /* text-align: center; */
-        padding-left: 1.06vw;
+        /* padding-left: 1.06vw; */
+        margin-right: 8px;
         outline: none;
     }
     .button3{
@@ -571,6 +630,7 @@ button.next-page-btn:enabled{
         text-align: center;
         /* position: absolute; */
         margin-top: 1.5rem;
+        margin-bottom: 24px;
     }
     .buttons-container{
         display:flex;
@@ -595,7 +655,8 @@ button.next-page-btn:enabled{
     }
     .next-page-btn{
         width: 6.75rem;
-    height: 2rem;
+        height: 2rem;
+        border-radius: 0px;
     }
     .button3{
         width: 154px;

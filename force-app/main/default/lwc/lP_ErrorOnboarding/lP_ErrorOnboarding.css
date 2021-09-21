@@ -64,10 +64,20 @@ a{
   margin-top: 78px;
   font-size: 12px;
 }
-.div-button{
-  display: block;
-}
-@media (min-width: 320px) and (max-width: 976px) {
+  /* TABLET VERSION  */
+  @media (min-width: 976px) and (max-width: 1250px){
+
+  }
+
+
+
+
+
+
+
+  
+/* MOBILE VERSION */
+@media (min-width: 320px) and (max-width: 975px) {
   .first-container{
     display:flex;
     flex-direction:row;
@@ -86,8 +96,7 @@ a{
     display:flex;
     position:absolute;
     margin-top: 230px;
-    /*justify-content: center;*/
-    margin-left: 132px;
+    justify-content: center;
   }
   .card-img{
     width: 116px;
@@ -117,11 +126,13 @@ a{
   }
   .button{
     width: 177px;
-    margin-top: 310px;
+    margin-top: 271px;
+    /*align-self:flex-end;*/
+    margin-left: 160px;
+    /*margin-right: 50px;*/
   }
-  .div-button{
-    text-align: right; 
-    width: 100%;
-    display: block;
-  }
+
+
+
+
 }

@@ -31,6 +31,8 @@ import step7 from '@salesforce/label/c.LP_OnboardingPaso7';
 import ERR_EXIST_CLIENT from '@salesforce/label/c.LP_ERR_EXIST_CLIENT';
 import ERR_NOCARD from '@salesforce/label/c.LP_ERR_NOCARD';
 import ERR_SYSTEM from '@salesforce/label/c.LP_ERR_SYSTEM';
+import SystemModstamp from '@salesforce/schema/Account.SystemModstamp';
+import MailingPostalCode from '@salesforce/schema/Contact.MailingPostalCode';
 
 
 export default class LP_BodyParent extends LightningElement {
@@ -138,6 +140,12 @@ export default class LP_BodyParent extends LightningElement {
         this.template.querySelector("c-l-p_-credit-card-path").onStepSelected(this.step);
     }
 
+    getStep5Title(event){
+        console.log(event);
+        this.title = event.detail;
+        this.stepLayout.title = this.title;
+    }
+
     getSteps7Title(event) {
         this.title = event.detail.title;
         this.stepLayout.title = this.title;
@@ -220,12 +228,16 @@ export default class LP_BodyParent extends LightningElement {
      getQueryParameters() {
         var params = {};
         var search = location.search.substring(1);
+        console.log("search: "+search);
         if (search) {
-            params = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => {
-                return key === "" ? value : decodeURIComponent(value)
-            });
+            var allVar = search.split("&");
+            for(let i = 0; i < allVar.length; i++){
+                var param = allVar[i].split("=");
+                params[param[0]] = param[1];
+            }
         }
+        console.log("params: "+JSON.stringify(params));
         return params;
     }
-
+    
 }

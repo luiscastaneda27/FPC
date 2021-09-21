@@ -85,6 +85,7 @@ export default class LP_IdentityValidation extends NavigationMixin(LightningElem
         window.open(this.redirectUrl,'_parent');
     }
     identityValidationTest(){
+        console.log("Link: "+this.redirectUrl);
         this.popRedirectUrl = true;
     }
     salirOC(){
