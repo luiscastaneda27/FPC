@@ -74,6 +74,17 @@
   font-size: 0.75rem;
   font-weight: bold;
 }
+.buttonExit{
+  background-color: #D00E2A;
+  color: #FFFFFF;
+  border: none;
+  width: 90px;
+  height: 32px;
+  border-radius: 0.25rem;
+  margin-top: 3rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
 button2.button:active {
   background-color: #D00E2A;
 }

@@ -41,6 +41,7 @@ import lOpenTarget from '@salesforce/label/c.LP_AbrirTarjeta';
 import lReadSignDocuments from '@salesforce/label/c.LP_LeerFimarDocumentos';
 import lReadSignDocumentsSubTitle from '@salesforce/label/c.LP_LeerFirmarSubTitulo';
 import step1 from '@salesforce/label/c.LP_OnboardingPaso1';
+import lTitleSolicCard from '@salesforce/label/c.LP_TitleSolicCard';
 
 //Import Apex Methods
 import getSetDocuments from '@salesforce/apex/LP_OnboardingStepFiveController.setDocuments';
@@ -50,6 +51,7 @@ import getNxtStep from '@salesforce/apex/LP_OnboardingStepFiveController.getNext
 import CLIENT_FORM_FACTOR from '@salesforce/client/formFactor';
 
 export default class LP_DocumentInformation extends LightningElement {
+    @api setsteptitle;
     @api objLead;
     @api creditCardType;
     @api typeDoc;
@@ -128,15 +130,44 @@ export default class LP_DocumentInformation extends LightningElement {
         }).catch(error => {
             this.hideSpinner = false;
             this.showDocuments = true;
-            this.error = error;
-            var message = JSON.parse(error.body.message);
-            console.log('error.message: ' + JSON.stringify(message));
-            console.log('message.cause: ' + message.cause);
-            const pathEvent = new CustomEvent('setsteplayout', {detail: 
-                                                                {step: message.cause,
-                                                                param: this.objLead.Email,
-                                                                objLead: this.objLead}});
-            this.dispatchEvent(pathEvent);
+            this.creditCardType = '01';
+            
+            if(this.creditCardType == '01'){
+                this.labels.text.title["lVisaAproved"] =  lVisaAproved.replace("VISA ", "");
+                this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
+                this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
+                this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
+                console.log(lStepFive.replace(" VISA", ""));
+                const custEvent = new CustomEvent(
+                    'steptitle', {
+                        detail:  lStepFive.replace(" Visa", "")
+                    }
+                );
+                this.dispatchEvent(custEvent);
+            }
+            else{
+                this.labels.text.title["lVisaAproved"] =  lVisaAproved;
+                this.labels.text.title["lVisaAprovedWorld"] = lVisaAprovedWorld;
+                this.labels.text.title["lOpenTarget"] = lOpenTarget;
+                const custEvent = new CustomEvent(
+                    'steptitle', {
+                        detail:  lStepFive
+                    }
+                );
+                this.dispatchEvent(custEvent);
+                console.log(lTitleSolicCard + ' Visaaaaa');
+                // this.setsteplayout(lTitleSolicCard + ' Visa');
+            }
+            this.template.querySelector(".card_img").src = this.creditCardType == '02' ? this.icon.iTLPVisa : this.icon.iTLP;
+            // this.error = error;
+            // var message = JSON.parse(error.body.message);
+            // console.log('error.message: ' + JSON.stringify(message));
+            // console.log('message.cause: ' + message.cause);
+            // const pathEvent = new CustomEvent('setsteplayout', {detail: 
+            //                                                     {step: message.cause,
+            //                                                     param: this.objLead.Email,
+            //                                                     objLead: this.objLead}});
+            // this.dispatchEvent(pathEvent);
         });
     }
 
@@ -200,8 +231,8 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.downloadDocument(result, element);
             } else {
                 window.open(result);
-            }
-            this.hideSpinnerDocumentos();            
+            }   
+            this.hideSpinnerDocumentos();          
         }).catch(error => {
             this.hideSpinnerDocumentos(); 
             this.error = error;
@@ -331,7 +362,7 @@ export default class LP_DocumentInformation extends LightningElement {
         const pathEvent = new CustomEvent('setsteplayout', {detail: {step: this.steps.step1, param: '', objLead: this.objLead}});
         this.dispatchEvent(pathEvent);
     }
-
+    
     /**
     *  @Description: Method to display spinner
     *  @Autor:       Luis Castaneda, Deloitte

@@ -24,7 +24,21 @@ VERSION  AUTHOR         DATE            Description
                 <div class="button-container">
                 <button class="button"  onclick={returnInit}>{label.button.lButtonIni}</button>
                 <button disabled={disabledSubmit} class="button2"  type="button" onclick={IdentityValidation}>{label.button.lButtonCompIdent}</button>
+                &nbsp;<button class="button2"  type="button" onclick={identityValidationTest}>Botón Prueba</button>
             </div>
         </div>
     </div>
+    <template if:true={popRedirectUrl}>
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
+           <div class="slds-modal__container">
+              <div class="slds-modal__content">
+                 <iframe id="contenidoPop" src={redirectUrl} scrolling="false" style="border:none;" width="100%" height="700"></iframe>
+              </div>
+              <footer class="slds-modal__footer">   
+                <button  type="button" class="buttonExit"   onclick={salirOC}>Salir</button> 
+              </footer>
+           </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+     </template>
 </template>
