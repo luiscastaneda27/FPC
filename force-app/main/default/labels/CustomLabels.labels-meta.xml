@@ -946,7 +946,7 @@
         <language>es</language>
         <protected>false</protected>
         <shortDescription>LP_EstadodeCuentaMC</shortDescription>
-        <value>ESTADO DE CUENTA</value>
+        <value>ESTADOS DE CUENTA</value>
     </labels>
     <labels>
         <fullName>LP_EstadodeCuentaMenu</fullName>
@@ -1177,7 +1177,7 @@ Seguros|https://www.tarjetalapolar.cl/s/seguros-y-asistencias|_blank,Consultas y
         <language>es</language>
         <protected>false</protected>
         <shortDescription>LP_LaPolarAprobada</shortDescription>
-        <value>Podrás usar tu Tarjeta La Polar en todas nuestras tiendas y en nuestro sitio La Polar</value>
+        <value>Podrás usar tu Tarjeta La Polar en todas nuestras tiendas y en nuestro sitio &lt;a href=&quot;https://www.lapolar.cl/&quot;&gt;La Polar&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>LP_LaPolarFooter</fullName>
@@ -1363,7 +1363,7 @@ Seguros|https://www.tarjetalapolar.cl/s/seguros-y-asistencias|_blank,Consultas y
         <language>es</language>
         <protected>false</protected>
         <shortDescription>LP_ModalSP</shortDescription>
-        <value>https://www.lapolar.cl/</value>
+        <value>https://avance.tarjetalapolar.cl/tarjetalapolar/s/login/?language=es_CL</value>
     </labels>
     <labels>
         <fullName>LP_MontoDisponibleCalugas</fullName>
@@ -2768,5 +2768,2320 @@ Para modificar tus datos personales debes dirigirte a cualquiera de nuestras &lt
         <protected>false</protected>
         <shortDescription>LP_Youtube</shortDescription>
         <value>https://www.youtube.com/user/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>EMPTY_FILE</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV file is empty.</shortDescription>
+        <value>CSV file is empty.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The provided Json String was badly formatted.</shortDescription>
+        <value>The provided Json String was badly formatted.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_EMPTY</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No field values were found in the Json String.</shortDescription>
+        <value>No field values were found in the Json String.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_OP_FAILED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation failed, please check messages!</shortDescription>
+        <value>Operation failed, please check messages!</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request failed with no specified error.</shortDescription>
+        <value>Request failed with no specified error.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
+        <value>Unauthorized endpoint, please check Setup</value>
+    </labels>
+    <labels>
+        <fullName>FILE_MISSING</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a comma separated file.</shortDescription>
+        <value>Please provide a comma separated file.</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
+        <value>The number of field values does not match the number of header fields on line</value>
+    </labels>
+    <labels>
+        <fullName>LP_BackgroundColor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_BackgroundColor</shortDescription>
+        <value>Blue</value>
+    </labels>
+    <labels>
+        <fullName>LP_MesHistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MesHistorialPagosPC</shortDescription>
+        <value>Mes</value>
+    </labels>
+    <labels>
+        <fullName>LP_TiempoDuracion_JWT</fullName>
+        <categories>Servicio Rest</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TiempoDuracion JWT</shortDescription>
+        <value>8000</value>
+    </labels>
+    <labels>
+        <fullName>LP_TiendaHistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TiendaHistorialPagosPC</shortDescription>
+        <value>Tienda</value>
+    </labels>
+    <labels>
+        <fullName>LP_VideoTest</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_VideoTest</shortDescription>
+        <value>https://www.youtube.com/embed/sP0ujaE8N_8</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CHECK_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names!</shortDescription>
+        <value>Please check the Api names!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting and Custom Metadata Types exists in the org!</shortDescription>
+        <value>Make sure Custom Setting and Custom Metadata Types exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the format, Custom Setting.field and Custom Metadata Types.field</shortDescription>
+        <value>Please check the format, Custom Setting.field and Custom Metadata Types.field</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_FIELD_NAME_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name/Field Name and CMT/Field Name names are required!</shortDescription>
+        <value>Custom Setting Name/Field Name and CMT/Field Name names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_MAPPING_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</shortDescription>
+        <value>Custom Setting Name, Custom Metadata Types and Json Mapping names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CS_MDT_REQ</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Setting Api Name and Custom Metadata Types Api names are required!</shortDescription>
+        <value>Custom Setting Api Name and Custom Metadata Types Api names are required!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_CUSTOM_SETTINGS_EXISTS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Make sure Custom Setting exists in the org!</shortDescription>
+        <value>Make sure Custom Setting exists in the org!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_API_NAMES</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Api names in Json!</shortDescription>
+        <value>Please check the Api names in Json!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_JSON_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please check the Json format!</shortDescription>
+        <value>Please check the Json format!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MDT_END</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Metadata Types name should end with</shortDescription>
+        <value>Custom Metadata Types name should end with</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_COMPLETED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration Completed!</shortDescription>
+        <value>Migration Completed!</value>
+    </labels>
+    <labels>
+        <fullName>MSG_MIGRATION_IN_PROGRESS</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</shortDescription>
+        <value>Migration In Progress, check status under Deploy -&gt; Deployment Status, Job Id:</value>
+    </labels>
+    <labels>
+        <fullName>MSG_NOT_SUPPORTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Not Supported!!!</shortDescription>
+        <value>Not Supported!!!</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountConfirmationComponentHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Confirmation Component Header</shortDescription>
+        <value>Transferencia de Avance Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountConfirmationDisclaimer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Confirmation Disclaimer</shortDescription>
+        <value>Declaro estar en conocimiento y acceptar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountConfirmationDisclaimerLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Confirmation Disclaimer Link</shortDescription>
+        <value>las condiciones generales de la transaccion</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountConfirmationTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Confirmation Title</shortDescription>
+        <value>RESUMEN DE LA TRANSACCIÓN</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountNoLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account No Label</shortDescription>
+        <value>Nº de cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountNumberExample</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AccountNumberExample</shortDescription>
+        <value>Ej: 138193119</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AccountTypeLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Type</shortDescription>
+        <value>Tipo de cuenta:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AddAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AddAccount</shortDescription>
+        <value>Agregar Nueva Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AddAccountHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AddAccountHeader</shortDescription>
+        <value>INGRESA UNA NUEVA CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AddAnotherAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AddAnotherAccount</shortDescription>
+        <value>Agregar Otra Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AdvanceEffectiveDetailsHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Advance Effective Details</shortDescription>
+        <value>Detalles Transferencia de Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AdvanceXLInstallments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Advance XL Installments</shortDescription>
+        <value>12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AdvanceXLLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF Advance XL Label</shortDescription>
+        <value>Avance XL</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AlreadyCustomer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AlreadyCustomer</shortDescription>
+        <value>&lt;p&gt;Según nuestros registros ya eres cliente de La Polar, si tienes algún problema
+                        por favor acércate a una &lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot; style=&quot;color:#d00e2a;&quot;&gt;Tienda La Polar&lt;/a&gt;
+                        o llama a &lt;a href=&quot;tel:600 391 3000&quot; style=&quot;color:#d00e2a;&quot;&gt;600 391 3000&lt;/a&gt;.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AmountLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Amount</shortDescription>
+        <value>Monto a Transferir:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AmountToRequestLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Amount to Request Label</shortDescription>
+        <value>Monto a solicitar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ApprovedCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ApprovedCard</shortDescription>
+        <value>&lt;p&gt;Solo debes dirigirte a cualquiera de nuestras &lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot; style=&quot;color:#d00e2a;&quot;&gt;Tiendas La Polar&lt;/a&gt; y nuestros ejecutivos financieros te ayudarán a terminar el proceso.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AvanceMinimumAmount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AvanceMinimumAmount</shortDescription>
+        <value>50000</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AvanceXLLegalDocument</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AvanceXLLegalDocument</shortDescription>
+        <value>La contratación del Avance XL y la suscripción del presente Anexo de Contrato, se realiza conforme a las condiciones solicitadas por usted, e informadas en el resumen de transacción, y mediante el ingreso del código de autorización que se enviará a su número de celular.
+
+El Anexo de contrato, y el voucher con el resumen de la transacción se encontrará disponible en su sitio privado.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AvanceXLLegalDocumentLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AvanceXLLegalDocumentLink</shortDescription>
+        <value>https://qa-lapolartarjeta.cs123.force.com/tarjetalapolar/servlet/servlet.FileDownload?file=0153I000000DQAM</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AvanceXLLegalDocumentText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AvanceXLLegalDocumentText</shortDescription>
+        <value>Anexo de Otorgamiento Nueva Línea de Crédito de Avance XL (“Anexo de Contrato”).</value>
+    </labels>
+    <labels>
+        <fullName>OSF_AvanceXLMinimumAmount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_AvanceXLMinimumAmount</shortDescription>
+        <value>100000</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BackToSimulation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BackToSimulation</shortDescription>
+        <value>Simular Otro Monto</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BackToSimulationComponent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BackToSimulationComponent</shortDescription>
+        <value>Volver a Simular</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BalanceNotEnoughAvance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BalanceNotEnoughAvance</shortDescription>
+        <value>No posee monto de Avance disponible</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BalanceNotEnoughAvanceXL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BalanceNotEnoughAvanceXL</shortDescription>
+        <value>No posee monto de Avance XL disponible</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Bank</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Bank</shortDescription>
+        <value>Banco</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BenefitTileVisaLogo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BenefitTileVisaLogo</shortDescription>
+        <value>https://lapolartarjeta--c.documentforce.com/servlet/servlet.ImageServer?id=0153k00000At5RQ&amp;oid=00D020000008ocP</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BtnGuardar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BtnGuardar</shortDescription>
+        <value>Guardar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BtnSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BtnSubmit</shortDescription>
+        <value>Enviar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_BtnSubmitLogin</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_BtnSubmitLogin</shortDescription>
+        <value>Ingresar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CAE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CAE</shortDescription>
+        <value>CAE:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CTC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CTC</shortDescription>
+        <value>CTC:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Cancel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Cancel</shortDescription>
+        <value>Cancelar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardImages</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardImages</shortDescription>
+        <value>¿Cómo lo encuentro?</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardInvalidDocument</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardInvalidDocument</shortDescription>
+        <value>Debes ingresar el número de documento válido</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardInvalidEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardInvalidEmail</shortDescription>
+        <value>Debes ingresar tu email</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardInvalidName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardInvalidName</shortDescription>
+        <value>Debes ingresar un nombre</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardInvalidPhone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardInvalidPhone</shortDescription>
+        <value>Debes ingresar un teléfono celular válido de 9 dígitos</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardInvalidRut</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CardInvalidRut</shortDescription>
+        <value>Debes ingresar un RUT válido</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CardLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Card</shortDescription>
+        <value>Tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CaseCreated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CaseCreated</shortDescription>
+        <value>¡Nos conectaremos con usted lo antes posible!</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CashAdvanceInstallments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cash Advance Installments</shortDescription>
+        <value>4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CashAdvanceLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF Cash Advance Label</shortDescription>
+        <value>Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CheckIUsernamePassword</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_CheckIUsernamePassword</shortDescription>
+        <value>Por favor verifique el número de RUT y la Contraseña</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ClientName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ClientName</shortDescription>
+        <value>Nombre De Cliente</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ClientRUT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ClientRUT</shortDescription>
+        <value>RUT del cliente:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Confirm</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Confirm</shortDescription>
+        <value>Confirmar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ConfirmComponentHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ConfirmComponentHeader</shortDescription>
+        <value>CONFIRMA QUE LOS DATOS ESTÉN CORRECTOS</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ConfirmEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ConfirmEmail</shortDescription>
+        <value>Confirmar Email</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ConfirmPassword</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ConfirmPassword</shortDescription>
+        <value>Confirmar contraseña</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ConfirmationScreenHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Confirmation Screen</shortDescription>
+        <value>Comprobante solicitud Transferencia de Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ContactSupportSuccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ContactSupportSuccess</shortDescription>
+        <value>Estimado Cliente, hemos recibido su solicitud. Un Ejecutivo lo contactara en un plazo máximo de 3 días hábiles</value>
+    </labels>
+    <labels>
+        <fullName>OSF_CustomerNameLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Customer Name Label</shortDescription>
+        <value>Nombre de cliente</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Delete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Delete</shortDescription>
+        <value>Eliminar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DeleteMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_DeleteMessage</shortDescription>
+        <value>¿Estás seguro de eliminar esta cuenta?</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DestinationAccountNumberLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Destination Account Number</shortDescription>
+        <value>N° cuenta destino:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DestinationBankLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Destination Bank</shortDescription>
+        <value>Banco de destino:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DestinationDetailsHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Destination Details Header</shortDescription>
+        <value>Detalles De Destino</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DisclaimerBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF Disclaimer Body</shortDescription>
+        <value>&lt;h1&gt;HTML Ipsum Presents&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Pellentesque habitant morbi tristique&lt;/strong&gt; senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. &lt;em&gt;Aenean ultricies mi vitae est.&lt;/em&gt; Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, &lt;code&gt;commodo vitae&lt;/code&gt;, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. &lt;a href=&quot;#&quot;&gt;Donec non enim&lt;/a&gt; in turpis pulvinar facilisis. Ut felis.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Discount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Discount</shortDescription>
+        <value>DESCUENTO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DiscountValid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_DiscountValid</shortDescription>
+        <value>Descuento válido solo con su tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DocumentNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_DocumentNumber</shortDescription>
+        <value>NUMERO DOCUMENTO CI</value>
+    </labels>
+    <labels>
+        <fullName>OSF_DownloadPDFButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Download to PDF</shortDescription>
+        <value>Descargar en PDF</value>
+    </labels>
+    <labels>
+        <fullName>OSF_EachInstallmentValue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Each Installment Value</shortDescription>
+        <value>Valor cuota</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Edit</shortDescription>
+        <value>Editar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_EditAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_EditAccount</shortDescription>
+        <value>Editar Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_EditDataLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Edit Data Label</shortDescription>
+        <value>Editar datos</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Email</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>OSF_EmailRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_EmailRequired</shortDescription>
+        <value>Correo electronico requerido</value>
+    </labels>
+    <labels>
+        <fullName>OSF_EmailsNotMatching</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_EmailsNotMatching</shortDescription>
+        <value>Los correos electrónicos no coinciden</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorAmountInvalid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Amount Invalid</shortDescription>
+        <value>Please enter a valid amount.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorContactNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Contact Not Found</shortDescription>
+        <value>No contact related to the given user was found.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorEmailFailed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error email failed</shortDescription>
+        <value>El correo electrónico no se pudo enviar: {0}</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorEmailTemplateNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error email template not found</shortDescription>
+        <value>No se encontró la plantilla de correo electrónico solicitada.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorMessageBlockPart1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ErrorMessageBlockPart1</shortDescription>
+        <value>Este usuario está bloqueado por</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorMessageBlockPart2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ErrorMessageBlockPart2</shortDescription>
+        <value>Por favor, inténtelo de nuevo más tarde.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorObjectsListEmpty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error objects list empty</shortDescription>
+        <value>La lista de objetos está vacía.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorObjectsListNull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error objects list null</shortDescription>
+        <value>La lista de objetos es nula.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ErrorOperationNameInvalid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error operation name invalid</shortDescription>
+        <value>Nombre de operación no válido.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FeeLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fee</shortDescription>
+        <value>Comisión:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FeesNumberLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Fees Number</shortDescription>
+        <value>Numero de cuotas:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FirstExpiration</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First Expiration</shortDescription>
+        <value>Fecha primer vencimiento</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FirstName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FirstName</shortDescription>
+        <value>Nombre de pila</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FirstPaymentDate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FirstPaymentDate</shortDescription>
+        <value>Fecha del primer pago:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnEmpresa</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FooterColumnEmpresa</shortDescription>
+        <value>Información de la Empresa |http://www.nuevapolar.cl/ | _blank,
+Canal de denuncias y ética |https://lapolar.ines.cl/lapolar/formulario/| _blank,
+Inversionistas |http://www.nuevapolar.cl/| _blank,
+Trabajar en La Polar | http://lapolar.trabajando.cl/ | _blank,
+Bases Legales |  https://documentos.tarjetalapolar.cl/bases-legales/ | _blank,
+Ubicaciones de Tiendas | https://www.lapolar.cl/tiendas/?showMap=true| _blank,
+Tiendas Abiertas y Horarios | https://www.lapolar.cl/tiendas-abiertas.html| _blank</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnEmpresa_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FooterColumnEmpresa_Title</shortDescription>
+        <value>Empresa</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnLaPolar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF FooterColumnLaPolar</shortDescription>
+        <value>Información de despacho | https://www.lapolar.cl/info/despacho/despacho.html,
+Seguimiento de despacho | https://www.lapolar.cl/Seguimiento-Despacho/,
+Más Protección | https://www.tarjetalapolar.cl/s/seguros-y-asistencias?tabset-f3158=190e7&amp;tabset-9a2d8=190e7|_self,
+Términos y Condiciones | https://www.lapolar.cl/info/terminos-y-condiciones/Terminos-condiciones-01.html</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnLaPolar_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF FooterColumnLaPolar Title</shortDescription>
+        <value>LaPolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnTarjetaLaPolar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FooterColumnTarjetaLaPolar</shortDescription>
+        <value>Dónde usarla,
+Tasas de Interés|https://tarjetalapolar.force.com/tarjetalapolar/servlet/servlet.FileDownload?file=0154z000001uNnr,
+Ofertas Exclusivas | https://tienda.lapolar.cl/ |_self,
+Seguros | /s/seguros-y-asistencias |_self,
+Consultas y Reclamos |/s/contactsupport |_self,
+Preguntas Frecuentes |https://www.tarjetalapolar.cl/s/sac-preguntas-frecuentes?tabset-d61d4=2
+|_self,
+Término y Condiciones| https://lapolartarjeta.my.salesforce.com/sfc/p/3k000000tOhd/a/3k000000g9ht/tHgUGVqk7tS5TpBqb6X_dICLDBhzXJETNEIqJX6tiFI,
+Contratos y Plan de Descuentos | https://documentos.tarjetalapolar.cl/contrato-plan-descuentos/ |_blank</value>
+    </labels>
+    <labels>
+        <fullName>OSF_FooterColumnTarjetaLaPolar_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_FooterColumnTarjetaLaPolar_Title</shortDescription>
+        <value>Tarjeta La Polar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ForgotPassword</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ForgotPassword</shortDescription>
+        <value>¿Olvidaste tu contraseña?</value>
+    </labels>
+    <labels>
+        <fullName>OSF_GeneralError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_GeneralError</shortDescription>
+        <value>Algo salió mal, no se pudo completar el pago. Intente de nuevo más tarde.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_HeaderRequestCard_Approved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_HeaderRequestCard_Approved</shortDescription>
+        <value>TIENES UNA TARJETA PRE APROBADA</value>
+    </labels>
+    <labels>
+        <fullName>OSF_HeaderRequestCard_PreApproved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_HeaderRequestCard_PreApproved</shortDescription>
+        <value>RECIBIMOS TUS DATOS Y TE ENCUENTRAS PRE APROBADO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_HeaderRequestCard_Rejected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_HeaderRequestCard_Rejected</shortDescription>
+        <value>EN ESTOS MOMENTOS NO TENEMOS UNA OFERTA PARA TI</value>
+    </labels>
+    <labels>
+        <fullName>OSF_HomePageUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_HomePageUrl</shortDescription>
+        <value>https://dev-lapolartarjeta.cs2.force.com/tarjetalapolar/s/</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Hours</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Hours</shortDescription>
+        <value>horas</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ITELabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ITE</shortDescription>
+        <value>ITE:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_InteresetRateLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Intereset Rate</shortDescription>
+        <value>Tasa de interés mensual:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_InvalidRUT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_InvalidRUT</shortDescription>
+        <value>Número de RUT no válido</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelAmountAvailable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label Amount Available</shortDescription>
+        <value>Monto avance:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelAmountToSimulate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LabelAmountToSimulate</shortDescription>
+        <value>MONTO A SIMULAR</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelAmountToTransfer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label Amount to Transfer</shortDescription>
+        <value>Monto a transferir</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelInstallments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label Installments</shortDescription>
+        <value>CUOTAS</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelSimulateEffectiveAdvance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label Simulate Effective Advance</shortDescription>
+        <value>Simula tu Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelSimulatePayingIn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LabelSimulatePayingIn</shortDescription>
+        <value>EMPIEZAS A PAGAR EN</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LabelStartPayingIn</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label Start PAying In</shortDescription>
+        <value>Comience a pagar en:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LastName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LastName</shortDescription>
+        <value>Apellido</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LastnameRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LastnameRequired</shortDescription>
+        <value>Apellido Necesario</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LearnMoreButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LearnMoreButton</shortDescription>
+        <value>CONOCE MÁS</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LegalCheckbox</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LegalCheckbox</shortDescription>
+        <value>Solicito credito y transferencia del giro.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_LimitMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_LimitMessage</shortDescription>
+        <value>Error 
+El monto ingresado supera el límite, por favor ingrese un monto menor.
+El límite máximo es:{maxLimit}
+El límite mínimo es:{minLimit}</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MessageObjectsListDeleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message objects list deleted</shortDescription>
+        <value>Se eliminó con éxito la lista de objetos.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MessageObjectsListInserted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message objects list inserted</shortDescription>
+        <value>Se insertó correctamente la lista de objetos.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MessageObjectsListUpdated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Message objects list updated</shortDescription>
+        <value>Se actualizó correctamente la lista de objetos.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Minutes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Minutes</shortDescription>
+        <value>minutos</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MissingBenefitDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_MissingBenefitDetails</shortDescription>
+        <value>Details missing for current record</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MissingToken</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_MissingToken</shortDescription>
+        <value>Missing token from Upago</value>
+    </labels>
+    <labels>
+        <fullName>OSF_MissingTokenLaPolar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_MissingTokenLaPolar</shortDescription>
+        <value>Missing credentials for La Polar Api</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Months</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Months</shortDescription>
+        <value>Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre</value>
+    </labels>
+    <labels>
+        <fullName>OSF_No</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>OSF_NoAccountFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_NoAccountFound</shortDescription>
+        <value>No se encontró cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_NoAccountSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_NoAccountSelected</shortDescription>
+        <value>Ninguna cuenta seleccionada</value>
+    </labels>
+    <labels>
+        <fullName>OSF_NoBenefits</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_NoBenefits</shortDescription>
+        <value>Por el momento no tenemos beneficios, para usted</value>
+    </labels>
+    <labels>
+        <fullName>OSF_OperationNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_OperationNumber</shortDescription>
+        <value>Id de operación:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_OrderButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_OrderButton</shortDescription>
+        <value>Pídelo aquí</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveAmountInput</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveAmountInput</shortDescription>
+        <value>El monto a pagar debe ser un abono igual o menor al monto adeudado</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveErrorButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveErrorButton</shortDescription>
+        <value>IR AL INICIO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveErrorHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveErrorHeader</shortDescription>
+        <value>MI TARJETA &lt;b&gt;LA POLAR&lt;/b&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveErrorMessage</shortDescription>
+        <value>Según nuestros registros usted no posee una cuenta La Polar.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveModalBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveModalBody</shortDescription>
+        <value>Al momento de entrar e ingresar tu rut, estarás pagando tu cuenta de manera simple y sencilla.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveModalButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveModalButton</shortDescription>
+        <value>INGRESAR</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveModalHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveModalHeader</shortDescription>
+        <value>PAGA SÓLO CON TU RUT</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepFourHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepFourHeader</shortDescription>
+        <value>Detalle De Pago</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepFourMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepFourMessage</shortDescription>
+        <value>Pageo realizado con éxito - Cuota pagada</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepThreeButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepThreeButton</shortDescription>
+        <value>Pagar ahora</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepThreeHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepThreeHeader</shortDescription>
+        <value>Confirmación de Monto a Pagar</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepThreeText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepThreeText</shortDescription>
+        <value>El monto a pagar es de &lt;b&gt;${1}&lt;/b&gt;, si es correcto por favor continúa con el pago, si no, vuelve a ingresarlo nuevamente.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepTwoButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepTwoButton</shortDescription>
+        <value>PAGAR CUOTA</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepTwoText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepTwoText</shortDescription>
+        <value>Ingresa el monto total que deseas pagar:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepTwoZeroAmountHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepTwoZeroAmountHeader</shortDescription>
+        <value>PAGO DE CUENTA</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveStepTwoZeroAmountText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PagaSinClaveStepTwoZeroAmountText</shortDescription>
+        <value>No tienes deudas pendientes. Si necesitas hablar con un ejecutivo, llámanos al &lt;a href=&quot;tel:600 391 3000&quot; style=&quot;color:#d00e2a;&quot;&gt;600 391 3000&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PagaSinClaveUNIRED</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SinClaveUNIRED</shortDescription>
+        <value>* Serás redirigido a un sitio seguro de pago Unired</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Password</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Password</shortDescription>
+        <value>Contraseña</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PasswordFieldEmpty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PasswordFieldEmpty</shortDescription>
+        <value>El campo de contraseña está vacío</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PasswordRule</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PasswordRule</shortDescription>
+        <value>Debe incluir caracteres alfanuméricos &lt;br/&gt;
+Debe tener al menos 8 caracteres</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PaymentPending</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PaymentPending</shortDescription>
+        <value>El resultado de la transacción de pago aún está pendiente.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PhoneNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PhoneNumber</shortDescription>
+        <value>Teléfono</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #000000; font-size:19.2px;padding-left: 2.5em;&quot;&gt;{!v.mainObj.name}&lt;/span&gt;&lt;/h4&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #797D7F; font-size:19.2px;padding-left: 2.5em;&quot;&gt;EN ESTOS MOMENTOS NO TENEMOS UNA OFERTA PARA TÍ&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+ &lt;span &gt;Para más información solo debes dirigirte a cualquiera de nuestras &lt;/span&gt;&lt;span  style=&quot;color: #d00e2a;&quot;&gt; Tiendas La Polar&lt;/span&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjetaClientName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjetaClientName</shortDescription>
+        <value>NOMBRE</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_AreaText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_AreaText</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #d00e2a; font-size:19.2px;padding-left: 2.5em;&quot;&gt;REQUISITOS&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+ &lt;li&gt;&lt;span &gt;Ser chileno/a o extranjero/a con residencia definitiva en Chile.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Tener entre 25 y 75 años de edad.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Presentar un número celular propio.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Presentar Cédula de Identidad Vigente y no bloqueada.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Domicilio particular acreditable en Chile.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_AreaText2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_AreaText2</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+ &lt;li&gt;&lt;span &gt;Ingreso acreditable sobre $350.000 líquidos en los últimos 4 meses, los últimos 3 meses con el mismo empleador.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Encontrarse vigente la promoción y oferta establecidas por Inversiones LP S.A. para acceder al otorgamiento de crédito que solicita si corresponde según análisis de Riesgo.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;No presentar informes comerciales negativos.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Cumplir el nivel mínimo de aprobación previsto en los análisis de Riesgo.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_Email</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_Email</shortDescription>
+        <value>CORREO ELECTRÓNICO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_HomeButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_HomeButton</shortDescription>
+        <value>VOLVER AL INICIO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_NoOlvides</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_NoOlvides</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #d00e2a; font-size:19.2px;padding-left: 2.5em;&quot;&gt;NO OLVIDES QUE DEBES&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+ &lt;li&gt;&lt;span &gt;Ser chileno/a o extranjero/a con residencia definitiva.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Tener entre 25 y 75 años de edad.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Presentar un número celular propio.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Presentar Cédula de Identidad Vigente y no bloqueada.&lt;/span&gt;&lt;/li&gt;
+ &lt;li&gt;&lt;span &gt;Domicilio particular acreditable en Chile.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PideTuTarjeta_PhoneNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PideTuTarjeta_PhoneNumber</shortDescription>
+        <value>CELULAR</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PreApprovedCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PreApprovedCard</shortDescription>
+        <value>&lt;p&gt;Solo debes dirigirte a cualquiera de nuestras &lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot; style=&quot;color:#d00e2a;&quot;&gt;Tiendas La Polar&lt;/a&gt; y nuestros ejecutivos financieros te ayudarán a terminar el proceso.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PrintButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Print Button</shortDescription>
+        <value>Imprimir</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PublicRateLinkMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PublicRateLinkMessage</shortDescription>
+        <value>&lt;span style=&quot;font-size: initial&quot;&gt;&lt;a href=&quot;https://www.tarjetalapolar.cl/wp-content/uploads/2020/01/Pizarra-lp-a-15-Enero-2020_TIENDA.pdf&quot; target=&quot;_blank&quot; style=&quot;color:#3272b0;&quot;&gt; Descargar tasas de interés. &lt;/a&gt; &lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PublicSimulateBannerButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PublicSimulateBannerButton</shortDescription>
+        <value>Pide Tu Tarjeta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PublicSimulateBannerHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PublicSimulateBannerHeader</shortDescription>
+        <value>¿No Eres Cliente?</value>
+    </labels>
+    <labels>
+        <fullName>OSF_PublicSimulateBannerText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_PublicSimulateBannerText</shortDescription>
+        <value>Si no eres cliente, solicita Tu Tarjeta La Polar, obtén diferentes beneficios y una tasa preferencial en Avances en Efectivo.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RUTNumberExists</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RUTNumberExists</shortDescription>
+        <value>Este número RUT tiene un usuario.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RUTRecipientLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RUT Recipient</shortDescription>
+        <value>RUT destinatario:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RateLinkMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RateLinkMessage</shortDescription>
+        <value>&lt;span style=&quot;font-size: initial&quot;&gt; Informate de nuestras tasas &lt;a href=&quot;https://www.tarjetalapolar.cl/wp-content/uploads/2020/01/Pizarra-lp-a-15-Enero-2020_TIENDA.pdf&quot; target=&quot;_blank&quot; style=&quot;color:#3272b0;&quot;&gt; aquí &lt;/a&gt; &lt;/span&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RecipientEmailLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recipient Email</shortDescription>
+        <value>Email destinatario:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RecipientNameLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Recipient Name</shortDescription>
+        <value>Nombre destinatario:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RegisterError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RegisterError</shortDescription>
+        <value>Tu solicitud no se puede procesar, recuerda que debes incluir al menos 8 caracteres, 1 letra y un número.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RejectedCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RejectedCard</shortDescription>
+        <value>&lt;p&gt;Para más información acerca a cualquiera de nuestros Solo debes dirigirte a cualquiera de nuestras &lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot; style=&quot;color:#d00e2a;&quot;&gt;Tiendas La Polar&lt;/a&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RequestCard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RequestCard</shortDescription>
+        <value>SOLICITAR TARJETA</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RequestTransferLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request Transfer Label</shortDescription>
+        <value>Solicitar Transferencia</value>
+    </labels>
+    <labels>
+        <fullName>OSF_RequiredFieldsError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_RequiredFieldsError</shortDescription>
+        <value>Por favor complete los siguientes campos:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ResendSms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_ResendSms</shortDescription>
+        <value>Reenviar Codigo</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Rut</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Rut</shortDescription>
+        <value>RUT</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Sbif_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Sbif_Text</shortDescription>
+        <value>www.cmfchile.cl</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SelectAccount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SelectAccount</shortDescription>
+        <value>Seleccione Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SelectAccountHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SelectAccountHeader</shortDescription>
+        <value>Escoge la cuenta a la cual deseas trasferir tu Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SelectAccountType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SelectAccountType</shortDescription>
+        <value>Seleccionar tipo de cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SelfRegister</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SelfRegister</shortDescription>
+        <value>Crear una cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SendToLastStep</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SendToLastStep</shortDescription>
+        <value>Volver al primer paso</value>
+    </labels>
+    <labels>
+        <fullName>OSF_ShareValueLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Share value</shortDescription>
+        <value>Valor cuota:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateEmail</shortDescription>
+        <value>CORREO ELECTRÓNICO</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateNext</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateNext</shortDescription>
+        <value>SIGUIENTE</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulatePhone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulatePhone</shortDescription>
+        <value>INGRESA TU CELULAR</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateRangeHTML</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateRangeHTML</shortDescription>
+        <value>&lt;div&gt;Ingresar monto entre $50.000 y&lt;/div&gt;
+&lt;div&gt;1.500.000(Sin puntos ni comas)&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateRangeHTML_XL</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateRangeHTML_XL</shortDescription>
+        <value>&lt;div&gt;Ingresar monto entre $100.000 y&lt;/div&gt;
+&lt;div&gt;$1.500.000(Sin puntos ni comas)&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateRut</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateRut</shortDescription>
+        <value>INGRESA TU RUT</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulateTitleStep1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulateTitleStep1</shortDescription>
+        <value>Datos Personales</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationBottomMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationBottomMessage</shortDescription>
+        <value>Simulación exclusiva para avance en efectivo, no aplica para XL.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationDataHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Simulation Data Header</shortDescription>
+        <value>Datos de simulación</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsAmountToApply</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsAmountToApply</shortDescription>
+        <value>MONTO A SOLICITAR</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsCuotas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsCuotas</shortDescription>
+        <value>cuotas de</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsEndMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsEndMessage</shortDescription>
+        <value>Oferta de transferencia de Avance y Avance XL exclusiva para titulares Tarjeta La Polar o Tarjeta La Polar Visa. Oferta válida solo por 24 horas, sujeta a evaluación crediticia del cliente y al cumplimiento de las políticas de riesgo y comerciales al momento de la solicitud, tales como variación de la línea de crédito por compras y/o avances realizados.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsHeader</shortDescription>
+        <value>SIMULACIÓN</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsMiddleMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsMiddleMessage</shortDescription>
+        <value>CAE: Costo Anual Equivalente &lt;br/&gt;
+CTC: Costo total del Crédito</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SimulationResultsPublicEndMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SimulationResultsPublicEndMessage</shortDescription>
+        <value>Oferta exclusiva para Avance en Efectivo y para clientes Tarjeta La Polar, Vigencia de 24 horas hábiles. Valor referencial, sujeto a evaluación crediticia y disponibilidad de cupo del cliente. Promociones Avance XL, solo para clientes con Tarjeta La Polar, solicitar directamente en Tiendas La Polar.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_SupportCaseError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_SupportCaseError</shortDescription>
+        <value>Valide los siguientes campos:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TimeOfTransfer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TimeOfTransfer</shortDescription>
+        <value>Fecha de transferencia:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TotalCreditCost</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Total Credit Cost</shortDescription>
+        <value>CTC</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferAmount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferAmount</shortDescription>
+        <value>Transfiere A Tu Cuenta:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferButton</shortDescription>
+        <value>Transfiere tu Avance</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferButtonResult</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferButtonResult</shortDescription>
+        <value>Transfiere aquí</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferSuccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferSuccess</shortDescription>
+        <value>Tu transferencia ya ha sido procesada. En 15 minutos recibirás la confirmación a través de e-mail.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferSummaryAvanceMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferSummaryAvanceMessage</shortDescription>
+        <value>&lt;strong&gt;Avance:&lt;/strong&gt; El presente Avance fue solicitado y aceptado conforme a la oferta realizada por Inversiones LP S.A y los términos y condiciones señalados en el presente documento, con cargo a la línea de avance en efectivo, asociado a mi Tarjeta La Polar o La Polar Visa, cuyas condiciones, características y montos han sido informadas previamente.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_TransferSummaryAvanceXLMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_TransferSummaryAvanceXLMessage</shortDescription>
+        <value>&lt;strong&gt;Avance XL:&lt;/strong&gt; El presente Avance XL fue solicitado y aceptado conforme a la oferta realizada por Inversiones LP S.A y los términos y condiciones señalados en el presente documento, con cargo  a una nueva línea de crédito no rotativa denominada Avance XL,  asociado a mi Tarjeta La Polar o La Polar Visa, cuyas condiciones, características y montos han sido informadas previamente.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_UserBlockedMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_UserBlockedMessage</shortDescription>
+        <value>Usuario bloqueado debido a demasiados intentos de inicio de sesión incorrectos.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_UserNotFoundError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_UserNotFoundError</shortDescription>
+        <value>El usuario no existe.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponentAcivationCode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponentAcivationCode</shortDescription>
+        <value>Ingrese su código de activación</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponentFirstMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponentFirstMessage</shortDescription>
+        <value>Te enviaremos un código al teléfono y correo asociado a tu cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponentHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponentHeader</shortDescription>
+        <value>Por razones de seguridad, necesitamos confirmar que seas tu.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponentNumberValidation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponentNumberValidation</shortDescription>
+        <value>Si este no es tu número de teléfono por favor acércate a alguna de nuestras tiendas para actualizarlo.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponent_BtnEnviar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponent_BtnEnviar</shortDescription>
+        <value>Enviar código</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeComponent_BtnVolver</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeComponent_BtnVolver</shortDescription>
+        <value>Volver</value>
+    </labels>
+    <labels>
+        <fullName>OSF_VerificationCodeFlowHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_VerificationCodeFlowHeader</shortDescription>
+        <value>Enviaremos un código a tu celular, ingresa tu código de activación abajo. Si este no es tu número de teléfono por favor diríjase a una de nuestras tiendas para actualizar su información.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_WrongCodeError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_WrongCodeError</shortDescription>
+        <value>El código de verificación es incorrecto</value>
+    </labels>
+    <labels>
+        <fullName>OSF_Yes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF_Yes</shortDescription>
+        <value>Si</value>
+    </labels>
+    <labels>
+        <fullName>OSF_client_service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF client service</shortDescription>
+        <value>Servicio Al Cliente</value>
+    </labels>
+    <labels>
+        <fullName>OSF_client_service_menu_items</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF client service menu items</shortDescription>
+        <value>Consultas y Reclamos|/s/contactsupport3|self,
+Preguntas Frecuentes|/s/sac-preguntas-frecuentes?tabset-d61d4=2|_self,
+Tiendas La Polar|https://www.lapolar.cl/Tiendas/?showMap=true|self</value>
+    </labels>
+    <labels>
+        <fullName>OSF_facebook_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF facebook link</shortDescription>
+        <value>http://www.facebook.com/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_bloqueo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer bloqueo</shortDescription>
+        <value>Bloqueo de Tarjetas</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_bloqueo_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer bloqueo number</shortDescription>
+        <value>800 395 800</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_entidades_text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer entidades text</shortDescription>
+        <value>Infórmese sobre las entidades autorizadas para emitir Tarjetas de Pago en el país, quienes se encuentran inscritas en los Registros de Emisores de Tarjetas que lleva la CMF, en</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_follow_us</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer follow us</shortDescription>
+        <value>Síguenos en:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_rights_reserved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer rights reserved</shortDescription>
+        <value>© La Polar 2021 — Avda. Santa Clara 207, Huechuraba, Santiago. / Servicio al Cliente 600 391 3000 - consultasyreclamos@lapolar.cl - Bloqueo de Tarjeta 800 395 800. / Empresas La Polar, todos los derechos reservados. / Inversiones LP S.A. Rut: 76.265.724-4, representante legal: Marcelo Arancibia Rodriguez.</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_safe_site</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer safe site</shortDescription>
+        <value>Sitio 100% Seguro.
+Privacidad y Seguridad Garantizada</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_servicio_al_cliente</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer servicio al cliente</shortDescription>
+        <value>Servicio Al Cliente</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_servicio_al_cliente_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer servicio al cliente number</shortDescription>
+        <value>600 391 3000</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_whatsapp</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer whatsapp</shortDescription>
+        <value>WhatsApp</value>
+    </labels>
+    <labels>
+        <fullName>OSF_footer_whatsapp_number</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF footer whatsapp number</shortDescription>
+        <value>+56 9 9885 7500</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_account_button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header account button</shortDescription>
+        <value>Mi Cuenta</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_clave_button</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header clave button</shortDescription>
+        <value>¡Paga sin clave!</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_follow_us</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header follow us</shortDescription>
+        <value>Síguenos en:</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_main_menu</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header main menu</shortDescription>
+        <value>Tarjetas|/s/pide-tu-tarjeta|_self,
+Avances|/s/simula-tu-avance|_self,
+Seguros y Asistencias|/s/seguros-y-asistencias?language=es_CL|_self,
+Beneficios|/s/beneficios|_self,
+Ofertas Exclusivas|https://www.lapolar.cl/|_self,
+Servicio Al Cliente|/s/contactsupport|_self</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_main_menu_avances</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header main menu avances</shortDescription>
+        <value>Simula tu Avance|/s/simula-tu-avance|_self,
+Avance en Efectivo|/s/avance-en-efectivo?tabset-5ba02=2|_self,
+Avance XL|/s/avance-xl?tabset-2ecf8=3|_self,
+Transferir|https://avance.tarjetalapolar.cl/tarjetalapolar/s/login/?language=es_CL&amp;startURL=%2Ftarjetalapolar%2Fs%2F&amp;ec=302</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_main_menu_seguros_y_assistencias</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header main menu seguros y assistencias</shortDescription>
+        <value>Desgravamen 2.0|/s/seguros-y-asistencias|_self,
+Programas de Salud|/s/seguros-y-asistencias?tabset-9a2d8=2|_self,
+Full Protección|/s/seguros-y-asistencias?tabset-9a2d8=f74aa|_self,
+Más Protección|/s/seguros-y-asistencias?tabset-9a2d8=190e7|_self,
+Siniestros|/s/seguros-y-asistencias?tabset-9a2d8=bb871|_self,
+Preguntas Frecuentes Seguros|/s/seguros-y-asistencias?tabset-9a2d8=bacd6|_self,
+Telemedicina|/s/seguros-y-asistencias?tabset-9a2d8=293a2|_self</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_main_menu_tarjetas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header main menu tarjetas</shortDescription>
+        <value>Pide Tu Tarjeta|/s/pide-tu-tarjeta|self,
+Tarjeta La Polar|/s/tarjeta-la-polar?tabset-d9bc1=2|_self,
+Tarjeta La Polar Visa|/s/tarjeta-la-polar-visa?tabset-7407a=1|_self</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_searchbar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header searchbar</shortDescription>
+        <value>¿Qué estás buscando?</value>
+    </labels>
+    <labels>
+        <fullName>OSF_header_super_menu</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF header super menu</shortDescription>
+        <value>LaPolar.cl|https://www.lapolar.cl/|_self|,
+Inversionistas|http://www.nuevapolar.cl/|_self|,
+Bloqueo de Tarjeta|tel:+562800395800|_self|-featured</value>
+    </labels>
+    <labels>
+        <fullName>OSF_home_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF home link</shortDescription>
+        <value>/s/</value>
+    </labels>
+    <labels>
+        <fullName>OSF_login_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF login link</shortDescription>
+        <value>https://micuenta.tarjetalapolar.cl/?_ga=2.180750639.960375092.1587739877-1993435803.1582886534</value>
+    </labels>
+    <labels>
+        <fullName>OSF_servicio_al_cliente_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF servicio al cliente link</shortDescription>
+        <value>/s/contactsupport?language=es_CL</value>
+    </labels>
+    <labels>
+        <fullName>OSF_twitter_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF twitter link</shortDescription>
+        <value>http://www.twitter.com/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>OSF_youtube_link</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OSF youtube link</shortDescription>
+        <value>http://www.youtube.com/lapolarchile</value>
+    </labels>
+    <labels>
+        <fullName>TYPE_OPTION_NOT_SELECTED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please choose a valid custom metadata type.</shortDescription>
+        <value>Please choose a valid custom metadata type.</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PagaSinClaveStepTwoButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PagaSinClaveStepTwoButton</shortDescription>
+        <value>PAGAR O ABONAR</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PagaSinClave_ConsultaHref</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PagaSinClave_ConsultaHref</shortDescription>
+        <value>https://avance.tarjetalapolar.cl/tarjetalapolar/s/login/?language=es_CL&amp;startURL=%2Ftarjetalapolar%2Fs%2F&amp;ec=302</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PagaSinClave_ConsultaTuAvance</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PagaSinClave_ConsultaTuAvance</shortDescription>
+        <value>Consulta aquí si tienes un avance disponible</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PagaSinClave_Lbl</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PagaSinClave_Lbl</shortDescription>
+        <value>PAGA SIN CLAVE</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_Aprobada</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_Aprobada</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;span style=&quot;color: #000000; font-size:19.2px;padding-left: 2.5em;&quot;&gt;TIENES UNA TARJETA APROBADA&lt;/span&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;span &gt;Solo debes dirigirte a cualquiera de nuestras&lt;/span&gt;&lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; style=&quot;color: #d00e2a;&quot; target=&quot;_blank&quot; &gt; Tiendas La Polar&lt;/a&gt;&lt;span &gt; y nuestros ejecutivos financieros te ayudarán a terminar el proceso.&lt;/span&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_AreaText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_AreaText</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #d00e2a; font-size:19.2px;padding-left: 2.5em;&quot;&gt;REQUISITOS&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;li&gt;&lt;span &gt;Ser chileno/a o extranjero/a con residencia definitiva en Chile.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Tener entre 25 y 75 años de edad.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Presentar un número celular propio.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Presentar Cédula de Identidad Vigente y no bloqueada.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Domicilio particular acreditable en Chile.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_AreaText2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_AreaText2</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;li&gt;&lt;span &gt;Ingreso acreditable sobre $350.000 líquidos en los últimos 4 meses, los últimos 3 meses con el mismo empleador.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Encontrarse vigente la promoción y oferta establecidas por Inversiones LP S.A. para acceder al otorgamiento de crédito que solicita si corresponde según análisis de Riesgo.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;No presentar informes comerciales negativos.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Cumplir el nivel mínimo de aprobación previsto en los análisis de Riesgo.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_ClientName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_NombreCliente</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;span &gt;Según nuestros registros ya eres cliente de La Polar, si tienes algún problema por favor acércate a una&lt;/span&gt;&lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; style=&quot;color: #d00e2a;&quot; target=&quot;_blank&quot; &gt; Tienda La Polar&lt;/a&gt;&lt;span &gt; o llama a&lt;/span&gt;&lt;a style=&quot;color: #d00e2a;&quot; href=&quot;tel:600 391 3000&quot; &gt; 600 391 3000.&lt;/a&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_Error</shortDescription>
+        <value>&lt;p&gt;En este momento no es posible continuar la solicitud. Para más información, por favor acércate a cualquiera de nuestras &lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot; style=&quot;color:#d00e2a;&quot;&gt;Tiendas La Polar&lt;/a&gt;&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_NoOlvides</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_NoOlvides</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #d00e2a; font-size:19.2px;padding-left: 2.5em;&quot;&gt;NO OLVIDES QUE DEBES&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;li&gt;&lt;span &gt;Ser chileno/a o extranjero/a con residencia definitiva.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Tener entre 25 y 75 años de edad.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Presentar un número celular propio.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Presentar Cédula de Identidad Vigente y no bloqueada.&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span &gt;Domicilio particular acreditable en Chile.&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_PreAprobada</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_PreAprobada</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;span style=&quot;color: #000000; font-size:19.2px;padding-left: 2.5em;&quot;&gt;RECIBIMOS TUS DATOS Y TE ENCUENTRAS PRE APROBADO&lt;/span&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;span &gt;Solo debes dirigirte a cualquiera de nuestras&lt;/span&gt;&lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; style=&quot;color: #d00e2a;&quot; target=&quot;_blank&quot; &gt; Tiendas La Polar&lt;/a&gt;&lt;span &gt; y nuestros ejecutivos financieros te ayudarán a terminar el proceso.&lt;/span&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_SinOferta</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_SinOferta</shortDescription>
+        <value>&lt;div class=&quot;forceCommunityRichText forceCommunityRichTextInline&quot;&gt;&lt;div class=&quot;uiOutputRichText&quot;&gt;
+&lt;h4&gt;&lt;span style=&quot;color: #797D7F; font-size:19.2px;padding-left: 2.5em;&quot;&gt;EN ESTOS MOMENTOS NO TENEMOS UNA OFERTA PARA TÍ&lt;/span&gt;&lt;/h4&gt;
+&lt;p &gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul style=&quot;font-size: 14px;&quot;&gt;
+&lt;span &gt;Para más información solo debes dirigirte a cualquiera de nuestras &lt;/span&gt;&lt;a href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; style=&quot;color: #d00e2a;&quot; target=&quot;_blank&quot; &gt; Tiendas La Polar&lt;/a&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;clear&quot; &gt;&lt;/div&gt;&lt;/div&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PideTuTarjeta_SujetoAEvaluacion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PideTuTarjeta_SujetoAEvaluacion</shortDescription>
+        <value>&lt;ul style=&quot;font-size: 11px;&quot;&gt;
+&lt;span &gt;Sujeto a evaluación crediticia vigente al momento de retiro en Tienda.&lt;/span&gt;
+&lt;/ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>VASS_PortabilidadFinanciera_Href</fullName>
+        <language>es_CL</language>
+        <protected>false</protected>
+        <shortDescription>VASS_PortabilidadFinanciera_Href</shortDescription>
+        <value>http://privdev.lapolar.cl/#portabilidad</value>
+    </labels>
+    <labels>
+        <fullName>VASS_SitioPrepago</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_SitioPrepago</shortDescription>
+        <value>https://preprod2-tarjetalapolar.cs17.force.com/prepago</value>
+    </labels>
+    <labels>
+        <fullName>VASS_reCaptcha_BackKey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_reCaptcha_BackKey</shortDescription>
+        <value>6LfG4IAaAAAAAMg441T4sfbUmM7EbxfYq2gsPL7d</value>
+    </labels>
+    <labels>
+        <fullName>VASS_reCaptcha_FrontKey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_reCaptcha_FrontKey</shortDescription>
+        <value>6LfG4IAaAAAAAPtUP5tZPxpPLxMLVk3Eq6INSOBD</value>
+    </labels>
+    <labels>
+        <fullName>VASS_reCaptcha_SiteVerify</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_reCaptcha_SiteVerify</shortDescription>
+        <value>https://www.google.com/recaptcha/api/siteverify</value>
+    </labels>
+    <labels>
+        <fullName>VASS_reCaptcha_Tarjetalapolar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VASS_reCaptcha_Tarjetalapolar</shortDescription>
+        <value>https://www.tarjetalapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>Vass_CerrarSesion</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Vass_CerrarSesion</shortDescription>
+        <value>Cerrar sesión</value>
+    </labels>
+    <labels>
+        <fullName>Vass_Error</fullName>
+        <language>es_CL</language>
+        <protected>false</protected>
+        <shortDescription>Vass_ErrorREJECTED</shortDescription>
+        <value>Algo salió mal, no se pudo completar el pago. Intente de nuevo más tarde</value>
+    </labels>
+    <labels>
+        <fullName>Vass_MiPerfil</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vass_MiPerfil</shortDescription>
+        <value>Mi Perfil</value>
+    </labels>
+    <labels>
+        <fullName>Vass_MisDocumentos</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vass_MisDocumentos</shortDescription>
+        <value>Mis Documentos</value>
+    </labels>
+    <labels>
+        <fullName>Vass_OrgForceUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vass_OrgForceUrl</shortDescription>
+        <value>https://avance.tarjetalapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>Vass_PagaSinClaveStepTwoSendEmail</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Vass_PagaSinClaveStepTwoSendEmail</shortDescription>
+        <value>Quiero recibir el comprobante de pago en mi correo.</value>
+    </labels>
+    <labels>
+        <fullName>Vass_TituloDeclaraciones</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Vass_TituloDeclaraciones</shortDescription>
+        <value>Listado de Documentos</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a cross-object fieldsset is not allowed and attempted.</shortDescription>
+        <value>Cross-object fields not allowed and field &quot;{0}&quot; is a cross-object field.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_fieldset_wrong_sobject_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error when selecting a field set for a different sobject type.</shortDescription>
+        <value>Field set &quot;{0}&quot; is not for SObject type &quot;{1}&quot;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_recursive_subquery_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to nest subqueries.</shortDescription>
+        <value>Invalid call to subselectQuery.  You may not add a subselect query to a subselect query.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryFactory_subquery_invalid_relationship</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Presented when attempting to create a subquery from an invalid relationship.</shortDescription>
+        <value>Invalid call to subselectQuery.  Invalid relationship for table.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_insertable</shortDescription>
+        <value>You do not have permission to insert field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_readable</shortDescription>
+        <value>You do not have permission to read the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_field_not_updateable</shortDescription>
+        <value>You do not have permission to update the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_deletable</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_deletable</shortDescription>
+        <value>You do not have permission to delete {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_insertable</shortDescription>
+        <value>You do not have permission to insert {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_readable</shortDescription>
+        <value>You do not have permission to read {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
+        <value>You do not have permission to update {0}</value>
     </labels>
 </CustomLabels>
