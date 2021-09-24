@@ -56,20 +56,28 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             LP_OnboardingSelector onbSelector = new LP_OnboardingSelector();
             resOnb = onbSelector.selectByLeadRutWithLimit(objLead.LP_Rut__c);
             resOnb.LP_GUIDIdentCheck__c = LP_RestConnectionUtility.getGUID();
-            String identCheckencrypt = LP_CryptoClassUtility.encrypt(resOnb.LP_GUIDIdentCheck__c, PVR_STR_KEY, PVR_STR_INITVECTOR);
+            
+            String encryptGuid = LP_CryptoClassUtility.encrypt(resOnb.LP_GUIDIdentCheck__c, PVR_STR_KEY, PVR_STR_INITVECTOR);
+            
+            JWT jwt = new JWT('HS256');
+            jwt.privateKey = 'base64 encoded secret';
+            jwt.iss = 'your issuer';
+            jwt.sub = 'some subject';
+            jwt.aud = 'some audience';
+            String token = jwt.issue();  
             
             Map<String, String> params = new Map<String, String>();
             params.put('action',PVR_ACT_JUMIO_INIT);
             params.put('scanreference',null);
             params.put('guid',resOnb.LP_GUIDIdentCheck__c);
             params.put('url',url);
-            system.debug('params: '+params);
+            params.put('jwt',token);
+            
             LP_MAPJSONAzurianValidation objClass = new LP_MAPJSONAzurianValidation(record, params);
             LP_JSONAzurianResponse response = new LP_JSONAzurianResponse();
             List<String> result = new List<String>();
             response = response.parse(objClass.call());
             update resOnb;
-            system.debug('response: '+response);
             //URL to redirect Biometric validation system
             result.add(response.items[0].transactionReference);
             result.add(response.items[0].redirectUrl);
@@ -273,7 +281,7 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             LP_OnboardingSelector onbSelector = new LP_OnboardingSelector();
             Lead resLead = new Lead();
             LP_LeadsSelector leadSelector = new LP_LeadsSelector();
-            
+            //String decryptGuid = LP_CryptoClassUtility.decrypt(guid, PVR_STR_KEY, PVR_B64_INITVECTOR);
             resOnb = onbSelector.selectByGUIDWithLimit(guid);
             resLead = leadSelector.selectByLeadIdWithLimit(resOnb.LP_Candidato__c);
             return resLead;

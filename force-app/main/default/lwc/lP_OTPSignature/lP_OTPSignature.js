@@ -50,10 +50,13 @@ import lInvalidCode from '@salesforce/label/c.LP_OTP_TextoErrorTituloValidacionC
 import GETPATHUTILITY from '@salesforce/resourceUrl/LP_OnboardingUtility';
 import { loadScript } from 'lightning/platformResourceLoader';
 
+import CLIENT_FORM_FACTOR from '@salesforce/client/formFactor';
+
 export default class LP_OTPSignature extends LightningElement {
     steps = {step1, step5};
     @api email;
-
+    showSpinner = false;
+    isPhone = CLIENT_FORM_FACTOR != 'Large' ? true : false;
     @api mobilePhone;
     @api showError;
     @api showAttemps;
@@ -303,12 +306,14 @@ export default class LP_OTPSignature extends LightningElement {
     *  @Date:        19/05/2021
     */
     async nextStep(event) {
+        
         let nextbtn = this.template.querySelector(".next-page-btn");
         try {
             if(this.showError){
                 const pathEvent = new CustomEvent('setsteplayout', {detail: {step: this.steps.step1, param: '', objLead: this.objLead}});
                 this.dispatchEvent(pathEvent);
             }else{
+                this.showSpinner = true;
                 nextbtn.disabled = true;
                 const result1 =  await processDocuments({objLead: this.objLead, otpCode: this.otpCode});
                 //console.log('processDocuments result: ' + JSON.stringify(result1));
@@ -320,6 +325,7 @@ export default class LP_OTPSignature extends LightningElement {
                 this.dispatchEvent(pathEvent);
             }
         } catch (error) {
+            this.showSpinner = false;
             this.error = error;
             let message = JSON.parse(error.body.message);
             console.error('error.message: ' + JSON.stringify(message));
@@ -332,6 +338,7 @@ export default class LP_OTPSignature extends LightningElement {
         } finally {
             if(!this.showError) {
                 nextbtn.disabled = false;
+                this.showSpinner = false;
             }
         }
     }

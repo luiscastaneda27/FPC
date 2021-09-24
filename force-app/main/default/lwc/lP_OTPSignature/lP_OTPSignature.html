@@ -92,5 +92,16 @@ VERSION  AUTHOR         DATE            Description
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-
+    <template if:true={showSpinner}>
+        <div id="activityIndicator" class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+                <div class="custom-loading-text">
+                    ¡En breve te redireccionaremos al último paso!
+                </div>
+            </div>
+        </div>
+     </template>
 </template>

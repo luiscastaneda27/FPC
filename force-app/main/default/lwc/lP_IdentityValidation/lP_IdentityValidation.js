@@ -31,7 +31,6 @@ export default class LP_IdentityValidation extends NavigationMixin(LightningElem
     @api disabledSubmit = false;
     @api sfdcBaseURL;
     @api renderFlag = false;
-    popRedirectUrl = false;
     steps = {step1}
     // static resource to use in the template
     iconSM = {
@@ -83,12 +82,5 @@ export default class LP_IdentityValidation extends NavigationMixin(LightningElem
    IdentityValidation(){
         this.disabledSubmit = true;
         window.open(this.redirectUrl,'_parent');
-    }
-    identityValidationTest(){
-        console.log("Link: "+this.redirectUrl);
-        this.popRedirectUrl = true;
-    }
-    salirOC(){
-        this.popRedirectUrl = false;
     }
 }

@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>LP_OnboardingStepFiveController</members>
-		<members>LP_OnboardingStepFourController</members>
-		<members>LP_OnboardingStepOneController</members>
-		<members>LP_OnboardingStepSevenController</members>
-		<members>LP_OnboardingStepSixController</members>
-		<members>LP_OnboardingStepThreeController</members>
-		<members>LP_OnboardingStepTwoController</members>
-		<name>ApexClass</name>
-	</types>
-	<types>
 		<members>lP_BodyParent</members>
 		<members>lP_DocumentInformation</members>
 		<members>lP_ErrorOnboarding</members>
@@ -18,6 +8,7 @@
 		<members>lP_InformationPersonalData</members>
 		<members>lP_OTPSignature</members>
 		<members>lP_OTPValidation</members>
+		<members>lP_InternetPassword</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<version>51.0</version>

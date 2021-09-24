@@ -223,7 +223,7 @@ button.button:enabled {
         height: 13.88vh;
     } */
 }
-@media (min-width: 360px) and (max-width:976px) {
+@media (min-width: 607px) and (max-width:975px){
     .father-container{
         display:flex;
         flex-direction: column;
@@ -247,8 +247,12 @@ button.button:enabled {
         grid-template-rows: 2.563rem;
         margin-top: 1.25rem;
     }
-.space{
+/* .space{
     width: 0px;
+} */
+.slds-input .slds-combobox__input{
+    margin-left: 0px;
+    outline-color: #D00E2A;
 }
     .mobile-title{
         display: block;
@@ -269,7 +273,11 @@ button.button:enabled {
         margin-top: 2rem;
     }
     .gen-input{
-        margin-bottom: 1.563rem;
+        margin-bottom: 0rem;
+        margin-top: -1rem;
+    }
+    .dir-input, .ciu-input{
+        margin-bottom: -1.2rem;
     }
     lightning-helptext{
         display: none;
@@ -307,6 +315,104 @@ button.button:enabled {
         display: flex;
         flex-wrap: wrap;
     }
+}
+@media (min-width: 360px) and (max-width:975px) {
+    .father-container{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width:100%;
+    }
+    .form-container{
+        display:flex;
+        grid-template-columns: 100%;
+        width: 100%;
+        padding-right: 0;
+        padding-left: 0;
+        grid-template-rows: 2.563rem;
+    }
+    .form-container2{
+        display:flex;
+        grid-template-columns: 100%;
+        width: 100%;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        grid-template-rows: 2.563rem;
+        margin-top: 1.25rem;
+    }
+/* .space{
+    width: 0px;
+} */
+.slds-input .slds-combobox__input{
+    margin-left: 0px;
+    outline-color: #D00E2A;
+}
+    .mobile-title{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:2.125rem;
+        color: #D00E2A;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        margin-bottom: 32px;
+        /* text-align: start; */
+    }
+   
+    .input-title{
+        margin: 0;
+        font-weight: 400;
+        margin-top: 2rem;
+    }
+    .gen-input{
+        margin-bottom: 0rem;
+        /* margin-top: -1rem; */
+    }
+    .dir-input, .ciu-input{
+        margin-bottom: -1.2rem;
+    }
+    lightning-helptext{
+        display: none;
+    }
+    .check-container{
+        margin-top: 0rem;
+        /* grid-template-columns: 20% 80%; */
+        display: flex;
+        flex-wrap: nowrap;
+        margin-right: 1.5rem;
+    }
+    .text1{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin-top: 56px;
+    }
+    .checkbox-text,
+    .checkbox-text2{
+        margin-left: 0rem;
+    }
+    .checkbox-text2{
+        margin-left: 0rem;
+    margin-top: -20px;
+    }
+    .last-container{
+        flex-direction: column;
+        justify-content: center;
+        padding:2.188rem 0rem;
+    }
+    .buttons-container{
+        margin-right: 0.25rem;
+        margin-top:40px;
+        margin-bottom: 40px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+@media (min-width: 360px) and (max-width:480px){
+.space{
+    width: 0px;
+}
 }
 
 @media (min-width: 320px) and (max-width:360px) {
@@ -359,7 +465,11 @@ button.button:enabled {
         margin-top: 2rem;
     }
     .gen-input{
-        margin-bottom: 1.563rem;
+        margin-top: -0.9rem;
+        margin-bottom: 0rem;
+    }
+    .dir-input, .ciu-input{
+        margin-bottom: -1.2rem;
     }
     lightning-helptext{
         display: none;

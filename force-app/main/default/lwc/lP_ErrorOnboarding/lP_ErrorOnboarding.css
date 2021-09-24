@@ -60,24 +60,17 @@ a{
   border: none;
   width: 185px;
   height: 32px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   margin-top: 78px;
   font-size: 12px;
 }
   /* TABLET VERSION  */
-  @media (min-width: 976px) and (max-width: 1250px){
-
-  }
-
-
-
-
-
-
-
-  
-/* MOBILE VERSION */
-@media (min-width: 320px) and (max-width: 975px) {
+/* @media (min-width: 976px) and (max-width: 1250px){
+.titles{
+  display: none;
+}
+} */
+@media (min-width: 791px) and (max-width: 976px) {
   .first-container{
     display:flex;
     flex-direction:row;
@@ -89,8 +82,14 @@ a{
   .titles{
     display: block;
     color: #D00E2A;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Nunito',sans-serif;
+    font-style: normal;
+    font-weight: 600;
     font-size: 34px;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    text-align: start;
+    margin-bottom: 32px;
   }
   .img-cont{
     display:flex;
@@ -101,20 +100,27 @@ a{
   .card-img{
     width: 116px;
     height: 176px;
-    margin-top: 32px;
+    margin-top: -37px;
+    margin-left: 42px;
   }
   .text-container{
-    padding: 40px 16px 0 0px;
+    padding: 0px 0px 31px 10px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
     margin-left: -15px;
   }
   .text{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
   }
   .number{
     display: none;
@@ -126,10 +132,316 @@ a{
   }
   .button{
     width: 177px;
-    margin-top: 271px;
-    /*align-self:flex-end;*/
-    margin-left: 160px;
-    /*margin-right: 50px;*/
+    height: 32px;
+    margin-top: 16.875rem;
+    margin-left: 32.25rem;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
+  }
+}
+@media (min-width: 667px) and (max-width: 791px) {
+  .first-container{
+    display:flex;
+    flex-direction:row;
+    /* flex-wrap:wrap;
+    justify-content: center; */
+    width: 100%;
+    margin: 0px;
+  }
+  .titles{
+    display: block;
+    color: #D00E2A;
+    font-family: 'Nunito',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    text-align: start;
+    margin-bottom: 32px;
+  }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 230px;
+    justify-content: center;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+    margin-top: -37px;
+    margin-left: 42px;
+  }
+  .text-container{
+    padding: 0px 0px 31px 10px;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: -15px;
+  }
+  .text{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+  }
+  .number{
+    display: none;
+  }
+  .number-mobile{
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .button{
+    width: 177px;
+    height: 32px;
+    margin-top: 16.875rem;
+    margin-left: 28.25rem;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
+  }
+}
+@media (min-width: 571px) and (max-width: 667px) {
+    .first-container{
+      display:flex;
+      flex-direction:row;
+      /* flex-wrap:wrap;
+      justify-content: center; */
+      width: 100%;
+      margin: 0px;
+    }
+    .titles{
+      display: block;
+      color: #D00E2A;
+      font-family: 'Nunito',sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 34px;
+      line-height: 46px;
+      letter-spacing: -1.5px;
+      text-align: start;
+      margin-bottom: 32px;
+    }
+    .img-cont{
+      display:flex;
+      position:absolute;
+      margin-top: 230px;
+      justify-content: center;
+    }
+    .card-img{
+      width: 116px;
+      height: 176px;
+      margin-top: -37px;
+      margin-left: 42px;
+    }
+    .text-container{
+      padding: 0px 0px 31px 10px;
+      display: flex;
+      /* justify-content: center; */
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-left: -15px;
+    }
+    .text{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 22px;
+      color: #000000;
+    }
+    .number{
+      display: none;
+    }
+    .number-mobile{
+      display: block;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .button{
+      width: 177px;
+      height: 32px;
+      margin-top: 16.875rem;
+      margin-left: 19.25rem;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      
+    }
+}
+@media (min-width: 409px) and (max-width: 571px) {
+    .first-container{
+      display:flex;
+      flex-direction:row;
+      /* flex-wrap:wrap;
+      justify-content: center; */
+      width: 100%;
+      margin: 0px;
+    }
+    .titles{
+      display: block;
+      color: #D00E2A;
+      font-family: 'Nunito',sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 34px;
+      line-height: 46px;
+      letter-spacing: -1.5px;
+      text-align: start;
+      margin-bottom: 32px;
+    }
+    .img-cont{
+      display:flex;
+      position:absolute;
+      margin-top: 276px;
+      justify-content: center;
+    }
+    .card-img{
+      width: 116px;
+      height: 176px;
+      margin-top: -37px;
+      margin-left: 42px;
+    }
+    .text-container{
+      padding: 0px 0px 31px 10px;
+      display: flex;
+      /* justify-content: center; */
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-left: -15px;
+    }
+    .text{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 22px;
+      color: #000000;
+    }
+    .number{
+      display: none;
+    }
+    .number-mobile{
+      display: block;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .button{
+      width: 177px;
+      height: 32px;
+      margin-top: 16.875rem;
+      margin-left: 12.25rem;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      
+    }
+  
+  
+  
+  
+}
+@media (min-width: 320px) and (max-width: 409px) {
+  .first-container{
+    display:flex;
+    flex-direction:row;
+    /* flex-wrap:wrap;
+    justify-content: center; */
+    width: 100%;
+    margin: 0px;
+  }
+  .titles{
+    display: block;
+    color: #D00E2A;
+    font-family: 'Nunito',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 46px;
+    letter-spacing: -1.5px;
+    text-align: start;
+    margin-bottom: 32px;
+  }
+  .img-cont{
+    display:flex;
+    position:absolute;
+    margin-top: 230px;
+    justify-content: center;
+  }
+  .card-img{
+    width: 116px;
+    height: 176px;
+    margin-top: -37px;
+    margin-left: 42px;
+  }
+  .text-container{
+    padding: 0px 0px 31px 0px;
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-left: -15px;
+  }
+  .text{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+  }
+  .number{
+    display: none;
+  }
+  .number-mobile{
+    display: block;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .button{
+    width: 177px;
+    height: 32px;
+    margin-top: 16.875rem;
+    margin-left: 7.625rem;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
   }
 
 

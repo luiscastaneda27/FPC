@@ -12,6 +12,7 @@ VERSION  AUTHOR         DATE            Description
 1.0       NL		  23/04/2021		initial version
 ********************************************************************************/
 import { LightningElement, wire, track, api } from 'lwc';
+import { CurrentPageReference } from "lightning/navigation";
 import lTitleCliExist from '@salesforce/label/c.LP_ErrorOnbTitle_Exist';
 import lTitleCliNoCard from '@salesforce/label/c.LP_ErrorOnbTitle_NoCard';
 import lTitleSystem from '@salesforce/label/c.LP_ErrorOnbTitle_System';
@@ -77,6 +78,22 @@ export default class LP_BodyParent extends LightningElement {
         existClient : lTitleCliExist,
         ClientNoCard : lTitleCliNoCard,
         systemError : lTitleSystem
+    }
+
+    currentPageReference;
+    // Injects the page reference that describes the current page
+    @wire(CurrentPageReference)
+    setCurrentPageReference(currentPageReference) {
+        this.currentPageReference = currentPageReference;
+        /*if (this.connected) {
+            // We need to have the currentPageReference, and to be connected before
+            // we can use NavigationMixin
+            this.generateUrls();
+        } else {
+            // NavigationMixin doesn't work before connectedCallback, so if we have 
+            // the currentPageReference, but haven't connected yet, queue it up
+            this.generateUrlOnConnected = true;
+        }*/
     }
 
     /**
@@ -186,13 +203,14 @@ export default class LP_BodyParent extends LightningElement {
      connectedCallback() {
         this.isParam =false;
         this.parameters = this.getQueryParameters();
-        
+        console.log("Access Token: " + JSON.stringify(this.parameters.accessToken));
+        console.log("state is: " + JSON.stringify(this.currentPageReference.state));
         var showErrorParam = false;
         if(this.parameters.g != undefined){
             this.cleanStepLayout();
             if (this.parameters.g != 'error'){
 
-                getGUIDOnboardingByRUT({guid: this.parameters.g})
+                getGUIDOnboardingByRUT({guid: this.parameters.g, token: this.parameters.accessToken})
                 .then(result => {
                     this.objLead = result;
                      if ( this.objLead.LP_Rut__c != null ){
@@ -228,7 +246,6 @@ export default class LP_BodyParent extends LightningElement {
      getQueryParameters() {
         var params = {};
         var search = location.search.substring(1);
-        console.log("search: "+search);
         if (search) {
             var allVar = search.split("&");
             for(let i = 0; i < allVar.length; i++){
@@ -239,5 +256,5 @@ export default class LP_BodyParent extends LightningElement {
         console.log("params: "+JSON.stringify(params));
         return params;
     }
-    
+
 }

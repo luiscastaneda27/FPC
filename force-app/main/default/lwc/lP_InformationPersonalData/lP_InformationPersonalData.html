@@ -68,7 +68,7 @@ VERSION  AUTHOR         DATE            Description
                         </div>
                         </div>
                         <div class='cont_block1'> 
-                        <div>
+                        <div class="dir-input">
                             <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.Address.label} </label>
                             <div class="slds-form-element__control" >
                                 <div class="_container slds-size_small">
@@ -110,7 +110,7 @@ VERSION  AUTHOR         DATE            Description
                             <label class="input-title"><span class="asterisk">*&nbsp;</span>{msg.text.titleComuna}</label>
                             <input type="text" name="comuna" placeholder="Comuna" value={objLead.City} class="input-cont" disabled>
                         </div>
-                        <div>       
+                        <div  class="ciu-input">       
                             <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LP_Ciudad__c.label} </label>
                             <lightning-record-edit-form object-api-name="Lead">
                                 <lightning-input-field name='ciudad'
@@ -137,7 +137,7 @@ VERSION  AUTHOR         DATE            Description
                                 <input type="number" name="numDeptoCasa" placeholder="Num Depto/casa" value={objLead.LP_NumDeptoCasa__c} onchange={validateNumDepto} class="input-cont">
                             </div>
 
-                            <div class="gen-input">
+                            <div >
                                 <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_FechaPago__c.label}</label>
                                 <div class="slds-form-element__control" >
                                     <div class="slds-combobox_container slds-size_small">
@@ -178,7 +178,7 @@ VERSION  AUTHOR         DATE            Description
                                 </template>
                             </div>
     
-                            <div class="gen-input">
+                            <div >
                                 <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_Ocupacion__c.label}</label>
                                 <div class="slds-form-element__control" >
                                     <div class="slds-combobox_container slds-size_small">
@@ -218,7 +218,7 @@ VERSION  AUTHOR         DATE            Description
                                     <p class="error-message2">{msg.text.selectOcupation}</p>
                                 </template>
                             </div>
-                            <div class="gen-input">
+                            <div >
                                 <label class="input-title"><span class="asterisk">*&nbsp;</span>{fields.Lead.LP_NivelEducacional__c.label}</label>
                                 <div class="slds-form-element__control" >
                                     <div class="slds-combobox_container slds-size_small">

@@ -57,7 +57,7 @@ export default class LP_OTPValidation extends LightningElement {
     @api inputOtp;
     @track objList;
     @track otpValidation;
-	@track otpInvalidCode;
+	otpInvalidCode = false;
     @track labels = {
         button : {
             send : lBtnSend,

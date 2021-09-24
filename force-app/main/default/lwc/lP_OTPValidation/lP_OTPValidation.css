@@ -265,22 +265,14 @@ button.next-page-btn:enabled{
 }
 
 /* TABLET VERSION  */
-@media (min-width: 974px) and (max-width: 1250px){
+@media (min-width: 975px) and (max-width: 1250px){
     .page-container{
         display:flex;
         flex-direction: column;
         flex-wrap: wrap;
     }
     .mobile-title{
-        display: block;
-        font-family: 'Nunito', sans-serif;
-        font-size:2.125rem;
-        color: #D00E2A;
-        width: 100%;
-        line-height: 46px;
-        letter-spacing: -1.5px;
-        font-weight: 600;
-        margin-bottom: 33px;
+        display: none;
     }
     .form{
         display:flex;
@@ -352,7 +344,7 @@ button.next-page-btn:enabled{
         font-family: 'Nunito', sans-serif;
         font-weight: bold;
         font-size: 0.75rem;
-        width:135px;
+        width:169px;
         height: 32px;
     }
     .button2:disabled .active-button2{
@@ -401,7 +393,7 @@ button.next-page-btn:enabled{
         font-family: 'Nunito', sans-serif;
         font-size: 0.75rem;
         color: #000000;
-        margin-left: 15.3rem;
+        margin-left: 17.9rem;
         margin-top: 0.3rem;
     }
     .active-button3{
@@ -441,7 +433,7 @@ button.next-page-btn:enabled{
     }
     .button3{
         width:154px;
-    height: 32px;
+        height: 32px;
         background-color: #C9C7C5;
         border: none;
         border-radius: 0.25rem;
@@ -521,7 +513,7 @@ button.next-page-btn:enabled{
     }
 
 }
-@media  (min-width:  497px) and (max-width: 974px) {
+@media  (min-width:  497px) and (max-width: 975px) {
     
     .mobile-title{
         display: block;
@@ -543,7 +535,9 @@ button.next-page-btn:enabled{
     .code-input{
         width: 40px;
         height: 40px;
-    
+    }
+    .button2:disabled{
+        margin-top: 0.5rem;
     }
 }
 
@@ -573,6 +567,14 @@ button.next-page-btn:enabled{
             margin-bottom: 16px;
             padding: 6px 12px;
           
+        }
+        .text-mistake{
+            display: none;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.75rem;
+            color: #000000;
+            margin-left: 1rem;
+            margin-top: 0.5rem;
         }
     .code-container{
         display: flex;
@@ -661,5 +663,8 @@ button.next-page-btn:enabled{
     .button3{
         width: 154px;
         height: 32px;
+    }
+    .button2:disabled{
+        margin-top: 0rem;
     }
 }

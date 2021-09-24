@@ -66,7 +66,7 @@ public without sharing class LP_OnboardingStepSixController {
         PBC_STR_STATICRESOURCE_HEADER_TLP = 'LP_OB_CorreoFirmaDocumentosHeaderTlp';
         PBC_STR_STATICRESOURCE_FOOTER_VISA = 'LP_OB_CorreoFirmaDocumentosFooterTlpVisa';
         PBC_STR_STATICRESOURCE_FOOTER_TLP = 'LP_OB_CorreoFirmaDocumentosFooterTlp';
-        PBC_STR_TEMPLATE_EMAIL = 'LP_OB_FirmaDocumentos_2';
+        PBC_STR_TEMPLATE_EMAIL = 'LP_OB_FirmaDocumentos';
         PBC_STR_ADDRESS_EMAIL = 'No Reply ONB';
         PBC_STR_DOC_ID_8 = '8';
         PBC_STR_DOC_ID_9 = '9';
@@ -112,18 +112,12 @@ public without sharing class LP_OnboardingStepSixController {
             position = paramPosition;
             url = '';
             sessionId = '';
-            /* system.debug('WrapDocument code: ' + code);
-            system.debug('WrapDocument position: ' + position); */
         }
 
         // metodo para completar la data del documento
         public void completeDocumentData(String paramSessionId, String paramURL) {
             sessionId = paramSessionId;
             url = paramURL;
-            /* system.debug('WrapDocument code: ' + code);
-            system.debug('WrapDocument position: ' + position);
-            system.debug('WrapDocument sessionId: ' + sessionId);
-            system.debug('WrapDocument url: ' + url); */
         }
     }
 
@@ -145,8 +139,6 @@ public without sharing class LP_OnboardingStepSixController {
         public void setAccount(Id paramAccountId, Boolean paramIsNew) {
             accountId = paramAccountId;
             isNew = paramIsNew;
-            /* system.debug('accountId: ' + accountId);
-            system.debug('isNew: ' + isNew); */
         }
     }
 
@@ -166,7 +158,6 @@ public without sharing class LP_OnboardingStepSixController {
                 LP_MAPJSONOTPValidation objMapOTP = new LP_MAPJSONOTPValidation(objLead, isSentByPhone);
                 LP_JSONOTPResponse jsonResponse = (LP_JSONOTPResponse)JSON.deserialize( objMapOTP.call().getBody(), LP_JSONOTPResponse.class);
                 code = jsonResponse.items?.get(0).data;
-                //System.debug('callToOtpService: OTP: ' + code);
             }
             else {
                 // en caso que el telefono es invalido (Quemado) se genera excepcion PRV_ERR_NOCARD
@@ -219,8 +210,7 @@ public without sharing class LP_OnboardingStepSixController {
         try {
             // obtenemos los datos necesarios para generar el documento
             wrapObj = getWrapObject(objLead.LP_Rut__c);
-            /* if(wrapObj.existsAcc) { System.debug('wrapObj.acc.LP_TipoTarjeta__pc: ' + wrapObj.acc.LP_TipoTarjeta__pc);}
-            if(!wrapObj.existsAcc) { System.debug('wrapObj.lead.LP_TipoTarjeta__c: ' + wrapObj.lead.LP_TipoTarjeta__c);} */
+
             String creditCardType = wrapObj.existsAcc ? wrapObj.acc.LP_TipoTarjeta__pc : wrapObj.lead.LP_TipoTarjeta__c;
 
             idsDoc.add(PBC_STR_DOC_ID_8);
@@ -231,16 +221,14 @@ public without sharing class LP_OnboardingStepSixController {
 
             // obtenemos los registros de documentos en base a los codigos y tipo de tarjeta
             LP_ConfiguracionDocumentosSelector docSelector = new LP_ConfiguracionDocumentosSelector();
-            /* System.debug('selectByCreditCardTypeWithLimit: creditCardType: ' + creditCardType);
-            System.debug('selectByCreditCardTypeWithLimit: idsDoc: ' + idsDoc); */
+
             List<LP_ConfiguracionDocumentos__mdt> docs = docSelector.selectByCreditCardTypeWithLimit(creditCardType, idsDoc);
-            //System.debug('docs?.get(0)?.MasterLabel: ' + docs?.get(0)?.MasterLabel);
 
             // generamos el objeto para ejecutar el servicio y obtener el codigo del documento generado
             LP_MAPJSONCustomerContractCreate mapObj = new LP_MAPJSONCustomerContractCreate(docs, objLead, wrapObj.onb);
             LP_JSONCustomerContractCreateResponse response = LP_JSONCustomerContractCreateResponse.parse(mapObj.call().get(docs?.get(0)?.MasterLabel));
             wrapObj.onb.LP_CodigoConstanciaSuscripcion__c = response?.items.get(0).result?.code;
-            //wrapObj.onb.LP_CodigoConstanciaSuscripcion__c = 'CA80000002DB1688_2'; // response?.items.get(0).result?.code;
+
             update wrapObj.onb;
 
         } catch(QueryException e) {
@@ -266,18 +254,17 @@ public without sharing class LP_OnboardingStepSixController {
         LP_OnBoardingUtility.WrapObject wrapObj;
         WrapConvertedAccount convertedAccount = new WrapConvertedAccount();
         String stepResult = LP_OnBoardingUtility.PBC_STR_STEPSIX;
-
+        Boolean updOnb = true;
+        // se obtiene el objeto wrap con el OB y Lead o Cuenta
+        wrapObj = getWrapObject(objLead.LP_Rut__c);
         try {
-            // se obtiene el objeto wrap con el OB y Lead o Cuenta
-            wrapObj = getWrapObject(objLead.LP_Rut__c);
+
             // se genera el objeto con los codigos de documentos
             Map<String, WrapDocument> docStructure = getDocumentStructure(wrapObj.onb);
-
             // se genera url de documentos (servicio 2: generar URL + SessionID)
             docStructure = getDocumentData(docStructure);
             // se firman los documentos
             signDocuments(objLead, docStructure);
-            System.debug('wrapObj.onb: '+wrapObj.onb);
             // Obtener el código de auditoria posterior a la firma de cada documento y guardarlo en obj Onb
             Map<String, String> auditCode = getAuditDocumentCode(wrapObj.onb);
             
@@ -289,17 +276,17 @@ public without sharing class LP_OnboardingStepSixController {
             wrapObj.onb.LP_CodigoAuditConstanciaSuscrip__c = auditCode.get(wrapObj.onb.LP_CodigoConstanciaSuscripcion__c);
             wrapObj.onb.LP_FirmaContratos__c = true;
             wrapObj.onb.LP_CodigoOTP__c = otpCode;
-            System.debug('auditCode: '+auditCode);
-            
-
-            system.debug('wrap.onb: '+wrapObj.onb);
-            system.debug('wrap.lead: '+wrapObj.lead);
-           
+        
             LP_MAPJSONCustomerCreate objMap = new LP_MAPJSONCustomerCreate(wrapObj.lead, wrapObj.onb);
             LP_JSONCustomerCreateResponse jsonResponse = (LP_JSONCustomerCreateResponse)JSON.deserialize( objMap.call(), LP_JSONCustomerCreateResponse.class);
             system.debug('jsonResponse: '+jsonResponse);
-            update wrapObj.onb;
-            //validar que el servicio 965 crea al cliente en los legados
+            
+            if(updOnb){
+                update wrapObj.onb;
+                updOnb = false;
+            }
+            
+            //si el servicio 965 crea al cliente en los legados continúa, en caso contrario cae en la excepción
 
             // si existe lead asociado al Onboarding
             if (wrapObj.existsLead) {
@@ -325,6 +312,7 @@ public without sharing class LP_OnboardingStepSixController {
             stepResult = LP_OnBoardingUtility.PBC_STR_STEPSEVEN;
 
         } catch (LP_RestConnectionWithAuth.ServiceException e) {
+            System.debug('Error: '+e);
             if(e.code == 422){
                 LP_CustomException.ExceptionDetail data = new LP_CustomException.ExceptionDetail(null, LP_CustomException.PRV_ERR_EXIST_CLIENT, true);
                 throw new AuraHandledException(JSON.serialize(data));
@@ -338,6 +326,18 @@ public without sharing class LP_OnboardingStepSixController {
         } catch (Exception e) {
             LP_CustomException.ExceptionDetail ed = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, true);
             throw new AuraHandledException(JSON.serialize(ed));
+        }finally{
+            if(updOnb){
+                Map<String, String> auditCode = getAuditDocumentCode(wrapObj.onb);
+                wrapObj.onb.LP_CodigoAuditContratoApertura__c = auditCode.get(wrapObj.onb.LP_CodigoContratoApertura__c);
+                wrapObj.onb.LP_CodigoAuditAutorizacionEspecial__c = auditCode.get(wrapObj.onb.LP_CodigoAutorizacionEspecial__c);
+                wrapObj.onb.LP_CodigoAuditMandato__c = auditCode.get(wrapObj.onb.LP_CodigoMandato__c);
+                wrapObj.onb.LP_CodigoAuditResumenContrato__c = auditCode.get(wrapObj.onb.LP_CodigoResumenContratoApertura__c);
+                wrapObj.onb.LP_CodigoAuditConstanciaSuscrip__c = auditCode.get(wrapObj.onb.LP_CodigoConstanciaSuscripcion__c);
+                wrapObj.onb.LP_FirmaContratos__c = true;
+                wrapObj.onb.LP_CodigoOTP__c = otpCode;
+                update wrapObj.onb;
+            }
         }
         return stepResult;
     }
@@ -425,8 +425,6 @@ public without sharing class LP_OnboardingStepSixController {
         }
     }
 
-/**********PCRM-1089******** */
-
     /**
     *  @Description: Get audit code for documents, service 103
     *  @Author:      Eilhert Andrade, Deloitte
@@ -462,8 +460,6 @@ public without sharing class LP_OnboardingStepSixController {
         return auditCode;
     }
 
-/**********PCRM-1089******** */
-
     /**
     *  @Description: Get the object using RUT as parameter
     *  @Author:      Rodrigo Salinas Oye, Deloitte, rosalinas@deloitte.com
@@ -472,16 +468,13 @@ public without sharing class LP_OnboardingStepSixController {
     private static LP_OnBoardingUtility.WrapObject getWrapObject(String rutClient) {
         LP_OnBoardingUtility.WrapObject wrap = new LP_OnBoardingUtility.WrapObject(new LP_Onboarding__c());
         wrap.rut = rutClient;
-        //System.debug('rut: ' + wrap.rut);
         wrap.type = SObjectType.Account.getName();
         wrap = LP_OnBoardingUtility.getOnboardingObj(wrap);
         if (!wrap.existsAcc) {
             wrap.type = SObjectType.Lead.getName();
             wrap = LP_OnBoardingUtility.getOnboardingObj(wrap);
         }
-        /* System.debug('onb.id: ' + wrap.onb.Id);
-        System.debug('onb.LP_Cuenta__c: ' + wrap.onb.LP_Cuenta__c);
-        System.debug('onb.LP_Candidato__c: ' + wrap.onb.LP_Candidato__c); */
+
         return wrap;
     }
 
@@ -536,8 +529,6 @@ public without sharing class LP_OnboardingStepSixController {
         obToUpdate.Id = idOnboarding;
         obToUpdate.LP_Cuenta__c = convertedAccount.accountId;            // cuenta asociada al onboarding
         obToUpdate.LP_TelefonoQuemado__c = mobilePhone;                 // telefono quemado
-        //obToUpdate.LP_FirmaContratos__c = true;
-        //obToUpdate.LP_CodigoOTP__c = otpCode;
         obToUpdate.LP_AsignacionPAN__c = true;
         obToUpdate.LP_Ruta__c = LP_OnBoardingUtility.PBC_STR_STEPSEVEN;
         obToUpdate.LP_FechaEnvioCorreo__c = Date.today();
@@ -580,10 +571,19 @@ public without sharing class LP_OnboardingStepSixController {
         Database.LeadConvertResult lcr = Database.convertLead(lc);  
         WrapConvertedAccount convertedAccount = new WrapConvertedAccount();
         convertedAccount.setAccount(lcr.getAccountId(), isNew);
-
-        return convertedAccount;
+        updateAccountStepSeven(lcr.getAccountId());
+		return convertedAccount;
     }
 
+    /**
+    *  @Description: Update the converted account to step seven
+    *  @Author:      Luis Castaneda, Deloitte, lcastanedad@deloitte.com
+    *  @Date:        23/09/2021
+    */
+    private static void updateAccountStepSeven(Id accountId){
+        Account acc = new Account(Id=accountId, LP_RutaOnboarding__pc = LP_OnBoardingUtility.PBC_STR_STEPSEVEN);
+        update acc; 
+    }
 
     /**
     *  @Description: Send an email to the cleint with the signed documents
@@ -592,11 +592,7 @@ public without sharing class LP_OnboardingStepSixController {
     */
     private static void sendEmailWithSignedDocuments(String toEmailAddress, Map<String, WrapDocument> docStructure, LP_OnBoardingUtility.WrapObject wrap) {
         //Query email template
-        //LP_EmailTemplatesSelector etObj = new LP_EmailTemplatesSelector();
-        ///EmailTemplate template= etObj.selectByEmailTemplateDeveloperNameWithLimit(PBC_STR_TEMPLATE_EMAIL);
         EmailTemplate template= [SELECT Id, body, htmlvalue, subject FROM EmailTemplate where DeveloperName =: PBC_STR_TEMPLATE_EMAIL];
-        //LP_OrgWideEmailAddressesSelector oes = new LP_OrgWideEmailAddressesSelector();
-        //OrgWideEmailAddress owa = oes.selectByOrgWideEmailAddressDisplayNameWithLimit(PBC_STR_ADDRESS_EMAIL);
         OrgWideEmailAddress owa = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress where DisplayName =:  PBC_STR_ADDRESS_EMAIL];
         //get template body
         String plainText = template.Body;
@@ -618,36 +614,6 @@ public without sharing class LP_OnboardingStepSixController {
         htmlText = updMailHtmlText(htmlText, wrap);
         plainText = updMailPlainText(plainText, wrap);
         
-        /* htmlText = htmlText.replace(PBC_STR_EMAIL_DOC_1,wrap.onb.LP_CodigoResumenContratoApertura__c);
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NUMAUDIT_1,wrap.onb.LP_CodigoAuditResumenContrato__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_DOC_1,wrap.onb.LP_CodigoResumenContratoApertura__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_NUMAUDIT_1,wrap.onb.LP_CodigoAuditResumenContrato__c);
-
-        htmlText = htmlText.replace(PBC_STR_EMAIL_DOC_2,wrap.onb.LP_CodigoContratoApertura__c);
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NUMAUDIT_2,wrap.onb.LP_CodigoAuditContratoApertura__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_DOC_2,wrap.onb.LP_CodigoContratoApertura__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_NUMAUDIT_2,wrap.onb.LP_CodigoAuditContratoApertura__c);
-
-        htmlText = htmlText.replace(PBC_STR_EMAIL_DOC_3,wrap.onb.LP_CodigoMandato__c);
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NUMAUDIT_3,wrap.onb.LP_CodigoAuditMandato__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_DOC_3,wrap.onb.LP_CodigoMandato__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_NUMAUDIT_3,wrap.onb.LP_CodigoAuditMandato__c);
-
-        htmlText = htmlText.replace(PBC_STR_EMAIL_DOC_4,wrap.onb.LP_CodigoAutorizacionEspecial__c);
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NUMAUDIT_4,wrap.onb.LP_CodigoAuditAutorizacionEspecial__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_DOC_4,wrap.onb.LP_CodigoAutorizacionEspecial__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_NUMAUDIT_4,wrap.onb.LP_CodigoAuditAutorizacionEspecial__c);
-       
-        htmlText = htmlText.replace(PBC_STR_EMAIL_DOC_5,wrap.onb.LP_CodigoConstanciaSuscripcion__c);
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NUMAUDIT_5,wrap.onb.LP_CodigoAuditConstanciaSuscrip__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_DOC_5,wrap.onb.LP_CodigoConstanciaSuscripcion__c);
-        plainText = plainText.replace(PBC_STR_EMAIL_NUMAUDIT_5,wrap.onb.LP_CodigoAuditConstanciaSuscrip__c);
-
-        htmlText = htmlText.replace(PBC_STR_EMAIL_NOMBRE,wrap.lead.Name);
-        plainText = plainText.replace(PBC_STR_EMAIL_NOMBRE,wrap.lead.Name); */
-
-        System.debug('sendEmailWithSignedDocuments html: ' + htmlText);
-
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         mail.setToAddresses(new List<String>{toEmailAddress});  
         mail.setSaveAsActivity(false); 
@@ -656,8 +622,6 @@ public without sharing class LP_OnboardingStepSixController {
         mail.setSubject(template.Subject);
         mail.setUseSignature(false); 
         mail.setOrgWideEmailAddressId(owa.id);
-        //mail.setSenderDisplayName('Tarjetas La Polar'); 
-        //mail.setReplyTo('no-reply@tarjetalapolar.cl');
 
         Messaging.SendEmailResult [] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});       
     }
