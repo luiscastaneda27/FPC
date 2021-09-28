@@ -75,6 +75,9 @@
     font-size: 1rem;
     color: #333333;
 }
+.slds-button{
+border-radius: 0px;
+}
 .number-input{
     width: 183px;
     height: 32px;
@@ -94,9 +97,9 @@ input:after:invalid{
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    padding: 3.438rem 29.625rem 3.438rem 0rem;
+    padding: 3.438rem 0rem 3.438rem 0rem;
     font-family: 'Nunito', sans-serif;
-    width:100%;
+    width:90%;
 }
 .error-message, .error-message2{
     font-size: 0.75rem;
@@ -126,7 +129,6 @@ input:after:invalid{
     /* padding-left: 1%; */
     width: 178px;
     height: 32px;
-    border-radius: 0.25rem;
 }
 button.button:active {
     background-color: #D00E2A;
@@ -152,7 +154,7 @@ button.button:enabled {
 .custom-box {
     text-align: center;
 }
-@media (min-width: 320px) and (max-width: 976px) {
+@media (min-width: 481px) and (max-width: 975px){
     .father-container{
         display:flex;
         flex-direction: column;
@@ -166,16 +168,21 @@ button.button:enabled {
         padding-right: 0rem;
         padding-left: 0rem;
         grid-template-rows: 2.563rem;
+        padding-bottom: 0px;
     }
     .cont_block1{
-        flex-direction: column;
+        flex-direction: row;
     }
     .mobile-title{
         display: block;
         font-family: 'Nunito', sans-serif;
         font-size:2.125rem;
         color: #D00E2A;
-        margin-bottom: 2.938rem;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        /* margin-bottom: 2.938rem; */
         /* text-align: start; */
     }
     .input-title{
@@ -184,41 +191,197 @@ button.button:enabled {
         margin-top: 3rem;
     }
     .gen-input{
-        margin-bottom: 1.563rem;
+        margin-bottom: 0.7rem;
         margin-top: -1rem;
+        width: 100%;
+        margin-left: 0rem;
     }
     lightning-helptext{
         display: none;
     }
     .checkbox-container{
-        padding: 1.563rem 0rem 0rem 0rem;
+        padding: 3rem 0rem 0rem 0rem;
     }
     .last-container{
         flex-direction: column;
         justify-content: center;
-        padding: 2.188rem 0rem;
+        padding: 2.5rem 0rem;
+        width: 90%;
+        align-items: center;
     }
     .recaptchaCheckbox{
         margin-right: 0rem;
     }
     .button{
-        width: 328px;
+        width: 100%;
         margin-top: 2.438rem;
     }
+    .button-container{
+        align-self: center;
+        display: contents;
+        width: 100%;
+    }
+    
     /* Modal queries */
      .slds-modal__title.slds-hyphenate{
         margin-right: 0.625rem;
+        width: auto;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 41px;
+        letter-spacing: -1.5px;
+        color: #333333;
     }
     .slds-modal__header{
-        width: 59.2vw;
+        text-align: start;
+    }
+    .slds-modal__title, .slds-hyphenate{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 34px;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        color: #333333;
     }
     .slds-m-top_x-small{
         margin-right: 0rem;
         width:  46vw;
         margin-left: 0.5rem;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        color: #333333;
+        text-transform: uppercase;
+    }
+  
+    .slds-modal__content, .slds-p-around_medium{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        color: #080707;
+        padding-left: 0px;
     }
     .slds-button.slds-button_brand{
-        margin-right: 5rem;
+        margin-right: 4rem;
+        border-radius: 0px;
+    }
+}
+@media (min-width: 320px) and (max-width: 481px) {
+    .father-container{
+        display:flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width:100%;
+    }
+    .form-container{
+        display:flex;
+        grid-template-columns: 100%;
+        width: 100%;
+        padding-right: 0rem;
+        padding-left: 0rem;
+        grid-template-rows: 2.563rem;
+        padding-bottom: 0px;
+    }
+    .cont_block1{
+        flex-direction: row;
+    }
+    .mobile-title{
+        display: block;
+        font-family: 'Nunito', sans-serif;
+        font-size:2.125rem;
+        color: #D00E2A;
+        width: 100%;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        font-weight: 600;
+        /* margin-bottom: 2.938rem; */
+        /* text-align: start; */
+    }
+    .input-title{
+        margin: 0rem;
+        font-weight: 400;
+        margin-top: 3rem;
+    }
+    .gen-input{
+        margin-bottom: 0.7rem;
+        margin-top: -1rem;
+        width: 100%;
+        margin-left: -0.5rem;
+    }
+    lightning-helptext{
+        display: none;
+    }
+    .checkbox-container{
+        padding: 0.7rem 0rem 0rem 0rem;
+    }
+    .last-container{
+        flex-direction: column;
+        justify-content: center;
+        padding: 2.5rem 0rem;
+        width: 90%;
+        align-items: center;
+    }
+    .recaptchaCheckbox{
+        margin-right: 0rem;
+    }
+    .button{
+        width: 100%;
+        margin-top: 2.438rem;
+    }
+    .button-container{
+        align-self: center;
+        display: contents;
+        width: 100%;
+    }
+    
+    /* Modal queries */
+     .slds-modal__title.slds-hyphenate{
+        margin-right: 0.625rem;
+        width: auto;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 30px;
+        line-height: 41px;
+        letter-spacing: -1.5px;
+        color: #333333;
+    }
+    .slds-modal__header{
+        text-align: start;
+    }
+    .slds-modal__title, .slds-hyphenate{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 34px;
+        line-height: 46px;
+        letter-spacing: -1.5px;
+        color: #333333;
+    }
+    .slds-m-top_x-small{
+        margin-right: 0rem;
+        width:  46vw;
+        margin-left: 0.5rem;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22px;
+        color: #333333;
+        text-transform: uppercase;
+    }
+  
+    .slds-modal__content, .slds-p-around_medium{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        color: #080707;
+        padding-left: 0px;
+    }
+    .slds-button.slds-button_brand{
+        margin-right: 4rem;
+        border-radius: 0px;
     }
 }
 

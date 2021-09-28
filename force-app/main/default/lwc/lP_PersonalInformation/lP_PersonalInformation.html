@@ -23,14 +23,14 @@ VERSION  AUTHOR         DATE            Description
                 <div class='cont_block1'> 
                     <div>
                         <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.FirstName.label}  </label>
-                        <input type="text" name="nombre" id="nombreId" placeholder="Pedro" class="input-cont" onfocusout={validateName} value={objLead.FirstName}>
+                        <input type="text" name="nombre" id="nombreId" placeholder="" class="input-cont" onfocusout={validateName} value={objLead.FirstName}>
                         <template if:true={nameB}>
                             <p class="error-message">{msg.text.firstName}</p>
                         </template>
                     </div>
                     <div>
                         <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LastName.label} </label>
-                        <input type="text" name="apellidoPaterno" placeholder="Olivos" class="input-cont" onfocusout={validateLastName} 
+                        <input type="text" name="apellidoPaterno" placeholder="" class="input-cont" onfocusout={validateLastName} 
                             value={objLead.LastName}>
                         <template if:true={apePB}>
                             <p class="error-message">{msg.text.lastName}</p>
@@ -38,7 +38,7 @@ VERSION  AUTHOR         DATE            Description
                     </div>
                     <div>    
                         <label class="input-title"><span class="asterisk">*&nbsp;</span> {fields.Lead.LP_ApellidoMaterno__c.label} </label>
-                        <input type="text" name="apellidoMaterno" placeholder="Pérez" class="input-cont" onfocusout={validateApellidoMaterno} 
+                        <input type="text" name="apellidoMaterno" placeholder="" class="input-cont" onfocusout={validateApellidoMaterno} 
                             value={objLead.LP_ApellidoMaterno__c}>
                         <template if:true={apeMB}>
                             <p class="error-message">{msg.text.secName}</p>

@@ -280,7 +280,7 @@ public without sharing class LP_OnboardingStepSixController {
             LP_MAPJSONCustomerCreate objMap = new LP_MAPJSONCustomerCreate(wrapObj.lead, wrapObj.onb);
             LP_JSONCustomerCreateResponse jsonResponse = (LP_JSONCustomerCreateResponse)JSON.deserialize( objMap.call(), LP_JSONCustomerCreateResponse.class);
             system.debug('jsonResponse: '+jsonResponse);
-            
+           
             if(updOnb){
                 update wrapObj.onb;
                 updOnb = false;
@@ -305,7 +305,6 @@ public without sharing class LP_OnboardingStepSixController {
 
             // actualizar ob y quemamos el telefono
             updateOnboarding(wrapObj.onb.id, otpCode, objLead.MobilePhone, convertedAccount);
-            LP_OnBoardingUtility.updateClientPath(wrapObj.onb);
              
             // enviar correo con links a documentos
             sendEmailWithSignedDocuments(objLead.Email, docStructure, wrapObj);
@@ -502,11 +501,11 @@ public without sharing class LP_OnboardingStepSixController {
         Account accountToUpdate = new Account();
         accountToUpdate.Id = convertedAccount.accountId;
         accountToUpdate.LP_NumeroCelularValidado__pc = true;
-        accountToUpdate.LP_NumeroCelular__pc = mobilePhone;
+        accountToUpdate.LP_NumeroCelular__c = mobilePhone;
         accountToUpdate.LP_AceptacionContratos__pc = true; 
         accountToUpdate.LP_FechaAceptacionContratos__pc = signDate;
         accountToUpdate.LP_NSerieDocumentoCedula__pc = documentNumber;
-        accountToUpdate.LP_AsignacionPAN__pc = true;
+        accountToUpdate.LP_AsignacionPAN__c = true;
         accountToUpdate.LP_FirmaContratos__pc = true;
         accountToUpdate.LP_CodigoOTP__pc = otpCode;
         accountToUpdate.PersonMobilePhone = mobilePhone;
@@ -571,18 +570,7 @@ public without sharing class LP_OnboardingStepSixController {
         Database.LeadConvertResult lcr = Database.convertLead(lc);  
         WrapConvertedAccount convertedAccount = new WrapConvertedAccount();
         convertedAccount.setAccount(lcr.getAccountId(), isNew);
-        updateAccountStepSeven(lcr.getAccountId());
 		return convertedAccount;
-    }
-
-    /**
-    *  @Description: Update the converted account to step seven
-    *  @Author:      Luis Castaneda, Deloitte, lcastanedad@deloitte.com
-    *  @Date:        23/09/2021
-    */
-    private static void updateAccountStepSeven(Id accountId){
-        Account acc = new Account(Id=accountId, LP_RutaOnboarding__pc = LP_OnBoardingUtility.PBC_STR_STEPSEVEN);
-        update acc; 
     }
 
     /**

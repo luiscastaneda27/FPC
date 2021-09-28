@@ -46,6 +46,7 @@
     line-height: 22px;
     margin-top: -0.5rem;
     margin-bottom: 8px;
+    color: #333333;
 }
 .number{
     margin: 1rem 0rem 2.5rem 0rem;
@@ -346,6 +347,7 @@ input{
         font-size: 14px;
         line-height: 19px;
         width: 168px;
+        color: #333333;
     }
     .number{
         font-size: 1.875rem;
@@ -451,6 +453,7 @@ input{
         font-size: 14px;
         line-height: 19px;
         width: 129px;
+        color: #333333;
     }
     .button-cont{
         position: absolute;

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>lP_BodyParent</members>
-		<members>lP_DocumentInformation</members>
+		<members>Contact.LP_NumDeptoCasa__c</members>
+		<members>Lead.LP_NumDeptoCasa__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
 		<members>lP_ErrorOnboarding</members>
-		<members>lP_IdentityValidation</members>
-		<members>lP_InformationPersonalData</members>
-		<members>lP_OTPSignature</members>
-		<members>lP_OTPValidation</members>
-		<members>lP_InternetPassword</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<version>51.0</version>

@@ -55,7 +55,6 @@ export default class LP_ErrorOnboarding extends NavigationMixin(LightningElement
         this.showErrClientExist = (this.getOriginError == this.errors.ERR_EXIST_CLIENT) ? true : false;
         this.showErrNoCard = (this.getOriginError == this.errors.ERR_NOCARD) ? true : false;
         this.showErrSystem = (this.getOriginError == this.errors.ERR_SYSTEM) ? true : false;
-
         if (!this.showErrSystem){
             // after 15 seconds go site oficial for ERR_EXIST_CLIENT & ERR_NOCARD
             this._interval = setInterval(() => {  

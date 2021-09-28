@@ -8,6 +8,7 @@ import leadObject from '@salesforce/schema/Lead';
 import generoField from '@salesforce/schema/Lead.LP_Genero__c';
 import getInitClass from '@salesforce/apex/LP_OnboardingStepOneController.initClass';
 import createLeadRecord from '@salesforce/apex/LP_OnboardingStepOneController.insertRecord';
+import checkClient from '@salesforce/apex/LP_OnboardingStepOneController.checkClientExist';
 
 import lRequestCard from '@salesforce/label/c.LP_SolicitaTarjeta';
 import lWrite3Letters from '@salesforce/label/c.LP_Escribe3Letras';
@@ -93,6 +94,7 @@ export default class LP_PersonalInformation extends LightningElement {
     @api mailB = false;
     @api celB = false;
     @api validateError = false;
+    @api clientExist;
     //@api expRegAlpha = /^[a-zA-Z ñÑ]+$/;
     @api expRegAlpha = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð '-]+$/u
     @api expRegMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -336,19 +338,34 @@ export default class LP_PersonalInformation extends LightningElement {
         }
     }
 
-    //Solicitar Tarjeta Button
-    submitData(event) {
+    
+    async submitData(event) {
+        this.disabledSubmit = true;
         this.validateInput();
-        if (this.validateError){
-            this.disabledSubmit = true;
+        const client = await checkClient({rut: this.objLead.LP_Rut__c})
+            .then( (result) => {
+                this.clientExist = result;
+            })
+            .catch( (error) => {
+                this.disabledSubmit = false;
+                this.clientExist = true;
+                this.error = error;
+                var message = JSON.parse(error.body.message);
+                const pathEvent = new CustomEvent('setsteplayout', {detail: 
+                                                                    {step: message.cause,
+                                                                    param: this.objLead.Email,
+                                                                    objLead: this.objLead}});
+                this.dispatchEvent(pathEvent);
+            });
+            
+        if (this.validateError && this.clientExist == null){
+            
             const resetCaptchaEvent = new Event("grecaptchaReset");
             createLeadRecord({record: this.objLead, recaptchaResponse: this.reCaptchaToken})
                 .then(result => {
-                    //console.log('Result: ' + result);
                     this.LP_Ruta = result;
                     let detail = result;
                     document.dispatchEvent(resetCaptchaEvent);
-                    //console.log('paso: '+detail.substring(detail.length-1,detail.length));
                     if(detail.substring(detail.length-1,detail.length) > 2 ) {
                         this.formValidEmail = true;
                         this.step = detail;
@@ -360,10 +377,9 @@ export default class LP_PersonalInformation extends LightningElement {
                         objLead: this.objLead}});
                         this.dispatchEvent(pathEvent);
                     } 
-                    
-
                 })
                 .catch(error => {
+                    this.disabledSubmit = false;
                     this.error = error;
                     document.dispatchEvent(resetCaptchaEvent);
                     var message = JSON.parse(error.body.message)
@@ -403,10 +419,6 @@ export default class LP_PersonalInformation extends LightningElement {
     *  @Date:        04/05/2021
     */
     connectedCallback() {
-
-
-
-
         //When the page is loaded the submit button is deactivated
         this.disabledSubmit = true;
         //The listener is added to the grecaptchaVerified event to receive the captcha token
@@ -461,7 +473,6 @@ export default class LP_PersonalInformation extends LightningElement {
                 sObjList: result2
             });
     
-
             const pathEvent = new CustomEvent('setsteplayout', {detail: 
                 {step: this.steps.step3,
                 param: this.objLead.Email,
@@ -469,14 +480,14 @@ export default class LP_PersonalInformation extends LightningElement {
                 this.dispatchEvent(pathEvent);
         }catch(error){
             console.log('objLead: '+this.objLead);
-            /* var message = JSON.parse(error.body.message);
+            var message = JSON.parse(error.body.message);
             console.log('error.message: ' + JSON.stringify(message));
             console.log('message.cause: ' + message.cause);
             const pathEvent = new CustomEvent('setsteplayout', {detail: 
                                                                 {step: message.cause,
                                                                 param: this.objLead.Email,
                                                                 objLead: this.objLead}});
-            this.dispatchEvent(pathEvent); */
+            this.dispatchEvent(pathEvent);
         }
     }
 }

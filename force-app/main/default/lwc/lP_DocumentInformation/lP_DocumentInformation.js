@@ -41,6 +41,9 @@ import lOpenTarget from '@salesforce/label/c.LP_AbrirTarjeta';
 import lReadSignDocuments from '@salesforce/label/c.LP_LeerFimarDocumentos';
 import lReadSignDocumentsSubTitle from '@salesforce/label/c.LP_LeerFirmarSubTitulo';
 import step1 from '@salesforce/label/c.LP_OnboardingPaso1';
+import redirectUrl from '@salesforce/label/c.LP_LaPolar';
+import textLaPolar from '@salesforce/label/c.LP_TextLaPolar';
+
 
 //Import Apex Methods
 import getSetDocuments from '@salesforce/apex/LP_OnboardingStepFiveController.setDocuments';
@@ -58,6 +61,9 @@ export default class LP_DocumentInformation extends LightningElement {
     hideSpinner = true;
     showDocuments = CLIENT_FORM_FACTOR == 'Large' ? true : false;
     isPhone = CLIENT_FORM_FACTOR != 'Large' ? true : false;
+    showLarAproved = false;
+    redirectUrl = redirectUrl;
+    textPolar = textLaPolar
     @track labels = {
         button : {
             lBtnCancel
@@ -119,6 +125,7 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
                 this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
                 this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
+                this.showLarAproved = true;
             }
             else{
                 this.labels.text.title["lVisaAproved"] =  lVisaAproved;
@@ -135,6 +142,7 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
                 this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
                 this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
+                this.showLarAproved = true;
             }
             else{
                 this.labels.text.title["lVisaAproved"] =  lVisaAproved;
