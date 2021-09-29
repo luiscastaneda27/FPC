@@ -110,10 +110,15 @@ input{
   
 }
 .btn2:disabled{
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     width: 329px;
     height: 32px;
     border: none;
-    border-radius: 0.25rem;
+    margin-top: 20px;
     color: #FFFFFF;
     background-color: #dddbda;
     font-weight: 600;
@@ -139,6 +144,7 @@ input{
 .txt{
     border-bottom: #D9DBDD 1px solid;
 }
+
 @media (min-width: 525px) and (max-width: 975px) {
     .mobile-title{
         display: block;
@@ -198,7 +204,7 @@ input{
         font-size: 0.75rem;
 
     }
-    .btn2{
+    .btn2, .btn2:disabled{
         width: 228px;
         font-size: 0.75rem;
 
@@ -277,7 +283,7 @@ input{
         font-size: 0.75rem;
 
     }
-    .btn2{
+    .btn2, .btn2:disabled{
         width: 228px;
         font-size: 0.75rem;
 
@@ -371,7 +377,7 @@ input{
         font-size: 10px;
 
     }
-    .btn2{
+    .btn2, .btn2:disabled{
         width: 191px;
         font-size: 10px;
 
@@ -467,7 +473,7 @@ input{
         font-size: 10px;
 
     }
-    .btn2{
+    .btn2, .btn2:disabled{
         width: 191px;
         font-size: 10px;
 

@@ -124,7 +124,7 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.labels.text.title["lVisaAproved"] =  lVisaAproved.replace("VISA ", "");
                 this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
                 this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
-                this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
+                this.labels.text.title["stepFive"] = lStepFive.replace(" Visa", "");
                 this.showLarAproved = true;
             }
             else{
@@ -141,7 +141,7 @@ export default class LP_DocumentInformation extends LightningElement {
                 this.labels.text.title["lVisaAproved"] =  lVisaAproved.replace("VISA ", "");
                 this.labels.text.title["lVisaAprovedWorld"] = lLaPolarAproved;
                 this.labels.text.title["lOpenTarget"] = lOpenTarget.replace("VISA", "");
-                this.labels.text.title["stepFive"] = lVisaAproved.replace("VISA ", "");
+                this.labels.text.title["stepFive"] = lStepFive.replace(" Visa", "");
                 this.showLarAproved = true;
             }
             else{

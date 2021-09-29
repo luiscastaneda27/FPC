@@ -1,7 +1,6 @@
 <template>
     <template if:true={showDocuments}>
-    <p class="mobile-title">5. Tienes Aprobada tu 
-        Tarjeta La Polar Visa </p>
+    <p class="mobile-title">{labels.text.title.stepFive}</p>
     <div class="first-container">
         <div class="card-container">
             <div class="text-img">
@@ -11,7 +10,7 @@
                 <div class="info-container">
                     <p class="titleLP">{labels.text.title.lVisaAproved}</p>
                     <p class="number">{amount} -</p>
-                    <p class="small-text1"> {labels.text.title.lVisaAprovedWorld} <a if:true={showLarAproved} class="small-text1" href={redirectUrl}>{textPolar}</a></p>
+                    <lightning-formatted-rich-text class="small-text" value={labels.text.title.lVisaAprovedWorld}></lightning-formatted-rich-text>
                 </div>
             </div>
             <div class="check-cont">

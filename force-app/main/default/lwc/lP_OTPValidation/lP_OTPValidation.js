@@ -18,6 +18,7 @@ import getUpdateObj from '@salesforce/apex/LP_OnboardingStepTwoController.update
 import getExpBaseValidation from '@salesforce/apex/LP_OnboardingStepTwoController.expressBaseValidation';
 import getCustomerAssetLaundering from '@salesforce/apex/LP_OnboardingStepTwoController.customerAssetLaundering';
 import getValidateClientEquifax from '@salesforce/apex/LP_OnboardingStepTwoController.validateClientEquifax';
+import getToken from '@salesforce/apex/LP_OnboardingStepTwoController.initOTPToken';
 //Import Static Resource
 import iCheck from '@salesforce/resourceUrl/LP_IconoCheckOTP';
 import iMail from '@salesforce/resourceUrl/LP_IconoCorreoOTP';
@@ -51,6 +52,7 @@ import { loadScript } from 'lightning/platformResourceLoader';
 
 export default class LP_OTPValidation extends LightningElement {
     steps = {step1}
+    wrapperObject;
     @api email;
     @api showError;
     @api objLead;
@@ -110,6 +112,27 @@ export default class LP_OTPValidation extends LightningElement {
     }
 
     /**
+    *  @Description: Get parameters of Azurian
+    *  @Autor:       Eilhert Andrade, Deloitte
+    *  @Date:        15/06/2021
+    */
+    connectedCallback() {
+        getToken({})
+        .then(result => {
+            console.log('Load connectedCallback');
+            this.wrapperObject = result;
+            console.log('this.wrapperObject: ' + JSON.stringify(this.wrapperObject));
+        })
+        .catch(error => {
+            this.error = error;
+            var message = JSON.parse(error.body.message);
+            console.log('error.message: ' + JSON.stringify(message));
+            console.log('message.cause: ' + message.cause);
+        });
+    
+    }
+
+    /**
     *  @Description: Consume the service to send the otp code
     *  @Autor:       Abdon Tejos, Deloitte, atejos@deloitte.com
     *  @Date:        17/05/2021
@@ -117,9 +140,14 @@ export default class LP_OTPValidation extends LightningElement {
     handleSearch() {
         this.template.querySelector(".active-button2").style.display = "none";
         this.template.querySelector(".button2").disabled = true; // Disable send button
-        getCall({objLead: this.objLead, userEmail: this.email})
+        console.log('handleSearch');
+        console.log('this.wrapperObject I: ' + JSON.stringify(this.wrapperObject));
+        this.wrapperObject.objLead = this.objLead;
+        this.wrapperObject.userEmail = this.email;
+        console.log('this.wrapperObject II: ' + JSON.stringify(this.wrapperObject));
+        getCall({obj: this.wrapperObject})
             .then((result) => {
-                this.otpValidation = result;
+                this.wrapperObject = result;
                 this.labels.button.send = this.labels.button.sendReplace;
                 this.template.querySelector(".active-button2").style.display = "block";
                 this.template.querySelector(".active-button2").src = this.iconOTP.iCheck; // Load the check icon in the send button
@@ -159,10 +187,9 @@ export default class LP_OTPValidation extends LightningElement {
         this.template.querySelectorAll('.code-input').forEach(element => {
             input+= element.value;
         });
-        this.inputOtp = input;
-        console.log('this.inputOtp: ' + this.inputOtp);
-        console.log('cipherCode: ' + this.otpValidation);
-        getCodeValidation({inputCode: this.inputOtp, cipherCode: this.otpValidation})
+        this.wrapperObject.inputCode = input;
+        console.log('getOtpValidation - this.wrapperObject: ' + JSON.stringify(this.wrapperObject));
+        getCodeValidation({obj: this.wrapperObject})
             .then((result) => {
                 activebtn3.style.display = "block";
                 activebtn3.src = this.iconOTP.iSuccess;
@@ -200,7 +227,8 @@ export default class LP_OTPValidation extends LightningElement {
     *  @Date:        19/05/2021
     */
     setUpdate(event) {
-        getUpdateObj({objLead: this.objLead, userEmail: this.email, otpCode: this.otpValidation})
+        console.log('setUpdate - this.wrapperObject: ' + JSON.stringify(this.wrapperObject));
+        getUpdateObj({obj: this.wrapperObject})
             .then(result => {
                 //console.log('result: ' + JSON.stringify(result));
             })
@@ -282,9 +310,7 @@ export default class LP_OTPValidation extends LightningElement {
             }else{
                 console.log('LEAD: '+JSON.stringify(this.objLead));
                 nextbtn.disabled = true;
-                const prevResult = await getCodeValidation({
-                    inputCode: this.inputOtp, cipherCode: this.otpValidation
-                });
+                const prevResult = await getCodeValidation({obj: this.wrapperObject});
                 const result1 = await getExpBaseValidation({
                     objLead: this.objLead
                 });
