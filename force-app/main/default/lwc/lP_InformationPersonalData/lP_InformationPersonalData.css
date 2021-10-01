@@ -14,6 +14,10 @@
     font-size: 16px;
     line-height: 22px;
 }
+[role="combobox"] input[readonly], input[readonly][role="combobox"] {
+    margin-left: 0px;
+    outline-color: #D00E2A;
+}
 .father-container{
     display:flex;
     flex-wrap: wrap;
@@ -206,16 +210,19 @@ input:after:invalid{
     font-weight: 600;
     text-align: center;
     letter-spacing: 0.063rem;
+    border-radius: 0.25rem;
     /* padding-left: 1%; */
     padding: 1px 16px;
     width: 108px;
     height: 32px;
 }
 button.button:active {
+    border-radius: 0.25rem;
     background-color: #D00E2A;
 }
 button.button:enabled {
     background-color: #D00E2A;
+    border-radius: 0.25rem;
 }
 
 @media (min-width:976px) {
@@ -250,7 +257,7 @@ button.button:enabled {
 /* .space{
     width: 0px;
 } */
-.slds-input .slds-combobox__input{
+.slds-input, .slds-combobox__input{
     margin-left: 0px;
     outline-color: #D00E2A;
 }
@@ -274,7 +281,7 @@ button.button:enabled {
     }
     .gen-input{
         margin-bottom: 0rem;
-        margin-top: -1rem;
+        margin-top: 0rem;
     }
     .dir-input, .ciu-input{
         margin-bottom: -1.2rem;
@@ -343,7 +350,14 @@ button.button:enabled {
 /* .space{
     width: 0px;
 } */
-.slds-input .slds-combobox__input{
+[role="combobox"] input[readonly], input[readonly][role="combobox"] {
+    margin-left: 0px;
+    outline-color: #D00E2A;
+}
+[role="combobox"] input[readonly]{
+    margin-left: 0px;
+}
+.slds-input, .slds-combobox__input{
     margin-left: 0px;
     outline-color: #D00E2A;
 }
@@ -365,10 +379,11 @@ button.button:enabled {
         font-weight: 400;
         margin-top: 2rem;
     }
-    .gen-input{
+    /* .gen-input{
         margin-bottom: 0rem;
-        /* margin-top: -1rem; */
-    }
+        margin-top: -0.9rem;
+
+    } */
     .dir-input, .ciu-input{
         margin-bottom: -1.2rem;
     }
@@ -414,7 +429,12 @@ button.button:enabled {
     width: 0px;
 }
 }
-
+@media (min-width: 360px) and (max-width:607px){
+    .gen-input{
+        margin-bottom: 0rem;
+        margin-top: -0.9rem;
+    }
+}
 @media (min-width: 320px) and (max-width:360px) {
     .father-container{
         display:flex;

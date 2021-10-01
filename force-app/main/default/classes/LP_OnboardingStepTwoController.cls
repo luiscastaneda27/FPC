@@ -15,6 +15,7 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
 
     private static LP_BasesExpressSelector baseExpressSelector;
     private static LP_NacionalidadesSelector countrySelector;
+    private static LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
 
     /**
     *  @Description: Initialization of static variables
@@ -57,11 +58,10 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
     */
     @AuraEnabled
     public static WrapperOtp callToOtpService(WrapperOtp obj) {
-
+        LP_JSONWebTokens.InnerJWT verifyJWT;
         try {
             System.debug('input token: ' + obj.token);
-            LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
-            LP_JSONWebTokens.InnerJWT verifyJWT = jwt.verifyJWT(obj.token, PVR_STR_KEY);
+            verifyJWT = jwt.verifyJWT(obj.token, PVR_STR_KEY);
             //String decodeCount = EncodingUtil.urlDecode(verifyJWT.payload.count, 'UTF-8');
             //String decryptCount = LP_CryptoClassUtility.decrypt(decodeCount, PVR_STR_KEY, PVR_B64_INITVECTOR);
             //Integer count = Integer.valueOf(decryptCount);
@@ -85,6 +85,10 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
         } catch (Exception e) {
             LP_CustomException.ExceptionDetail data = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, true);
             throw new AuraHandledException (JSON.serialize(data));
+        } finally {
+            if (verifyJWT.verify) {
+                LP_JSONWebTokens.burnToken(obj.token);
+            }
         }
     }
 
@@ -95,11 +99,11 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
     */
     @AuraEnabled
     public static Boolean otpCodeValidation(WrapperOtp obj) {
+        LP_JSONWebTokens.InnerJWT verifyJWT;
         Boolean isValid = false;
         try {
             System.debug('obj: ' + obj);
-            LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
-            LP_JSONWebTokens.InnerJWT verifyJWT = jwt.verifyJWT(obj.token, PVR_STR_KEY);
+            verifyJWT = jwt.verifyJWT(obj.token, PVR_STR_KEY);
             String decodeCode = EncodingUtil.urlDecode(verifyJWT.payload.code, 'UTF-8');
             String decryptCode = LP_CryptoClassUtility.decrypt(decodeCode, PVR_STR_KEY, PVR_B64_INITVECTOR);
             if (verifyJWT.verify && obj.inputCode == decryptCode) {
@@ -111,6 +115,10 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
         } catch (Exception e) {
             LP_CustomException.ExceptionDetail data = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, false);
             throw new AuraHandledException (JSON.serialize(data));
+        } finally {
+            if (verifyJWT.verify) {
+                LP_JSONWebTokens.burnToken(obj.token);
+            }
         }
     }    
 
@@ -122,7 +130,6 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
     @AuraEnabled
     public static Boolean updateObjs(WrapperOtp obj) {
         try {
-            LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
             LP_JSONWebTokens.InnerJWT verifyJWT = jwt.verifyJWT(obj.token, PVR_STR_KEY);
             obj.objLead.Email = obj.userEmail;
             WrapObject wrap = new WrapObject(new LP_Onboarding__c());
@@ -271,7 +278,6 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
     *  @Date:        23/09/2021
     */
     private static String getAccessToken(Map<String, String> claims) {
-        LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
         jwt.privateKey = PVR_STR_KEY;
         jwt.iss = 'Onboarding Card La Polar';
         jwt.sub = 'Onboarding Site: Step 2 - OTP';
@@ -287,7 +293,7 @@ public without sharing class LP_OnboardingStepTwoController extends LP_OnBoardin
                 jwt.claims.put(mapKey, encodeStr);
             }
         }
-        return jwt.issue();
+        return jwt.issue(true);
     }
 
     /**

@@ -51,7 +51,6 @@ public without sharing class LP_OnboardingStepSixController {
     public static final String PBC_STR_EMAIL_NUMAUDIT_5;
     public static final String PBC_STR_EMAIL_NOMBRE;
     public static final String PBC_STR_PHONE_PREFIX;
-    public static final String PBC_STR_LINK_COMMUNITY_ONBOARDING;
 
     /**
     *  @Description: Initialization of static variables
@@ -91,7 +90,6 @@ public without sharing class LP_OnboardingStepSixController {
         PBC_STR_EMAIL_NUMAUDIT_5 = '%%AUDIT_5%%';
         PBC_STR_EMAIL_NOMBRE = '%%NOMBRE%%';
         PBC_STR_PHONE_PREFIX = '+56';
-        PBC_STR_LINK_COMMUNITY_ONBOARDING = Label.LP_LinkCommunityOnboarding;
         
     }
 
@@ -280,7 +278,6 @@ public without sharing class LP_OnboardingStepSixController {
             LP_MAPJSONCustomerCreate objMap = new LP_MAPJSONCustomerCreate(wrapObj.lead, wrapObj.onb);
             LP_JSONCustomerCreateResponse jsonResponse = (LP_JSONCustomerCreateResponse)JSON.deserialize( objMap.call(), LP_JSONCustomerCreateResponse.class);
             system.debug('jsonResponse: '+jsonResponse);
-           
             if(updOnb){
                 update wrapObj.onb;
                 updOnb = false;
@@ -301,11 +298,11 @@ public without sharing class LP_OnboardingStepSixController {
             }
             // actualizamos el account 
             system.debug('teléfono: '+PBC_STR_PHONE_PREFIX+objLead.MobilePhone);
-            updateAccount(convertedAccount, otpCode, PBC_STR_PHONE_PREFIX+objLead.MobilePhone, wrapObj.onb.LP_NumeroDocumento__c);
+            updateAccount(convertedAccount, otpCode, PBC_STR_PHONE_PREFIX+objLead.MobilePhone);
 
             // actualizar ob y quemamos el telefono
             updateOnboarding(wrapObj.onb.id, otpCode, objLead.MobilePhone, convertedAccount);
-             
+
             // enviar correo con links a documentos
             sendEmailWithSignedDocuments(objLead.Email, docStructure, wrapObj);
             stepResult = LP_OnBoardingUtility.PBC_STR_STEPSEVEN;
@@ -327,6 +324,7 @@ public without sharing class LP_OnboardingStepSixController {
             throw new AuraHandledException(JSON.serialize(ed));
         }finally{
             if(updOnb){
+                System.debug('onb_antes: '+wrapObj.onb);
                 Map<String, String> auditCode = getAuditDocumentCode(wrapObj.onb);
                 wrapObj.onb.LP_CodigoAuditContratoApertura__c = auditCode.get(wrapObj.onb.LP_CodigoContratoApertura__c);
                 wrapObj.onb.LP_CodigoAuditAutorizacionEspecial__c = auditCode.get(wrapObj.onb.LP_CodigoAutorizacionEspecial__c);
@@ -336,6 +334,7 @@ public without sharing class LP_OnboardingStepSixController {
                 wrapObj.onb.LP_FirmaContratos__c = true;
                 wrapObj.onb.LP_CodigoOTP__c = otpCode;
                 update wrapObj.onb;
+                System.debug('onb_despues: '+wrapObj.onb);
             }
         }
         return stepResult;
@@ -496,7 +495,7 @@ public without sharing class LP_OnboardingStepSixController {
     *  @Author:      Rodrigo Salinas Oye, Deloitte, rosalinas@deloitte.com
     *  @Date:        07/07/2021
     */
-    private static void updateAccount(WrapConvertedAccount convertedAccount, String otpCode, String mobilePhone, Decimal documentNumber) {
+    private static void updateAccount(WrapConvertedAccount convertedAccount, String otpCode, String mobilePhone) {
         Date signDate = Date.today();
         Account accountToUpdate = new Account();
         accountToUpdate.Id = convertedAccount.accountId;
@@ -504,7 +503,6 @@ public without sharing class LP_OnboardingStepSixController {
         accountToUpdate.LP_NumeroCelular__c = mobilePhone;
         accountToUpdate.LP_AceptacionContratos__pc = true; 
         accountToUpdate.LP_FechaAceptacionContratos__pc = signDate;
-        accountToUpdate.LP_NSerieDocumentoCedula__pc = documentNumber;
         accountToUpdate.LP_AsignacionPAN__c = true;
         accountToUpdate.LP_FirmaContratos__pc = true;
         accountToUpdate.LP_CodigoOTP__pc = otpCode;
@@ -676,8 +674,11 @@ public without sharing class LP_OnboardingStepSixController {
         {
             //Getting namespace
             String namespace = resourceList.NamespacePrefix;
+
             //Resource URL
-            result = PBC_STR_LINK_COMMUNITY_ONBOARDING + '/resource/' + resourceList.SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName; 
+            result = URL.getOrgDomainUrl().toExternalForm() + '/resource/' + resourceList.SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName; 
+            result = result.replace('.my.sales', '--c.visual');
+            System.debug(result);
         }
         return result;
     }

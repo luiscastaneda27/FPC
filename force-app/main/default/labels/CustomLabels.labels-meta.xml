@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>EMPTY_FILE</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSV file is empty.</shortDescription>
+        <value>CSV file is empty.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The provided Json String was badly formatted.</shortDescription>
+        <value>The provided Json String was badly formatted.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_JSON_EMPTY</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No field values were found in the Json String.</shortDescription>
+        <value>No field values were found in the Json String.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_OP_FAILED</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation failed, please check messages!</shortDescription>
+        <value>Operation failed, please check messages!</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Request failed with no specified error.</shortDescription>
+        <value>Request failed with no specified error.</value>
+    </labels>
+    <labels>
+        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
+        <value>Unauthorized endpoint, please check Setup</value>
+    </labels>
+    <labels>
+        <fullName>FILE_MISSING</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please provide a comma separated file.</shortDescription>
+        <value>Please provide a comma separated file.</value>
+    </labels>
+    <labels>
+        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
+        <categories>CMT</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
+        <value>The number of field values does not match the number of header fields on line</value>
+    </labels>
+    <labels>
         <fullName>LP_AbrirTarjeta</fullName>
         <categories>Onboarding - Step 5</categories>
         <language>es_MX</language>
@@ -101,6 +165,13 @@
         <protected>false</protected>
         <shortDescription>LP Ayuda Creación Clave</shortDescription>
         <value>Tu clave de internet debe tener &lt;br/&gt; 8 carácteres compuestos por números y letras.</value>
+    </labels>
+    <labels>
+        <fullName>LP_BackgroundColor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_BackgroundColor</shortDescription>
+        <value>Blue</value>
     </labels>
     <labels>
         <fullName>LP_BasesLegalesBL</fullName>
@@ -510,7 +581,7 @@
         <language>es_MX</language>
         <protected>false</protected>
         <shortDescription>LP_ContinuarSolicitud</shortDescription>
-        <value>CONTINUAR SOLICITUD</value>
+        <value>Continuar solicitud</value>
     </labels>
     <labels>
         <fullName>LP_ContrasenaCambiadaRC</fullName>
@@ -1177,7 +1248,7 @@ Seguros|https://www.tarjetalapolar.cl/s/seguros-y-asistencias|_blank,Consultas y
         <language>es</language>
         <protected>false</protected>
         <shortDescription>LP_LaPolarAprobada</shortDescription>
-        <value>Podrás usar tu Tarjeta La Polar en todas nuestras tiendas y en nuestro sitio &lt;a href=&quot;https://www.lapolar.cl/&quot;&gt;La Polar&lt;/a&gt;</value>
+        <value>Podrás usar tu Tarjeta La Polar en todas nuestras tiendas y en nuestro sitio</value>
     </labels>
     <labels>
         <fullName>LP_LaPolarFooter</fullName>
@@ -1246,6 +1317,14 @@ Seguros|https://www.tarjetalapolar.cl/s/seguros-y-asistencias|_blank,Consultas y
         <protected>false</protected>
         <shortDescription>Onboarding - Step 5: Documento Mandato</shortDescription>
         <value>Mandato</value>
+    </labels>
+    <labels>
+        <fullName>LP_MesHistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_MesHistorialPagosPC</shortDescription>
+        <value>Mes</value>
     </labels>
     <labels>
         <fullName>LP_MiCuenta</fullName>
@@ -2475,6 +2554,22 @@ Te redireccionaremos para que ingreses a tu cuenta, desde ahí podrás crear tu 
         <value>&lt;p&gt;El bloqueo de tu tarjeta será solo temporal, puedes habilitarla para su uso desbloqueándolo por el mismo medio. El bloqueo temporal te permitirá comprar en páginas web y en &lt;a Style=&quot;color: #FF0000; &quot; href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot;&gt;Tiendas La Polar&lt;/a&gt; a través de tu huella. Para bloqueo permanente, debes solicitarlo directamente en &lt;a Style=&quot;color: #FF0000; &quot; href=&quot;https://www.lapolar.cl/Tiendas/?showMap=true&quot; target=&quot;_blank&quot;&gt;Tiendas La Polar&lt;/a&gt; o llamando a nuestro número telefónico.&lt;/p&gt;</value>
     </labels>
     <labels>
+        <fullName>LP_TiempoDuracion_JWT</fullName>
+        <categories>Servicio Rest</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP TiempoDuracion JWT</shortDescription>
+        <value>8000</value>
+    </labels>
+    <labels>
+        <fullName>LP_TiendaHistorialPagosPC</fullName>
+        <categories>PAGOS SP</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TiendaHistorialPagosPC</shortDescription>
+        <value>Tienda</value>
+    </labels>
+    <labels>
         <fullName>LP_TiendasLaPolarMenu</fullName>
         <categories>Barra Navegación SP</categories>
         <language>es</language>
@@ -2710,6 +2805,13 @@ Para modificar tus datos personales debes dirigirte a cualquiera de nuestras &lt
         <value>Debes ingresar una clave que contenga letras y números, con un largo de 8 caracteres.</value>
     </labels>
     <labels>
+        <fullName>LP_VideoTest</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_VideoTest</shortDescription>
+        <value>https://www.youtube.com/embed/sP0ujaE8N_8</value>
+    </labels>
+    <labels>
         <fullName>LP_ViewPdfURL</fullName>
         <categories>MI CUENTA SP</categories>
         <language>es</language>
@@ -2768,108 +2870,6 @@ Para modificar tus datos personales debes dirigirte a cualquiera de nuestras &lt
         <protected>false</protected>
         <shortDescription>LP_Youtube</shortDescription>
         <value>https://www.youtube.com/user/lapolarchile</value>
-    </labels>
-    <labels>
-        <fullName>EMPTY_FILE</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSV file is empty.</shortDescription>
-        <value>CSV file is empty.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_JSON_BAD_FORMAT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>The provided Json String was badly formatted.</shortDescription>
-        <value>The provided Json String was badly formatted.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_JSON_EMPTY</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>No field values were found in the Json String.</shortDescription>
-        <value>No field values were found in the Json String.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_OP_FAILED</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Operation failed, please check messages!</shortDescription>
-        <value>Operation failed, please check messages!</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_REQUEST_FAILED_NO_ERROR</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Request failed with no specified error.</shortDescription>
-        <value>Request failed with no specified error.</value>
-    </labels>
-    <labels>
-        <fullName>ERROR_UNAUTHORIZED_ENDPOINT</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Unauthorized endpoint, please check Setup</shortDescription>
-        <value>Unauthorized endpoint, please check Setup</value>
-    </labels>
-    <labels>
-        <fullName>FILE_MISSING</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Please provide a comma separated file.</shortDescription>
-        <value>Please provide a comma separated file.</value>
-    </labels>
-    <labels>
-        <fullName>INVALID_FILE_ROW_SIZE_DOESNT_MATCH</fullName>
-        <categories>CMT</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>The number of field values does not match the number of header fields on line</shortDescription>
-        <value>The number of field values does not match the number of header fields on line</value>
-    </labels>
-    <labels>
-        <fullName>LP_BackgroundColor</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>LP_BackgroundColor</shortDescription>
-        <value>Blue</value>
-    </labels>
-    <labels>
-        <fullName>LP_MesHistorialPagosPC</fullName>
-        <categories>PAGOS SP</categories>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>LP_MesHistorialPagosPC</shortDescription>
-        <value>Mes</value>
-    </labels>
-    <labels>
-        <fullName>LP_TiempoDuracion_JWT</fullName>
-        <categories>Servicio Rest</categories>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>LP TiempoDuracion JWT</shortDescription>
-        <value>8000</value>
-    </labels>
-    <labels>
-        <fullName>LP_TiendaHistorialPagosPC</fullName>
-        <categories>PAGOS SP</categories>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>LP_TiendaHistorialPagosPC</shortDescription>
-        <value>Tienda</value>
-    </labels>
-    <labels>
-        <fullName>LP_VideoTest</fullName>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>LP_VideoTest</shortDescription>
-        <value>https://www.youtube.com/embed/sP0ujaE8N_8</value>
     </labels>
     <labels>
         <fullName>MSG_CHECK_API_NAMES</fullName>
@@ -5083,5 +5083,28 @@ Bloqueo de Tarjeta|tel:+562800395800|_self|-featured</value>
         <protected>true</protected>
         <shortDescription>fflib_security_error_object_not_updateable</shortDescription>
         <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>LP_BodyParentBGColor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LP_BodyParentBGColor</shortDescription>
+        <value>#F2F4F7</value>
+    </labels>
+    <labels>
+        <fullName>LP_TextLaPolar</fullName>
+        <categories>Onboarding</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_TextLaPolar</shortDescription>
+        <value>lapolar.cl</value>
+    </labels>
+    <labels>
+        <fullName>LP_ValidaFirmaDocStepSix</fullName>
+        <categories>Onboarding Step 6</categories>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>LP_ValidaFirmaDocStepSix</shortDescription>
+        <value>Valida la firma de tus documentos</value>
     </labels>
 </CustomLabels>

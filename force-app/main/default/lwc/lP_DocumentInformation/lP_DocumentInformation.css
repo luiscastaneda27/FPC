@@ -77,6 +77,7 @@ input{
     width: 453px;
 }
 .btn1{
+    border-radius: 0.25rem;
     width: 124px;
     height: 32px;
     border: #DDDBDA 1px solid;
@@ -95,6 +96,7 @@ input{
     margin-top: 56px;
 }
 .btn2{
+    border-radius: 0.25rem;
     font-weight: bold;
     font-size: 12px;
     line-height: 16px;
@@ -110,6 +112,7 @@ input{
   
 }
 .btn2:disabled{
+    border-radius: 0.25rem;
     font-size: 12px;
     line-height: 16px;
     text-align: center;
@@ -199,12 +202,14 @@ input{
        
     }
     .btn1{
+        border-radius: 0.25rem;
         width: 84px;
         margin-right: 1rem;
         font-size: 0.75rem;
 
     }
     .btn2, .btn2:disabled{
+        border-radius: 0.25rem;
         width: 228px;
         font-size: 0.75rem;
 
@@ -278,12 +283,14 @@ input{
        
     }
     .btn1{
+        border-radius: 0.25rem;
         width: 84px;
         margin-right: 1rem;
         font-size: 0.75rem;
 
     }
     .btn2, .btn2:disabled{
+        border-radius: 0.25rem;
         width: 228px;
         font-size: 0.75rem;
 
@@ -372,12 +379,14 @@ input{
        
     }
     .btn1{
+        border-radius: 0.25rem;
         width: 80px;
         margin-right: 1rem;
         font-size: 10px;
 
     }
     .btn2, .btn2:disabled{
+        border-radius: 0.25rem;
         width: 191px;
         font-size: 10px;
 
@@ -471,11 +480,12 @@ input{
         width: 80px;
         margin-right: 0.5rem;
         font-size: 10px;
-
+        border-radius: 0.25rem;
     }
     .btn2, .btn2:disabled{
         width: 191px;
         font-size: 10px;
+        border-radius: 0.25rem;
 
     }
     .check-cont{

@@ -68,13 +68,16 @@
     font-size: 0.75rem;
     width:135px;
     height: 32px;
+    border-radius: 0.25rem;
 
 }
 .button2 .active-button2{
     display: none;
+    border-radius: 0.25rem;
 }
 .active-button2:enabled{
     display: none;
+    border-radius: 0.25rem;
 }
 .button2:disabled{
     background-color: #FFFFFF;
@@ -85,6 +88,7 @@
     font-size: 0.75rem;
     width: 169px;
     height: 32px;
+    border-radius: 0.25rem;
     font-weight: bold;
     font-size: 12px;
     line-height: 16px;
@@ -101,6 +105,7 @@
     display: none;
     margin-left: 8.4rem;
     margin-top: -1rem;
+    border-radius: 0.25rem;
 }
 .code-container{
     display: flex;
@@ -183,10 +188,12 @@
 }
 .button-justify{
     display: flex;
+    border-radius: 0.25rem;
     justify-content: flex-end;
 }
 .button3{
     width:154px;
+    border-radius: 0.25rem;
     height: 32px;
     background-color: #C9C7C5;
     border: none;
@@ -197,12 +204,15 @@
     margin-top: 0.6rem;
 }
 .button3:enabled{
+    border-radius: 0.25rem;
     background-color: #D00E2A;
 }
 button.button3:active {
+    border-radius: 0.25rem;
     background-color: #D00E2A;
 }
 button.button3:active {
+    border-radius: 0.25rem;
     background-color: #D00E2A;
 }
 .buttons-container{
@@ -317,9 +327,11 @@ button.next-page-btn:enabled{
         width: 32px;
         height: 32px;
         margin-right: 1.5rem;
+        border-radius: 0.25rem;
     }
     .button2{
         background-color: #D00E2A;
+        border-radius: 0.25rem;
         border: none;
         border-radius: 0.25rem;
         color: #FFFFFF;
@@ -331,11 +343,14 @@ button.next-page-btn:enabled{
     }
     .button2 .active-button2{
         display: none;
+        border-radius: 0.25rem;
     }
     .active-button2:enabled{
         display: none;
+        border-radius: 0.25rem;
     }
     .button2:disabled{
+        border-radius: 0.25rem;
         background-color: #FFFFFF;
         color: #D00E2A;
         /* align-content: center; */
@@ -350,6 +365,7 @@ button.next-page-btn:enabled{
     .button2:disabled .active-button2{
         width: 1rem;
         height: 1rem;
+        border-radius: 0.25rem;
         display: none;
         margin-left: 8.4rem;
         margin-top: -1.1rem;
@@ -434,6 +450,7 @@ button.next-page-btn:enabled{
     .button3{
         width:154px;
         height: 32px;
+        border-radius: 0.25rem;
         background-color: #C9C7C5;
         border: none;
         border-radius: 0.25rem;
@@ -444,12 +461,15 @@ button.next-page-btn:enabled{
         margin-top: 0.6rem;
     }
     .button3:enabled{
+        border-radius: 0.25rem;
         background-color: #D00E2A;
     }
     button.button3:active {
+        border-radius: 0.25rem;
         background-color: #D00E2A;
     }
     button.button3:active {
+        border-radius: 0.25rem;
         background-color: #D00E2A;
     }
     .buttons-container{
@@ -527,6 +547,7 @@ button.next-page-btn:enabled{
         margin-bottom: 33px;
      }
      .button3{
+        border-radius: 0.25rem;
          margin: 24px 0px;
      }
      .buttons-container{
@@ -537,6 +558,7 @@ button.next-page-btn:enabled{
         height: 40px;
     }
     .button2:disabled{
+        border-radius: 0.25rem;
         margin-top: 0.5rem;
     }
 }
@@ -623,6 +645,7 @@ button.next-page-btn:enabled{
         outline: none;
     }
     .button3{
+        border-radius: 0.25rem;
         width: 9.7rem;
         height: 2rem;
         background-color: #C9C7C5;
@@ -661,10 +684,12 @@ button.next-page-btn:enabled{
         border-radius: 0px;
     }
     .button3{
+        border-radius: 0.25rem;
         width: 154px;
         height: 32px;
     }
     .button2:disabled{
+        border-radius: 0.25rem;
         margin-top: 0rem;
     }
 }

@@ -99,8 +99,6 @@ public without sharing class LP_OnboardingStepOneController extends LP_OnBoardin
             // If the lead exists, update it if not create
             wrap = upsertLead(wrap, lead);            
         } else if (wrap.existsAcc) {
-            // Customer already exists
-            //throwException(wrap);
             // If the account exists, update it
             wrap = updateAccount(wrap, lead);
         }
@@ -240,6 +238,10 @@ public without sharing class LP_OnboardingStepOneController extends LP_OnBoardin
         }catch(LP_RestConnectionWithAuth.ServiceException e){
             if(e.code == 422){
                 res = null;
+            }else{
+                system.debug('Exception: '+e);
+                LP_CustomException.ExceptionDetail ed = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, false);
+                throw new AuraHandledException (JSON.serialize(ed));
             }
         }
         return res;
@@ -270,5 +272,26 @@ public without sharing class LP_OnboardingStepOneController extends LP_OnBoardin
             objMap.put(inputErrorList.DeveloperName, inputErrorList);
         }
         return objMap;
+    }
+
+    @AuraEnabled
+    public static String getResourceURL(String resourceName)
+    {
+        String result = '';
+        //Fetching the resource
+        LP_StaticResourcesSelector srObj = new LP_StaticResourcesSelector();
+        StaticResource resourceList = srObj.selectByStaticResourceNameWithLimit('LP_FaviconOnb');
+
+        //Checking if the result is returned or not
+        if(resourceList != null)
+        {
+            //Getting namespace
+            String namespace = resourceList.NamespacePrefix;
+
+            //Resource URL
+            result = URL.getOrgDomainUrl().toExternalForm() + '/resource/' + resourceList.SystemModStamp.getTime() + '/' + (namespace != null && namespace != '' ? namespace + '__' : '') + resourceName; 
+            result = result.replace('.my.sales', '--c.visual');
+        }
+        return result;
     }
 }

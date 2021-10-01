@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 //Import Custom Label
 import lLaPolarUrl from '@salesforce/label/c.LP_LaPolar';
+import lMiCuentaLaPolarUrl from '@salesforce/label/c.LP_MiCuenta';
 import lLaPolarErrorUrl from '@salesforce/label/c.LP_LaPolarTiendasAbiertas';
 import lTarjetaLaPolarUrl from '@salesforce/label/c.LP_TarjetaLaPolar';
 import lButton from '@salesforce/label/c.LP_ErrorOnbButton';
@@ -62,6 +63,13 @@ export default class LP_ErrorOnboarding extends NavigationMixin(LightningElement
                 this.navigateToTLPSite();
             }, this.progress);
         }
+        if (this.showErrClientExist){
+            // after 15 seconds go site oficial for ERR_EXIST_CLIENT & ERR_NOCARD
+            this._interval = setInterval(() => {  
+                this.progress = this.progress + 5000;  
+                this.navigateToMyAccount();
+            }, this.progress);
+        }
     }
     /**
     *  @Description: Method response to parent
@@ -91,12 +99,21 @@ export default class LP_ErrorOnboarding extends NavigationMixin(LightningElement
         window.location.assign(lLaPolarErrorUrl);
     }
 
-     /**
+      /**
     *  @Description: Method navigate to tarjeta LP site
     *  @Autor:       Jorge Baeza, Deloitte, jbaezac@deloitte.com
     *  @Date:        23/09/2021
     */
-      navigateToTLPSite(){
+       navigateToTLPSite(){
         window.location.assign(lTarjetaLaPolarUrl);
+    }
+
+     /**
+    *  @Description: Method navigate to Mi Cuenta LP site
+    *  @Autor:       Brian Burgos, Deloitte
+    *  @Date:        27/09/2021
+    */
+      navigateToMyAccount(){
+        window.location.assign(lMiCuentaLaPolarUrl);
     }
 }

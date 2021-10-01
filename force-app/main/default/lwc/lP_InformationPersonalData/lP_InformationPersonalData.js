@@ -220,7 +220,7 @@ export default class LP_InformationPersonalData extends LightningElement {
     */
      enableButton(event){
 
-        if (this.objLead.Street != '' &&
+        if (this.objLead.Street != '' && this.objLead.Street != null &&
             this.LP_FechaPago__c_Label != '' &&
             this.objLead.LP_Ocupacion__c != '' &&
             this.objLead.LP_NivelEducacional__c != '' &&

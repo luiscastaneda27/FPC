@@ -8,7 +8,8 @@
 
 .background{
     width: 100%;
-    background-color: #F2F4F7;
+    background-color: var(--backgroundColor);
+    /*background-color: #F2F4F7; /*original*/
     /*background-color: colorFondo;*/
     /* height: 100%; */
     display: flex;
@@ -46,7 +47,7 @@ b{
     color: #080707;
 }
 .path{
-    width: 60vw;
+    width: 66vw;
     height: 4.04vh;
 }
 /* TABLET VERSION */
@@ -89,7 +90,7 @@ b{
         color: #080707;
     }
     .path{
-        width: 67vw;
+        width: 66vw;
         height: 4.04vh;
     }
 }

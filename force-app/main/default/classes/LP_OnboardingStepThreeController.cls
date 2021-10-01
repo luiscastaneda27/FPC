@@ -37,8 +37,8 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
         PVR_ACT_IDENTCHK_APRV = 'RUT COINCIDE';
         PVR_ACT_IDENTCHK_SIMIL = 'MATCH';
         PVR_STATUS_FAILED = 'FAILED';
-        PVR_STR_INITVECTOR = LP_CryptoClassUtility.setCacheValues().values()[0];
-        PVR_STR_KEY = (new List<String>(LP_CryptoClassUtility.setCacheValues().keySet()))[0];
+        PVR_STR_INITVECTOR = initWrapperKeys().values()[0];
+        PVR_STR_KEY = (new List<String>(initWrapperKeys().keySet()))[0];
         PVR_B64_INITVECTOR = EncodingUtil.base64Encode(Blob.valueOf(PVR_STR_INITVECTOR));
     }
 
@@ -56,27 +56,19 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             LP_OnboardingSelector onbSelector = new LP_OnboardingSelector();
             resOnb = onbSelector.selectByLeadRutWithLimit(objLead.LP_Rut__c);
             resOnb.LP_GUIDIdentCheck__c = LP_RestConnectionUtility.getGUID();
-            
             String encryptGuid = LP_CryptoClassUtility.encrypt(resOnb.LP_GUIDIdentCheck__c, PVR_STR_KEY, PVR_STR_INITVECTOR);
-            
-            JWT jwt = new JWT('HS256');
-            jwt.privateKey = 'base64 encoded secret';
-            jwt.iss = 'your issuer';
-            jwt.sub = 'some subject';
-            jwt.aud = 'some audience';
-            String token = jwt.issue();  
-            
+            String encodeGuid = EncodingUtil.urlEncode(encryptGuid, 'UTF-8');
             Map<String, String> params = new Map<String, String>();
-            params.put('action',PVR_ACT_JUMIO_INIT);
-            params.put('scanreference',null);
-            params.put('guid',resOnb.LP_GUIDIdentCheck__c);
-            params.put('url',url);
-            params.put('jwt',token);
+            params.put('action', PVR_ACT_JUMIO_INIT);
+            params.put('scanreference', null);
+            params.put('url', url);
+            params.put('jwt', getAccessToken(resOnb.LP_GUIDIdentCheck__c));
             
             LP_MAPJSONAzurianValidation objClass = new LP_MAPJSONAzurianValidation(record, params);
             LP_JSONAzurianResponse response = new LP_JSONAzurianResponse();
             List<String> result = new List<String>();
             response = response.parse(objClass.call());
+            resOnb.LP_Ruta__c = LP_OnBoardingUtility.PBC_STR_STEPFOUR;
             update resOnb;
             //URL to redirect Biometric validation system
             result.add(response.items[0].transactionReference);
@@ -89,6 +81,24 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             LP_CustomException.ExceptionDetail data = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, true);
             throw new AuraHandledException (JSON.serialize(data));
         }
+    }
+
+    /**
+    *  @Description: Get Access Token (JWT)
+    *  @Autor:       Abdon Tejos, Deloitte, atejoso@deloitte.com
+    *  @Date:        23/09/2021
+    */
+    private static String getAccessToken(String guid) {
+        String encryptGuid = LP_CryptoClassUtility.encrypt(guid, PVR_STR_KEY, PVR_STR_INITVECTOR);
+        String encodeGuid = EncodingUtil.urlEncode(encryptGuid, 'UTF-8');
+        LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
+        jwt.privateKey = PVR_STR_KEY;
+        jwt.iss = 'Onboarding Card La Polar';
+        jwt.sub = 'Onboarding Site: Step 4';
+        jwt.aud = 'Jumio';
+        jwt.claims = new Map<String,String>();
+        jwt.claims.put('guid', encodeGuid);
+        return jwt.issue();
     }
     
     /**
@@ -103,7 +113,7 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             Map<String, String> params = new Map<String, String>(); 
             params.put('action',PVR_ACT_JUMIO_REQ);
             params.put('scanreference',transRef);
-            params.put('guid',null);
+            params.put('jwt',null);
             params.put('url',url);
             LP_MAPJSONAzurianValidation objClass = new LP_MAPJSONAzurianValidation(record, params);
             LP_JSONAzurianResponse response = new LP_JSONAzurianResponse();
@@ -135,7 +145,7 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
             Map<String, String> params = new Map<String, String>(); 
             params.put('action',PVR_ACT_AZURIAN_INIT);
             params.put('scanreference',transRef);
-            params.put('guid',null);
+            params.put('jwt',null);
             params.put('url',url);
             //System.debug('params: '+params);
             LP_JSONAzurianResponse response = new LP_JSONAzurianResponse();
@@ -179,7 +189,6 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
         try{
             String rut = objIdentChk.items[0].documento.rut;
             objOnb.LP_RutValidacionBiometrica__c = rut.replace(' ','-');
-            objOnb.LP_NumeroDocumento__c = Integer.valueOf(objIdentChk.items[0].documento.numero);
             objOnb.LP_NombresValidacionBiometrica__c = objIdentChk.items[0].documento.nombres;
             objOnb.LP_ApellidosValidacionBiometrica__c = objIdentChk.items[0].documento.apellidos;
             objOnb.LP_NacionalidadValidacionBiometrica__c = objIdentChk.items[0].documento.nacionalidad;
@@ -275,18 +284,53 @@ public without sharing class LP_OnboardingStepThreeController extends LP_OnBoard
     *  @Date:        14/06/2021
     */
     @AuraEnabled
-    public static SObject getGUIDOnboardingByRUT(String guid){
+    public static SObject getGUIDOnboardingByRUT(String token) {
         try {
             LP_Onboarding__c resOnb = new LP_Onboarding__c();
             LP_OnboardingSelector onbSelector = new LP_OnboardingSelector();
             Lead resLead = new Lead();
             LP_LeadsSelector leadSelector = new LP_LeadsSelector();
-            //String decryptGuid = LP_CryptoClassUtility.decrypt(guid, PVR_STR_KEY, PVR_B64_INITVECTOR);
-            resOnb = onbSelector.selectByGUIDWithLimit(guid);
+            resOnb = onbSelector.selectByGUIDWithLimit(getGUID(token));
             resLead = leadSelector.selectByLeadIdWithLimit(resOnb.LP_Candidato__c);
             return resLead;
+        } catch (LP_CustomException e) {
+            LP_CustomException.ExceptionDetail data = new LP_CustomException.ExceptionDetail(e, LP_CustomException.PRV_ERR_SYSTEM, false);
+            throw new AuraHandledException (JSON.serialize(data));
         } catch (Exception e) {
             return null;
         }
+    }
+
+    /**
+    *  @Description: Get GUID from JWT
+    *  @Autor:       Abdon Tejos, Deloitte, atejoso@deloitte.com
+    *  @Date:        27/09/2021
+    */
+    private static String getGUID(String token) {
+        String decryptGuid;
+        LP_JSONWebTokens jwt = new LP_JSONWebTokens('HS256');
+        LP_JSONWebTokens.InnerJWT verifyJWT = jwt.verifyJWT(token, PVR_STR_KEY);  
+        if (verifyJWT.verify) {
+            String decodeGuid = EncodingUtil.urlDecode(verifyJWT.payload.guid, 'UTF-8');
+            decryptGuid = LP_CryptoClassUtility.decrypt(decodeGuid, PVR_STR_KEY, PVR_B64_INITVECTOR);
+        } else {
+            throw new LP_CustomException('Invalid or corrupt Token');
+        }
+        return decryptGuid;
+    }
+
+    /**
+    *  @Description: Encryption key initializer
+    *  @Autor:       Abdon Tejos, Deloitte, atejoso@deloitte.com
+    *  @Date:        27/09/2021
+    */
+    private static Map<String, String> initWrapperKeys() {
+        LP_CryptoClassUtility.WrapperKeys objKeys = new LP_CryptoClassUtility.WrapperKeys();
+        objKeys.key = LP_CryptoClassUtility.PBC_ORG_JWTKEY;
+        objKeys.vector = LP_CryptoClassUtility.PBC_ORG_JWTINITVECTOR;
+        objKeys.valid = LP_CryptoClassUtility.PBC_ORG_JWTVALIDUNTIL;
+        objKeys.validFor = 12;
+        Map<String, String> values = LP_CryptoClassUtility.setCacheValues(objKeys);
+        return values;
     }
 }

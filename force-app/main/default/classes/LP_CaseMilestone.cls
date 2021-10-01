@@ -17,31 +17,31 @@ public with sharing class LP_CaseMilestone extends fflib_SObjectDomain{
         
         boolean notUpdate = false;
         for(Case cas : (List<Case>) cases.Records) {
-            if(cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && cas.LP_Asignado__c && !mapOld.get(cas.id).LP_Asignado__c){
+            if(mapCaseMilestone.containsKey(cas.id + STR_ASIGNACION) && mapCaseMilestone.get(cas.id + STR_ASIGNACION).CompletionDate == null && cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && cas.LP_Asignado__c && !mapOld.get(cas.id).LP_Asignado__c){
                 listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_ASIGNACION)));
 
-            }else if(!cas.LP_CierreAutomatico__c && cas.Status != 'Cancelado' && cas.Status == 'En Gestión' && !cas.IsClosedOnCreate && mapOld.get(cas.id).Status == 'Asignado'){
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_ENGESTION) && mapCaseMilestone.get(cas.id + STR_ENGESTION).CompletionDate == null && !cas.LP_CierreAutomatico__c && cas.Status != 'Cancelado' && cas.Status == 'En Gestión' && !cas.IsClosedOnCreate && mapOld.get(cas.id).Status == 'Asignado'){
                 listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_ENGESTION)));
             
-            }else if(cas.Status == 'Cancelado' && !cas.IsClosedOnCreate && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status == 'Asignado'){
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_ENGESTION) && mapCaseMilestone.get(cas.id + STR_ENGESTION).CompletionDate == null && cas.Status == 'Cancelado' && !cas.IsClosedOnCreate && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status == 'Asignado'){
                 listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_ENGESTION)));
                 
-            }else if(!cas.LP_CierreAutomatico__c && cas.Status == 'Finalizado' && cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && mapOld.get(cas.id).Status != 'Asignado' && mapOld.get(cas.id).Status != 'Gestionado'){
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_ENGESTION) && mapCaseMilestone.get(cas.id + STR_ENGESTION).CompletionDate == null && !cas.LP_CierreAutomatico__c && cas.Status == 'Finalizado' && cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && mapOld.get(cas.id).Status != 'Asignado' && mapOld.get(cas.id).Status != 'Gestionado'){
                 listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_ENGESTION)));
             
-            }else if(cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && cas.Status == 'Gestionado' && cas.Status != mapOld.get(cas.id).Status){
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_GESTIONADO) && mapCaseMilestone.get(cas.id + STR_GESTIONADO).CompletionDate == null && cas.Status != 'Cancelado' && !cas.IsClosedOnCreate && cas.Status == 'Gestionado' && cas.Status != mapOld.get(cas.id).Status){
                 listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_GESTIONADO)));
                 
-            }else if( cas.LP_NumeroDeRechazos__c < 2 && cas.LP_CierreAutomatico__c && !cas.IsClosedOnCreate && (cas.Status == 'Finalizado' && cas.Status != 'Cancelado') && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_GESTIONADO) && mapCaseMilestone.get(cas.id + STR_GESTIONADO).CompletionDate == null && cas.LP_NumeroDeRechazos__c < 2 && cas.LP_CierreAutomatico__c && !cas.IsClosedOnCreate && (cas.Status == 'Finalizado' && cas.Status != 'Cancelado') && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){
                 	listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_GESTIONADO)));    
                     
-            }else if(cas.LP_NumeroDeRechazos__c == 2 && !cas.IsClosedOnCreate && cas.Status != 'Cancelado' && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){           
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_GESTIONADO) && mapCaseMilestone.get(cas.id + STR_GESTIONADO).CompletionDate == null && cas.LP_NumeroDeRechazos__c == 2 && !cas.IsClosedOnCreate && cas.Status != 'Cancelado' && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){           
                 	listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_GESTIONADO)));
                 
-            }else if(cas.LP_CierreAutomatico__c && cas.LP_NumeroDeRechazos__c < 2 && !cas.IsClosedOnCreate && cas.Status == 'Finalizado' && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'En Gestión' && mapOld.get(cas.id).Status != 'Asignado'){           
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_GESTIONADO) && mapCaseMilestone.get(cas.id + STR_GESTIONADO).CompletionDate == null && cas.LP_CierreAutomatico__c && cas.LP_NumeroDeRechazos__c < 2 && !cas.IsClosedOnCreate && cas.Status == 'Finalizado' && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'En Gestión' && mapOld.get(cas.id).Status != 'Asignado'){           
                 	listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_GESTIONADO)));
             
-            }else if( cas.LP_NumeroDeRechazos__c < 2 && !cas.LP_CierreAutomatico__c && !cas.IsClosedOnCreate && (cas.Status == 'Finalizado' && cas.Status != 'Cancelado') && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){           
+            }else if(mapCaseMilestone.containsKey(cas.id + STR_FINALIZADO) && mapCaseMilestone.get(cas.id + STR_FINALIZADO).CompletionDate == null && cas.LP_NumeroDeRechazos__c < 2 && !cas.LP_CierreAutomatico__c && !cas.IsClosedOnCreate && (cas.Status == 'Finalizado' && cas.Status != 'Cancelado') && cas.Status != mapOld.get(cas.id).Status && mapOld.get(cas.id).Status != 'Asignado'){           
                 	listCaseMilestoneToUpdate.add(completeCaseMilestone(mapCaseMilestone.get(cas.id + STR_FINALIZADO)));
                 
             }else{
@@ -53,7 +53,7 @@ public with sharing class LP_CaseMilestone extends fflib_SObjectDomain{
         if(!notUpdate) update listCaseMilestoneToUpdate;
 
     }
-
+	
     static CaseMilestone completeCaseMilestone(CaseMilestone caseM){
         caseM.CompletionDate = system.now();
         return caseM;

@@ -20,6 +20,9 @@ import lTitleSolicCard from '@salesforce/label/c.LP_TitleSolicCard';
 import lSubTitle from '@salesforce/label/c.LP_InicioPideTarjeta';
 import lTitleValidatingIdentity from '@salesforce/label/c.LP_TitleValidatingIdentity';
 import getGUIDOnboardingByRUT from '@salesforce/apex/LP_OnboardingStepThreeController.getGUIDOnboardingByRUT';
+import getResourceURL from '@salesforce/apex/LP_OnboardingStepOneController.getResourceURL';
+import backgroundColor from '@salesforce/label/c.LP_BodyParentBGColor';
+import lStepSixTitle from '@salesforce/label/c.LP_ValidaFirmaDocStepSix';
 
 //Steps 
 import step1 from '@salesforce/label/c.LP_OnboardingPaso1';
@@ -41,7 +44,6 @@ export default class LP_BodyParent extends LightningElement {
     @track objLead = { 'sobjectType': 'Lead' };
     @api mail;
     @api paramNextStep;
-    @api parameters;
     @api isParam=false;
     @api stepForParam;
     @api step;
@@ -77,7 +79,8 @@ export default class LP_BodyParent extends LightningElement {
         validatingIdentity : lTitleValidatingIdentity,
         existClient : lTitleCliExist,
         ClientNoCard : lTitleCliNoCard,
-        systemError : lTitleSystem
+        systemError : lTitleSystem,
+        stepSixTitle : lStepSixTitle
     }
 
     currentPageReference;
@@ -132,6 +135,7 @@ export default class LP_BodyParent extends LightningElement {
                 break;
             case this.steps.step6 :
                 this.stepLayout.step6 = true;
+                this.stepLayout.title = this.titles.stepSixTitle;
                 break;
             case this.steps.step7 :
                 this.stepLayout.step7 = true;
@@ -202,19 +206,25 @@ export default class LP_BodyParent extends LightningElement {
     */
      connectedCallback() {
         this.isParam =false;
-        this.parameters = this.getQueryParameters();
-        console.log("Access Token: " + JSON.stringify(this.parameters.accessToken));
-        console.log("state is: " + JSON.stringify(this.currentPageReference.state));
         var showErrorParam = false;
-        if(this.parameters.g != undefined){
+        var favIconUrl;
+        this.setBackgroundColor();
+        getResourceURL({resourceName: 'LP_FaviconOnb'}).then(result =>
+            {
+                document.dispatchEvent(new CustomEvent("getFaviconUrl", {"detail": result}));
+                console.log(result);
+            }
+        );
+        
+        if(this.currentPageReference.state.accessToken != undefined){
             this.cleanStepLayout();
-            if (this.parameters.g != 'error'){
+            if (this.currentPageReference.state.accessToken != 'error'){
 
-                getGUIDOnboardingByRUT({guid: this.parameters.g, token: this.parameters.accessToken})
+                getGUIDOnboardingByRUT({token: this.currentPageReference.state.accessToken})
                 .then(result => {
                     this.objLead = result;
                      if ( this.objLead.LP_Rut__c != null ){
-                        this.paramNextStep = this.parameters.transactionReference; 
+                        this.paramNextStep = this.currentPageReference.state.transactionReference; 
                         this.stepLayout.step4 = true;
                         this.stepLayout.title = this.titles.validatingIdentity;
                         this.isParam =true;
@@ -224,37 +234,57 @@ export default class LP_BodyParent extends LightningElement {
                      }
                 })
                 .catch(error => {
-                    showErrorParam = true;
+                    this.error = error;
+                    var message = JSON.parse(error.body.message);
+                    console.log('error.message: ' + JSON.stringify(message));
+                    console.log('message.cause: ' + message.cause);
+                    this.showError();
                 });
             }else{
                 showErrorParam = true;
             }
+            console.log('showErrorParam: ' + showErrorParam);
             if (showErrorParam){
-                this.paramchildError = this.errors.ERR_NOCARD;
-                this.stepLayout.error = true;
-                this.stepLayout.title = this.titles.ClientNoCard;
-                this.stepLayout.showPath = false;
+                this.showError();
                 this.step = this.steps.step4;
             }
         }
     }
+
+    /**
+    *  @Description: Show error
+    *  @Autor:       Abdon Tejos, Deloitte
+    *  @Date:        28/09/2021
+    */
+    showError() {
+        this.paramchildError = this.errors.ERR_NOCARD;
+        this.stepLayout.error = true;
+        this.stepLayout.title = this.titles.ClientNoCard;
+        this.stepLayout.showPath = false;
+    }
+
     /**
     *  @Description: Read and formated parameters of Azurian
     *  @Autor:       Eilhert Andrade, Deloitte
     *  @Date:        15/06/2021
     */
-     getQueryParameters() {
-        var params = {};
-        var search = location.search.substring(1);
-        if (search) {
-            var allVar = search.split("&");
-            for(let i = 0; i < allVar.length; i++){
-                var param = allVar[i].split("=");
-                params[param[0]] = param[1];
+         getQueryParameters() {
+            var params = {};
+            var search = location.search.substring(1);
+            if (search) {
+                params = JSON.parse('{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}', (key, value) => {
+                    return key === "" ? value : decodeURIComponent(value)
+                });
             }
+            return params;
         }
-        console.log("params: "+JSON.stringify(params));
-        return params;
-    }
 
+    /**
+    *  @Description: Sets the background color in the css
+    *  @Autor:       Johan Ortiz, Deloitte
+    *  @Date:        28/09/2021
+    */
+    setBackgroundColor() {
+        document.documentElement.style.setProperty('--backgroundColor', backgroundColor);
+    }
 }

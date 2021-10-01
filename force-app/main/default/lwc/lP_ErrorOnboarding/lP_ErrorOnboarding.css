@@ -55,6 +55,7 @@ a{
   display:none;
 }
 .button{
+  border-radius: 0.25rem;
   background-color: #D00E2A;
   color: #FFFFFF;
   border: none;
@@ -131,6 +132,7 @@ a{
     text-decoration: underline;
   }
   .button{
+    border-radius: 0.25rem;
     width: 177px;
     height: 32px;
     margin-top: 16.875rem;
@@ -205,6 +207,7 @@ a{
     text-decoration: underline;
   }
   .button{
+    border-radius: 0.25rem;
     width: 177px;
     height: 32px;
     margin-top: 16.875rem;
@@ -279,6 +282,7 @@ a{
       text-decoration: underline;
     }
     .button{
+      border-radius: 0.25rem;
       width: 177px;
       height: 32px;
       margin-top: 16.875rem;
@@ -322,7 +326,7 @@ a{
     .card-img{
       width: 116px;
       height: 176px;
-      margin-top: -37px;
+      margin-top: -60px;
       margin-left: 42px;
     }
     .text-container{
@@ -353,6 +357,7 @@ a{
       text-decoration: underline;
     }
     .button{
+      border-radius: 0.25rem;
       width: 177px;
       height: 32px;
       margin-top: 16.875rem;
@@ -400,7 +405,7 @@ a{
   .card-img{
     width: 116px;
     height: 176px;
-    margin-top: -37px;
+    margin-top: -15px;
     margin-left: 42px;
   }
   .text-container{
@@ -431,6 +436,7 @@ a{
     text-decoration: underline;
   }
   .button{
+    border-radius: 0.25rem;
     width: 177px;
     height: 32px;
     margin-top: 16.875rem;
