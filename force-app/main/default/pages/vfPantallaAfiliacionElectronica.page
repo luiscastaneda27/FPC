@@ -434,7 +434,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                 </apex:actionStatus>
                 <apex:actionPoller rendered="{!updateRecord}" action="{!updateAF}" interval="5" />
                 <!--apex:outputPanel id="actionPoll">
-                	<apex:actionPoller rendered="{!actionPoller}" reRender="actionPoll"  action="{!enviarcorreoAfiliacion}" interval="5" />
+                    <apex:actionPoller rendered="{!actionPoller}" reRender="actionPoll"  action="{!enviarcorreoAfiliacion}" interval="5" />
                 </apex:outputPanel-->
                 <div class="slds-scope"> 
                     <header class="slds-modal__header">
@@ -1223,7 +1223,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                                         }
                                                                         //document.getElementById("page:ubic1:pcCalleDetalleCN").setCustomValidity( x.value.length + " de " + x.maxLength );
                                                                         //document.getElementById("page:ubic1:pcCalleDetalleCN").reportValidity();
-                                                                	}
+                                                                    }
                                                                 </script>
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Calle/Detalle
@@ -2124,7 +2124,7 @@ standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" i
                                                         
                                                         <tr>
                                                             
-                                                            <td width="150">
+                                                            <td width="1200">
                                                                 
                                                                 <label class="slds-form-element__label" for="inputSample">
                                                                     <abbr class="slds-required" title="required"></abbr> Tipo Trabajador
@@ -3349,7 +3349,7 @@ OFICIAL
                                         </div>     
                                         <!--Tabla Para Mostrar los beneficiarios-->
                                         <apex:outputPanel id="tablaBeneficiariosC"> 
-                                        	<div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
+                                            <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                                             <apex:outputPanel rendered="{!mostrarTablaC}"  style="width:1200px; margin-left:35px; "> 
                                                 
                                                 <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style=" width:10000px;">

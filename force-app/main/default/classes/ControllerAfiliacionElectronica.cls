@@ -122,7 +122,7 @@ public without sharing class ControllerAfiliacionElectronica
     public string pcTIpoEmpleado /*TipoEmpleado*/ {get;set;}
     public datetime pdfechainiciolabor{get;set;}
     public string pcNivelIngreso /*NivelIngreso*/ {get;set;}
-    //public string pcVolumenIngresoCN /*VolumenIngreso*/ {get;set;}
+    //public string pcVolumenIngresoCN /*VolumenIngreso*/ {get;set;} 
     
     //DatoEmpleado
     public string pcUsuarioCN /*usuarioValidacion*/ {get;set;}
@@ -370,8 +370,6 @@ public without sharing class ControllerAfiliacionElectronica
     //Fin
     
     public string pagina{get;set;}
-    public static string ClienteNatural {get;set;}
-    public static string ProductoNatural {get;set;}
     public string paso1Cabeza{get;set;}
     public string paso1Cuerpo{get;set;}
     
@@ -418,14 +416,14 @@ public without sharing class ControllerAfiliacionElectronica
     
     public Boolean updateRecord{get;set;}
     
-    public ControllerAfiliacionElectronica() 
-    {
+    
+    public ControllerAfiliacionElectronica(){
         String queryCorreo = 'Select URL__c From URL_conexion_Sysde__mdt Where DeveloperName = \'Afiliacion_Electronica\'';
         URL_conexion_Sysde__mdt cuerpoCorreo = dataBase.query(queryCorreo);
         cuerpo = cuerpoCorreo.URL__c;
         Blob key = Blob.valueOf('aAk!h@37WQ9bsAfk');
-        //actionPoller = false;
         updateRecord = true;
+        //actionPoller = false;
         if(!test.isRunningTest()){
             idClie = ApexPages.currentPage().getParameters().get('ident');
             securityT =  ApexPages.currentPage().getParameters().get('securityToken');
@@ -531,8 +529,8 @@ public without sharing class ControllerAfiliacionElectronica
         Cuenta20 = new Cuentas__c();
         Cuenta22 = new Beneficiario__c();
         //ParentezcoDependen = new Beneficiario__c();
-        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
-        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
+        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
         //beneficiarioUnicoConti = new ClassBeneficiarioContigencia(null,'','','','','','','','','',null,null,null);
         cuentaUnico = new Class_CuentasTraer('');
         options=new List<SelectOption>();
@@ -662,7 +660,6 @@ Tercera = true;  */
         pcaplicaseguro = FALSE; 
         //pcpromotor = 'HN22250'; 
         //pnnrocertificado= 'AF';
-        
         af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
         pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
         if(prueba2!=null)
@@ -670,7 +667,6 @@ Tercera = true;  */
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,prueba2));                        
         }    
     }
-    
     Autonumerico_cuentas_Syste__c af;
     public void updateAF(){
         updateRecord = false;
@@ -1175,7 +1171,7 @@ Tercera = true;  */
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true;
                         }
                         else
@@ -1195,7 +1191,7 @@ Tercera = true;  */
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true; 
                         }
                         return null;
@@ -1213,7 +1209,7 @@ Tercera = true;  */
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;
                         
                     }
@@ -1234,7 +1230,7 @@ Tercera = true;  */
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;  
                     }
                     return null;
@@ -1304,7 +1300,7 @@ Tercera = true;  */
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true;
                         }
                         else
@@ -1324,7 +1320,7 @@ Tercera = true;  */
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true; 
                         }
                         return null;
@@ -1342,7 +1338,7 @@ Tercera = true;  */
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;
                         
                     }
@@ -1363,7 +1359,7 @@ Tercera = true;  */
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;  
                     }
                     return null;
@@ -2748,10 +2744,8 @@ Tercera = true;  */
             
         }else{
             ContratistaNOSelec();
-        } 
-        //PARA Generar Formulario
-        ID_FORMULARIOAE__c acct = new ID_FORMULARIOAE__c();
-        insert acct;   
+        }    
+        
         //PARA Generar Secuencia RTN
         Secuencia_rtn__c acctR = new Secuencia_rtn__c();
         insert acctR; 
@@ -2866,12 +2860,6 @@ Tercera = true;  */
         else{
             ContratistaNOOSelec();
         }
-        /*if(pcprimernombre!= null){
-validar125();
-}*/
-        //PARA Generar Formulario
-        ID_FORMULARIOAE__c acct = new ID_FORMULARIOAE__c();
-        insert acct;   
         //PARA Generar Secuencia RTN
         Secuencia_rtn__c acctR = new Secuencia_rtn__c();
         insert acctR; 
@@ -3486,8 +3474,7 @@ paso2Cuerpo = 'slds-hide';
         try{ 
             
             system.debug('captcha: '+Recaptcha);        
-            if( pnnrocertificado == '')
-            {          
+            if( pnnrocertificado == ''){          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacio'));
                 return null;    
             }
@@ -4124,10 +4111,10 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Aceptacion de Cuenta no Marcada'));
                 return null; 
             }
-            if(Recaptcha == 'N'){
+            /*if(Recaptcha == 'N'){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Favor Validar el reCAPTCHA.'));
                 return null; 
-            }              
+            } */             
             else
             {
                 afiliacionElectronicaClass envioDatos = new afiliacionElectronicaClass();        
