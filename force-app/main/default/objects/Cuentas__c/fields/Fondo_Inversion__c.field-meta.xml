@@ -25,6 +25,16 @@
                 <default>false</default>
                 <label>Lempiras Puros</label>
             </value>
+            <value>
+                <fullName>Cesantías</fullName>
+                <default>false</default>
+                <label>Cesantías</label>
+            </value>
+            <value>
+                <fullName>Pensiones</fullName>
+                <default>false</default>
+                <label>Pensiones</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

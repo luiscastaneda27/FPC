@@ -3,6 +3,18 @@
     <label>Disminución de aporte HNL</label>
     <protected>false</protected>
     <values>
+        <field>DAU_Contrasenia__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_Token__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_Usuario__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Monto_a_Disminuir__c</field>
         <value xsi:type="xsd:double">1000.0</value>
     </values>

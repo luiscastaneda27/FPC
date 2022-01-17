@@ -18,13 +18,15 @@ public class controllerApiClienteNatural {
 			String cons = 'contenido=' + envio.contenido;
 			system.debug(cons);		
 			request.setBody(cons);	
-			HttpResponse response = http.send(request);
+			HttpResponse response = new HttpResponse();
+            if(!test.isRunningTest()){
+                response = http.send(request);
+            }else{
+                response.setBody('Proceso realizado Correctamente');
+            }
 	    	respuesta = response.getBody();
             system.debug(respuesta);      
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage());
-	
-        }Catch(Exception e){
+		}Catch(Exception e){
 			system.debug(e.getMessage());	
 		} 
 		return respuesta;   
@@ -251,6 +253,7 @@ public class controllerApiClienteNatural {
             respuesta = respuesta.replace(']"', ']');
             respuesta = respuesta.replace('\\"','"');
             respuesta = respuesta.replace('\"','"');
+            respuesta = respuesta.replace(':"T00:00:00"',':null');
             
             //fcsd = respuesta.split(',');
             system.debug('debuggRespuesta: ' + respuesta); 
@@ -262,10 +265,7 @@ public class controllerApiClienteNatural {
                
            }
             
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage()+'   '+e.getLineNumber());
-	
-        }Catch(Exception e){
+		}Catch(Exception e){
 			system.debug(e.getMessage()+'   '+e.getLineNumber());	
 		} 
         

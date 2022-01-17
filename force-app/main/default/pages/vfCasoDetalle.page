@@ -27,6 +27,7 @@
                         
                 var CanalAporte = $('[id$=CanalAporte]').val(); //alert(CanalAporte);                   
                 var e = document.querySelectorAll('[id$="Frecuencia"]')[0];
+                var e2 = document.querySelectorAll('[id$="POS"]')[0];
                 
                 if(TipoOperacion == 'A1' || TipoOperacion == 'A2' || TipoOperacion == 'A4' || TipoOperacion == 'A6' || TipoOperacion == 'A7') { 
                     $('select.removePicklistValue2 option[value=24]').remove(); $('select.removePicklistValue2 option[value=2]').remove(); $('select.removePicklistValue2 option[value=30]').remove(); $('select.removePicklistValue2 option[value=6]').remove(); $('select.removePicklistValue2 option[value=15]').remove();
@@ -38,6 +39,9 @@
                 if(CanalAporte == 'TA' || CanalAporte == 'TAOB' || TipoOperacion == 'A6') {                   
                     if (e && !e[0].value) {
                         e.remove(1);
+                    }
+                    if (e2 && !e2[0].value) {
+                        e2.remove(2);
                     }
                     $('select.removePicklistValue option[value=1]').remove(); $('select.removePicklistValue option[value=2]').remove(); $('select.removePicklistValue option[value=3]').remove(); $('select.removePicklistValue option[value=4]').remove(); $('select.removePicklistValue option[value=5]').remove();
                     $('select.removePicklistValue option[value=6]').remove(); $('select.removePicklistValue option[value=7]').remove(); $('select.removePicklistValue option[value=8]').remove(); $('select.removePicklistValue option[value=9]').remove(); $('select.removePicklistValue option[value=10]').remove(); 
@@ -125,27 +129,28 @@
                     searchFunction2();
                 }        
             }
-            </script>
+            </script> 
             
             <apex:form id="theForm" >
+                
                 <apex:actionFunction name="callAction" reRender="yourText" action="{!changeFlag}">
                     <apex:param value="" name="flagValue"/>
                 </apex:actionFunction>
                 <apex:actionFunction action="{!buscarSubPro}" name="searchFunction" />
                 <apex:actionFunction action="{!buscarCuentaC}" name="searchFunction2" />
-                 <apex:actionStatus id="status">
-                <apex:facet name="start">
-                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
-                         
-                    </div>
-                    
-                    <div role="status" class="slds-spinner slds-spinner_large">
-                        <span class="slds-assistive-text">Por Favor Espere...</span>
-                        <div class="slds-spinner__dot-a"></div>
-                        <div class="slds-spinner__dot-b"></div>
-                    </div>
-                </apex:facet>
-            </apex:actionStatus>
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                             
+                        </div>
+                        
+                        <div role="status" class="slds-spinner slds-spinner_large">
+                            <span class="slds-assistive-text">Por Favor Espere...</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </apex:facet>
+            	</apex:actionStatus>
                 <div class="slds-scope"> 
                     <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme--alert-texture"/>
                     
@@ -161,7 +166,7 @@
                                             <label class="slds-form-element__label" >Cuenta</label>
                                             <apex:selectList rendered="{!!cTipoCaso.reversiones}" value="{!idCuenta}" id="idCuenta2" styleclass="slds-select cuentaDetalle" size="1">
                                                 <apex:selectOptions value="{!listCuentas}" />
-                                                <apex:actionSupport event="onchange" action="{!selecCuenta}" rendered="{!cTipoCaso.subProducto}"/>
+                                                <apex:actionSupport event="onchange" action="{!selecCuenta}" rendered="{!OR(cTipoCaso.subProducto, cTipoCaso.aumDisAporte)}"/>
                                                 <!--apex:actionSupport immediate="true" event="onchange" action="{!MonedaCuenta}" rendered="{!cTipoCaso.reversiones}"/-->
                                             </apex:selectList>
                                             <apex:selectList rendered="{!cTipoCaso.reversiones}" value="{!idCuenta}" id="idCuenta" styleclass="slds-select" size="1">
@@ -285,34 +290,9 @@
                                                 <div class="slds-form-element slds-size--3-of-3">
                                                     <label class="slds-form-element__label" >Numero de Prestamo</label>
                                                     <apex:inputField styleclass="slds-input"   value="{!detalleCaso.Numero_Prestamo__c}"  />
-                                                    
                                                 </div>
                                             </div>
-                                        </apex:outputPanel>
-                                        <!--div class="slds-form-element__row">
-<div class="slds-form-element slds-size--1-of-3">
-<label class="slds-form-element__label" >Es Primer prestamo</label><br/>
-<apex:inputField styleclass="slds-input" rendered="{!AND(caso.status='Nuevo', !case.Aprobado__c)}"   value="{!detalleCaso.Es_Primer_Prestamo__c }"  >
-<apex:actionSupport event="onchange" action="{!VerificacionCheckPrestamos}" reRender="theForm" status="status" />
-</apex:inputField>
-<apex:outputField rendered="{!OR(caso.status !='Nuevo', case.Aprobado__c)}" value="{!detalleCaso.Es_Primer_Prestamo__c }" />
-</div>
-<div class="slds-form-element slds-size--2-of-3">
-<label class="slds-form-element__label" >No es Primer prestamo</label><br/>
-<apex:inputField styleclass="slds-input" rendered="{!AND(caso.status='Nuevo', !case.Aprobado__c)}"  value="{!detalleCaso.No_es_primer_prestamo__c}"  >
-<apex:actionSupport event="onchange" action="{!VerificacionCheckPrestamos}" reRender="theForm" status="status" />
-</apex:inputField>
-<apex:outputField rendered="{!OR(caso.status !='Nuevo', case.Aprobado__c)}" value="{!detalleCaso.No_es_primer_prestamo__c }" />
-</div>
-<div class="slds-form-element slds-size--3-of-3">
-<label class="slds-form-element__label" >Es Refinanciamiento</label><br/>
-<apex:inputField styleclass="slds-input" rendered="{!AND(caso.status='Nuevo', !case.Aprobado__c)}"   value="{!detalleCaso.Es_Refinanciamiento__c}"  >
-<apex:actionSupport event="onchange" action="{!VerificacionCheckPrestamos}" reRender="theForm" status="status" />
-</apex:inputField>
-<apex:outputField rendered="{!OR(caso.status !='Nuevo', case.Aprobado__c)}" value="{!detalleCaso.Es_Refinanciamiento__c }" />
-</div>
-</div-->
-                                        
+                                        </apex:outputPanel>                                        
                                         
                                         <div class="slds-form-element__row">
                                             <div class="slds-form-element slds-size--1-of-2">
@@ -382,19 +362,6 @@
                                                 <apex:actionSupport event="onchange" action="{!accionVacia}"/>
                                             </apex:inputField> 
                                             
-                                            <!-- apex:outputPanel rendered="{!If((detalleCaso.Tipo_Operacion__c = 'A4'),true,false)}" -->
-                                            <!-- <apex:outputpanel rendered="{!AND(detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Inicio_Fecha_Aporte__c == null)}">
-                                                <label class="slds-form-element__label" >
-                                                    Fechas disponibles
-                                                </label>
-                                                <div class="slds-form-element slds-size--2-of-2">
-                                                    <apex:selectList styleclass="slds-input" value="{!DAU_Cambio_de_Fecha}" size="1"> 
-                                                        <apex:selectOptions value="{!CambioFechaOptions}" /> 
-                                                        <apex:actionSupport action="{!setCambioFecha}" event="onchange" reRender="dateField"/>    
-                                                    </apex:selectList>
-                                                </div> 
-                                            </apex:outputPanel> -->
-                                            
                                             <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A5',detalleCaso.Tipo_Operacion__c = 'A6',
                                                                         detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')}">
                                                 <label class="slds-form-element__label" >
@@ -402,17 +369,16 @@
                                                 <apex:inputField id="Frecuencia" styleclass="slds-input" value="{!detalleCaso.Frecuencia__c}" />
                                             </apex:outputpanel> 
                                             
-                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6', AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA', detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Día de pago</label>
                                                 <apex:inputField id="DiaPago" styleclass="slds-input removePicklistValue" value="{!detalleCaso.DAU_Dia_de_pago__c}" />
                                             </apex:outputpanel> 
                                                                                         
-                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8',
-                                                                        AND(detalleCaso.Tipo_Operacion__c = 'A3'))}">
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6', AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA', detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), OR(detalleCaso.Tipo_Operacion__c = 'A8', detalleCaso.Tipo_Operacion__c = 'A3')))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>POS</label>
-                                                <apex:inputField styleclass="slds-input" value="{!detalleCaso.POS__c}" /> 
+                                                <apex:inputField id="POS" styleclass="slds-input" value="{!detalleCaso.POS__c}" /> 
                                             </apex:outputPanel> 
                                             
                                             <apex:outputPanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8'),
@@ -423,12 +389,12 @@
                                             </apex:outputPanel>
                                             
                                             <apex:outputPanel rendered="{!OR(AND(OR(detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A8'),
-                                                detalleCaso.Nuevo_canal_aporte__c = 'TAOB', cuentaCliente.Forma_Aportacion__c != 'AH'), 
-                                                AND(detalleCaso.Tipo_Operacion__c = 'A1', cuentaCliente.Forma_Aportacion__c != 'AH'),
-                                                AND(detalleCaso.Tipo_Operacion__c = 'A2', cuentaCliente.Forma_Aportacion__c != 'AH'),                        
-                                                AND(detalleCaso.Tipo_Operacion__c = 'A4', cuentaCliente.Forma_Aportacion__c != 'AH'), 
-                                                AND(detalleCaso.Tipo_Operacion__c = 'A6', cuentaCliente.Forma_Aportacion__c != 'AH'),
-                                                AND(detalleCaso.Tipo_Operacion__c = 'A7', cuentaCliente.Forma_Aportacion__c != 'AH'))}">
+                                                detalleCaso.Nuevo_canal_aporte__c = 'TAOB'), 
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A1', cuentaCliente.Forma_Aportacion__c == 'TA'),
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A2', cuentaCliente.Forma_Aportacion__c == 'TA'),                        
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A4', cuentaCliente.Forma_Aportacion__c == 'TA'), 
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A6', cuentaCliente.Forma_Aportacion__c == 'TA'),
+                                                AND(detalleCaso.Tipo_Operacion__c = 'A7', cuentaCliente.Forma_Aportacion__c == 'TA'))}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Banco</label>
                                                 <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 
@@ -447,7 +413,7 @@
                                                 <label class="slds-form-element__label">
                                                     <abbr class="slds-required" title="required">*</abbr>Nuevo canal de aporte</label><br/>
                                                 <apex:inputField id="CanalAporte" styleclass="slds-input" value="{!detalleCaso.Nuevo_canal_aporte__c}">
-                                                    <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
+                                                    <apex:actionSupport event="onchange" action="{!accionVacia2}" reRender="theForm" status="status" oncomplete="process()" />
                                                 </apex:inputField>  
                                             </apex:outputPanel> 
                                             
@@ -459,18 +425,23 @@
                                                 <apex:inputText styleclass="slds-input" value="{!detalleCaso.N_Cuenta_Bancaria__c}" /> 
                                             </apex:outputPanel>                             
                                             
-                                            <apex:outputPanel id="dateField" rendered="{!If(OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Tipo_Operacion__c = 'A8'),true,false)}">
+                                            <apex:outputPanel id="dateField" rendered="{!If(OR(AND(cuentaCliente.Forma_Aportacion__c = 'TA', detalleCaso.Tipo_Operacion__c = 'A1'),AND(cuentaCliente.Forma_Aportacion__c = 'TA', detalleCaso.Tipo_Operacion__c = 'A2'),detalleCaso.Tipo_Operacion__c = 'A4',AND(cuentaCliente.Forma_Aportacion__c = 'AH', detalleCaso.Tipo_Operacion__c = 'A5'),detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A8'),true,false)}">
                                                 <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Nueva fecha de aporte</label>
-                                                <!-- apex:input type="date" value="{!FechaAporte}" styleclass="slds-input" -->
-                                                <div> <!-- style="{!Nueva_fecha_aporte}" -->
-                                                    <apex:inputField type="date" styleclass="slds-input" value="{!detalleCaso.Nueva_fecha_aporte__c}" showDatePicker="false"/>
+                                                <div>
+                                                    <apex:inputField type="date" styleclass="slds-input" value="{!detalleCaso.Nueva_fecha_aporte__c}" showDatePicker="true"/>
                                                 </div>
+                                                
+                                                <apex:outputPanel rendered="{!detalleCaso.Tipo_Operacion__c = 'A4'}">
+                                                	<div>
+                                                    	<span class="slds-text-title"><abbr style="color:#42c4dc; font-size:16px;" title="Si el aporte de este mes quedó pendiente, se trasladará para el siguiente mes.">*</abbr> Si el aporte de este mes quedó pendiente, se trasladará para el siguiente mes. </span>
+                                                	</div>
+                                                </apex:outputPanel>                                                                                                                                                                       
+                                                
                                             </apex:outputPanel>
-                                            
-                                            
-                                            <apex:outputpanel rendered="{!AND(OR(detalleCaso.Tipo_Operacion__c = 'A6', detalleCaso.Tipo_Operacion__c = 'A8', detalleCaso.Tipo_Operacion__c = 'A3'), 
-                                                                        AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA',detalleCaso.Nuevo_canal_aporte__c = 'TAOB',detalleCaso.Banco__c = 'Otros Bancos')))}">                                     
+
+                                            <apex:outputpanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A6', AND(OR(detalleCaso.Tipo_Operacion__c = 'A8', detalleCaso.Tipo_Operacion__c = 'A3'), 
+                                                                        OR(detalleCaso.Nuevo_canal_aporte__c = 'TA',detalleCaso.Nuevo_canal_aporte__c = 'TAOB',detalleCaso.Banco__c = 'Otros Bancos')))}">                                     
                                                 <label class="slds-form-element__label">
                                                   <abbr class="slds-required" title="required">*</abbr>Fecha de vencimiento
                                                 </label>                                              
@@ -505,13 +476,13 @@
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.DAU_Tarjeta_Habiente__c}" /> 
                                             </apex:outputPanel> 
                                             
-                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                            <apex:outputPanel rendered="{!OR( detalleCaso.Tipo_Operacion__c = 'A5', detalleCaso.Tipo_Operacion__c = 'A6', AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA', detalleCaso.Nuevo_canal_aporte__c = 'TAOB', detalleCaso.Nuevo_canal_aporte__c = 'AH'), OR(detalleCaso.Tipo_Operacion__c = 'A3', detalleCaso.Tipo_Operacion__c = 'A8')))}">
                                                 <label class="slds-form-element__label">
                                                     <abbr class="slds-required" title="required">*</abbr>Monto Débito</label>
                                                 <apex:inputField styleclass="slds-input" value="{!detalleCaso.Nuevo_monto_aporte__c}" /> 
                                             </apex:outputPanel>     
                                             
-                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A6',detalleCaso.Tipo_Operacion__c = 'A8')}">
+                                            <apex:outputPanel rendered="{!OR(detalleCaso.Tipo_Operacion__c = 'A5', detalleCaso.Tipo_Operacion__c = 'A6', AND(OR(detalleCaso.Nuevo_canal_aporte__c = 'TA', detalleCaso.Nuevo_canal_aporte__c = 'TAOB', detalleCaso.Nuevo_canal_aporte__c = 'AH'), OR(detalleCaso.Tipo_Operacion__c = 'A3',detalleCaso.Tipo_Operacion__c = 'A8')))}">
                                                 <div class="slds-form-element slds-size--2-of-2">
                                                     <label class="slds-form-element__label">
                                                        <apex:outputLabel ><abbr class="slds-required" title="required">*</abbr>Borrar cuotas pendientes</apex:outputLabel>
@@ -521,6 +492,7 @@
                                                     <apex:inputField id="tipoPago" style="width: 100% !important;" styleclass="slds-input" value="{!detalleCaso.DAU_Borrar_Cuotas__c}">
                                                     </apex:inputField>
                                                 </div>  
+                                                
                                             </apex:outputPanel>                                                                 
                                             
                                         </div>
@@ -536,15 +508,12 @@
                                             <div class="slds-form-element slds-size--2-of-2" />
                                         </div>
                                     </apex:outputPanel>
-                                    
-                                    
-                                    
                                 </div>
                             </fieldset>                 
                         </apex:outputpanel>
                         
                         <!-- SUBPRODUCTO -->
-                        <apex:outputpanel rendered="{!cTipoCaso.subProducto}"> 
+                        <apex:outputpanel id="CambioSubproducto" rendered="{!cTipoCaso.subProducto}"> 
                             <fieldset class="slds-form--compound ">
                                 <div class="slds-form-element__group">
                                     <div class="slds-form-element__row">
@@ -650,7 +619,7 @@
                                                         
                                                     </div>
                                                 </div> 
-                                                <!--apex:outputPanel rendered="{!caso.Mostrar_tasa_Cambio__c ='Si'}" >
+                                                <!--apex:outputPanel rendered="{!caso.Mostrar_Tasa_Cambio__c ='Si'}" >
                                                     <div class="slds-form-element__row">
                                                         <div class="slds-form-element slds-size--1-of-2">
                                                             <label class="slds-form-element__label">
@@ -932,7 +901,13 @@
                                 <div class="slds-form-element slds-size--2-of-2">
                                     <br/>
                                     <apex:commandButton value="Guardar" action="{!guardar}" styleClass="slds-button slds-button--brand"
-                                                        rendered="{!AND(mostrarGuardar, !cTipoCaso.reversiones)}"/>
+                                                        rendered="{!AND(mostrarGuardar, !cTipoCaso.reversiones, !cTipoCaso.subProducto)}" reRender="theForm" status="status"/>
+                                    
+                                    <apex:commandButton value="Guardar" styleClass="slds-button slds-button--brand" rendered="{!AND(detalleCaso.Id == Null, cTipoCaso.subProducto)}" reRender="cambioSubproducto">
+                                        <apex:actionSupport event="onclick" action="{!guardar}" onComplete="hideButtonSave" />
+                                    </apex:commandButton>
+                                    
+                                                                        
                                     <!-- apex:commandButton value="Finalizar" action="{!finalizar}" styleClass="slds-button slds-button--brand"
                                                         rendered="{!AND(!mostrarFinalizar)}"/ -->                    
                                     <apex:commandButton value="Guardar" action="{!guardarReversiones}" styleClass="slds-button slds-button--brand"

@@ -27,6 +27,11 @@ public class FieldsBankManagement {
     public String pcTarjetaHabiente;
     public String pcTipoTarjeta;
     public String pcBanco;
+    public Date pcNuevaFecha;
+    public String pcpromotor;
+    
+    public String EntitlementValue;
+    
     public List<FieldsBankManagement> fieldsList;
     
     public String CARD_HOLDER_LEGAL_ID;

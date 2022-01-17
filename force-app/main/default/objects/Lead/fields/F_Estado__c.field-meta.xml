@@ -4,15 +4,6 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Departamento</label>
-    <lookupFilter>
-        <active>true</active>
-        <filterItems>
-            <field>$Source.F_Pais__c</field>
-            <operation>equals</operation>
-            <valueField>Departamentos__c.F_Pais__c</valueField>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>Departamentos__c</referenceTo>
     <relationshipLabel>Candidatos</relationshipLabel>
     <relationshipName>Candidatos</relationshipName>

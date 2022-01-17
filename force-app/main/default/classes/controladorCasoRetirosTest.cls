@@ -62,17 +62,23 @@ public class controladorCasoRetirosTest {
             //list<RecordType> tiposR = [Select Name From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ];
             //system.debug(tiposR);
             
+            Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+            insert ass;
+            
+            Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+            insert ent;
+            
             list<Case> casos = new list<Case>();
 
-            Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+            Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo',  EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
             casos.add(casoRetiros);
       
-            Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+            Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo',  EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
             casos.add(casoRetiros2);
             
             insert Casos;
             
-            Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo',Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+            Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
             
             list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
             Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id, Fecha_Ingreso_Empresa__c = System.today().addDays(-50), Fecha_Despido_Empresa__c = System.today(), Monto_comision_retiro__c = 50, Cliente_sigue_Laborando__c = true, Cobrar_empleado_sigue_laborando__c = true, Monto_Saldo_Patronal__c = 100, Monto_retirar__c = 1000, Total_Saldo_Patronal__c = 1500, Tipo_pago__c = 'N', Tipo_retiro__c = '51');

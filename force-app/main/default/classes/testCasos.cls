@@ -141,23 +141,23 @@ insert f;*/
             controlRetiro.verPropietarioCuenta();            
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
             controlRetiro.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro.selecTipoRetiro();
+            //controlRetiro.selecTipoRetiro();
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
-            controlRetiro.selecTipoRetiro();
+            //controlRetiro.selecTipoRetiro();
             controlRetiro.verMovimientos();
             controlRetiro.selecMovimiento(); 
             //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales();
-            controlRetiro.calculoSaldoPatronales2();
+            //controlRetiro.calculoSaldoPatronales();
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales(); 
-            controlRetiro.calculoSaldoPatronales2();
+            //controlRetiro.calculoSaldoPatronales(); 
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '10',
                                                               Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
             
-            controlRetiro.ValidacionSaldoPatronales();
+            //controlRetiro.ValidacionSaldoPatronales();
             controlretiro.caso.Aplica_Saldo_patronal__c=true;
             controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
             controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
@@ -195,9 +195,9 @@ insert f;*/
             cuentaIndiColec.fecha_apertura__c = date.today() - 950;
             update cuentaIndiColec;
             extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
-            controlRetiro2.selecCuentaRetiros();
+            //controlRetiro2.selecCuentaRetiros();
             controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro2.selecTipoRetiro();
+            //controlRetiro2.selecTipoRetiro();
             controlRetiro2.guardar();
             
             extensionCasoDetalle controlADA2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[4]));
@@ -248,8 +248,8 @@ insert f;*/
             //controlada.movimientoSeleccionado.;
             controlada.cambioMontoC1();
             controlada.cambioMonto();
-            controlada.actualizardetalleCaso();
-            controlada.actualizarSaldoPatronalCons();
+            //controlada.actualizardetalleCaso();
+            //controlada.actualizarSaldoPatronalCons();
             controlada.getListAgentsByZone();
             controlada.actualizarRezago();
             controlada.montoExoneradoAlDia();
@@ -365,38 +365,38 @@ insert f;*/
             extensionCasoDetalle controlActinfo = new extensionCasoDetalle(new ApexPages.StandardController(Casos[0]));
             controlActinfo.selecCuenta();
             controlActinfo.llenarCuentasDesdeSysde();
-            controlActinfo.verBeneficiarios2();
+            //controlActinfo.verBeneficiarios2();
             if(controlActinfo.listBeneficiarios.size()>0){
                 controlActinfo.listBeneficiarios[0].Casilla__c = true;
             }
             controlActinfo.agregarBeneficiarios();
-            controlActinfo.upsertBeneficiarios();
-            controlActinfo.verPagosBeneficiarios();
-            controlActinfo.verPagosBeneficiarios2();
-            controlActinfo.upsertPagosBeneficiarios();
+            //controlActinfo.upsertBeneficiarios();
+            //controlActinfo.verPagosBeneficiarios();
+            //controlActinfo.verPagosBeneficiarios2();
+            //controlActinfo.upsertPagosBeneficiarios();
             controlActinfo.addPagoBene();
             controlActinfo.delRow();
-            controlActinfo.addPagoBene2();
-            controlActinfo.delRow2();
+            //controlActinfo.addPagoBene2();
+            //controlActinfo.delRow2();
             
             
             extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
             controlRetiro.verPropietarioCuenta();            
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
             controlRetiro.detalleCaso.Tipo_retiro__c = '51';
-            controlRetiro.selecTipoRetiro();
+            //controlRetiro.selecTipoRetiro();
             controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
-            controlRetiro.selecTipoRetiro();
+            //controlRetiro.selecTipoRetiro();
             controlRetiro.verMovimientos();
             controlRetiro.selecMovimiento(); 
             //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales();
-            controlRetiro.calculoSaldoPatronales2();
+            //controlRetiro.calculoSaldoPatronales();
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
             controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales(); 
-            controlRetiro.calculoSaldoPatronales2();
+            //controlRetiro.calculoSaldoPatronales(); 
+            //controlRetiro.calculoSaldoPatronales2();
             controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '10',
                                                               Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
             

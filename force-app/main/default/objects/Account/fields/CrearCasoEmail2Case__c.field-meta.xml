@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CrearCasoEmail2Case__c</fullName>
+    <externalId>false</externalId>
+    <formula>AND(PersonEmail != null, Celular__c != null, OR(TEXT(UltimoEmail2Case__c) == &quot;Z&quot;, ADDMONTHS(UltimoEmail2Case__c ,12) &lt; NOW()) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Crear Caso Email2Case?</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

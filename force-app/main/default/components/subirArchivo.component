@@ -2,7 +2,7 @@
     
     <script language="Javascript">
         function cerrarVentana(value,value2){
-            if(value == 'true' && value2 == 'true'){
+            if(value == 'true' && value2 == 'true'){ 
                 window.top.close();
             }
         }

@@ -45,15 +45,22 @@ public class DAU_BorrarCuotas {
             
             HttpResponse response = http.send(request);
             
+            System.debug('Response: '+response.getStatusCode());
+            
             if (response.getStatusCode() == 200) {
                 System.debug(response.getBody());               
-                Caso.Respuesta_desde_Sysde__c = Caso.Respuesta_desde_Sysde__c + ', Cuotas Borradas del Saldo: '+tipoSaldo;
+                Caso.Respuesta_desde_Sysde__c = 'Cuotas Borradas del Saldo: '+tipoSaldo;
                 update Caso;
                 if(detalle.DAU_Borrar_Cuotas__c == '3') {
                 	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S18__c = true));
                     // Call method to publish events
                     List<Database.SaveResult> results = EventBus.publish(Logs); 	    
+                } else {
+                	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);    
                 } 
             }
         }catch(System.CalloutException e){
@@ -117,6 +124,10 @@ public class DAU_BorrarCuotas {
                 System.debug(response.getBody());               
                 Caso.Respuesta_desde_Sysde__c = Caso.Respuesta_desde_Sysde__c + ', Cuotas Borradas del Saldo: '+tipoSaldo;
                 update Caso;
+                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = Caso.id, DAU_EjecutarSYSDE__c = true));
+                // Call method to publish events
+                List<Database.SaveResult> results = EventBus.publish(Logs);  
             }
         }catch(System.CalloutException e){
             system.debug(e.getMessage());
@@ -164,16 +175,8 @@ public class DAU_BorrarCuotas {
             if (response.getStatusCode() == 200) {  
 	            fcsd = (ClienteNaturales)System.JSON.deserialize(respuesta, ClienteNaturales.class);
                 System.debug('fcsd: '+fcsd);
-
-                //caso.DAU_Tarjeta_de_Sysde__c = fcsd.pccuentapago/*4809939250096876*/;
-                //update caso;
                     
-                System.debug('fcsd.pccuentapago: '+fcsd.pccuentapago);
-                  
-                /*List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_NumeroCuenta__c = fcsd.pccuentapago));
-                // Call method to publish events
-                List<Database.SaveResult> results = EventBus.publish(Logs); */  
+                System.debug('fcsd.pccuentapago: '+fcsd.pccuentapago); 
         	}
             
 		}catch(System.CalloutException e){

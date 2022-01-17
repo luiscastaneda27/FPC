@@ -68,7 +68,8 @@
                         component.set("v.progress",(endPosition*100)/fileContents.length);
                         component.set("v.spiner",false);
                         alert("Archivo cargado correctamente");
-                        location.reload();
+                        //location.reload();
+                        helper.inicio(component, event, helper);
                     }
                 }else{
                     component.set("v.spiner",false);

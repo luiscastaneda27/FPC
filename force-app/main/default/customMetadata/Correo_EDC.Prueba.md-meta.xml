@@ -4,34 +4,28 @@
     <protected>false</protected>
     <values>
         <field>Cuerpo__c</field>
-        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt; 
-&lt;head&gt; 
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt; 
-&lt;title&gt;Documento sin título&lt;/title&gt; 
-&lt;style&gt; 
-element.style { 
- position: relative; padding: 1rem; text-align: left; margin-left:16.7rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 15px; 
-} 
-&lt;/style&gt; 
-
-&lt;/head&gt; 
-
-&lt;body&gt; 
-
-&lt;div class=&quot;row&quot; style=&quot;margin:0;padding:0;&quot; align=&quot;center&quot;&gt; 
- &lt;div class=&quot;col-lg-12&quot;&gt; 
- &lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576556772000/Plantilla_header&quot;/&gt; 
- &lt;/div&gt; 
- &lt;div class=&quot;texto-encima&quot; style=&quot;position: relative; padding: 1rem; text-align: left; margin-left:16.7rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 15px;&quot;&gt;Estimad@, getDestinatario&lt;/div&gt; 
- &lt;div class=&quot;col-lg-12&quot;&gt; 
- &lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576556754000/Plantilla_Body&quot;/&gt; 
- &lt;/div&gt; 
- &lt;div class=&quot;col-lg-12&quot; style=&quot;top:-10px;&quot;&gt; 
- &lt;a href=&quot;http://www.ficohsaimagencorporativa.com/2018/pdfs/Pensiones/guiadeuso.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://ficohsafpc--pensiones--c.cs77.visual.force.com/resource/1576173359000/Plantilla_Boton&quot; style=&quot;width:15%;&quot; /&gt;&lt;/a&gt; 
- &lt;/div&gt;&lt;br/&gt; 
-&lt;/div&gt; 
-
-&lt;/body&gt; 
+        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+      &lt;title&gt;Documento sin título&lt;/title&gt;
+   &lt;/head&gt;
+   &lt;body&gt;
+      &lt;div class=&quot;row&quot; style=&quot;margin:0;padding:0;&quot; align=&quot;center&quot;&gt;
+         &lt;div class=&quot;col-lg-12&quot;&gt;
+            &lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576612285000/Plantilla_header&quot;/&gt;
+         &lt;/div&gt;
+         &lt;!--div style=&quot;border:5px solid #7f7f7f; &quot; --&gt;
+         &lt;div style=&quot;text-align: left; margin-left:8rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 17px;&quot;&gt;Estimado(a), Mónica Aguirre&lt;/div&gt;
+         &lt;div class=&quot;col-lg-12&quot;&gt;
+            &lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576556754000/Plantilla_Body&quot;/&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;col-lg-12&quot; style=&quot;top:-10px;&quot;&gt;
+            &lt;a href=&quot;http://www.ficohsaimagencorporativa.com/2018/pdfs/Pensiones/guiadeuso.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576173359000/Plantilla_Boton&quot; style=&quot;width:15%;&quot; /&gt;&lt;/a&gt;
+         &lt;/div&gt;
+         &lt;br/&gt;
+         &lt;!--/div--&gt;
+      &lt;/div&gt;
+   &lt;/body&gt;
 &lt;/html&gt;</value>
     </values>
 </CustomMetadata>

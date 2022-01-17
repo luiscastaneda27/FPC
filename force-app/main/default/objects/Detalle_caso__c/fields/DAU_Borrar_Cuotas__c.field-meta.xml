@@ -19,12 +19,12 @@
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>Borrar cuotas excepto saldo 18</label>
+                <label>Borrar aportes pendientes excepto cuotas Seguro de vida</label>
             </value>
             <value>
                 <fullName>3</fullName>
                 <default>false</default>
-                <label>Borrar cuotas incluyendo saldo 18</label>
+                <label>Borrar aportes pendientes incluyendo cuotas Seguro de Vida</label>
             </value>
         </valueSetDefinition>
     </valueSet>

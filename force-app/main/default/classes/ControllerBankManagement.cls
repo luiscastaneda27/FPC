@@ -34,24 +34,20 @@ public class ControllerBankManagement {
                 if(parser.getCurrentName() == 'CARD_HOLDER_LEGAL_ID') {
                     parser.nextValue();
                     System.debug('CARD_HOLDER_LEGAL_ID: ' +parser.getText());
-                    respuesta = parser.getText();
-                    fields.CARD_HOLDER_LEGAL_ID = respuesta;
+                    respuesta = parser.getText(); fields.CARD_HOLDER_LEGAL_ID = respuesta;
                 }
                 if(parser.getCurrentName() == 'ACCOUNT_HOLDER_LEGAL_ID') {
-                    parser.nextValue();
-                    respuesta2 = parser.getText();
+                    parser.nextValue(); respuesta2 = parser.getText();
                     System.debug('ACCOUNT_HOLDER_LEGAL_ID: '+respuesta2);
                     fields.ACCOUNT_HOLDER_LEGAL_ID = respuesta2;
                 }
                 if(parser.getCurrentName() == 'ACCOUNT_NUMBER') {
-                    parser.nextValue();
-                    respuesta3 = parser.getText();
+                    parser.nextValue(); respuesta3 = parser.getText();
                     System.debug('ACCOUNT_NUMBER: '+respuesta3);
                     fields.ACCOUNT_NUMBER = respuesta3;                    
                 }
                 if(parser.getCurrentName() == 'CARD_STATUS') {
-                    parser.nextValue();
-                    respuesta4 = parser.getText();
+                    parser.nextValue(); respuesta4 = parser.getText();
                     System.debug('CARD_STATUS: '+respuesta4);
                     fields.CARD_STATUS = respuesta4;
                 }

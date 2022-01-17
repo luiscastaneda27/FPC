@@ -48,8 +48,36 @@ global class testAGN {
             return response; 
         }
     }
+    
+    /*static testMethod void execute() {
+    	test.startTest();
+        
+        PageReference pageRef = Page.vfpantallaclienteProductoAgn;
+        pageRef.getParameters().put('idAfiliacion','6464646464646');
+       
+        
+        Reporte_calidad__c Afiliacion = new Reporte_calidad__c();
+        Afiliacion.Name = 'Test';
+        Afiliacion.Segundo_Nombre__c = 'Test';
+        Afiliacion.Primer_Apellido__c = 'Test';
+        Afiliacion.Segundo_Apellido__c = 'Test';
+        Afiliacion.Asesor_Comercial__c = 'Test Asesor';
+        Afiliacion.Codigo_Asesor_Comercial__c = '001';
+        //Afiliacion.Empresa__c = Null;
+        //Afiliacion.Estado__c = '';
+        //Afiliacion.Espediente_Completo__c = '';
+        Afiliacion.Numero_de_Cliente__c = '505';
+        Afiliacion.Numero_de_Contrato__c = '1234';
+        Insert Afiliacion;
+        
+        ControllerProductoAgn cs = new ControllerProductoAgn();
+        
+        test.stopTest();
+    }*/
+    
     static testMethod void ControllerProductoAgn(){ 
     test.startTest();
+        
         Estado_Cuenta__c ec= new Estado_Cuenta__c(name = 'Test', CodigoEstado__c = 'A');
         insert ec;
         Causa_Cuenta__c cc= new Causa_Cuenta__c(name = 'Test', codigo__c = '01', Estado_Cuenta__c = ec.Id);
@@ -64,7 +92,22 @@ global class testAGN {
         af.Id_Formulario_Sysde__c = 0;
         insert af;
         
+        
         ControllerProductoAgn cliente = new ControllerProductoAgn();
+        
+        cliente.Afiliacion.Name = 'Test';
+        cliente.Afiliacion.Segundo_Nombre__c = 'Test';
+        cliente.Afiliacion.Primer_Apellido__c = 'Test';
+        cliente.Afiliacion.Segundo_Apellido__c = 'Test';
+        cliente.Afiliacion.Asesor_Comercial__c = 'Test Asesor';
+        cliente.Afiliacion.Codigo_Asesor_Comercial__c = '001';
+        //cliente.Afiliacion.Empresa__c = Null;
+        //cliente.Afiliacion.Estado__c = '';
+        //cliente.Afiliacion.Espediente_Completo__c = '';
+        cliente.Afiliacion.Numero_de_Cliente__c = '505';
+        cliente.Afiliacion.Numero_de_Contrato__c = '1234';
+        //Insert cliente.Afiliacion;  
+        
         cliente.iniciarMensaje('mensaje prueba');
         cliente.Pruebax2();
         cliente.usuarioValidacion = '';
@@ -202,6 +245,7 @@ global class testAGN {
         cliente.enviarPagPro();
 		cliente.guardar();
         cliente.pcsubproducto = subp.Codigo__c;
+        cliente.checkcorreo = true;
         cliente.obtieneCodSub();
         cliente.bloqBotonGuardar();
         
@@ -598,6 +642,10 @@ global class testAGN {
         cliente.desUn();
         cliente.TerceraSI();
         cliente.CargoSI();
+        cliente.getLPromotores();
+        String[] lPromotores = new List<String>();
+        lPromotores.add('Test');
+        cliente.setLPromotores(lPromotores);
         cliente.vccodpais = '074';
         cliente.mensaje3 = '';
         cliente.OcultarCuenta1 = false;

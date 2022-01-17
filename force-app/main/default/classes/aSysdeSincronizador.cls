@@ -1,11 +1,34 @@
 public class aSysdeSincronizador {
     
     public static final String URL = claseUtilPlanillas.urlSysde('Test');
-    //public static final String URL = 'http://190.5.68.49:9090/';
+    //public static final String URL = 'http://190.5.68.49:9090/';;
+    public static final String NOMBRE_JOB = 'JobSync';
     
     @future(callout=true)
-    public static void actializarClientes (string idCliente) {
-        system.debug('llamo el metodo');
+    public static void actializarClientes (String idCliente) {
+        system.debug('llamo el metodo actializarClientes');
+        Boolean respuesta = actializarClienteSysde(idCliente);
+        if(idCliente == null){
+            for(CronTrigger item : [SELECT id FROM CronTrigger where CronJobDetail.Name =:NOMBRE_JOB]){
+                System.abortJob(item.id);
+            }
+            Datetime fecha = Datetime.now();
+            fecha = fecha.minute() > 3 ? fecha.addMinutes(57) :fecha.addHours(1);
+            String acron = fecha.second()+' '+fecha.minute()+' '+fecha.hour()+' '+fecha.day()+' '+fecha.month()+' ? '+fecha.year();
+            System.schedule(NOMBRE_JOB, acron, new JobSync());
+        }
+        if(datetime.now().hour() == 23){
+            EstadosDeCuenta.InsertarCorreos();
+        }
+        
+    }
+    
+    public static void actializarClienteIndividual (string idCliente) {
+        system.debug('llamo el metodo desde Act Info');
+        Boolean respuesta = actializarClienteSysde(idCliente);
+    }
+    
+    public static Boolean actializarClienteSysde(string idCliente){
         Bitacora_Sync__c  bitacora = new Bitacora_Sync__c ();
         bitacora.fecha__C = system.now();
         bitacora.Clientes__c = 0;
@@ -91,23 +114,44 @@ public class aSysdeSincronizador {
                         }
                         item.nacionalidad = item.nacionalidad != null ? item.nacionalidad.toUpperCase() : null;
                         listClientes.add(new account(
-                            firstname = item.nombres, lastName = item.apeliidos, Cliente_Unico_Banco__c= item.numeroClienteBanco,
-                            activo__C =true, RecordTypeId=tipoRegistro, tipo_identificacion__C = item.tipoIdentificacion,
-                            identificacion__C = item.identificacion.replace('-',''), sexo__C = item.sexo, estado_civil__pc =item.estadoCivil != null && mapEstadoCivil.containsKey(item.estadoCivil) ? mapEstadoCivil.get(item.estadoCivil) : null ,
-                            PersonEmail  = item.correo, Nombre_Conyugue__pc  = item.nombreConyugue, Nacionalidad__pc =mapNacionalidad.containsKey(item.nacionalidad) ? mapNacionalidad.get(item.nacionalidad) : null,
-                            Celular__c = item.telefonoCelular, Phone =item.telefonoDomicilio, Lugar_Nacimiento__c =item.lugarNacimiento,
+                            firstname = item.nombres, 
+                            lastName = item.apeliidos, 
+                            Cliente_Unico_Banco__c= item.numeroClienteBanco,
+                            activo__C =true,
+                            RecordTypeId=tipoRegistro,
+                            tipo_identificacion__C = item.tipoIdentificacion,
+                            identificacion__C = item.identificacion.replace('-',''),
+                            sexo__C = item.sexo,
+                            estado_civil__pc =item.estadoCivil != null && mapEstadoCivil.containsKey(item.estadoCivil) ? mapEstadoCivil.get(item.estadoCivil) : null ,
+                            PersonEmail  = item.correo, 
+                            Nombre_Conyugue__pc  = item.nombreConyugue,
+                            Nacionalidad__pc =mapNacionalidad.containsKey(item.nacionalidad) ? mapNacionalidad.get(item.nacionalidad) : null,
+                            Celular__c = item.telefonoCelular,
+                            Phone =item.telefonoDomicilio,
+                            Lugar_Nacimiento__c =item.lugarNacimiento,
                             Profesi_n_Ocupaci_n__c  = item.profesion,   
-                            Pais_Trabajo__c = mapPais.containsKey(item.paisTrabajo) ? mapPais.get(item.paisTrabajo) : null , Departamento_Trabajo2__c =item.departamentoTrabajo,
+                            Pais_Trabajo__c = mapPais.containsKey(item.paisTrabajo) ? mapPais.get(item.paisTrabajo) : null ,
+                            Departamento_Trabajo2__c =item.departamentoTrabajo,
                             Ciudad_Trabajo2__c = item.departamentoTrabajo !=null && item.ciudadTrabajo !=null && mapMunicipios.containsKey((item.departamentoTrabajo+'-'+item.ciudadTrabajo))  ? (item.departamentoTrabajo+'-'+item.ciudadTrabajo) : '000', 
-                            Punto_Referencia_Trabajo__c  = item.puntoReferenciaTrabajo, Pais_Residencia__c  = mapPais.containsKey(item.paisResidencia) ? mapPais.get(item.paisResidencia) : null,
+                            Punto_Referencia_Trabajo__c  = item.puntoReferenciaTrabajo, 
+                            Pais_Residencia__c  = mapPais.containsKey(item.paisResidencia) ? mapPais.get(item.paisResidencia) : null,
                             Departamento_Residencia2__c =item.departamentoResidencia, 
                             Ciudad_Residencia2__c =item.departamentoResidencia !=null && item.ciudadResidencia !=null && item.departamentoResidencia != '000' && item.ciudadResidencia != '000' ? (item.departamentoResidencia+'-'+item.ciudadResidencia) : '000',
-                            Punto_Referencia_Residencia__c =item.puntoReferenciaResidencia, Nombre1__c =item.nombreReferenciaUno,
-                            Telefono1__c = item.telefonoReferenciaUno, Nombre2__c = item.nombreReferenciaDos, Telefono2__c= item.telefonoReferenciaDos,
-                            Tipo_trabajador__c  = item.tipoTrabajador !=null ? item.tipoTrabajador.replace('.0','') : null, Nombre_empresa__c  = item.nombreEmpresa, Tipo_Empresa__c =item.tipoEmpresa,
+                            Punto_Referencia_Residencia__c =item.puntoReferenciaResidencia,
+                            Nombre1__c =item.nombreReferenciaUno,
+                            Telefono1__c = item.telefonoReferenciaUno,
+                            Nombre2__c = item.nombreReferenciaDos,
+                            Telefono2__c= item.telefonoReferenciaDos,
+                            Tipo_trabajador__c  = item.tipoTrabajador !=null ? item.tipoTrabajador.replace('.0','') : null,
+                            Nombre_empresa__c  = item.nombreEmpresa,
+                            Tipo_Empresa__c =item.tipoEmpresa,
                             RTN_Empresa__c = item.identificacionEmpresa,
-                            Cargo_desempena__pc = item.cargoEmpresa, Nivel_Ingreso__c  = item.nivelIngreso, sector_n__C = item.giroNegocio,
-                            Fecha_ingreso_Empresa__pc  = convertStringDate(item.fechaIngresoFPC) ));
+                            Cargo_desempena__pc = item.cargoEmpresa,
+                            Nivel_Ingreso__c  = item.nivelIngreso,
+                            sector_n__C = item.giroNegocio,
+                            Fecha_ingreso_Empresa__pc  = convertStringDate(item.fechaIngresoFPC)));
+                            //Segmento__c = item.segmento
+                        
                         if(item.fechaNacimiento !=null){
                             listClientes[listClientes.size() -1].PersonBirthdate = convertStringDate(item.fechaNacimiento);
                         }
@@ -242,7 +286,7 @@ public class aSysdeSincronizador {
                             nuevo.Total_Afiliados_que_Aportan__c = item.totalAfiliadosAportan ;
                             nuevo.Total_Monto_de_Aporte_en_L__c = convertStringDecimal(item.totalMontoAporteL); 
                             nuevo.Total_Monto_de_Aporte_en_D__c = convertStringDecimal(item.totalMontoAporteD);
-                            
+                            //nuevo.Segmento__c = item.segmento;
                             listClientes.add(nuevo);                        
                             if(item.cuentas != null){
                                 for(Cuentas itemCuentas : item.cuentas){
@@ -255,8 +299,6 @@ public class aSysdeSincronizador {
                                             fecha = date.valueOf(dateTime.newInstance(integer.valueOf(separador[2])+2000, MesLetras(separador[1]), integer.valueOf(separador[0])));
                                         }
                                     }
-                                    
-                                    
                                     listCuentas.add(new cuentas__C(
                                         cliente__r = new Account(cliente_unico_banco__C = item.numeroClienteBanco)  ,name = itemCuentas.Scuenta+' - ' +item.nombreComercial, codigo__C =itemCuentas.scuenta,
                                         producto__r = new producto__C (codigo__C = itemCuentas.producto), subproducto__r = new subproducto__C(codigo__C = itemCuentas.subProducto),
@@ -270,8 +312,6 @@ public class aSysdeSincronizador {
                                     if(itemCuentas.asesor !=null && mapUsuario.containskey(itemCuentas.asesor)){
                                         listClientes[listClientes.size() -1].ownerid = mapUsuario.get(itemCuentas.asesor);
                                     }
-                                    //}
-                                    
                                 }
                             }
                             
@@ -312,7 +352,6 @@ public class aSysdeSincronizador {
             }
             bitacora.Clientes_Correctos__C = i ;
             bitacora.Clientes__c = listClientes.size();
-            //system.debug(' tamano'+listCuentas.size());
             list<cuentas__C> listCuentasUpse = new list<cuentas__C>();
             for(cuentas__C item: listCuentas){
                 cuentas__C v = new cuentas__C();
@@ -367,7 +406,6 @@ public class aSysdeSincronizador {
             }
             bitacora.Beneficiarios__c = listBeneficiarios.size();
             bitacora.Beneficiarios_Correctos__C = i;
-            // system.debug('Wendy esto es un exito');
             bitacora.resultado__C = 'Éxitoso';
         }catch(exception ex){
             system.debug('Error: '+ex.getMessage()+ ', Linea: '+ex.getLineNumber());
@@ -385,284 +423,8 @@ public class aSysdeSincronizador {
         
         if(idCliente == null){
             insert bitacora;
-            for(CronTrigger item : [SELECT id FROM CronTrigger where CronJobDetail.Name = 'JobSync']){
-                System.abortJob(item.id);
-            }
-            Datetime fecha = Datetime.now();
-            fecha = fecha.minute() > 3 ? fecha.addMinutes(57) :fecha.addHours(1);
-            String acron = fecha.second()+' '+fecha.minute()+' '+fecha.hour()+' '+fecha.day()+' '+fecha.month()+' ? '+fecha.year();
-            System.schedule('JobSync', acron, new JobSync());
         }
-        if(datetime.now().hour() == 23){
-            EstadosDeCuenta.InsertarCorreos();
-        }
-        
-    }
-    
-    public static void actializarClienteIndividual (string idCliente) {
-        system.debug('llamo el metodo desde Act Info');
-        Bitacora_Sync__c  bitacora = new Bitacora_Sync__c ();
-        bitacora.fecha__C = system.now();
-        bitacora.Clientes__c = 0;
-        bitacora.Cuentas__c = 0;
-        bitacora.Beneficiarios__c = 0 ;
-        bitacora.Beneficiarios_Correctos__c = 0 ;
-        bitacora.Clientes_Correctos__c = 0;
-        bitacora.Cuentas_Correctas__c = 0;
-        Http http = new Http();
-        list<Beneficiario__c> listBeneficiarios = new list<Beneficiario__c>();
-        list<account> listClientes = new list<account>();
-        list<cuentas__C> listCuentas = new list<cuentas__C>();
-        try{
-            HttpRequest request = new HttpRequest();
-            request.setEndpoint(URL + 'api/sync');
-            request.setMethod('POST');
-            request.setTimeout(120000); 
-            map<string, string> mapUsuario = new map<string, string> ();
-            map<string, string> mapPais = new map<string, string> ();
-            map<string, string> mapNacionalidad = new map<string, string> ();
-            map<string, string> mapCuentasCo = new map<string, string> ();
-            for(user item: [select id, codigo__C from user where isActive = true and codigo__C!=null]){
-                mapUsuario.put(item.codigo__C, item.id);
-            }
-            for(pais_r__C item : [select codigo__C, name, nacionalidad__c,id from pais_r__C]){
-                mapPais.put(item.Codigo__c, item.name);
-                mapNacionalidad.put(item.Codigo__c, item.nacionalidad__c);
-                mapNacionalidad.put(item.nacionalidad__c, item.nacionalidad__c);
-            }
-            for(Cuentas__C item : [select codigo__C, name from cuentas__C where Colectiva__c = true]){
-                mapCuentasCo.put(item.Codigo__c, item.name);
-            }
-            //integer resta = (datetime.now().hour() == 21 || datetime.now().hour() == 23) ? -2 : datetime.now().hour() == 7 ? -8 : -1;
-            datetime hora = datetime.now();
-            
-            String cons;
-            cons = 'contenido={"accion":"I", "idCliente":"'+idCliente+'"}';
-            
-            
-            system.debug('Mandamos:'+cons);
-            request.setBody(cons);
-            HttpResponse response = new HttpResponse();
-            
-            if(!test.isRunningTest()){
-                response = http.send(request); 
-            }else{
-                response.setBody('{"codigo":200,"mensaje":"Se han encontrado 3 clientes naturales.","clientes": [{"numeroClienteBanco":271875,"nombres":"ZOE GERALDINE","apeliidos":"ULLOA MARADIAGA","estadoCivil":"S","nombreConyugue":null,"sexo":"F","lugarNacimiento":"tegucigalpa","nacionalidad":"074","fechaNacimiento":"03-OCT-94","profesion":"33","nivelIngreso":null,"nombreReferenciaUno":"CARLOS  ESCOTO","telefonoReferenciaUno":"99999999","nombreReferenciaDos":"MARIELL  SIERRA","telefonoReferenciaDos":"89898989","tipoIdentificacion":"1","identificacion":"0801-1994-11017","correo":"wendy.alvarado@ficohsa.com","telefonoDomicilio":null,"telefonoCelular":null,"fechaIngresoFPC":"01-ENE-16","tipoTrabajador":"1","nombreEmpresa":"ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA S.A.","tipoEmpresa":"N","identificacionEmpresa":"08019015715256","cargoEmpresa":"OFTEC","giroNegocio":"15","paisResidencia":"1","departamentoResidencia":null,"ciudadResidencia":null,"coloniaResidencia":null,"puntoReferenciaResidencia":"(Sin Direccion)","paisTrabajo":"074","departamentoTrabajo":null,"ciudadTrabajo":null,"coloniaTrabajo":null,"puntoReferenciaTrabajo":"(Sin Direccion)","cuentas":[{"sCuenta":"104527","asesor":"HN22258","cuentaActiva":"A","fondo":"P","producto":"01","formaAporte":"TL","fechaApertura":"10-FEB-20","subProducto":"FI010","cuentaColectiva":"33101","causa":"01","fondoInversion":"101","frecuenciaAporte":"M","montoAporte":"0","divisa":"01","codigoBarra":"FPC20200210","seguroVida":"N","beneficiarios":[{"primerNombre":null,"segundoNombre":null,"primerApellido":null,"segundoApellido":null,"tipoId":null,"identidad":null,"idExterno":null,"sexo":null,"porcentaje":null,"fechaNacimiento":null,"gradoParentesco":null,"parentesco":null}]}]}]}');
-                response.setStatusCode(200);
-            }
-            system.debug('Respuesta Clientes: '+response.getBody()+'-----');
-            if(response.getStatusCode() == 200 && response.getBody() != null && response.getBody().trim() !='') {
-                string contenido = response.getBody().trim();
-                contenido = contenido.replace(' "', '"');
-                contenido = contenido.replace('" ', '"');
-                contenido = contenido.replace('""', 'null');
-                response.setBody(contenido);
-                RespuestaSync respuesta = (RespuestaSync)System.JSON.deserialize(response.getBody(), RespuestaSync.class);
-                list<clientes> listClientesSysde =respuesta.Clientes;// (list<clientes>)System.JSON.deserialize(response.getBody(), list<clientes>.class);
-                string tipoRegistro = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
-                map<string, string> mapMunicipios= new map<string, string>(); 
-                map<string, string> mapEstadoCivil= new map<string, string>(); 
-                Schema.DescribeFieldResult fieldResult = account.Ciudad_Trabajo2__c.getDescribe();   
-                for(Schema.PicklistEntry p : fieldResult.getPicklistValues()){          
-                    mapMunicipios.put(p.getvalue(), p.getLabel());  
-                }
-                fieldResult = account.estado_civil__pc.getDescribe();   
-                for(Schema.PicklistEntry p : fieldResult.getPicklistValues()){          
-                    mapEstadoCivil.put(p.getvalue().substring(0, 1), p.getLabel());  
-                }
-                if(listClientesSysde !=null){
-                    for(Clientes item : listClientesSysde){
-                        //system.debug(item.numeroClienteBanco);
-                        if(item.correo != null){
-                            item.correo = item.correo.replace(' ', '@');
-                            item.correo = !item.correo.contains('@.') ? item.correo : 'notiene@ejemplo.hn';
-                            
-                        }
-                        item.nacionalidad = item.nacionalidad != null ? item.nacionalidad.toUpperCase() : null;
-                        listClientes.add(new account(
-                            firstname = item.nombres, lastName = item.apeliidos, Cliente_Unico_Banco__c= item.numeroClienteBanco,
-                            activo__C =true, RecordTypeId=tipoRegistro, tipo_identificacion__C = item.tipoIdentificacion,
-                            identificacion__C = item.identificacion.replace('-',''), sexo__C = item.sexo, estado_civil__pc =item.estadoCivil != null && mapEstadoCivil.containsKey(item.estadoCivil) ? mapEstadoCivil.get(item.estadoCivil) : null ,
-                            PersonEmail  = item.correo, Nombre_Conyugue__pc  = item.nombreConyugue, Nacionalidad__pc =mapNacionalidad.containsKey(item.nacionalidad) ? mapNacionalidad.get(item.nacionalidad) : null,
-                            Celular__c = item.telefonoCelular, Phone =item.telefonoDomicilio, Lugar_Nacimiento__c =item.lugarNacimiento,
-                            Profesi_n_Ocupaci_n__c  = item.profesion,   
-                             Pais_Trabajo__c = mapPais.containsKey(item.paisTrabajo) ? mapPais.get(item.paisTrabajo) : null , Departamento_Trabajo2__c =item.departamentoTrabajo,
-                            Ciudad_Trabajo2__c = item.departamentoTrabajo !=null && item.ciudadTrabajo !=null && mapMunicipios.containsKey((item.departamentoTrabajo+'-'+item.ciudadTrabajo))  ? (item.departamentoTrabajo+'-'+item.ciudadTrabajo) : '000', 
-                            Punto_Referencia_Trabajo__c  = item.puntoReferenciaTrabajo, Pais_Residencia__c  = mapPais.containsKey(item.paisResidencia) ? mapPais.get(item.paisResidencia) : null,
-                            Departamento_Residencia2__c =item.departamentoResidencia, 
-                            Ciudad_Residencia2__c =item.departamentoResidencia !=null && item.ciudadResidencia !=null && item.departamentoResidencia != '000' && item.ciudadResidencia != '000' ? (item.departamentoResidencia+'-'+item.ciudadResidencia) : '000',
-                            Punto_Referencia_Residencia__c =item.puntoReferenciaResidencia, Nombre1__c =item.nombreReferenciaUno,
-                            Telefono1__c = item.telefonoReferenciaUno, Nombre2__c = item.nombreReferenciaDos, Telefono2__c= item.telefonoReferenciaDos,
-                            Tipo_trabajador__c  = item.tipoTrabajador !=null ? item.tipoTrabajador.replace('.0','') : null, Nombre_empresa__c  = item.nombreEmpresa, Tipo_Empresa__c =item.tipoEmpresa,
-                            RTN_Empresa__c = item.identificacionEmpresa,
-                            Cargo_desempena__pc = item.cargoEmpresa, Nivel_Ingreso__c  = item.nivelIngreso, sector_n__C = item.giroNegocio,
-                            Fecha_ingreso_Empresa__pc  = convertStringDate(item.fechaIngresoFPC) ));
-                        if(item.fechaNacimiento !=null){
-                            listClientes[listClientes.size() -1].PersonBirthdate = convertStringDate(item.fechaNacimiento);
-                        }
-                        if(item.asesor !=null && mapUsuario.containskey(item.asesor)){
-                            listClientes[listClientes.size() -1].ownerid = mapUsuario.get(item.asesor);
-                        }
-                        
-                        if(item.departamentoTrabajo !=null && item.ciudadTrabajo !=null && item.coloniaTrabajo !=null){
-                            listClientes[listClientes.size() -1].Colonia_Avenida_Trabajo__r  =new Colonia__C(Codigo_Municipio_Colonia__c = item.departamentoTrabajo+'-'+item.ciudadTrabajo+'-'+item.coloniaTrabajo);
-                        }
-                        
-                       if(item.departamentoResidencia !=null  && item.ciudadResidencia !=null && item.coloniaResidencia !=null){
-                            listClientes[listClientes.size() -1].Colonia_Avenida_Residencia__r  =new Colonia__C(Codigo_Municipio_Colonia__c = item.departamentoResidencia+'-'+item.ciudadResidencia+'-'+item.coloniaResidencia); 
-                            
-                        }
-                        
-                        if(item.cuentas != null){
-                            for(Cuentas itemCuentas : item.cuentas){
-                                listCuentas.add(new cuentas__C(
-                                    Cliente__r = new Account(cliente_unico_banco__C = item.numeroClienteBanco) , 
-                                    Name = itemCuentas.Scuenta, 
-                                    Codigo__C =itemCuentas.scuenta,
-                                    Producto__r = new producto__C (codigo__C = itemCuentas.producto), 
-                                    Subproducto__r = new subproducto__C(codigo__C = itemCuentas.subProducto),
-                                    Activo__C = itemCuentas.cuentaActiva != 'I' ? true : false,
-                                    Tipo_fondo__C = itemCuentas.fondo == null || itemCuentas.fondo.trim() =='' ? 'I' : itemCuentas.fondo  ,
-                                    Fondo_Inversion__c = itemCuentas.fondoInversion, 
-                                    causa__C = itemCuentas.causa, 
-                                    fecha_apertura__C = convertStringDate(itemCuentas.fechaApertura),
-                                    Frecuencia_Aportacion__c  = itemCuentas.frecuenciaAporte,
-                                    Monto_aporte__c = convertStringDecimal(itemCuentas.montoAporte), forma_aportacion__C = itemCuentas.formaAporte, Seguro_Vida__c = itemCuentas.seguroVida == 'S' ? true : false,
-                                    Codigo_Barra__c = itemCuentas.codigoBarra,// tipo_comision__C = itemCuentas.tipoComision, //*Matriz_Comision__c = itemCuentas.matrizComision,
-                                    CurrencyIsoCode = (itemCuentas.producto == '01' || itemCuentas.producto == '03') ? 'HNL' : 'USD' ));
-                                    if(itemCuentas.cuentaColectiva !=null && mapCuentasCo.containsKey(itemCuentas.cuentaColectiva)){
-                                        listCuentas[listCuentas.size() -1].cuenta_colectiva2__r = new cuentas__C(codigo__C = itemCuentas.cuentaColectiva);
-                                    }
-                                    if(itemCuentas.asesor !=null && mapUsuario.containskey(itemCuentas.asesor)){
-                                        listClientes[listClientes.size() -1].ownerid = mapUsuario.get(itemCuentas.asesor);
-                                    }
-                                
-                                if(itemCuentas.Beneficiarios !=null){
-                                    for(Beneficiarios Bene : itemCuentas.Beneficiarios){
-                                        if(convertStringDecimal(Bene.idExterno) != null){
-                                            listBeneficiarios.add(new Beneficiario__c(
-                                                Cuenta__r = new cuentas__C(codigo__C = itemCuentas.sCuenta),Id_Externo__c  = convertStringDecimal(Bene.idExterno),
-                                                Primer_Nombre__c  = Bene.primerNombre, Segundo_Nombre__c = Bene.segundoNombre, Primer_Apellido__c  = Bene.primerApellido,
-                                                Segundo_Apellido__c = Bene.segundoApellido, Fecha_Nacimiento__c =convertStringDate( Bene.fechaNacimiento),
-                                                parentesco__C = Bene.parentesco, Grado_Parentesco__C = Bene.gradoParentesco, porcentaje__C= convertStringDecimal(Bene.porcentaje),
-                                                sexo__C = Bene.sexo != 'F' ? 'Masculino' : 'Femenino', Identidad__c  =Bene.identidad, Tipo_de_Identificaci_n__c =Bene.tipoId//,
-                                            ));
-                                        }
-                                        
-                                        
-                                    }
-                                } 
-                                
-                            }
-                        }
-                        
-                        
-                    }
-                }
-                
-                
-            }
-            system.debug('--------UPSERT CLIENTES--------');
-            //asysdeCallouts.fechaCierreSysde(date.today());
-            //database.upsert(listClientes, account.cliente_unico_banco__c, true);
-            database.UpsertResult[] result = database.upsert(listClientes, account.cliente_unico_banco__c, false);
-            list<account> listClientesIden = new list<account>();
-            for(account item :listClientes){
-                if(item.id == null){
-                    listClientesIden.add(item);
-                }
-            }
-            
-            integer i = 0;
-            for(database.UpsertResult item : result){
-                if(item.isSuccess()){
-                    i++;
-                }else{
-                    system.debug('Error Cliente: '+item.getErrors());
-                }
-            }
-            result = database.upsert(listClientesIden, account.identificacion__C, false);
-            for(database.UpsertResult item : result){
-                if(item.isSuccess()){
-                    i++;
-                }else{
-                    system.debug('Error Cliente: '+item.getErrors());
-                }
-            }
-            bitacora.Clientes_Correctos__C = i ;
-            bitacora.Clientes__c = listClientes.size();
-            //system.debug(' tamano'+listCuentas.size());
-            list<cuentas__C> listCuentasUpse = new list<cuentas__C>();
-            for(cuentas__C item: listCuentas){
-                cuentas__C v = new cuentas__C();
-                date fecha = item.Fecha_Apertura__c != null ? date.valueOf(item.Fecha_Apertura__c.year()+'-'+item.Fecha_Apertura__c.month()+'-'+item.Fecha_Apertura__c.day()) : null;
-                if(fecha!=null){
-                    v.Fecha_Apertura__c=fecha;
-                }
-                v.Name=item.name;
-                v.cliente__r = new Account(cliente_unico_banco__C = item.cliente__r.cliente_unico_banco__C);
-                v.Producto__r = new producto__C(codigo__C = item.Producto__r.codigo__C);
-                v.Subproducto__r = new Subproducto__C(codigo__C = item.Subproducto__r.codigo__C);
-                v.Codigo__c=item.Codigo__c;
-                v.Activo__c=item.Activo__c;
-                v.Tipo_Fondo__c=item.Tipo_Fondo__c;
-                v.Fondo_Inversion__c=item.Fondo_Inversion__c;
-                v.Causa__c=item.Causa__c;
-                if(item.cuenta_colectiva2__r.codigo__C !=null){
-                    v.cuenta_colectiva2__r = new cuentas__C(codigo__C = item.cuenta_colectiva2__r.codigo__C);
-                }
-                v.Frecuencia_Aportacion__c=item.Frecuencia_Aportacion__c;
-                v.Monto_aporte__c=item.Monto_aporte__c;
-                v.Forma_Aportacion__c=item.Forma_Aportacion__c;
-                v.Seguro_Vida__c=item.Seguro_Vida__c;
-                v.Codigo_Barra__c=item.Codigo_Barra__c;
-                v.tipo_comision__C = item.tipo_comision__C;
-                v.Matriz_Comision__c = item.Matriz_Comision__c;
-                v.CurrencyIsoCode = item.CurrencyIsoCode;
-                //v.Fecha_ingreso_Empresa__pc = item.Fecha_ingreso_Empresa__pc;
-                listCuentasUpse.add(v);
-            }
-            system.debug('--------UPSERT CUENTAS--------');
-            result =   database.upsert(listCuentasUpse, cuentas__c.codigo__C, false);
-            i = 0;
-            for(database.UpsertResult item : result){
-                if(item.isSuccess()){
-                    i++;
-                }else{
-                    system.debug('Error cuentas: '+item.getErrors());
-                }
-            }
-            bitacora.Cuentas_Correctas__C = i;
-            bitacora.Cuentas__c = listCuentasUpse.size();
-             system.debug('--------UPSERT BENEFICIARIOS--------');
-            result =   database.upsert(listBeneficiarios, Beneficiario__c.Id_externo__C, false);
-            i = 0;
-            for(database.UpsertResult item : result){
-                if(item.isSuccess()){
-                    i++;
-                }else{
-                    system.debug('Error Beneficiarios: '+item.getErrors());
-                }
-            }
-            bitacora.Beneficiarios__c = listBeneficiarios.size();
-            bitacora.Beneficiarios_Correctos__C = i;
-            // system.debug('Wendy esto es un exito');
-            bitacora.resultado__C = 'Éxitoso';
-        }catch(exception ex){
-            system.debug('Error: '+ex.getMessage()+ ', Linea: '+ex.getLineNumber());
-            bitacora.resultado__C = 'Error: '+ex.getMessage()+ ', Linea: '+ex.getLineNumber();
-            database.UpsertResult[] result =  database.upsert(listClientes, account.cliente_unico_banco__C, false);
-            integer i = 0;
-            for(database.UpsertResult item : result){
-                if(item.isSuccess()){
-                    i++;
-                }
-            }
-            bitacora.Clientes_Correctos__C = i ;
-            bitacora.Clientes__c = listClientes.size();
-        }
-        
-        
+        return true;
     }
    
     public static Date convertStringDate(String stringDate){
@@ -779,6 +541,7 @@ public class aSysdeSincronizador {
         public string cargoEmpresa { get; set; }
         public string nivelIngreso { get; set; }
         public string asesor { get; set; }
+        public string segmento { get; set; }
         
         
         

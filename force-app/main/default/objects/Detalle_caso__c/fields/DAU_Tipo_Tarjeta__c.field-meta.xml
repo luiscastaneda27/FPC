@@ -17,7 +17,7 @@
                 <label>Visa</label>
             </value>
             <value>
-                <fullName>MasterCard</fullName>
+                <fullName>Mastercard</fullName>
                 <default>false</default>
                 <label>MasterCard</label>
             </value>
