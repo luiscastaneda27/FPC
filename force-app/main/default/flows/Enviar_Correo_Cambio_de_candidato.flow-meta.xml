@@ -146,22 +146,28 @@
     </decisions>
     <description>Correo que se envia al cambiar el propietario del candidato</description>
     <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>[Lead].Email &lt;&gt; null</stringValue>
+            </value>
+        </processMetadataValues>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
-        <expression>true</expression>
+        <expression>{!myVariable_current.Email} &lt;&gt; null</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>(ISCHANGED([Lead].OwnerId)  || ISNEW()) &amp;&amp; [Lead].Email &lt;&gt; null</stringValue>
+                <stringValue>ISCHANGED([Lead].OwnerId)  || ISNEW() </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_3</name>
         <dataType>Boolean</dataType>
-        <expression>(ISCHANGED({!myVariable_current.OwnerId})  || ISNEW()) &amp;&amp; {!myVariable_current.Email} &lt;&gt; null</expression>
+        <expression>ISCHANGED({!myVariable_current.OwnerId})  || ISNEW()</expression>
     </formulas>
-    <interviewLabel>Enviar_Correo_Cambio_de_candidato-6_InterviewLabel</interviewLabel>
+    <interviewLabel>Enviar_Correo_Cambio_de_candidato-3_InterviewLabel</interviewLabel>
     <label>Enviar Correo Cambio de candidato</label>
     <processMetadataValues>
         <name>ObjectType</name>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DAU_Tarjeta_de_Sysde__c</fullName>
+    <description>Número de tarjeta de devuelve el servicio que consulta a Sysde.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Número de tarjeta de devuelve el servicio que consulta a Sysde.</inlineHelpText>
+    <label>DAU_Tarjeta de Sysde</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

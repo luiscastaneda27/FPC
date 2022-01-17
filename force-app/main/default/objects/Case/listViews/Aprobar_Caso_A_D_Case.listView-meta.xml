@@ -32,6 +32,6 @@
     </filters>
     <label>Aprobar Caso A&amp;D</label>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

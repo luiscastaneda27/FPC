@@ -105,6 +105,11 @@
                 <default>false</default>
                 <label>CAMPAÑA INSTITUCIONAL 2021</label>
             </value>
+            <value>
+                <fullName>Base BI 2021</fullName>
+                <default>false</default>
+                <label>Base BI 2021</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

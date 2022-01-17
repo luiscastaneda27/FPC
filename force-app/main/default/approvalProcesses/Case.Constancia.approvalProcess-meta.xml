@@ -14,13 +14,13 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>Aprobacion_SubGerencia_SAC</name>
+                <name>Aprobacion_Supervisor_SAC</name>
                 <type>queue</type>
             </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
-        <label>Aprobación SubGerencia SAC</label>
-        <name>Aprobacion_SubGerencia_SAC</name>
+        <label>Aprobación Supervisor SAC</label>
+        <name>Aprobacion_Supervisor_SAC</name>
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>

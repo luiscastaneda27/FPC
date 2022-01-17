@@ -8,6 +8,7 @@
     <columns>CREATED_DATE</columns>
     <columns>Zona__c</columns>
     <columns>Ultimo_Caso_Asignado__c</columns>
+    <columns>Objeto__c</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

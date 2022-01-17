@@ -21,6 +21,12 @@
                 <default>false</default>
                 <label>TRABAJO</label>
             </value>
+            <value>
+                <fullName>O</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>O</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

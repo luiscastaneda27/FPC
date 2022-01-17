@@ -112,6 +112,11 @@
                 <label>Campaña Institucional 2021</label>
             </value>
             <value>
+                <fullName>Base BI 2021</fullName>
+                <default>false</default>
+                <label>Base BI 2021</label>
+            </value>
+            <value>
                 <fullName>AGUINALDO 2018</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

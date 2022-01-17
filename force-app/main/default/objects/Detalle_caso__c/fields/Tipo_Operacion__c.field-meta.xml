@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>Cancelación</label>
             </value>
+            <value>
+                <fullName>A8</fullName>
+                <default>false</default>
+                <label>Afiliación de Débito Automático</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

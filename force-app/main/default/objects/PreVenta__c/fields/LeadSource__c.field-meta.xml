@@ -170,6 +170,11 @@
                 <default>false</default>
                 <label>Segmentos Winners COVID</label>
             </value>
+            <value>
+                <fullName>Tarjeta Futura</fullName>
+                <default>false</default>
+                <label>Tarjeta Futura</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

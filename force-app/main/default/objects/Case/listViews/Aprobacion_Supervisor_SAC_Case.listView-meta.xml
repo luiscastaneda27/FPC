@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Aprobacion_Supervisor_SAC_Case</fullName>
+    <filterScope>Queue</filterScope>
+    <label>Aprobación Supervisor SAC</label>
+    <queue>Aprobacion_Supervisor_SAC</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

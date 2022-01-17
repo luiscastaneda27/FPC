@@ -526,6 +526,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>AGN L%2EC%2E SIGUATEPEQUE SGA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AGN LC TELA TELA</fullName>
             <default>false</default>
         </values>
@@ -535,6 +539,94 @@
         </values>
         <values>
             <fullName>AGN PLAZA HUMUYA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PREMIER BANCA PRIVADA OP TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PREMIER BANCA PRIVADA RIO P SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PREMIER BANCA PRIVADA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PRINCIPAL CBA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PRINCIPAL SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PRINCIPAL TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN PUERTO CORTES PCR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN QUINTA AVENIDA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SAN LORENZO SLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SANTA FE TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SANTA MONICA SUYAPA TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SANTA ROSA DE COPAN SRC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SIETE CALLE SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN SIGUATEPEQUE SGA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN TELA TLA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN TERCERA AVENIDA SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN TONCONTIN TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN UNIMALL CHOLUTECA CHT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN UNIPLAZA STA ROSA SRC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN VILLANUEVA VLL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN ZIP BUENA VISITA SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AGN ZONAL BELEN 2 TGU</fullName>
             <default>false</default>
         </values>
         <values>
@@ -558,6 +650,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FPC SPS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FPC TGU</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>JUAN PABLO SEGUNDO</fullName>
             <default>false</default>
         </values>
@@ -571,6 +671,14 @@
         </values>
         <values>
             <fullName>SUCURSAL SAN PEDRO SULA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TELEVENTAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VTN DIUNSA SUPERSTORE SPS</fullName>
             <default>false</default>
         </values>
     </picklistValues>

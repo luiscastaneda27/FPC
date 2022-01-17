@@ -97,11 +97,6 @@
                 <label>AGN COMAYAGUA MALL PREMIER COM</label>
             </value>
             <value>
-                <fullName>130200000000</fullName>
-                <default>false</default>
-                <label>AGN CT CITY MALL SPS</label>
-            </value>
-            <value>
                 <fullName>130800000000</fullName>
                 <default>false</default>
                 <label>AGN CT MULTIPLAZA TGU</label>
@@ -404,7 +399,7 @@
             <value>
                 <fullName>112700000000</fullName>
                 <default>false</default>
-                <label>AGN ZIP BUENA VISTA SPS</label>
+                <label>AGN ZIP BUENA VISITA SPS</label>
             </value>
             <value>
                 <fullName>138800000000</fullName>
@@ -432,10 +427,21 @@
                 <label>AGN L.C. SIGUATEPEQUE SGA</label>
             </value>
             <value>
+                <fullName>T10000000000</fullName>
+                <default>false</default>
+                <label>TELEVENTAS</label>
+            </value>
+            <value>
                 <fullName>125400000000</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>AGENCIA PLAZA 105</label>
+            </value>
+            <value>
+                <fullName>130200000000</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>AGN CT CITY MALL SPS</label>
             </value>
             <value>
                 <fullName>01</fullName>

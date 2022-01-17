@@ -238,10 +238,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>130200000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>130400000000</fullName>
             <default>false</default>
         </values>
@@ -327,6 +323,10 @@
         </values>
         <values>
             <fullName>139000000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T10000000000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1028,6 +1028,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tarjeta Futura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Web</fullName>
             <default>false</default>
         </values>
@@ -1044,6 +1048,10 @@
         </values>
         <values>
             <fullName>Asesoría Producto Individual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Base BI 2021</fullName>
             <default>false</default>
         </values>
         <values>

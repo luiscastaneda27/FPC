@@ -12,6 +12,6 @@
     <label>Aprobacion Intermedia Retiros</label>
     <queue>Aprobacion_Intermedia_Retiros</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>

@@ -699,6 +699,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Tarjeta Futura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Top Planilla</fullName>
             <default>false</default>
         </values>

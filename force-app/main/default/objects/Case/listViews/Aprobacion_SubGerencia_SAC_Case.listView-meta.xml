@@ -5,6 +5,6 @@
     <label>Aprobación SubGerencia SAC</label>
     <queue>Aprobacion_SubGerencia_SAC</queue>
     <sharedTo>
-        <allInternalUsers/>
+        <allInternalUsers></allInternalUsers>
     </sharedTo>
 </ListView>
