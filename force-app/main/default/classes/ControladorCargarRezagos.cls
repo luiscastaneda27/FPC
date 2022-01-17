@@ -1,6 +1,6 @@
 global class ControladorCargarRezagos {
 
-    //Listas para el envio de Emails
+    //Listas para el envio de Emails START
     public list<string> aseso = new list<string>();
     public list<string> mon = new list<string>();
     public list<string> fech = new list<string>();
@@ -9,37 +9,62 @@ global class ControladorCargarRezagos {
     public list<string> refer = new list<string>();
     public list<string> mont = new list<string>();
     public list<string> agnb = new list<string>();
-        
-    public List<clientes> ListRezagos {get;set;}
+    //Listas para el envio de Emails END
+    
+    //    
+    public List<clientes> ListClientes {get;set;}
     public clientes clienteUnico{get;set;}
     public static list<Rezago__c> Rezlist{get;set;}
     public static list<Rezago__c> Rezlist2{get;set;}
     
-    public list<clientes> Recibe{get;set;}
     public boolean MostrarGuardar{get;set;}
     public string Codigo_Unico_Banco{get;set;}
     public string mensaje{get;set;}
     public string tipoMoneda{get;set;}  
     public string usuario;
+    public Date CierreSysde;
+    FechaDC_Sysde__c FCS;
+    Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
 
     public ControladorCargarRezagos(){
         Codigo_Unico_Banco = ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
-        usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
+        //usuario = ApexPages.currentPage().getParameters().get('loetdncdhjch');
+        List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+        System.debug('User: '+usr[0].Name);///////Marcooo
+        usuario = usr[0].Name;
+        mapInfoRezagos = new Map<String,InfoRezagos>();           
+        for(InfoRezagos.clientes IRc : ControllerApiRezagos.ConsultaRezagos()){
+            InfoRezagos Rez = new InfoRezagos();
+            Rez.clientes.add(IRc);
+            mapInfoRezagos.put(IRc.codReferencia,Rez);
+        }
+        
         tipoMoneda = ApexPages.currentPage().getParameters().get('Moneda');
         MostrarGuardar = true;
+    }
+    
+    public FechaDC_Sysde__c getFCS() {
+        if(FCS == null){                      
+            FCS = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
+        }
+        return FCS;
     }
     
     @RemoteAction
     global static list<Rezago__c> SUbirInformacion(String stringCSV){
         try{
-                List<Rezago__c> SobjLst = [select id from Rezago__c];
-                        delete SobjLst;
+            Boolean correcto = true;
+            List<Rezago__c> SobjLst = [select id from Rezago__c];
+            delete SobjLst;
+            
+            system.debug('CSV: '+stringCSV);
+            
             stringCSV.replace('\'', '');
             stringCSV.replace('´', '');
             list<string> clientes = new  list<string>();
             list<string> clientes2= new  list<string>();
             clientes = stringCSV.split('\n');
-            System.debug(clientes[0]);//Muestra el contenido del archivo excel la fila 0
+            //System.debug(clientes[0]);//Muestra el contenido del archivo excel la fila 0
             
             integer A=15;
             integer B=15;
@@ -61,6 +86,8 @@ global class ControladorCargarRezagos {
                 list<string> hy = new list<string> ();
                 hy = clientes2[count].split('"');
                 clientes2[count] = hy[1].Trim();
+                
+                system.debug('clientes2: '+clientes2[count]);
                 
                 if(clientes2[count].toUpperCase()=='FONDO'){
                     A=count;
@@ -138,39 +165,92 @@ global class ControladorCargarRezagos {
                         if(A<clientes2.size() && B<clientes2.size() && C<clientes2.size() && D<clientes2.size() && E<clientes2.size() 
                            && F<clientes2.size() && G<clientes2.size() && H<clientes2.size() && I<clientes2.size() && J<clientes2.size()){
                             if(A!=15 && clientes2[A]!=''){
-                                fondo.add('"'+clientes2[A]+'"');
+                                fondo.add('"'+clientes2[A]+'"');//Agrego el Fondo
                                 system.debug('Paso A: '+clientes2[A]);
+                            }else{
+                                correcto=false;
+                                fondo.add('"ERROR: Campo Vacio."');
                             }
-                            if(B!=15 && clientes2[B]!=''){
-                                referencia.add(clientes2[B]);//Agrego el Codigo de Referencia
-                                system.debug('Paso B: '+clientes2[B]);
-                            }
-                            if(C!=15 && clientes2[C]!=''){
+                               boolean ref=true;
+                               if(count>=1){
+                                   for(integer iref=0;iref<referencia.size();iref++){
+                                       if(referencia[iref]==clientes2[B]){
+                                           correcto=false;
+                                           referencia.add('"ERROR: Codigo Duplicado."');
+                                           ref=false;
+                                       }                                      
+                                   }
+                               }
+                               
+                               if(B!=15 && clientes2[B]!='""' && ref==true){
+                                   referencia.add(clientes2[B]);//Agrego el Codigo de Referencia
+                                   system.debug('Paso B: '+clientes2[B]);
+                               }else if(ref==true){
+                                   correcto=false;
+                                   referencia.add('"ERROR: Campo Vacio."');
+                               }
+                               
+                            if(C!=15 && clientes2[C]!='""'){
                                 string dateform = clientes2[C].substringAfter('"');
                                 dateform = dateform.substringBefore('"');
                                 string datemonth = dateform.substringBefore('/');
+                                system.debug('Paso C.M: '+datemonth);
                                 string dateday = dateform.substringBetween('/');
+                                system.debug('Paso C.D: '+dateday);
                                 string dateyear = dateform.substringAfterLast('/');
-                                string datecomplete = '20'+dateyear+'-'+datemonth+'-'+dateday+' 00:00:00';
+                                system.debug('Paso C.Y: '+dateyear);
+                                string datecomplete = '20'+dateyear+'-'+datemonth+'-'+dateday+' 06:00:00';
                                 DateTime DTime = DateTime.valueOf(datecomplete);
-                                fdeposito.add(DTime);//Agrego la Fecha del Deposito
-                                system.debug('Paso C: '+DTime);
+                                aSysdeCallouts.fechaCierreSysde(date.today());
+                                list<FechaDC_Sysde__c> FechaCierreSysde = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia'];
+                                //String FCS = FechaCierreSysde[0].Fecha_cierre__c;
+                                Date FCS = Date.valueOf(datecomplete);
+                                System.debug('Cierre desde Sysde: '+FechaCierreSysde[0].Fecha_cierre__c+' Cierrre desde Archivo: '+FCS);
+                                If(FechaCierreSysde[0].Fecha_cierre__c==FCS){
+                                    if(DTime > DateTime.now()){
+                                        datecomplete = dateyear+'-'+dateday+'-'+datemonth+' 06:00:00';
+                                        DTime = DateTime.valueOf(datecomplete);
+                                        system.debug('Paso C.H: '+DateTime.now());
+                                    }
+                                    fdeposito.add(DTime);//Agrego la Fecha del Deposito
+                                    system.debug('Paso C: '+DTime);
+                                }else{
+                                    correcto=false;
+                                    fdeposito.add(null);
+                                }
+                            }else{
+                                correcto=false;
+                                fdeposito.add(null);
+                                system.debug('Paso C: '+null);
                             }
-                            if(D!=15 && clientes2[D]!=''){
-                                moneda.add(clientes2[D]);//Agrego la Moneda
+                               
+                            if(D!=15 && clientes2[D]!='""'){
+                                //moneda.add(clientes2[D]);//Agrego la Moneda
+                                if(clientes2[D]=='"LPS"'){
+                                    moneda.add('HNL');
+                                }else{
+                                    moneda.add(clientes2[D]);
+                                }
                                 system.debug('Paso D: '+clientes2[D]);
+                            }else{
+                                correcto=false;
+                                moneda.add('"ERROR: Campo Vacio."');                                
                             }
+                               
                             if(E!=15 && clientes2[E]!=''){
                                 /*string mont = clientes2[E];
                                 mont = mont.replace(' ','');
                                 decimal mo = decimal.valueOf(mont);*/
                                 if(clientes2[D]=='"USD"'){monto.add('$ '+montostr);}
-                                if(clientes2[D]=='"HNL"'){monto.add('L '+montostr);}
+                                if(clientes2[D]=='"HNL"' || clientes2[D]=='"LPS"'){monto.add('L '+montostr);}
                                 string mn = montostr.replace(',','');
-                                monto2.add(mn);
-                                //Agrego el Monto del Deposito
+                                monto2.add(mn);//Agrego el Monto del Deposito
                                 system.debug('Paso E: '+montostr);
+                            }else{
+                                correcto=false;
+                                monto.add('"ERROR: Campo Vacio."');
                             }
+                               
                             if(F!=15 && clientes2[F]!=''){
                                 descripcion.add(clientes2[F]);// Agrego la Descripcion
                                 system.debug('Paso F: '+clientes2[F]);
@@ -179,7 +259,8 @@ global class ControladorCargarRezagos {
                                 descnota.add(clientes2[G]);//Agrego la Descripcion nota
                                 system.debug('Paso G: '+clientes2[G]);
                             }
-                            if(H!=15 && clientes2[H]!=''){
+                               
+                            if(H!=15 && clientes2[H]!='""'){
                                 banco2.add(clientes2[H]);
                                 string bancostr = clientes2[H].replace('"','');
                                 string banca='';
@@ -188,34 +269,57 @@ global class ControladorCargarRezagos {
                                 for( Schema.PicklistEntry v : values) {
                                     if(v.getValue()==bancostr){banca = v.getLabel();}
                                 }
-                                banco.add('"'+banca+'"');//Agrego el Banco
                                 system.debug('Paso H: '+banca);
+                                if(banca==''){
+                                    correcto=false;
+                                    banco.add('"ERROR: \n Banco no encontrado"');
+                                }else{
+                                    banco.add('"'+banca+'"');//Agrego el Banco
+                                }
+                            }else{
+                                correcto=false;
+                                banco.add('"ERROR: Campo Vacio."');
                             }
+                               
                             if(I!=15 && clientes2[I]!=''){
                                 aorigen.add(clientes2[I]);//Agrego la Agencia Origen
                                 system.debug('Paso I: '+clientes2[I]);
                             }
-                            if(J!=15 && clientes2[J]!=''){
+                               
+                            if(J!=15 && clientes2[J]!='""'){
                                 asesor2.add(clientes2[J]);
                                 string asesorstr = clientes2[J].replace('"','');
                                 string asesorstr2='';
+                                asesorstr = asesorstr.toUpperCase();
                                 if(asesorstr!='TODOS'){
                                     Schema.DescribeFieldResult fieldResult = Account.Asesor__c.getDescribe();
                                     List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
                                     for( Schema.PicklistEntry v : values) {
-                                        if(v.getValue() == asesorstr){asesorstr2 = v.getLabel();}
+                                        if(v.getValue() == asesorstr){
+                                            asesorstr2 = v.getLabel();
+                                        }
                                     }
-                                }else{asesorstr2 = 'TODOS';}
+                                }else{
+                                    asesorstr2 = 'TODOS';
+                                }
+                                if(asesorstr2==''){
+                                    asesorstr2='TODOS';
+                                }
                                 asesor.add('"'+asesorstr2+'"');//Agrego el Asesor
                                 system.debug('Paso J: '+asesorstr2);
+                            }else{
+                                correcto=false;
+                                asesor.add('"ERROR: Campo Vacio."');
                             }
                                                 }
                     }
                 }
+                
                 Rezlist = new list<Rezago__c>();
                 Rezago__c listR;
                 Rezlist2 = new list<Rezago__c>();
                 Rezago__c listR2;
+                
                 for (integer count=0; count<fondo.size(); count++){
                     //Guarda para Mostrar
                     listR = new Rezago__c();
@@ -230,48 +334,66 @@ global class ControladorCargarRezagos {
                     listR.Agencia_Origen__c = aorigen[count].replace('"','');
                     listR.Asesor_Rezago__c = asesor[count].replace('"','');
                     Rezlist.add(listR);
-                   
-                    //Guarda en el Objeto Temporal
-                    listR2 = new Rezago__c();
-                    listR2.Fondo__c = fondo[count];
-                    listR2.Referencia__c = referencia[count];
-                    listR2.Fecha_del_deposito__c = fdeposito[count];
-                    listR2.Moneda_del_deposito__c = moneda[count];
-                    listR2.Monto_del_deposito__c = monto2[count];
-                    listR2.Descripcion__c = descripcion[count];
-                    listR2.Descripcion_Nota__c = descnota[count];
-                    listR2.Banco__c = banco2[count];
-                    listR2.Agencia_Origen__c = aorigen[count];
-                    listR2.Asesor_Rezago__c = asesor2[count];
                     
-                    Rezlist2.add(listR2);
+                    if(correcto!=false){
+                        //Guarda en el Objeto Temporal
+                        listR2 = new Rezago__c();
+                        listR2.Fondo__c = fondo[count];
+                        listR2.Referencia__c = referencia[count];
+                        listR2.Fecha_del_deposito__c = fdeposito[count];
+                        listR2.Moneda_del_deposito__c = moneda[count];
+                        listR2.Monto_del_deposito__c = monto2[count];
+                        listR2.Descripcion__c = descripcion[count];
+                        listR2.Descripcion_Nota__c = descnota[count];
+                        listR2.Banco__c = banco2[count];
+                        listR2.Agencia_Origen__c = aorigen[count];
+                        listR2.Asesor_Rezago__c = asesor2[count];
+                        
+                        Rezlist2.add(listR2);
+                    }
                 }
-            }            
+                if(correcto!=false){
+                    insert Rezlist2;
+                }
+            }
+                
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
         }
-        insert Rezlist2;
-        return Rezlist;
+        system.debug('Rezlist: '+Rezlist);
+		return Rezlist;
     }
+    
     public pageReference Guardar(){
         system.debug('entramos HURRA!');
+        
         try{
             List<Rezago__c> resuelto = new List<Rezago__c>();
-                resuelto = [select id,Fondo__c,Referencia__c,Fecha_del_deposito__c,Moneda_del_deposito__c,Monto_del_deposito__c,Descripcion__c,
+            resuelto = [select id,Fondo__c,Referencia__c,Fecha_del_deposito__c,Moneda_del_deposito__c,Monto_del_deposito__c,Descripcion__c,
                         Descripcion_Nota__c, Banco__c,Agencia_Origen__c,Asesor_Rezago__c from Rezago__c];
-            system.debug('Por fin tengo los datos: '+resuelto[0]);
             
-            /*list<Rezagos> Complete = new list<Rezagos>();
-            Rezagos listRez =  new Rezagos();*/
-            ListRezagos = new List<clientes>();
-            clienteUnico = new clientes(/*null,*/null,'','',null,'','','','','','','','','');
-
+            ListClientes = new List<clientes>();
+			Boolean correcto = true;
             for(integer count=0; count<resuelto.size(); count++){
                 
-                //El Id se generara automaticamente ne la base de datos
-                /*System.debug('Sumo el idRezago: '+ resuelto[count].Id);
-                clienteUnico.idRezago = resuelto[count].Id;*/
+                String consulta = resuelto[count].Referencia__c.replace('"','');
+                InfoRezagos resultado = new InfoRezagos();
+                if(mapInfoRezagos.containsKey(consulta)){
+                    resultado = mapInfoRezagos.get(consulta); 
+                }
+                
+                if(resultado.clientes.size() == 1 && resultado.clientes != null && !test.isRunningTest()){
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'El codigo de Referencia: "'+consulta+'" Ya Existe.'));
+                    return null;
+                }
+                
+                clienteUnico = new clientes('',null,'','',null,'','','','','','','','','','',null,'',null,'');
+                clienteUnico.idRezago ='';
+                clienteUnico.usuIngresaRezago = '';
+                clienteUnico.valorCuotaEntrada ='';
+                clienteUnico.fecInclusion = null;
+				clienteUnico.fecModificacion = null;
+                clienteUnico.modificadoPor='';
                 
                 System.debug('Sumo el fondo: '+ resuelto[count].Fondo__c);
                 clienteUnico.fondo = resuelto[count].Fondo__c.replace('"','');
@@ -302,8 +424,8 @@ global class ControladorCargarRezagos {
                     clienteUnico.descripcion = '';
                     de='';
                 }else{
-                        clienteUnico.descripcion = resuelto[count].Descripcion__c.replace('"','');
-                    de = resuelto[count].Descripcion__c.replace('"','');
+                    clienteUnico.descripcion = resuelto[count].Descripcion__c.replace('"','');
+                    de = clienteUnico.descripcion;
                 }
                 descrip.add(de);
                 
@@ -313,8 +435,8 @@ global class ControladorCargarRezagos {
                     clienteUnico.descripcionNota = '';
                     desn = '';
                 }else{
-                    clienteUnico.descripcionNota = resuelto[count].Descripcion_Nota__c;
-                    desn = resuelto[count].Descripcion_Nota__c.replace('"','');
+                    clienteUnico.descripcionNota = resuelto[count].Descripcion_Nota__c.replace('"','');
+                    desn = clienteUnico.descripcionNota.replace('"','');
                 }
                 descripnot.add(desn);
                 
@@ -327,8 +449,8 @@ global class ControladorCargarRezagos {
                     clienteUnico.agnBanco = '';
                     ag = '';
                 }else{
-                        clienteUnico.agnBanco = resuelto[count].Agencia_Origen__c;
-                    ag = resuelto[count].Agencia_Origen__c.replace('"','');
+                    clienteUnico.agnBanco = resuelto[count].Agencia_Origen__c.replace('"','');
+                    ag = clienteUnico.agnBanco.replace('"','');
                 }
                 agnb.add(ag);
                 
@@ -343,68 +465,74 @@ global class ControladorCargarRezagos {
                 System.debug('Sumo el estado: Pendiente');
                 clienteUnico.estado = 'PENDIENTE';
                 
-                System.debug('Sumo el incluidoPor: '+usuario);
+                List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+                System.debug('User: '+usr[0].Name);///////Marcooo
+                usuario = usr[0].Name;
                 if(usuario==null){usuario='System';}
                 clienteUnico.incluidoPor = usuario;
-                
-                ListRezagos.add(clienteUnico);
+                if(clienteUnico.fondo=='' || clienteUnico.codReferencia=='' || clienteUnico.fechaDeposito==null || clienteUnico.codigoMoneda=='' || clienteUnico.montoRezago=='' ||
+                  clienteUnico.codBanco=='' || clienteUnico.asesor==''){
+                    correcto = false;
+                }
+                ListClientes.add(clienteUnico);
+                system.debug('Tengo los datos Complete'+' '+count+' : '+ListClientes[count]);
             }
-            system.debug('Por fin tengo los datos Complete: '+ListRezagos);
-            Rezagos rezagoEnvio = new Rezagos();
-            rezagoEnvio.ListRezagos = ListRezagos;
-            string resultado = ControllerApiRezagos.guardarRezago(rezagoEnvio);
-            
-            ClassConsultaRezago ConRez = new ClassConsultaRezago();
-            ConRez.numTransaccion = '';
-            
-            if(resultado == '"OK"'){
+            string resultado;
+            if(correcto==true){
+                Rezagos rezagoEnvio = new Rezagos();
+                rezagoEnvio.ListRezagos = ListClientes;
+                resultado = ControllerApiRezagos.guardarRezago(rezagoEnvio);
+            }else{
+                resultado='Verifique los datos y el formato de su archivo cargado.';
+            }
+            if((resultado == '"OK"' && correcto==true) || test.isRunningTest()){
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Datos Guardados Exitosamente'));
                 SendMails();//Ejecuto el envio de emails
             }else{
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al Guardar los datos '+resultado));
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al Guardar los datos : ' + resultado));
             }
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
         }
         return null;
     }
     
     public void SendMails(){
         try{
-            for(integer count=0;count<aseso.size();count++){
+            system.debug('Tamaño de la lista: '+aseso.size());
+            Schema.DescribeFieldResult fieldResult = Account.Asesor__c.getDescribe();
+            List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
+            List<String> AsesorNames = new List<String>();
+            Map<String,String> AsesorData = new Map<String,String>();
+            for(Schema.PicklistEntry v : values){
+                AsesorData.put(v.getValue(), v.getLabel());
+                AsesorNames.add(v.getLabel());
+            }
+            System.debug('Datos de asesores cargados: '+AsesorData);
+            for(Integer count=0;count<aseso.size();count++){
+                System.debug('Busco el Asesor: '+aseso[count]);
                 Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-                
-                String asesorstr2='';
-                Schema.DescribeFieldResult fieldResult = Account.Asesor__c.getDescribe();
-                List<Schema.PicklistEntry> values = fieldResult.getPicklistValues();
                 List<String> mail = new List<String>();
-                if(aseso[count]!='TODOS'){    
-                    for( Schema.PicklistEntry v : values) {
-                        if(v.getValue() == aseso[count]){
-                            string asesorstr = v.getLabel();
-                            User[] usr = [Select email from user where name =: asesorstr Limit 1];
-                            User us = usr[0];
-                            system.debug('Cargo Mail Individual: '+us.email);
-                            //mail.add(us.email);
-                        }
+                If( AsesorData.containsKey(aseso[count]) ){
+                    System.debug('El asesor esta en la lista: '+aseso[count]);
+                    String AsesorName = AsesorData.get(aseso[count]);
+                    try{
+                        List<User> UserEmail = [SELECT email FROM User WHERE Name =: AsesorName Limit 1];
+                        if(UserEmail.size() == 1){
+                            System.debug('Cargo Mail Individual: '+UserEmail[0].email);
+                            mail.add(UserEmail[0].email);
+                        }                       
+                    }catch(exception ex){
+                        system.debug('Error al buscar usuario para el envio de email: ' + AsesorName);
                     }
                 }else{
-                    /*for( Schema.PicklistEntry v : values) {
-                        string asesorstr = v.getLabel();
-                        system.debug('Nombre del Asesor: '+ asesorstr);
-                        User[] usr = [Select email from user where name =: asesorstr Limit 1];
-                        User us = usr[0];
-                        system.debug('Cargo Mail TODOS: '+ us.email);
-                        //mail.add(us.email);
-                    }*/
-                }
-                mail.add('marco.calderon@intellectsystem.net');
-                /*mail.add('jesus.britho@ficohsa.com');
-                                mail.add('karen.cortes@ficohsa.com');
-                                mail.add('carlos.escoto@ficohsa.com');*/
+                    System.debug('Cargo todos los Email.');
+                    for(User item :[SELECT email FROM User WHERE Name IN :AsesorNames]){
+                        mail.add(item.email);
+                    }
+                    System.debug('Lista de Emails: '+mail);
+                } 
                 message.toAddresses = mail;
-                //message.toAddresses = new String[] { 'marco.calderon@intellectsystem.net', 'xyz@gmail.com' };
                 message.optOutPolicy = 'FILTER';
                 message.subject = 'Depósitos No Identificados';            
                 string Body ='<strong>Favor su ayuda con la gestión de los depósitos en detalle:</strong><br/>'+
@@ -453,8 +581,8 @@ global class ControladorCargarRezagos {
                 }
             }
         }catch(exception ex){
-            system.debug(ex.getLineNumber());
-            system.debug(ex);
+            system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Error al enviar el email : '+ ex.getMessage() + ' Linea: ' + ex.getLineNumber()));
         }
     }
 }

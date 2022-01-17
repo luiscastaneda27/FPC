@@ -157,9 +157,8 @@ global with sharing class restClientes {
                 if(item.cuentas != null && item.cuentas.size() > 0){
 	                For(classClientes.classCuentas itemCu : item.cuentas){
 	                    Cuentas__c nueva = new Cuentas__c(Activo__c = itemCu.cuentaActiva,
-		                            Fecha_Apertura__c = Date.valueOF(itemCu.fechaApertura), //*Fondo_Inversion__c = itemCu.fondoInversion,
-		                            Tipo_Fondo__c = itemCu.fondo,
-                                                          Dia_aporte__c = itemCu.fechaAporte,
+		                            Fecha_Apertura__c = Date.valueOF(itemCu.fechaApertura), Fondo_Inversion__c = itemCu.fondoInversion,
+		                            Tipo_Fondo__c = itemCu.fondo, Dia_aporte__c = itemCu.fechaAporte,
 		                            Frecuencia_Aportacion__c = itemCu.frecuenciaAporte, Forma_Aportacion__c = itemCu.formaAporte,
 		                            Seguro_Vida__c = itemCu.seguroVida, Tipo_Comision__c = itemCu.tipoComision,
 		                            Matriz_Comision__c = itemCu.matrizComision);

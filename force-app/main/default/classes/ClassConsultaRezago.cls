@@ -1,3 +1,3 @@
 public class ClassConsultaRezago {
-    public string numTransaccion{get;set;}
+	public string numTransaccion{get;set;}
 }

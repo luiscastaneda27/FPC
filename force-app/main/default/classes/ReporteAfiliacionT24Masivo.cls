@@ -1,4 +1,4 @@
-global class ReporteAfiliacionT24Masivo {   
+global without sharing class ReporteAfiliacionT24Masivo {   
     
     public string empresa {get;set;}  
     public  List<reporteT24__c> rellenoTabla {get;set;}  
@@ -631,7 +631,11 @@ global class ReporteAfiliacionT24Masivo {
     }
     
     public static String llenarObjetosMonetarios(string prueba){     
-        //prueba= '0.00';
+        try{
+            Decimal.valueOf(prueba);
+        }catch(Exception ex){
+            prueba = '0';
+        }
         return prueba;
     }
     
@@ -639,7 +643,7 @@ global class ReporteAfiliacionT24Masivo {
     public static String fechas(string fecha){     
         string fechaFinal=null;
         date myDate = date.today();
-        system.debug('fecha '+myDate);
+        system.debug('fecha: '+fecha);
         if(fecha!=NULL){
             
             list<string> a1;            
@@ -1100,7 +1104,7 @@ global class ReporteAfiliacionT24Masivo {
             system.debug('String recibido: '+stringCSV);
             clientes = stringCSV.split('\n');
             string stringNuevo ='2121';
-            string noContiene = '0123456789".,';
+            string noContiene = '0123456789".,-';
             string commilla = '"';
             
             if(clientes.size() > 1){

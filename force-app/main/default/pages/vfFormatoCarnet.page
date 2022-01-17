@@ -57,7 +57,7 @@
             </apex:outputPanel>
             
             <apex:outputPanel rendered="{!AND(!esMasivo, !EsPersonal)}">
-                EL CASO TIENE QUE ESTAR EN ESTATUS CERRADO PARA PODER IMPRIMIR EL CARNET
+                EL CASO TIEN QUE ESTAR EN ESTATUS CERRADO PARA PODER IMPRIMIR EL CARNET
             </apex:outputPanel>
         </body>
         

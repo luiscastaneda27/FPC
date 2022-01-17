@@ -1,6 +1,8 @@
 @isTest
 public class testPromociones 
 {
+    
+
    static testMethod void ControllerPromociones2()
    {
       Account aa = new Account(Identificacion__c='0122199012345',Name='carlo');
@@ -19,23 +21,16 @@ public class testPromociones
         pro.candidato.FirstName = 'carlo';
         pro.candidato.LastName = 'escoto';
         pro.candidato.Identificacion__c='0801185687456';
-        pro.guardarPop();
-       
-        pro.candidato.FirstName = 'carlos';
-        pro.candidato.LastName = 'escotos';
-        pro.candidato.Identificacion__c=null;
+      
         pro.guardarPop();
         
         pro.candidato.Phone = '886125101465';
         pro.candidato.Telefono_Trabajo__c = '227524005454';
         pro.candidato.Departamento__c = 'N/A';
-		pro.guardarPop();
+		
        //pro.preven = [select id from Account where Identificacion__c ='0122199012345'];
        
-        pro.candidato.Phone = '88612510';
-        pro.candidato.Telefono_Trabajo__c = '2275240044644';
-        pro.candidato.Identificacion__c = null;
-        pro.guardarPop();
+        
 
         pro.candidato.Phone = '88612510';
         pro.candidato.Telefono_Trabajo__c = '22752400';

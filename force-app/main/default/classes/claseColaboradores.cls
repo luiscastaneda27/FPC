@@ -19,15 +19,21 @@ public class claseColaboradores {
         try{
             this.id=id;
             this.idcliente=cliente;
-            if(tipoIden=='1'){
-                this.tipo_Identificacion ='CEDULA DE IDENTIDAD'; 
+            if(tipoIden=='1')
+            {
+               this.tipo_Identificacion ='CEDULA DE IDENTIDAD'; 
             }
-            else if (tipoIden=='2'){
-                this.tipo_Identificacion ='CARNET DE RESIDENTE'; 
-            } else if (tipoIden=='4'){
-                this.tipo_Identificacion ='PASAPORTE'; 
-            }ELSE{
-                this.tipo_Identificacion  =tipoIden.toUpperCase();
+            else if (tipoIden=='2')
+             {
+               this.tipo_Identificacion ='CARNET DE RESIDENTE'; 
+            }   
+            else if (tipoIden=='4')
+             {
+               this.tipo_Identificacion ='PASAPORTE'; 
+            }   
+            ELSE
+            {
+              this.tipo_Identificacion  =tipoIden.toUpperCase();
             }
             
             

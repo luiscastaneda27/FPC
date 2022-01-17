@@ -73,7 +73,7 @@ public without sharing class controladorEstadoCuentaMasivo {
                             }
                         }
                         integer posicion = 0;
-                        list<Integer> listPosiciones = new list<Integer>();                        
+                        list<Integer> listPosiciones = new list<Integer>();                        //try{
                         for(classECHistorico.classTransaccion itemTra: item.transacciones){
                             if(decimal.valueOf(itemTra.aporteTotal.replace(',','')) ==0 ){
                                 listPosiciones.add(posicion);

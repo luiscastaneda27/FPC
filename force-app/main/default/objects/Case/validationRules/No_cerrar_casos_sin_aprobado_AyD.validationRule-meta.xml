@@ -2,7 +2,24 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_cerrar_casos_sin_aprobado_AyD</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(RecordType.DeveloperName = &apos;Aumento_Disminucion_Aportes&apos;, !Aprobado__c, Enviar_aprobacion_AD__c, ISCHANGED(Status), ISPICKVAL(Status, &apos;Cerrado&apos;), AND(OR(Tipo_de_Operacion__c = &apos;A2&apos;, Tipo_de_Operacion__c = &apos;A7&apos;, Tipo_de_Operacion__c = &apos;A8&apos;, Tipo_de_Operacion__c = &apos;A6&apos;)), !DAU_aprobacion__c)</errorConditionFormula>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName = &apos;Aumento_Disminucion_Aportes&apos;, 
+!Aprobado__c, 
+Enviar_aprobacion_AD__c, 
+ISCHANGED(Status),  
+ISPICKVAL(Status, &apos;Cerrado&apos;), 
+AND(
+OR(
+Tipo_de_Operacion__c = &apos;A2&apos;, 
+Tipo_de_Operacion__c = &apos;A3&apos;, 
+Tipo_de_Operacion__c = &apos;A5&apos;, 
+Tipo_de_Operacion__c = &apos;A7&apos;, 
+Tipo_de_Operacion__c = &apos;A8&apos;, 
+Tipo_de_Operacion__c = &apos;A6&apos;
+)
+), 
+!DAU_aprobacion__c
+)</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
     <errorMessage>El caso debe estar aprobado para poder cerrarlo</errorMessage>
 </ValidationRule>

@@ -39,7 +39,7 @@
             <value>
                 <fullName>TA</fullName>
                 <default>false</default>
-                <label>Tarjeta de Credito/Debito</label>
+                <label>Tarjeta de Crédito/Debito</label>
             </value>
             <value>
                 <fullName>TAOB</fullName>

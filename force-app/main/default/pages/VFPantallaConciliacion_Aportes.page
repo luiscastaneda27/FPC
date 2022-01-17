@@ -270,17 +270,18 @@
                                 <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                            				<abbr class="slds-required" title="required"></abbr> Nombre Completo
                        	       </label>
-                               <apex:inputText disabled="true" id="NombreCompleto" styleclass="slds-input"  style="height:10px; width:455px; margin-left:3px;" value="{!NombreCompleto}"  />
+                               <apex:outputText id="NombreCompleto" styleclass="slds-input"  style="height:10px; width:455px; margin-left:3px;" value="{!NombreCompleto}"  />
                                <label class="slds-form-element__label" for="inputSample" style="margin-left:0px;">
                            				<abbr class="slds-required" title="required"></abbr> Tipo de Moneda
                        	       </label>
-                 				<apex:inputField id="Moneda" html-disabled="true"  value="{!TipoMonedaN.Tipo_MonedaN__c}" styleclass="slds-input"  style="height:10px; width:160px; margin-left:40px;"  />
+                 				<apex:outputText id="Moneda" rendered="{!TipoMonedaN.Tipo_MonedaN__c!=null}" styleclass="slds-input"  value="{!IF(TipoMonedaN.Tipo_MonedaN__c ='1','Lempiras', 'Dolares')}"  style="height:10px; width:160px; margin-left:40px;"  />
+                                <apex:outputText id="Moneda2" rendered="{!TipoMonedaN.Tipo_MonedaN__c=null}" styleclass="slds-input"  value=""  style="height:10px; width:160px; margin-left:40px;"  />
                            </td>
                           </tr>
 						<tr>
                               <td>
                                   <br/>
-                           		<label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
+                           		<label class="slds-form-element__label" for="inputSample" style="margin-left:10px;"> 
                            				<abbr class="slds-required" title="required"></abbr> Fecha Del Deposito
                        	       </label>
 								<apex:input type="date" styleClass="slds-input" style="height:10px; width:160px; margin-left:1px;" value="{!FechaDeposito}"/>
@@ -313,7 +314,7 @@
                             	<label class="slds-form-element__label" for="inputSample" style="margin-left:0px;">
                            				<abbr class="slds-required" title="required"></abbr> Periodo Aporte
                        	       	</label>
-                             	<apex:inputText disabled="true" onkeypress="return isNumberKey(event)" id="p_periodo_aporte" value="{!p_periodo_aporte}" styleclass="slds-input"  style="height:10px; width:160px; margin-left:46px;" />
+                             	<apex:outputText id="p_periodo_aporte" value="{!p_periodo_aporte}" styleclass="slds-input"  style="height:10px; width:160px; margin-left:46px;" />
                         	</td>
                           </tr>
                        	<tr>
@@ -339,10 +340,10 @@
                            </td>
 						</tr>
                         <tr>
-                          <td>
+                          <td style="display: {!IF(TipoMonedaN.Tipo_MonedaN__c =null,'none;','block;')}">
                               <br/>
                           	<label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
-                           				<abbr class="slds-required" title="required"></abbr> Compra Dolar
+                           				<abbr class="slds-required" title="required"></abbr> {!IF(TipoMonedaN.Tipo_MonedaN__c ='1','Venta Dolar','Compra Dolar')} 
                        	   </label>
                           	<label class="slds-form-element__label" for="inputSample" style="margin-left:20px;">
                            				<abbr class="slds-required" title="required"></abbr> SI

@@ -122,7 +122,7 @@ public without sharing class ControllerAfiliacionElectronica
     public string pcTIpoEmpleado /*TipoEmpleado*/ {get;set;}
     public datetime pdfechainiciolabor{get;set;}
     public string pcNivelIngreso /*NivelIngreso*/ {get;set;}
-    //public string pcVolumenIngresoCN /*VolumenIngreso*/ {get;set;}
+    //public string pcVolumenIngresoCN /*VolumenIngreso*/ {get;set;} 
     
     //DatoEmpleado
     public string pcUsuarioCN /*usuarioValidacion*/ {get;set;}
@@ -529,8 +529,8 @@ public without sharing class ControllerAfiliacionElectronica
         Cuenta20 = new Cuentas__c();
         Cuenta22 = new Beneficiario__c();
         //ParentezcoDependen = new Beneficiario__c();
-        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
-        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
+        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
         //beneficiarioUnicoConti = new ClassBeneficiarioContigencia(null,'','','','','','','','','',null,null,null);
         cuentaUnico = new Class_CuentasTraer('');
         options=new List<SelectOption>();
@@ -1171,7 +1171,7 @@ Tercera = true;  */
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true;
                         }
                         else
@@ -1191,7 +1191,7 @@ Tercera = true;  */
                                 beneficiarioUnico.tipoId = null;
                             }
                             ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBene = true; 
                         }
                         return null;
@@ -1209,7 +1209,7 @@ Tercera = true;  */
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;
                         
                     }
@@ -1230,7 +1230,7 @@ Tercera = true;  */
                             beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
-                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBene = true;  
                     }
                     return null;
@@ -1300,7 +1300,7 @@ Tercera = true;  */
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true;
                         }
                         else
@@ -1320,7 +1320,7 @@ Tercera = true;  */
                                 beneficiarioUnicoC.tipoId = null;
                             }
                             ListBeneficiariosC.add(beneficiarioUnicoC);
-                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                            beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                             disbotBeneC = true; 
                         }
                         return null;
@@ -1338,7 +1338,7 @@ Tercera = true;  */
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;
                         
                     }
@@ -1359,7 +1359,7 @@ Tercera = true;  */
                             beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
-                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','',null,null,null);
+                        beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
                         disbotBeneC = true;  
                     }
                     return null;
@@ -4111,10 +4111,10 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Aceptacion de Cuenta no Marcada'));
                 return null; 
             }
-            if(Recaptcha == 'N'){
+            /*if(Recaptcha == 'N'){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Favor Validar el reCAPTCHA.'));
                 return null; 
-            }              
+            } */             
             else
             {
                 afiliacionElectronicaClass envioDatos = new afiliacionElectronicaClass();        

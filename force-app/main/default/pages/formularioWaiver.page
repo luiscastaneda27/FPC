@@ -1,10 +1,10 @@
-<apex:page showHeader="false" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf" controller="formularioIdentificacion_PDF_CONT">
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf" controller="formularioIdentificacion_PDF_CONT">
     <head>
         <style>
             @page {
                 size: 8.5in 14in;
                 margin-left: 2.5cm;
-            	margin-right: 2.5cm;
+                margin-right: 2.5cm;
             }
             
             
@@ -153,7 +153,7 @@
         <div class="p">
         <p>Debido a las obligaciones establecidas en el Foreing Account Tax Complianca Act
             (FACTA), el Acuerdo suscrito entre el gobierno de Estados Unidos y el Gobierno de la 
-            República de Honduras para Mejorar el Cumplimiento Trinutario Internacional y para
+            República de Honduras para Mejorar el Cumplimiento Tributario Internacional y para
             Implementar el FATCA, (en adelante el Acuerdo) y adicionalmente cualquier otra
             regulación debidamnete promulgada por autoridades competentes y asumidas por
             FICOHSA PENSIONES Y CESANTIAS S.A., el titular mediante la firma de este documento
@@ -171,7 +171,7 @@
         <p>Como condición para establecer o mantener cuentas o cualquier instrumento u 
             obligación con FICOHSA PENSIONES Y CESANTIAS S.A., el titular se compromete a
             proporcionar oportunamente toda información que FICOHSA PENSIONES Y CESANTIAS
-			S.A. pueda requerir en el tiempo y forma establecida por FICOHSA PENSIONES Y
+            S.A. pueda requerir en el tiempo y forma establecida por FICOHSA PENSIONES Y
             CESANTIAS S.A, para cumplir debidamente con FATCA, el Acuerdo y la normativa
             aplicable.</p><br/><br/><br/><br/><br/><br/>
         <p>Específicamente el titular: (i) acepta que cualquier obstrucción, falta de diligencia o
@@ -179,12 +179,12 @@
             forma de suplir la información facultará a FICOHSA PENSIONES Y CESANTIAS S.A. para
             terminar los contratos y obligaciones mantenidas con el titular, sin necesidad de
             notificación previa ni responsabilidad alguna para FICOHSA PENSIONES Y CESANTIAS
-			S.A. o bien cerrar, bloquear o transferir dichas cuentas u obligaciones; (ii) se obliga
+            S.A. o bien cerrar, bloquear o transferir dichas cuentas u obligaciones; (ii) se obliga
             incondicionalmente a mantener a FICOHSA PENSIONES Y CESANTIAS S.A. (incluyendo
-            sus empleados, asesores, representante legal y apoderados, directores, y accionistas)
+            sus empleados, asesores, representante legal y apoderados, directores, y accionistas,
             todo su personal y personas relacionadas) totalmente indemnes en contra de cualquier
             daño o perjuicio derivado del incumplimiento de esta obligación (iii) se compromete a
-            informar inmediatamente por escrito a FICOHSA PENSIONES Y CESANTIAS S.A. caso de
+            informar inmediatamente por escrito a FICOHSA PENSIONES Y CESANTIAS S.A. en caso de
             darse algún cambio relevante a la información proporcionada.</p><br/>
         </div>
         <div class="p2">

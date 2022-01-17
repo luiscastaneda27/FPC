@@ -64,6 +64,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
+            <controllingFieldValue>A8</controllingFieldValue>
+            <valueName>TAOB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>A3</controllingFieldValue>
             <valueName>IT</valueName>
         </valueSettings>
         <valueSettings>
@@ -73,10 +78,6 @@
         <valueSettings>
             <controllingFieldValue>A3</controllingFieldValue>
             <valueName>TL</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>A8</controllingFieldValue>
-            <valueName>TAOB</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

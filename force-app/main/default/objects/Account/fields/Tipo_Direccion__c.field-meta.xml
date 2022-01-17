@@ -21,6 +21,12 @@
                 <default>false</default>
                 <label>DOMICILIO</label>
             </value>
+            <value>
+                <fullName>R</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>R</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

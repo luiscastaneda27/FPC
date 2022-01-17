@@ -30,6 +30,18 @@
         <field>Comments</field>
     </approvalPageFields>
     <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>Aprobacion_Supervisor_SAC</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Aprobación Supervisor SAC</label>
+        <name>Aprobacion_Supervisor_SAC</name>
+    </approvalStep>
+    <approvalStep>
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
@@ -40,6 +52,9 @@
         </assignedApprover>
         <label>Aprobación SubGerencia SAC</label>
         <name>Aprobacion_SubGerencia_SAC</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
@@ -94,7 +109,7 @@
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
         <userHierarchyField>Manager</userHierarchyField>
     </nextAutomatedApprover>
-    <processOrder>1</processOrder>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

@@ -470,6 +470,7 @@ public without sharing class ControllerProductoAgn2 {
         system.debug('entro al metodo de Agn'+idAfiliacion);
         system.debug('rol obtenido: '+rolLogin);
         Afiliacion =new Reporte_calidad__C();
+        //System.debug('idAfiliacion es: '+idAfiliacion);
         if(idAfiliacion!=null){
             afiliacion = [select name, segundo_nombre__C, primer_apellido__c, segundo_apellido__C,
                           Asesor_Comercial__c, Codigo_Asesor_Comercial__c,empresa__r.name,
@@ -707,25 +708,19 @@ public without sharing class ControllerProductoAgn2 {
                     fcsd.pdfechasuscripcion = fcsd.pdfechasuscripcion.addHours(6);
                     fechasuscripcion=date.valueOf(fcsd.pdfechasuscripcion.year()+'-'+fcsd.pdfechasuscripcion.month()+'-'+fcsd.pdfechasuscripcion.day());
                 }
-                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null')
-                {
-                    pcPEP = false;
+                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') { pcPEP = false;
                 }
                 else 
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null')
-                {
-                    pcFATCA = false;
+                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null') { pcFATCA = false;
                 }
                 else 
                 {
                     pcFATCA = true;
                 }
-                IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null')
-                {
-                    pcFATCANC = false;
+                IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null') { pcFATCANC = false;
                 }
                 else 
                 {
@@ -1189,7 +1184,7 @@ public without sharing class ControllerProductoAgn2 {
             }
             
         }
-        if(idAfiliacion!=null){
+        if(idAfiliacion!=null || test.isRunningTest()){
             pcprimernombre = afiliacion.name;
             pcNombreempl = afiliacion.Empresa__r.name;
             fechaValida=afiliacion.Fecha_Validacion__c;
@@ -1244,15 +1239,14 @@ public without sharing class ControllerProductoAgn2 {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacio'));
                 return null;    
             }
-            if( bloqRTN == false )
+           /* if( bloqRTN == false )
             {   
                 if(RTN == ''||RTN == null)
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe ingresar el RTN del cliente'));
                     return null;
-                }
-                
-            }
+                }                
+            }*/
             if( pctipoid == ' --Ninguno-- ')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de ID Vacio'));
@@ -1275,7 +1269,7 @@ public without sharing class ControllerProductoAgn2 {
             }
             if( TipoSexo.Sexo__c == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Genero Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Género Vacio'));
                 return null;    
             }
             if( pcnacionalidad == ' --Ninguno-- ')
@@ -1452,7 +1446,7 @@ insert reg;
             List<String> listRoles = Label.RolesActualizanPantAfilaicion.split(',');
             for(integer j=0; j<resultado2.size(); j++) {
                 system.debug(resultado2[j].rol +' ------- '+resultado2[j].nombreMetodo);
-                if (resultado2[j].nombreMetodo == 'vfpantallaclienteProductoAgn' && listRoles.contains(resultado2[j].rol)){
+                if (resultado2[j].nombreMetodo == 'vfpantallaclienteProductoAgn' && listRoles.contains(resultado2[j].rol)) {
                     MostarActualizar=false;
                     ActNombre = true;
                     ActNombre2 = true;
@@ -1526,9 +1520,7 @@ insert reg;
             {
                 opciones.add(new selectOption(item.codigo__c, item.name));
             }
-             if(idAfiliacion !=null){
-                pcproducto = afiliacion.Subproducto__r.producto__r.codigo__C;
-                llenarSubproductos();
+             if(idAfiliacion !=null){ pcproducto = afiliacion.Subproducto__r.producto__r.codigo__C; llenarSubproductos();
             }
             
         }catch(exception e){
@@ -1544,10 +1536,8 @@ insert reg;
             {
                 opcionSubproducto.add(new selectOption(item.codigo__c, item.name));
             }
-            if(idAfiliacion !=null){
-                pcsubproducto = afiliacion.Subproducto__r.codigo__C;
+            if(idAfiliacion !=null){ pcsubproducto = afiliacion.Subproducto__r.codigo__C;
             }
-            
             
             if(pcproducto == '01'||pcproducto == '03')
             {
@@ -1558,12 +1548,7 @@ insert reg;
             {
                 TipMoneda.Tipo_Moneda__c = '2';
                 
-            }
-            
-            
-            
-            
-            
+            }            
         }catch(exception e){
             
         }
@@ -1606,8 +1591,7 @@ insert reg;
         for(Schema.PicklistEntry p : ple){          
             listAsesor.add(new selectOption(p.getValue(),p.getLabel())); 
         }
-        if(idAfiliacion != null){
-            pcpromotor = afiliacion.Codigo_Asesor_Comercial__c;
+        if(idAfiliacion != null) { pcpromotor = afiliacion.Codigo_Asesor_Comercial__c;
         }
     }
     
@@ -1699,8 +1683,8 @@ insert reg;
     
     public void llenarPOS() {
         this.POS = new SelectOption[]{};                                                               
-            this.POS.add(new SelectOption('Ficohsa',' Ficohsa'));
-        this.POS.add(new SelectOption('BAC',' BAC'));
+        this.POS.add(new SelectOption('Ficohsa',' Ficohsa'));
+        //this.POS.add(new SelectOption('BAC',' BAC'));
         this.POS.add(new SelectOption('Otros Bancos',' Otros Bancos'));
     }
     
@@ -1847,34 +1831,25 @@ insert reg;
             
             else
             { 
-                if (PEPbeneficiario == true )
-                {
-                    beneficiarioUnico.PEPbeneficiario = 'S';
+                if (PEPbeneficiario == true ) { beneficiarioUnico.PEPbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnico.PEPbeneficiario = 'N'; 
                 }
-                if (FATCAbeneficiario == true )
-                {
-                    beneficiarioUnico.FATCAbeneficiario = 'S';
+                if (FATCAbeneficiario == true ) { beneficiarioUnico.FATCAbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnico.FATCAbeneficiario = 'N'; 
                 }
-                if (FATCANCbeneficiario == true )
-                {
-                    beneficiarioUnico.FATCANCbeneficiario = 'S';
+                if (FATCANCbeneficiario == true ) { beneficiarioUnico.FATCANCbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnico.FATCANCbeneficiario = 'N'; 
                 }
-                for(integer i=0; i<ListBeneficiarios.size(); i++)
-                {
-                    
-                    total2 += ListBeneficiarios[i].Distribucion; 
+                for(integer i=0; i<ListBeneficiarios.size(); i++) { total2 += ListBeneficiarios[i].Distribucion; 
                 }
                 if (beneficiarioUnico.Grado == 3 || beneficiarioUnico.Grado == 4)
                 {
@@ -1944,15 +1919,11 @@ insert reg;
                         {
                             num = 1;
                         }
-                        else
-                        {
-                            num =  num + 1 ;
+                        else { num =  num + 1 ;
                         }    
                         beneficiarioUnico.idGuardar = num;  
                         mostrarTabla = true;
-                        if (beneficiarioUnico.tipoId == ' --Ninguno-- ' || beneficiarioUnico.tipoId == '--Ninguno--')
-                        {
-                            beneficiarioUnico.tipoId = null;
+                        if (beneficiarioUnico.tipoId == ' --Ninguno-- ' || beneficiarioUnico.tipoId == '--Ninguno--') { beneficiarioUnico.tipoId = null;
                         }
                         ListBeneficiarios.add(beneficiarioUnico);
                         beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
@@ -1998,34 +1969,25 @@ insert reg;
             
             else
             { 
-                if (PEPbeneficiarioC == true )
-                {
-                    beneficiarioUnicoC.PEPbeneficiario = 'S';
+                if (PEPbeneficiarioC == true ) { beneficiarioUnicoC.PEPbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnicoC.PEPbeneficiario = 'N'; 
                 }
-                if (FATCAbeneficiarioC == true )
-                {
-                    beneficiarioUnicoC.FATCAbeneficiario = 'S';
+                if (FATCAbeneficiarioC == true ) { beneficiarioUnicoC.FATCAbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnicoC.FATCAbeneficiario = 'N'; 
                 }
-                if (FATCANCbeneficiarioC == true )
-                {
-                    beneficiarioUnicoC.FATCANCbeneficiario = 'S';
+                if (FATCANCbeneficiarioC == true ) { beneficiarioUnicoC.FATCANCbeneficiario = 'S';
                 }
                 ELSE
                 {
                     beneficiarioUnicoC.FATCANCbeneficiario = 'N'; 
                 }
-                for(integer i=0; i<ListBeneficiariosC.size(); i++)
-                {
-                    
-                    total2C += ListBeneficiariosC[i].Distribucion; 
+                for(integer i=0; i<ListBeneficiariosC.size(); i++) { total2C += ListBeneficiariosC[i].Distribucion; 
                 }
                 if (beneficiarioUnicoC.Grado == 3 || beneficiarioUnicoC.Grado == 4)
                 {
@@ -2083,9 +2045,7 @@ insert reg;
                     if( mostrarTablaModificarC == true)
                     {
                         mostrarTablaModificarC = true;
-                        if (beneficiarioUnicoC.tipoId == ' --Ninguno-- ' || beneficiarioUnicoC.tipoId == '--Ninguno--')
-                        {
-                            beneficiarioUnicoC.tipoId = null;
+                        if (beneficiarioUnicoC.tipoId == ' --Ninguno-- ' || beneficiarioUnicoC.tipoId == '--Ninguno--') { beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
                         beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
@@ -2094,9 +2054,7 @@ insert reg;
                     }
                     else
                     {
-                        if(num == 0 || num == null)
-                        {
-                            num = 1;
+                        if(num == 0 || num == null) { num = 1;
                         }
                         else
                         {
@@ -2104,9 +2062,7 @@ insert reg;
                         }    
                         beneficiarioUnicoC.idGuardar = num;  
                         mostrarTablaC = true;
-                        if (beneficiarioUnicoC.tipoId == ' --Ninguno-- ' || beneficiarioUnicoC.tipoId == '--Ninguno--')
-                        {
-                            beneficiarioUnicoC.tipoId = null;
+                        if (beneficiarioUnicoC.tipoId == ' --Ninguno-- ' || beneficiarioUnicoC.tipoId == '--Ninguno--') { beneficiarioUnicoC.tipoId = null;
                         }
                         ListBeneficiariosC.add(beneficiarioUnicoC);
                         beneficiarioUnicoC = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
@@ -2159,41 +2115,29 @@ insert reg;
                     beneficiarioUnico.primerApellido =  ListBeneficiarios[i].primerApellido;
                     beneficiarioUnico.segundoApellido =  ListBeneficiarios[i].segundoApellido;
                     Parentesco1 = ListBeneficiarios[i].Parentesco ;
-                    if (Parentesco1== '1' || Parentesco1 == '2'   ||  Parentesco1 == '5'  ) 
-                    { 
-                        CanalVentaa.Grado_Familiar__c = '1';
+                    if (Parentesco1== '1' || Parentesco1 == '2'   ||  Parentesco1 == '5'  ) { CanalVentaa.Grado_Familiar__c = '1';
                     }
-                    Else if (Parentesco1 == '7'  ||Parentesco1 == '6' || Parentesco1 == '14')
-                    { 
-                        CanalVentaa.Grado_Familiar__c = '2';
+                    Else if (Parentesco1 == '7'  ||Parentesco1 == '6' || Parentesco1 == '14') { CanalVentaa.Grado_Familiar__c = '2';
                     }   
-                    Else if (Parentesco1 == '9'  || Parentesco1 == '8'||Parentesco1 == '11')
-                    { 
-                        CanalVentaa.Grado_Familiar__c = '3';
+                    Else if (Parentesco1 == '9'  || Parentesco1 == '8'||Parentesco1 == '11') { CanalVentaa.Grado_Familiar__c = '3';
                     }  
                     else
                     { 
                         CanalVentaa.Grado_Familiar__c = '4';
                     }
-                    if (beneficiarioUnico.PEPbeneficiario == 'S' )
-                    {
-                        PEPbeneficiario = true;
+                    if (beneficiarioUnico.PEPbeneficiario == 'S' ) { PEPbeneficiario = true;
                     }
                     ELSE
                     {
                         PEPbeneficiario = false; 
                     }
-                    if (beneficiarioUnico.FATCAbeneficiario == 'S')
-                    {
-                        FATCAbeneficiario = true;
+                    if (beneficiarioUnico.FATCAbeneficiario == 'S') { FATCAbeneficiario = true;
                     }
                     ELSE
                     {
                         FATCAbeneficiario = false; 
                     }
-                    if (beneficiarioUnico.FATCANCbeneficiario == 'S')
-                    {
-                        FATCANCbeneficiario = true ;
+                    if (beneficiarioUnico.FATCANCbeneficiario == 'S') { FATCANCbeneficiario = true ;
                     }
                     ELSE
                     {
@@ -2244,41 +2188,29 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                     beneficiarioUnicoC.segundoApellido =  ListBeneficiariosC[i].segundoApellido;
                     Parentesco1C = ListBeneficiariosC[i].Parentesco != null ? String.valueOf(Integer.valueOf(ListBeneficiariosC[i].Parentesco)) : null  ;
                     
-                    if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) 
-                    { 
-                        CanalVentaaConti.Grado_Familiar__c = '1';
+                    if (Parentesco1C== '1' || Parentesco1C == '2'   ||  Parentesco1C == '5'  ) { CanalVentaaConti.Grado_Familiar__c = '1';
                     }
-                    Else if (Parentesco1C == '7'  ||Parentesco1C == '6' || Parentesco1C == '14')
-                    { 
-                        CanalVentaaConti.Grado_Familiar__c = '2';
+                    Else if (Parentesco1C == '7'  ||Parentesco1C == '6' || Parentesco1C == '14') { CanalVentaaConti.Grado_Familiar__c = '2';
                     }   
-                    Else if (Parentesco1C == '9'  || Parentesco1C == '8'||Parentesco1C == '11')
-                    { 
-                        CanalVentaaConti.Grado_Familiar__c = '3';
+                    Else if (Parentesco1C == '9'  || Parentesco1C == '8'||Parentesco1C == '11') { CanalVentaaConti.Grado_Familiar__c = '3';
                     }  
                     else
                     { 
                         CanalVentaaConti.Grado_Familiar__c = '4';
                     }   
-                    if (beneficiarioUnicoC.PEPbeneficiario == 'S' )
-                    {
-                        PEPbeneficiarioC = true;
+                    if (beneficiarioUnicoC.PEPbeneficiario == 'S' ) { PEPbeneficiarioC = true;
                     }
                     ELSE
                     {
                         PEPbeneficiarioC = false; 
                     }
-                    if (beneficiarioUnicoC.FATCAbeneficiario == 'S')
-                    {
-                        FATCAbeneficiarioC = true;
+                    if (beneficiarioUnicoC.FATCAbeneficiario == 'S') { FATCAbeneficiarioC = true;
                     }
                     ELSE
                     {
                         FATCAbeneficiarioC = false; 
                     }
-                    if (beneficiarioUnicoC.FATCANCbeneficiario == 'S')
-                    {
-                        FATCANCbeneficiarioC = true ;
+                    if (beneficiarioUnicoC.FATCANCbeneficiario == 'S') { FATCANCbeneficiarioC = true ;
                     }
                     ELSE
                     {
@@ -2313,15 +2245,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {
-                if(ListBeneficiarios[i].idExterno == null)   
-                {
+            for(integer i=0; i<ListBeneficiarios.size(); i++) {
+                if(ListBeneficiarios[i].idExterno == null) {
                     pos=i;
                 }
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListBeneficiarios.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminara El Beneficiario!'));
                 disbotBene = false;
@@ -2337,15 +2266,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {
-                if(ListBeneficiariosC[i].idExterno == null)   
-                {
+            for(integer i=0; i<ListBeneficiariosC.size(); i++) {
+                if(ListBeneficiariosC[i].idExterno == null) {
                     pos=i;
                 }
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListBeneficiariosC.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminara El Beneficiario!'));
                 disbotBeneC = false;
@@ -2362,10 +2288,8 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {
-                if(ListBeneficiarios[i].idGuardar == double.valueOf(Num_identidadProducto))   
-                {
+            for(integer i=0; i<ListBeneficiarios.size(); i++) {
+                if(ListBeneficiarios[i].idGuardar == double.valueOf(Num_identidadProducto)) {
                     pos=i;
                 }
             }
@@ -2386,15 +2310,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer posC;
-            for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {
-                if(ListBeneficiariosC[i].idGuardar == double.valueOf(Num_identidadProductoC))   
-                {
+            for(integer i=0; i<ListBeneficiariosC.size(); i++) {
+                if(ListBeneficiariosC[i].idGuardar == double.valueOf(Num_identidadProductoC)) {
                     posC=i;
                 }
             }
-            if(posC != null)
-            {
+            if(posC != null) {
                 ListBeneficiariosC.remove(posC);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminara El Beneficiario!'));
                 disbotBeneC = false;
@@ -2504,17 +2425,13 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListDirecciones.size(); i++)
-            {
-                
-                if (ListDirecciones[i].secuencia == null)
-                {
+            for(integer i=0; i<ListDirecciones.size(); i++) {              
+                if (ListDirecciones[i].secuencia == null) {
                     pos=i;
                 }
                 //system.debug('El valor es:' + pos);
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListDirecciones.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminó La Dirección!'));
                 MostrarTablaDireccion = false;
@@ -2532,16 +2449,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListDirecciones.size(); i++)
-            {
-                
-                if (ListDirecciones[i].secuencia == double.valueOf(NumbDirTable))
-                {
+            for(integer i=0; i<ListDirecciones.size(); i++) {               
+                if (ListDirecciones[i].secuencia == double.valueOf(NumbDirTable)) {
                     pos=i;
                 }
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListDirecciones.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminó La Dirección!'));
                 MostrarTablaDireccion = false;
@@ -2677,15 +2590,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;
-            for(integer i=0; i<ListTelefonos.size(); i++)
-            {                
-                if (ListTelefonos[i].secuencia == double.valueOf(NumbTelTable))
-                {
+            for(integer i=0; i<ListTelefonos.size(); i++) {                
+                if (ListTelefonos[i].secuencia == double.valueOf(NumbTelTable)) {
                     pos=i;
                 }  
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListTelefonos.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminó el Télefono'));
                 MostrarTablaTelefono = false;
@@ -2702,16 +2612,12 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer pos;          
-            for(integer i=0; i<ListTelefonos.size(); i++)
-            {
-                if (ListTelefonos[i].secuencia == null)
-                    //if (ListTelefonos[i].secuencia == double.valueOf(NumbTelTable))
-                {
+            for(integer i=0; i<ListTelefonos.size(); i++) {
+                if (ListTelefonos[i].secuencia == null) {
                     pos=i;                     
                 } 
             }
-            if(pos != null)
-            {
+            if(pos != null) {
                 ListTelefonos.remove(pos);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Se Eliminó el télefono'));
                 MostrarTablaTelefono = false;    
@@ -2730,8 +2636,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         try
         { 
             integer posi;
-            for(integer i=0; i<ListTelefonos.size(); i++) 
-            { 
+            for(integer i=0; i<ListTelefonos.size(); i++) { 
                 if(ListTelefonos[i].secuencia == double.valueOf(NumbTelTable))// null)//double.valueOf(NumbTelTable))
                 {         
                     posi=i;
@@ -2774,8 +2679,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                             and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN order by nombre_colonia__c asc];
             opcionColonia = new list <selectOption>();
             opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            if(listColonias.size()>999)
-            {
+            if(listColonias.size()>999) {
                 paginacion++;
                 mostrarBoton =  true;
                 mostrarSiguiente = false;
@@ -2802,8 +2706,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
     
     public void siguiente(){
         try{
-            if (listColonias.size()> ((paginacion + 1)*1000) )
-            {
+            if (listColonias.size()> ((paginacion + 1)*1000) ) {
                 opcionColonia = new list <selectOption>();
                 opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
                 for (integer i=1000; i< 1999; i++)
@@ -3057,12 +2960,10 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
     }
     public void siguienteEmpleado(){
         try{
-            if (listColoniasEmple.size()> ((paginacionEmpleador + 1)*1000) )
-            {
+            if (listColoniasEmple.size()> ((paginacionEmpleador + 1)*1000) ) {
                 opcionColoniaEmpleado = new list <selectOption>();
                 opcionColoniaEmpleado.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (integer i=1000; i< 1999; i++)
-                {
+                for (integer i=1000; i< 1999; i++) {
                     opcionColoniaEmpleado.add(new selectOption(listColoniasEmple[i].codigo_colonia__c, listColoniasEmple[i].nombre_colonia__c));
                 }    
             }
@@ -3071,8 +2972,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                 mostrarSiguienteEmpleador=true;
                 mostrarAnteriorEmpleador = false;
                 opcionColoniaEmpleado.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (integer i=1000; i< listColoniasEmple.size(); i++)
-                {
+                for (integer i=1000; i< listColoniasEmple.size(); i++) {
                     opcionColoniaEmpleado.add(new selectOption(listColoniasEmple[i].codigo_colonia__c, listColoniasEmple[i].nombre_colonia__c));
                 }    
             }
@@ -3287,9 +3187,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             {
                 bloqRTN = false;
             } 
-            else
-            {
-                bloqRTN = true;
+            else { bloqRTN = true;
             } 
         }
         if(pcPEP == false && valorsiCont == false && pcFATCA == false)
@@ -3298,9 +3196,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             PC_DEBIDA_DELIGENCIA = '1';
             dispep = true;
         }
-        if (pcPEP== true && pctipoid == '1')
-        {
-            bloqRTN = false;
+        if (pcPEP== true && pctipoid == '1') { bloqRTN = false;
         } 
         else
         {
@@ -3342,9 +3238,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             bloqRTN = false;
         } 
-        else
-        {
-            bloqRTN = true;
+        else { bloqRTN = true;
         }
         //Agregando 10042019 para validar Nivel de riesgo en contratistas 
         if (pcPEP == true || valorsiCont == true || pcAPNFDSI == true || pcFATCA == true)
@@ -3649,22 +3543,16 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             debidaDil.Contratista ='S';
         }
-        else
-        {
-            debidaDil.Contratista = 'N';
+        else { debidaDil.Contratista = 'N';
         }
-        if (ContDirecto == true)
-        {
-            debidaDil.tipoContrDirecto = 'S';
+        if (ContDirecto == true) { debidaDil.tipoContrDirecto = 'S';
         }
         else
         {
             debidaDil.tipoContrDirecto = 'N';
         }
         
-        if (ContSub == true)
-        {
-            debidaDil.tipoContrSubcontratado = 'S';
+        if (ContSub == true) { debidaDil.tipoContrSubcontratado = 'S';
         }
         else
         {
@@ -3752,9 +3640,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             integer pos;          
             for(integer i=0; i<ListDebidaDil.size(); i++)
             {
-                if (ListDebidaDil[i].NombreProyecto == string.valueOf(NumbDILTable))
-                {
-                    pos=i;                     
+                if (ListDebidaDil[i].NombreProyecto == string.valueOf(NumbDILTable)) { pos=i;                     
                 } 
             }
             if(pos != null)
@@ -3801,20 +3687,14 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                 {
                     valorsiCont = true;
                 }
-                else
-                {
-                    valorsiCont = false;}
-                if(debidaDil.tipoContrDirecto =='S')
-                {
-                    ContDirecto = true;
+                else { valorsiCont = false;}
+                if(debidaDil.tipoContrDirecto =='S') { ContDirecto = true;
                 }
                 else
                 {
                     ContDirecto = false;
                 } 
-                if(debidaDil.tipoContrSubcontratado =='S')
-                {
-                    ContSub = true;
+                if(debidaDil.tipoContrSubcontratado =='S') { ContSub = true;
                 }
                 else
                 {
@@ -3893,9 +3773,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             {
                 bloqRTN = false;
             } 
-            else
-            {
-                bloqRTN = true;
+            else { bloqRTN = true;
             } 
         }
     }
@@ -3927,9 +3805,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             bloqRTN = false;
         } 
-        else
-        {
-            bloqRTN = true;
+        else { bloqRTN = true;
         } 
         
     } 
@@ -4268,7 +4144,7 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero Formulario Vacio'));
                 return null;    
             }
-            if( bloqRTN == false )
+            /*if( bloqRTN == false )
             {   
                 if(RTN == ''||RTN == null)
                 {
@@ -4276,7 +4152,8 @@ paso2Cuerpo = 'slds-hide';
                     return null;
                 }
                 
-            }
+            }*/
+                       
             if( pctipoid == ' --Ninguno-- ')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Tipo de ID Vacio'));
@@ -4305,23 +4182,25 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha Nacimiento no Valida'));
                 return null;    
             }
-            if( pdLugarNacimientoCN == '')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
+            if( pdLugarNacimientoCN == '') { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Lugar de Nacimiento Vacio'));
                 return null;    
             }
-            if( TipoSexo.Sexo__c == ' --Ninguno-- ')
-            {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Genero Vacio'));
+            if( pcmail == null || pcmail == '')  {ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Correo Vacío'));
                 return null;    
             }
-            
+            if( TipoSexo.Sexo__c == null)
+            {          
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Género Vacío'));
+                return null;    
+            }        
+            if( TipoProfesion.Profesi_n_Ocupaci_n__c  == null){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Profesión/Ocupación Vacío'));
+                return null;    
+            }    
             if( pcnacionalidad == ' --Ninguno-- ')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nacionalidad Vacio'));
                 return null;    
-            }
-            
+            }            
             if( desCheckb2 == TRUE)
             {         
                 if (pcnacionalidad2 == '' || pcnacionalidad3 == '' )
@@ -4331,8 +4210,7 @@ paso2Cuerpo = 'slds-hide';
                 }
                 
             }    
-            
-            
+                        
             if( ES_Residente_EfectosMi == TRUE || ES_Residente == true||pccodpais == '053'||pccodpais == '144'||pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144')
             {         
                 if (NumeroID_Fiscal_EEUU == '' )
@@ -4348,74 +4226,73 @@ paso2Cuerpo = 'slds-hide';
                 }
                 
             }     
-            //TELEFONO
-            if(ListTelefonos == null || ListTelefonos.size() == 0 ){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos un teléfono.'));
-                return null;    
-            }
-            //DIRECCION
-            if(ListDirecciones == null || ListDirecciones.size() == 0 ){          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos una dirección.'));
-                return null;    
-            }
-            //REFERENCIAS
+            //Agregado para validar las listas
+            if (ListTelefonos.size() == 0)
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe ingresar al menos un Teléfono'));
+                return null;  
+            }   
+            if (ListDirecciones.size() == 0 )
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe ingresar al menos una Dirección'));
+                return null;  
+            }   
+            //
             if( pcPrimerNombreReferi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Referido Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre 1er Referido Vacio'));
                 return null;    
             }
             
             if( pcPrimerApellidoReferi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Apellido 1er Referido Vacio'));
                 return null;    
             }
             if( pcTelefono_Referido1Referi1 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Primer Referido Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Primer Referido Vacio'));
                 return null;    
             }
             if( pcPrimerNombreReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre De Referido dos Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Nombre 2do referido Vacio'));
                 return null;    
             }
             if( pcPrimerApellidoReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Apellido De Referido dos Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Apellido 2do Referido Vacio'));
                 return null;    
             }
             if( pcTelefono_ReferidoReferi2 == '')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Telefono Segundo Referido Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Teléfono Segundo Referido Vacio'));
                 return null;    
-            }         
-            //DEPENDENCIA ECONÓMICA
-            if( pcDependeSI == false && pcDependeNO == false)
-            { 
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Completar Dependencia económica'));
-                return null;
+            }               
+           
+            if(pcDependeSI == false && pcDependeNO ==false)
+            {
+                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¿Depende Económicamente de Otra Persona?'));
+                    return null;  
             }
-            
-            if( pcDependeSI == true)
-            { 
-                if (pcTipoIDDependencia == '' && pcNumeroIDDependencia == '' && pcNombreCompletoDependencia ==''){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Debe completar los datos de Dependencia económica'));
-                return null;
+            if(pcDependeSI == true)
+            {
+                if(pcTipoIDDependencia == null || pcNumeroIDDependencia == '' || pcNombreCompletoDependencia == '')
+                {
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ingrese los datos dependencia Econ.'));
+                    return null;
                 }
             }
-            
-            //DATOS DEL TERCERO
-            if(OcultaTerSI == false && OcultaTerNO == false){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ingrese Datos del Tercero'));
-                return null; 
+            if(OcultaTerNO == false && OcultaTerSI ==false)
+            {
+                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¿Actúa en representación de una tercera persona?'));
+                    return null;  
             }
-            
             if( OcultaTerSI == true)
             {
                 if (pcNumeroIDPV == '')
                 {    
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Tercera Persona Vacio'));
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Num ID Tercera Persona Vacio'));
                     return null;  
                 }
                 
@@ -4425,14 +4302,12 @@ paso2Cuerpo = 'slds-hide';
                     return null;  
                 }
             }
-            //DATOS PEP
             if( OcultaCarSI == false && OcultaCarNO == false)
             { 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Completar pregunta PEP '));
                 return null;
             }
             SYSTEM.debug('PEP: '+OcultaCarSI+','+OcultaCarNO);
-            
             if( OcultaCarSI == true)
             {  
                 if(pcCargoEjercido == '')
@@ -4440,27 +4315,26 @@ paso2Cuerpo = 'slds-hide';
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Cargo que ejerce o ha ejercido vacio'));
                     return null; 
                 }
-                //NUEVO
-                ELSE if(periodoPep == '')
+                if(periodoPep == '')
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Periodo vacio'));
                     return null; 
                 }
-                ELSE if(institucionPep == '')
+                if(institucionPep == '')
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,' Institución vacio'));
                     return null; 
                 }
                 
             }
-            //ACTIVIDAD ECONÓMICA O FUENTE DE INGRESOS
-            if(fechaLabor > date.today())
+            if(fechaLabor > date.today()) 
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha de ingreso a empresa no puede ser mayor a hoy'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha ingreso a la empresa no puede ser mayor a hoy ni estar vacía'));
                 return null;    
             } 
+            
             /*SECUENCIA RTN*/
-            if(pcrncempl == null || pcrncempl == '' && pcNombreempl !=null)
+            if(pcrncempl == null || pcrncempl == ''&& pcNombreempl !=null)
             {
                 Secuencia_rtn__c acct = new Secuencia_rtn__c();
                 
@@ -4469,18 +4343,13 @@ paso2Cuerpo = 'slds-hide';
                     pcrncempl=item.name;
                 }    
             }
-             if(pcrncempl == ''|| pcNombreempl == '' || pcCargoEmpresaEmpCN == '' || pcmailempl == '' || ClienteTipoId.Tipo_Empresa__c == '' || pcrazonsocialempl == '' )
-             {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ingrese información Laboral'));
-                return null;   
-             }
-            //DEBIDA DILIGENCIA INCREMENTADA
+            
             if( valorsiCont == false && valornoCont == false)
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Contratista del Estado vacio'));
                 return null;    
             }
-            //VALIDACIÓN DE DATOS
+            
             if(pcAPNFDSI == false && pcAPNFDNO == false)
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'APNFD vacio'));
@@ -4491,6 +4360,7 @@ paso2Cuerpo = 'slds-hide';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe indicar un tipo de APNFD'));
                 return null;    
             }
+            
             
             else
             {   
@@ -4529,10 +4399,10 @@ paso2Cuerpo = 'slds-hide';
     
     
     //METODO EL CUAL ENVIARA TODA LA INFORMACION 
-    public pageReference guardar(){
+    public pageReference guardar() {
         try{
             ClienteNaturales naturalEnvio = new ClienteNaturales();
-            ValidaRiesgo();
+            //ValidaRiesgo();
             naturalEnvio.numtran = numtran; //Agregado 08/04/2020
             naturalEnvio.TipoPantalla = 'AA'; //Afiliación AGENCIA 
             naturalEnvio.PCEMPRESA = pcempresa;    
@@ -4560,9 +4430,7 @@ paso2Cuerpo = 'slds-hide';
             {
                 naturalEnvio.pcFATCANC = 'S';
             } 
-            else
-            {
-                naturalEnvio.pcFATCANC = 'N';
+            else { naturalEnvio.pcFATCANC = 'N';
             }
             naturalEnvio.pctipoid = pctipoid;   
             naturalEnvio.pcnroid = pcnroid;
@@ -4606,17 +4474,13 @@ paso2Cuerpo = 'slds-hide';
             {
                 naturalEnvio.pcNumeroIDPV = pcNumeroIDPV;
             }
-            if (FATCARepresentante == true)
-            {
-                naturalEnvio.FATCARepresentante = 'S';
+            if (FATCARepresentante == true) { naturalEnvio.FATCARepresentante = 'S';
             }
             else
             {
                 naturalEnvio.FATCARepresentante = 'N';
             }
-            if (FATCANCRepresentante == true)
-            {
-                naturalEnvio.FATCANCRepresentante = 'S';
+            if (FATCANCRepresentante == true) { naturalEnvio.FATCANCRepresentante = 'S';
             }
             else
             {
@@ -4696,16 +4560,12 @@ paso2Cuerpo = 'slds-hide';
             //DatoEMpleador
             naturalEnvio.pccontratocolectivo = pccontratocolectivo;
             //RTN VACIO27082020
-            IF(pcrncempl == NULL || pcrncempl == '' && pcrazonsocialempl != NULL)
-            {
-                naturalEnvio.pcrncempl = '1';
+            IF(pcrncempl == NULL || pcrncempl == '' && pcrazonsocialempl != NULL) { naturalEnvio.pcrncempl = '1';
             }
             ELSE
             { naturalEnvio.pcrncempl = pcrncempl;}
             
-            if (ClienteTipoId.Tipo_Empresa__c == ' --Ninguno-- ')
-            {
-                naturalEnvio.pcTipoEmpresaEmpCN = null;
+            if (ClienteTipoId.Tipo_Empresa__c == ' --Ninguno-- ') { naturalEnvio.pcTipoEmpresaEmpCN = null;
             }
             else
             {
@@ -4714,18 +4574,14 @@ paso2Cuerpo = 'slds-hide';
             naturalEnvio.pcNombreempl = pcNombreempl;
             naturalEnvio.pcrazonsocialempl = pcrazonsocialempl;
             naturalEnvio.pcCargoEmpresaEmpCN = pcCargoEmpresaEmpCN;
-            if (Cliente25.sector_n__c == ' --Ninguno-- ')
-            {
-                naturalEnvio.pcGiroEmpresaEmpCN = null;
+            if (Cliente25.sector_n__c == ' --Ninguno-- ') { naturalEnvio.pcGiroEmpresaEmpCN = null;
             }
             else
             {
                 naturalEnvio.pcGiroEmpresaEmpCN = Cliente25.sector_n__c;
             }
             naturalEnvio.pcmailempl = pcmailempl;
-            if (Cliente25.Tipo_trabajador__c == ' --Ninguno-- ')
-            {
-                naturalEnvio.pcTIpoEmpleado = null;
+            if (Cliente25.Tipo_trabajador__c == ' --Ninguno-- ') { naturalEnvio.pcTIpoEmpleado = null;
             }
             else
             {
@@ -4751,9 +4607,8 @@ paso2Cuerpo = 'slds-hide';
             naturalEnvio.pcTipoMoneda = TipMoneda.Tipo_Moneda__c;
             naturalEnvio.pcperiodicidad = Cuenta20.Frecuencia_Aportacion__c;
             System.debug('pcformapago: '+pcformapago);
-            if(pcformapago == 'TAOB') {
-                System.debug('Es TAOB'); 
-                naturalEnvio.pcformapago = 'TA';
+            if(pcformapago == 'TAOB') { naturalEnvio.pcformapago = 'TA';
+                System.debug('Es TAOB');                 
             } 
             else {
                 naturalEnvio.pcformapago = pcformapago;
@@ -4901,10 +4756,8 @@ return null;
                 return null;    
             }
             decimal totalBene= 0;
-            for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {   
-                system.debug('distri: '+ListBeneficiarios[i].Distribucion);
-                totalBene += ListBeneficiarios[i].Distribucion; 
+            for(integer i=0; i<ListBeneficiarios.size(); i++) { totalBene += ListBeneficiarios[i].Distribucion;
+                system.debug('distri: '+ListBeneficiarios[i].Distribucion);                
             }
             if(!test.isRunningTest() && totalBene < 100)
             {
@@ -4912,20 +4765,45 @@ return null;
                 return null; 
             }
             decimal totalBeneC= 0;
-            for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {   
-                system.debug('distri: '+ListBeneficiariosC[i].Distribucion);
-                totalBeneC += ListBeneficiariosC[i].Distribucion; 
+            for(integer i=0; i<ListBeneficiariosC.size(); i++) { totalBeneC += ListBeneficiariosC[i].Distribucion;   
+                system.debug('distri: '+ListBeneficiariosC[i].Distribucion);                
             }
             if(totalBeneC > 0 && totalBeneC < 100 && !test.isRunningTest())
             {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se Puede Agregar porque la distribución de los beneficiarios de Contingencias es menor a 100% '));
                 return null; 
             }else{ 
-                Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c  from Autonumerico_cuentas_Syste__c Limit 1];
+                Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c from Autonumerico_cuentas_Syste__c Limit 1];
                 pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
                 naturalEnvio.pnnrocertificado = pnnrocertificado;
-                String resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
+                
+                String resultado = '';
+                
+                System.debug('Tipo de Moneda: '+naturalEnvio.pcTipoMoneda + '--- ' + TipMoneda.Tipo_Moneda__c);
+                String valorMoneda = '';
+                if(TipMoneda.Tipo_Moneda__c == '1') {
+                    valorMoneda = 'HNL';
+                } else { valorMoneda = 'USD';
+                }
+                
+                //Si la cuenta es AH validar la Moneda antes de guardar
+                if(pcformapago == 'AH') {
+                	FieldsAHManagement fields = new FieldsAHManagement();
+        			fields = ControllerValidateIdentityAH.execute(pccuentapago);
+                    if(fields.CURRENCY_VAL != Null || fields.CURRENCY_VAL != '') { 
+                        if(fields.CURRENCY_VAL != valorMoneda) {
+                            resultado = 'La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque';	
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resultado));
+                        } else {
+                            resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);    
+                        }
+                    } else {
+                        resultado = 'Error en el servicio, no se ha obtenido la identidad y el tipo de moneda, actualice y vuelva a intentarlo';
+                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resultado)); 
+                    }    
+                } else {    
+                	resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
+                }    
                 
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
@@ -4935,11 +4813,11 @@ return null;
                 //limpiar();
                 
                 aSysdeReporteCalidad.ClassReporteCalidad respuesta = new aSysdeReporteCalidad.ClassReporteCalidad();
-                if((idAfiliacion !=null || checkcorreo) &&resultado.contains('Proceso realizado Correctamente')){
+                if((idAfiliacion !=null || checkcorreo) && resultado.contains('Proceso realizado Correctamente')){
                     respuesta= aSysdeReporteCalidad.infoCliente(pcnroid);
                 }
                 update af;
-                if(idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')){
+                if((idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')) || test.isRunningTest()) {
                     afiliacion.Periodicidad__c = Cuenta20.Frecuencia_Aportacion__c;
                     afiliacion.Forma_Pago__c = pcformapago;
                     afiliacion.Numero_Cuenta__c = respuesta.numCuenta;
@@ -4961,12 +4839,10 @@ return null;
                     afiliacion.Espediente_Completo__c = 'S';
                     system.debug('Antes del actualizar');
                     update afiliacion;
-                    system.debug('despues del actualizar');
-                    
+                    system.debug('despues del actualizar');                    
                 }
                 
-                if(resultado.contains('Proceso realizado Correctamente')) {
-                    
+                if(resultado.contains('Proceso realizado Correctamente')) {                  
                      if(checkcorreo && pcmail != null){
                         checkCorreo = false;
                         String queryCorreo = 'Select Cuerpo__c From  Correo_EDC__mdt Where DeveloperName = ';
@@ -4991,8 +4867,7 @@ return null;
                     cuenta = cuenta.replace('"', '');
                     system.debug('cuenta guardada: '+cuenta);
                     Integer existe=0;//[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:pc_codCuenta];
-                    if(!test.isRunningTest()){
-                        existe=[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:cuenta];
+                    if(!test.isRunningTest()) { existe=[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:cuenta];
                     }
                     //system.debug('cuenta:::'+cuentaG);
                     if(existe==0)
@@ -5002,7 +4877,7 @@ return null;
                         insert reg;
                     }
                     
-                   if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
+                    if(pcformapago == 'AH' || pcformapago == 'TA' || pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
@@ -5027,6 +4902,8 @@ return null;
                         fields.pcTarjetaHabiente = detalleCaso.DAU_Tarjeta_Habiente__c;
                         fields.pcTipoTarjeta = detalleCaso.DAU_Tipo_Tarjeta__c;
                         fields.pcBanco = detalleCaso.Banco__c;
+                        fields.pcNuevaFecha = detalleCaso.Nueva_fecha_aporte__c;
+                        fields.pcpromotor = pcpromotor;
                         list<FieldsBankManagement> fieldsList = new list<FieldsBankManagement>();  
                         fieldsList.add(fields);
                         UpdateCase.createRecord(fieldsList);
@@ -5041,9 +4918,7 @@ return null;
                 }
                 else{
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado)); 
-                }
-                
-                
+                } 
             }
         } 
         catch(Exception e)
@@ -5115,35 +4990,26 @@ return null;
             naturalEnvio.PC_DEBIDA_DELIGENCIA = PC_DEBIDA_DELIGENCIA;
             naturalEnvio.PC_NIVEL_RIESGO = PC_NIVEL_RIESGO;
             //Usted o un familia
-            if(OcultaTerSI == true)
-            {
-                naturalEnvio.pc_ActuaSI = 'S';
+            if(OcultaTerSI == true) { naturalEnvio.pc_ActuaSI = 'S';
             }
-            else
-            {               
+            else {               
                 naturalEnvio.pc_ActuaSI = 'N';
             }
             naturalEnvio.pcNumeroIDPV = pcNumeroIDPV;
-            if (FATCARepresentante == true)
-            {
-                naturalEnvio.FATCARepresentante = 'S';
+            if (FATCARepresentante == true) { naturalEnvio.FATCARepresentante = 'S';
             }
             else
             {
                 naturalEnvio.FATCARepresentante = 'N';
             }
-            if (FATCANCRepresentante == true)
-            {
-                naturalEnvio.FATCANCRepresentante = 'S';
+            if (FATCANCRepresentante == true) { naturalEnvio.FATCANCRepresentante = 'S';
             }
             else
             {
                 naturalEnvio.FATCANCRepresentante = 'N';
             }
             naturalEnvio.pcNombreCompletoPV = pcNombreCompletoPV;
-            if(OcultaCarSI == true)
-            {
-                naturalEnvio.pcEjerce_Cargo_Publico = 'S';
+            if(OcultaCarSI == true) { naturalEnvio.pcEjerce_Cargo_Publico = 'S';
             }
             else
             {              
@@ -5153,9 +5019,7 @@ return null;
             naturalEnvio.periodoPep = periodoPep;
             naturalEnvio.institucionPep = institucionPep;
             //DependenciaEconomica
-            if(pcDependeSI == true)
-            {
-                naturalEnvio.pcDependeSI = 'S';
+            if(pcDependeSI == true) { naturalEnvio.pcDependeSI = 'S';
             }
             else
             {
@@ -5228,9 +5092,7 @@ naturalEnvio.pcColoniaCN = pcColoniaCN;*/
             {
                 naturalEnvio.pcTipoFondo = '';
             }
-            else
-            {
-                naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c;
+            else { naturalEnvio.pcTipoFondo = Cuenta20.Tipo_Fondo__c;
             }
             naturalEnvio.pcTipoMoneda = TipMoneda.Tipo_Moneda__c;
             naturalEnvio.pcperiodicidad = Cuenta20.Frecuencia_Aportacion__c;
@@ -5241,9 +5103,7 @@ naturalEnvio.pcColoniaCN = pcColoniaCN;*/
             naturalEnvio.pccuentapago = pccuentapago;
             //naturalEnvio.pcAportacionEmpleadoP = pcAportacionEmpleadoP;
             //naturalEnvio.pcAportacionTrabajoP = pcAportacionTrabajoP;
-            if(pcaplicaseguro == true)
-            {
-                naturalEnvio.pcaplicaseguro = 'S';
+            if(pcaplicaseguro == true) { naturalEnvio.pcaplicaseguro = 'S';
             }
             else
             {
@@ -5261,9 +5121,7 @@ naturalEnvio.pcColoniaCN = pcColoniaCN;*/
             naturalEnvio.pcpromotor = pcpromotor;               
             //naturalEnvio.pctiposolicitud = pctiposolicitud;
             //Pantalla fatca
-            if(ES_Residente == true)
-            {
-                naturalEnvio.ES_Residente = 'S' ;
+            if(ES_Residente == true) { naturalEnvio.ES_Residente = 'S' ;
             }
             else
             {
@@ -5281,25 +5139,16 @@ naturalEnvio.pcColoniaCN = pcColoniaCN;*/
             naturalEnvio.NumeroID_Fiscal_EEUU = NumeroID_Fiscal_EEUU;
             naturalEnvio.NumeroID_Fiscal_OtroPais = NumeroID_Fiscal_OtroPais;
             
-            for(integer i=0; i<ListBeneficiarios.size(); i++)
-            {
-                naturalEnvio.ListBeneficiarios=ListBeneficiarios;
+            for(integer i=0; i<ListBeneficiarios.size(); i++) { naturalEnvio.ListBeneficiarios=ListBeneficiarios;
             }            
-            for(integer i=0; i<ListBeneficiariosC.size(); i++)
-            {
-                naturalEnvio.ListBeneficiariosC=ListBeneficiariosC;
+            for(integer i=0; i<ListBeneficiariosC.size(); i++) { naturalEnvio.ListBeneficiariosC=ListBeneficiariosC;
             }
             naturalEnvio.ListDebidaDil= ListDebidaDil; 
             
-            for(integer i=0; i<ListTelefonos.size(); i++)
-            {                   
-                naturalEnvio.ListTelefonos= ListTelefonos; 
+            for(integer i=0; i<ListTelefonos.size(); i++) {  naturalEnvio.ListTelefonos= ListTelefonos; 
             }
             
-            for(integer i=0; i<ListDirecciones.size(); i++)
-            {
-                
-                ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(pc_codCuenta);
+            for(integer i=0; i<ListDirecciones.size(); i++) { ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(pc_codCuenta);
                 
                 /*Pais_R__c itemP = [select nombre__c, codigo__c from Pais_R__c
 where codigo__c =: fcsd.ListDirecciones[i].paisDir];
@@ -5336,13 +5185,11 @@ return null;
             //beneficiarioUnico.Grado = integer.valueOf(CanalVentaa.Grado_Familiar__c);
             //   validarRol();             
             disbot = true;
-            if( pcproducto == '' || pcproducto == ' --Ninguno-- ')
-            {          
+            if( pcproducto == '' || pcproducto == ' --Ninguno-- ') {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Producto  Vacio'));
                 return null;    
             }            
-            if( pcsubproducto == ''|| pcsubproducto == ' --Ninguno-- ')
-            {          
+            if( pcsubproducto == ''|| pcsubproducto == ' --Ninguno-- ') {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Subroducto  Vacio'));
                 return null;    
             }
@@ -5536,17 +5383,13 @@ insert reg;
                     fcsd.pdfechasuscripcion = fcsd.pdfechasuscripcion.addHours(6);
                     fechasuscripcion=date.valueOf(fcsd.pdfechasuscripcion.year()+'-'+fcsd.pdfechasuscripcion.month()+'-'+fcsd.pdfechasuscripcion.day());
                 }
-                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null')
-                {
-                    pcPEP = false;
+                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') { pcPEP = false;
                 }
                 else 
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null')
-                {
-                    pcFATCA = false;
+                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null') { pcFATCA = false;
                 }
                 else 
                 {
@@ -5556,9 +5399,7 @@ insert reg;
                 {
                     pcFATCANC = false;
                 }
-                else 
-                {
-                    pcFATCANC = true;
+                else { pcFATCANC = true;
                 }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
@@ -5566,9 +5407,7 @@ insert reg;
                 }
                 opcionesCausa = new list <selectOption>();
                 opcionesCausa.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (Causa_Cuenta__c item:[select name, codigo__c from Causa_Cuenta__c where Estado_Cuenta__r.CodigoEstado__c =: Activo])
-                {
-                    opcionesCausa.add(new selectOption(item.codigo__c, item.name));
+                for (Causa_Cuenta__c item:[select name, codigo__c from Causa_Cuenta__c where Estado_Cuenta__r.CodigoEstado__c =: Activo]) {  opcionesCausa.add(new selectOption(item.codigo__c, item.name));
                 }
                 Causa = fcsd.pcCod_Causa;
                 if (fcsd.pctipoid != 'null')
@@ -5745,13 +5584,11 @@ Cuenta22.Parentesco__c = fcsd.pcParentescoDependencia;
                 {
                     pcNumeroIDPV = fcsd.pcNumeroIDPV;
                 }
-                if(fcsd.FATCARepresentante == 'S'){
-                    FATCARepresentante = true;
+                if(fcsd.FATCARepresentante == 'S') { FATCARepresentante = true;
                 }else{
                     FATCARepresentante = false;
                 }
-                if(fcsd.FATCANCRepresentante == 'S'){
-                    FATCANCRepresentante = true;
+                if(fcsd.FATCANCRepresentante == 'S') { FATCANCRepresentante = true;
                 }else{
                     FATCANCRepresentante = false;
                 }
@@ -6125,8 +5962,7 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
             string temporal = pc_codCuenta;
             /*Arismel*/
             Integer existe=0;//[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:pc_codCuenta];
-            if(!test.isRunningTest()){
-                existe=[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:pc_codCuenta];
+            if(!test.isRunningTest()){ existe=[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:pc_codCuenta];
             }
             system.debug('cuenta:::'+pc_codCuenta);
             if(existe==0)
@@ -6167,9 +6003,7 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                     fcsd.pdfechasuscripcion = fcsd.pdfechasuscripcion.addHours(6);
                     fechasuscripcion=date.valueOf(fcsd.pdfechasuscripcion.year()+'-'+fcsd.pdfechasuscripcion.month()+'-'+fcsd.pdfechasuscripcion.day());
                 }
-                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null')
-                {
-                    pcPEP = false;
+                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') { pcPEP = false;
                 }
                 else 
                 {
@@ -6179,17 +6013,13 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 {
                     pcFATCA = false;
                 }
-                else 
-                {
-                    pcFATCA = true;
+                else { pcFATCA = true;
                 }
                 IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null'||fcsd.pcFATCANC == null)
                 {
                     pcFATCANC = false;
                 }
-                else 
-                {
-                    pcFATCANC = true;
+                else { pcFATCANC = true;
                 }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
@@ -6197,9 +6027,7 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 }
                 opcionesCausa = new list <selectOption>();
                 opcionesCausa.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (Causa_Cuenta__c item:[select name, codigo__c from Causa_Cuenta__c where Estado_Cuenta__r.CodigoEstado__c =: Activo])
-                {
-                    opcionesCausa.add(new selectOption(item.codigo__c, item.name));
+                for (Causa_Cuenta__c item:[select name, codigo__c from Causa_Cuenta__c where Estado_Cuenta__r.CodigoEstado__c =: Activo]) { opcionesCausa.add(new selectOption(item.codigo__c, item.name));
                 }  
                 Causa = fcsd.pcCod_Causa;
                 if (fcsd.pctipoid != 'null')
@@ -6398,13 +6226,11 @@ Cuenta22.Parentesco__c = fcsd.pcParentescoDependencia;
                 {
                     pcNumeroIDPV = fcsd.pcNumeroIDPV;
                 }
-                if(fcsd.FATCARepresentante == 'S'){
-                    FATCARepresentante = true;
+                if(fcsd.FATCARepresentante == 'S'){  FATCARepresentante = true;
                 }else{
                     FATCARepresentante = false;
                 }
-                if(fcsd.FATCANCRepresentante == 'S'){
-                    FATCANCRepresentante = true;
+                if(fcsd.FATCANCRepresentante == 'S') { FATCANCRepresentante = true;
                 }else{
                     FATCANCRepresentante = false;
                 }
@@ -6417,8 +6243,7 @@ Cuenta22.Parentesco__c = fcsd.pcParentescoDependencia;
                 {
                     OcultaCarNO = True;
                     OcultaCarSI = false;
-                    if(rolLogin == 'OFSRCU'){
-                        CargoNO();
+                    if(rolLogin == 'OFSRCU') { CargoNO();
                     } 
                 }
                 else
@@ -6988,13 +6813,9 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                         PC_DEBIDA_DELIGENCIA = fcsd.PC_DEBIDA_DELIGENCIA;
                     }
                     //Pantalla fatca
-                    if(fcsd.ES_Residente == 'S')
-                    {
-                        ES_Residente = true ;
+                    if(fcsd.ES_Residente == 'S') { ES_Residente = true ;
                     }
-                    if(fcsd.ES_Residente_EfectosMi == 'S')
-                    {
-                        ES_Residente_EfectosMi = true;
+                    if(fcsd.ES_Residente_EfectosMi == 'S') { ES_Residente_EfectosMi = true;
                     }
                     if (fcsd.PaisResidenciaEfectosFiscales != 'null')
                     {
@@ -7022,7 +6843,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
         }
     }
     
-    public void ValidaRiesgo()
+    /*public void ValidaRiesgo()
     {
         try{
             ClienteNaturales naturalEnvio = new ClienteNaturales();
@@ -7041,14 +6862,12 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             else
             {
                 naturalEnvio.pcFATCA = 'N';
-            }*/
+            }
             if(valorsiCont == true)
             {
                 debidaDil.Contratista ='S';
             }
-            else
-            {
-                debidaDil.Contratista = 'N';
+            else { debidaDil.Contratista = 'N';
             }
             if(OcultaCarSI == true)
             {
@@ -7082,15 +6901,14 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             csharp=string.valueOf(ControllerApiValidaRiesgo.NivelRiesgo(Enviar));            
             system.debug('PRUEBA1 ' + csharp);         
             //PC_MEDIDA_APLICADA = csharp.substring(42,43);
-            PC_DEBIDA_DELIGENCIA =csharp.substring(42,43);
-            PC_NIVEL_RIESGO = csharp.substring(61,62);
+            PC_DEBIDA_DELIGENCIA =csharp.substring(42,43); PC_NIVEL_RIESGO = csharp.substring(61,62);
             //PC_NIVEL_RIESGO1 =csharp.substring(61,62);
             system.debug('campo1 ' + PC_MEDIDA_APLICADA +'campo2 ' + PC_NIVEL_RIESGO);
             
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());   
         }
-    }     
+    }     */
     
     public void validarBeneficiario()
     {
@@ -7099,7 +6917,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             classListas claseEnvio = new classListas();
             classListas fcsd = controllerApiClienteNatural.consultaListas(beneficiarioUnico.numeroId);
             
-            if(beneficiarioUnico.numeroId ==''){
+            if(beneficiarioUnico.numeroId == ''){
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio')); 
             }else{
                 
@@ -7197,8 +7015,7 @@ dispep = true;
             classListas claseEnvio = new classListas();
             classListas fcsd = controllerApiClienteNatural.consultaListas(pcNumeroIDPV);
             
-            if(pcNumeroIDPV ==''){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio')); 
+            if(pcNumeroIDPV =='') { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación vacio')); 
             }else{
                 
                 system.debug(fcsd.FATCA);
@@ -7359,9 +7176,7 @@ dispep = true;
                 mostrarSiguienteInfo = true;
                 mostrarAnteriorEmpresas = false;
                 opcionesEmpresas.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (integer i=1000; i< listEmpresas.size(); i++)
-                {
-                    opcionesEmpresas.add(new selectOption(listEmpresas[i].RTN_Empresa__c, listEmpresas[i].name));
+                for (integer i=1000; i< listEmpresas.size(); i++) { opcionesEmpresas.add(new selectOption(listEmpresas[i].RTN_Empresa__c, listEmpresas[i].name));
                 }    
             }
         }

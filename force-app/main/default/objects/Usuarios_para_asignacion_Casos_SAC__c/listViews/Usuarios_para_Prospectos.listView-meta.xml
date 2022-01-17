@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Usuarios_para_Prospectos</fullName>
+    <columns>NAME</columns>
+    <columns>Usuario__c</columns>
+    <columns>Objeto__c</columns>
+    <columns>Zona__c</columns>
+    <columns>Ultimo_Caso_Asignado__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Objeto__c</field>
+        <operation>equals</operation>
+        <value>Lead</value>
+    </filters>
+    <label>Usuarios para Prospectos</label>
+</ListView>

@@ -35,8 +35,6 @@ public class TestClasesutilizadas {
         reversion3.rendimiento = 32;
         reversion3.bitacora =null;
         
-        reversion3.bitacora =null;
-        
         classReversiones.classRendimiento reversion4= new classReversiones.classRendimiento();
         reversion4.cuenta ='';
         reversion4.fechaDesde = datetime.now();
@@ -118,7 +116,6 @@ public class TestClasesutilizadas {
         reversion8.montoPorSaldo=12;
         reversion8.montoRendimiento=12;
         reversion8.tipoSaldo='';
-        reversion8.rezago = '';
         
         TasaCambio.traertasacambio(null);
         

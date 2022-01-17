@@ -17,7 +17,7 @@ public class ControllerValidateIdentityAH {
             string respuesta = '';
                       
             HttpResponse response = http.send(request);
-            respuesta = response.getBody();
+            respuesta = response.getBody();   
             system.debug('Resultado: '+respuesta);
             
             if(response.getStatusCode() == 200) { 

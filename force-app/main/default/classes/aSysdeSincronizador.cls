@@ -1,7 +1,7 @@
 public class aSysdeSincronizador {
     
     public static final String URL = claseUtilPlanillas.urlSysde('Test');
-    //public static final String URL = 'http://190.5.68.49:9090/';
+    //public static final String URL = 'http://190.5.68.49:9090/';;
     
     @future(callout=true)
     public static void actializarClientes (string idCliente) {
@@ -515,21 +515,16 @@ public class aSysdeSincronizador {
                         
                         if(item.cuentas != null){
                             for(Cuentas itemCuentas : item.cuentas){
-                                listCuentas.add(new cuentas__C(
-                                    Cliente__r = new Account(cliente_unico_banco__C = item.numeroClienteBanco) , 
-                                    Name = itemCuentas.Scuenta, 
-                                    Codigo__C =itemCuentas.scuenta,
-                                    Producto__r = new producto__C (codigo__C = itemCuentas.producto), 
-                                    Subproducto__r = new subproducto__C(codigo__C = itemCuentas.subProducto),
-                                    Activo__C = itemCuentas.cuentaActiva != 'I' ? true : false,
-                                    Tipo_fondo__C = itemCuentas.fondo == null || itemCuentas.fondo.trim() =='' ? 'I' : itemCuentas.fondo  ,
-                                    Fondo_Inversion__c = itemCuentas.fondoInversion, 
-                                    causa__C = itemCuentas.causa, 
-                                    fecha_apertura__C = convertStringDate(itemCuentas.fechaApertura),
-                                    Frecuencia_Aportacion__c  = itemCuentas.frecuenciaAporte,
-                                    Monto_aporte__c = convertStringDecimal(itemCuentas.montoAporte), forma_aportacion__C = itemCuentas.formaAporte, Seguro_Vida__c = itemCuentas.seguroVida == 'S' ? true : false,
-                                    Codigo_Barra__c = itemCuentas.codigoBarra,// tipo_comision__C = itemCuentas.tipoComision, //*Matriz_Comision__c = itemCuentas.matrizComision,
-                                    CurrencyIsoCode = (itemCuentas.producto == '01' || itemCuentas.producto == '03') ? 'HNL' : 'USD' ));
+                                 listCuentas.add(new cuentas__C(
+                                        cliente__r = new Account(cliente_unico_banco__C = item.numeroClienteBanco) , name = itemCuentas.Scuenta, codigo__C =itemCuentas.scuenta,
+                                        producto__r = new producto__C (codigo__C = itemCuentas.producto), subproducto__r = new subproducto__C(codigo__C = itemCuentas.subProducto),
+                                        activo__C = itemCuentas.cuentaActiva != 'I' ? true : false,
+                                        tipo_fondo__C = itemCuentas.fondo == null || itemCuentas.fondo.trim() =='' ? 'I' : itemCuentas.fondo  , Fondo_Inversion__c = itemCuentas.fondoInversion, causa__C = itemCuentas.causa, 
+                                        fecha_apertura__C = convertStringDate(itemCuentas.fechaApertura),
+                                        Frecuencia_Aportacion__c  = itemCuentas.frecuenciaAporte,
+                                        Monto_aporte__c = convertStringDecimal(itemCuentas.montoAporte), forma_aportacion__C = itemCuentas.formaAporte, Seguro_Vida__c = itemCuentas.seguroVida == 'S' ? true : false,
+                                        Codigo_Barra__c = itemCuentas.codigoBarra,// tipo_comision__C = itemCuentas.tipoComision, //*Matriz_Comision__c = itemCuentas.matrizComision,
+                                        CurrencyIsoCode = (itemCuentas.producto == '01' || itemCuentas.producto == '03') ? 'HNL' : 'USD' ));
                                     if(itemCuentas.cuentaColectiva !=null && mapCuentasCo.containsKey(itemCuentas.cuentaColectiva)){
                                         listCuentas[listCuentas.size() -1].cuenta_colectiva2__r = new cuentas__C(codigo__C = itemCuentas.cuentaColectiva);
                                     }

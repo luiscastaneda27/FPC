@@ -6,7 +6,9 @@ trigger TR_TrasladarProspecto on Lead (after insert) {
     String idRecordType = Schema.SObjectType.PreVenta__c.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
     List<PreVenta__c> listPV = new list<PreVenta__c>();
     for (Lead sc: System.Trigger.new) {
-        
+        if(ControllerPromociones3.validarPreventaExistente(sc.FirstName, sc.LastName, sc.Phone)){
+            continue;
+        }
         listPV.add(new PreVenta__c (
             OwnerId =  sc.OwnerId,
             Referido_por__c = sc.Referido_por__c,

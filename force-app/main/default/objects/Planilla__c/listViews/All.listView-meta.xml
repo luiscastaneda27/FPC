@@ -6,5 +6,10 @@
     <columns>Estado2__c</columns>
     <columns>Fecha__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>equals</operation>
+        <value>PLA-0000004828</value>
+    </filters>
     <label>Todos</label>
 </ListView>

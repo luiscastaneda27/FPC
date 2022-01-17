@@ -102,7 +102,7 @@ public class ControllerConstactProject {
     {
         try{
             String queryCorreo = 'Select Cuerpo__c From ConstanContact__mdt Where DeveloperName = '; 
-                queryCorreo += '\'correoo\'';
+                queryCorreo += '\'CartaBienvenida\'';
                 ConstanContact__mdt cuerpoCorreo = dataBase.query(queryCorreo);
                 String cuerpo = cuerpoCorreo.Cuerpo__c;
             
@@ -111,27 +111,24 @@ public class ControllerConstactProject {
             system.debug('listado de correos: '+resultado);
         	OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
         	Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
-        	if (resultado.size() > 0)
-            {
-            	for(integer i=0; i<resultado.size(); i++)
-                {
-                	if((resultado[i].V_FO_Correo != '@' || resultado[i].V_FO_Correo != 'NOTIENE@.HN'))
-                    {
-                        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        mail.setHtmlBody(cuerpo);
-                        mail.setSubject('Te felicitamos por pensar en tu futuro '+  resultado[i].V_NOMBRE + ' ' + resultado[i].V_APELLIDO);
-                        //resultado[i].V_FO_Correo='wendy.alvarado@ficohsa.com';
-                        mail.setToAddresses(new String[] {resultado[i].V_FO_Correo});
-                        mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                        mail.setSaveAsActivity(true);
-                        listCorreo.add(mail);
-                    }
-               	}
-                Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-                system.debug('Correos enviados correctamente: '+results);
-                system.debug('ListaCorreoAenviar' + listCorreo);
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
-           }
+            for(integer i=0; i<resultado.size(); i++){
+                String nombre = resultado[i].V_NOMBRE + ' ' + resultado[i].V_APELLIDO;
+                String correo = resultado[i].V_FO_Correo;
+                if((correo != '@' || correo != 'NOTIENE@.HN'))  {
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    String body = cuerpo.replace('[getDestinatario]', nombre);
+                    mail.setHtmlBody(body);
+                    mail.setSubject('Te felicitamos por pensar en tu futuro '+ nombre);
+                    //resultado[i].V_FO_Correo='wendy.alvarado@ficohsa.com';
+                    mail.setToAddresses(new String[] {correo});
+                    mail.setOrgWideEmailAddressId(owea[0].Id);
+                    mail.setSaveAsActivity(true);
+                    listCorreo.add(mail);
+                }
+            }
+            Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
+            system.debug('Correos enviados correctamente: '+results);
+            system.debug('ListaCorreoAenviar' + listCorreo);
         }
         catch(exception ex)
         {

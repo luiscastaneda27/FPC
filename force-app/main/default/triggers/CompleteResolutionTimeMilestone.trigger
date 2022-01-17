@@ -30,7 +30,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 }     
                 
                 List<Case> lstCase = new List<Case>{};
-                lstCase = [Select Id, Status, AccountId, Account.Name, Account.Identificacion__c, ParentId, Finalizar_SLA__c, Recordtype.Name, RecordType.DeveloperName, DAU_aprobacion__c, Respuesta_desde_Sysde__c, DAU_Identidad__c, Tipo_de_Operacion__c, DAU_llamarSalesforceTarjeta__c, Respuesta_SF_Tarjetas__c from Case Where Id =: caso Limit 1];   
+                lstCase = [Select Id, Status, AccountId, Account.Name, Account.Identificacion__c, ParentId, Finalizar_SLA__c, Recordtype.Name, RecordType.DeveloperName, DAU_aprobacion__c, Respuesta_desde_Sysde__c, DAU_Identidad__c, Tipo_de_Operacion__c, Respuesta_SF_Tarjetas__c from Case Where Id =: caso Limit 1];   
                 List<Detalle_caso__c> lstDetCase = new List<Detalle_caso__c>{};
                 lstDetCase = [Select Id, DAU_Borrar_Cuotas__c, Cuenta__r.Forma_Aportacion__c, Nuevo_canal_aporte__c From Detalle_caso__c Where Caso__c =: lstCase[0].Id];
                 
@@ -87,7 +87,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 
                 //Inicio Creando caso de Cancelación de aporte por retiro total 
                 System.debug('lstCase: '+lstCase); 
-                If(lstCase[0].Recordtype.Name == 'Retiros') {
+                If(lstCase[0].Status == 'Cerrado' && lstCase[0].Recordtype.Name == 'Retiros') {
                     List<Detalle_caso__c> dc = [Select Id,Caso__c,Tipo_retiro__c,Cuenta__c From Detalle_caso__c Where Caso__c =: lstCase[0].Id and Tipo_retiro__c = '52']; 
                     if(!dc.isEmpty()) {
                         List<Cuentas__c> cuentac = [Select Id,Forma_Aportacion__c From Cuentas__c Where Id =: dc[0].Cuenta__c Limit 1];
@@ -112,40 +112,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                         }
                     }
                 }    
-                //Fin Creando caso de Cancelación de aporte por retiro total 
-                
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && (lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null && lstDetCase[0].Nuevo_canal_aporte__c == 'TA') {
-                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
-                    if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'ADI',lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
-                    }    
-                }
-                                               
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A7' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
-                    String Identidad = lstCase[0].DAU_Identidad__c;
-                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
-                    if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'DEC','','');
-                    }    
-                } 
-                
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A4' && lstCase[0].Status == 'Cerrado' && lstCase[0].Respuesta_SF_Tarjetas__c == null) {
-                    String Identidad = lstCase[0].DAU_Identidad__c;
-                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c,Nueva_fecha_aporte__c From Detalle_caso__c where Caso__c In: caso Limit 1];
-                    Date dia = detailCase[0].Nueva_fecha_aporte__c;
-                    if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'MOD',casos[0].Account.Name,String.valueOf(dia.Day()));
-                    }    
-                } 
-                
-                if(lstCase[0].DAU_llamarSalesforceTarjeta__c == true && lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Status == 'Cerrado' /*&& lstCase[0].Respuesta_SF_Tarjetas__c == null*/) {
-                    //Adición
-                    List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c From Detalle_caso__c where Caso__c In: caso Limit 1];
-                    if(!detailCase.isEmpty()) { 
-                    	Salesforce_Tarjetas.processCase(caso,'ADI',lstCase[0].Account.Name,detailCase[0].DAU_Dia_de_pago__c);
-                    }         
-                }
-                
+                //Fin Creando caso de Cancelación de aporte por retiro total     
             }
         }
     }
@@ -162,7 +129,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 }   
                
                 //Start send autoresponse Email to Case (The client exist)
-                List<Case> casos = [Select id,CaseNumber,Tipo_de_Operacion__c,ParentId,DAU_aprobacion__c,RecordTypeId,RecordType.Name,Correo_Electronico__c,Type,Subject,ownerId,Status,SuppliedEmail,Identificacion__c,AccountId,Account.Identificacion__c From Case Where Id =: caseId];
+                List<Case> casos = [Select id,CaseNumber,Tipo_de_Operacion__c,/*CreadoFormaMasiva__c,*/ParentId,DAU_aprobacion__c,RecordTypeId,RecordType.Name,Correo_Electronico__c,Type,Subject,ownerId,Status,SuppliedEmail,Identificacion__c,AccountId,Account.Identificacion__c From Case Where Id =: caseId];
                 //List<User> usuario = [Select Id,Name From User Where Name = 'PortalAutoGestion Usuario invitado al sitio Web'];
                 
                 if(casos[0].Tipo_de_Operacion__c == 'A7' && casos[0].ParentId <> '' && casos[0].DAU_aprobacion__c == true) {
@@ -192,7 +159,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                 //End send autoresponse Email to Case 
                 
                 //Start send autoresponse Email to Case (The client doesn't exist)
-                } else if(casos[0].RecordType.Name == 'Email to Case' && casos[0].AccountId == null) {                                   
+                } else if(casos[0].RecordType.Name == 'Email to Case' && casos[0].AccountId == null /*&& !Casos[0].CreadoFormaMasiva__c*/) {                                   
                     //Start send email
                     OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];        
                     List<EmailTemplate> lstEmailTemplates = [SELECT Id, Name, HtmlValue, Body, Subject from EmailTemplate Where Name = 'F_Caso_Email2Case - Auto-respuesta'];            

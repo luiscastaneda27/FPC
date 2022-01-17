@@ -4,7 +4,6 @@
     <defaultValue>false</defaultValue>
     <description>Bandera para validar si el caso se enviará a SYSDE.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Bandera para validar si el caso se enviará a SYSDE.</inlineHelpText>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>

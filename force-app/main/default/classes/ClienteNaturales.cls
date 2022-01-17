@@ -178,6 +178,9 @@ public  with sharing class ClienteNaturales {
     public date fechaLabor{get;set;}
     public date fechaValida{get;set;}
 
+    public String usuarioActualiza { get; set; }
+    public String usuarioAprueba { get; set; }
+    
     //Lista para mostrar los datos de beneficiarios
     public List<beneficiario> ListBeneficiarios {get;set;}
     public List<beneficiario> ListBeneficiariosC {get;set;}

@@ -78,7 +78,8 @@ trigger CaseDetail on Detalle_caso__c (after Insert, before Update) {
                         }
                     } else if(!prod.isEmpty() && prod[0].CurrencyIsoCode == 'USD') {
                         System.debug('Cuenta en Dólares');
-                        if(((cuentaC[0].Monto_aporte__c - dt[0].Nuevo_monto_aporte__c) >= paramHNL[0].Monto_a_Disminuir__c) && !casoUpdate.isEmpty() && dt[0].Tipo_Operacion__c == 'A2') {  
+                        System.debug('Valores: '+cuentaC[0].Monto_aporte__c+'--'+dt[0].Nuevo_monto_aporte__c+'--'+paramUSD[0].Monto_a_Disminuir__c+'--'+casoUpdate+'--'+dt[0].Tipo_Operacion__c);
+                        if(((cuentaC[0].Monto_aporte__c - dt[0].Nuevo_monto_aporte__c) >= paramUSD[0].Monto_a_Disminuir__c) && !casoUpdate.isEmpty() && dt[0].Tipo_Operacion__c == 'A2') {  
                             casoUpdate[0].DAU_aprobacion__c = false;
                             update casoUpdate[0];
                         }

@@ -153,9 +153,8 @@ public class EstadosDeCuenta {
                 }
 				
 		   }
-           //system.debug('Variable correos: ' + listCorreo);
            Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-           system.debug('Correos enviados correctamente: '+results);
+           //system.debug('Correos enviados correctamente: '+results);
            
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());	
@@ -176,18 +175,17 @@ public class EstadosDeCuenta {
 		system.debug('Entro al REST del EDC');
 		try{
 						
-			classJson envio = new classJson();
-			envio.contenido = JSON.serialize(claseEnvio);
-			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
-			request.setBody(cons);	
-			
-	    		HttpResponse response = http.send(request);
-	    		System.debug('Respuesta de Sysde: '+response.getBody());
-	        	if (response.getStatusCode() == 200) {
-           		
-           		respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
-	        	}       	
+            classJson envio = new classJson();
+            envio.contenido = JSON.serialize(claseEnvio);
+            String cons = 'contenido=' + envio.contenido;
+            system.debug(cons);		
+            request.setBody(cons);	
+            
+            HttpResponse response = http.send(request);
+            System.debug('Respuesta de Sysde: '+response.getBody());
+            if (response.getStatusCode() == 200) {
+               respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
+            }       	
                        
 		}catch(System.CalloutException e){
 			system.debug(e.getMessage());

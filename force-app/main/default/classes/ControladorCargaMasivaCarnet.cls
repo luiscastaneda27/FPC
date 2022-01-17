@@ -115,33 +115,28 @@ global class ControladorCargaMasivaCarnet {
             list<string> OrdenColumnas=encabezado.split(',');
             clientes.remove(0);
             
-            for(integer i=0; i<OrdenColumnas.size(); i++){
-                string ccs;
-                //ccs.contains(str)
-                if(OrdenColumnas[i]!=null && OrdenColumnas[i].trim()!='' && !OrdenColumnas[i].trim().contains('""')){
-                    system.debug('Ordenar: '+OrdenColumnas[i].split('"')[1].Trim());
-                    OrdenColumnas[i]=OrdenColumnas[i].split('"')[1].Trim();
-                    if(OrdenColumnas[i].toUpperCase()=='NOMBRE' || OrdenColumnas[i].toUpperCase()=='NOMBRES'){
-                        nombre=i;
-                    }
-                    if(OrdenColumnas[i].toUpperCase()=='NUM IDENTIDAD' || OrdenColumnas[i].toUpperCase()=='IDENTIFICACION'
-                       || OrdenColumnas[i].toUpperCase()=='IDENTIDAD'
-                       || OrdenColumnas[i].toUpperCase()=='IDENTIFICACIÓN' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIDAD'
-                       || OrdenColumnas[i].toUpperCase()=='NUM IDENTIFICACIÓN' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIFICACIÓN'
-                       || OrdenColumnas[i].toUpperCase()=='NUM IDENTIFICACION' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIFICACION'){
-                           identificacion=i;
-                       }
-                    if(OrdenColumnas[i].toUpperCase()=='APELLIDO' || OrdenColumnas[i].toUpperCase()=='APELLIDOS'){
-                        apellido=i;
-                    }
-                    if(OrdenColumnas[i].toUpperCase()=='CUENTA' || OrdenColumnas[i].toUpperCase()=='CUENTAS'){
-                        cuenta=i;
-                    }
-                    if(OrdenColumnas[i].toUpperCase()=='NUM_FORMULARIO' ){
-                        codigoBarra=i;
-                    }
+            for(integer i=0; i<OrdenColumnas.size(); i++)
+            {
+                OrdenColumnas[i]=OrdenColumnas[i].split('"')[1].Trim();
+                if(OrdenColumnas[i].toUpperCase()=='NOMBRE' || OrdenColumnas[i].toUpperCase()=='NOMBRES'){
+                    nombre=i;
                 }
-                
+                if(OrdenColumnas[i].toUpperCase()=='NUM IDENTIDAD' || OrdenColumnas[i].toUpperCase()=='IDENTIFICACION'
+                   || OrdenColumnas[i].toUpperCase()=='IDENTIDAD'
+                   || OrdenColumnas[i].toUpperCase()=='IDENTIFICACIÓN' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIDAD'
+                   || OrdenColumnas[i].toUpperCase()=='NUM IDENTIFICACIÓN' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIFICACIÓN'
+                   || OrdenColumnas[i].toUpperCase()=='NUM IDENTIFICACION' || OrdenColumnas[i].toUpperCase()=='NUMERO IDENTIFICACION'){
+                       identificacion=i;
+                   }
+                if(OrdenColumnas[i].toUpperCase()=='APELLIDO' || OrdenColumnas[i].toUpperCase()=='APELLIDOS'){
+                    apellido=i;
+                }
+                if(OrdenColumnas[i].toUpperCase()=='CUENTA' || OrdenColumnas[i].toUpperCase()=='CUENTAS'){
+                    cuenta=i;
+                }
+                if(OrdenColumnas[i].toUpperCase()=='NUM_FORMULARIO' ){
+                       codigoBarra=i;
+                   }
             }
             list<Carnet_masivo__c> listEmpleados = new list<Carnet_masivo__c >();
             if(codigoBarra != 15 && nombre != 15 && apellido != 15 && identificacion !=15 && cuenta !=15){
@@ -174,8 +169,7 @@ global class ControladorCargaMasivaCarnet {
             }
             return retorno;
         }catch(exception ex){
-             retorno.error='Ha ocurrido un error inesperado, por favor revise el archivo e intente subirlo de nuevo '+ex.getMessage()+', Linea: '+ex.getLineNumber();
-            
+             retorno.error='Ha ocurrido un error inesperado, por favor revise el archivo e intente subirlo de nuevo';
         }
         return retorno;
     }

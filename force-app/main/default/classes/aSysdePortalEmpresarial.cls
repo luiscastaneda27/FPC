@@ -1,6 +1,6 @@
 public class aSysdePortalEmpresarial {
        
-       public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
+     public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
         classDolares.classRespuestaDolares respuesta = new classDolares.classRespuestaDolares();
         try{
             Compra_Venta_Dolares__mdt dato = new Compra_Venta_Dolares__mdt();
@@ -40,18 +40,30 @@ public class aSysdePortalEmpresarial {
                 response.setStatusCode(200);
             }
             system.debug('Codigo: '+response.getStatusCode());
-            system.debug('Respuesta: '+response.getbody());
+            system.debug('Respuesta del servicio: '+response.getbody());
             if(response.getStatusCode() == 200){
                 respuesta = (classDolares.classRespuestaDolares)System.JSON.deserialize(response.getBody(), classDolares.classRespuestaDolares.class);
+                system.debug('Respuesta luego del status 200 Antes de Aplicar Parche: '+respuesta);           
+                if(respuesta.montoAcreditado==null && respuesta.tasaCambio!=null && respuesta.montoDebitado!=null){
+                    if(respuesta.monedaOrigen=='HNL'){
+                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)/Decimal.valueOf(respuesta.tasaCambio);
+                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
+                    }
+                    if(respuesta.monedaOrigen=='USD'){
+                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)*Decimal.valueOf(respuesta.tasaCambio);
+                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
+                    }
+                    
+                }
+                system.debug('Respuesta luego del status 200 Despues de Aplicar Parche: '+respuesta);
             }
         }catch(Exception ex){
             system.debug('Error ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());	
         }
         return respuesta;
     }
-   
     
-    public static date fechaCierreSysde() { 
+    public static list<string> fechaCierreSysde() { 
          Http http = new Http();  
          HttpRequest request = new HttpRequest();  
          String url = claseUtil.urlSysde('Test');   
@@ -59,24 +71,28 @@ public class aSysdePortalEmpresarial {
          request.setMethod('GET');  
          request.setHeader('Content-Type', 'application/x-www-form-urlencoded'); 
          request.setTimeout(120000); 
-        date fecha;
+        list<string> fr = new list<string>();
          try{   
              HttpResponse response =new HttpResponse();// http.send(request);  
              if(!test.isRunningTest()){
                  response = http.send(request); 
-             }else{
+             }
+             else{
                  response.setBody('"2019-12-10T00:00:00"');
              }
               
-             System.debug('Respuesta '+response.getBody()); 
-             fecha=date.valueOf(response.getBody().replace('"',''));
-             //system.debug(resp);
+             //System.debug('Respuesta '+response.getBody()); 
+             string resp=string.valueOf(response.getBody());
+             system.debug(resp);
+             fr=resp.split('T');
+             resp=fr[0];
+             fr=resp.split('-');
              
-             
-         }catch(Exception e){ 
+         }catch(System.CalloutException e)
+         { 
              system.debug(e.getMessage());  
          }    
-        return fecha;        
+        return fr;        
      }
     
     public static list<Account> agregarPersonaPlanilla(list<String> identificacionPersona) {
@@ -428,7 +444,7 @@ public class aSysdePortalEmpresarial {
 		request.setTimeout(120000);
         try
         {
-           system.debug('Error en Enviar Aportes:'+ personas); 
+           system.debug('String: '+ personas); 
            list<string> todos= new list<string>();
            list<string> individual; 
             todos=personas.split('::::');
@@ -437,7 +453,6 @@ public class aSysdePortalEmpresarial {
             for(integer i=0; i<todos.size(); i++)
             {
                 individual = new list<string>();
-                integer g=0;
                 nueva = new classAportesPlanilla();
                 string gt=todos[i];
                 individual=gt.split(',');
@@ -447,57 +462,46 @@ public class aSysdePortalEmpresarial {
                 nueva.cuentaColectiva =individual[2];
                 nueva.rezago= rezago;
                 nueva.codigoReferencia = codigo;
-                //nueva.cuenta=individual[3];
+                nueva.cuenta=individual[3];
                 //nueva.codigoCuenta=integer.valueOf(individual[4]);
+                
                 nueva.codigoMoneda=individual[5];
-                boolean bande=false;
-                if(decimal.valueOf(individual[6])>0)
-                {
-                   nueva.aportePersonalVoluntario=decimal.valueOf(individual[6]);
-                    g=5;
-                   bande=true; 
+                
+                boolean bandera = false;
+                if(decimal.valueOf(individual[6]) > 0){
+                    nueva.aportePersonalVoluntario=decimal.valueOf(individual[6]);
+                    bandera = true; 
                 }
-                if(decimal.valueOf(individual[7])>0)
-                {
-                     nueva.aportePatronalVoluntario=decimal.valueOf(individual[7]); 
-                    g=5;
-                    bande=true;
+                if(decimal.valueOf(individual[7]) > 0) {
+                    nueva.aportePatronalVoluntario=decimal.valueOf(individual[7]); 
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[8])>0)
-                {
-                      nueva.aportePersonalObligatorio=decimal.valueOf(individual[8]);
-                    g=5;
+                if(decimal.valueOf(individual[8]) > 0) {
+                    nueva.aportePersonalObligatorio=decimal.valueOf(individual[8]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[9])>0)
-                {
-                      nueva.aportePatronalObligatorio=decimal.valueOf(individual[9]);
-                    g=5;
+                if(decimal.valueOf(individual[9]) > 0) {
+                    nueva.aportePatronalObligatorio=decimal.valueOf(individual[9]);
+                    bandera = true;
                 }
                 //
-                if(decimal.valueOf(individual[10])>0)
-                {
-                      nueva.aportePersonalExtraordinario=decimal.valueOf(individual[10]);
-                    g=5;
+                if(decimal.valueOf(individual[10]) > 0) {
+                    nueva.aportePersonalExtraordinario=decimal.valueOf(individual[10]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[11])>0)
-                {
-                      nueva.aportePatronalExtraordinario=decimal.valueOf(individual[11]);
-                    g=5;
+                if(decimal.valueOf(individual[11]) > 0){
+                    nueva.aportePatronalExtraordinario=decimal.valueOf(individual[11]);
+                    bandera = true;
                 }
-                if(decimal.valueOf(individual[12])>0)
-                {
-                      nueva.aporteSeguroVida=decimal.valueOf(individual[12]);
-                    g=5;
+                if(decimal.valueOf(individual[12]) > 0){
+                    nueva.aporteSeguroVida=decimal.valueOf(individual[12]);
+                    bandera = true;
                 }
-                //
-                if(bande)
-                {
-                    nueva.cuenta=individual[3];
-                }
+                
+                
                 nueva.periodoAporte=periodoaporte;
                 nueva.fechaRecaudo=fecha;
-                if(g>0)
-                {
+                if( bandera){
                     claseenvio.add(nueva); 
                 }
                
@@ -507,7 +511,7 @@ public class aSysdePortalEmpresarial {
 			envio.contenido = JSON.serialize(claseenvio);
             system.debug(claseenvio.size());
 			String cons = 'Contenido= ' + envio.contenido;
-            system.debug('Yo no se mañana dijo Luis Enrique: '+cons);
+            system.debug('ENviamos a sysde: '+cons);
 			request.setBody(cons);
             HttpResponse response = new HttpResponse();
             if(!test.isRunningTest()){

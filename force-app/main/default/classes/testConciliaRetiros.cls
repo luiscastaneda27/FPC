@@ -14,8 +14,8 @@ public class testConciliaRetiros {
 		w.cuenta_Destino__c = '';
         w.CurrencyIsoCode = 'HNL';
         w.Descripcion__c = '';
-        w.Fecha_SalesForce__c = DATE.valueOf('2019-05-21');
-        w.Fecha_Sysde__c = DATE.valueOf('2019-05-21');
+        w.Fecha_SalesForce__c = date.today();
+        w.Fecha_Sysde__c = date.today();
         w.Forma_Pago__c = '';
         w.moneda__c = '';
         w.Monto_Salesforce__c = '1';
@@ -28,7 +28,9 @@ public class testConciliaRetiros {
         w.AprobacionM__c = 'S';
         w.Nombre_Cliente__c = 'Paola';
         w.Numero_Caso__c = '1';
-        w.Nombre_Propietario__c = 'Esteban';
+        w.Tipo_Pago__c = 'dd';
+        w.Monto_HNL__c = '1';
+        w.Monto_USD__c = '2';
         insert w;
         
         Retiro_Aprobacion__c p = new Retiro_Aprobacion__c();
@@ -41,8 +43,8 @@ public class testConciliaRetiros {
 		p.cuenta_Destino__c = '';
         p.CurrencyIsoCode = 'HNL';
         p.Descripcion__c = '';
-        p.Fecha_SalesForce__c = DATE.valueOf('2019-05-21');
-        p.Fecha_Sysde__c = DATE.valueOf('2019-05-21');
+        p.Fecha_SalesForce__c = date.today();
+        p.Fecha_Sysde__c = date.today();
         p.Forma_Pago__c = '';
         p.moneda__c = '';
         p.Monto_Salesforce__c = '1';
@@ -55,53 +57,59 @@ public class testConciliaRetiros {
         p.AprobacionM__c = 'S';
         p.Nombre_Cliente__c = 'Paola';
         p.Numero_Caso__c = '1';
-        p.Nombre_Propietario__c = 'Esteban';
-        insert p;
+        p.Tipo_Pago__c ='prue';
+        p.Monto_HNL__c = '1';
+        p.Monto_USD__c = '2';
+        insert p;    
         
-        Retiro_Aprobacion__c pp= new Retiro_Aprobacion__c();
-        pp.Aprobacion_Final__c = '';
-        pp.banco_destino__c = '';
-        pp.cheque__c = null;
-        pp.compara_monto__c = '';
-        pp.Cuenta__c = '';
-        pp.cuenta_bancaria__c = '';
-		pp.cuenta_Destino__c = '';
-        pp.CurrencyIsoCode = 'HNL';
-        pp.Descripcion__c = '';
-        pp.Fecha_SalesForce__c = DATE.valueOf('2019-05-21');
-        pp.Fecha_Sysde__c = DATE.valueOf('2019-05-21');
-        pp.Forma_Pago__c = '';
-        pp.moneda__c = '';
-        pp.Monto_Salesforce__c = '1';
-        pp.Monto_Sysde__c = null;
-        pp.monto_total__c = '1';
-        pp.Numero_Referencia__c = '1234566';
-        pp.tasa_seguridad_poblacional__c = '1';
-        pp.tipo_cuenta__c = '';
-        pp.transferencia_ACH__c = '1';
-        pp.AprobacionM__c = 'S';
-        pp.Nombre_Cliente__c = 'Paola';
-        pp.Numero_Caso__c = '1';
-        pp.Nombre_Propietario__c = 'Esteban';
-        insert pp;
-        
+        /*Retiro_Aprobacion__c wa = new Retiro_Aprobacion__c();
+        wa.Aprobacion_Final__c = '';
+        wa.AprobacionM__c = '';
+        wa.banco_destino__c = '';
+        wa.cheque__c = null;
+        wa.compara_monto__c = '';
+        wa.Cuenta__c = '';
+        wa.cuenta_bancaria__c = '';
+		wa.cuenta_Destino__c = '';
+        wa.CurrencyIsoCode = 'HNL';
+        wa.Descripcion__c = '';
+        wa.Fecha_SalesForce__c = date.today();
+        wa.Fecha_Sysde__c = date.today();
+        wa.Forma_Pago__c = '';
+        wa.moneda__c = '';
+        wa.Monto_Salesforce__c = '1';
+        wa.Monto_Sysde__c = null;
+        wa.monto_total__c = '1';
+        wa.Numero_Referencia__c = '1234567';
+        wa.tasa_seguridad_poblacional__c = '1';
+        wa.tipo_cuenta__c = '';
+        wa.transferencia_ACH__c = '1';
+        wa.AprobacionM__c = 'S';
+        wa.Nombre_Cliente__c = 'Paola';
+        wa.Numero_Caso__c = '1';
+        wa.Tipo_Pago__c = 'dd';
+        wa.Monto_HNL__c = '1';
+        wa.Monto_USD__c = '2';
+        insert wa;*/
+                
         controllerCRetiros ra = new controllerCRetiros();
- 
+        
         ra.fecha = '';
-        ra.fecha2 = DATE.valueOf('2019-05-21');
-        ra.fecha3 = DATE.valueOf('2019-05-21');
-        ra.fecha_retiro = DATE.valueOf('2019-05-21');
-        ra.fechaSysdeRetiros = DATE.valueOf('2019-05-21');
+        ra.fecha2 = date.today();
+        ra.fecha3 = date.today();
+        ra.fecha_retiro = date.today(); 
+        ra.fechaSysdeRetiros = date.today();             
         
-        
-        list<cuadreRetirosP> lu = new list<cuadreRetirosP>();
+        //list<cuadreRetirosP> lu = new list<cuadreRetirosP>();
+        //list<cuadreRetirosI> luu = new list<cuadreRetirosI>();        
         
         ra.conciliaRetiros();
         ra.mostrarTablaRetirosP = true;
         ra.mostrarTablaRetiros = true;
         ra.mostrarTablaRetirosC = true;
-        ra.mostrarTablaRetirosB = true;
         ra.mostrarTablaRetirosI = true;
+        ra.envioAprobacionI();
+        ra.enviarListaTotalI();
         
         list<Retiro_Aprobacion__c> lii = new list<Retiro_Aprobacion__c>();
         ApexPages.currentPage().getParameters().put('id',w.id);
@@ -116,45 +124,31 @@ public class testConciliaRetiros {
         ra.Id=null;
         p.id=null;
         insert p;
-        list<Retiro_Aprobacion__c> liiii = new list<Retiro_Aprobacion__c>();
-        ApexPages.currentPage().getParameters().put('id',pp.id);
+        
+        /*list<Retiro_Aprobacion__c> liiii = new list<Retiro_Aprobacion__c>();
+        ApexPages.currentPage().getParameters().put('id',wa.id);
         ra.Eliminar();
         ra.Id=null;
-        pp.id=null;
-        insert pp;
+        wa.id=null;
+        insert wa;*/
+                
         ra.envioAprobacion();
         ra.envioAprobacionP();
-        ra.envioAprobacionB();
         ra.envioAprobacionI();
-        
+        ra.enviarListaTotalI();
+                              
         list<cuadreRetiros> laa = new list<cuadreRetiros>();
         list<cuadreRetirosC> lee = new list<cuadreRetirosC>();
         list<cuadreRetirosP> llll = new list<cuadreRetirosP>();
-        list<cuadreRetirosB> lllll = new list<cuadreRetirosB>();
-        list<cuadreRetirosI> llllll = new list<cuadreRetirosI>();
-        
+        list<cuadreRetirosI> lllle = new list<cuadreRetirosI>();
+                
         ra.conciliaRetiros();
-        ra.mostrarTablaRetiros = true; 
-        ra.mostrarTablaRetirosC = true;
-        ra.mostrarTablaRetirosP = true;
-        ra.mostrarTablaRetirosB = true;
-        ra.mostrarTablaRetirosI = true;
-        //ra.ListPagosP.clear();
         ra.enviarListaTotal();
         ra.enviarListaTotalP();
-        ra.enviarListaTotalB();
-        ra.enviarListaTotalI();
-        string mes = 'JAN';
-        //.MesLetras(mes);
- 
-       // ra.ListPagosP[0].referencia= ra.ListEnvioRepetidosP[0].referencia;
+        
+       //ra.ListPagosP[0].referencia= ra.ListEnvioRepetidosP[0].referencia;
        
         //Colavoradores.idEmpleado=Colavoradores.listClientes2[0].id;
-        
-        
-        
-        
-              
         
         list<Retiro_Aprobacion__c> lo = new list<Retiro_Aprobacion__c>();
 
@@ -165,8 +159,8 @@ public class testConciliaRetiros {
         //controllerApiCRetiros
         controllerApiCRetiros k = new controllerApiCRetiros();
         cuadreRetirosC2 hola = new cuadreRetirosC2();
-        hola.fecha_retiro = DATE.valueOf('2019-05-21');
-        hola.fechaSysdeRetiros = DATE.valueOf('2019-05-21');
+        hola.fecha_retiro = dateTime.now();
+        hola.fechaSysdeRetiros = dateTime.now();
         
         string wendy = controllerApiCRetiros.pagaRetiros(hola); 
     
@@ -176,6 +170,8 @@ public class testConciliaRetiros {
         o.mensaje = '';
         //classRetiros
         classRetiros s = new classRetiros();
+        //s.nombreCliente = '';
+        //s.numeroCaso = 1;
         s.cuenta = '';
         s.cuentaOrigen = '';
         s.cuentaDestino = '';
@@ -192,17 +188,27 @@ public class testConciliaRetiros {
         s.formaPago = '';
         s.aportePatronal = true;
         //cuadreRetiros
-        cuadreRetiros g = new cuadreRetiros('', '', '', 1.0, 1.0, 1.0, '', '', '', 1.0, 1.0, '','', 1.0,'', 1.0, 1.0, 1);
+        cuadreRetiros g = new cuadreRetiros('', '', '', 1.0, 1.0, 1.0, dateTime.now(), dateTime.now(), 1.0, '', 1.0, '', 1);
         //cuadreRetirosC
-        cuadreRetirosC x = new cuadreRetirosC('', '', '', '', 1.0, '', 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, '', '', 1.0,  1.0, '', '', '', '', '', 1.0, 1.0, 1);
+        //cuadreRetirosC x = new cuadreRetirosC('', '', '', '', 1.0, '', 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, dateTime.now(), dateTime.now(), 1.0,  1.0, '', '', '', '', '', 1);
+        cuadreRetirosC x = new cuadreRetirosC('', '', '', '',1.0, '', 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                          1.0, 1.0, dateTime.now(), dateTime.now(), 1.0, 1.0,
+                          '', '', '', '', '', 1);
         //cuadreRetirosP
-        cuadreRetirosP y = new cuadreRetirosP('', 1.0, '', '', '', 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, '', '', '', '', '', '', 1);
+        //cuadreRetirosP y = new cuadreRetirosP('', 1.0, '', '', '', 1.0, 1.0, 1.0, 1.0, 1.0, dateTime.now(), '', '', '', '', '', 1);
+        cuadreRetirosP y = new cuadreRetirosP('', 1.0, '', '','',1.0, 
+                           1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
+                           dateTime.now(), '', '', 
+                           '', '', '', 1);
+        
+        cuadreRetirosI z = new cuadreRetirosI('', '', '', '',1.0, '', 
+                          1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 
+                          dateTime.now(), dateTime.now(), 1.0, 1.0,'', '', 
+                          '', '', '', 1);
         //cuadreRetirosC2
         cuadreRetirosC2 f = new cuadreRetirosC2();
-        //cuadreRetirosb
-        cuadreRetirosB z = new cuadreRetirosB('', '', '', '', '', 1.0, '', 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, '', '', 1.0,  1.0, '', '', '', '', '', 1.0, 1.0, 1);
         f.fecha_retiro = null;
-        f.fechaSysdeRetiros = DATE.valueOf('2019-05-21');
+        f.fechaSysdeRetiros = date.today();
         //pagoRetirosC
         pagoRetirosC d = new pagoRetirosC();
         d.referencia = '';
@@ -228,7 +234,7 @@ public class testConciliaRetiros {
         ControllerRetirosAproba ul = new ControllerRetirosAproba();
         ul.AprobarRetiro();
         ControllerRetirosAproba u = new ControllerRetirosAproba();
-        Retiro_Aprobacion__c pe = new Retiro_Aprobacion__c();
+        /*Retiro_Aprobacion__c pe = new Retiro_Aprobacion__c();
         pe.Aprobacion_Final__c = '';
         pe.AprobacionM__c = '';
         pe.banco_destino__c = '';
@@ -239,25 +245,26 @@ public class testConciliaRetiros {
 		pe.cuenta_Destino__c = '';
         pe.CurrencyIsoCode = 'HNL';
         pe.Descripcion__c = '';
-        pe.Fecha_SalesForce__c = DATE.valueOf('2019-05-21');
-        pe.Fecha_Sysde__c = DATE.valueOf('2019-05-21');
+        pe.Fecha_SalesForce__c = date.today();
+        pe.Fecha_Sysde__c = date.today();
         pe.Forma_Pago__c = '';
         pe.moneda__c = '';
         pe.Monto_Salesforce__c = '1';
         pe.Monto_Sysde__c = null;
         pe.monto_total__c = '1';
-        pe.Numero_Referencia__c = '12345678';
+        pe.Numero_Referencia__c = '123456';
         pe.tasa_seguridad_poblacional__c = '1';
         pe.tipo_cuenta__c = '';
         pe.transferencia_ACH__c = '1';
-        pe.Nombre_Propietario__c = 'Esteban';
         //pe.AprobacionM__c = 'S';
         //pe.mo
-        insert pe;
-  
+        pe.Tipo_Pago__c = 'kkk';
+        insert pe;*/
+           
         list<Retiro_Aprobacion__c> ll = new list<Retiro_Aprobacion__c>();
-        ApexPages.currentPage().getParameters().put('id',pe.id);
+        ApexPages.currentPage().getParameters().put('id',w.id);
         u.Eliminar();
+        
         test.stopTest();
         
     }

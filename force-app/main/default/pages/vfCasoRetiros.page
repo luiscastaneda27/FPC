@@ -254,12 +254,13 @@
                                             </div>
                                             
                                             <div class="slds-form-element slds-size--2-of-2">
-                                                <apex:outputPanel rendered="{!detalleCaso.Tipo_retiro__c = '52'}">
+                                                <apex:outputPanel rendered="{!AND(detalleCaso.Tipo_retiro__c = '52', cuentaCliente.Forma_Aportacion__c == 'TA', showTipoTC == True)}">
                                                     <label class="slds-form-element__label" >
                                                     <abbr class="slds-required" title="required">*</abbr>Tipo de TC</label>
-                                                    <apex:inputField styleClass="slds-select removePicklistValue2"  value="{!detalleCaso.Banco__c}" /> 
+                                                    <apex:inputField styleClass="slds-select removePicklistValue2" value="{!detalleCaso.Banco__c}" /> 
                                                 </apex:outputPanel>
                                             </div>
+                                            
                                         </div>
                                     <!--/apex:outputPanel-->
                                     <div class="slds-form-element__row">

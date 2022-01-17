@@ -637,7 +637,7 @@
                             </p>
                             <apex:messages styleClass="ContainerError"/>
                             <apex:commandButton value="Ingresar" action="{!sesionIniciada}" styleClass="Confirmar"/>
-                   			<div class="Checks">
+                            <div class="Checks">
                                 <a href="javascript:olvide();"  class="Forget">Olvidé mi clave <em>›</em></a>
                             </div>   
                         </div>

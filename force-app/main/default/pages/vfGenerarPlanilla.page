@@ -499,29 +499,27 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listEmpleadosPorEmpresa}" var="item" styleClass="slds-table slds-table--bordered slds-table_fixed-layout">
+                        <apex:DataTable value="{!listEmpleadosEmpresa}" var="item" styleClass="slds-table slds-table--bordered slds-table_fixed-layout">
                           <apex:column >
-                              <apex:inputCheckbox value="{!item.seleccionado}" />  
+                                <apex:InputField value="{!item.Eliminado__c}"/>   
                            </apex:column>
                            <apex:column headerValue="Identificación">
-                                <apex:OutputText value="{!item.identificacion}"/>   
+                                <apex:OutputField value="{!item.Empleado2__r.Identificacion__c}"/>   
                            </apex:column>
-                            <apex:column headerValue="Nombres">
-                                <apex:OutputText value="{!item.nombres}"/>   
-                            </apex:column>
-                            <apex:column headerValue="Apellidos">
-                                <apex:OutputText value="{!item.apellidos}"/>   
-                            </apex:column>
-                            <apex:column headerValue="Género">
-                                <apex:OutputText value="{!item.sexo}"/>   
-                            </apex:column>
-                            <apex:column headerValue="Fecha de nacimiento">
-                                <apex:outputText value="{0, date, dd/MM/YYYY}">
-                                    <apex:param value="{!item.fechaNacimiento}" /> 
-                                </apex:outputText> 
+                           <apex:column headerValue="Nombres">
+                                <apex:OutputField value="{!item.Empleado2__r.FirstName}"/>   
+                           </apex:column>
+                           <apex:column headerValue="Apellidos">
+                                <apex:OutputField value="{!item.Empleado2__r.LastName}"/>   
+                           </apex:column>
+                           <apex:column headerValue="Género">
+                                <apex:OutputField value="{!item.Empleado2__r.Sexo__c}"/>   
+                           </apex:column>
+                           <apex:column headerValue="Fecha de nacimiento">
+                                <apex:OutputField value="{!item.Empleado2__r.PersonBirthDate}"/>   
                            </apex:column>  
                            <apex:column headerValue="Salario">
-                                <apex:OutputText value="{!item.salario}"/>   
+                                <apex:OutputField value="{!item.Salario__c}"/>   
                            </apex:column>                                                                               
                         </apex:DataTable> 
                                        
@@ -544,18 +542,15 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listAportesCuenta}" var="item" styleClass="slds-table slds-table--bordered">
+                        <apex:DataTable value="{!listCuentasPlanilla}" var="item" styleClass="slds-table slds-table--bordered">
                            <apex:column headerValue="Número de Cuenta">
-                                 <apex:outputText value="{!item.cuenta}"/>    
+                                <apex:outputField value="{!item.Codigo_cuenta__c}"/>   
                            </apex:column>
                            <apex:column headerValue="Calcular por" >
-                                <apex:selectList value="{!item.CalcularPor}" size="1" >
-                                   <apex:selectOption itemLabel="Monto" itemValue="Monto" />
-                                   <apex:selectOption itemLabel="Porcentaje " itemValue="Porcentaje " />
-                               </apex:selectList>     
+                                <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto Patrono" rendered="{!esAPV}">
-                                <apex:inputText value="{!item.valorMontoPatrono}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto_Patrono__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column>
                         </apex:DataTable> 
                                        
@@ -578,18 +573,15 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listAportesCuenta}" var="item" styleClass="slds-table slds-table--bordered">
+                        <apex:DataTable value="{!listCuentasPlanilla}" var="item" styleClass="slds-table slds-table--bordered">
                            <apex:column headerValue="Número de Cuenta">
-                                 <apex:outputText value="{!item.cuenta}"/>    
+                                <apex:outputField value="{!item.Codigo_cuenta__c}"/>   
                            </apex:column>
                            <apex:column headerValue="Calcular por" >
-                                <apex:selectList value="{!item.CalcularPor}" size="1" >
-                                   <apex:selectOption itemLabel="Monto" itemValue="Monto" />
-                                   <apex:selectOption itemLabel="Porcentaje " itemValue="Porcentaje " />
-                               </apex:selectList>      
+                                <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto Patrono Extraordinario" rendered="{!esAPX}">
-                                <apex:inputText value="{!item.valorMontoPatronalExtraordinario}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto_Patronal_Extraordinario__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column>
                         </apex:DataTable> 
                                        
@@ -612,19 +604,15 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listAportesCuenta}" var="item" styleClass="slds-table slds-table--bordered">
+                        <apex:DataTable value="{!listCuentasPlanilla}" var="item" styleClass="slds-table slds-table--bordered">
                            <apex:column headerValue="Número de Cuenta">
-                                <apex:outputText value="{!item.cuenta}"/>   
+                                <apex:outputField value="{!item.Codigo_cuenta__c}"/>   
                            </apex:column>
                            <apex:column headerValue="Calcular por" >
-                               <apex:selectList value="{!item.CalcularPor}" size="1" >
-                                   <apex:selectOption itemLabel="Monto" itemValue="Monto" />
-                                   <apex:selectOption itemLabel="Porcentaje " itemValue="Porcentaje " />
-                               </apex:selectList>
-                                <!--apex:inputField value="{!item.Calcular_por__c}" required="true"/-->   
+                                <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto" rendered="{!esAEV}">
-                                <apex:inputText value="{!item.valorMonto}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column> 
                           
                         </apex:DataTable> 
@@ -648,18 +636,15 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listAportesCuenta}" var="item" styleClass="slds-table slds-table--bordered">
+                        <apex:DataTable value="{!listCuentasPlanilla}" var="item" styleClass="slds-table slds-table--bordered">
                            <apex:column headerValue="Número de Cuenta">
-                                <apex:outputText value="{!item.cuenta}"/>   
+                                <apex:outputField value="{!item.Codigo_cuenta__c}"/>   
                            </apex:column>
-                            <apex:column headerValue="Calcular por" >
-                                <apex:selectList value="{!item.CalcularPor}" size="1" >
-                                    <apex:selectOption itemLabel="Monto" itemValue="Monto" />
-                                    <apex:selectOption itemLabel="Porcentaje " itemValue="Porcentaje " />
-                                </apex:selectList>  
-                            </apex:column>
+                           <apex:column headerValue="Calcular por" >
+                                <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
+                           </apex:column>
                            <apex:column headerValue="Valor / Monto Extraordinario" rendered="{!esAPE}">
-                                <apex:inputText value="{!item.valorMontoExtraordinario}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto_Extraordinario__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column>
                           
                         </apex:DataTable> 
@@ -683,18 +668,15 @@
                   </header>
                   <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
 
-                        <apex:DataTable value="{!listAportesCuenta}" var="item" styleClass="slds-table slds-table--bordered">
+                        <apex:DataTable value="{!listCuentasPlanilla}" var="item" styleClass="slds-table slds-table--bordered">
                            <apex:column headerValue="Número de Cuenta">
-                                <apex:outputText value="{!item.cuenta}"/>   
+                                <apex:outputField value="{!item.Codigo_cuenta__c}"/>   
                            </apex:column>
                            <apex:column headerValue="Calcular por" >
-                                 <apex:selectList value="{!item.CalcularPor}" size="1" >
-                                   <apex:selectOption itemLabel="Monto" itemValue="Monto" />
-                                   <apex:selectOption itemLabel="Porcentaje " itemValue="Porcentaje " />
-                               </apex:selectList>   
+                                <apex:inputField value="{!item.Calcular_por__c}" required="true"/>   
                            </apex:column>
                            <apex:column headerValue="Valor / Monto Seguro Vida" rendered="{!esASV}">
-                                <apex:inputText value="{!item.valorMontoSeguroVida}" OnKeyPress="return CampoNumero(event, this)"/>   
+                                <apex:inputField value="{!item.Valor_Monto_Seguro_Vida__c}" OnKeyPress="return CampoNumero(event, this)"/>   
                            </apex:column>
                           
                         </apex:DataTable> 

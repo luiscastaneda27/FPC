@@ -4088,7 +4088,7 @@ public class ControllerProducto {
                         Messaging.sendEmail(listCorreo);
           
                     }
-                    if(pcformapago == 'AH' || pcformapago == 'TA') {
+                    if(pcformapago == 'AH' || pcformapago == 'TA' ||  pcformapago == 'TAOB') {
                         System.debug('Crear caso de Afiliación de Débito Automático' + resultado);                
                         String val = resultado.substring(51);
                         String val2 = val.replace('"','');
@@ -4117,12 +4117,7 @@ public class ControllerProducto {
                         fieldsList.add(fields);
                         UpdateCase.createRecord(fieldsList);
                     }
-                    
-                    if(pcformapago == 'TAOB') {
-                    	classGestionesBac bc = new classGestionesBac();
-                        bc.nombreTarjetaHabiente = pcTarjetaHabiente;
-                    }
-                    
+                                       
                     final PageReference target = new
                     PageReference(Site.getBaseSecureUrl() + '/apex/vfpantallaclienteProducto?mensaje='+resultado);
                     target.setRedirect(true);

@@ -30,6 +30,21 @@
                 <default>false</default>
                 <label>Pensionados</label>
             </value>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>Ama de Casa</label>
+            </value>
+            <value>
+                <fullName>6</fullName>
+                <default>false</default>
+                <label>Estudiante</label>
+            </value>
+            <value>
+                <fullName>7</fullName>
+                <default>false</default>
+                <label>No Labora</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

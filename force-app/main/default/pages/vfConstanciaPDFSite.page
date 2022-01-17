@@ -58,6 +58,8 @@
         
         <apex:form > 
             <apex:image value="{!URLFOR($Resource.logo1)}" width="175px"  rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
+            <!--apex:image styleClass="imagenLado" value="{!URLFOR($Resource.mebreteright)}" rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
+            <<apex:image styleClass="imagenFooter" value="{!URLFOR($Resource.mebretefooter )}" rendered="{!case.Embajadas__c == null}"/-->
             <table  style="width:100%; display:{!if(mostrarMenbrete, 'block;','none;')}">
                 <tr>
                     <td style="width:75%; " valign="top" >
@@ -73,6 +75,7 @@
                         <font style="color:#b1afa9; font-size:10px; font-weight: bold;">Ave. Circunvalación, 5 y 6 calle<!--, S.O.--></font><br/>
                         <font style="color:#b1afa9; font-size:10px; font-weight: bold;">5to. piso</font><br/><br/>
                         <font style="color:#b1afa9; font-size:10px;font-weight: bold;">PBX: 2275-2400</font>
+                        <!--apex:image value="{!URLFOR($Resource.mebreteright)}" height="130px;" rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/-->
                     </td>
                 </tr>
             </table>

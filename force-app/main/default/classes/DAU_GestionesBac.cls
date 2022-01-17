@@ -1,6 +1,7 @@
 public class DAU_GestionesBac {
+   
     @future(callout=true)
-    public static void execute(String CaseId, String Gestion) {        
+    public static void execute(String CaseId) {        
         
         String respuesta = '';
         
@@ -14,7 +15,7 @@ public class DAU_GestionesBac {
             System.debug('Caso: '+CaseId);
             
             Detalle_caso__c detC = [Select Id,Cuenta__r.Name,Cuenta__r.Monto_aporte__c,Cuenta__r.Fecha_Aporte__c,N_Cuenta_Bancaria__c,Mes__c,Ano_tarjeta__c,DAU_Dia_de_pago__c, Tipo_Operacion__c,	
-                                    DAU_Tarjeta_Habiente__c,DAU_Tipo_Tarjeta__c,Nuevo_monto_aporte__c,toLabel(Banco__c), Nueva_fecha_aporte__c, Cuenta__r.Fondo_Inversion__c 
+                                    DAU_Tarjeta_Habiente__c,DAU_Tipo_Tarjeta__c,Nuevo_monto_aporte__c,toLabel(Banco__c), Nueva_fecha_aporte__c, Cuenta__r.Fondo_Inversion__c, DAU_Borrar_Cuotas__c 
                                     From Detalle_caso__c Where Caso__c =: c.Id];
             
             System.debug('Detalle Caso: '+detC);
@@ -34,8 +35,8 @@ public class DAU_GestionesBac {
             String estadoDebito = 'A';
             
             classGestionesBac datos = new classGestionesBac();
-            if(detC.Tipo_Operacion__c == 'A3' || detC.Tipo_Operacion__c == 'A8' || Gestion == 'Afiliacion' 
-              || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null && c.Status == 'Cerrado')) {
+            if(detC.Tipo_Operacion__c == 'A3' || detC.Tipo_Operacion__c == 'A8' || 
+               (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null && c.Respuesta_SF_Tarjetas__c.contains('correctamente'))) {
                 System.debug('Afiliación de Débito Automático');
                 datos.tipoGestion = 'afiliaDebito';
                 datos.identificacion = c.Account.Identificacion__c;
@@ -99,7 +100,25 @@ public class DAU_GestionesBac {
                 datos.diaCobro = String.valueOf(myDate.Day());
                 datos.montoDebito = String.valueOf(detC.Cuenta__r.Monto_aporte__c);   
                 datos.estadoDebito = estadoDebito;                                              
-            } else if(detC.Tipo_Operacion__c == 'A7' || (detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null)) {
+            } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
+                System.debug('Cancelación');
+                datos.tipoGestion = 'modificaDebito';
+                datos.identificacion = c.Account.Identificacion__c;
+                datos.nombreCliente = '';
+                datos.email = '';
+                datos.celular = '';
+                datos.sexo = '';
+                datos.servicio = '';
+                datos.cuentaPensiones = detC.Cuenta__r.Name;
+                datos.tipoTarjeta = '';              
+                datos.nombreTarjetaHabiente = '';               
+                datos.numeroTarjeta = '';                                            
+                datos.fechaExpiracion = '';
+                datos.bancoTarjeta = '';                              
+                datos.diaCobro = '14';
+                datos.montoDebito = '0';    
+                datos.estadoDebito = 'C';  
+            } else if(detC.Tipo_Operacion__c == 'A7') {
                 System.debug('Cancelación');
                 datos.tipoGestion = 'modificaDebito';
                 datos.identificacion = c.Account.Identificacion__c;
@@ -144,7 +163,7 @@ public class DAU_GestionesBac {
             //respuesta = 'Débito creado correctamente'; 
             system.debug('respuesta: '+respuesta);
             
-            if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente') {
+            if(respuesta == 'Débito creado correctamente' || respuesta == 'Débito modificado correctamente' || test.isRunningTest()) {
                 if(detC.Tipo_Operacion__c == 'A7') {
                 	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta; 
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
@@ -154,7 +173,7 @@ public class DAU_GestionesBac {
                 } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c == Null) {
                 	c.Respuesta_SF_Tarjetas__c = 'Cancelación: // '+respuesta;     
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id));
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_SegundoServicio__c = true));
                     // Call method to publish events
                     List<Database.SaveResult> results = EventBus.publish(Logs);
                 } else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c <> Null) {
@@ -172,10 +191,17 @@ public class DAU_GestionesBac {
                 }
                 else if(detC.Tipo_Operacion__c == 'A6' && c.Respuesta_SF_Tarjetas__c.Contains('Afiliación')) {
                     System.debug('Cambio de # Tarjeta llama a Sysde');
-                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
-                    // Call method to publish events
-                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                    if(detC.DAU_Borrar_Cuotas__c == '2' || detC.DAU_Borrar_Cuotas__c == '3') {
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_Borrar_Cuotas_S10__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
+                    } else {
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);    
+                    }
                 } 
                 else if(detC.Tipo_Operacion__c == 'A7') {
                 	System.debug('Cancelación llama a Sysde');
@@ -186,10 +212,17 @@ public class DAU_GestionesBac {
                 }
                 else if(detC.Tipo_Operacion__c == 'A3' || detC.Tipo_Operacion__c == 'A8') {
                 	System.debug('Cambio de Canal de Aporte	o Afiliación de Débito Automático llama a Sysde');
-                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
-                    // Call method to publish events
-                    List<Database.SaveResult> results = EventBus.publish(Logs);    
+                    if(detC.DAU_Borrar_Cuotas__c == '2' || detC.DAU_Borrar_Cuotas__c == '3') {
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_Borrar_Cuotas_S10__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
+                    } else {
+                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_EjecutarSYSDE__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);    
+                    }   
                 }
             } else if(respuesta.contains('Error')){
             	c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' ' + respuesta;
@@ -200,7 +233,12 @@ public class DAU_GestionesBac {
             respuesta = e.getMessage();
             c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' ' + respuesta;
             update c; 
-        }
-		//return respuesta;     
+        } catch(System.Exception ex){
+            system.debug('Error Gestión BAC: '+ex.getMessage()+' --- '+ex.getLineNumber());
+            respuesta = ex.getMessage();
+            c.Respuesta_SF_Tarjetas__c = c.Respuesta_SF_Tarjetas__c + ' ' + respuesta;
+            update c; 
+        }  
     }    
+
 }

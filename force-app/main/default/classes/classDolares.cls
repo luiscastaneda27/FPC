@@ -8,7 +8,8 @@ public class classDolares {
     public string nivelDos {get;set; }
     public string nivelTres {get;set;}
     public string nivelCuatro {get;set;}
-    public string nivelCinco {get;set;}
+    public string nivelCinco {get;set;}        
+    
     
     public class classRespuestaDolares{
         public string id {get;set;}

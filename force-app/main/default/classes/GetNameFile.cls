@@ -8,7 +8,8 @@ public class GetNameFile {
             listIdAcc.add(recordId);
             List<ContentDocumentLink> listDocument =  [Select ContentDocumentId,ContentDocument.Title 
                                                        from ContentDocumentLink
-                                                       where LinkedEntityId in :listIdAcc  ];
+                                                       where LinkedEntityId in :listIdAcc 
+                                                       Order By ContentDocument.CreateDdate desc];
             for(integer i = 0; i < listDocument.size(); i++){
                 File archivo = new File();
                 archivo.nameFile = listDocument[i].ContentDocument.Title;

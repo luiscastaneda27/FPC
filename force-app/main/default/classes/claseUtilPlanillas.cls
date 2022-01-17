@@ -9,16 +9,7 @@ public without sharing class claseUtilPlanillas {
         }
     }
     
-    public static void updateTime(String usuario){
-        try{
-            Tiempo_Inactividad__c hora= new Tiempo_Inactividad__c();
-            hora=[select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
-            hora.Hora_ultima_consulta__c=datetime.now();
-            update hora;
-        }Catch(Exception e){
-            system.debug('Error: '+e.getMessage()+', Linea: '+e.getLineNumber());
-        }
-    }
+    
     
     
     public static void CompreDeDollar (string idplanilla) {

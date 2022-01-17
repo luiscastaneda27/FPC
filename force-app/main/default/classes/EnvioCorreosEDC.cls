@@ -16,6 +16,9 @@ public class EnvioCorreosEDC {
             map<String, String> mapNombre = new map<String, String>();
             list<string> idClientes= new list<string>();
             List<Account> clientes = new List<Account>();
+            
+            list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
+            
             idClientes = estadosDeCuenta.ObtenerCorreos('A1');
             fechaHoy = fechaHoy.addDays(-fechaHoy.Day());
             date fecha =fechaHoy;  
@@ -57,7 +60,12 @@ public class EnvioCorreosEDC {
                 }
                 
             }
-            
+            if(respuestaDetallado.size() > 0){
+                for(Correo_estado_cuenta__c item: [select cliente__C, enviado__C, id, grupo__C, enviado_mensual__C from Correo_estado_cuenta__c where cliente__C in :idClientes]){
+                    item.enviado__C = true;
+                    todosCorreos.add(item);
+                }
+            }
             
             Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
             
@@ -82,6 +90,7 @@ public class EnvioCorreosEDC {
                 correo.setHtmlBody(cuerpo);
                 correo.setSubject('Estado de cuenta.');
                 String[] toAddresses = new String[] {item.emailCliente};
+                    system.debug('Correo: '+item.emailCliente);
                 correo.setToAddresses(toAddresses);  
                 correo.setOrgWideEmailAddressId(owea.get(0).Id);
                 correo.setTargetObjectId(mapContacto.get(item.identidad));
@@ -101,24 +110,15 @@ public class EnvioCorreosEDC {
                 if(item.isSuccess()){ fcsd.Total_Correos_Enviados__C++;
                 }
             }
-            list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
-            decimal grupo = 0;
-            todosCorreos = [select cliente__C, enviado__C, id, grupo__C, enviado_mensual__C from Correo_estado_cuenta__c where cliente__C in :idClientes];
-            if( listCorreo.size()>0 ){
-                for(integer i=0; i<todosCorreos.size(); i++){
-                    todosCorreos[i].enviado__C=true;
-                    if(todosCorreos[i].grupo__C > grupo){
-                        grupo = todosCorreos[i].grupo__C;
-                    }
-                    
-                }
-            }
+                        
             if(!test.isRunningTest()){
                 update fcsd;
             }
             update todosCorreos;
             
             decimal mayorGrupo = [select  grupo__C from Correo_estado_cuenta__c order by grupo__C desc limit 1].grupo__C;
+            decimal grupo = todosCorreos.size() > 0 ? todosCorreos[0].Grupo__c : 0;
+            
             if(grupo >= mayorGrupo){
                 Messaging.singleEmailMessage email = new Messaging.singleEmailMessage();
                 email.setSubject('Finalizado proceso de envio de Estado de Cuenta '+date.today().format()); 

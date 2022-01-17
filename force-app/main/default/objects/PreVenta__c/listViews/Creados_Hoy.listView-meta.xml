@@ -8,14 +8,16 @@
     <columns>Canal_que_Refiere__c</columns>
     <columns>LeadSource__c</columns>
     <columns>OWNER.FIRST_NAME</columns>
+    <columns>Pais_Residencia__c</columns>
+    <columns>Departamento__c</columns>
     <columns>Round_Robin_ID_Norte__c</columns>
     <columns>Round_Robin_ID_Centro__c</columns>
     <columns>OWNER.ALIAS</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>LAST_UPDATE</field>
-        <operation>equals</operation>
-        <value>10/29/2019 12:00 AM</value>
+        <field>CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>6/30/2021 12:00 AM</value>
     </filters>
-    <label>Creados Hoy</label>
+    <label>Validación de asignación Rotativa</label>
 </ListView>

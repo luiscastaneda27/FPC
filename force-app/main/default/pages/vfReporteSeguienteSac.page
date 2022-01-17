@@ -218,14 +218,11 @@
                         </footer> 
                     </apex:pageBlock>
                 </div>
+                <!-- styleClass="slds-table slds-table_bordered slds-table_col-bordered"-->
                     <apex:pageBlock id="pageBlockClientes" >
                         <apex:pageMessages />
                         <apex:pageBlockSection columns="1"  title="Reporte de Seguimiento">
-                            <apex:outputPanel >
-                                <div style="overflow-x:scroll;white-space: nowrap;">
-                                    
-                                
-                            <apex:dataTable style="overflow-x:scroll;white-space: nowrap;" styleClass="slds-table slds-table_bordered slds-table_col-bordered"  value="{!listReporte}" var="item">
+                            <apex:dataTable style="width:6000px;"  value="{!listReporte}" var="item">
                                 
                                 <apex:column headerValue="Primer Nombre">
                                     <apex:outputField value="{!item.Name}" />
@@ -243,7 +240,7 @@
                                     <apex:outputField value="{!item.Segundo_Apellido__c}" />
                                 </apex:column>
                                 
-                                 <apex:column headerValue="Tipo de Identificación" >
+                                 <apex:column headerValue="Tipo de Identificación1" >
                                     <apex:outputField value="{!item.Tipo_Identificacion__c}" />
                                 </apex:column>
                              
@@ -429,8 +426,6 @@
                                 
                                 
                             </apex:dataTable>
-                            </div>
-                            </apex:outputPanel>
                         </apex:pageBlockSection>
                      
                         <apex:outputPanel id="idEmpresasPop" rendered="{!popEmpresas}"  >
@@ -479,8 +474,6 @@
                         </section>
                         <div class="slds-backdrop slds-backdrop_open"></div>
                     </apex:outputPanel>
-                        
-                       
                     </apex:pageBlock> 
                 
                

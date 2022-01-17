@@ -338,7 +338,6 @@
 			      <th scope="col">
 			        <div class="slds-truncate" title="Aporte Empleado Voluntario"><STRONG>Empleado</STRONG></div>
 			      </th>
-                  <!--agregado wp 07-11-2019-->
                   <th scope="col" >
                     <div class="slds-truncate" title="Aporte Empleado Extraordinario"><strong>E.Extraordinario</strong></div>
                   </th>
@@ -348,7 +347,6 @@
                   <th scope="col" >
                     <div class="slds-truncate" title="Aporte Seguro de Vida"><strong>SeguroVida</strong></div>
                   </th>
-                  <!--agregado wp 07-11-2019-->
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -385,8 +383,8 @@
 				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Voluntario__c}"/> 
 			        		</div>
 				      </td>
-                     <!--agregado wp 07-11-2019-->
-                     <td data-label="Aporte Empleado Extraordinario" style="text-align:right;">
+                      
+                      <td data-label="Aporte Empleado Extraordinario" style="text-align:right;">
 				        <div class="slds-truncate" > 
 				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Extraordinario__c}"/> 
 				        </div>
@@ -401,7 +399,6 @@
 				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Seguro_de_Vida__c}"/> 
 				        </div>
 				      </td>
-                     <!--agregado wp 07-11-2019-->
 				    </tr>
 			    </apex:repeat>
 			    
@@ -433,7 +430,7 @@
 			      <td style="text-align:right;">
 			        <div class="slds-truncate" ><strong> <apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Empleado_Voluntario__c}"/> </strong></div>
 			      </td>
-                  <!--agregado wp 07-11-2019-->  
+                  
                   <td style="text-align:right;">
 			        <div class="slds-truncate" ><strong> <apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Empleado_Extraordinario__c}"/> </strong></div>
 			      </td>
@@ -443,7 +440,6 @@
                   <td style="text-align:right;">
 			        <div class="slds-truncate" ><strong> <apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Seguro_de_Vida__c}"/> </strong></div>
 			      </td>
-                  <!--agregado wp 07-11-2019-->
 			    </tr>
 			  </tbody>
 			</table>

@@ -11,7 +11,7 @@
 				      <th scope="col" colspan="3" >
 				        <div class="slds-truncate" title="Aportes Obligatorios"><strong><center>Aportes Obligatorios</center> </strong></div>
 				      </th>
-				      <th scope="col" colspan="4" >
+				      <th scope="col" colspan="5" >
 				        <div class="slds-truncate" title="Aportes Voluntarios"><strong><center>Aportes Voluntarios</center></strong></div>
 				      </th>				     
 				    
@@ -41,8 +41,17 @@
 			      <th scope="col">
 			        <div class="slds-truncate" title="Aporte Patronal Voluntario" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"><strong>Patronal</strong>  </div>
 			      </th>
+                  <th scope="col">
+			        <div class="slds-truncate" title="Aporte Patronal Extraordinario" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"><strong>P. Extraordinario</strong>  </div>
+			      </th>
 			      <th scope="col">
 			        <div class="slds-truncate" title="Aporte Empleado Voluntario" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"> <strong>Empleado</strong> </div>
+			      </th>
+                  <th scope="col">
+			        <div class="slds-truncate" title="Aporte Empleado Extraordinario" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"> <strong>E. Extraordinario</strong> </div>
+			      </th>
+                  <th scope="col">
+			        <div class="slds-truncate" title="Seguro de Vida" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;"> <strong>SeguroVida</strong> </div>
 			      </th>
 			      
 			      
@@ -78,9 +87,27 @@
 				        		
 				        </div>
 				      </td>
+                      <td data-label="Aporte Patronal Extraordinario" >
+				        <div class="slds-truncate" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" ALIGN="right"> 
+				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Patrono_Extraordinario__c}"/> 
+				        		
+				        </div>
+				      </td>
 				      <td >
 				        <div class="slds-truncate" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" ALIGN="right"> 
 				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Voluntario__c}"/> 
+				        		
+			        		</div>
+				      </td>
+                      <td >
+				        <div class="slds-truncate" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" ALIGN="right"> 
+				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Empleado_Extraordinario__c}"/> 
+				        		
+			        		</div>
+				      </td>
+                      <td >
+				        <div class="slds-truncate" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" ALIGN="right"> 
+				        		<apex:outputField styleclass="slds-input" value="{!Item.Aporte_Seguro_de_Vida__c}"/> 
 				        		
 			        		</div>
 				      </td>
@@ -113,8 +140,17 @@
 				      <td data-label="" >
 				        <div class="slds-truncate" ALIGN="right"> <b><apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Patrono_Voluntario__c}"/></b></div>  
 				      </td>
+                      <td data-label="" >
+				        <div class="slds-truncate" ALIGN="right"> <b><apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Patrono_Extraordinario__c}"/></b></div>  
+				      </td>
 				      <td >
 				        <div class="slds-truncate" ALIGN="right"> <b><apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Empleado_Voluntario__c}"/></b> </div>
+				      </td>
+                      <td >
+				        <div class="slds-truncate" ALIGN="right"> <b><apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Empleado_Extraordinario__c}"/></b> </div>
+				      </td>
+                      <td >
+				        <div class="slds-truncate" ALIGN="right"> <b><apex:outputField styleclass="slds-input" value="{!contenidoTotal.Aporte_Seguro_de_Vida__c}"/></b> </div>
 				      </td>
 				    </tr>  
 			  </tbody>

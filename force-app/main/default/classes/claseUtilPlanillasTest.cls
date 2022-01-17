@@ -107,12 +107,7 @@ public class claseUtilPlanillasTest {
         planilla.Empresa2__c = empresa.Id;
         update planilla;
         
-        Tiempo_Inactividad__c tiempo = new Tiempo_Inactividad__c();
-        tiempo.Usuario__c = null;
-        insert tiempo;
         
-        claseUtilPlanillas.updateTime(null);
-        claseUtilPlanillas.updateTime('s');
         claseUtilPlanillas.urlSysde('Test');
         claseUtilPlanillas.urlSysde('Testfrs');
         claseUtilPlanillas.CompreDeDollar(planilla.Id);

@@ -10,7 +10,7 @@ public class formularioIdentificacion_PDF_CONT {
     public String depto {get;set;}
     public String mun {get;set;}
     public String col {get;set;}
-    public String pais {get;set;}
+    public String pais {get;set;} 
     public String P {get;set;}
     public string PFis {get;set;}
     public string PFisNacionalidad {get;set;}    
@@ -18,7 +18,13 @@ public class formularioIdentificacion_PDF_CONT {
     public String Mu {get;set;}
     public String Co {get;set;}
     public string Nac {get;set;}
+    public string Nac2 {get;set;}
+    public string Nac3 {get;set;}
     public datetime fechaForm {get;set;}
+    public string fechanacimientoB{get;set;}
+    public String fechanacimientoDiaB{get;set;}
+    public String fechanacimientoMesB{get;set;}
+    public String fechanacimientoAnioB{get;set;}
     
     /*public string pcUsuarioCN {get;set;}
     public string pcAGN {get;set;}
@@ -53,7 +59,7 @@ public class formularioIdentificacion_PDF_CONT {
     public CPAWP cpa{get;set;}
     public Decimal comiSaldo {get;set;}
     public Decimal comiAporte {get;set;}
-
+    
     public formularioIdentificacion_PDF_CONT(){   
         fechaform= date.today();
         try{
@@ -66,7 +72,7 @@ public class formularioIdentificacion_PDF_CONT {
                 JsonString = JSON.serialize(fcsd);//ApexPages.currentPage().getParameters().get('JSONString');
             }
             else{
-                JsonString = ApexPages.currentPage().getParameters().get('JSONString');
+                JsonString = ApexPages.currentPage().getParameters().get('JSONString'); 
             }
             String securityToken =ApexPages.currentPage().getParameters().get('securityToken');
             system.debug('securityToken en PDF: '+securityToken);
@@ -84,10 +90,21 @@ public class formularioIdentificacion_PDF_CONT {
             if(!(info.ListBeneficiarios!=null && info.ListBeneficiarios.size()>0)){
                 List<beneficiario> ltem=new List<beneficiario>();
                 for(Integer i=0;i<info.ListBeneficiarios.size();i++) {
-                   ltem.add(new beneficiario(null, ' ', ' ',' ', ' ', ' ',' ',' ', ' ',' ',' ',' ', ' ',null, null, null));                  
-                }
+                   ltem.add(new beneficiario(null, ' ', ' ',' ', ' ', ' ',' ',' ', ' ',' ',' ',' ', ' ',null, null, null));    
+                                    }
                 info.ListBeneficiarios=ltem;
             }
+            
+           /* for(integer i=0; i<info.ListBeneficiarios.size(); i++)
+            {
+                if(info.ListBeneficiarios[i].fechaNacimiento !=null){
+                    info.ListBeneficiarios[i].fechaNacimiento= info.ListBeneficiarios[i].fechaNacimiento.addHours(6);
+                    fechanacimientoB=(info.ListBeneficiarios[i].fechaNacimiento.day()<10 ? '0'+info.ListBeneficiarios[i].fechaNacimiento.day() : info.ListBeneficiarios[i].fechaNacimiento.day()+'')+'-'+(info.ListBeneficiarios[i].fechaNacimiento.month()<10 ? '0'+info.ListBeneficiarios[i].fechaNacimiento.month() : info.ListBeneficiarios[i].fechaNacimiento.month()+'')+'-'+info.ListBeneficiarios[i].fechaNacimiento.year();
+                   /* fechanacimientoDiaB=String.valueOf(info.ListBeneficiarios[i].fechaNacimiento.day());
+                    fechanacimientoMesB=String.valueOf(info.ListBeneficiarios[i].fechaNacimiento.month());
+                    fechanacimientoAnioB=String.valueOf(info.ListBeneficiarios[i].fechaNacimiento.year());
+                }
+            }*/                 
             system.debug('Beneficiarios' + info.ListBeneficiarios);
             
             if(!(info.ListDebidaDil!=null&&info.ListDebidaDil.size()>0)){
@@ -101,7 +118,7 @@ public class formularioIdentificacion_PDF_CONT {
             }else{
                 contra = 'S';
             }
-            
+                              
             for(integer i=0; i<info.ListDebidaDil.size(); i++)
             {
                 if(info.ListDebidaDil[i].tipoContrDirecto == 'S'||info.ListDebidaDil[i].tipoContrDirecto =='N')
@@ -112,11 +129,9 @@ public class formularioIdentificacion_PDF_CONT {
                     //}               
                 }
             }
-         
-            
-        system.debug('contratistaEstado: ' + contra +' Directo: '+ ContraD +' Sub: '+ ContraS);    
-        system.debug('depende no ' + info.pcDependeNO + 'depende si'+ info.pcDependeSI); 
-        system.debug('esResidente ' + info.ES_Residente); 
+            system.debug('contratistaEstado: ' + contra +' Directo: '+ ContraD +' Sub: '+ ContraS);    
+            system.debug('depende no ' + info.pcDependeNO + 'depende si'+ info.pcDependeSI); 
+            system.debug('esResidente ' + info.ES_Residente); 
             system.debug('contratista ' + contra);    
             system.debug('depende no' + info.pcDependeNO + 'depende si'+ info.pcDependeSI);    
             
@@ -144,7 +159,8 @@ public class formularioIdentificacion_PDF_CONT {
                 pcUsuarioCN = info.pcUsuarioCN.split('/').get(0);
                 pcUsuNombreCN = info.pcUsuarioCN.split('/').get(0);
                 pcAgn = info.pcUsuarioCN.split('/').get(0);
-            }*/
+            }*/            
+          
             Map<String,String> mapPa=new Map<String,String>(); 
             Map<String,String> mapPaFis=new Map<String,String>();
             Map<String,String> mapDepart=new Map<String,String>();
@@ -171,13 +187,18 @@ public class formularioIdentificacion_PDF_CONT {
 				PFisNacionalidad = mapNaFis.get(info.PaisResidenciaEfectosFiscales );                  
                 //NACIONALIDAD
                 
-                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
-                    mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+               /* for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.pcnacionalidad limit 1]){
+                 nac=   mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
                 }
-                nac=mapNac.get(info.ListDirecciones[i].paisDir);
+                */
                 //info.pcnacionalidad2=mapNaci.get(info.pcnacionalidad2);
                 //info.pcnacionalidad3=mapNaci.get(info.pcnacionalidad3);
-                
+                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
+                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+                nac= itemNA.nacionalidad__c;
+                //info.pcnacionalidad2 = itemNA.nacionalidad__c;    
+                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad + info.pcnacionalidad2 + Nac2);
+            	}
                 //DEPARTAMENTO
                 
                 for (Departamentos__c itemDe:[SELECT Departamento__c, codigo_departamento__c,codigo_pais__c from Departamentos__c where codigo_pais__c =: info.ListDirecciones[i].paisDir

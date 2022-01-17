@@ -1,4 +1,4 @@
-global class controladorCargarPlanilla {
+global without sharing class controladorCargarPlanilla {
     
     
     public  string Codigo_Unico_Banco{get;set;}

@@ -9,14 +9,6 @@
     <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>astrid.rivera@ficohsa.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>cintya.alcantara@ficohsa.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
     <approvalPageFields>
         <field>CaseNumber</field>
         <field>Owner</field>
@@ -84,10 +76,6 @@
         <action>
             <name>Aprobado_verdadero</name>
             <type>FieldUpdate</type>
-        </action>
-        <action>
-            <name>Caso_aprobado_encuesta</name>
-            <type>Alert</type>
         </action>
         <action>
             <name>Caso_aprobado_interno</name>

@@ -264,29 +264,29 @@
                     {!nac}
                 </div></div><br/>
             <!--div style="margin-top:5px;"-->
-                <div style="display:inline-block;margin-right:5px; ;width:115px;">
-                    Segunda nacionalidad(si aplica):
-                </div>
-                <div style="border-bottom:1px solid black;width:220px;display:inline-block;">
-                    {!info.pcnacionalidad2}
-                </div>
-                <div style="display:inline-block;margin-right:5px; ;width:112.5px;">
-                    Tercera nacionalidad(si aplica):
-                </div>
-                <div style="border-bottom:1px solid black;width:300px;display:inline-block;">
-                    {!info.pcnacionalidad3}
-                </div>
+            <div style="display:inline-block;margin-right:5px; ;width:115px;">
+                Segunda nacionalidad(si aplica):
+            </div>
+            <div style="border-bottom:1px solid black;width:220px;display:inline-block;">
+                {!info.pcnacionalidad2}
+            </div>
+            <div style="display:inline-block;margin-right:5px; ;width:112.5px;">
+                Tercera nacionalidad(si aplica):
+            </div>
+            <div style="border-bottom:1px solid black;width:300px;display:inline-block;">
+                {!info.pcnacionalidad3}
+            </div>
             <!--/div><br/-->
-             <div style="margin-left:90px;width:50px;display:inline-block; font-size:8px;">
-                    Día
-                </div>
-                <div style="width:50px;display:inline-block; font-size:8px;">
-                    Mes
-                </div>
-                <div style="width:50px;display:inline-block; font-size:8px;">
-                    Año
-                </div>
-                
+            <div style="margin-left:90px;width:50px;display:inline-block; font-size:8px;">
+                Día
+            </div>
+            <div style="width:50px;display:inline-block; font-size:8px;">
+                Mes
+            </div>
+            <div style="width:50px;display:inline-block; font-size:8px;">
+                Año
+            </div>
+            
             <div style="margin-top:5px;">
                 <div style="width:50px;display:inline-block;margin-right:6px;">
                     Fecha de nacimiento:
@@ -357,14 +357,14 @@
                 </div>
                 
                 <div style="width:100px;display:inline-block;">
-                   
+                    
                     <apex:outputPanel rendered="{!if(info.pcestadocivil=='D',false,true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!if(info.pcestadocivil=='D',true,false)}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
-                     Divorciado(a)
+                    Divorciado(a)
                 </div>
                 <div style="width:80px;display:inline-block;">
                     
@@ -385,7 +385,7 @@
                     {!info.pcProfesionOcupacion}
                 </div>
             </div><br/>
-             
+            
             <div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;width:120px;">
                     Dirección de domicilio:
@@ -415,7 +415,7 @@
                 <div style="border-bottom:1px solid black;width:255px;display:inline-block;">
                     <!--País{!info.pccodpais}-->{!pais}
                 </div>
-           
+                
                 <div style="margin-left:60px;font-size:10px;width:90px;display:inline-block;margin-right:7px;text-align:center;">
                     Ciudad
                 </div>
@@ -442,15 +442,15 @@
                 <div style="border-bottom:1px solid black;width:325px;display:inline-block;">
                     {!info.pcNombreConyuge}
                 </div>
-                          
+                
             </div><br/>
             <div style="margin-top:5px;">
                 
                 <table>
                     <thead>
-                    	<th style="border:1px solid black;" colspan="6" align="center">Referencias Personales/Bancarias/Comerciales/Laborales:</th>                           
+                        <th style="border:1px solid black;" colspan="6" align="center">Referencias Personales/Bancarias/Comerciales/Laborales:</th>                           
                         <tr>    
-                        	<td style="width:402px" align="center">
+                            <td style="width:402px" align="center">
                                 1. Nombre Completo<br/>
                                 {!info.pcPrimerNombreReferi1} {!info.pcSegundoNombreReferi1} {!info.pcPrimerApellidoReferi1} {!info.pcSegundoApellidoReferi1}&nbsp;
                             </td>
@@ -459,7 +459,7 @@
                                 {!info.pcTelefono_Referido1Referi1}&nbsp;
                             </td>
                         </tr>
-                    	<tr>
+                        <tr>
                             <td style="width:402px" align="center">
                                 2. Nombre Completo<br/>
                                 {!info.pcPrimerNombreReferi2} {!info.pcSegundoNombreReferi2} {!info.pcPrimerApellidoReferi2} {!info.pcSegundoApellidoReferi2}&nbsp;
@@ -495,7 +495,7 @@
                     No
                 </div>
             </div><br/>
-             <div style="margin-top:5px;">
+            <div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;">
                     Nombre completo:
                 </div>
@@ -521,7 +521,7 @@
                     <apex:outputPanel rendered="{!if(info.pc_ActuaSI=='S',true,false)}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
-					Si
+                    Si
                 </div>
                 <div style="width:55px;display:inline-block;">
                     
@@ -554,17 +554,18 @@
                     <!--parentesco-->
                 </div>
             </div><br/>
-            <div style="margin-top:5px;">
+            
+            <!--div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;">
                     ¿Usted o un familiar(esposo(a)o compañero(a) de hogar, padres hijos/hijos del conyúge o hermano(a)),ejerce o ha ejercido un cargo público nacional o internacional?
-                	 <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',false,true)}">
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',false,true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',true,false)}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
-                     Si
-                     <apex:outputPanel rendered="{!if(or(info.pcEjerce_Cargo_Publico=='N',info.pcEjerce_Cargo_Publico==' '),false,true)}">
+                    Si
+                    <apex:outputPanel rendered="{!if(or(info.pcEjerce_Cargo_Publico=='N',info.pcEjerce_Cargo_Publico==' '),false,true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!if(or(info.pcEjerce_Cargo_Publico=='N',info.pcEjerce_Cargo_Publico==' '),true,false)}">
@@ -572,15 +573,50 @@
                     </apex:outputPanel>
                     No
                 </div>
-            </div>
-            <div style="margin-top:5px;">
+            </div-->
+            <!--div style="margin-top:5px;">
                 <div style="display:inline-block;margin-right:5px;width:345px;">
                     En caso de responder "Si", ¿Cuál es el cargo que ejerce o ha ejercido?
                 </div>
                 <div style="border-bottom:1px solid black;width:415px;display:inline-block;">
-                    <!--{!info.pcCargoEjercido}-->
                     {!info.Cargo_Pulbico}
                 </div>
+            </div-->
+            <div>
+            	¿Ejerce o ha ejercido un cargo público nacional o internacional?&nbsp;&nbsp;
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_unchecked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    Si
+                </div>
+                <div style="display:inline-block;"> 
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
+                        <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
+                        <img src="/img/checkbox_unchecked.gif "/>
+                    </apex:outputPanel>
+                    No
+                </div><br/>
+                <table width="100%" >
+                    <tr>
+                        <td style="width:40%;">
+                            Cargo que ejerce o ha ejercido: {!info.pcCargoEjercido}
+                        </td>
+                        <td style="width:25%;">
+                            Periodo: {!info.periodoPep}
+                        </td>
+                        <td style="width:35%;">
+                            Institución: {!info.institucionPep}
+                        </td>
+                    </tr>
+                    
+                </table>
+                  
             </div>
         </div>
         <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
@@ -640,7 +676,7 @@
                 {!info.pcNombreempl}
             </div>
         </div><br/>
-         <div style="margin-top:5px;font-size:12px;">
+        <div style="margin-top:5px;font-size:12px;">
             <div style="width:50px;display:inline-block;margin-right:2px;">
                 Tipo de empresa:
             </div>
@@ -671,14 +707,14 @@
                 {!info.pcGiroEmpresaEmpCN}
             </div>
             <div style="margin-left:510px;width:50px;display:inline-block; font-size:8px;">
-                    Día
-                </div>
-                <div style="width:50px;display:inline-block; font-size:8px;">
-                    Mes
-                </div>
-                <div style="width:50px;display:inline-block; font-size:8px;">
-                    Año
-                </div>
+                Día
+            </div>
+            <div style="width:50px;display:inline-block; font-size:8px;">
+                Mes
+            </div>
+            <div style="width:50px;display:inline-block; font-size:8px;">
+                Año
+            </div>
         </div>
         <div style="margin-top:5px;font-size:12px;">
             <div style="display:inline-block;margin-right:5px;">
@@ -691,16 +727,16 @@
                 Fecha de ingreso a la empresa: 
             </div>
             <div style="border-bottom:1px solid black;width:60px;display:inline-block;">
-                    {!inicioDia}
-                </div>
-                <div style="border-right:1px solid black;height:15px;display:inline-block;"/>
-                <div style="border-bottom:1px solid black;width:60px;display:inline-block;">
-                    {!inicioMes}
-                </div>
-                <div style="border-right:1px solid black;height:15px;display:inline-block;"/>
-                <div style="border-bottom:1px solid black;width:60px;display:inline-block;">
-                    {!inicioAnio}
-                </div>
+                {!inicioDia}
+            </div>
+            <div style="border-right:1px solid black;height:15px;display:inline-block;"/>
+            <div style="border-bottom:1px solid black;width:60px;display:inline-block;">
+                {!inicioMes}
+            </div>
+            <div style="border-right:1px solid black;height:15px;display:inline-block;"/>
+            <div style="border-bottom:1px solid black;width:60px;display:inline-block;">
+                {!inicioAnio}
+            </div>
         </div><br/>
         <div style="margin-top:5px;font-size:12px;">
             <div style="display:inline-block;margin-right:2px;">
@@ -772,36 +808,36 @@
                 Mayor a L441,600.00
             </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <div style="width:100%;display:inline-block;margin-right:5px;font-size:12px;">
-                   DECLARACIÓN: Declaro expresamente que mi actividad, profesión u oficio es lícita y está
-                   dentro de los marcos legales y que los recursos que poseo no provienen de actividades ilícitas
-                   según el código penal de Honduras ni cualquier otra ley vigente en el país y autorizo a ficohsa 
-                   pensiones y cesantías a que pueda dar por terminado este contrato sin ninguna responsbilidad para
-                   dicha empresa ante mí en caso de demostrarse falso testimonio en la información declarada.
-                </div><br/><br/>
-            <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
+                DECLARACIÓN: Declaro expresamente que mi actividad, profesión u oficio es lícita y está
+                dentro de los marcos legales y que los recursos que poseo no provienen de actividades ilícitas
+                según el código penal de Honduras ni cualquier otra ley vigente en el país y autorizo a ficohsa 
+                pensiones y cesantías a que pueda dar por terminado este contrato sin ninguna responsbilidad para
+                dicha empresa ante mí en caso de demostrarse falso testimonio en la información declarada.
+            </div><br/><br/><br/><br/><br/><br/>
+            <!--div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
                 INFORMACIÓN PEP
             </div><br/>
             <div>
             	¿Ejerce o ha ejercido un cargo público nacional o internacional?&nbsp;&nbsp;
                 <div style="display:inline-block;"> 
-                    Si
                     <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
                         <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
+                    Si
                 </div>
                 <div style="display:inline-block;"> 
-                    NO
                     <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico !='S'}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!info.pcEjerce_Cargo_Publico ='S'}">
                         <img src="/img/checkbox_unchecked.gif "/>
                     </apex:outputPanel>
+                    No
                 </div><br/>
-                <table width="100%">
+                <table width="100%" >
                     <tr>
                         <td style="width:40%;">
                             Cargo que ejerce o ha ejercido: {!info.pcCargoEjercido}
@@ -816,7 +852,7 @@
                     
                 </table>
                   
-            </div><br/><br/>
+            </div--><br/><br/>
             <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
                 INFORMACIÓN DEL EMPLEADOR O NEGOCIO PROPIO
             </div><br/>
@@ -841,11 +877,11 @@
                     Número de casa
                 </div>
                 <!--div style="border-bottom:1px solid black;width:70px;display:inline-block;margin-right:7px;">
-                    <numerocasa>
-                </div>
-                <div style="border-bottom:1px solid black;width:99px;display:inline-block;margin-right:7px;">
-                    <ciudad>
-                </div-->
+<numerocasa>
+</div>
+<div style="border-bottom:1px solid black;width:99px;display:inline-block;margin-right:7px;">
+<ciudad>
+</div-->
                 <div style="border-bottom:1px solid black;width:276px;display:inline-block;margin-right:0px;">
                     <!--{!info.pcMunicipioEmpleadorCN}-->
                     {!munEm}
@@ -892,7 +928,7 @@
                 </div>
             </div><br/>
             <div style="margin-top:5px;">
-            	<div style="display:inline-block;margin-right:5px;width:105px;">
+                <div style="display:inline-block;margin-right:5px;width:105px;">
                     Correo electrónico:
                 </div>
                 <div style="border-bottom:1px solid black;width:655px;display:inline-block;margin-right:7px;">
@@ -905,16 +941,16 @@
                     ¿Es contratista del Estado?
                 </div>
                 <div style="width:50px;display:inline-block;">
-                   
+                    
                     <apex:outputPanel rendered="{!if(contra=='S',false,true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <apex:outputPanel rendered="{!if(contra=='S',true,false)}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
-                     Si
+                    Si
                 </div>
-               <div style="width:52px;display:inline-block;">
+                <div style="width:52px;display:inline-block;">
                     
                     <apex:outputPanel rendered="{!if(or(contra=='N',contra==' '),false,true)}">
                         <img src="/img/checkbox_unchecked.gif"/>
@@ -922,7 +958,7 @@
                     <apex:outputPanel rendered="{!if(or(contra=='N',contra==' '),true,false)}">
                         <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
-                   No
+                    No
                 </div>
                 <div style="margin-left:60px;display:inline-block;margin-right:5px;width:135px;">
                     En caso de responder "Si":
@@ -951,9 +987,9 @@
             <div style="margin-top:5px;font-size:12px;">
                 <table>
                     <thead>
-                    	<th style="border:1px solid black;" colspan="6" align="center">DETALLE DE LOS PROYECTOS REALIZADOS O POR REALIZAR</th>                           
+                        <th style="border:1px solid black;" colspan="6" align="center">DETALLE DE LOS PROYECTOS REALIZADOS O POR REALIZAR</th>                           
                         <tr>    
-                        	<td style="width:278px" align="center">
+                            <td style="width:278px" align="center">
                                 Nombre del Proyecto
                             </td>
                             <td style="width:276px" align="center">
@@ -961,7 +997,7 @@
                             </td>
                             <td style="width:233px" align="center">
                                 Tipo de Proyecto
-                              (Permanente/Temporal)  
+                                (Permanente/Temporal)  
                             </td>
                             <td style="width:263px" align="center">
                                 Beneficiarios
@@ -969,22 +1005,22 @@
                             </td>
                             <td style="width:206px" align="center">
                                 Valor aproximado
-                                 del Proyecto
+                                del Proyecto
                             </td>
                         </tr>
                     </thead>
                     <tbody>
                         <!--apex:variable var="index" value="{!0}"/-->
-                            <apex:repeat value="{!info.ListDebidaDil}" var="ban" >
-                                <!--apex:variable var="index" value="{!index+1}"/-->
-                                <tr>
-                                    <td>{!ban.NombreProyecto}&nbsp;</td>
-                                    <td>{!ban.Ubicacion}</td>
-                                    <td>{!ban.TipoProyecto}</td>
-                                    <td>{!ban.BeneficioProyecto}</td>
-                                    <td>{!ban.Valor}</td>
-                                </tr>
-                            </apex:repeat>
+                        <apex:repeat value="{!info.ListDebidaDil}" var="ban" >
+                            <!--apex:variable var="index" value="{!index+1}"/-->
+                            <tr>
+                                <td>{!ban.NombreProyecto}&nbsp;</td>
+                                <td>{!ban.Ubicacion}</td>
+                                <td>{!ban.TipoProyecto}</td>
+                                <td>{!ban.BeneficioProyecto}</td>
+                                <td>{!ban.Valor}</td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
             </div><br/>
@@ -999,14 +1035,14 @@
                         </thead>
                         <tbody style="border:1px solid black;">
                             <!--tr style="border:1px solid black;">
-                                <th colspan="3">
-                                    <div style="width:100%;display:inline-block;text-align:center;">
-                                        <div style="display:inline-block;margin-right:2px;width:100%;">
-                                            Monto de aporte:
-                                        </div>
-                                    </div>
-                                </th>
-                            </tr-->
+<th colspan="3">
+<div style="width:100%;display:inline-block;text-align:center;">
+<div style="display:inline-block;margin-right:2px;width:100%;">
+Monto de aporte:
+</div>
+</div>
+</th>
+</tr-->
                             <tr style="border:1px solid black;">
                                 <td style="text-align:center;border:1px solid black;width:20%;">
                                     Monto de aporte
@@ -1022,7 +1058,7 @@
                                 <th colspan="3">
                                     
                                     <dvi style="width:100%;display:{!IF(AND(info.pcaplicaseguro == 'S', info.pcTipoSeguro == '1'),'inline-block;', 'none;')}">
-                                         <img src="/img/checkbox_checked.gif"/> Estoy de acuerdo que la frecuencia del aporte sea mensual
+                                        <img src="/img/checkbox_checked.gif"/> Estoy de acuerdo que la frecuencia del aporte sea mensual
                                     </dvi>
                                     <div style="width:100%;display:{!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'),'inline-block;', 'none;')};text-align:center;">
                                         <div style="display:inline-block;margin-right:2px;width:100%;">
@@ -1079,14 +1115,14 @@
                                             Anual
                                         </div>
                                         <div style="width:88px;display:inline-block;">
-                                           
+                                            
                                             <apex:outputPanel rendered="{!if(info.pcperiodicidad=='U',false,true)}">
                                                 <img src="/img/checkbox_unchecked.gif"/>
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!if(info.pcperiodicidad=='U',true,false)}">
                                                 <img src="/img/checkbox_checked.gif"/>
                                             </apex:outputPanel>
-                                             Único
+                                            Único
                                         </div>
                                     </div>
                                 </th>
@@ -1155,7 +1191,7 @@
                     <!--aporte-->
                 </div>
             </div><br/>
-             <div style="width:100%;">
+            <div style="width:100%;">
                 <div style="width:130px;display:inline-block;">
                     Procedencia de fondos
                 </div>
@@ -1177,8 +1213,8 @@
                     </div>
                     <table style="width:100%;">
                         <!--tr>
-                            <th style="background-color:black;color:white;font-size:8px;" colspan="40" align="center" valign="middle">CONVENIO DE PAGO APORTACIÓN</th>
-                        </tr-->
+<th style="background-color:black;color:white;font-size:8px;" colspan="40" align="center" valign="middle">CONVENIO DE PAGO APORTACIÓN</th>
+</tr-->
                         <tr>
                             <th colspan="5" style="max-width:1px;">
                                 
@@ -1227,7 +1263,7 @@
                             <apex:outputPanel rendered="{!cpa.ahorro}">
                                 <img src="/img/checkbox_checked.gif"/>
                             </apex:outputPanel>
-							Ahorro
+                            Ahorro
                             <apex:outputPanel rendered="{!!cpa.cheque}">
                                 <img src="/img/checkbox_unchecked.gif"/>
                             </apex:outputPanel>
@@ -1286,6 +1322,9 @@
                                 Parentesco
                             </td>
                             <td style="width:253px" align="center">
+                                Fecha Nacimiento
+                            </td>
+                            <td style="width:253px" align="center">
                                 Identidad
                             </td>
                             <td style="width:150px" align="center">
@@ -1295,18 +1334,19 @@
                     </thead>
                     <tbody>
                         <!--apex:variable var="index" value="{!0}"/-->
-                            <apex:repeat value="{!info.ListBeneficiarios}" var="ben" >
-                                <!--apex:variable var="index" value="{!index+1}"/-->
-                                <tr>
-                                    <td>{!ben.primerNombre}&nbsp;</td>
-                                    <td>{!ben.segundoNombre}</td>
-                                    <td>{!ben.primerApellido}</td>
-                                    <td>{!ben.segundoApellido}</td>
-                                    <td>{!ben.Parentesco}</td>
-                                    <td>{!ben.numeroId}</td>
-                                    <td>{!ben.Distribucion}</td>
-                                </tr>
-                            </apex:repeat>
+                        <apex:repeat value="{!info.ListBeneficiarios}" var="ben" >
+                            <!--apex:variable var="index" value="{!index+1}"/-->
+                            <tr>
+                                <td>{!ben.primerNombre}&nbsp;</td>
+                                <td>{!ben.segundoNombre}</td>
+                                <td>{!ben.primerApellido}</td>
+                                <td>{!ben.segundoApellido}</td>
+                                <td>{!ben.Parentesco}</td>
+                                <td>{!ben.fechaNacimiento}</td>
+                                <td>{!ben.numeroId}</td>
+                                <td>{!ben.Distribucion}</td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
                 <div style="display:block;" align="right">
@@ -1338,6 +1378,9 @@
                                 Parentesco
                             </td>
                             <td style="width:253px" align="center">
+                                Fecha Nacimiento
+                            </td>
+                            <td style="width:253px" align="center">
                                 Identidad
                             </td>
                             <td style="width:150px" align="center">
@@ -1346,17 +1389,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <apex:repeat value="{!info.ListBeneficiariosC}" var="benC" >
-                                <tr>
-                                    <td>{!benC.primerNombre}&nbsp;</td>
-                                    <td>{!benC.segundoNombre}</td>
-                                    <td>{!benC.primerApellido}</td>
-                                    <td>{!benC.segundoApellido}</td>
-                                    <td>{!benC.Parentesco}</td>
-                                    <td>{!benC.numeroId}</td>
-                                    <td>{!benC.Distribucion}</td>
-                                </tr>
-                            </apex:repeat>
+                        <apex:repeat value="{!info.ListBeneficiariosC}" var="benC" >
+                            <tr>
+                                <td>{!benC.primerNombre}&nbsp;</td>
+                                <td>{!benC.segundoNombre}</td>
+                                <td>{!benC.primerApellido}</td>
+                                <td>{!benC.segundoApellido}</td>
+                                <td>{!benC.Parentesco}</td>
+                                <td>{!benC.fechaNacimiento}</td>
+                                <td>{!benC.numeroId}</td>
+                                <td>{!benC.Distribucion}</td>
+                            </tr>
+                        </apex:repeat>
                     </tbody>
                 </table>
                 <div style="display:block;" align="right">
@@ -1367,7 +1411,7 @@
             </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <div style="background-color:black;width:100%;height:15px;display:inline-block;font-size:12px;color:white;text-align:center;margin-top:5px;">
                 {!IF(OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1'), 'INFORMACIÓN SEGUROS OPCIONALES', 'INFORMACIÓN SEGURO DE VIDA')}
-             </div>
+            </div>
             <apex:outputPanel rendered="{!OR(info.pcaplicaseguro != 'S', info.pcTipoSeguro != '1')}">
                 <div style="margin-top:5px;font-size:12px;">
                     <div style="display:inline-block;margin-right:5px;">
@@ -1529,7 +1573,7 @@
                 <br/>
                 <div style="display:inline-block;width:250px;margin-right:5px;">
                     <div align="justify">
-                    	Firmo el presente documento como aceptación de afiliación a ficohsa pensiones y censatías:
+                        Firmo el presente documento como aceptación de afiliación a ficohsa pensiones y censatías:
                     </div>
                 </div>
                 <div style="margin-left:130px;display:inline-block;margin-right:5px;">
@@ -1598,12 +1642,12 @@
                 <div style="display:block;margin-top:0px;">
                     <div style="display:inline-block;margin-right:5px;">
                         Es APNFD: 
-                                <apex:outputPanel rendered="{!if(info.pcAPNFD=='S',false,true)}">
-                                    <img src="/img/checkbox_unchecked.gif"/>
-                                </apex:outputPanel>
-                                <apex:outputPanel rendered="{!if(info.pcAPNFD=='S',true,false)}">
-                                    <img src="/img/checkbox_checked.gif"/>
-                                </apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(info.pcAPNFD=='S',false,true)}">
+                            <img src="/img/checkbox_unchecked.gif"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(info.pcAPNFD=='S',true,false)}">
+                            <img src="/img/checkbox_checked.gif"/>
+                        </apex:outputPanel>
                         Si
                         <apex:outputPanel rendered="{!if(or(info.pcAPNFD=='N',info.pcAPNFD==' '),false,true)}">
                             <img src="/img/checkbox_unchecked.gif"/>
@@ -1612,13 +1656,13 @@
                             <img src="/img/checkbox_checked.gif"/>
                         </apex:outputPanel>
                         No
-                            <div style="margin-left:246px;display:inline-block;margin-right:5px;">
-                                No. de cuenta:
-                            </div>
-                            <div style="border-bottom:1px solid black;width:305px;display:inline-block;">
-                                <!--nocuenta-->{!cuenta}
-                            </div>
-                            <div style="display:inline-block;margin-right:5px;"/>
+                        <div style="margin-left:246px;display:inline-block;margin-right:5px;">
+                            No. de cuenta:
+                        </div>
+                        <div style="border-bottom:1px solid black;width:305px;display:inline-block;">
+                            <!--nocuenta-->{!cuenta}
+                        </div>
+                        <div style="display:inline-block;margin-right:5px;"/>
                     </div>
                 </div>
                 
@@ -1637,8 +1681,11 @@
                 </div>
             </div>
         </div>
-        <div style="page-break-after:always;"/>
-        <div style="width:100%;font-size:8.9px;">
+        <div style="page-break-after:always;"/> 
+        
+        
+        
+        <div style="width:100%;font-size:8.9px;display:{!IF(NOT(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')), 'block;','none;')}">
             <div style="width:100%;display:block;font-size:15px;font-weight:bold;text-align:center;">
                 <b>CONTRATO DE AFILIACIÓN PARA LA ADMINISTRACIÓN DE UN FONDO DE PENSIONES INDIVIDUAL</b>
             </div>
@@ -1648,145 +1695,112 @@
                 Registro Tribunal Nacional número 08019015715256 y la persona que suscribe este contrato, en
                 adelante denominada como <b>EL AFILIADO</b> aceptan sujetarse a los siguientes términos y condiciones:<br/>
                 <b>CLAUSULA PRIMERA. DEFINICIONES</b>: Para los propósitos de este contrato, las
-                siguientes palabras tendrán los significados establecidos a continuación:<br/>                
-                <b>a. ADMINISTRADORA DE FONDOS DE PENSIONES O SIMPLEMENTE ADMINISTRADORA"</b>: La entidad legalmente 
-                constituida y organizada, encargada de la gestión de los Fondos Privados de Pensiones;<br/>
-				<b>b. ADENDA</b>: Documento suscrito entre EL AFILIADO y LA ADMINISTRADORA por medio del cual se modifican
-                las cláusulas previamente pactadas entre estas en la CONTRATO DE AFILIACION que surtirá efectos siempre
-                y cuando estas modificaciones no contravengan lo establecido en la Ley del Régimen Opcional Complementario
-                para la Administración de Fondos Privados de Pensiones y demás normas aplicables al rubro.<br/>
-				<b>c. AFILIADO, O SIMPLEMENTE "EL AFILIADO"</b>: La persona que mediante la suscripción del contrato 
-                correspondiente se afilia voluntariamente a un plan privado de pensiones;<br/>
-				<b>d. APORTES</b>: Son los valores que EL AFILIADO enterará en la moneda de su elección, en el plazo
-                y monto pactado, de acuerdo a lo definido por EL AFILIADO en la SOLICITUD DE AFILIACION, ya sea
-                de forma mensual, inicial o extraordinaria, para constituir y acrecentar la CUENTA INDIVIDUAL DE
-                CAPITALIZACIÓN.<br/>
-                <b>e. APORTE EXTRAORDINARIO</b>: Son los valores que EL AFILIADO entera en la moneda de su elección, en un
-                momento distinto del indicado por EL AFILIAD0 en la SOLICITUD DE AFILIACION, para acrecentar la CUENTA
-                INDIVIDUAL DE CAPITALIZACION.<br/>
-				<b>f. APORTE INICIAL</b>: Es el primer APORTE Que el AFILIADO entera a la ADMINISTRADORA para abrir una CUENTA
-                INDIVIDUAL DE CAPITALIZACIÓN.<br/>
-				<b>g. BENEFICIARIO</b>: Es la persona natural o persona jurídica designada por el AFILIADO en la SOLICITUD DE 
-                AFILIACION, para gozar de los beneficios de FONDO DE PENSION, en caso de fallecimiento del AFILIADO, de 
-                acuerdo con los porcentajes establecidos por el mismo AFILIADO. En caso que EL AFILIADO no designe 
-                beneficiarios, estos serán quienes se declaren herederos de conformidad a la Ley.<br/>
-				<b>h. BENEFICIARIO CONTINGENTE</b>: Es la persona natural o persona jurídica designada en ausencia de todos 
-                los beneficiarios directos por EL AFILIADO en la SOLICITUD DE AFILLACION, para gozar de los beneficios 
-                del FONDO DE PENSION, en caso de fallecimiento de EL AFILIADO, de acuerdo a los porcentajes establecidos 
-                por el mismo AFILIADO.<br/>
-				<b>i. BENEFICIARIO DIRECTO</b>: ES la persona natural, o persona jurídica designada en primera instancia por 
-                EL AFILIADO en la SOLICITUD DE AFILIACIÓN para gozar de los beneficios del FONDO DE PENSION, en caso de 
-                fallecimiento del AFILIADO, de acuerdo a los porcentajes establecidos por el mismo AFILIADO.<br/>
-				<b>j. CASO FORTUETO Y/O FUERZA MAYOR</b>: ES aquel evento, que se origina de un acto del hombre o de la 
-                naturaleza, que no puede preverse, y que aun pudiendo preverse, no se pueden evitar sus efectos.<br/>
-                <b>k. COMISIONES POR ADMINISTRACION DEL FONDO</b>: Los ingresos que percibe LA ADMINISTRADORA en concepto de 
-                gastos de administración que se deriven de la administración de EL FONDO DE PENSIONES, del portafolio 
-                de inversiones u otros aplicables y/o establecidos de acuerdo a Ley y a la normativa vigente.<br/>
-				<b>l. COMPANIA DE SEGUROS</b>: Institución de seguros, supervisada por la COMISION NACIONAL DE BANCOS Y SEGUROS, 
-                contratada por intermediación de la ADMINISTRADORA, para prestar la cobertura del seguro de vida previsional.<br/>
-				<b>m. CONTRATO DE AFILIACION</b>: ES el Contrato que se suscribe entre la ADMINISTRADORA y EL AFILIADO, para 
-                regular la aplicación de una persona al plan correspondiente, en el cual se establecen entre otros, 
-                los derechos y obligaciones de cada une de las partes con relación al Plan.<br/>
-				<b>n. CUENTA INDIVIDUAL DE CAPITALIZACIÓN SIMPLEMENTE "CUENTA INDIVIDUAL"</b>: Parte del Fondo Privado de 
-                Pensiones correspondiente a un afiliado en particular, resultante de la suma de sus APORTES más los 
-                rendimientos que proporcionalmente le correspondan, menos las comisiones por administración del Fondo 
-                que deban deducirse conforme al CONTRATO DE APILIACION.<br/>
-				<b>o. ESTADO DE CUENTA</b>: Es el documento oficial emitido por LA ADMINISTRADORA a sus afiliados, a través 
-                del cual informan sobre movimientos registrados en su cuenta individual de capitalización, incluyendo 
-                las aportaciones, el rendimiento, las comisiones y cualquier otra información pertinente, el cual es 
-                enviado al AFILIADO en un plazo máximo de treinta (30) días a partir del cierre del último día hábil 
-                de cada trimestre o, ante la solicitud expresa del AFILIADO.<br/>
- 				<b>p. FONDO DE PENSIONES O SIMPLEMENTE "FONDO"</b>: El Fondo que constituyan las Administradoras de Fondos 
-                de Pensiones con las contribuciones de sus afiliados, para el plan de pensiones que establezca, así 
-                como los rendimientos que las inversiones que dicho Fondo produzcan, una vez deducidas las comisiones 
-                correspondientes conforme el respectivo contrato de afiliación;<br/>
-				<b>q. MEDIOS ELECTRÓNICOS O FÍSICOS</b>: Las plataformas tecnológicas habilitadas por LA ADMINISTRADORA para 
-                extender la cobertura de atención en beneficio de EL AFILIADO tales como: Pagina web. Correo electrónico, 
-                App móvil, mensajes de texto, como también entrega física directamente a la dirección del domicilio del 
-                AFILIADO. Dichos servicios no generarán cargos adicionales al AFILIADO.<br/>
-                <b>r. LAS PARTES O SIMPLEMENTE "PARTES"</b>: LA ADMINSTRADORAY EL AFILIADO.<br/>
-				<b>s. LEY</b>: La Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones.<br/>
-				<b>t. PENSIÓN O RENTA</b>: El pago único o total, parcial, temporal o de por vida en tanto la CUENTA INDIVIDUAL 
-                DE CAPITALIZACION tenga Fondos disponibles, que recibe un AFILIADO o sus BENEFICIARIOS, según la elección 
-                de la modalidad de Pensión o Renta dispuesto en la SOLICITUD DE AFILIACIÓN y en el CONTRATO DE AFILIACIÓN.<br/>
-				<b>u. {!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'),'PENSIÓN POR INVALIDEZ TOTAL Y PERMANENTE','PENSIÓN POR INCAPACIDAD TOTAL Y PERMANENTE')}</b>: Es el beneficio, en dinero, que EL AFILIADO percibirá por 
-                el tiempo que dure el FONDO DE PENSIÓN, por motivo de una INCAPACIDAD TOTAL Y PERMANENTE que lo inhabilite
-                de un modo absoluto y definitivo.<br/>
-				<b>v. PLANES PRIVADOS DE PENSIONES O SIMPLEMENTE "PLANES"</b>. Los programas privados de formación de un ahorro 
-                individual destinado a la obtención de una pensión complementaria a los beneficios establecidos por otros
-                regímenes.<br/>
-               <b>w. SEGURO DE VIDA PREVISIONAL</b>: La cobertura de Vida e {!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'),'invalidez','incapacidad')} Total y Permanente que EL AFILIADO podrá
-                contratar opcionalmente a través de LA ADMINISTRADORA por intermedio de la póliza colectiva de seguros 
-                contratada por esta, con una Compañía de Seguros supervisada por la COMISIÓN NACIONAL DE BANCOS Y SEGUROS,
-                para lo cual deberá completar los documentos correspondientes.<br/>
-                <b>x. SOLICITUD DE AFILIACIÖN</b>: Documento que debe ser completado y suscrito por EL AFILIADO. Para su registro
-                en el FONDO DE PENSIONES.<br/>
-				<b>y. RENTA ANTICIPADA PARCIAL O TOTAL</b>: E pago anticipado que LA ADMINISTRADORA hace al AFILIADO en caso de 
-                incapacidad total y permanente o a sus BENEFICIARIOS O HEREDEROS, por fallecimiento del primero.<br/>
-                <b>CLAUSULA SEGUNDA. OBJETO</b>: Por el presente contrato de Afiliación para la Administración de un Fondo de 
-                Pensiones Individual, EL AFILIADO se obliga a entregar a LA ADMINISTRADORA APORTES, para que LA ADMINISTRADORA
-                los invierta en los rubros que esta última determine atendiendo condiciones de seguridad y rendimiento, así como de conformidad a las disposiciones legales que al efecto apliquen.<br/>
-                <b>CLAUSULA TERCERA. OBLIGACIONES DE LAS PARTES:<br/>
-                A. OBLIGACIONES DE LA ADMINISTRADORA</b>:<br/>
-                <b>1.</b> Llevar la CUENTA INDIVIDUAL, en forma separada de cualquiera otras cuentas de LA 
-                ADMINISTRADORA.<br/>
-                <b>2.</b> Invertir los aportes de EL AFILIADO, en la forma que estime conveniente para dar cumplimiento a
-                las obligaciones que asume en este contrato siempre atendiendo a factores de rentabilidad y
-                seguridad dentro de los límites legales establecidos.<br/>
-                <b>3.</b> Poner a disposición de EL AFILIADO al menos trimestralmente, estados de cuenta, los cuales
-                podrán ser enviados utilizando medios electrónicos o físicos. Si transcurridos treinta días de enviado
-                el estado de cuenta no se recibe ninguna notificación escrita por parte EL AFILIADO, se dará por
-                aceptado el contenido del mismo.<br/>
-                <br/>         
+                siguientes palabras tendrán los significados establecidos a continuación:<br/>   
+                
+                <b>a. ADENDA Y ANEXO</b>: Documentos suscritos entre EL AFILIADO y LA ADMINISTRADORA, por medio de los cuales, se modifican las cláusulas previamente pactadas entre estos en el CONTRATO DE AFILIACIÓN y surtirá efectos siempre y cuando estas modificaciones no contravengan lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones, las “Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas” contenidas en las Resoluciones GE No. 1768/12-11-2012 y las “Normas Complementarias para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero” contenidas en la Resolución GE No. 1769/12-11-2012 y demás normativa aplicable al sector.
+                <br/>
+                <b>b. ADMINISTRADORA DE FONDOS DE PENSIONES O SIMPLEMENTE “ADMINISTRADORA”</b>: Entidad legalmente constituida y organizada, conforme a la LEY DEL RÉGIMEN OPCIONAL COMPLEMENTARIO PARA LA ADMINISTRACIÓN DE FONDOS PRIVADOS DE PENSIONES, encargada de la gestión de los Fondos Privados de Pensiones y Cesantías, autorizada por el Banco Central de Honduras previo dictamen favorable de la Comisión Nacional de Bancos y Seguros;
+                <br/> 
+                <b>c. AFILIADO O SIMPLEMENTE "EL AFILIADO"</b>: Persona que mediante la suscripción de la SOLICITUD DE AFILIACIÓN y el CONTRATO DE AFILIACIÓN correspondiente se afilia voluntariamente al PLAN PRIVADO DE PENSIONES;
+                <br/> 
+                <b>d. AÑOS DE PERMANENCIA</b>: Período mínimo de permanencia establecido por la Administradora, para determinar penalizaciones por el retiro anticipado
+                <br/> 
+                <b>e. APORTES</b>: Son los valores que EL AFILIADO enterará en la moneda, plazo y monto pactado, de acuerdo a lo definido por EL AFILIADO en la SOLICITUD DE AFILIACIÓN, ya sea de forma inicial, mensual, o extraordinaria, para constituir y acrecentar la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/> 
+                <b>f. APORTE EXTRAORDINARIO</b>: Son los valores que EL AFILIADO entera en la moneda en que se realicen los APORTES, de forma extraordinaria, para acrecentar la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/> 
+                <b>g. APORTE INICIAL</b>: Es el primer APORTE que el AFILIADO entera a la ADMINISTRADORA para abrir una CUENTA INDIVIDUAL DE CAPITALIZACIÓN
+                <br/> 
+                <b>h. BCH</b>: Banco Central de Honduras.
+                <br/>
+                <b>i. BENEFICIARIO</b>: Es la persona natural o persona jurídica designada por el AFILIADO en la SOLICITUD DE AFILIACIÓN, para gozar de los beneficios del FONDO DE PENSIÓN, en caso de fallecimiento del AFILIADO, de acuerdo con los porcentajes establecidos por el mismo AFILIADO. En caso que EL AFILIADO no designe beneficiarios, estos serán quienes se declaren herederos de conformidad a la Ley.
+                <br/> 
+                <b>j. BENEFICIARIO CONTINGENTE</b>: Es la persona natural, o persona jurídica designada por EL AFILIADO en la SOLICITUD DE AFILIACIÓN, para que, en caso de fallecimiento de EL AFILIADO y en ausencia de todos los beneficiarios directos, pueda gozar de los beneficios del FONDO DE PENSIÓN de acuerdo a los porcentajes establecidos por el mismo AFILIADO en la mencionada solicitud.
+                <br/> 
+                <b>k. BENEFICIARIO DIRECTO</b>: Es la persona natural, o persona jurídica designada por EL AFILIADO en la SOLICITUD DE AFILIACIÓN para gozar, en primera instancia y en caso de fallecimiento del AFILIADO, de los beneficios del FONDO DE PENSIÓN, de acuerdo a los porcentajes establecidos por el mismo AFILIADO en la mencionada solicitud.
+                <br/> 
+                <b>l. CASO FORTUITO Y/O FUERZA MAYOR</b>: Es aquel evento, que se origina de un acto del hombre o de la naturaleza, que no puede preverse, y que aun pudiendo preverse, no se pueden evitar sus efectos.
+                <br/> 
+                <b>m. CNBS</b>: Comisión Nacional de Bancos y Seguros
+                <br/> 
+                <b>n. COMISIÓN ORDINARIA POR ADMINISTRACIÓN DEL FONDO</b>: Los ingresos que percibe LA ADMINISTRADORA en concepto de gastos de administración que se deriven de la administración de EL FONDO DE PENSIONES, el cual podrá ser deducido de los APORTES mensuales, de la rentabilidad generada por la cuenta o del saldo de la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, de conformidad a lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones y a la normativa vigente aplicable
+                <br/> 
+                <b>o. COMISION POR RETIRO ANTICIPADO</b>: Es la comisión que se cobra al AFILIADO por el retiro del FONDO de manera anticipada de su Cuenta Individual de Capitalización, misma que en ningún momento podrá ser realizado de manera parcial
+                <br/> 
+                <b>p. CONTRATO DE AFILIACIÓN</b>: Es el Contrato que se suscribe entre la ADMINISTRADORA y EL AFILIADO, para regular la afiliación de una persona al plan correspondiente, en el cual se establecen, entre otros, los derechos y obligaciones de cada una de las partes con relación al Plan.
+                <br/> 
+                <b>q. CUENTA INDIVIDUAL DE CAPITALIZACIÓN o SIMPLEMENTE "CUENTA INDIVIDUAL”</b>: Parte del Fondo Privado de Pensiones correspondiente a un afiliado en particular, resultante de la suma de sus APORTES más los rendimientos que proporcionalmente le correspondan, menos las comisiones por administración del Fondo que deban deducirse conforme al CONTRATO DE AFILIACIÓN.
+                <br/> 
+                <b>r. ESTADO DE CUENTA</b>: Es el documento oficial emitido por LA ADMINISTRADORA y a través del cual informa a sus afiliados, sobre los movimientos registrados en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN, que incluyen las aportaciones, el rendimiento, las comisiones y cualquier otra información pertinente, el cual es enviado al AFILIADO en un plazo máximo de treinta (30) días calendario a partir del cierre del último día hábil de cada trimestre o, ante la solicitud expresa del AFILIADO.
+                <br/> 
+                <b>s. FONDO DE PENSIONES O SIMPLEMENTE "FONDO"</b>: El Fondo que constituyan las Administradoras de Fondos de Pensiones con las contribuciones de sus afiliados, para el plan de pensiones que establezca, así como los rendimientos que las inversiones que dicho Fondo produzcan, una vez deducidas las comisiones correspondientes conforme el respectivo contrato de afiliación.
+                <br/> 
+                <b>t. FORMULARIO DE ACTUALIZACIÓN DE INFORMACIÓN</b>: Documento que contiene todo cambio de empleo, domicilio, números de teléfonos fijos y móviles, actualización de beneficiarios directos o contingentes, referencias personales, así como sobre cualquier otra variación en la información.
+                <br/> 
+                <b>u. INSTITUCIÓN DE SEGUROS</b>: Persona Jurídica autorizada de conformidad a lo establecido en la Ley de Instituciones de Seguros y Reaseguros, supervisada por la CNBS, la cual es contratada por intermediación de la Administradora para prestar la cobertura del SEGURO DE VIDA PREVISIONAL
+                <br/> 
+                <b>v. LAS PARTES O SIMPLEMENTE "PARTES"</b>: LA ADMINISTRADORA y EL AFILIADO
+                <br/> 
+                <b>w. LEY</b>: La Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones
+                <br/> 
+                <b>x. MEDIOS ELECTRÓNICOS O FÍSICOS</b>: Las plataformas tecnológicas habilitadas por LA ADMINISTRADORA para extender la cobertura de atención en beneficio de EL AFILIADO tales como: Pagina web, correo electrónico, App móvil, mensajes de texto, como también entrega física directamente a la dirección del domicilio del AFILIADO. Dichos servicios no generarán cargos adicionales al AFILIADO.
+                <br/> 
+                <b>y. PENSION O RENTA</b>: El pago único o total, parcial, temporal o de por vida en tanto la CUENTA INDIVIDUAL DE CAPITALIZACION tenga Fondos disponibles, que recibe un AFILIADO o sus BENEFICIARIOS, según la elección de la modalidad de Pensión o Renta dispuesto en la SOLICITUD DE AFILIACIÓN y en el CONTRATO DE AFILIACIÓN.
+                <br/> 
+                <b>z. PENSIÓN POR INVALIDEZ TOTAL Y PERMANENTE</b>: Es el beneficio, en dinero, que EL AFILIADO percibirá en tanto la CUENTA INDIVIDUAL DE CAPITALIZACION tenga Fondos disponibles, por motivo de una INCAPACIDAD TOTAL Y PERMANENTE que lo inhabilite de un modo absoluto y definitivo.
+                <br/> 
+                <b>aa. PLAN INDIVIDUAL VOLUNTARIO DE PENSIONES</b>: Programas privados de formación de un ahorro individual destinado a la obtención de una pensión complementaria a los beneficios establecidos por otros regímenes y que se regularán conforme a lo dispuesto en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones.
+                <br/> 
+                <b>bb. RENTA ANTICIPADA PARCIAL O TOTAL</b>: El pago anticipado parcial o total, que LA ADMINISTRADORA hace al AFILIADO en caso de invalidez total y permanente o a sus BENEFICIARIOS o HEREDEROS, por fallecimiento de El AFILIADO.
+                <br/> 
+                <b>cc. SEGURO DE VIDA PREVISIONAL</b>: Seguro colectivo contratado por la Administradora con una Institución de Seguros autorizada por la Comisión Nacional de Bancos y Seguros para operar en el ramo de personas, para brindar las coberturas de vida e invalidez total y permanente, a los afiliados que de forma opcional y voluntaria acepten estos servicios, suscribiendo la póliza correspondiente.
+                
             </div>
             <div style="width:48%;max-width:48%;display:inline-block;">
-                <b>4.</b> Garantizar a EL AFILIADO la disponibilidad de los recursos del FONDO DE PENSION.<br/>
-                <b>5.</b> Emitir a solicitud de EL AFILIADO, constacia que certifique que las aportaciones hechas por EL
-                AFILIADO, han sido recibidas y mantenidas en el FONDO DE PENSION desde la fecha de la
-                suscripción del contrato hasta la fecha de solicitud de la constacia.<br/>
-                <b>B. OBLIGACIONES DE EL AFILIADO</b>:<br/>
-                <b>1.</b> Cumplir con el pago puntual de sus aportes tanto en su cuantía como en frecuencia.<br/>
-                <b>2.</b> Designar en la SOLICITUD DE AFILIACION a sus BENEFICIARIOS DIRECTOS Y CONTINGENTES en caso de muerte. 
-                La distribución que corresponda se hará en base a lo establecido en por EL AFILIADO en la SOLICITUD DE 
-                AFILIACIÓN o los formularios de solicitud para actualización de Información de Afiliado que sea suscrito 
-                por EL AFILIADO posteriormente. En caso que al momento del fallecimiento del AFILIADO, los BENEFICIARIOS 
-                designados por este no existan o no se encuentren, se seguirán las reglas de la sucesión intestada de acuerdo
-                a la legislación hondureña.<br/>
-                <b>3.</b> Informará LA ADMINISTRADORA acerca de todo cambio de empleo, domicilio propio o de sus beneficiarios, 
-                así como sobre cualquier otra variación en la información relevante del contrato mediante la suscripción 
-                de los formularios de solicitud para actualización de Información de Afiliado que, de forma física o 
-                electrónica, LA ADMINISTRADORA pone a su disposición a través del Call Center o del Portal de Autogestión en 
-                la dirección https://www.ficohsapensiones.hn/. <br/>
-                <b>4.</b> Cumplir con la permanencia pactada establecida en la Solicitud de Afiliación.<br/>
-                <b>5.</b> Proporcionar a La Administradora la información requerida en la forma y plazos Indicados, para dar 
-                cumplimiento a la normativa vigente de Prevención o detección de Lavado de Activos.<br/>
-                <b>6.</b> Proporcionar a LA ADMINISTRADORA, todas los años durante el mes de enero y Comenzando a partir del 
-                año siguiente al que se empiece a recibir la pensión, los documentos que LA ADMINISTRADORA determine que 
-                son suficientes para comprobar la sobrevivencia.<br/>
-                <b>7.</b> En caso de retiro anticipado o de la culminación del contrato de pensión por el periodo de tiempo 
-                suscrito, EL AFILIADO se obliga a cumplir con cualquier requerimiento u obligación fiscal exigida por las
-                leyes tributarias al momento de recibir la pensión o en su caso el ingreso por retiro anticipado al plazo
-                de tiempo Suscrito.<br/>
-              	<b>CLAUSULA CUARTA.</b> EL AFILIADO en cualquier momento podrá efectuar aportes extraordinarios a su fondo de pensión.
-                Dichos aportes los podrá hacer sin necesidad de requerimiento, a través de los canales que LA ADMINISTRADORA
-                le indique.<apex:outputText rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}">&nbsp;EL AFILIADO entiende y acepta que los aportes extraordinarios no forman parte del cálculo de la suma
-                asegurada pactada en la póliza de seguro de vida descrita en LA SOLICITUD DE
-                AFILIACIÓN.</apex:outputText> <br/>
-                <b>CLAUSULA QUINTA. DE LOS RENDIMIENTOS</b>: Los rendimientos del fondo de pensión se calcularán
-                mensualmente y podrán variar durante el plazo del contrato; en todo caso, LA ADMINISTRADORA
-                no garantiza a EL AFILIADO un rendimiento determinado. Los rendimientos se empezarán a
-                computar apartir del día siguiente hábil en que LA ADMINISTRADORA reciba los aportes. En caso
-                de que el aporte se haga por medio de cheque, quedará sujeto a la condición de que se haga efectivo,
-                de conformidad a lo dispuesto en el Artículo 959 del Código de Comercio vigente.<br/>
-                <b>CLAUSULA SEXTA. VIGENCIA Y CARGOS POR RETIROS ANTICIPADOS</b>: El presente contrato tendrá una vigencia de 
-                acuerdo a lo establecido en la SOLICITUD DE AFILIACION. Sin perjuicio de lo anterior, cualquier retiro 
-                anticipado parcial o total que<apex:outputText rendered="{!AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')}">
-                &nbsp;que ocurra, será objeto de un cargo, de acuerdo los porcentajes siguientes:
-                </apex:outputText><br/>
+                <b>dd.SOLICITUD DE AFILIACIÓN</b>: Formulario en el cual se documenta la solicitud y los datos del cliente para su registro como afiliado del FONDO DE PENSIONES, y que forma parte integral de este Contrato. 
+                <br/>
+                <b>CLÁUSULA SEGUNDA. OBJETO</b>: Por el presente contrato de Afiliación para la administración de un Fondo de Pensiones Individual, EL AFILIADO se obliga a entregar a LA ADMINISTRADORA APORTES, para que LA ADMINISTRADORA los invierta en los rubros que esta última determine atendiendo condiciones de seguridad y rendimiento, así como de conformidad al Reglamento de Inversiones de los Fondos Administrados por parte de las Administradoras de Fondos de Pensiones (AFP) y demás disposiciones legales aplicables 
+                <br/>
+                <b>CLÁUSULA TERCERA. OBLIGACIONES DE LAS PARTES</b>: 
+                <br/>
+                <b>A. OBLIGACIONES DE LA ADMINISTRADORA</b>: 
+                <br/>
+                <b>1.</b> Llevar la CUENTA INDIVIDUAL, en forma separada de cualesquiera otras cuentas de LA ADMINISTRADORA. 
+                <br/>
+                <b>2.</b> Invertir los aportes de EL AFILIADO, en la forma que estime conveniente para dar cumplimiento a las obligaciones que asume en este contrato siempre atendiendo a factores de rentabilidad y seguridad dentro de los límites legales establecidos.
+                <br/>
+                <b>3.</b>Suministrar al AFILIADO en un plazo máximo de treinta (30) días calendario a partir del cierre del último día hábil de cada trimestre o, ante solicitud expresa del AFILIADO, un estado de cuenta el cual podrá ser enviado utilizando medios electrónicos o físicos de todos los movimientos registrados en su Cuenta Individual, incluyendo las aportaciones, el rendimiento, las comisiones y cualquier otra información pertinente.
+                <br/>
+                <b>4.</b> Garantizar a EL AFILIADO la disponibilidad de los recursos del FONDO DE PENSIÓN
+                <br/>
+                <b>5.</b>Emitir a solicitud de EL AFILIADO, constancia que certifique que las aportaciones hechas por EL AFILIADO, han sido recibidas y mantenidas en el FONDO DE PENSIÓN desde la fecha de la suscripción del contrato hasta la fecha de solicitud de la constancia.
+                <br/>
+                <b>B.OBLIGACIONES DE EL AFILIADO</b>:
+                <br/>
+                <b>1.</b> Cumplir con el pago puntual de sus aportes tanto en su cuantía como en frecuencia.
+                <br/>
+                <b>2.</b> Designar en la SOLICITUD DE AFILIACIÓN a sus BENEFICIARIOS DIRECTOS Y CONTINGENTES en caso de muerte. La distribución que corresponda se hará en base a lo establecido en la SOLICITUD DE AFILIACIÓN o en los formularios de actualización de Información que sean suscritos por EL AFILIADO posteriormente. En caso de ausencia de los BENEFICIARIOS DIRECTOS Y CONTINGENTES, al momento del fallecimiento del AFILIADO, se seguirán las reglas de la sucesión intestada de acuerdo a la Ley.
+                <br/>
+                <b>3.</b> Informar a LA ADMINISTRADORA acerca de todo cambio de empleo, domicilio propio o de sus beneficiarios, así como sobre cualquier otra variación en la información relevante del contrato mediante la suscripción del formulario de actualización de Información, de forma física o electrónica, que LA ADMINISTRADORA pone a su disposición a través del Call Center o del Portal de Autogestión en la dirección https://www.ficohsapensiones.hn/.
+                <br/>
+                <b>4.</b> Cumplir con la permanencia pactada establecida en la SOLICITUD DE AFILIACIÓN, de conformidad a la tabla señalada en la Cláusula Sexta del presente Contrato.
+                <br/>
+                <b>5.</b> Proporcionar a LA ADMINISTRADORA la información requerida en la forma y plazos indicados, para dar cumplimiento a la normativa vigente de Prevención o detección de Lavado de Activos.
+                <br/>
+                <b>6.</b> Presentarse físicamente ante las oficinas de LA ADMINISTRADORA, todos los años durante el mes de enero y comenzando a partir del año siguiente al que se empiece a recibir la pensión, debiendo presentar la cédula de identidad y llenar el Formulario de Actualización de Información, para la constatación física o prueba de sobrevivencia, como requisito para continuar con el pago de la renta respectiva. Dicha constatación también puede ser realizada a través de video llamada o por los medios electrónicos que se ponga a disposición del AFILIADO.
+                <br/>
+                <b>7.</b> En caso de retiro anticipado o de la culminación del presente CONTRATO DE AFILIACIÓN por el período de tiempo suscrito, EL AFILIADO se obliga a cumplir con cualquier requerimiento u obligación fiscal exigida por las leyes tributarias al momento de recibir la pensión o en su caso el ingreso por retiro anticipado al plazo de tiempo suscrito por EL AFILIADO
+                <br/>
+                <b>CLÁUSULA CUARTA.</b> EL AFILIADO en cualquier momento podrá efectuar aportes extraordinarios a su Cuenta Individual de capitalización. Dichos aportes los podrá hacer a través de los canales que LA ADMINISTRADORA le indique. 
+                <br/>
+                <b>CLÁUSULA QUINTA. DE LOS RENDIMIENTOS</b>: Los rendimientos del fondo de pensión se calcularán diariamente y podrán variar durante el plazo del contrato; en todo caso, LA ADMINISTRADORA no garantiza a EL AFILIADO un rendimiento determinado. Los rendimientos se empezarán a computar a partir del día siguiente hábil en que LA ADMINISTRADORA reciba los aportes. En caso de que el aporte se haga por medio de cheque, quedará sujeto a la condición de que se haga efectivo, de conformidad a lo dispuesto en el Artículo 959 del Código de Comercio vigente. 
+                <br/>
+                <b>CLÁUSULA SEXTA. VIGENCIA Y CARGOS POR RETIROS ANTICIPADOS</b>: El presente contrato tendrá una vigencia de acuerdo al plazo establecido por el AFILIADO en la SOLICITUD DE AFILIACIÓN, el cual será renovable automáticamente por períodos de un (1) año, salvo que una de las partes de aviso por escrito a la otra parte su intención de no renovar el CONTRATO DE AFILIACIÓN. 
+                La renovación del CONTRATO DE AFILIACIÓN, no afectará la antigüedad del AFILIADO, la que se considera en todo momento a partir de su aporte inicial.
+                Sin perjuicio de lo anterior, cualquier retiro anticipado que ocurra, será objeto de un cargo, de acuerdo a los porcentajes siguientes: 
                 <p align="center">
                     COMISIÓN POR RETIRO ANTICIPADO
                 </p>
-                
                 <table width="100%">
                     <tr>
                         <td>Años de permanencia</td>
@@ -1802,238 +1816,400 @@
                         <td>10%</td>
                         <td>0%</td>
                     </tr>
-                </table>
+                </table>                
                 <br/>
-                El cargo se calculará sobre el valor del monto de retiro y LA ADMINISTRADORA lo descontará al efectuar la 
-                liquidación que corresponda, a la que EL AFILLADO desde ahora da su expreso consentimiento. El proceso de 
-                retiro tiene una duración máxima de 15 días hábiles a partir de la fecha de la firma del formulario siempre 
-                y cuando EL AFILIADO o su Apoderado Legal debidamente facultado presente los documentos de identificación y 
-                facultativos necesarios para procesar el retiro.<br/>
-				LA ADMINISTRADORA podrá unilateralmente terminar el contrato sin ninguna responsabilidad cuando así lo 
-                considere por decisión administrativa, debiendo para tal efecto bastar una notificación hecha a EL AFILIADO
-                Con treinta días calendario para que pueda retirar el saldo a la fecha de terminación, sin que esto represente
-                algún cargo por retiro a EL AFILIADO. Lo anterior sin perjuicio que EL AFILIADO en todo caso deberá asumir 
-                la totalidad de la responsabilidad en lo que corresponde al pago de los impuestos que pudiera causar el 
-                retiro anticipado del fondo y declararlos a la entidad correspondiente, de acuerdo a lo que las leyes 
-                tributarlas vigentes estipulen a la fecha del retiro.<br/>
-                Las Partes expresamente aceptan que, el monto que constituye el LA CUENTA INDVIDUAL DE CAPITALIZACIÓN, 
-                podrán ser retirados sin penalización en cualquiera de los siguientes casos:<br/>
-				<b>1.</b> Por muerte de EL AFILIADO.<br/>
-				<b>2.</b> Por invalidez total y permanente de EL AFILIADO.<br/>
-				<b>3.</b> A los 3 años de vigencia del CONTRATO DE AFILIACIÓN según se detalla en la tabla anterior.<br/>
-				<b>4.</b> En caso de que LA ADMINISTRADORA decida unilateralmente terminar el contrato.<br/>
-                <b>CLAUSULA SEPTIMA. BENEFICIOS: EL AFILIADO</b> obtendrá los beneficios previsionales del FONDO DE PENSIONES,
-                dependiendo del valor acumulado en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN, cuando llegue a una edad de 
-                jubilación temprana a los 60 años, normal a los 65 años o tardía a los 70 años. Igualmente, a recibir una 
-                renta anticipada parcial o total cuando haya cumplido el periodo mínimo de permanencia en el FONDO según 
-                se establece en la cláusula anterior, o a una pensión por invalidez total
-                y permanente, siempre y cuando haya suscrito u optado a un seguro de vida y este se encuentre vigente.<br/>
-                <b>CLAUSULA OCTAVA. MODALIDADES PARA EL CUMPLIMIENTO DEL PAGO DE LA PENSIÓNO RENTAS</b>: LA ADMINISTRADORA pone a 
-                disposición de EL AFILIADO, las modalidades para el cumplimiento del pago de la pensión o renta convenida son
-                las siguientes:<br/>
-				<b>1. Opción Primera. Pensión o Renta de Pago Único</b>: Bajo esta opción, EL AFILIADO recibirá el valor total 
-                acumulado que incluye los rendimientos generados por la CUENTA INDIVIDUAL DE CAPITALIZACIÓN hasta la fecha 
-                de su retiro; en un solo y único pago, con el cual queda finiquitada la obligación de pago de pensión a EL 
-                AFILIADO Por parte de LA ADMINISTRADORA.<br/>   
-                <b>2. Opción Segunda. Pensión o Renta Programada</b>: En esta opción EL AFILIADO decide percibir el valor total 
-                acumulado que incluye los rendimientos generados por la CUENTA INDIVIDUAL DE CAPITALIZACIÓN hasta la fecha 
-                de su retiro, en cuotas mensuales, por el número de meses que resten del periodo de renta seleccionado por
-                EL AFILIADO, bajo este esquema la CUENTA INDVIDUAL DE CAPITALIZACIÓN continuará devengando rendimientos 
-                sobre su saldo, los que se capitalizarán mensualmente.<br/>
-				En caso que EL AFILIADO requiera el pago de pensión o renta programada antes descrito, LA ADMINISTRADORA
-                Cobrará un porcentaje no menor al 1.59% calculado sobre el valor de cada renta. Se exceptúan aquellos casos
-                en los cuales EL AFILIADO se encuentra en la modalidad de cobro sobre saldo.<br/>
-				En cualquier momento LA ADMINISTRADORA podrá poner a disposición de los afiliados, nuevas opciones para el
-                pago de la pensión entre las cuales EL AFILIADO podrá escoger libremente mismas que serán comunicadas previa
-                y oportunamente a los AFILIADOS mediante los canales habituales utilizados por LA ADMINISTRADORA Durante el 
-                periodo de aportaciones y hasta la fecha de retiro inclusive, EL AFILIADO puede elegir otra opción, siempre
-                mediando notificación previa a LA ADMINISTRADORA. El cambio lo deberá informar por escrito y surtirá efecto 
-                hasta transcurridos treinta (30) días a partir de la fecha en que LA ADMINISTRADORA haya recibido la 
-                comunicación.<br/>
-                <b>CLAUSULA NOVENA. FORMAS DE ENTREGAR LA PENSIÓN</b>:
-                <b>1.</b> LA ADMINISTRADORA entregará la pensión períodicamente, de acuerdo en la moneda que se
-                realicen las aportaciones de acuerdo a lo definido por EL AFILIADO en la Solicitud y Contrato de
-                Afiliación, únicamente a el AFILIADO o a su apoderado o representante legal, designado de conformidad con la 
-                ley.   
-                La entrega de la pensión la hará LA ADMINISTRADORA a través de los canales
-                dispuestos para sus cliente a elección de EL AFILIADO, lo cual deberá notificar por escrito a LA
-                ADMINISTRADORA con el fin de que esté disponible en las fechas convenidas.<br/>
-                <b>2.</b> En caso de fallecimiento de EL AFILIADO la distribución de beneficios se hará en base a los porcentajes 
-                definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización autorizado por esté para sus 
-                Beneficiarios Directos. A falta de alguno de éstos, y de acuerdo a lo establecido en el Art. 1245 del Código 
-                de Comercio, dicho porcentaje será distribuido equitativamente al resto de Beneficiarios Directos. En ausencia
-                de todos los Beneficiarios Directos, se activarán los Beneficiarios Contingentes, en base a los porcentajes 
-                definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización autorizado para cada uno de ellos.
-                Igualmente, a falta de alguno de éstos, dicho porcentaje será distribuido equitativamente al resto de
+                El cargo se calculará sobre el valor del monto de retiro y LA ADMINISTRADORA lo descontará al efectuar la liquidación que corresponda, a lo que EL AFILIADO desde ahora da su expreso consentimiento. 
+                El proceso de retiro tiene una duración máxima de 15 días hábiles a partir de la fecha de la firma del formulario siempre y cuando EL AFILIADO o su Apoderado Legal debidamente facultado presente los documentos de identificación y facultativos necesarios para procesar el retiro. 
+                LA ADMINISTRADORA podrá unilateralmente terminar el contrato sin ninguna responsabilidad cuando así lo considere por decisión administrativa justificada, debiendo para tal efecto bastar una notificación hecha a EL AFILIADO con treinta días calendario para que pueda retirar el saldo a la fecha de terminación, sin que esto represente algún cargo por retiro a EL AFILIADO. 
+                Lo anterior sin perjuicio que EL AFILIADO en todo caso deberá asumir la totalidad de la responsabilidad en lo que corresponde al pago de los impuestos que pudiera causar el retiro anticipado del fondo y declararlos a la entidad correspondiente, de acuerdo a lo que las leyes tributarias vigentes estipulen a la fecha del retiro. 
                 <br/>
+                Las Partes expresamente aceptan que, el monto que constituye la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, podrá ser retirados sin penalización en cualquiera de los siguientes casos: 
+                <br/>
+                <b>1.</b> Por muerte de EL AFILIADO. 
+                <br/>
+                <b>2.</b> Por invalidez total y permanente de EL AFILIADO. 
+                <br/>
+                <b>3.</b>A los 3 años de vigencia del CONTRATO DE AFILIACIÓN según se detalla en la tabla anterior. 
+                <br/>
+                <b>4.</b>En caso de que por causa justificada LA ADMINISTRADORA decida unilateralmente terminar el Contrato. 
+                <br/>
+                <b> CLÁUSULA SÉPTIMA. BENEFICIOS</b>: EL AFILIADO obtendrá los beneficios previsionales del FONDO DE PENSIONES, dependiendo del valor acumulado en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN, cuando llegue a una edad de jubilación temprana a los 60 años, normal a los 65 años o tardía a los 70 años. Igualmente, a recibir una renta anticipada parcial o total cuando haya cumplido el período mínimo de permanencia en el FONDO según se establece en la cláusula anterior, o a una pensión por invalidez total y permanente, siempre y cuando haya suscrito u optado a un seguro de vida y este se encuentre vigente. 
+                <br/>
+                <b>CLÁUSULA OCTAVA.</b> MODALIDADES PARA EL CUMPLIMIENTO DEL PAGO DE LA PENSIÓN O RENTAS: LA ADMINISTRADORA pone a disposición de EL AFILIADO, las modalidades para el cumplimiento del pago de la pensión o renta convenida son las siguientes: 
+                <br/>
+                <b>1.</b> Opción Primera. Pensión o Renta de Pago Único: Bajo esta opción, EL AFILIADO recibirá el valor total acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, que incluye los rendimientos generados por dicha cuenta hasta la fecha de su retiro; en un solo y único pago, con el cual queda finiquitada la obligación de pago de pensión a EL AFILIADO por parte de LA ADMINISTRADORA. 
+                <br/>
+                <b>2.Opción Segunda.</b> Pensión o Renta Programada: En esta opción EL AFILIADO decide percibir el valor total acumulado que incluye los rendimientos generados por la CUENTA INDIVIDUAL DE CAPITALIZACIÓN hasta la fecha de su retiro, en cuotas mensuales, por el número de meses que resten del período de renta seleccionado por EL AFILIADO, bajo este esquema la CUENTA INDIVIDUAL DE CAPITALIZACIÓN continuará devengando rendimientos sobre su saldo, los que se capitalizarán mensualmente.
+                <br/> 
             </div>
         </div>
-         <div style="page-break-after:always;"/>
-         <div style="width:100%;font-size:9px;">
-         <div style="width:48%;max-width:48%;display:inline-block;margin-right:23px;">      
-             <br/> 
-             <br/>
-                Beneficiarios Contingentes sobrevivientes. La ausencia de todos los Beneficiarios Contingentes dará como
-                resultado la distribución "Según herederos por ley".<br/>
-				El Beneficiario Directo y/o Contingente, o los herederos por ley, podrán suscribir un nuevo CONTRATO DE 
-                AFILIACIÓN si así lo desean.<br/>
-                <b>CLAUSULA DÉCIMA. COMISIÓN</b>: EL AFILIADO autoriza a LA ADMINISTRADORA deducir mensualmente de la CUENTA 
-                INDIVIDUAL DE CAPITALIZACIÓN la comisión ordinaria de conformidad a los Artículos 10 y 11 de la Ley del 
-                Régimen Opcional Complementarlo para la Administración de Fondos Privados de Pensiones y debidamente indicada
-                en el presente contrato, la cual se pacta de la siguiente manera:<br/>
-				<b>1.</b> Para el Fondo de Pensión en Lempiras una Comisión Mixta compuesta por un 
-             	<div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+        <div style="page-break-after:always;"/>
+        <div style="width:100%;font-size:9px; display:{!IF(NOT(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1')), 'block;','none;')}">
+            <div style="width:48%;max-width:48%;display:inline-block;margin-right:23px;">      
+                <br/> 
+                <br/>
+                En caso que EL AFILIADO requiera el pago de pensión o renta programada antes descrito, LA ADMINISTRADORA cobrará un porcentaje no menor al 1.5% calculado sobre el valor de cada renta. Se exceptúan aquellos casos en los cuales EL AFILIADO se encuentra en la modalidad de cobro sobre saldo.
+                En cualquier momento LA ADMINISTRADORA podrá poner a disposición de los afiliados, nuevas opciones para el pago de la pensión entre las cuales EL AFILIADO podrá escoger libremente mismas que serán comunicadas previa y oportunamente a los AFILIADOS mediante los canales habituales utilizados por LA ADMINISTRADORA.
+                <br/>
+                Durante el período de aportaciones y hasta la fecha de retiro inclusive, EL AFILIADO puede elegir otra opción, siempre mediando notificación previa a LA ADMINISTRADORA. El cambio lo deberá informar por escrito y surtirá efecto hasta transcurridos treinta (30) días a partir de la fecha en que LA ADMINISTRADORA haya recibido la comunicación.
+                <br/>
+                <b>CLÁUSULA NOVENA.</b> FORMAS DE ENTREGAR LA PENSIÓN: 
+                <br/>
+                <b>1.</b> LA ADMINISTRADORA entregará la pensión periódicamente, de acuerdo a lo definido por EL AFILIADO en la SOLICITUD DE AFILIACIÓN y CONTRATO DE AFILIACIÓN, únicamente a EL AFILIADO o a su apoderado o representante legal, designado de conformidad con la Ley. La entrega de la pensión la efectuará LA ADMINISTRADORA, a través de los canales dispuestos para sus afiliados a elección de ellos mismos, lo cual deberá notificar por escrito a LA ADMINISTRADORA, con el fin de que esté disponible en las fechas convenidas. 
+                <br/>
+                <b>2.</b>En caso de fallecimiento de EL AFILIADO la distribución de beneficios se hará en base a los porcentajes definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización de Información autorizado por éste para sus Beneficiarios Directos. A falta de alguno de éstos, y de acuerdo a lo establecido en el Artículo 1246 del Código de Comercio, dicho porcentaje será distribuido equitativamente al resto de Beneficiarios Directos. En ausencia de todos los Beneficiarios Directos, se activarán los Beneficiarios Contingentes, en base a los porcentajes definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización de Información autorizado para cada uno de ellos. Igualmente, a falta de alguno de éstos, dicho porcentaje será distribuido equitativamente al resto de Beneficiarios Contingentes sobrevivientes. La ausencia de todos los Beneficiarios Contingentes dará como resultado la distribución "Según herederos por Ley” 
+                <br/>
+                CLÁUSULA DÉCIMA. COMISIÓN: EL AFILIADO autoriza a LA ADMINISTRADORA deducir mensualmente de la CUENTA INDIVIDUAL DE CAPITALIZACIÓN la comisión ordinaria de conformidad a los Artículos 10 y 11 de la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones y debidamente indicada en el presente contrato, la cual se pacta de la siguiente manera: 
+                <br/>
+                <b>1.</b>Para el Fondo de Pensión en Lempiras una Comisión Mixta compuesta por 
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
                     <apex:outputText rendered="{!if(info.pcTipoMoneda=='1',true,false)}">{!comiAporte}</apex:outputText>
                 </div>% calculado sobre el valor de los aportes más un 
                 <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
                     <apex:outputText rendered="{!if(info.pcTipoMoneda=='1',true,false)}">{!comiSaldo}</apex:outputText>
                 </div>%
-                anual calculando diariamente y cobrado mensualmente sobre el saldo acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.<br/>
-                <b>2.</b> Para el Fondo de Pensión en Dólares una Comisión Mixta compuesta por un
-             	<div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+                anual calculado diariamente y cobrado mensualmente sobre el saldo acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN. 
+                <br/>
+                <b>2.</b>Para el Fondo de Pensión en Dólares una Comisión Mixta compuesta por un
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
                     <apex:outputText rendered="{!if(info.pcTipoMoneda=='2',true,false)}">{!comiAporte}</apex:outputText>
                 </div>%
                 calculado sobre el valor de los aportes más un
                 <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
                     <apex:outputText rendered="{!if(info.pcTipoMoneda=='2',true,false)}">{!comiSaldo}</apex:outputText>
                 </div>%
-                anual calculado diariamente y cobrada mensualmente sobre el saldo 
-                acumulado en la CUENTA INDVIDUAL DE CAPITALIZACIÓN.<br/>
-				Los cargos por concepto de comisiones podrán ser modificados por parte de LA ADMINISTRADORA previa 
-                notificación a EL AFILIADO, por lo menos con treinta (30) días de anticipación.<br/>
-                <b>3.</b> En caso de que la variación implique un incremento, EL AFILIADO podrá rescindir del presente contrato
-                sin que sea aplicable ninguna penalidad por dicho concepto. Las notificaciones que LA ADMINISTRADORA realice
-                a EL AFILIADO podrán ser mediante avisos escritos al domicilio de EL AFILIADO o dirección establecida en 
-                éste contrato o comunicados en radio, o televisión, o periódicos, o mensajes electrónicos o avisos en las 
-                oficinas de LA ADMINISTRADORA o en su página Web.<br/>
-            	<b>CLAUSULA DÉCIMA PRIMERA, CESE DE APORTACIONES Y REINICIO DE LOS APORTES</b>: Si EL AFILIADO deja de efectuar 
-                los aportes aquí convenidos durante seis (6) meses consecutivos, la CUENTA INDIVIDUAL DE CAPITALIZACIÓN 
-                pasaré a un estado de INACTIVO" con los efectos que la Ley. Artículo 1, numeral 2 establece y LA 
-                ADMINISTRADORA tendrá derecho a percibir una comisión del% sobre la rentabilidad anual de la CUENTA 
-                INDIVIDUAL DE CAPITALIZACIÓN. Sin perjuicio de lo anterior, EL AFILADO Podrá reiniciar los aportes en
-                cualquier momento en la misma CUENTA INDVIDUAL DE CAPITALIZACIÓN.<br/>
-                <b>CLAUSULA DÉCIMA SEGUNDA. SEGUROS</b>: EL AFILIADO podrá optar por contratar un Seguro de Vida. Es entendido y 
-                convenido que LA ADMINISTRADORA actúa únicamente como intermediaria en la suscripción de las coberturas, por
-                lo tanto, la procedencia de Cualquier indemnización será determinada por la Compañía de Seguros Contratada y
-                El AFILIADO queda en el entendido que perderá su cobertura en el momento que interrumpa los aportes mensuales
-                pactados{!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'), ', efectúe retiros anticipados o cancele su plan antes del plazo contratado.', '.')}<br/>  
-                <b>CLAUSULA DÉCIMA TERCERA. NORMA PARA LA APLICACIÓN DELACUERDO ENTRE EL GOBIERNO DE LOS ESTADOS UNIDOS DE 
-                AMERICA Y EL GOBIERNO DE LA REPUBLICA DE HONDURAS PARA LA MEJORA DEL CUMPLIMIENTO TRIBUTARIO INTERNACIONAL
-                E IMPLEMENTAR FATCA</b>: Específicamente EL AFILIADO:<br/>
-				<b>1.</b> Acepta que cualquier obstrucción. Falta de diligencia o falsedad en la información suministrada o
-                cualquier falta respecto al tiempo o la forma de suplir la información Facultará a LA ADMINISTRADORA para 
-                terminar contrates y obligaciones mantenidas con el AFLIADO, sin necesidad de notificación previa ni
-                responsabilidad alguna para LA ADMINISTRADORA, o bien cerrar, bloquear o transferir dichas cuentas u 
-                obligaciones.<br/>
-				<b>2.</b> Se obliga incondicionalmente a mantener a LA ADMINISTRADORA (incluyendo todo su personal y terceros
-                relacionados) totalmente indemnes en contra de cualquier daño o perjuicio derivado del incumplimiento de 
-                esta obligación y<br/>
-				<b>3.</b> En caso de cualquier cambio de circunstancias respecto a la información brindada por mi persona en la
-                documentación solicitada por LA ADMINISTRADORA, que pueda generar un cambio de estatus respecto a FATCA,
-                entiendo que quedo comprometido a informar por escrito a LA ADMINISTRADORA de forma inmediata al acontecimiento
-                de dicho cambio."<br/>                
-                <b>CLAUSULA DÉCIMA CUARTA: CLAUSULA DE TERMINACION ESPECIAL</b>: El presente Contrato se dará por terminado de 
-                manera anticipada en los casas en que EL AFILIADO, o el BENEFICIARIO o BENEFICIARIOS sean condenados mediante
-                sentencia firme por algún Tribunal Nacional o de otra jurisdicción por los delitos de Narcotráfico, Lavado de
-                Dinero, Financiamiento del Terrorismo, Financiación de la Proliferación de Armas de Destrucción Masiva, o
-                cualquier otro delito de crimen o delincuencia organizada reconocidos como tales por Tratados o Convenios
-                Internacionales de los cuales Honduras sea suscriptor, o bien sean incluidos en las listas de entidades u
-                Organizaciones que identifiquen a personas como participes, colaboradores, Facilitadores del crimen organizado
-                como ser la lista OFAC (Ofice Foreing Assets Control) y la lista de Designados de la ONU, entre otras.
-                Esta cláusula se adecuará en lo pertinente a los procedimientos especiales que podrían derivarse de la 
-                Ley Especial Contra el Lavados de Activos, Ley sobre Uso Indebido y Tráfico ilícito de Drogas y Sustancias
-                Psicotrópicas, Ley Contra el Financiamiento del Terrorismo, Ley sobre Privación Definitiva del Dominio de
-                Bienes de Origen Ilícito y sus respectivos Reglamentos, en lo relativo al manejo, custodia y administración
-                de los fondos de pensión de personas involucradas en ese tipo de actos" <br/>  
-                <b>CLAUSULA DÉCIMA QUINTA: CONFIDENCIALIDAD</b>: LA ADMINISTRADORA dará un tratamiento confidencial a la información
-                relacionada con EL AFILIADO; información que ha sido proporcionada de forma veraz y exacta por EL AFILIADO.
-                En consecuencia, cualquier omisión o falsedad en las mismas dará derecho a LA ADMINISTRADORA de dar por 
-                finalizado. Sin responsabilidad de su parte, el presente Contrato.<br/>
-				No obstante, el tratamiento confidencial antes aludido, EL AFILIADO autoriza expresamente a LA ADMINISTRADORA
-                a transferir y a dar a conocer toda la información relacionada con EL AFILIADO a las sucursales, subsidiarias,
-                oficinas representativas, filiales y agentes de LA ADMINISTRADORA, que forman parte del GRUPO FINANCIERO 
-                FICOHSA, para su uso confidencial (incluso en conexión con el suministro de producto o la prestación de 
-                servicio y con fines estadísticos, de procesamiento de datos y análisis de riesgo).<br/> 
-                Asimismo, EL AFILIADO autoriza desde ya a LA ADMINISTRADORA a compartir información confidencial cuando
-                le sea requerida por autoridades competentes o por los reguladores bancarios del Grupo Financiero Ficohsa.<br/>                
+                anual calculado diariamente y cobrada mensualmente sobre el saldo acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN. 
+                <br/>   
+                Los cargos por concepto de comisiones podrán ser modificados por parte de LA ADMINISTRADORA previa notificación a EL AFILIADO, por lo menos con treinta (30) días de anticipación, de conformidad a lo establecido en el Artículo 22 numeral 8 de las Normas Complementarias para el Fortalecimiento de la Transparencia, la Cultura Financiera, y Atención al Usuario Financiero. En caso de que la variación implique un incremento, EL AFILIADO podrá rescindir del presente contrato sin que sea aplicable ninguna penalidad por dicho concepto, de conformidad a lo establecido en la Cláusula Sexta, del presente CONTRATO DE AFILIACIÓN. 
+                <br/>
+                Las notificaciones que LA ADMINISTRADORA realice a EL AFILIADO podrán ser mediante avisos escritos al domicilio de EL AFILIADO o dirección establecida en este contrato o comunicados en radio, televisión, periódicos, mensajes electrónicos, avisos en las oficinas de LA ADMINISTRADORA o en su página Web 
+                <br/>
+                <b>CLÁUSULA DÉCIMA PRIMERA CESE DE APORTACIONES Y REINICIO DE LOS APORTES</b>: Si EL AFILIADO suspendiese el pago de sus APORTES mensuales pactados, durante un período de seis (6) meses consecutivos, EL AFILIADO conservará sus derechos sobre El FONDO DE PENSIONES acumulado en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN y éste seguirá siendo gestionado por LA ADMINISTRADORA, quien puede descontar a EL AFILIADO una comisión con base en la rentabilidad anual, según lo establezca la legislación vigente siempre y cuando dicho valor no sobrepase la comisión ordinaria recibida normalmente, en cuyo caso únicamente se podrá descontar como máximo este último valor. 
+                Dicha comisión será establecida claramente en un tarifario a disposición de EL AFILIADO por medio de los canales dispuestos por la ADMINISTRADORA para sus afiliados. Sin perjuicio de lo anterior, EL AFILIADO podrá reiniciar los aportes en cualquier momento en la misma CUENTA INDIVIDUAL DE CAPITALIZACIÓN. 
+                <b>CLÁUSULA DÉCIMA SEGUNDA. SEGUROS</b>: Para que EL AFILIADO o sus BENEFICIARIOS cuando corresponda, puedan tener opcionalmente derecho a recibir una indemnización por invalidez parcial o total, ya sea temporal o permanente y por muerte de EL AFILIADO deberá suscribir por medio de LA ADMINISTRADORA, un SEGURO DE VIDA PREVISIONAL para cubrir dichos riesgos conforme la suma asegurada pactada, para lo cual EL AFILIADO deberá cumplir con los requisitos establecidos en la Póliza de Seguros contratada por LA ADMINISTRADORA. El costo de la prima a pagar se calculará sobre la suma asegurada, de conformidad con la póliza contratada por la Administradora, con la Institución Aseguradora, el pago de dicha prima de seguro se puede realizar con cargo a la CUENTA INDIVIDUAL DE CAPITALIZACIÓN o por las vías establecidas en la SOLICITUD DE AFILIACIÓN. De igual manera, los efectos del seguro cesarán de conformidad a las disposiciones que establezca la Institución de Seguros. Es entendido y convenido que LA ADMINISTRADORA actúa únicamente como intermediaria en la suscripción de las coberturas, por lo tanto, la procedencia de cualquier indemnización será determinada en todo momento por la Institución de Seguros que respalda la póliza contratada, al amparo de lo establecido en las condiciones generales y particulares del Contrato de SEGURO DE VIDA PREVISIONAL suscrito con LA ADMINISTRADORA y vigente a la fecha del siniestro.
+                <br/>
+                <b>CLÁUSULA DÉCIMA TERCERA. NORMA PARA LA APLICACIÓN DEL ACUERDO ENTRE EL GOBIERNO DE LOS ESTADOS UNIDOS DE AMÉRICA y EL GOBIERNO DE LA REPÚBLICA DE HONDURAS PARA LA MEJORA DEL CUMPLIMIENTO TRIBUTARIO INTERNACIONAL E IMPLEMENTAR FATCA</b>: Específicamente EL AFILIADO: 
+                <br/>
+                <b>1.</b> Acepta que cualquier obstrucción, falta de diligencia o falsedad en la información suministrada o cualquier falta respecto al tiempo o la forma de suplir la información facultará a LA ADMINISTRADORA para terminar contratos y obligaciones mantenidas con el AFILIADO, sin necesidad de notificación previa ni responsabilidad alguna para LA ADMINISTRADORA, o bien cerrar, bloquear o transferir dichas cuentas u obligaciones; 
+                <br/>
+                <b>2.</b>Se obliga incondicionalmente a mantener a LA ADMINISTRADORA (incluyendo todo su personal y terceros relacionados) totalmente indemnes en contra de cualquier daño o perjuicio derivado del incumplimiento de esta obligación y, 
+                <br/>
+                <b>3.</b>En caso de cualquier cambio de circunstancias respecto a la información brindada por mi persona en la documentación solicitada por LA ADMINISTRADORA, que pueda generar un cambio de estatus respecto a FATCA, entiendo que quedo comprometido a informar por escrito a LA ADMINISTRADORA de forma inmediata al acontecimiento de dicho cambio. 
+                <br/>
+                <b>CLÁUSULA DÉCIMA CUARTA: CLÁUSULA DE TERMINACIÓN ESPECIAL</b>: El presente Contrato se dará por terminado de manera anticipada en los casos en que EL AFILIADO, o el BENEFICIARIO o BENEFICIARIOS sean condenados mediante sentencia firme por algún Tribunal Nacional o de otra jurisdicción por los delitos de Narcotráfico, Lavado de Dinero, Financiamiento del Terrorismo, Financiación de la Proliferación de Armas de Destrucción Masiva, o cualquier otro delito de crimen o delincuencia organizada reconocidos como tales por Tratados o Convenios Internacionales de los cuales Honduras sea suscriptor, o bien sean incluidos en las listas de entidades u Organizaciones que identifiquen a personas como participes, colaboradores, facilitadores del crimen organizado como ser la lista OFAC (Office Foreign Assets Control) y la lista de Designados de la ONU, entre otras. Esta cláusula se adecuará en lo pertinente a los procedimientos especiales que podrían derivarse de la Ley Especial Contra el Lavados de Activos, Ley sobre Uso Indebido y Tráfico Ilícito de Drogas y Sustancias Psicotrópicas, Ley Contra el Financiamiento del Terrorismo, Ley sobre Privación Definitiva del Dominio de Bienes de Origen Ilícito y sus respectivos Reglamentos, en lo relativo al manejo, custodia y administración de los fondos de pensión de personas involucradas en ese tipo de actos. 
+                <b>CLÁUSULA DÉCIMA QUINTA: CONFIDENCIALIDAD</b>: LA ADMINISTRADORA dará un tratamiento confidencial a la información relacionada con EL AFILIADO; información que ha sido proporcionada de forma veraz y exacta por EL AFILIADO.
                 
-                 
-               </div>
-              <div style="width:48%;max-width:48%;display:inline-block;"> 
-                <b>CLÁUSULA DÉCIMA SEXTA, FONDOS LÍCITOS</b>: Declaración: EL AFILIADO manifiesta bajo protesta de decir verdad, 
-                que los recursos que maneje en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN en LA ADMINISTRADORA O que utilice en 
-                el pago de sus obligaciones con la institución bajo cualquier causa, son de procedencia licita y faculta a
-            	LA ADMINISTRADORA para que ésta pueda brindar información financiera de los ingresos o saldo(s) en la{s)
-                cuenta(s), así como documentación e informes que sean solicitados por la Comisión Nacional de Bancos y             
+            </div>
+            <div style="width:48%;max-width:48%;display:inline-block;"> 
                 
-                Seguros y/u otros organismos competentes que conforme a Ley puedan requerirla. Por lo anteriormente expuesto
-                libera a LA ADMINISTRADORA, de Cualquier responsabilidad al brindar este tipo de información. EL AFILIADO 
-                reconoce, que en caso que sea un sujeto obligado al pago de impuestos en los Estados Unidos de América, sus
-                cuentas estarán sujetas a lo establecido a la Norma Para La Aplicación del Acuerdo entre El Gobierno de Los
-                Estados Unidos de América y El Gobierno de La Republica De Honduras para la Mejora del Cumplimiento Tributario 
-                Internacional e Implementar FATCA,
-               
-           
-                por lo tanto, desde ya autoriza a LA ADMINISTRADORA, para que pueda
-                brindar toda la información necesaria en relación a sus cuentas u operaciones financieras que conforme 
-                al Foreign Account Tax Compliance Act (FATCA), deba ser dada a conocer a las autoridades fiscales de los
-                Estados Unidos de América o cualquier autoridad nacional que este autorizada para recibir dicha información.<br/> 
-                <b>CLÁUSULA DÉCIMA SÉPTIMA. CESIÓN</b>: Es convenido por las Partes, que LA ADMINISTRADORA podrá ceder, gravar o 
-                traspasar en todo o en parte los derechos y obligaciones a su cargo derivadas del presente CONTRATO DE 
-                AFILIACIÓN. EL AFILIADO solamente podrá ceder los derechos y obligaciones que se originen de este CONTRATO
-                DE AFILIACIÓN con la aprobación previa y por escrito de la ADMINISTRADORA.<br/>                
-                <b>CLAUSULA DÉCIMA OCTAVA. CASO FORTUITO Y FUERZA MAYOR</b>: Ninguna de las Partes será responsable por el 
-                incumplimiento de sus obligaciones cuando dicho incumplimiento se genere por caso fortuito o
-                fuerza mayor debidamente comprobado y siempre que el mismo sea mayor de 30 días.<br/>     
-                <b>CLAUSULA DÉCIMA NOVENA. LEGISLACIÓN, SOLUCIÓN DE CONTROVERSIAS Y RECLAMOS DEL USUARIO FINANCIERO</b>:<br/>
-				EL AFILIADO tendrá derecho de presentar reclamos ante la ADMNISTRADORA, en Cualquier momento, por 
-                controversias que se susciten durante la vigencia de la relación contractual. La ADMINISTRADORA estará 
-                obligada a dar respuesta por escrito al AFILIADO dentro de los diez (10) días hábiles siguientes a la fecha
-                de recepción de la hoja de reclamación correspondiente, pudiendo la ADMINISTRADORA prorrogar el plazo 
-                anterior por otro plazo de diez (0) días hábiles adicionales. Si el AFlLIADO no estuviese satisfecho con
-                la respuesta de la ADMINISTRADORA Podrá acudir a la Comisión Nacional de Bancos y Seguros en aplicación de
-                la Resolución 1768/12-T-2012 y 2404/02-12-2013.<br/>
-				Este CONTRATO DE AFILIACIÓN será regulado de conformidad con las Leyes de la República de Honduras,
-                especialmente por las disposiciones de la Ley y las Normas para el Fortalecimiento de la Transparencia, 
-                la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas. Las PARTES 
-                acuerdan que todas las controversias y conflictos relacionados directamente o indirectamente con la 
-                SOLICITUD DE AFILIACIÓN Y EL CONTRATO DE AFILIACIÓN, Sus ADENDAS Y ANEXOS; inclusive de su naturaleza, 
-                Cumplimiento, ejecución o terminación del misma. Las partes convienen que, en caso de cualquier controversia,
-                se someten al juzgado de Letras de lo Civil de Francisco Morazán.<br/>
-             	<b>CLAUSULA VIGÉSIMA. PRELACIÓN</b>: Las Partes convienen que cualquier discrepancia que Surja entre las 
-                condiciones establecidas en las cláusulas del presente Contrato, sus Anexos y Adendas y la Solicitud de
-                Afiliación, se resolverá conforme al siguiente orden de prelación para su interpretación. a) La solicitud
-                de afiliación; b) Contrato de Afiliación y sus Adendas: y. c) Anexos: todo conforme a la legislación 
-                aplicable y de conformidad con las reglas generales de Interpretación de los Contratos, En caso de conflicto
-                entre los términos del presente Contrato y un Anexo o una Adenda, los términos del Anexo o Adenda
-                prevalecerán a menos que se especifique lo contrario en dicho Anexo o Adenda respectivo. <br/>
-                Las referencias al "Contrato" incluirán también una referencia a los Anexos y/o Adendas y la Solicitud 
-                de Afiliación que se agreguen al presente contrato a efecto de formar parte integrante del mismo.<br/>  
-                <b>CLÁUSULA VIGÉSIMA PRIMERA. NOTIFICACIONES</b>: La dirección que El AFILIADO señala para recibir notificaciones
-                relacionadas con el contrato es la que está indicada en la Solicitud o a través de los medios electrónicos
-                puestos a disposición por las PARTES. La dirección que LA ADMINISTRADORA señala para recibir notificaciones
-                sobre el contrato es Edificio Plaza Ficohsa, 4to piso, Colonia Payaqui, Avenida San Juan Bosco, media cuadra
-                arriba del instituto Salesiano San Miguel, Tegucigalpa, Honduras., Tanto EL AFILIADO Como LA ADMINISTRADORA 
-                se obligan a dar aviso de cualquier cambio de dirección, bajo el entendido de que si no lo hicieren se
-                tendrán como bien hechas las notificaciones que se le hagan en las direcciones antes indicadas.<br/>
-                <b>CLAUSULA VIGÉSIMA SEGUNDA. MODIFICACIONES</b>: EL AFILIADO y LA ADMINISTRADORA Convienen que este contrato podrá
-                ser modificado a requerimiento de la Comisión Nacional de Bancos y Seguros, o si el Banco Central de Honduras,
-                la misma Comisión Nacional de Bancos y Seguros o el Estado dictaran alguna resolución o ley que modifique la
-                estructura legal de este contrato o establezca condiciones fiscales que Pudieran ser aplicables al presente 
-                contrato y que incidan en la rentabilidad del fondo o en Su estructura jurídica, igualmente podrá ser 
-                modificado por mutuo acuerdo por escrito entre las partes., suscribiendo el respectivo Anexo o Adenda
-                misma que será de conformidad a lo establecido en la Ley.<br/>                
-                <b>CLÁUSULA VIGÉSIMA TERCERA. ACEPTACIÓN</b>. Entendidas las partes del significado exacto de todas y cada una de
-                las cláusulas del presente CONTRATO DE AFILIACIÓN, así como el valor y trascendencia legales de las renuncias
-                y estipulaciones que han hecho en este acto, manifiestan su conformidad y aceptación, por tanto, en te de 
-                lo anterior firman dos ejemplares origínales, en la Ciudad y en la fecha que corresponde a la Solicitud.
-                  <br/>  
-                  <br/>  
-                  <br/><br/>
-                   <br/>  
-                  <br/>  
-                  <br/><br/>
-             </div>
+                No obstante, el tratamiento confidencial antes aludido, EL AFILIADO autoriza expresamente a LA ADMINISTRADORA a transferir y a dar a conocer toda la información relacionada con EL AFILIADO a las sucursales, subsidiarias, oficinas representativas, filiales y agentes de LA ADMINISTRADORA, que forman parte del GRUPO FINANCIERO FICOHSA, para su uso confidencial (incluso en conexión con el suministro de producto o la prestación de servicio y con fines estadísticos, de procesamiento de datos y análisis de riesgo). Asimismo, EL AFILIADO autoriza desde ya a LA ADMINISTRADORA a compartir información confidencial cuando le sea requerida por autoridades competentes o por los reguladores bancarios del Grupo Financiero Ficohsa.
+                <br/>   
+                <b>CLÁUSULA DÉCIMA SEXTA. FONDOS LÍCITOS: Declaración</b>: EL AFILIADO manifiesta bajo protesta de decir verdad, que los recursos que maneje en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN en LA ADMINISTRADORA o que utilice en el pago de sus obligaciones con la institución bajo cualquier causa, son de procedencia lícita y faculta a LA ADMINISTRADORA para que ésta pueda brindar información financiera de los ingresos o saldo(s) en la(s) cuenta(s), así como documentación e informes que sean solicitados por la Comisión Nacional de Bancos y Seguros y/u otros organismos competentes que conforme a Ley puedan requerirla. Por lo anteriormente expuesto libera a LA ADMINISTRADORA, de cualquier responsabilidad al brindar este tipo de información. EL AFILIADO reconoce, que en caso que sea un sujeto obligado al pago de impuestos en los Estados Unidos de América, sus cuentas estarán sujetas a lo establecido a la Norma para la Aplicación del Acuerdo entre el Gobierno de los Estados Unidos de América y el Gobierno de La República De Honduras para la Mejora del Cumplimiento Tributario Internacional e Implementar FATCA, por lo tanto, desde ya autoriza a LA ADMINISTRADORA, para que pueda brindar toda la información necesaria en relación a sus cuentas u operaciones financieras que conforme al Foreign Account Tax Compliance Act (FATCA), deba ser dada a conocer a las autoridades fiscales de los Estados Unidos de América o cualquier autoridad nacional que este autorizada para recibir dicha información. 
+                <br/> 
+                <b>CLÁUSULA DÉCIMA SÉPTIMA. CESIÓN</b>: Es convenido por las Partes, que LA ADMINISTRADORA podrá ceder, gravar o traspasar en todo o en parte los derechos y obligaciones a su cargo derivadas del presente CONTRATO DE AFILIACIÓN siempre y cuando dicha cesión se haga a favor de una institución debidamente autorizada por la Comisión Nacional de Bancos y Seguros para prestar servicios de Administración de Fondos de Pensiones.
+                <br/> 
+                LA ADMINISTRADORA deberá notificar con al menos 30 días de anticipación al AFILIADO, a través de los canales usuales de comunicación, para que este pueda rescindir el presente contrato, sin responsabilidad o penalidad si así lo desea, y que pueda trasladar los fondos existentes en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN a otra Administradora de su elección, o retirar los mismos íntegramente. Vencido el plazo de 30 días señalado anteriormente, en caso de silencio de parte del AFILIADO, LA ADMINISTRADORA entenderá que no existe objeción alguna, y procederá con la cesión del presente contrato. EL AFILIADO solamente podrá ceder los derechos y obligaciones que se originen de este CONTRATO DE AFILIACIÓN con la aprobación previa y por escrito de la ADMINISTRADORA.
+                <br/> 
+                <b>CLÁUSULA DÉCIMA OCTAVA</b>: CASO FORTUITO O FUERZA MAYOR: Ninguna de las partes será responsable por el incumplimiento de sus obligaciones cuando dicho incumplimiento se genere por caso fortuito o fuerza mayor debidamente comprobado y siempre que el mismo tenga una duración mayor de treinta (30) días hábiles, pudiendo LA ADMINISTRADORA solicitar la terminación del presente Contrato, quedando obligada únicamente por el efecto mismo de la terminación, a devolver los aportes acumulados al AFILIADO en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN. 
+                <br/> 
+                <b>CLÁUSULA DÉCIMA NOVENA.</b> - RECLAMOS DEL USUARIO FINANCIERO: EL AFILIADO tendrá derecho de presentar reclamos ante la ADMNISTRADORA, en cualquier momento, por controversias que se susciten durante la vigencia de la relación contractual. La ADMINISTRADORA estará obligada a dar respuesta por escrito al AFILIADO dentro de los diez (10) días hábiles siguientes a la fecha de recepción de la hoja de reclamación correspondiente, pudiendo la ADMINISTRADORA prorrogar el plazo anterior por otro plazo de diez (10) días hábiles adicionales. Si el AFILIADO no estuviese satisfecho con la respuesta de la ADMINISTRADORA podrá acudir a la Comisión Nacional de Bancos y Seguros en aplicación de las Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisada contenidas en la Resolución GE No. 1768/12-11-2012 y GE No. 1769/12-11-2012. 
+                <br/> 
+                <b>CLÁUSULA VIGÉSIMA. LEGISLACIÓN, SOLUCIÓN DE CONTROVERSIAS</b>: Este CONTRATO DE AFILIACIÓN será regulado de conformidad con las Leyes de la República de Honduras, especialmente por las disposiciones de la Ley y las Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas. Las PARTES acuerdan que todas las controversias y conflictos relacionados directamente o indirectamente con la SOLICITUD DE AFILIACIÓN Y EL CONTRATO DE AFILIACIÓN, sus ADENDAS Y ANEXOS; inclusive de su naturaleza, cumplimiento, ejecución o terminación del mismo. Las partes convienen que, en caso de cualquier controversia, se someten al juzgado de Letras de lo Civil de Francisco Morazán.
+                <br/> 
+                <b>CLÁUSULA VIGÉSIMA PRIMERA. PRELACIÓN</b>: Las Partes convienen que cualquier discrepancia que surja entre las condiciones establecidas en las cláusulas del presente Contrato, sus Anexos y Adendas y la Solicitud de Afiliación, se resolverá conforme al siguiente orden de prelación para su interpretación: a) La solicitud de afiliación; b) Contrato de Afiliación y sus Adendas; y, c) Anexos; todo conforme a la legislación aplicable y de conformidad con las reglas generales de Interpretación de los Contratos. En caso de conflicto entre los términos del presente Contrato y un Anexo o una Adenda, los términos del Anexo o Adenda prevalecerán a menos que se especifique lo contrario en dicho Anexo o Adenda respectivo. Las referencias al "Contrato" incluirán también una referencia a los Anexos y/o Adendas y la Solicitud de Afiliación que se agreguen al presente contrato a efecto de formar parte integrante del mismo. 
+                <br/> 
+                <b>CLÁUSULA VIGÉSIMA SEGUNDA. NOTIFICACIONES</b>: La dirección que EL AFILIADO señala para recibir notificaciones relacionadas con el contrato es la que está indicada en la Solicitud o a través de los medios electrónicos puestos a disposición por las PARTES. La dirección que LA ADMINISTRADORA señala para recibir notificaciones sobre el contrato es Edificio Plaza Ficohsa, 4to piso, Colonia Payaquí, Avenida San Juan Bosco, media cuadra arriba del Instituto Salesiano San Miguel, Tegucigalpa, Honduras. Tanto EL AFILIADO como LA ADMINISTRADORA se obligan a dar aviso de cualquier cambio de dirección, bajo el entendido de que si no lo hicieren se tendrán como bien hechas las notificaciones que se le hagan en las direcciones antes indicadas. 
+                <br/> 
+                <b>CLÁUSULA VIGÉSIMA TERCERA. MODIFICACIÓN DE CONTRATO</b>: EL AFILIADO y LA ADMINISTRADORA convienen que este CONTRATO DE AFILIACIÓN podrá ser modificado a requerimiento de la Comisión Nacional de Bancos y Seguros, o si el Banco Central de Honduras o el Estado emitieran alguna resolución o Ley que modifique la estructura legal de este Contrato o establezca condiciones fiscales que pudieran ser aplicables y que incidan en la rentabilidad del fondo o en su estructura Jurídica. 
+                <br/> 
+                Igualmente podrá ser ampliado o modificado por mutuo acuerdo por escrito entre las partes, suscribiendo la respectiva Adenda, la cual formará parte integral del presente Contrato, misma que surtirá efecto, siempre y cuando dicha ampliación o modificación no contravenga lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones, las “Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas” contenidas en las Resoluciones GE No. 1768/12-11-2012 y las “Normas Complementarias para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero” contenidas en la Resolución GE No. 1769/12-11-2012 y demás normativa aplicable al sector. Los ANEXOS que se agreguen al presente Contrato a efecto de formar parte integrante del mismo, deberán, en todo caso, contar con la aprobación por escrito y contener la firma autógrafa de ambas partes. 
+                <br/> 
+                Los modelos de Anexos y Adenda a ser utilizados por LA ADMINISTRADORA en sus operaciones, deben estar disponibles en cualquier momento que lo requiera la Comisión en los procesos de supervisión, para su evaluación. 
+                <b>CLÁUSULA VIGÉSIMA CUARTA. ACEPTACIÓN</b>: LAS PARTES declaran que dan por aceptado los términos y condiciones expuestos en el presente CONTRATO DE AFILIACIÓN y que se comprometen a cumplirlo fielmente en todo su contenido, en fe de lo cual, firman dos ejemplares originales en la Ciudad de _{!mun}_, a los {!suscripcionDia} días del mes {!suscripcionMes} del año {!suscripcionAnio}. 
+                <br/> <br/> 
+                <br/>  
+                <br/><br/>
+                <br/>  
+                <br/>  
+                <br/><br/>
+            </div>
+        </div>
+        <div style="width:100%;font-size:9px; display:{!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'), 'block;','none;')}">
+            <div style="width:100%;display:block;font-size:15px;font-weight:bold;text-align:center;">
+                <b>CONTRATO DE AFILIACIÓN PARA LA ADMINISTRACIÓN DE UN FONDO DE PENSIONES INDIVIDUAL</b>
+            </div>
+            <div style="width:48%;max-width:48%;display:inline-block;margin-right:23px;">
+                Nosotros, <b>ADMINISTRADORA DE FONDOS DE PENSIONES FICOHSA, S.A.</b> en adelante denominado simplemente <b>como LA ADMINISTRADORA,</b> 
+                del domicilio de Tegucigalpa, M.D.C., con Registro Tributario Nacional número 08019015715256 y la persona que suscribe 
+                este contrato, en adelante denominada como <b>EL AFILIADO</b> aceptan sujetarse a los siguientes términos y condiciones:
+                <br/><B>CLÁUSULA PRIMERA. DEFINICIONES: </B>Para
+                los propósitos de este contrato, las siguientes palabras tendrán
+                los significados establecidos a continuación: <br/>
+                
+                a. ADENDA Y ANEXO: Documentos suscritos entre EL AFILIADO y LA ADMINISTRADORA,
+                por medio de los cuales, se modifican las cláusulas previamente
+                pactadas entre estos en el CONTRATO DE AFILIACIÓN y surtirá
+                efectos siempre y cuando estas modificaciones no contravengan lo
+                establecido en la Ley del Régimen Opcional Complementario para la
+                Administración de Fondos Privados de Pensiones, las “Normas para
+                el Fortalecimiento de la Transparencia, la Cultura Financiera y
+                Atención al Usuario Financiero en las Instituciones Supervisadas”
+                contenidas en las Resoluciones GE No. 1768/12-11-2012 y las “Normas
+                Complementarias para el Fortalecimiento de la Transparencia, la
+                Cultura Financiera y Atención al Usuario Financiero” contenidas
+                en la Resolución GE No. 1769/12-11-2012 y demás normativa
+                aplicable al sector.<br/>
+                
+                b. ADMINISTRADORA DE FONDOS DE PENSIONES O SIMPLEMENTE “ADMINISTRADORA”: Entidad legalmente constituida y organizada, conforme a la LEY DEL RÉGIMEN OPCIONAL COMPLEMENTARIO PARA LA ADMINISTRACIÓN DE FONDOS PRIVADOS DE PENSIONES, encargada de la gestión de los Fondos Privados de Pensiones y Cesantías, autorizada por el Banco Central de Honduras previo dictamen favorable de la Comisión Nacional de Bancos y Seguros;
+                <br/>
+                c. AFILIADO O SIMPLEMENTE "EL AFILIADO": Persona que mediante la suscripción de la SOLICITUD DE AFILIACIÓN y el CONTRATO DE AFILIACIÓN correspondiente se afilia voluntariamente al PLAN PRIVADO DE PENSIONES;
+                <br/>
+                d. AÑOS DE PERMANENCIA: Período mínimo de permanencia establecido por la Administradora, para determinar penalizaciones por el retiro anticipado
+                <br/>
+                e. APORTES: Son los valores que EL AFILIADO enterará en la moneda, plazo y monto pactado, de acuerdo a lo definido por EL AFILIADO en la SOLICITUD DE AFILIACIÓN, ya sea de forma inicial, mensual, o extraordinaria, para constituir y acrecentar la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                f. APORTE EXTRAORDINARIO: Son los valores que EL AFILIADO entera en la moneda en que se realicen los APORTES, de forma extraordinaria, para acrecentar la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                g. APORTE INICIAL: Es el primer APORTE que el AFILIADO entera a la ADMINISTRADORA para abrir una CUENTA INDIVIDUAL DE CAPITALIZACIÓN
+                <br/>
+                h. BCH: Banco Central de Honduras.
+                <br/>
+                i. BENEFICIARIO: Es la persona natural o persona jurídica designada por el AFILIADO en la SOLICITUD DE AFILIACIÓN, para gozar de los beneficios del FONDO DE PENSIÓN, en caso de fallecimiento del AFILIADO, de acuerdo con los porcentajes establecidos por el mismo AFILIADO. En caso que EL AFILIADO no designe beneficiarios, estos serán quienes se declaren herederos de conformidad a la Ley.
+                <br/>
+                j. BENEFICIARIO CONTINGENTE: Es la persona natural, o persona jurídica designada por EL AFILIADO en la SOLICITUD DE AFILIACIÓN, para que, en caso de fallecimiento de EL AFILIADO y en ausencia de todos los beneficiarios directos, pueda gozar de los beneficios del FONDO DE PENSIÓN de acuerdo a los porcentajes establecidos por el mismo AFILIADO en la mencionada solicitud.
+                <br/>
+                k. BENEFICIARIO DIRECTO: Es la persona natural, o persona jurídica designada por EL AFILIADO en la SOLICITUD DE AFILIACIÓN para gozar, en primera instancia y en caso de fallecimiento del AFILIADO, de los beneficios del FONDO DE PENSIÓN, de acuerdo a los porcentajes establecidos por el mismo AFILIADO en la mencionada solicitud.
+                <br/>
+                l. CASO FORTUITO Y/O FUERZA MAYOR: Es aquel evento, que se origina de un acto del hombre o de la naturaleza, que no puede preverse, y que aun pudiendo preverse, no se pueden evitar sus efectos.
+                <br/>
+                m. CNBS: Comisión Nacional de Bancos y Seguros
+                <br/>
+                n. COMISIÓN ORDINARIA POR ADMINISTRACIÓN DEL FONDO: Los ingresos que percibe LA ADMINISTRADORA en concepto de gastos de administración que se deriven de la administración de EL FONDO DE PENSIONES, el cual podrá ser deducido de los APORTES mensuales, de la rentabilidad generada por la cuenta o del saldo de la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, de conformidad a lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones y a la normativa vigente aplicable
+                <br/>
+                o. COMISION POR RETIRO ANTICIPADO: Es la comisión que se cobra al AFILIADO por el retiro del FONDO de manera anticipada de su Cuenta Individual de Capitalización, misma que en ningún momento podrá ser realizado de manera parcial
+                <br/>
+                p. CONTRATO DE AFILIACIÓN: Es el Contrato que se suscribe entre la ADMINISTRADORA y EL AFILIADO, para regular la afiliación de una persona al plan correspondiente, en el cual se establecen, entre otros, los derechos y obligaciones de cada una de las partes con relación al Plan.
+                <br/>
+                q. CUENTA INDIVIDUAL DE CAPITALIZACIÓN o SIMPLEMENTE "CUENTA INDIVIDUAL”: Parte del Fondo Privado de Pensiones correspondiente a un afiliado en particular, resultante de la suma de sus APORTES más los rendimientos que proporcionalmente le correspondan, menos las comisiones por administración del Fondo que deban deducirse conforme al CONTRATO DE AFILIACIÓN.
+                <br/>
+                r. ESTADO DE CUENTA: Es el documento oficial emitido por LA ADMINISTRADORA y a través del cual informa a sus afiliados, sobre los movimientos registrados en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN, que incluyen las aportaciones, el rendimiento, las comisiones y cualquier otra información pertinente, el cual es enviado al AFILIADO en un plazo máximo de treinta (30) días calendario a partir del cierre del último día hábil de cada trimestre o, ante la solicitud expresa del AFILIADO.
+                <br/>
+                s. FONDO DE PENSIONES O SIMPLEMENTE "FONDO": El Fondo que constituyan las Administradoras de Fondos de Pensiones con las contribuciones de sus afiliados, para el plan de pensiones que establezca, así como los rendimientos que las inversiones que dicho Fondo produzcan, una vez deducidas las comisiones correspondientes conforme el respectivo contrato de afiliación.
+                <br/>
+                t. FORMULARIO DE ACTUALIZACIÓN DE INFORMACIÓN: Documento que contiene todo cambio de empleo, domicilio, números de teléfonos fijos y móviles, actualización de beneficiarios directos o contingentes, referencias personales, así como sobre cualquier otra variación en la información.
+                <br/>
+                u. INSTITUCIÓN DE SEGUROS: Persona Jurídica autorizada de conformidad a lo establecido en la Ley de Instituciones de Seguros y Reaseguros, supervisada por la CNBS, la cual es contratada por intermediación de la Administradora para prestar la cobertura del SEGURO DE VIDA PREVISIONAL
+                <br/>
+                v. LAS PARTES O SIMPLEMENTE "PARTES": LA ADMINISTRADORA y EL AFILIADO
+                <br/>
+                w. LEY: La Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones
+                <br/>
+                x. MEDIOS ELECTRÓNICOS O FÍSICOS: Las plataformas tecnológicas habilitadas por LA ADMINISTRADORA para extender la cobertura de atención en beneficio de EL AFILIADO tales como: Pagina web, correo electrónico, App móvil, mensajes de texto, como también entrega física directamente a la dirección del domicilio del AFILIADO. Dichos servicios no generarán cargos adicionales al AFILIADO.
+                <br/>
+                y. PENSION O RENTA: El pago único o total, parcial, temporal o de por vida en tanto la CUENTA INDIVIDUAL DE CAPITALIZACION tenga Fondos disponibles, que recibe un AFILIADO o sus BENEFICIARIOS, según la elección de la modalidad de Pensión o Renta dispuesto en la SOLICITUD DE AFILIACIÓN y en el CONTRATO DE AFILIACIÓN.
+                <br/>
+                z. PENSIÓN POR INVALIDEZ TOTAL Y PERMANENTE: Es el beneficio, en dinero, que EL AFILIADO percibirá en tanto la CUENTA INDIVIDUAL DE CAPITALIZACION tenga Fondos disponibles, por motivo de una INCAPACIDAD TOTAL Y PERMANENTE que lo inhabilite de un modo absoluto y definitivo.
+                <br/>
+                aa. PLAN INDIVIDUAL VOLUNTARIO DE PENSIONES: Programas privados de formación de un ahorro individual destinado a la obtención de una pensión complementaria a los beneficios establecidos por otros regímenes y que se regularán conforme a lo dispuesto en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones.
+                <br/>
+                ab. RENTA ANTICIPADA PARCIAL O TOTAL: El pago anticipado parcial o total, que LA ADMINISTRADORA hace al AFILIADO en caso de invalidez total y permanente o a sus BENEFICIARIOS o HEREDEROS, por fallecimiento de El AFILIADO.
+            </div>
+            <div style="width:48%;max-width:48%;display:inline-block;">
+                ac. SEGURO DE VIDA PREVISIONAL: Seguro colectivo contratado por la Administradora con una Institución de Seguros autorizada por la Comisión Nacional de Bancos y Seguros para operar en el ramo de personas, para brindar las coberturas de vida e invalidez total y permanente, a los afiliados que de forma opcional y voluntaria acepten estos servicios, suscribiendo la póliza correspondiente.
+                <br/>
+                ad. SOLICITUD DE AFILIACIÓN: Formulario en el cual se documenta la solicitud y los datos del cliente para su registro como afiliado del FONDO DE PENSIONES, y que forma parte integral de este Contrato.
+                <br/>
+                <B>CLÁUSULA SEGUNDA. OBJETO</B>:
+                Por el presente contrato de Afiliación para la administración de un
+                Fondo de Pensiones Individual, EL AFILIADO se obliga a entregar a LA
+                ADMINISTRADORA APORTES, para que LA ADMINISTRADORA los invierta en
+                los rubros que esta última determine atendiendo condiciones de
+                seguridad y rendimiento, así como de conformidad al Reglamento de
+                Inversiones de los Fondos Administrados por parte de las
+                Administradoras de Fondos de Pensiones (AFP) y demás disposiciones
+                legales aplicables <br/>
+                <B>CLÁUSULA TERCERA. OBLIGACIONES DE LAS PARTES</B><br/>
+                A. OBLIGACIONES DE LA ADMINISTRADORA:
+                <br/>
+                1. Llevar la CUENTA INDIVIDUAL, en forma separada de cualesquiera otras cuentas de LA ADMINISTRADORA.
+                <br/>
+                2. Invertir los aportes de EL AFILIADO, en la forma que estime conveniente para dar cumplimiento a las obligaciones que asume en este contrato siempre atendiendo a factores de rentabilidad y seguridad dentro de los límites legales establecidos.
+                <br/>
+                3. Suministrar al AFILIADO en un plazo máximo de treinta (30) días calendario a partir del cierre del último día hábil de cada trimestre o, ante solicitud expresa del AFILIADO, un estado de cuenta el cual podrá ser enviado utilizando medios electrónicos o físicos de todos los movimientos registrados en su Cuenta Individual, incluyendo las aportaciones, el rendimiento, las comisiones y cualquier otra información pertinente.
+                <br/>
+                4. Garantizar a EL AFILIADO la disponibilidad de los recursos del FONDO DE PENSIÓN
+                <br/>
+                5. Emitir a solicitud de EL AFILIADO, constancia que certifique que las aportaciones hechas por EL AFILIADO, han sido recibidas y mantenidas en el FONDO DE PENSIÓN desde la fecha de la suscripción del contrato hasta la fecha de solicitud de la constancia.
+                <br/>
+                B. OBLIGACIONES DE EL AFILIADO:
+                <br/>
+                1. Cumplir con el pago puntual de sus aportes tanto en su cuantía como en frecuencia.
+                <br/>
+                2. Designar en la SOLICITUD DE AFILIACIÓN a sus BENEFICIARIOS DIRECTOS Y CONTINGENTES en caso de muerte. La distribución que corresponda se hará en base a lo establecido en la SOLICITUD DE AFILIACIÓN o en los formularios de actualización de Información que sean suscritos por EL AFILIADO posteriormente. En caso de ausencia de los BENEFICIARIOS DIRECTOS Y CONTINGENTES, al momento del fallecimiento del AFILIADO, se seguirán las reglas de la sucesión intestada de acuerdo a la Ley.
+                <br/>
+                3. Informar a LA ADMINISTRADORA acerca de todo cambio de empleo, domicilio propio o de sus beneficiarios, así como sobre cualquier otra variación en la información relevante del contrato mediante la suscripción del formulario de actualización de Información, de forma física o electrónica, que LA ADMINISTRADORA pone a su disposición a través del Call Center o del Portal de Autogestión en la dirección https://www.ficohsapensiones.hn/.
+                <br/>
+                4. Cumplir con la permanencia pactada establecida en la SOLICITUD DE AFILIACIÓN, de conformidad a la tabla señalada en la Cláusula Sexta del presente Contrato.
+                <br/>
+                5. Proporcionar a LA ADMINISTRADORA la información requerida en la forma y plazos indicados, para dar cumplimiento a la normativa vigente de Prevención o detección de Lavado de Activos.
+                <br/>
+                6. Presentarse físicamente ante las oficinas de LA ADMINISTRADORA, todos los años durante el mes de enero y comenzando a partir del año siguiente al que se empiece a recibir la pensión, debiendo presentar la cédula de identidad y llenar el Formulario de Actualización de Información, para la constatación física o prueba de sobrevivencia, como requisito para continuar con el pago de la renta respectiva. Dicha constatación también puede ser realizada a través de video llamada o por los medios electrónicos que se ponga a disposición del AFILIADO.
+                <br/>
+                7. En caso de retiro anticipado o de la culminación del presente CONTRATO DE AFILIACIÓN por el período de tiempo suscrito, EL AFILIADO se obliga a cumplir con cualquier requerimiento u obligación fiscal exigida por las leyes tributarias al momento de recibir la pensión o en su caso el ingreso por retiro anticipado al plazo de tiempo suscrito por EL AFILIADO
+                <br/>
+                <b>CLÁUSULA CUARTA.</b> EL AFILIADO en cualquier momento podrá efectuar aportes extraordinarios a su Cuenta Individual de capitalización. Dichos aportes los podrá hacer a través de los canales que LA ADMINISTRADORA le indique.  EL AFILIADO entiende y acepta que los aportes extraordinarios no forman parte del cálculo de la suma asegurada pactada en la póliza de seguro de vida descrita en LA SOLICITUD DE AFILIACIÓN. 
+                <br/><b>CLÁUSULA QUINTA. DE LOS RENDIMIENTOS:</b> Los rendimientos del fondo de pensión se calcularán diariamente y podrán variar durante el plazo del contrato; en todo caso, LA ADMINISTRADORA no garantiza a EL AFILIADO un rendimiento determinado. Los rendimientos se empezarán a computar a partir del día siguiente hábil en que LA ADMINISTRADORA reciba los aportes. En caso de que el aporte se haga por medio de cheque, quedará sujeto a la condición de que se haga efectivo, de conformidad a lo dispuesto en el Artículo 959 del Código de Comercio vigente. 
+                <br/><b>CLÁUSULA SEXTA. VIGENCIA Y CARGOS POR RETIROS ANTICIPADOS:</b> El presente contrato tendrá una vigencia de acuerdo al plazo establecido por el AFILIADO en la SOLICITUD DE AFILIACIÓN, el cual será renovable automáticamente por períodos de un (1) año, salvo que una de las partes de aviso por escrito a la otra parte su intención de no renovar el CONTRATO DE AFILIACIÓN. 
+                La renovación del CONTRATO DE AFILIACIÓN, no afectará la antigüedad del AFILIADO, la que se considera en todo momento a partir de su aporte inicial.
+                Sin perjuicio de lo anterior, cualquier retiro anticipado que ocurra, será objeto de un cargo, de acuerdo a los porcentajes siguientes: 
+                <table width="100%;">
+                    <tr>
+                        <td style="width: 40%;">
+                            Años de permanencia
+                        </td>
+                        <td style="width: 15%;">
+                            0 - 1
+                        </td>
+                        <td style="width: 15%;">
+                            1 - 2
+                        </td>
+                        <td style="width: 15%;">
+                            2 - 3
+                        </td>
+                        <td style="width: 15%;">
+                            3 o más
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Cargo por retiro
+                        </td>
+                        <td>
+                            20%
+                        </td>
+                        <td>
+                            15%
+                        </td>
+                        <td>
+                            10%
+                        </td>
+                        <td>
+                            0%
+                        </td>
+                    </tr>
+                </table>
+                El cargo se calculará sobre el valor del monto de retiro y LA ADMINISTRADORA lo descontará al efectuar la liquidación que corresponda, a lo que EL AFILIADO desde ahora da su expreso consentimiento.
+                <br/>
+                El proceso de retiro tiene una duración máxima de 15 días hábiles a partir de la fecha de la firma del formulario siempre y cuando EL AFILIADO o su Apoderado Legal debidamente facultado presente los documentos de identificación y facultativos necesarios para procesar el retiro.
+                <br/>
+                LA ADMINISTRADORA podrá unilateralmente terminar el contrato sin ninguna responsabilidad cuando así lo considere por decisión administrativa justificada, debiendo para tal efecto bastar una notificación hecha a EL AFILIADO con treinta días calendario para que pueda retirar el saldo a la fecha de terminación, sin que esto represente algún cargo por retiro a EL AFILIADO.
+                <br/>
+                Lo anterior sin perjuicio que EL AFILIADO en todo caso deberá asumir la totalidad de la responsabilidad en lo que corresponde al pago de los impuestos que pudiera causar el retiro anticipado del fondo y declararlos a la entidad correspondiente, de acuerdo a lo que las leyes tributarias vigentes estipulen a la fecha del retiro.
+                <br/>
+                Las Partes expresamente aceptan que, el monto que constituye la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, podrá ser retirados sin penalización en cualquiera de los siguientes casos:
+                <br/>
+                1. Por muerte de EL AFILIADO.
+                <br/>
+                2. Por invalidez total y permanente de EL AFILIADO.
+                <br/>
+                3. A los 3 años de vigencia del CONTRATO DE AFILIACIÓN según se detalla en la tabla anterior.
+                <br/>
+                4. En caso de que por causa justificada LA ADMINISTRADORA decida unilateralmente terminar el Contrato.
+                <br/>
+                <b>CLÁUSULA SÉPTIMA. BENEFICIOS:</b> EL AFILIADO obtendrá los beneficios previsionales del FONDO DE PENSIONES, dependiendo del valor acumulado en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN, cuando llegue a una edad de jubilación temprana a los 60 años, normal a los 65 años o tardía a los 70 años. Igualmente, a recibir una renta anticipada parcial o total cuando haya cumplido el período mínimo de permanencia en el FONDO según se establece en la cláusula anterior, o a una pensión por invalidez total y permanente, siempre y cuando haya suscrito u optado a un seguro de vida y este se encuentre vigente.
+                <br/>
+                <b>CLÁUSULA OCTAVA. MODALIDADES PARA EL CUMPLIMIENTO DEL PAGO DE LA PENSIÓN O RENTAS:</b> LA ADMINISTRADORA pone a disposición de EL AFILIADO, las modalidades para el cumplimiento del pago de la pensión o renta convenida son las siguientes:
+                <br/>
+                1. Opción Primera. Pensión o Renta de Pago Único: Bajo esta opción, EL AFILIADO recibirá el valor total acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN, que incluye los rendimientos generados por dicha cuenta hasta la fecha de su retiro; en un solo y único pago, con el cual queda finiquitada la obligación de pago de pensión a EL AFILIADO por parte de LA ADMINISTRADORA.
+            </div>
+        </div> 
+        <div style="{!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'), 'page-break-after:always;;','')}"/> 
+        <div style="width:100%;font-size:9px; display:{!IF(AND(info.pcaplicaseguro = 'S', info.pcTipoSeguro = '1'), 'block;','none;')}">
+            <div style="width:48%;max-width:48%;display:inline-block;margin-right:23px;">
+                2. Opción Segunda. Pensión o Renta Programada: En esta opción EL AFILIADO decide percibir el valor total acumulado que incluye los rendimientos generados por la CUENTA INDIVIDUAL DE CAPITALIZACIÓN hasta la fecha de su retiro, en cuotas mensuales, por el número de meses que resten del período de renta seleccionado por EL AFILIADO, bajo este esquema la CUENTA INDIVIDUAL DE CAPITALIZACIÓN continuará devengando rendimientos sobre su saldo, los que se capitalizarán mensualmente.
+                <br/>
+                En caso que EL AFILIADO requiera el pago de pensión o renta programada antes descrito, LA ADMINISTRADORA cobrará un porcentaje no menor al 1.5% calculado sobre el valor de cada renta. Se exceptúan aquellos casos en los cuales EL AFILIADO se encuentra en la modalidad de cobro sobre saldo.
+                <br/>
+                En cualquier momento LA ADMINISTRADORA podrá poner a disposición de los afiliados, nuevas opciones para el pago de la pensión entre las cuales EL AFILIADO podrá escoger libremente mismas que serán comunicadas previa y oportunamente a los AFILIADOS mediante los canales habituales utilizados por LA ADMINISTRADORA.
+                <br/>
+                Durante el período de aportaciones y hasta la fecha de retiro inclusive, EL AFILIADO puede elegir otra opción, siempre mediando notificación previa a LA ADMINISTRADORA. El cambio lo deberá informar por escrito y surtirá efecto hasta transcurridos treinta (30) días a partir de la fecha en que LA ADMINISTRADORA haya recibido la comunicación.            
+                <br/>
+                <b>CLÁUSULA NOVENA. FORMAS DE ENTREGAR LA PENSIÓN:</b>
+                <br/>
+                LA ADMINISTRADORA entregará la pensión periódicamente, de acuerdo a lo definido por EL AFILIADO en la SOLICITUD DE AFILIACIÓN y CONTRATO DE AFILIACIÓN, únicamente a EL AFILIADO o a su apoderado o representante legal, designado de conformidad con la Ley. La entrega de la pensión la efectuará LA ADMINISTRADORA, a través de los canales dispuestos para sus afiliados a elección de ellos mismos, lo cual deberá notificar por escrito a LA ADMINISTRADORA, con el fin de que esté disponible en las fechas convenidas.
+                <br/>
+                En caso de fallecimiento de EL AFILIADO la distribución de beneficios se hará en base a los porcentajes definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización de Información autorizado por éste para sus Beneficiarios Directos. A falta de alguno de éstos, y de acuerdo a lo establecido en el Artículo 1246 del Código de Comercio, dicho porcentaje será distribuido equitativamente al resto de Beneficiarios Directos. En ausencia de todos los Beneficiarios Directos, se activarán los Beneficiarios Contingentes, en base a los porcentajes definidos en la SOLICITUD DE AFILIACIÓN, o el Formulario de Actualización de Información autorizado para cada uno de ellos. Igualmente, a falta de alguno de éstos, dicho porcentaje será distribuido equitativamente al resto de Beneficiarios Contingentes sobrevivientes. La ausencia de todos los Beneficiarios Contingentes dará como resultado la distribución "Según herederos por Ley”
+                <br/>
+                <b>CLÁUSULA DÉCIMA. COMISIÓN:</b> EL AFILIADO autoriza a LA ADMINISTRADORA deducir mensualmente de la CUENTA INDIVIDUAL DE CAPITALIZACIÓN la comisión ordinaria de conformidad a los Artículos 10 y 11 de la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones y debidamente indicada en el presente contrato, la cual se pacta de la siguiente manera:
+                <br/>
+                
+                <b>1.</b>Para el Fondo de Pensión en Lempiras una Comisión Mixta compuesta por un 
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+                    <apex:outputText rendered="{!if(info.pcTipoMoneda=='1',true,false)}">{!comiAporte}</apex:outputText>
+                </div>% calculado sobre el valor de los aportes más un 
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+                    <apex:outputText rendered="{!if(info.pcTipoMoneda=='1',true,false)}">{!comiSaldo}</apex:outputText>
+                </div>% anual calculado diariamente y cobrado mensualmente sobre el saldo acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                2.Para el Fondo de Pensión en Dólares una Comisión Mixta compuesta por un
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+                    <apex:outputText rendered="{!if(info.pcTipoMoneda=='2',true,false)}">{!comiAporte}</apex:outputText>
+                </div>%
+                calculado sobre el valor de los aportes más un
+                <div style="border-bottom:1px solid black;width:14px;display:inline-block; margin-right:3px;">
+                    <apex:outputText rendered="{!if(info.pcTipoMoneda=='2',true,false)}">{!comiSaldo}</apex:outputText>
+                </div>% anual calculado diariamente y cobrada mensualmente sobre el saldo acumulado en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                Los cargos por concepto de comisiones podrán ser modificados por parte de LA ADMINISTRADORA previa notificación a EL AFILIADO, por lo menos con treinta (30) días de anticipación, de conformidad a lo establecido en el Artículo 22 numeral 8 de las Normas Complementarias para el Fortalecimiento de la Transparencia, la Cultura Financiera, y Atención al Usuario Financiero. En caso de que la variación implique un incremento, EL AFILIADO podrá rescindir del presente contrato sin que sea aplicable ninguna penalidad por dicho concepto, de conformidad a lo establecido en la Cláusula Sexta, del presente CONTRATO DE AFILIACIÓN.
+                <br/>
+                Las notificaciones que LA ADMINISTRADORA realice a EL AFILIADO podrán ser mediante avisos escritos al domicilio de EL AFILIADO o dirección establecida en este contrato o comunicados en radio, televisión, periódicos, mensajes electrónicos, avisos en las oficinas de LA ADMINISTRADORA o en su página Web
+                <br/>
+                <b>CLÁUSULA DÉCIMA PRIMERA CESE DE APORTACIONES Y REINICIO DE LOS APORTES:</b> Si EL AFILIADO suspendiese el pago de sus APORTES mensuales pactados, durante un período de seis (6) meses consecutivos, EL AFILIADO conservará sus derechos sobre El FONDO DE PENSIONES acumulado en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN y éste seguirá siendo gestionado por LA ADMINISTRADORA, quien puede descontar a EL AFILIADO una comisión con base en la rentabilidad anual, según lo establezca la legislación vigente siempre y cuando dicho valor no sobrepase la comisión ordinaria recibida normalmente, en cuyo caso únicamente se podrá descontar como máximo este último valor.
+                <br/>
+                Dicha comisión será establecida claramente en un tarifario a disposición de EL AFILIADO por medio de los canales dispuestos por la ADMINISTRADORA para sus afiliados. Sin perjuicio de lo anterior, EL AFILIADO podrá reiniciar los aportes en cualquier momento en la misma CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                <b>CLÁUSULA DÉCIMA SEGUNDA. SEGUROS:</b> Para que EL AFILIADO o sus BENEFICIARIOS cuando corresponda, puedan tener opcionalmente derecho a recibir una indemnización por invalidez parcial o total, ya sea temporal o permanente y por muerte de EL AFILIADO deberá suscribir por medio de LA ADMINISTRADORA, un SEGURO DE VIDA PREVISIONAL para cubrir dichos riesgos conforme la suma asegurada pactada, para lo cual EL AFILIADO deberá cumplir con los requisitos establecidos en la Póliza de Seguros contratada por LA ADMINISTRADORA. El costo de la prima a pagar se calculará sobre la suma asegurada, de conformidad con la póliza contratada por la Administradora, con la Institución Aseguradora, el pago de dicha prima de seguro se puede realizar con cargo a la CUENTA INDIVIDUAL DE CAPITALIZACIÓN o por las vías establecidas en la SOLICITUD DE AFILIACIÓN. De igual manera, los efectos del seguro cesarán de conformidad a las disposiciones que establezca la Institución de Seguros. Es entendido y convenido que LA ADMINISTRADORA actúa únicamente como intermediaria en la suscripción de las coberturas, por lo tanto, la procedencia de cualquier indemnización será determinada en todo momento por la Institución de Seguros que respalda la póliza contratada, al amparo de lo establecido en las condiciones generales y particulares del Contrato de SEGURO DE VIDA PREVISIONAL suscrito con LA ADMINISTRADORA y vigente a la fecha del siniestro.
+                <br/>
+                <b>CLÁUSULA DÉCIMA TERCERA. NORMA PARA LA APLICACIÓN DEL ACUERDO ENTRE EL GOBIERNO DE LOS ESTADOS UNIDOS DE AMÉRICA y EL GOBIERNO DE LA REPÚBLICA DE HONDURAS PARA LA MEJORA DEL CUMPLIMIENTO TRIBUTARIO INTERNACIONAL E IMPLEMENTAR FATCA: Específicamente EL AFILIADO:
+                </b><br/>
+                1. Acepta que cualquier obstrucción, falta de diligencia o falsedad en la información suministrada o cualquier falta respecto al tiempo o la forma de suplir la información facultará a LA ADMINISTRADORA para terminar contratos y obligaciones mantenidas con el AFILIADO, sin necesidad de notificación previa ni responsabilidad alguna para LA ADMINISTRADORA, o bien cerrar, bloquear o transferir dichas cuentas u obligaciones;
+                <br/>
+                2. Se obliga incondicionalmente a mantener a LA ADMINISTRADORA (incluyendo todo su personal y terceros relacionados) totalmente indemnes en contra de cualquier daño o perjuicio derivado del incumplimiento de esta obligación y,
+                <br/>
+                3. En caso de cualquier cambio de circunstancias respecto a la información brindada por mi persona en la documentación solicitada por LA ADMINISTRADORA, que pueda generar un cambio de estatus respecto a FATCA, entiendo que quedo comprometido a informar por escrito a LA ADMINISTRADORA de forma inmediata al acontecimiento de dicho cambio.
+                <br/>
+                <b>CLÁUSULA DÉCIMA CUARTA: CLÁUSULA DE TERMINACIÓN ESPECIAL:</b> El presente Contrato se dará por terminado de manera anticipada en los casos en que EL AFILIADO, o el BENEFICIARIO o BENEFICIARIOS sean condenados mediante sentencia firme por algún Tribunal Nacional o de otra jurisdicción por los delitos de Narcotráfico, Lavado de Dinero, Financiamiento del Terrorismo, Financiación de la Proliferación de Armas de Destrucción Masiva, o cualquier otro delito de crimen o delincuencia organizada reconocidos como tales por Tratados o Convenios Internacionales de los cuales Honduras sea suscriptor, o bien sean incluidos en las listas de entidades u Organizaciones que identifiquen a personas como participes, colaboradores, facilitadores del crimen organizado como ser la lista OFAC (Office Foreign Assets Control) y la lista de Designados de la ONU, entre otras. Esta cláusula se adecuará en lo pertinente a los procedimientos especiales que podrían derivarse de la Ley Especial Contra el Lavados de Activos, Ley sobre Uso Indebido y Tráfico Ilícito de Drogas y Sustancias Psicotrópicas, Ley Contra el Financiamiento del Terrorismo,
+            </div>
+            <div style="width:48%;max-width:48%;display:inline-block;">
+                Ley sobre Privación Definitiva del Dominio de Bienes de Origen Ilícito y sus respectivos Reglamentos, en lo relativo al manejo, custodia y administración de los fondos de pensión de personas involucradas en ese tipo de actos.
+                <br/>
+                <b>CLÁUSULA DÉCIMA QUINTA: CONFIDENCIALIDAD:</b> LA ADMINISTRADORA dará un tratamiento confidencial a la información relacionada con EL AFILIADO; información que ha sido proporcionada de forma veraz y exacta por EL AFILIADO. En consecuencia, cualquier omisión o falsedad en las mismas dará derecho a LA ADMINISTRADORA de dar por finalizado, sin responsabilidad de su parte, el presente Contrato. No obstante, el tratamiento confidencial antes aludido, EL AFILIADO autoriza expresamente a LA ADMINISTRADORA a transferir y a dar a conocer toda la información relacionada con EL AFILIADO a las sucursales, subsidiarias, oficinas representativas, filiales y agentes de LA ADMINISTRADORA, que forman parte del GRUPO FINANCIERO FICOHSA, para su uso confidencial (incluso en conexión con el suministro de producto o la prestación de servicio y con fines estadísticos, de procesamiento de datos y análisis de riesgo). Asimismo, EL AFILIADO autoriza desde ya a LA ADMINISTRADORA a compartir información confidencial cuando le sea requerida por autoridades competentes o por los reguladores bancarios del Grupo Financiero Ficohsa.
+                <br/>
+                <b>CLÁUSULA DÉCIMA SEXTA. FONDOS LÍCITOS:</b> Declaración: EL AFILIADO manifiesta bajo protesta de decir verdad, que los recursos que maneje en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN en LA ADMINISTRADORA o que utilice en el pago de sus obligaciones con la institución bajo cualquier causa, son de procedencia lícita y faculta a LA ADMINISTRADORA para que ésta pueda brindar información financiera de los ingresos o saldo(s) en la(s) cuenta(s), así como documentación e informes que sean solicitados por la Comisión Nacional de Bancos y Seguros y/u otros organismos competentes que conforme a Ley puedan requerirla. Por lo anteriormente expuesto libera a LA ADMINISTRADORA, de cualquier responsabilidad al brindar este tipo de información. EL AFILIADO reconoce, que en caso que sea un sujeto obligado al pago de impuestos en los Estados Unidos de América, sus cuentas estarán sujetas a lo establecido a la Norma para la Aplicación del Acuerdo entre el Gobierno de los Estados Unidos de América y el Gobierno de La República De Honduras para la Mejora del Cumplimiento Tributario Internacional e Implementar FATCA, por lo tanto, desde ya autoriza a LA ADMINISTRADORA, para que pueda brindar toda la información necesaria en relación a sus cuentas u operaciones financieras que conforme al Foreign Account Tax Compliance Act (FATCA), deba ser dada a conocer a las autoridades fiscales de los Estados Unidos de América o cualquier autoridad nacional que este autorizada para recibir dicha información.
+                <br/>
+                <b>CLÁUSULA DÉCIMA SÉPTIMA. CESIÓN:</b> Es convenido por las Partes, que LA ADMINISTRADORA podrá ceder, gravar o traspasar en todo o en parte los derechos y obligaciones a su cargo derivadas del presente CONTRATO DE AFILIACIÓN siempre y cuando dicha cesión se haga a favor de una institución debidamente autorizada por la Comisión Nacional de Bancos y Seguros para prestar servicios de Administración de Fondos de Pensiones.
+                <br/>
+                LA ADMINISTRADORA deberá notificar con al menos 30 días de anticipación al AFILIADO, a través de los canales usuales de comunicación, para que este pueda rescindir el presente contrato, sin responsabilidad o penalidad si así lo desea, y que pueda trasladar los fondos existentes en la CUENTA INDIVIDUAL DE CAPITALIZACIÓN a otra Administradora de su elección, o retirar los mismos íntegramente. Vencido el plazo de 30 días señalado anteriormente, en caso de silencio de parte del AFILIADO, LA ADMINISTRADORA entenderá que no existe objeción alguna, y procederá con la cesión del presente contrato. EL AFILIADO solamente podrá ceder los derechos y obligaciones que se originen de este CONTRATO DE AFILIACIÓN con la aprobación previa y por escrito de la ADMINISTRADORA.
+                <br/>
+                <b>CLÁUSULA DÉCIMA OCTAVA: CASO FORTUITO O FUERZA MAYOR:</b> Ninguna de las partes será responsable por el incumplimiento de sus obligaciones cuando dicho incumplimiento se genere por caso fortuito o fuerza mayor debidamente comprobado y siempre que el mismo tenga una duración mayor de treinta (30) días hábiles, pudiendo LA ADMINISTRADORA solicitar la terminación del presente Contrato, quedando obligada únicamente por el efecto mismo de la terminación, a devolver los aportes acumulados al AFILIADO en su CUENTA INDIVIDUAL DE CAPITALIZACIÓN.
+                <br/>
+                <b>CLÁUSULA DÉCIMA NOVENA. - RECLAMOS DEL USUARIO FINANCIERO:</b> EL AFILIADO tendrá derecho de presentar reclamos ante la ADMNISTRADORA, en cualquier momento, por controversias que se susciten durante la vigencia de la relación contractual. La ADMINISTRADORA estará obligada a dar respuesta por escrito al AFILIADO dentro de los diez (10) días hábiles siguientes a la fecha de recepción de la hoja de reclamación correspondiente, pudiendo la ADMINISTRADORA prorrogar el plazo anterior por otro plazo de diez (10) días hábiles adicionales. Si el AFILIADO no estuviese satisfecho con la respuesta de la ADMINISTRADORA podrá acudir a la Comisión Nacional de Bancos y Seguros en aplicación de las Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisada contenidas en la Resolución GE No. 1768/12-11-2012 y GE No. 1769/12-11-2012.
+                <br/>
+                <b>CLÁUSULA VIGÉSIMA. LEGISLACIÓN, SOLUCIÓN DE CONTROVERSIAS:</b>b> Este CONTRATO DE AFILIACIÓN será regulado de conformidad con las Leyes de la República de Honduras, especialmente por las disposiciones de la Ley y las Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas. Las PARTES acuerdan que todas las controversias y conflictos relacionados directamente o indirectamente con la SOLICITUD DE AFILIACIÓN Y EL CONTRATO DE AFILIACIÓN, sus ADENDAS Y ANEXOS; inclusive de su naturaleza, cumplimiento, ejecución o terminación del mismo. Las partes convienen que, en caso de cualquier controversia, se someten al juzgado de Letras de lo Civil de Francisco Morazán.
+                <br/>
+                <b>CLÁUSULA VIGÉSIMA PRIMERA. PRELACIÓN:</b> Las Partes convienen que cualquier discrepancia que surja entre las condiciones establecidas en las cláusulas del presente Contrato, sus Anexos y Adendas y la Solicitud de Afiliación, se resolverá conforme al siguiente orden de prelación para su interpretación: a) La solicitud de afiliación; b) Contrato de Afiliación y sus Adendas; y, c) Anexos; todo conforme a la legislación aplicable y de conformidad con las reglas generales de Interpretación de los Contratos. En caso de conflicto entre los términos del presente Contrato y un Anexo o una Adenda, los términos del Anexo o Adenda prevalecerán a menos que se especifique lo contrario en dicho Anexo o Adenda respectivo. Las referencias al "Contrato" incluirán también una referencia a los Anexos y/o Adendas y la Solicitud de Afiliación que se agreguen al presente contrato a efecto de formar parte integrante del mismo.
+                <br/>
+                <b>CLÁUSULA VIGÉSIMA SEGUNDA. NOTIFICACIONES:</b> La dirección que EL AFILIADO señala para recibir notificaciones relacionadas con el contrato es la que está indicada en la Solicitud o a través de los medios electrónicos puestos a disposición por las PARTES. La dirección que LA ADMINISTRADORA señala para recibir notificaciones sobre el contrato es Edificio Plaza Ficohsa, 4to piso, Colonia Payaquí, Avenida San Juan Bosco, media cuadra arriba del Instituto Salesiano San Miguel, Tegucigalpa, Honduras. Tanto EL AFILIADO como LA ADMINISTRADORA se obligan a dar aviso de cualquier cambio de dirección, bajo el entendido de que si no lo hicieren se tendrán como bien hechas las notificaciones que se le hagan en las direcciones antes indicadas.
+                <br/>
+                <b>CLÁUSULA VIGÉSIMA TERCERA. MODIFICACIÓN DE CONTRATO:</b> EL AFILIADO y LA ADMINISTRADORA convienen que este CONTRATO DE AFILIACIÓN podrá ser modificado a requerimiento de la Comisión Nacional de Bancos y Seguros, o si el Banco Central de Honduras o el Estado emitieran alguna resolución o Ley que modifique la estructura legal de este Contrato o establezca condiciones fiscales que pudieran ser aplicables y que incidan en la rentabilidad del fondo o en su estructura Jurídica.
+                <br/>
+                Igualmente podrá ser ampliado o modificado por mutuo acuerdo por escrito entre las partes, suscribiendo la respectiva Adenda, la cual formará parte integral del presente Contrato, misma que surtirá efecto, siempre y cuando dicha ampliación o modificación no contravenga lo establecido en la Ley del Régimen Opcional Complementario para la Administración de Fondos Privados de Pensiones, las “Normas para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero en las Instituciones Supervisadas” contenidas en las Resoluciones GE No. 1768/12-11-2012 y las “Normas Complementarias para el Fortalecimiento de la Transparencia, la Cultura Financiera y Atención al Usuario Financiero” contenidas en la Resolución GE No. 1769/12-11-2012 y demás normativa aplicable al sector. Los ANEXOS que se agreguen al presente Contrato a efecto de formar parte integrante del mismo, deberán, en todo caso, contar con la aprobación por escrito y contener la firma autógrafa de ambas partes.
+                <br/>
+                 Los modelos de Anexos y Adenda a ser utilizados por LA ADMINISTRADORA en sus operaciones, deben estar disponibles en cualquier momento que lo requiera la Comisión en los procesos de supervisión, para su evaluación.
+                <br/>
+                <b>CLÁUSULA VIGÉSIMA CUARTA. ACEPTACIÓN:</b> LAS PARTES declaran que dan por aceptado los términos y condiciones expuestos en el presente CONTRATO DE AFILIACIÓN y que se comprometen a cumplirlo fielmente en todo su contenido, en fe de lo cual, firman dos ejemplares originales en la Ciudad de __________, a los ____ del mes de _________ del año dos mil ________.
+                
+            </div>
         </div>
     </body>
 </apex:page>

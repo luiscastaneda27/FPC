@@ -4,7 +4,6 @@
     <defaultValue>false</defaultValue>
     <description>Bandera cuando el caso es aprobado desde Operaciones.</description>
     <externalId>false</externalId>
-    <inlineHelpText>Bandera cuando el caso es aprobado desde Operaciones.</inlineHelpText>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>

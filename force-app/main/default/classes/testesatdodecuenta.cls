@@ -5,32 +5,33 @@ public class testesatdodecuenta {
     {
         test.startTest(); 
          list<planilla> planil=new list<Planilla>(); 
-        planil.add(new planilla('','','','','','','','',date.today(),'',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7));
-        planil.add(new planilla('','',7.7,7.7,7.7,7.7,7.7,''));
+        planil.add(new planilla('','','','','','','','',date.today(),'',7.7,7.7,7.7,7.7,7.7,7.7));
+        planil.add(new planilla('','',7.7,7.7,''));
         list<cuenta> vf= new list<cuenta>();
         vf.add(new cuenta('',54.54));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,vf,vf,vf,vf,vf));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,vf,vf,vf,vf,vf,'','',''));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,''));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7));
+        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,vf,vf));
+        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,vf,vf,'','',''));
+        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,''));
+        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7));
         planil.add(new planilla('',1));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7,7.7));
+        planil.add(new planilla('',7.7,7.7,7.7,7.7,7.7));
         planil.add(new planilla('','',date.today(),'',9.0,'',''));
         planil.add(new planilla('','','','','','',7.7,7.7));
-        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,8.7,8.7,8.7,8.7,'',9.9));
-        planil.add(new planilla('', '', '','','', 0.0, 0.0,0.0, 0.0,0.0, 0.0,0.0,0.0, 0.0));
-        planil.add(new Planilla(0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0));
+        planil.add(new planilla('','','','','',7.7,7.7,7.7,7.7,8.7,'',9.9));
+        planil.add(new planilla('', '', '','','', 0.0, 0.0,
+                    0.0, 0.0,0.0, 0.0,0.0,0.0, 0.0));
+        planil.add(new Planilla(0.0, 0.0, 0.0,0.0, 0.0));
         planil.add(new Planilla('', 0, ''));
-        planil.add(new Planilla('', 1, 0.0, 0.0,0.0,0.0,0.0,0.0,0.0,0.0));
-        planil.add(new planilla('','',date.today(),'',9.0,'','','','',''));
+        planil.add(new Planilla('', 1, 0.0, 0.0,0.0,0.0,0.0));
+        planil.add(new planilla('','',date.today(),'',9.0,'','',''));
          list<claseaportaciones> aportacio= new list<claseaportaciones>();
-     aportacio.add(new claseaportaciones('','',65.65,65.65,65.65,65.65,65.65,''));  
+     aportacio.add(new claseaportaciones('','',65.65,65.65,''));  
     
      
-    /*claseUtilPla ju = new claseUtilPla();
+    claseUtilPla ju = new claseUtilPla();
     ju.planilla=1;
     claseUtilPla2 juo = new claseUtilPla2();
-    juo.planilla=1;*/
+    juo.planilla=1;
         
         
         
@@ -136,7 +137,7 @@ public class testesatdodecuenta {
        cuentaNormal.CurrencyIsoCode='HNL';
        cuentaNormal.Codigo__c='der3';
        cuentaNormal.Cliente__c=ClientePrueba3.id;
-       cuentanormal.Cuenta_colectiva2__c=null;
+       cuentanormal.Cuenta_colectiva2__c=cuentacolectiva.id;
        cuentaNormal.Producto__c=producto.id;
        insert cuentaNormal;
         
@@ -219,24 +220,8 @@ public class testesatdodecuenta {
        empleado.Salario__c=30000;
        empleado.Estado__c='Activo';
        empleado.Empleado2__c=clienteprueba3.id;
-       insert empleado;  
-       Planilla_Temporal__c tem = new Planilla_Temporal__c();
-        tem.Name = EmpresaPrueba.Id;
-        insert tem;
-        
-        Contenido_Planilla_Temporal__c temp = new Contenido_Planilla_Temporal__c();
-        temp.Identidad__c = ClientePrueba3.Identificacion__c;
-        temp.Cuenta__c = cuentaNormal.Codigo__c;
-        temp.Aporte_Empleado_Voluntario__c = 1.0;
-        temp.Aporte_Empleado_Obligatorio__c = 0.0;
-        temp.Aporte_Patronal_Obligatorio__c = 0.0;
-        temp.Aporte_Patronal_Voluntario__c = 2.0;
-        temp.Aporte_Reserva_Laboral__c = 0.0;
-        temp.Aporte_Empleado_Extraordinario__c = 200.00;
-        temp.Aporte_Patrono_Extraordinario__c =0.0;
-        temp.Aporte_Seguro_de_Vida__c = 0.0;
-        temp.planilla__c = tem.Id;
-        insert temp;
+       //insert empleado;  
+       
       
         ApexPages.currentPage().getParameters().put('empresa',empresaprueba.id);
         controladorExportarExcelColavoradores frcds= new controladorExportarExcelColavoradores();
@@ -244,7 +229,7 @@ public class testesatdodecuenta {
     
      ApexPages.currentPage().getParameters().put('Eldudhdhyudb',empresaprueba.id);
      ApexPages.currentPage().getParameters().put('loetdncdhjch',usuario.id);    
-    /*controladorGenerarPersonal Colavoradores=new controladorGenerarPersonal();
+    controladorGenerarPersonal Colavoradores=new controladorGenerarPersonal();
     Colavoradores.SIGUIENTE();
     Colavoradores.anterior();
     Colavoradores.idEmpleado=Colavoradores.listClientes2[0].id;
@@ -324,28 +309,11 @@ public class testesatdodecuenta {
    colavoradores.iniciar();
    colavoradores.Inicio=0;
    colavoradores.fin=1;
-   colavoradores.AgregarEMpleados();*/
+   colavoradores.AgregarEMpleados();
         
-        string stringCSV ='"NUM IDENTIDAD", "APORTE PATRONO OBLIGATORIO", "APORTE EMPLEADO OBLIGATORIO", "RESERVA LABORAL", "APORTE PATRONO VOLUNTARIO",'+
-        ' "CUENTA", "APORTE EMPLEADO EXTRAORDINARIO", "APORTE PATRONO EXTRAORDINARIO", "APORTE SEGURO DE VIDA", "APORTE EMPLEADO VOLUNTARIO"\n"0000000000040",15,15,15,15,"",15\n';
-        classWRetorno2 error = new classWRetorno2();
-     error=controladorCargarPlanilla.SUbirInformacion(stringCSV, empresaprueba.id);
-        controladorCargarPlanilla Cplanilla = new controladorCargarPlanilla();
-     
-     cplanilla.VerPlanilla();
-     cplanilla.Cargarmeses();
-     cplanilla.sumas();
-     cplanilla.popEnviar();
-     cplanilla.popGuardar();
-     cplanilla.Si();
-     cplanilla.No();
-     //cplanilla.EnviarPlanilla(2);
-     cplanilla.siguiente();
-     cplanilla.anterior();
-     cplanilla.salir();
-     cplanilla.NuevaCarga();
-     cplanilla.CalculoDePilares();
-     cplanilla.metodoutil();
+        
+        
+        
         
         
         

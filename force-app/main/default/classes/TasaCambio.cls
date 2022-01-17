@@ -8,17 +8,18 @@ public class TasaCambio {
         request.setEndpoint(url + 'api/retiros/tasaLista');
         request.setMethod('POST');
         request.setTimeout(120000);
+        //list<ValorDolar> resultado = new list<ValorDolar>();
         try{
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(resultado);
             resultado = new list<ValorDolar>();
             String cons = 'contenido={"listValorDolar":'+envio.contenido+'}';
+             //String cons = 'contenido='+envio.contenido;
+            system.debug('Mandamos api/retiros/tasaLista: '+cons);
             request.setBody(cons);
             HttpResponse response =new HttpResponse();// http.send(request);  
-            system.debug('Mandamos: '+cons);
+            system.debug('Mandamos: '+request.getBody());
             if(!test.isRunningTest()){
-                /*response.setStatusCode(200);
-                response.setBody('[{"fecha":"2019-10-18T00:00:00","ValorVenta":24.6357,"valorCompra":24.4644}]');*/
                 response = http.send(request); 
             }else{
                 response.setBody('[{"fecha":"2019-05-23T00:00:00","ValorVenta":24.6357,"valorCompra":24.4644}]');

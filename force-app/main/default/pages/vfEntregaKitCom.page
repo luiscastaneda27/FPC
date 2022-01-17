@@ -40,7 +40,7 @@
                 <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
                     <apex:pageMessages />
-                    <apex:pageBlockSection rendered="{!listAfiliaciones.size !=0}" title="Afiliciones Pendientes" columns="1">
+                    <apex:pageBlockSection rendered="{!listAfiliaciones.size !=0}" title="Kits Pendientes" columns="1">
                         <apex:outputPanel >
                             <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
                                 

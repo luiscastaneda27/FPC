@@ -64,124 +64,131 @@
                     <br/>
                     <apex:outputPanel rendered="{!mostrarPan}">
                         <!------class="slds-table slds-table--bordered"--------->
-                        <table   >
-                            <thead>
-                                <tr class="slds-text-title_caps">
-                                    
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Empresa"><strong> Empresa</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Fecha"><strong>Fecha</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Tipo Planilla"><strong>Planilla</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Tipo Planilla"><strong>Moneda</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Total"><strong>Total</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Tasa compra"><strong>Compra Dolar</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Tasa compra"><strong>Venta de  Dolar</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Total"><strong>Cod Referencia</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Tasa compra"><strong>Rezago</strong></div>
-                                    </th>
-                                    <!--th scope="col">
-<div class="slds-truncate" title="Aceptar"><strong>Aceptar</strong></div>
-</th-->
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
-                                    </th>
-                                    <th scope="col">
-                                        <div class="slds-truncate" title="Denegar"><strong>Denegar</strong></div>
-                                    </th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <apex:repeat value="{!Planillas}" var="Item" >
-                                    <tr>
-                                        <td>
-                                            {!Item.Primer_Nombre}
-                                        </td>
-                                        <td>
-                                            <apex:input style="" type="date"    styleclass="slds-input" rendered="{!Item.Primer_Apellido = 'false'}" value="{!Item.Planilla_Aprobada}" />
-                                            <apex:outputText rendered="{!Item.Primer_Apellido = 'true'}" value="{0, date, dd/MM/YYYY}"> <apex:param value="{!Item.Planilla_Aprobada}" /> </apex:outputText> 
-
-                                        </td>
-                                        <td>
-                                            {!Item.Segundo_Nombre}
-                                        </td>
-                                        <td>
-                                            {!Item.a}
-                                        </td>
-                                        <td>
-                                            {!Item.Salario}
-                                        </td>
-                                        <td style="text-align:center;">
-                                            <apex:outputText value="{!IF(AND(Item.Primer_Apellido = 'true', Item.a = 'HNL'), 'Si', 'No' )}" style=" font-size:15px;"  />
-                                            
-                                            
-                                        </td>
-                                        <td style="text-align:center;">
-                                            <apex:outputText value="{!IF(AND(Item.Primer_Apellido = 'true', Item.a = 'USD'), 'Si', 'No' )}" style=" font-size:15px;"  />
-                                            
-                                        </td>
-                                        <td style="text-align:center;">
-                                            <apex:inputText value="{!Item.codigoReferencia}"   />
-                                            
-                                        </td>
-                                        <td style="text-align:center;">
-                                            <apex:selectList value="{!Item.rezago}" size="1" styleclass="slds-input" >
-                                                <!--apex:selectOption itemLabel="--Ninguno--" itemValue="" /-->
-                                                 <apex:selectOption itemLabel="Si" itemValue="S" />
-                                                 <apex:selectOption itemLabel="No" itemValue="N" />
-                                            </apex:selectList>
-                                            
-                                        </td>
-<!--td>
-<div class="slds-scope">
-<apex:commandLink styleclass="slds-button slds-button--brand" rendered="{!Item.Primer_Apellido}" value="Aceptar" action="{!CambioTasa}">  
-<apex:param value="{!Item.id_cambiarSalario}" AssignTo="{!id_Planilla}" name="CambioTasa" /> </apex:commandLink>
-</div>
-
-</td-->
-                                        <td>
-                                            <div class="slds-scope">
-                                                <apex:commandLink styleclass="slds-button slds-button--brand" value="Aprobar" status="status" reRender="theForm"  action="{!Aprobarplanilla}">  
-                                                    <apex:param value="{!Item.id_cambiarSalario}" AssignTo="{!id_Planilla}" name="CambioTasa" /> </apex:commandLink>
-                                            </div>
-                                            
-                                        </td>
-                                        <td>
-                                            
-                                            <div class="slds-scope">
-                                                <apex:commandLink styleclass="slds-button slds-button--brand" value="Denegar" status="status" reRender="theForm"  action="{!Denegarplanilla}">  
-                                                    <apex:param value="{!Item.id_cambiarSalario}" AssignTo="{!id_Planilla}" name="CambioTasa" /> </apex:commandLink>
-                                            </div>
-                                            
-                                            
-                                        </td>
+                        <div style="width:100%; overflow-x:scroll; height: 100%">
+                            <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                                   style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Empresa"><strong>Empresa</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Fecha"><strong>Fecha</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tipo Planilla"><strong>Planilla</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tipo Planilla"><strong>Moneda</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Total"><strong>Total</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tasa compra"><strong>Compra Dolar</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tasa compra"><strong>Venta de  Dolar</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Total"><strong>Codigo Rezago</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tasa compra"><strong>Rezago</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tasa compra"><strong>Total Calculado</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Denegar"><strong>Denegar</strong></div>
+                                        </th>
                                         
                                     </tr>
-                                </apex:repeat>
-                            </tbody>
-                            
-                        </table></apex:outputPanel>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!Planillas}" var="Item" >
+                                        <tr>
+                                            <td>
+                                                {!Item.Primer_Nombre}
+                                            </td>
+                                            <td>
+                                                <apex:input type="date" styleclass="slds-input" rendered="{!Item.Primer_Apellido = 'false'}" value="{!Item.Planilla_Aprobada}" />
+                                                <apex:outputText rendered="{!Item.Primer_Apellido = 'true'}" value="{0, date, dd/MM/YYYY}"> 
+                                                    <apex:param value="{!Item.Planilla_Aprobada}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.Segundo_Nombre}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.a}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.Salario}" style="font-size:15px;" />
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <apex:outputText value="{!IF(AND(Item.Primer_Apellido = 'true', Item.a = 'HNL'), 'Si', 'No' )}" style=" font-size:15px;"  />
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <apex:outputText value="{!IF(AND(Item.Primer_Apellido = 'true', Item.a = 'USD'), 'Si', 'No' )}" style=" font-size:15px;"  />
+                                            </td>
+                                            <!-- REZAGOS -->
+                                            <apex:actionRegion >
+                                                <td scope="row" data-label="Codigo Referencia Rezago" style= "text-align: center;">
+                                                    <div class="slds-truncate" > 
+                                                        <apex:commandLink action="{!showPopup}">
+                                                            <apex:outputText value="{!Item.codigoReferencia}" style="font-size:15px;" />
+                                                            <apex:param value="{!Item.codigoReferencia}" AssignTo="{!CodRef}"  name="CodRef" />
+                                                            <apex:param value="{!Item.Segundo_Nombre}" AssignTo="{!Cod_Planilla}"  name="CodRefPla" /> 
+                                                            <apex:param value="{!Item.Salario}" AssignTo="{!Total}"  name="CodRefTot" /> 
+                                                        </apex:commandLink>
+                                                    </div>
+                                                </td>
+                                            </apex:actionRegion>
+                                            <td style="text-align:center;" id="Rezago_SINO" >
+                                                <apex:outputText value="{!IF(Item.rezago = null,'N/A',Item.rezago)}" style="font-size:15px;" />
+                                            </td>
+                                            <td style="text-align:center;" id="Total_Calculado" >
+                                                <apex:outputText value="{!IF(OR(Item.rezago = null,Item.rezago = 'N'),Item.Salario,Item.Monto_Calculado)}" style="font-size:15px;" />
+                                            </td>
+                                            <!-- REZAGOS -->
+                                            
+                                            <td>
+                                                <div class="slds-scope">
+                                                    <apex:commandLink styleclass="slds-button slds-button--brand" value="Aprobar" status="status" reRender="theForm"  action="{!Aprobarplanilla}">  
+                                                        <apex:param value="{!Item.id_cambiarSalario}" AssignTo="{!id_Planilla}" name="CambioTasa" />
+                                                        <apex:param value="{!Item.codigoReferencia}" AssignTo="{!Num_CodReferencia_Rez}"  name="APROBACIONREZ" />
+                                                        <apex:param value="{!Item.rezago}" AssignTo="{!Rez_SI_NO}" name="APROBACIONREZSN" />
+                                                        <apex:param value="{!Item.Salario}" AssignTo="{!Monto_Sal}" name="APROBACIONREZMC" />
+                                                        <apex:param value="{!Item.Segundo_Nombre}" AssignTo="{!Num_CodCuenta_Rez}"  name="APROBACIONREZC" />
+                                                        <apex:param value="{!Item.Monto_Calculado}" AssignTo="{!Monto_Calculado}"  name="APROBACIONREZM" />
+                                                        <apex:param value="{!Item.Primer_Apellido}" AssignTo="{!Compra_Dolar}"  name="APROBACIONREZCD" />
+                                                        <apex:param value="{!Item.a}" AssignTo="{!Moneda}"  name="APROBACIONREZMO" />
+                                                    </apex:commandLink>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-scope">
+                                                    <apex:commandLink styleclass="slds-button slds-button--brand" value="Denegar" status="status" reRender="theForm"  action="{!Denegarplanilla}">  
+                                                        <apex:param value="{!Item.id_cambiarSalario}" AssignTo="{!id_Planilla}" name="CambioTasa" /> </apex:commandLink>
+                                                </div>
+                                            </td>
+                                            
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </apex:outputPanel>
                     <apex:outputPanel rendered="{!!mostrarPan}">    
                         <table class="slds-table slds-table--bordered"  >
                             <thead>
                                 <tr class="slds-text-title_caps">
-                                    
                                     <th scope="col">
                                         <div class="slds-truncate" title="Empresa"><strong> Empresa</strong></div>
                                     </th>
@@ -200,8 +207,6 @@
                                     <th scope="col">
                                         <div class="slds-truncate" title="Tasa compra"><strong>Respuesta Sysde</strong></div>
                                     </th>
-                                    
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -230,9 +235,53 @@
                                     </tr>
                                 </apex:repeat>
                             </tbody>
-                            
-                        </table></apex:outputPanel>
+                        </table>
+                    </apex:outputPanel>
                 </div>
+                
+                <!-- Modal Buscar Codigos de Rezago -->
+                
+                <div class="slds-scope">	
+                    <apex:outputPanel rendered="{!displayPopup}" > 
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Codigos de Rezago</h1>
+                                    <br/><br/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="font-size:15px;">
+                                        <apex:inputText value="{!CodRefTest}" html-placeholder="{!CodRef}">
+                                            <apex:actionSupport event="onchange" action="{!SearchValores}"/>
+                                        </apex:inputText><br/><br/>
+                                        <apex:outputText value="{!Existe}"/>
+                                        <br/><br/>
+                                        <table style="border: 1px solid black;">
+                                            <tr>
+                                                <th style="text-align: center; vertical-align: middle;">Rezago Si/No</th>
+                                                <th style="text-align: center; vertical-align: middle;">Moneda</th>
+                                                <th style="text-align: center; vertical-align: middle;">Monto</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: center; vertical-align: middle;">{!Rezagosn}</td>
+                                                <td style="text-align: center; vertical-align: middle;">{!Moneda}</td>
+                                                <td style="text-align: center; vertical-align: middle;">{!Monto}</td>
+                                            </tr>
+                                        </table>
+                                    </h2>
+                                    <br/><br/>
+                                    <apex:commandLink action="{!closePopup}" status="status" reRender="theForm" >  
+                                        <apex:commandButton style="width: 200px; color:#fff; height: 28px;position: relative;background: #42c4dd;"  value="Cerrar"/> 
+                                    </apex:commandLink>
+                                    <apex:commandLink action="{!aplicar}" status="status" reRender="theForm" rendered="{!BTNAplicar}">  
+                                        <apex:commandButton style="width: 200px; color:#fff; height: 28px;position: relative;background: #42c4dd;" value="Aplicar Codigo"/> 
+                                    </apex:commandLink>
+                                </header>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>	 
+                </div>
+                <!--Fin-->
                 
                 <div class="slds-scope">	
                     <apex:outputPanel rendered="{!popTasa}" > 
@@ -241,36 +290,52 @@
                                 <header class="slds-modal__header">
                                     <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
                                     <apex:commandLink style="slds-item-align_center"   ><apex:image styleClass="imgx" /> </apex:commandLink>
-                                    
-                                    
                                     <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Tasa de Cambio</h1>
-                                    <br/>
-                                    <br/>
-                                    
+                                    <br/><br/>
                                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="font-size:30px;">
                                         Tasa de cambio: {!respuesta.tasaCambio}<br/>
                                         Monto Acreditado: {!respuesta.montoAcreditado}
-                                        
                                     </h2>
-                                    
-                                    <br/>
-                                    <br/>
-                                    
+                                    <br/><br/>
                                     <apex:commandButton style="width: 200px; color:#fff;   height: 28px;position: relative;background: #42c4dd;"  action="{!Cerrar}"  value="ACEPTAR" /> 
-                                    
                                 </header>
-                                
-                                
-                                
                             </div>
                         </section>
                         <div class="slds-backdrop slds-backdrop_open"></div>
                     </apex:outputPanel>	
                 </div>
                 
+                <div class="slds-scope">	
+                    <apex:outputPanel rendered="{!MensajeErr}" > 
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
+                                    <apex:commandLink style="slds-item-align_center"   ><apex:image styleClass="imgx" /> </apex:commandLink>
+                                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Planilla Con Error</h1>
+                                    <br/><br/>
+                                    <h3 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#FE2E2E; font-size:30px;">
+                                        <apex:outputText value="{!MensajeError}" escape="false" />
+                                    </h3>
+                                    <br/><br/>
+                                    <apex:commandButton style="width: 200px; color:#fff;   height: 28px;position: relative;background: #42c4dd;"  action="{!cerrar}"  value="ACEPTAR" oncomplete="Cleaning();" /> 
+                                </header>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </apex:outputPanel>	
+                </div>
                 
-            </apex:form> 
-            
+            </apex:form>
         </body>
+        <script type="text/javascript">
+        function Clean(){
+            window.location.href = window.location.href;
+            alert('Recargando Pagina \n Espere Por Favor...');
+        }
+        function Cleaning(){
+            window.location.href = window.location.href;           
+        }
+        </script>
     </html>
 </apex:page>

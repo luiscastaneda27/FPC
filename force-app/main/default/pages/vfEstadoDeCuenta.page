@@ -470,7 +470,7 @@
                           </apex:outputPanel>
                           
                           <apex:outputPanel rendered="{!mostrarUSD}">
-                              <SUP>1</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br/>
+                              <SUP>*</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br/>
                           </apex:outputPanel>
                           </p></td>
                       <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; line-height:20px;"><p><br/>Identificación: {!cuentas.identificacion}<br />
@@ -555,7 +555,7 @@
                   </table></td>
               </tr -->
               <tr>
-                <td height="20"> </td>
+                <td height="20">&nbsp;</td>
               </tr>
               
               <apex:repeat value="{!listCuentas}" var="linea">
@@ -585,7 +585,7 @@
                                           <font style="padding-left:10px;">Aportes Seguro de Vida: {!item.aporteSeguroVida}</font> <br />
                                           <font style="padding-left:10px;">Intereses: {!item.intereses}</font> <br />
                                           <font style="padding-left:10px;">Comisiones: {!item.comisiones}</font> <br />
-                                          <font style="padding-left:10px;">Retiros: {!item.retiros}</font> <br />
+                                          <font style="padding-left:10px;">Retiros / Pago de Intereses: {!item.retiros}</font> <br />
                                           <font style="font-weight: bold; padding-left:10px;">Total de mi Fondo: {!item.totalMiFondo}</font></p>
                                         <span>Resumen de mi fondo</span>
                                         <table class="chart" width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -620,9 +620,9 @@
                                           <table class="chart" width="100%" border="0" cellspacing="0" cellpadding="0">
                                           <tr>
                                             <td scope="col">
-                                                <img src = "{!$Resource.LogoEstadoCuenta}" /> 
-                                               <!--  <img id="publicidad" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002wU6z&oid=00Dj0000001rVac&lastMod=1539276939000" /> -->
-                                                 <!--img id="publicidad" src="https://ficohsafpc--fpc32--c.cs40.visual.force.com/resource/1625427473000/Pruebas?" /-->
+                                                <a href="https://www.tuconcienciafinanciera.com/#/jubilacion" target="_blank">
+                                                    <img src = "{!$Resource.LogoEstadoCuenta}"  style="width: 100%; height: 100%;"  />
+                                                </a>
                                             </td>
                                           </tr>
                                           </table>
@@ -666,7 +666,6 @@
                                     </td -->
                                     
                                 </apex:repeat>    
-                
                             </tr>
                         
                       </table>

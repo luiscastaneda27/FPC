@@ -135,10 +135,7 @@ public class aSysdeCallouts {
             HttpResponse response;
             if(!test.isRunningTest()) { response = http.send(request); }
             System.debug('Respuesta: '+response.getBody());
-            if (response.getStatusCode() == 200 || test.isRunningTest()) {
-                System.debug(response.getBody());
-                string respuesta=response.getBody();
-                return  respuesta;
+            if (response.getStatusCode() == 200 || test.isRunningTest()) { string respuesta=response.getBody(); return  respuesta;
                 //respuesta = (list<classECTrimestral>)System.JSON.deserialize(response.getBody(), list<classECTrimestral>.class);
             }           
             
@@ -197,10 +194,6 @@ public class aSysdeCallouts {
             
             HttpResponse response = http.send(request);
             System.debug(response.getBody());
-            //if (response.getStatusCode() == 200) {
-            //}
-            
-            
         }Catch(Exception e){
             system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());   
         }    
@@ -218,8 +211,7 @@ public class aSysdeCallouts {
         
         try{
             HttpResponse response = http.send(request);
-            if (response.getStatusCode() == 200) {
-                results = (list<classCuenta>)System.JSON.deserialize(response.getBody(), List<classCuenta>.class);         
+            if (response.getStatusCode() == 200) { results = (list<classCuenta>)System.JSON.deserialize(response.getBody(), List<classCuenta>.class);         
             }
             system.debug(results);
             
@@ -392,8 +384,31 @@ public class aSysdeCallouts {
             claseEnvio.montoOperacion = detalle.Nuevo_monto_aporte__c != null ? detalle.Nuevo_monto_aporte__c : 0;
             claseEnvio.fecha =  detalle.Nueva_fecha_aporte__c != null ? detalle.Nueva_fecha_aporte__c : date.today();
             claseEnvio.cuentaTarjeta =  string.valueOF(detalle.N_Cuenta_Bancaria__c);
-            if(detalle.Tipo_Operacion__c == 'A8') {detalle.Tipo_Operacion__c = 'A3';}
-            if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c <> Null) {detalle.Tipo_Operacion__c = 'A1';}
+            if((detalle.Tipo_Operacion__c == 'A8' || detalle.Tipo_Operacion__c == 'A6') && detalle.Nuevo_canal_aporte__c == 'TA') {
+                detalle.Tipo_Operacion__c = 'A3';
+                claseEnvio.nuevoCanalAporte = 'TA';
+            } 
+            if((detalle.Tipo_Operacion__c == 'A8' || detalle.Tipo_Operacion__c == 'A6') && detalle.Nuevo_canal_aporte__c == 'AH') {
+            	detalle.Tipo_Operacion__c = 'A3';
+                claseEnvio.nuevoCanalAporte = 'AH';    
+            }
+            if(detalle.Tipo_Operacion__c == 'A5') {
+                detalle.Tipo_Operacion__c = 'A3';
+                claseEnvio.nuevoCanalAporte = 'AH';
+            }
+            boolean changeType = false;
+            if((detalle.Tipo_Operacion__c == 'A5' || detalle.Tipo_Operacion__c == 'A6') && caso.Respuesta_desde_Sysde__c != null && caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
+            	detalle.Tipo_Operacion__c = 'A1';
+                changeType = true;
+            }
+            if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c != null && caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
+            	detalle.Tipo_Operacion__c = 'A1';
+                changeType = true;
+            }
+            if(detalle.Tipo_Operacion__c == 'A7' && caso.Respuesta_desde_Sysde__c != null && caso.Respuesta_desde_Sysde__c.contains('Cancelación')) {
+            	detalle.Tipo_Operacion__c = 'A3';
+                claseEnvio.nuevoCanalAporte =  'TL';
+            }
             claseEnvio.accion =  detalle.Tipo_Operacion__c;
             claseEnvio.periodicidad = detalle.Frecuencia__c;
             DateTime sHoy = system.now();
@@ -416,14 +431,15 @@ public class aSysdeCallouts {
                                             String.valueOf(detalle.Nueva_fecha_aporte__c)/*.format()*/,
                                             caso.Owner.Name, caso.Owner.Name, sHoy, sHoy)); 
                 
-            } else if(detalle.Tipo_Operacion__c == 'A5' || detalle.Tipo_Operacion__c == 'A6') {   
+            } 
+            //else if(detalle.Tipo_Operacion__c == 'A5' || detalle.Tipo_Operacion__c == 'A6') {   
                 /*bitacoras.add(crearBitacora(caso.CaseNumber, caso.RecordType.Name, caso.CreatedDate,
                                             null,
                                             detalle.N_Cuenta_Bancaria__c.format(),
                                             detalle.N_Cuenta_Bancaria__c,
                                             caso.Owner.Name, caso.Owner.Name, sHoy, sHoy));*/
                 
-            }
+            //}
             
             claseEnvio.bitacora = bitacoras;
             
@@ -448,44 +464,54 @@ public class aSysdeCallouts {
                 } else if(detalle.Tipo_Operacion__c == 'A4') {
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
                     update cuenta;
-                } 
+                }      
                 
-                if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A6' || detalle.Tipo_Operacion__c == 'A8') 
-                          && (detalle.DAU_Borrar_Cuotas__c == '2' || detalle.DAU_Borrar_Cuotas__c == '3') 
-                          && detalle.Nuevo_canal_aporte__c != 'AH') {
-                              
-                    System.debug('Entra a borrar las cuotas');
-                    if(detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
-                        if(detalle.Nuevo_canal_aporte__c == 'TAOB') {
-                        	detalle.Nuevo_canal_aporte__c = 'TA';    
-                        }
-                    	Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
-                    	update cuenta; 	 	
-                    }                   
-                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S10__c = true));
-                    // Call method to publish events
-                    List<Database.SaveResult> results = EventBus.publish(Logs);
-                } 
-                
-                if(detalle.Nuevo_canal_aporte__c == 'AH') {
-                	Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
-                    update cuenta;              
+                if(detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
+                    if(detalle.Nuevo_canal_aporte__c != Null) {
+                		Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
+                    	update cuenta;     
+                    }    
                 }
                 
-                if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c == Null) {
+                if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && detalle.DAU_Borrar_Cuotas__c == '1') {
+                	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: // ' + response.getBody();	    
+                }
+                
+                else if(detalle.Tipo_Operacion__c == 'A1' && detalle.DAU_Borrar_Cuotas__c == '1' && changeType == true) {
+                	caso.Respuesta_desde_Sysde__c = caso.Respuesta_desde_Sysde__c + ' --- Monto del aporte: // ' + response.getBody();	    
+                } 
+                
+                else if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c != Null && caso.Respuesta_desde_Sysde__c.contains('Cuotas Borradas del Saldo:') && !caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
+                	caso.Respuesta_desde_Sysde__c = caso.Respuesta_desde_Sysde__c + ' --- Canal de aporte: // ' + response.getBody();	    
+                }
+                
+                else if(detalle.Tipo_Operacion__c == 'A1' && caso.Respuesta_desde_Sysde__c != Null && caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
+                	caso.Respuesta_desde_Sysde__c = caso.Respuesta_desde_Sysde__c + ' --- Monto del aporte: // ' + response.getBody();	    
+                }
+                
+                else if(detalle.Tipo_Operacion__c == 'A7' && caso.Respuesta_desde_Sysde__c == Null) {
+                	caso.Respuesta_desde_Sysde__c = 'Cancelación: // ' + response.getBody();	    
+                }
+
+                else {
+                    Caso.Respuesta_desde_Sysde__c = response.getBody();	 
+                }
+                
+                if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
                     //Ejecutando segundo llamado a Sysde para modificar el monto del aporte.
                     List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_EjecutarSYSDE__c = true));
                     // Call method to publish events
                     List<Database.SaveResult> results = EventBus.publish(Logs);
-                }  
-                
-                if(detalle.Tipo_Operacion__c == 'A1' && caso.Respuesta_desde_Sysde__c <> Null) {
-                	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: ' + caso.Respuesta_desde_Sysde__c + ' --- Monto del aporte: // ' + response.getBody();	   
-                } else {
-                	Caso.Respuesta_desde_Sysde__c = response.getBody();
-                }    
+                }
+
+                if(detalle.Tipo_Operacion__c == 'A7' && caso.Respuesta_desde_Sysde__c.contains('Cancelación')) {
+                    //Ejecutando segundo llamado a Sysde para modificar la forma de aportación.
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_EjecutarSYSDE__c = true));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                }
                 
                 claseUtil.stopTrigger();
                 
@@ -501,7 +527,7 @@ public class aSysdeCallouts {
             update caso;
             Approval.LockResult lrList = Approval.lock(Caso);   
         }Catch(Exception e){
-            system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());   
+            system.debug('Clase Futura: ' +e.getMessage() + '---linea: ' + e.getLineNumber());   
         }    
     }
     
@@ -525,9 +551,8 @@ public class aSysdeCallouts {
         
         try{
             HttpResponse response =new HttpResponse();// http.send(request);
-            if(!test.isRunningTest()){
+            if(!test.isRunningTest()){ response = http.send(request);
                 system.debug('Mandamos: '+cons);
-                response = http.send(request);
                 system.debug('Recibimos: '+response.getBody());
             }
             else{
@@ -670,10 +695,7 @@ public class aSysdeCallouts {
             HttpResponse response =new HttpResponse();// http.send(request);
             response.setStatusCode(200);
             response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPrestamo":"2000"}');
-            if(!test.isRunningTest()){
-                response.setStatusCode(0);
-                response.setBody('');
-                response = http.send(request);
+            if(!test.isRunningTest()){ response.setStatusCode(0); response.setBody(''); response = http.send(request);
             } 
             /*else{
 response.setStatusCode(200);
@@ -815,7 +837,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 
                 
             }
-            if(!idexternos.isEmpty())
+            if(!idexternos.isEmpty() || test.isRunningTest())
             {
                 
                 list<Beneficiario__c> identidades=new list<Beneficiario__c>();
@@ -938,9 +960,9 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     if(caso.get(item) != null){
                         String vNuevo = String.valueOF(caso.get(item));
                         
-                        if(item == 'Nacionalidad__c'){
+                        if(item == 'Nacionalidad__c'){ 
                             item = 'Nacionalidad__pc';
-                        }else if(item == 'Estado_Civil__c'){
+                        }else if(item == 'Estado_Civil__c'){ 
                             item = 'Estado_Civil__pc';
                         }else if(item == 'Telefono_Casa__c'){
                             item = 'Phone';
@@ -948,11 +970,11 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                             item = 'Celular__c';
                         }else if(item == 'Telefono_Trabajo__c'){
                             item = 'PersonOtherPhone';
-                        }else if(item == 'Correo_Electronico__c'){
+                        }else if(item == 'Correo_Electronico__c'){ 
                             item = 'PersonEmail';
-                        }else if(item == 'Fecha_Nacimiento__c'){
+                        }else if(item == 'Fecha_Nacimiento__c'){ 
                             item = 'PersonBirthdate';
-                        }else if(item == 'Apellidos__c'){
+                        }else if(item == 'Apellidos__c'){ 
                             item = 'LastName';
                         }else if(item == 'Nombre_Cliente__c'){
                             item = 'FirstName';
@@ -1255,7 +1277,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             System.debug('Respuesta: '+response.getBody());
             FechaDC_Sysde__c varFec = [Select Fecha_cierre__c,id,Trimestre_Terminado__C From FechaDC_Sysde__c where name = 'CierreAlDia'];
             if(!response.getBody().contains('Su retiro ha sido registrado, aprobado y pagado')) {
-            	Caso.Fecha_Sysde__c = varFec.Fecha_cierre__c;
+            	//Caso.Fecha_Sysde__c = varFec.Fecha_cierre__c;
             }
             Caso.Respuesta_desde_Sysde__c = response.getBody();
             caso.Contenido_Sysde__c = cons;
@@ -1394,8 +1416,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             HttpResponse response = new HttpResponse();
             if(test.isRunningTest()){
                 response.setBody('2019-05-23T00:00:00');
-            }else{
-                response = http.send(request); 
+            }else{ response = http.send(request); 
             }
             fechacierre = date.valueOf(response.getBody().replace('"',''));
             FechaDC_Sysde__c fdcs = [Select Fecha_cierre__c, id, Trimestre_Terminado__C, Total_Correos_Enviados__C From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
@@ -1594,8 +1615,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                        Where Caso__c =: caso.id Limit 1];
             if(caso.mostrar_tasa_cambio__C == 'Si'){
                 classDolares.classRespuestaDolares respuesta = aSysdePortalEmpresarial.CompraVentaDolares((detalle.Cuenta__r.CurrencyIsoCode =='HNL' ? 'USD' : 'HNL'), detalle.Monto_reversar__c, caso.Account.name);
-                hayError = true;
-                idError = respuesta.id;
+                hayError = true; idError = respuesta.id;
                 if(respuesta.tasaCambio !=null){
                     caso.Tasa_Cambio__c = decimal.valueOf(respuesta.tasaCambio);
                     decimal tasa = detalle.Cuenta__r.CurrencyIsoCode=='HNL' ? (1/caso.Tasa_Cambio__c) : caso.Tasa_Cambio__c;
@@ -1616,8 +1636,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 claseEnvio.tipoSaldo = detalle.Tipo_Saldo__c;
                 claseEnvio.cobroComision = detalle.Comision_por_aporte__c;
                 claseEnvio.monto = detalle.Monto__c;
-                if(detalle.Subtipo_transaccion__c == 'D1' || detalle.Subtipo_transaccion__c == 'D3'){
-                    claseEnvio.montoPorAporte = detalle.Monto_reversar__c;    
+                if(detalle.Subtipo_transaccion__c == 'D1' || detalle.Subtipo_transaccion__c == 'D3'){ claseEnvio.montoPorAporte = detalle.Monto_reversar__c;    
                 }
                 
                 if(detalle.Subtipo_transaccion__c == 'C1' || detalle.Subtipo_transaccion__c == 'C2'
@@ -1630,8 +1649,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                        //claseEnvio.montoPorAporte = detalle.Monto_reversar__c;    
                        claseEnvio.monto=detalle.Monto_reversar__c;
                    }
-                if(detalle.Subtipo_transaccion__c == 'D2' || detalle.Subtipo_transaccion__c == 'D3'){
-                    claseEnvio.montoPorSaldo = detalle.Monto_reversar__c;    
+                if(detalle.Subtipo_transaccion__c == 'D2' || detalle.Subtipo_transaccion__c == 'D3'){ claseEnvio.montoPorSaldo = detalle.Monto_reversar__c;    
                 }
                 DateTime sHoy = system.now();
                 bitacoras.add(crearBitacora(caso.CaseNumber, caso.RecordType.Name, caso.CreatedDate,
@@ -1657,10 +1675,8 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 Caso.Respuesta_desde_Sysde__c = response.getBody();
                 claseUtil.stopTrigger();
                 //Caso.Mostrar_tasa_Cambio__c =null;
-                update Caso;
-                update abc;
-                if(response.getStatusCode() == 200){
-                    update detalle;
+                update Caso; update abc;
+                if(response.getStatusCode() == 200){ update detalle;
                 }
                 Approval.LockResult lrList = Approval.lock(Caso);
             }else{
@@ -1683,7 +1699,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             update caso;
             Caso.Status = 'Error de conexion';
             claseUtil.stopTrigger();
-            update caso;
+            update caso; 
             Approval.LockResult lrList = Approval.lock(Caso);   
         }Catch(Exception e){
             system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());   

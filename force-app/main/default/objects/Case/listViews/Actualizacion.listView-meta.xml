@@ -13,7 +13,7 @@
     <filters>
         <field>CASES.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Case.Retiros</value>
+        <value>Case.Actualizacion_informacion</value>
     </filters>
     <label>Actualización de información</label>
 </ListView>

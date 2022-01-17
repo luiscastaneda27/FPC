@@ -12,7 +12,7 @@ trigger CompreDeDollar on Planilla__c (after update) {
          {
                 Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 mail.setToAddresses(new String[] {correos[i].correo__c});
-                mail.setOrgWideEmailAddressId(owea.get(0).Id);
+             	mail.setOrgWideEmailAddressId(owea.get(0).Id);
                 mail.setSenderDisplayName('FICOHSA PENSIONES Y CESANTíAS');
                 mail.setSubject('Portal Empresarial Ficohsa');
                 mail.setPlainTextBody('Buen día ' + correos[i].Name +'.\n\n La empresa ' +nombreEmpresa +
