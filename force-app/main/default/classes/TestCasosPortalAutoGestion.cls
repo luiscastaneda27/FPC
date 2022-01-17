@@ -1,12 +1,8 @@
 @isTest
-public class TestCasosPortalAutoGestion {
+public class TestCasosPortalAutoGestion {   
     
     static testMethod void TestCasos(){
-        /*Map<String, String> mapRecordtype = new Map<String, String>();
-        for(RecordType item: [Select Id, DeveloperName From RecordType Where sObjectType = 'Case' ]){
-            mapRecordtype.put(item.DeveloperName, item.Id);
-        }*/
-        
+
         Account cliente = new Account();
         cliente.Name='Luis Donaire';
         cliente.Identificacion__c='0709199300155';
@@ -44,13 +40,48 @@ public class TestCasosPortalAutoGestion {
         municipio.Codigo_Municipio__c='01';
         municipio.nombre_municipio__C='Test';
         municipio.codigo_departamento__c= '	120';
-        insert municipio;
-        
+        insert municipio;       
         
         ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
         controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
         controlCasos.contrato.Acepto_Condiciones_de_Portal_Autogestion__c = true;
         controlCasos.AceptarTerminos();
+        
+        list<RecordType> tiposR0 = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Aumento_Disminucion_Aportes'];
+        
+        //Caso Aumento Disminución de Aporte
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
+        controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        //controlCasos.guardar();
+        
+        controlCasos.detalleCaso.Tipo_Operacion__c='A1';
+        controlCasos.detallecaso.Nuevo_monto_aporte__c=500;
+        controlCasos.caso.CurrencyIsoCode ='HNL';
+        controlCasos.guardar();
+        
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
+        controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        controlCasos.detalleCaso.Tipo_Operacion__c='A6';
+        controlCasos.detallecaso.Nuevo_monto_aporte__c=000;
+        controlCasos.caso.CurrencyIsoCode ='HNL';
+        controlCasos.guardar();
+                
+        controlCasos.detalleCaso.Tipo_Operacion__c='A6';
+        controlCasos.detallecaso.Banco__c = 'Otros Bancos';        
+        controlCasos.detalleCaso.Tipo_Operacion__c='A6';
+        controlCasos.detallecaso.Inicio_Fecha_Aporte__c = date.today();
+        controlCasos.datetemp= date.today();
+        controlCasos.guardar();
         
         //Caso Act de Info
         controlCasos.idTipoRegistro = controlCasos.listTipoCaso[1].getValue();
@@ -76,9 +107,7 @@ public class TestCasosPortalAutoGestion {
         controlCasos.inputCodigoVeficacion = controlCasos.codigoVeficacion;
         controlCasos.verificarCodigo();
         controlCasos.cerrar();
-        
-        
-        
+               
         //Caso Constancia
         controlCasos.caso = new case();
         controlCasos.idTipoRegistro = controlCasos.listTipoCaso[2].getValue();
@@ -144,9 +173,58 @@ public class TestCasosPortalAutoGestion {
         controlCasos.caso = new case();
         controlCasos.AccionVacia2();
         
+    }
+    
+    static testMethod void execute(){
+
+        Account cliente = new Account();
+        cliente.Name='Luis Donaire';
+        cliente.Identificacion__c='0709199300155';
+        insert cliente;
+        
+        Producto__C producto = new Producto__C();
+        producto.Codigo__c='qwqw';
+        producto.name='Prueba';
+        insert producto;
+        
+        Subproducto__c  subProducto = new Subproducto__c ();
+        subProducto.Name='Test';
+        subProducto.Codigo__c='3434';
+        subProducto.Producto__c = producto.id;
+        insert subProducto;
+        
+        Cuentas__C cuenta = new cuentas__C();
+        cuenta.codigo__C='0000';
+        cuenta.Cliente__c = cliente.id;
+        cuenta.Subproducto__c = subProducto.id;
+        cuenta.name='test';
+        cuenta.Monto_aporte__c = 100;
+        cuenta.Forma_Aportacion__c='TA';
+        insert cuenta;
+        
+        Agencia__C agencia = new agencia__C(name='Test', zona__C='2');
+        insert agencia;
+        
+        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        municipio__C municipio = new municipio__C();
+        municipio.Codigo_Municipio__c='01';
+        municipio.nombre_municipio__C='Test';
+        municipio.codigo_departamento__c= '	120';
+        insert municipio;       
+        
+        ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
+        controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
+        controlCasos.contrato.Acepto_Condiciones_de_Portal_Autogestion__c = true;
+        controlCasos.AceptarTerminos();
+        
+        list<RecordType> tiposR0 = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Aumento_Disminucion_Aportes'];
+        
         //Caso Aumento Disminución de Aporte
         controlCasos.caso = new case();
-        controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
         controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
         controlCasos.Caso.Status = 'Nuevo';
         controlCasos.Caso.type = 'Solicitud de Gestión';
@@ -159,75 +237,16 @@ public class TestCasosPortalAutoGestion {
         controlCasos.caso.CurrencyIsoCode ='HNL';
         controlCasos.guardar();
         
-        controlCasos.caso = new case();
-        controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
-        controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
-        controlCasos.Caso.Status = 'Nuevo';
-        controlCasos.Caso.type = 'Solicitud de Gestión';
-        controlCasos.Caso.Origin = 'Web';
-        controlCasos.Caso.Priority = 'Media';
-        controlCasos.detalleCaso.Tipo_Operacion__c='A1';
-        controlCasos.detallecaso.Nuevo_monto_aporte__c=000;
-        controlCasos.caso.CurrencyIsoCode ='HNL';
-        controlCasos.guardar();
+        classClientesEC cc = new classClientesEC();
+        cc.idCliente = cliente.Id;
+        cc.desde = System.now();
+        cc.hasta = System.now() + 30;
         
+        list<classClientesEC> claseEnvio = new list<classClientesEC>();
+        claseEnvio.add(cc);
         
-        controlCasos.detalleCaso.Tipo_Operacion__c='A3';
-        controlCasos.detallecaso.Nuevo_canal_aporte__c = 'AH';
-        controlCasos.AccionVacia2();
-        controlCasos.detalleCaso.Inicio_Fecha_Aporte__c=date.today();
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A3';
-        controlCasos.detallecaso.Nuevo_canal_aporte__c = 'TA';
-        controlCasos.AccionVacia2();
-        controlCasos.detalleCaso.Inicio_Fecha_Aporte__c=date.today().adddays(10);
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A3';
-        controlCasos.detallecaso.Nuevo_canal_aporte__c = 'TA';
-        controlCasos.AccionVacia2();
-        controlCasos.detalleCaso.Inicio_Fecha_Aporte__c=date.today().addmonths(5);
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A4';
-        controlCasos.detalleCaso.Nueva_fecha_aporte__c=date.today().addmonths(-5);
-        controlCasos.datetemp= date.today();
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A4';
-        controlCasos.detallecaso.Nuevo_canal_aporte__c = 'TA';
-        controlCasos.AccionVacia2();
-        controlCasos.detalleCaso.Nueva_fecha_aporte__c=date.today().addmonths(5);
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A5';
-        controlCasos.detallecaso.Inicio_Fecha_Aporte__c = date.today().adddays(-1);
-        controlCasos.datetemp= date.today();
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A6';
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A6';
-        controlCasos.detallecaso.Inicio_Fecha_Aporte__c = date.today();
-        controlCasos.datetemp= date.today();
-        controlCasos.guardar();
-        
-        controlCasos.detalleCaso.Tipo_Operacion__c='A1';
-        controlCasos.detallecaso.Nuevo_monto_aporte__c=500;
-        controlCasos.caso.CurrencyIsoCode ='HNL';
-        controlCasos.guardar();
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        controladorCasosPortalAutogestion.estadoCuentaHistorico(claseEnvio, controlCasos.caso.Id);  
+        controladorCasosPortalAutogestion.estadoCuentaTrimestral(claseEnvio, controlCasos.caso.Id);
     }
-    
+       
 }

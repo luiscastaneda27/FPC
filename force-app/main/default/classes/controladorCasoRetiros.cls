@@ -13,6 +13,7 @@ public class controladorCasoRetiros {
     public Double montoaRetirar{get;set;}
     public Double montoPatExtOrd{get;set;}
     public Cuentas__c cuentaCliente{get;set;}
+    public boolean showTipoTC{get;set;}
     public boolean bandera3{get;set;}
     public boolean banderaSubTipoTran{get;set;}
     public boolean mostrarReversiones{get;set;}
@@ -86,7 +87,7 @@ public class controladorCasoRetiros {
         idCaso = controller.getId();
         montoaRetirar = 0.00; montoPatOrd = 0.00; montoPatExtOrd = 0.00; montoPerOrd = 0.00; montoPerExtOrd = 0.00; porcCobroIndiv = 0.00; aplicaComi = false;
         saldo10 = 0.00; saldo11 = 0.00; saldo12 = 0.00; saldo13 = 0.00;
-        
+            
         pruebamodal=false;
         
         vienedeVisualforce = true;
@@ -135,7 +136,7 @@ public class controladorCasoRetiros {
                         Mostrar_tasa_Cambio__c,Tasa_Cambio__c,
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
                         Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c,
-                        Archivo_Adjunto__C,Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
+                        Nombre_agencia__c, agencia__c, Agencia__r.Name, account.Departamento_Residencia2__c,
                         Monto_compromiso_aporte__c, Frecuencia__c,Codigo_barra__C, Cuentas_seleccionada__c
                         From Case Where Id =: idCaso Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){
@@ -289,19 +290,18 @@ public class controladorCasoRetiros {
                         detalleCaso.Tipo_retiro__c = '51';
                         configCobros = [Select DeveloperName, Monto__c, Monto_dolar__c From Configuracion_Cobro__mdt Order by DeveloperName];
                         
-                        detalleCaso.Cobro_Cheque__c = true;
-                        detalleCaso.Cobro_ACH__c = true;
-                        detalleCaso.Cobro_TSP__c = true;
-                        detalleCaso.Comision_Retiro_Anticipado__c = true;
+                        detalleCaso.Cobro_Cheque__c = true; detalleCaso.Cobro_ACH__c = true; detalleCaso.Cobro_TSP__c = true; detalleCaso.Comision_Retiro_Anticipado__c = true;
                         
                         detalleCaso.Total_exonerado__c = montoExoneradoAlDia();
                         selecCuentaRetiros();   
                     }   
                 }                             
-            if(caso.Status == 'Cerrado') { 
-                bandera3 = true;
+            if(caso.Status == 'Cerrado') { bandera3 = true;
             }
-            cerrar();  
+            cerrar(); 
+            if(detalleCaso.id != null) {
+        		showTipoTC = True;
+        	}
         }Catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Contacte a su Administrador2. ' + e.getMessage() + ' - ' + e.getLineNumber() ));
         }
@@ -418,11 +418,8 @@ public class controladorCasoRetiros {
     }
     
     public void ModificarSaldoPrestamo(){
-        if(detalleCaso.Saldo_Prestamo__c>detallecaso.Monto_Pignorado__c) { 
-            detalleCaso.Saldo_Prestamo__c=0; 
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El saldo del Prestamo no puede ser mauyor al monto pignorado'));
-        }else if(Caso.Status=='Pendiente de aprobación') {
-            guardar();
+        if(detalleCaso.Saldo_Prestamo__c>detallecaso.Monto_Pignorado__c) { detalleCaso.Saldo_Prestamo__c=0; ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El saldo del Prestamo no puede ser mauyor al monto pignorado'));
+        }else if(Caso.Status=='Pendiente de aprobación') { guardar();
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El saldo del Prestamo se modifico exitosamente'));
         }
     }
@@ -448,8 +445,7 @@ public class controladorCasoRetiros {
                     if(mapPSP.containsKey((integer)anosVejes)){
                         system.debug('Aqui es no entre');
                         for(Detalle_caso__C item: cuentasCaso){
-                            if((item.Saldo_retirar__c=='12' ) && item.Monto_Saldo__c>0){
-                                totalSaldo += item.Monto_Saldo__c;
+                            if((item.Saldo_retirar__c=='12' ) && item.Monto_Saldo__c>0){ totalSaldo += item.Monto_Saldo__c;
                             }
                         }
                         detalleCaso.Porcentaje_Saldo_Patronal__c=mapPSP.get((integer)anosVejes);
@@ -489,11 +485,9 @@ public class controladorCasoRetiros {
                         
                         if(item.Monto_retirar__c>totalSaldo && item.Saldo_retirar__c=='12') { 
                             if(totalSaldo>0) { 
-                                item.Monto_retirar__c=0; 
-                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Solo puede retirar de su saldo patronal ordinario un máximo de '+totalsaldo.setScale(2)));
+                                item.Monto_retirar__c=0; ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Solo puede retirar de su saldo patronal ordinario un máximo de '+totalsaldo.setScale(2)));
                             }
-                            else{
-                                item.Monto_retirar__c=0;
+                            else{ item.Monto_retirar__c=0;
                             }
                         } else if(item.Monto_retirar__c>totalSaldo2 && item.Saldo_retirar__c=='13') { 
                             item.Monto_retirar__c=0; 
@@ -530,8 +524,7 @@ public class controladorCasoRetiros {
                 caso.enviar_a_aprobacion__C=false;
             }
             decimal montoPatronal = 0;
-            if(caso.Aplica_Saldo_patronal__c){
-                montoPatronal = detallecaso.Total_Saldo_Patronal__c ;
+            if(caso.Aplica_Saldo_patronal__c){ montoPatronal = detallecaso.Total_Saldo_Patronal__c ;
             }
             detallecaso.Monto_Prestamo__c = detallecaso.Monto_Prestamo__c !=null ? detallecaso.Monto_Prestamo__c : 0;
             decimal montoPignorado = detalleCaso.Monto_Pignorado__c!=null && !detalleCaso.Es_Refinanciamiento__c ? detalleCaso.Monto_Pignorado__c:0;
@@ -582,7 +575,8 @@ public class controladorCasoRetiros {
         }catch(Exception ex){}
     }
     
-    public void selecCuentaRetiros() {
+    public void selecCuentaRetiros() { 
+        
         getSaldoCuenta saldos = new getSaldoCuenta();
         try{      
             for(SelectOption item: listCuentas){
@@ -601,6 +595,13 @@ public class controladorCasoRetiros {
         }
         try{
             cuentaCliente = mapCuentas.get(idCuenta);
+            
+            if(cuentaCliente.Forma_aportacion__c == 'TA') {
+            	showTipoTC = true;    
+            } else {
+                showTipoTC = false; 
+            }
+            
             Detallecaso.Tipo_Politica_Retiro_Saldo_Patronal__c=null;
             detalleCaso.Cobrar_empleado_sigue_laborando__c=false;
             detalleCaso.Permitir_Retiro_Saldos_Patronales__c=false;
@@ -610,6 +611,7 @@ public class controladorCasoRetiros {
                    detalleCaso.Cobrar_empleado_sigue_laborando__c = true;                  
             }
             detallecaso.cuenta__c = IdCuenta;
+            
             /*PARTE NUEVA*/ detalleCaso.Cobrar_empleado_sigue_laborando__c = true;
             if(cuentaCliente.Cuenta_colectiva2__c != null) {
                 Detallecaso.Tipo_Politica_Retiro_Saldo_Patronal__c=cuentaCliente.Cuenta_colectiva2__r.Tipo_Politica_Retiro_Saldo_Patronal__c; 

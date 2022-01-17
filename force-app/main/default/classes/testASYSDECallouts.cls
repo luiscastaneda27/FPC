@@ -39,28 +39,10 @@ public class testASYSDECallouts {
         mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
         Test.setMock(HttpCalloutMock.class, mock);
         
-        /*aSysdeCallouts.montoCambioDolar(); 
-        aSysdeCallouts paola = new aSysdeCallouts();
-        aSysdeCallouts.retiros('');
-        classConstancias envio2 = new classConstancias();
-        classRespuestaConstancias pl = aSysdeCallouts.constancias(envio2);
-        aSysdeCallouts.classRespuesta pp = new aSysdeCallouts.classRespuesta();
-        pp.codigo = 0;
-        pp.mensaje = '';
-        
-        aSysdeCallouts.VerPDF('', Datetime.now(), Datetime.now());
-        aSysdeCallouts.PDFHistorico();
-        aSysdeCallouts.reversar('');
-        aSysdeCallouts.fechaCierreSysde(date.today()) ;*/
-        aSysdeCallouts.MesLetras(12); 
-            
-           
+        aSysdeCallouts.MesLetras(12);           
         
         aSysdeCallouts.montoCambioDolar(); 
         aSysdeCallouts paola = new aSysdeCallouts();
-        //aSysdeCallouts.retiros(objCaso.Id);
-        //aSysdeCallouts.aumentoDisminucion(objCaso.Id);
-        //aSysdeCallouts.Refinanciamiento('', '');
         classConstancias envio2 = new classConstancias();
         classRespuestaConstancias pl = aSysdeCallouts.constancias(envio2);
         aSysdeCallouts.classRespuesta pp = new aSysdeCallouts.classRespuesta();
@@ -75,24 +57,6 @@ public class testASYSDECallouts {
         aSysdeCallouts.traerSaldos('');
         aSysdeCallouts.verPropietarioCuenta('');
         
-        /*MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
-        mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/info','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/ec/pdf','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/ec/historico/pdf','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/constancias','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/saldos/','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/retiros/','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/cierre','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/retiros/tasa','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/ec/portada?IdCliente=12345','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/ec/trimestral?IdCliente=12345','mockCuentas');
-        mock.setStaticResource('http://190.5.68.11:9090/api/ec/mensual?IdCliente=12345&fechaDesde=2017-07-18&fechaHasta=2017-07-23','mockCuentas');
-        mock.setStatusCode(200);
-        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        Test.setMock(HttpCalloutMock.class, mock);*/
-        
         //Inicio Pasar por el trigger: enviarASysde
         FechaDC_Sysde__c fdcSysde2 = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
         insert fdcSysde2;
@@ -102,15 +66,15 @@ public class testASYSDECallouts {
         insert producto2;
         
         Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
-                currencyIsoCode = 'HNL');
+        	currencyIsoCode = 'HNL');
         insert subproducto4;
         
         Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
-                currencyIsoCode = 'HNL');
+        	currencyIsoCode = 'HNL');
         insert subproducto3;    
             
         Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
-                                    RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        	RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
         insert natural2;
         
         Date hoy2 = date.today();
@@ -130,29 +94,38 @@ public class testASYSDECallouts {
         
         list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
         system.debug(tiposR2);
+            
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;    
         
         list<Case> casos2 = new list<Case>();
         list<Detalle_caso__c> detalle2 = new list<Detalle_caso__c>();
-        
-        Case casoActualizacion2 = new Case(AccountId = natural2.id, Nombre_Cliente__c = 'FPC',
+            
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A3', Respuesta_SF_Tarjetas__c = Null, EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        casos2.add(casoAumentoD2);    
+            
+        Case casoActualizacion2 = new Case(AccountId = natural2.id, Nombre_Cliente__c = 'FPC', EntitlementId = ent.Id,
                                 Status = 'Nuevo', RecordTypeId = tiposR2[0].id, Telefono_Casa__c = '234524534',
                                 Telefono_Movil__c = '2345345', Telefono_Trabajo__c = '2345234534',
                                           Tipo_Identificacion__c='4');
         casos2.add(casoActualizacion2);
         
-        Case casoSubproducto2 = new Case(AccountId = natural2.id, Status = 'Nuevo', RecordTypeId = tiposR2[2].id);
+        Case casoSubproducto2 = new Case(AccountId = natural2.id, EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[2].id);
         casos2.add(casoSubproducto2);     
-        
-        Case casoAumentoD2 = new Case(AccountId = natural2.id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
-        casos2.add(casoAumentoD2);
-        
-        Case casoConstancia2 = new Case(AccountId = natural2.id, Status = 'Nuevo', RecordTypeId = tiposR2[3].id);
+                
+        Case casoConstancia2 = new Case(AccountId = natural2.id, EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[3].id);
         casos2.add(casoConstancia2);
         
-        Case casoRetiro2 = new Case(AccountId = natural2.id, Status = 'Nuevo', RecordTypeId = tiposR2[6].id);
+        Case casoRetiro2 = new Case(AccountId = natural2.id, EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[6].id);
         casos2.add(casoRetiro2);
+            
+        System.debug('Todos los casos: '+Casos2);    
                 
         insert Casos2;
+            
         asysdeCallouts.ReposicionCarnet(Casos2[0].id);
         
         ContentVersion cv = new ContentVersion();
@@ -175,12 +148,12 @@ public class testASYSDECallouts {
         
         identidades2= [select Identidad__c, Id_Externo__c from Beneficiario__c];
         
-        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = Casos2[0].id,Cuenta__c = cuentaIndi2.id,
-                Fecha_nacimiento__c = date.today());
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = Casos2[0].id,Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 8000,
+                Fecha_nacimiento__c = date.today(), Banco__c = '28', Tipo_Operacion__c = 'A3', Nuevo_canal_aporte__c = 'TA');
         detalles2.add(nuevoSP);
         detalles2.add(new Detalle_Caso__c(Caso__c = Casos2[1].id,Nuevo_Subproducto__c = subproducto4.id, Cuenta__c = cuentaIndi2.id));
-        detalles2.add(new Detalle_Caso__c(Caso__c = Casos2[2].id, Nuevo_monto_aporte__c = 7000, Cuenta__c = cuentaIndi2.id));
-        detalles2.add(new Detalle_Caso__c(Caso__c = Casos2[4].id, Cuenta__c = cuentaIndi2.id));
+        detalles2.add(new Detalle_Caso__c(Caso__c = Casos2[2].id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 7000, Cuenta__c = cuentaIndi2.id));
+        detalles2.add(new Detalle_Caso__c(Caso__c = Casos2[4].id, Nuevo_Subproducto__c = subproducto4.id, Cuenta__c = cuentaIndi2.id));
         insert detalles2;
          
 		Case caso = new case();
@@ -191,6 +164,7 @@ public class testASYSDECallouts {
         Caso.RecordTypeId = [Select Name,id From RecordType Where sObjectType = 'Case' and name ='Constancia'].id;
         caso.AccountId =  natural2.id;
         caso.Constancia__c = 'P1';
+        caso.EntitlementId = ent.Id;   
         insert caso;
         Detalle_Caso__c detalle = new Detalle_Caso__c();
         detalle.cuenta__C=cuentaIndi2.id;
@@ -216,9 +190,24 @@ public class testASYSDECallouts {
         caso.Aprobado__c = false;
         caso.Requiere_aprobacion_exoneracion__c = false;
         Update caso;
+            
+        Group g1 = new Group(Name='Aprobacion Intermedia Retiros', type='Queue');
+        insert g1;
+        QueuesObject q1 = new QueueSObject(QueueID = g1.id, SobjectType = 'Case');
+        insert q1;
+            
+        List<Group> gru = new List<Group>();   
+        gru.add(g1);   
+            
+        List<Id> param1 = new List<Id>();
+           
+        for(Group lstGr : gru) {
+        	param1.add(lstGr.Id);        
+        }    
         
         Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
-        req1.setObjectId(Caso.id);
+        req1.setObjectId(Caso.id); 
+        req1.setNextApproverIds(param1);  
         req1.setProcessDefinitionNameOrId('Retiros_sin_Exoneracion');
         Approval.ProcessResult result = Approval.process(req1);
             
@@ -241,6 +230,7 @@ public class testASYSDECallouts {
                 item.Status = 'Cerrado';
                 item.Aprobado__c = true;
                 item.Segunda_aprobacion__c = true;
+                item.Archivo_Adjunto__c = true;
             }
             update casosF;
         list<id> listcasosid = new list<id>();
@@ -291,7 +281,7 @@ public class testASYSDECallouts {
         FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
         insert fdcSysde;
         
-       Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro12');
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro12');
         insert producto;
         
         Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro12', Producto__c = producto.id);
@@ -351,17 +341,58 @@ public class testASYSDECallouts {
             objCaso.Telefono_Casa__c = '32323232';
             objCaso.Telefono_Movil__c= '32323232';
             objCaso.Telefono_Trabajo__c= '32323232';
+            objCaso.EntitlementId = ent.Id;
             insert objCaso;
             
             Detalle_caso__c objDetalle = new Detalle_caso__c();
             objDetalle.Caso__c = objCaso.Id;
             objDetalle.Cuenta__c = cuentaIndiColec.Id;
             objDetalle.Nuevo_monto_aporte__c = 32.21;
+            objDetalle.Tipo_Retiro__c = '51';
             insert objDetalle;
             
+            Pago_Beneficiario__c pBene = new Pago_Beneficiario__c();
+            pBene.Caso__c = objCaso.Id;
+            pBene.Primer_nombre__c = 'Juan';
+            pBene.Segundo_nombre__c = 'Andrés';
+            pBene.Primer_apellido__c = 'Pérez';
+            pBene.Segundo_apellido__c = 'Silva';
+            pBene.Identidad__c = '0801-1991-07738';
+            Insert pBene;
+                       
+            Case objCaso2 = new case();
+            objCaso2.AccountId = cliente.Id;
+            objCaso2.Identificacion__c='0709199300136';
+            objCaso2.RecordTypeId = recordType;
+            objCaso2.Status = 'Nuevo';
+            objCaso2.Telefono_Casa__c = '32323232';
+            objCaso2.Telefono_Movil__c= '32323232';
+            objCaso2.Telefono_Trabajo__c= '32323232';
+            objCaso2.EntitlementId = ent.Id;
+            objCaso2.Tipo_de_Operacion__c = 'A3';
+            objCaso2.Respuesta_SF_Tarjetas__c = null;
+            insert objCaso2;
+            
+            Detalle_caso__c objDetalle2 = new Detalle_caso__c();
+            objDetalle2.Caso__c = objCaso2.Id;
+            objDetalle2.Cuenta__c = cuentaIndiColec.Id;
+            objDetalle2.Nuevo_monto_aporte__c = 32.21;
+            objDetalle2.Tipo_Operacion__c = 'A3';
+            objDetalle2.Nuevo_canal_aporte__c = 'TA';
+            objDetalle2.Banco__c = '28';
+            insert objDetalle2;
+                        
             aSysdeCallouts.bloquerCasoConstancia(null);
             aSysdeCallouts.retiros(objCaso.Id);
             aSysdeCallouts.aumentoDisminucion(objCaso.Id);
+            aSysdeCallouts.aumentoDisminucion(objCaso2.Id);
+            
+            objCaso2.Status = 'Cerrado';
+            objCaso2.Aprobado__c = true;
+            objCaso2.Segunda_aprobacion__c = true;
+            objCaso2.Archivo_Adjunto__c = true;
+            Update objCaso2;
+            
             aSysdeCallouts.Refinanciamiento('', '');
             List<String> idCasos = new List<String>();
             idCasos.add(objCaso.Id);
@@ -376,5 +407,336 @@ public class testASYSDECallouts {
         test.stopTest();  
         }
     }
-
+    
+    static testMethod void execute() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A4', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 8000,
+                                                      Fecha_nacimiento__c = date.today(), Banco__c = '28', Tipo_Operacion__c = 'A4', Nueva_fecha_aporte__c = System.today());
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+    }
+    
+    static testMethod void execute2() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A6', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 8000,
+                                                      Fecha_nacimiento__c = date.today(), Banco__c = '28', Tipo_Operacion__c = 'A6', N_Cuenta_Bancaria__c = '456789965');
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+    }
+    
+    static testMethod void execute3() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A7', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 8000,
+                                                      Fecha_nacimiento__c = date.today(), Banco__c = '28', Tipo_Operacion__c = 'A7');
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+    }
+    
+    static testMethod void execute4() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Description = 'Test', Tipo_de_Operacion__c = 'A1', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 10000,
+                                                      Fecha_nacimiento__c = date.today(), Banco__c = '28', Tipo_Operacion__c = 'A1');
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Description = 'Test';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+    }
+    
+    static testMethod void execute5() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'TA');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A6', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 10000,
+                                                      Fecha_nacimiento__c = date.today(), N_Cuenta_Bancaria__c = '456765678', Banco__c = 'Otros Bancos', Tipo_Operacion__c = 'A6');
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+    }
+    
+    static testMethod void execute6() {
+        Producto__c producto2 = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto2;
+        
+        Subproducto__c subproducto4 = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto4;
+        
+        Subproducto__c subproducto3 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto2.id,
+                                                         currencyIsoCode = 'HNL');
+        insert subproducto3;    
+        
+        Account natural2 = new Account(Name = 'Juan Perez', Identificacion__c = '1234567890123', /*PersonEmail = 'as@csd.com',*/
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert natural2;
+        
+        Date hoy2 = date.today();
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                                Fecha_Apertura__c = date.today().addyears(-1),
+                                                Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                                Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        insert cuentaIndi2;
+        cuentaIndi2.Codigo__c = '123';
+        cuentaIndi2.id = null;
+        cuentaIndi2.Fecha_Apertura__c = hoy2;
+        insert cuentaIndi2;
+        
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+                                                    Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        list<RecordType> tiposR2 = [Select Name From RecordType Where sObjectType = 'Case' Order by DeveloperName];
+        system.debug(tiposR2);
+        
+        Asset ass = new Asset(AccountId=natural2.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A5', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Insert casoAumentoD2;
+        
+        Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 10000,
+                                                      Fecha_nacimiento__c = date.today(), N_Cuenta_Bancaria__c = '456765678', Tipo_Operacion__c = 'A5');
+        
+        Insert nuevoSP;
+        
+        casoAumentoD2.Status = 'Cerrado';
+        casoAumentoD2.Archivo_Adjunto__c = true;
+        Update casoAumentoD2;
+        
+        aSysdeCallouts.aumentoDisminucion(casoAumentoD2.Id);
+        aSysdeCallouts.crearCasoSubproducto(casoAumentoD2.Id);
+    }
 }
