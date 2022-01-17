@@ -462,15 +462,15 @@
                       <td></td>
                     </tr>
                 
-                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; line-height:20px; padding-right: 20px"><p>Fecha: {!cuentas.fecha}<br />
+                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; line-height:20px; padding-right: 20px"><p>Período del {!cuentas.fecha}<br />
                           Número de Cliente: {!cuentas.numeroCliente}<br />
                           Nombre del Cliente: {!cuentas.nombreCliente}<br/>
                           <apex:outputPanel rendered="{!mostrarHNL}">
-                              <SUP>*</SUP>Rendimiento (HNL): {!cuentas.rendimientoLempiras} <br/>
+                              <SUP>*</SUP>Rendimiento del período seleccionado (HNL): {!cuentas.rendimientoLempiras} <br/>
                           </apex:outputPanel>
                           
                           <apex:outputPanel rendered="{!mostrarUSD}">
-                              <SUP>*</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br/>
+                              <SUP>*</SUP>Rendimiento del período seleccionado (USD): {!cuentas.rendimientoDolares} <br/>
                           </apex:outputPanel>
                           </p></td>
                       <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; line-height:20px;"><p><br/>Identificación: {!cuentas.identificacion}<br />
@@ -564,7 +564,7 @@
                     <table class="table_green" width="1020" border="0" cellspacing="0" cellpadding="0">
                         
                         <tr>
-                          <th width="5%" rowspan="2" class="voluntarios"> <img src="https://fpc.secure.force.com/portalautogestion/resource/1570731428000/aportes_voluntarios?" /> </th>
+                          <!--th width="5%" rowspan="2" class="voluntarios"> <img src="https://fpc.secure.force.com/portalautogestion/resource/1570731428000/aportes_voluntarios?" /> </th-->
                           <apex:repeat value="{!linea.cuentas}" var="item">                               
                               <th> {!IF(item.moneda != null, 'FONDO EN '+ item.moneda, '')}</th>
                               <!--th>FONDO EN DÓLARES</th -->
@@ -573,15 +573,15 @@
                         
                             <tr>
                                 <apex:repeat value="{!linea.cuentas}" var="item">
-                                  <td scope="col" width="45%">
+                                  <td scope="col" width="50%">
                                       <apex:outputPanel rendered="{!item.numeroCuenta != null}">
                                       <p style="font-weight: bold;"> Número de Cuenta: {!item.numeroCuenta} <br />
-                                          Fecha de Incorporación: {!item.fechaIncorporacion} </p>
-                                          <p style="font-weight: normal;"><font style="font-weight: bold;">Totales Acumulados desde Fecha de Incorporación:</font><br/>
-                                          <font style="padding-left:10px;">Aportes Empleado: {!item.aportesEmpleado}</font> <br />
-                                          <font style="padding-left:10px;">Aportes Extraordinarios Empleado: {!item.aportesExtraEmpleado}</font> <br />
+                                        Fecha de Afiliación: {!item.fechaIncorporacion} </p>
+                                          <p style="font-weight: normal;"><font style="font-weight: bold;">Totales Acumulados desde fecha de Afiliación:</font><br/>
+                                          <font style="padding-left:10px;">Personal Obligatorio: {!item.aportesEmpleado}</font> <br />
+                                          <font style="padding-left:10px;">Personal Voluntario: {!item.aportesExtraEmpleado}</font> <br />
                                           <font style="padding-left:10px;"><SUP>**</SUP>Aportes Empleador: {!item.aportesEmpleador}</font> <br />
-                                          <font style="padding-left:10px;"><SUP>**</SUP>Aportes Extraordinarios Empleador: {!item.aporteExtraEmpleador}</font><br />
+                                          <font style="padding-left:10px;"><SUP>**</SUP>Patronal Voluntario: {!item.aporteExtraEmpleador}</font><br />
                                           <font style="padding-left:10px;">Aportes Seguro de Vida: {!item.aporteSeguroVida}</font> <br />
                                           <font style="padding-left:10px;">Intereses: {!item.intereses}</font> <br />
                                           <font style="padding-left:10px;">Comisiones: {!item.comisiones}</font> <br />
@@ -608,7 +608,7 @@
                                             </td>
                                             <td scope="col"><img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAM&oid=00Dj0000001rVac&lastMod=1515191539000" />{!item.porcentajeMisAportes}. Mis Aportes <br />
                                               <br />
-                                              <img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAH&oid=00Dj0000001rVac&lastMod=1515191517000" />{!item.porcentajeEmpleadorAportes}. Aportes de mi Empleador<br />
+                                              <img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAH&oid=00Dj0000001rVac&lastMod=1515191517000" />{!item.porcentajeEmpleadorAportes}. Aportes Patronales<br />
                                               <br />
                                               <img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afA7&oid=00Dj0000001rVac&lastMod=1515191463000" />{!item.porcentajeFicohsaAportes}. Lo que Ficohsa Pensiones
                                               y Cesantías ha trabajado por mi</td>
@@ -775,27 +775,26 @@
                 <td height="20"></td>
               </tr>
               <tr>
-                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>*</SUP>El rendimiento corresponde al promedio diario neto del año en curso a la fecha. Desempeños pasados no son necesariamente indicativos de resultados futuros.</p></td>
+                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>*</SUP>El rendimiento corresponde al promedio del período mostrado. Desempeños pasados no son necesariamente indicativos de resultados futuros.</p></td>
               </tr>
               <tr>
                 <td height="20"></td>
               </tr>
               <tr>
-                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>**</SUP>Los aportes patronales a tu fondo de pensión aplican solamente para las personas afiliadas a un fondo empresarial contributivo.</p></td>
+                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>**</SUP>Permanece igual.</p></td>
               </tr>
               <tr>
                 <td height="20"></td>
               </tr>
               <tr>
-                  <td ><p style="text-align: justify; margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>***</SUP>La estimación de tu pensión mensual considera: tu promedio de aportes <b>Individuales</b> mensuales desde tu fecha de incorporación, tu edad actual y tu edad de jubilación de 65 años, una pensión pagadera en 10 años y el rendimiento del período actual el cual no es indicativo de futuros resultados. Los valores de los fondos en dólares fueron convertidos al tipo de cambio vigente.
-                   No se considera inflación en dicha proyección. La información presentada no garantiza la obligación de pagar la mensualidad estimada. Si deseas hacer diferentes estimaciones puedes hacerlo ingresando a <a href="https://www.ficohsapensiones.hn/calculadora">https://www.ficohsapensiones.hn/calculadora</a></p></td>
+                  <td ><p style="text-align: justify; margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>***</SUP>La estimación de tu pensión mensual considera: El saldo total de tus fondos personales desde tu fecha de afiliación, tu edad actual y tu edad de jubilación de 65 años, una pensión pagadera en 10 años y el rendimiento del período actual el cual no es indicativo de futuros resultados. Los valores de los fondos en dólares fueron convertidos al tipo de cambio vigente. No se considera inflación en dicha proyección. La información presentada no garantiza la obligación de pagar la mensualidad estimada. Si deseas hacer diferentes estimaciones puedes hacerlo ingresando a <a href="https://www.ficohsapensiones.hn/calculadora">https://www.ficohsapensiones.hn/calculadora</a></p></td>
               </tr>
               <apex:outputPanel rendered="{!!cuentas.mayor}">
                   <tr>
                     <td height="20"></td>
                   </tr>
                   <tr>
-                    <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>****</SUP>Si tienes mas de un fondo, el estimado del incremento mensual se realizó considerando que lo hagas a la cuenta con el promedio de aporte más alto.</p></td>
+                    <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>****</SUP>Si tienes más de un fondo, el estimado del incremento mensual se realizó considerando que lo hagas a la cuenta con el saldo más alto.</p></td>
                   </tr>
               </apex:outputPanel>
               <tr>

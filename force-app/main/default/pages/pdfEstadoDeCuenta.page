@@ -53,11 +53,11 @@
             </tr>
         </table>
         <apex:outputPanel style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;" rendered="{!mostrarHNL}">
-            <SUP>*</SUP>Rendimiento (HNL): {!cuentas.rendimientoLempiras} <br />
+            <SUP>*</SUP>Rendimiento del período seleccionado (HNL): {!cuentas.rendimientoLempiras} <br />
         </apex:outputPanel>
         
         <apex:outputPanel style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;" rendered="{!mostrarUSD}">
-            <SUP>*</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br />
+            <SUP>*</SUP>Rendimiento del período seleccionado (USD): {!cuentas.rendimientoDolares} <br />
         </apex:outputPanel>
         <br/><br/>
          <!--div style="border: 1px solid #0f4f9e;  border-left: 0px; border-top: 0px;"-->
@@ -98,7 +98,7 @@
                                                           >
                                             <p style="font-weight: bold; font-size: 10pt;padding-left:10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">
                                                 Número de Cuenta: {!item.numeroCuenta}
-                                                <br /> Fecha de Incorporación:
+                                                <br /> Fecha de Afiliación:
                                                 {!item.fechaIncorporacion}
                                             </p>
                                             <hr style="border: 1px solid #0f4f9e;width: 240pt;"/>
@@ -108,17 +108,17 @@
                                                 Incorporación:</font
                                                 ><br />
                                                 <font style="padding-left:10pt; font-size: 10pt;"
-                                                      >Aportes Empleado:
+                                                      >Personal Obligatorio:
                                                     {!item.aportesEmpleado}</font
                                                     >
                                                 <br />
                                                 <font style="padding-left:10pt;"
-                                                      >Aportes Extraordinarios Empleado:
+                                                      >Personal Voluntario:
                                                     {!item.aportesExtraEmpleado}</font
                                                     >
                                                 <br />
                                                 <font style="padding-left:10pt;"
-                                                      ><SUP>**</SUP>Aportes Empleador:
+                                                      ><SUP>**</SUP>Patronal Obligatorio:
                                                     {!item.aportesEmpleador}</font
                                                     >
                                                 <br />
@@ -176,7 +176,7 @@
                                                                  style="margin-right: 5px"
                                                                  src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAH&oid=00Dj0000001rVac&lastMod=1515191517000"
                                                                  /> <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeEmpleadorAportes}%.
-                                                            Aportes de mi Empleador.</span><br />
+                                                                Aportes Patronales .</span><br />
                                                             <br />
                                                             <img
                                                                  style="margin-right: 5px"
@@ -397,9 +397,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>*</SUP>El rendimiento corresponde al promedio diario neto del año
-                    en curso a la fecha. Desempeños pasados no son necesariamente
-                    indicativos de resultados futuros.
+                    <SUP>*</SUP>El rendimiento corresponde al promedio del período mostrado. Desempeños pasados no son necesariamente indicativos de resultados futuros.
                 </td>
             </tr>
             <tr>
@@ -408,9 +406,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>**</SUP>Los aportes patronales a tu fondo de pensión aplican
-                    solamente para las personas afiliadas a un fondo empresarial
-                    contributivo.
+                    <SUP>**</SUP>Permanece igual.
                 </td>
             </tr>
             <tr>
@@ -419,15 +415,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>***</SUP>La estimación de tu pensión mensual considera: tu
-                    promedio de aportes <b>Individuales</b> mensuales desde tu fecha de
-                    incorporación, tu edad actual y tu edad de jubilación de 65 años, una
-                    pensión pagadera en 10 años y el rendimiento del período actual el
-                    cual no es indicativo de futuros resultados. Los valores de los fondos
-                    en dólares fueron convertidos al tipo de cambio vigente. No se
-                    considera inflación en dicha proyección. La información presentada no
-                    garantiza la obligación de pagar la mensualidad estimada. Si deseas
-                    hacer diferentes estimaciones puedes hacerlo ingresando a
+                    <SUP>***</SUP>La estimación de tu pensión mensual considera: El saldo total de tus fondos personales desde tu fecha de afiliación, tu edad actual y tu edad de jubilación de 65 años, una pensión pagadera en 10 años y el rendimiento del período actual el cual no es indicativo de futuros resultados. Los valores de los fondos en dólares fueron convertidos al tipo de cambio vigente. No se considera inflación en dicha proyección. La información presentada no garantiza la obligación de pagar la mensualidad estimada. Si deseas hacer diferentes estimaciones puedes hacerlo ingresando a 
                     <a href="https://www.ficohsapensiones.hn/calculadora"
                        >https://www.ficohsapensiones.hn/calculadora</a
                         >
@@ -439,9 +427,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>****</SUP>Si tienes mas de un fondo, el estimado del incremento
-                    mensual se realizó considerando que lo hagas a la cuenta con el
-                    promedio de aporte más alto.
+                    <SUP>****</SUP>Si tienes más de un fondo, el estimado del incremento mensual se realizó considerando que lo hagas a la cuenta con el saldo más alto. 
                 </td>
             </tr>
         </table>
