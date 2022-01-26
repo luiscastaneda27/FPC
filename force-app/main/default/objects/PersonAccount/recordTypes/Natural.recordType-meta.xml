@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Natural</fullName>
     <active>true</active>
+    <compactLayoutAssignment>Formato_VOC</compactLayoutAssignment>
     <label>Natural</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
@@ -436,10 +437,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>130200000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>130400000000</fullName>
             <default>false</default>
         </values>
@@ -535,100 +532,13 @@
             <fullName>138800000000</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>TELEVENTAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Asesor_Agn__c</picklist>
-        <values>
-            <fullName>HN18973</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19320</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19331</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19332</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19334</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19336</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19337</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19962</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19964</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN21645</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN21892</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN22061</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN22258</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN22396</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24493</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24668</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24669</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24687</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24735</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN24776</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25657</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN25900</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Asesor__c</picklist>
         <values>
             <fullName>HN00313</fullName>
             <default>false</default>
@@ -674,7 +584,138 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN21645</fullName>
+            <fullName>HN19332</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19333</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19334</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19336</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19962</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19964</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN21718</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN21892</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN22061</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN22258</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN22396</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN22419</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN23175</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN24669</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN24687</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN24735</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN24776</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN25657</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN25900</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN26479</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN26601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN27254</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN27403</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Asesor__c</picklist>
+        <values>
+            <fullName>HN00313</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN00387</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN02713</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN02852</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN18762</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN18765</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN18774</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN18812</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19320</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN19331</fullName>
             <default>false</default>
         </values>
         <values>
@@ -718,10 +759,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN24493</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN24668</fullName>
             <default>false</default>
         </values>
@@ -747,6 +784,22 @@
         </values>
         <values>
             <fullName>HN25948</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN26479</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN26601</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN27254</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN27403</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5699,6 +5752,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Base BI 2021</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CAMPAÑA INSTITUCIONAL 2019</fullName>
             <default>false</default>
         </values>
@@ -6104,6 +6161,10 @@
         </values>
         <values>
             <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -92,7 +92,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                    &lt;table align=&quot;left&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;  style=&quot;border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;&quot;&gt;
                                                       &lt;tr&gt;
                                                          &lt;td align=&quot;left&quot; class=&quot;MsoNormal&quot; style=&quot;color:#ffffff; padding: 10px 20px; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight:400; line-height:24px;&quot;&gt;
-                                                            &lt;p&gt;Período del [getAlaFecha]&lt;/p&gt;
+                                                            &lt;p&gt;A la Fecha: [getAlaFecha]&lt;/p&gt;
                                                             &lt;p&gt;Fondos Voluntarios                                               [getFondosLempira]                                                              [getFondosDolar]                  &lt;/p&gt;
                                                          &lt;/td&gt;
                                                       &lt;/tr&gt;
@@ -112,7 +112,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                                   &lt;td width=&quot;233&quot; scope=&quot;col&quot;&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; float: right; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:17px; font-weight:700;&quot;&gt;&lt;img src=&quot;https://fpc.secure.force.com/estadosCuenta/resource/1578421431000/Descarga_EDC&quot; /&gt;&lt;/span&gt;&lt;/td&gt;
                                                                   &lt;td style=&quot;padding-left: 10px&quot; width=&quot;367&quot; scope=&quot;col&quot;&gt;
                                                                      &lt;p&gt;Descarga aquí &lt;/p&gt;
-                                                                     &lt;a href=&quot;https://stagefpc-fpc.cs43.force.com/estadosCuenta/vfEstadoDeCuenta?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
+                                                                     &lt;a href=&quot;https://fpcloudcod-fpc.cs34.force.com/estadosCuenta/vfEstadoDeCuenta?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
                                                                         &lt;p&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:20px; font-weight:700;&quot;&gt;                                TU ESTADO DE CUENTA&lt;/span&gt;                            &lt;/p&gt;
                                                                      &lt;/a&gt;
                                                                   &lt;/td&gt;
@@ -187,7 +187,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                                                     &lt;table align=&quot;center&quot; bgcolor=&quot;#42c4dc&quot; class=&quot;button&quot; style=&quot; border-radius:5px;  width:95%&quot;&gt;
                                                                                        &lt;tr&gt;
                                                                                           &lt;td align=&quot;center&quot; class=&quot;MsoNormal&quot; style=&quot;color:#ffffff; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:13px; font-weight:700; padding:6px 12px 6px 12px; 
-                                                                                             border-radius:10px;&quot;&gt;                                       &lt;a href=&quot;https://stagefpc-fpc.cs43.force.com/estadosCuenta/vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; style=&quot;color:#ffffff; text-decoration:none;&quot; target=&quot;_blank&quot;  &gt;Detalle&lt;br /&gt;                                          movimientos                                          &lt;/a&gt;                                        &lt;/td&gt;
+                                                                                             border-radius:10px;&quot;&gt;                                       &lt;a href=&quot;https://fpcloudcod-fpc.cs34.force.com/estadosCuenta/vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; style=&quot;color:#ffffff; text-decoration:none;&quot; target=&quot;_blank&quot;  &gt;Detalle&lt;br /&gt;                                          movimientos                                          &lt;/a&gt;                                        &lt;/td&gt;
                                                                                        &lt;/tr&gt;
                                                                                     &lt;/table&gt;
                                                                                  &lt;/td&gt;

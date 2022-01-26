@@ -125,7 +125,7 @@
             <div style="font-size:10px;margin: 0; padding: 0;" class="footerR">
                 <table styleClass="tabla2" style="width: 100%;">
                     <tr>
-                        <td style="font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;color:#0f4f9e;" >A la fecha: </td>
+                        <td style="font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;color:#0f4f9e;" >Período del </td>
                         <td style="width: 50%;color:#0f4f9e;">{!cuentas.fecha} </td>
                         <td  rowspan="3"><apex:image styleClass="logos" url="{!URLFOR($Resource.LogoFPC)}"/></td>
                     </tr>

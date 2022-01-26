@@ -37,20 +37,27 @@ public class controllerEDChistorico {
                 case caso = [select Estado_de_Cuenta_Historico__c from case where id=:idCaso];
                 contenido = caso.Estado_de_Cuenta_Historico__c;
             }
-            cuentas = contenido ==null ? (EstadosDeCuenta.estadoCuentaHistorico(claseEnvio))[0] : ((list<classECHistorico>)System.JSON.deserialize(contenido, list<classECHistorico>.class))[0];
-                for(classECHistorico.classMovimientos item : cuentas.movimientos){
-                    rendimientoHNL = item.moneda.trim() == 'Lempiras' ? true : rendimientoHNL;
-                    rendimientoUSD = item.moneda.trim()== 'Dólares' ? true : rendimientoUSD;
+            if(contenido == null){
+                if(urlDecode.esMasivo != null && urlDecode.esMasivo){
+                    cuentas =  EstadosDeCuenta.estadoCuentaHistoricoMasivo(claseEnvio)[0];             
+                }else{
+                    cuentas =  EstadosDeCuenta.estadoCuentaHistorico(claseEnvio)[0];  
                 }
-                }Catch(Exception e){
-                    
-                }
+            }else{
+                cuentas = ((list<classECHistorico>)System.JSON.deserialize(contenido, list<classECHistorico>.class))[0];
+            }
+            for(classECHistorico.classMovimientos item : cuentas.movimientos){
+                rendimientoHNL = item.moneda.trim() == 'Lempiras' ? true : rendimientoHNL;
+                rendimientoUSD = item.moneda.trim()== 'Dólares' ? true : rendimientoUSD;
+            }
+        }Catch(Exception e){
+            
+        }
     }
-    public class VarURL
-    {
+    public class VarURL {
         public string idcli{get;set;}
         public string desde{get;set;}
         public string hasta{get;set;}
-        
+        public Boolean esMasivo{get;set;}
     }
 }

@@ -242,10 +242,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>130200000000</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>130400000000</fullName>
             <default>false</default>
         </values>
@@ -347,6 +343,10 @@
         </values>
         <values>
             <fullName>139000000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T10000000000</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1072,6 +1072,10 @@
         </values>
         <values>
             <fullName>BONO MARZO GFF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Base BI 2021</fullName>
             <default>false</default>
         </values>
         <values>

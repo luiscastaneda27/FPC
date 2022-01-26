@@ -31,8 +31,10 @@ public with sharing class classECTrimestral {
         public String fechaIncorporacion { get; set; }
         public String aportesEmpleado { get; set; }
         public String aportesExtraEmpleado { get; set; }
+        public String totalAportesEmpleado { get; set; }
         public String aportesEmpleador { get; set; }
         public String aporteExtraEmpleador { get; set; }
+        public String totalAportesEmpleador { get; set; }
         public String aporteSeguroVida { get; set; }
         public String intereses { get; set; }
         public String comisiones { get; set; }

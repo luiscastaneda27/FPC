@@ -78,7 +78,7 @@ public class EnvioCorreosEDC {
                 
                 String dolar = item.fondosDolares != null ? '<br/> &nbsp; &nbsp; &nbsp; Total Fondos en Dólares: ' + item.fondosDolares : '';
                 cuerpo = cuerpo.replace('[getFondosDolar]', dolar);
-                aSysdeCallouts.varurl url= new aSysdeCallouts.varurl();
+                VarURL url= new VarURL();
                 url.idcli=mapClientes.get(item.identidad);
                 url.desde=mapFDesde.get(item.identidad);
                 url.hasta=mapFHasta.get(item.identidad);
@@ -137,6 +137,18 @@ public class EnvioCorreosEDC {
         }
         return true;
     }  
+    
+    public class VarURL{
+        public string idcli{get;set;}
+        public string desde{get;set;}
+        public string hasta{get;set;}
+        public Boolean esMasivo{get;set;}
+        
+        public VarURL(){
+            this.esMasivo = true;
+        }
+        
+    }
    
 
 }

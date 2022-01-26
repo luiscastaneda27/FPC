@@ -578,10 +578,12 @@
                                       <p style="font-weight: bold;"> Número de Cuenta: {!item.numeroCuenta} <br />
                                         Fecha de Afiliación: {!item.fechaIncorporacion} </p>
                                           <p style="font-weight: normal;"><font style="font-weight: bold;">Totales Acumulados desde fecha de Afiliación:</font><br/>
-                                          <font style="padding-left:10px;">Personal Obligatorio: {!item.aportesEmpleado}</font> <br />
-                                          <font style="padding-left:10px;">Personal Voluntario: {!item.aportesExtraEmpleado}</font> <br />
-                                          <font style="padding-left:10px;"><SUP>**</SUP>Aportes Empleador: {!item.aportesEmpleador}</font> <br />
-                                          <font style="padding-left:10px;"><SUP>**</SUP>Patronal Voluntario: {!item.aporteExtraEmpleador}</font><br />
+                                          <!--font style="padding-left:10px;">Personal Obligatorio: {!item.aportesEmpleado}</font> <br />
+                                          <font style="padding-left:10px;">Personal Voluntario: {!item.aportesExtraEmpleado}</font> <br /-->
+                                          <font style="padding-left:10px;">Total Aportes Personal: {!item.totalAportesEmpleado}</font> <br />
+                                          <!--font style="padding-left:10px;"><SUP>**</SUP>Patronal Obligatorio: {!item.aportesEmpleador}</font> <br />
+                                          <font style="padding-left:10px;"><SUP>**</SUP>Patronal Voluntario: {!item.aporteExtraEmpleador}</font><br /-->
+                                          <font style="padding-left:10px;"><SUP>**</SUP>Total Aportes Empleador: {!item.totalAportesEmpleador}</font><br />
                                           <font style="padding-left:10px;">Aportes Seguro de Vida: {!item.aporteSeguroVida}</font> <br />
                                           <font style="padding-left:10px;">Intereses: {!item.intereses}</font> <br />
                                           <font style="padding-left:10px;">Comisiones: {!item.comisiones}</font> <br />
@@ -610,7 +612,7 @@
                                               <br />
                                               <img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAH&oid=00Dj0000001rVac&lastMod=1515191517000" />{!item.porcentajeEmpleadorAportes}. Aportes Patronales<br />
                                               <br />
-                                              <img style="margin-right: 5px" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afA7&oid=00Dj0000001rVac&lastMod=1515191463000" />{!item.porcentajeFicohsaAportes}. Lo que Ficohsa Pensiones
+                                              <img style="margin-right: 5px; height:20px;width:20px;" src="{!$Resource.PuntoVerdeEDC}" />{!item.porcentajeFicohsaAportes}. Lo que Ficohsa Pensiones
                                               y Cesantías ha trabajado por mi</td>
                                           </tr>
                                         </table>
@@ -620,7 +622,9 @@
                                           <table class="chart" width="100%" border="0" cellspacing="0" cellpadding="0">
                                           <tr>
                                             <td scope="col">
-                                                <img id="publicidad" src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002wU6z&oid=00Dj0000001rVac&lastMod=1539276939000" />
+                                                <a href="https://www.tuconcienciafinanciera.com/#/jubilacion" target="_blank">
+                                                    <img src = "{!$Resource.LogoEstadoCuenta}"  style="width: 100%; height: 100%;"  />
+                                                </a>
                                             </td>
                                           </tr>
                                           </table>
@@ -781,7 +785,7 @@
                 <td height="20"></td>
               </tr>
               <tr>
-                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>**</SUP>Permanece igual.</p></td>
+                <td ><p style="margin-top: 20px;color: #0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:14px; font-weight: normal; margin-top: 20px"><SUP>**</SUP>Los aportes patronales a tu fondo de pensión aplican solamente para las personas afiliadas a un fondo empresarial contributivo.</p></td>
               </tr>
               <tr>
                 <td height="20"></td>

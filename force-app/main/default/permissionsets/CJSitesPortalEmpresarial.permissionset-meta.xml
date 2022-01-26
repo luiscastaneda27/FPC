@@ -1517,6 +1517,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.CSAT__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Calle_Residencia__c</field>
         <readable>true</readable>
@@ -1855,6 +1860,11 @@
         <editable>true</editable>
         <field>Account.Motivo_de_Contacto__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.NPS__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2590,6 +2600,11 @@
         <editable>true</editable>
         <field>Asset.AssetServicedById</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Asset.ConsequenceOfFailure</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5312,6 +5327,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Cuentas__c.FondoInversionCP__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Cuentas__c.Fondo_Inversion__c</field>
         <readable>true</readable>
@@ -7379,6 +7399,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Municipio__c.nombre_municipio__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ObjectoReferenciaArchivos__c.Cuenta__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ObjectoReferenciaArchivos__c.Estado__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11029,6 +11059,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Usuarios_de_Pantallas__c.Zona__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Usuarios_para_asignacion_Casos_SAC__c.Objeto__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

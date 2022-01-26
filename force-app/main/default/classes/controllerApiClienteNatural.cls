@@ -16,7 +16,7 @@ public class controllerApiClienteNatural {
 			classJson envio = new classJson();
 			envio.contenido = JSON.serialize(claseEnvio);
 			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
+			system.debug('Mandamos: '+cons);		
 			request.setBody(cons);
             HttpResponse response = new HttpResponse();
             if(!test.isRunningTest()){

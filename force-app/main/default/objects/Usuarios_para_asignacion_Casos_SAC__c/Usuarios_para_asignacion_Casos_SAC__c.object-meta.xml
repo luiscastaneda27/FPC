@@ -154,14 +154,14 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Masculine</gender>
-    <label>Usuarios para asignacion - Casos SAC</label>
+    <label>Usuarios para asignación de registros</label>
     <nameField>
         <displayFormat>ACSAC-{000000}</displayFormat>
         <label>Correlativo</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Usuarios para asignación - Casos SAC</pluralLabel>
-    <searchLayouts/>
+    <pluralLabel>Usuarios para asignación de registros</pluralLabel>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

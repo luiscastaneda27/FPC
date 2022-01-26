@@ -4,64 +4,26 @@
     <protected>false</protected>
     <values>
         <field>Cuerpo__c</field>
-        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt; 
-&lt;head&gt; 
-&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt; 
-&lt;title&gt;simple&lt;/title&gt; 
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0,&quot; /&gt; 
-&lt;link href=&apos;https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,600italic,700italic,800,800italic&apos; rel=&apos;stylesheet&apos; type=&apos;text/css&apos; /&gt; 
-
-&lt;/head&gt; 
-&lt;body&gt; 
-&lt;div bgcolor=&quot;#cce6f9&quot; style=&quot;margin:0;padding:0;&quot;&gt; 
-&lt;table bgcolor=&quot;#cce6f9&quot; align=&quot;center&quot; style=&quot;max-width:640px;color:#cce6f9&quot; width=&quot;640px&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt; 
-&lt;tbody&gt; 
-&lt;tr bgcolor=&quot;#000000&quot;&gt; 
-&lt;td align=&quot;center&quot;&gt; 
-&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; 
-&lt;tbody&gt; 
-&lt;tr&gt; 
-&lt;td&gt; 
-&lt;img style=&quot;display:block&quot; alt=&quot;Ficohsa&quot; src=&quot;http://fpc-fpc.cs18.force.com/aprobarCasos/resource/1551390744000/Captura1&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;/tbody&gt; 
-&lt;/table&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;tr bgcolor=&quot;#000000&quot;&gt; 
-&lt;td align=&quot;center&quot;&gt; 
-&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; 
-&lt;tbody&gt; 
-&lt;tr&gt; 
-&lt;td&gt;&lt;a href=&quot;http://www.ficohsaimagencorporativa.com/2018/pdfs/Pensiones/guiadeuso.pdf&quot; target=&quot;_blank&quot;&gt; 
-&lt;img style=&quot;display:block&quot; alt=&quot;Ficohsa&quot; src=&quot;http://fpc-fpc.cs18.force.com/aprobarCasos/resource/1551390788000/Captura2&quot; width=&quot;100%&quot; 
-height=&quot;100%&quot;&gt; 
-&lt;/a&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;/tbody&gt; 
-&lt;/table&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;tr bgcolor=&quot;#000000&quot;&gt; 
-&lt;td align=&quot;center&quot;&gt; 
-&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot; height=&quot;100%&quot;&gt; 
-&lt;tbody&gt; 
-&lt;tr&gt; 
-&lt;td&gt; 
-&lt;img style=&quot;display:block&quot; alt=&quot;Ficohsa&quot; src=&quot;http://fpc-fpc.cs18.force.com/aprobarCasos/resource/1551390826000/Captura3&quot; width=&quot;100%&quot; 
-height=&quot;100%&quot;&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;/tbody&gt; 
-&lt;/table&gt; 
-&lt;/td&gt; 
-&lt;/tr&gt; 
-&lt;/tbody&gt; 
-&lt;/table&gt; 
-&lt;/div&gt; 
-&lt;/body&gt; 
+        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+      &lt;title&gt;Documento sin título&lt;/title&gt;
+   &lt;/head&gt;
+   &lt;body&gt;
+      &lt;div class=&quot;row&quot; style=&quot;margin:0;padding:0;&quot; align=&quot;center&quot;&gt;
+         &lt;div class=&quot;col-lg-12&quot;&gt;
+            &lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576612285000/Plantilla_header&quot;/&gt;
+         &lt;/div&gt;
+         &lt;div style=&quot;text-align: left; margin-left:8rem; font-family: &apos;Open Sans&apos;,sans-serif; color: #7f7f7f; font-size: 17px;&quot;&gt;Estimado(a), [getDestinatario]&lt;/div&gt;
+         &lt;div class=&quot;col-lg-12&quot;&gt;
+            &lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576556754000/Plantilla_Body&quot;/&gt;
+         &lt;/div&gt;
+         &lt;div class=&quot;col-lg-12&quot; style=&quot;top:-10px;&quot;&gt;
+            &lt;a href=&quot;http://www.ficohsaimagencorporativa.com/2018/pdfs/Pensiones/guiadeuso.pdf&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://fpc.secure.force.com/planillas/resource/1576173359000/Plantilla_Boton&quot; style=&quot;width:15%;&quot; /&gt;&lt;/a&gt;
+         &lt;/div&gt;
+         &lt;br/&gt;
+      &lt;/div&gt;
+   &lt;/body&gt;
 &lt;/html&gt;</value>
     </values>
 </CustomMetadata>

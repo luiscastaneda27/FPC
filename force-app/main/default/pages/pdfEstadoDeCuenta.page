@@ -34,7 +34,7 @@
         <table style="width: 100%">
             <tr>
                 <td style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;">
-                    Fecha: {!cuentas.fecha}
+                    Período del {!cuentas.fecha}
                 </td>
             </tr>
             <tr>
@@ -73,12 +73,12 @@
                                cellpadding="0"
                                >
                             <tr>
-                                <th width="4%" rowspan="2" style="background: #1d7482;border-top-left-radius: 20pt;
+                                <!--th width="4%" rowspan="2" style="background: #1d7482;border-top-left-radius: 20pt;
                                     border-bottom-left-radius: 20pt;">
                                     <img
                                          src="https://fpc.secure.force.com/portalautogestion/resource/1568949451000/aportes_voluntarios?"
                                          />
-                                </th>
+                                </th-->
                                 <apex:repeat value="{!linea.cuentas}" var="item">
                                     <th style="background: #54868e;color: #ffffff;
                                         padding: 10px;
@@ -123,8 +123,7 @@
                                                     >
                                                 <br />
                                                 <font style="padding-left:10pt;"
-                                                      ><SUP>**</SUP>Aportes Extraordinarios
-                                                    Empleador:
+                                                      ><SUP>**</SUP>Patronal Voluntario:
                                                     {!item.aporteExtraEmpleador}</font
                                                     ><br />
                                                 <font style="padding-left:10pt;"
@@ -161,7 +160,7 @@
                                                    >
                                                 <tr>
                                                     <td scope="col">
-                                                       <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:{!item.porcentajeMisAportes},{!item.porcentajeEmpleadorAportes},{!item.porcentajeFicohsaAportes}&chs=250x100&chco=3a9fd6,1649a9,f17e31" />
+                                                       <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:{!item.porcentajeMisAportes},{!item.porcentajeEmpleadorAportes},{!item.porcentajeFicohsaAportes}&chs=250x100&chco=3a9fd6,1649a9,00A94f" />
                                                         <br/>
                                                         <div style="margin-left: 8px;">
                                                             
@@ -179,9 +178,8 @@
                                                                 Aportes Patronales .</span><br />
                                                             <br />
                                                             <img
-                                                                 style="margin-right: 5px"
-                                                                 src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afA7&oid=00Dj0000001rVac&lastMod=1515191463000"
-                                                                 /> <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeFicohsaAportes}%. Lo
+                                                                 style="margin-right: 5px; height:20px;width:20px;" src="{!$Resource.PuntoVerdeEDC}" />
+                                                                  <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeFicohsaAportes}%. Lo
                                                             que Ficohsa Pensiones y Cesantías ha
                                                             trabajado por mi.</span>
                                                         </div>

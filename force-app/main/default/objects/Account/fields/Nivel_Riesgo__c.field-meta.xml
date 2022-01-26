@@ -17,14 +17,19 @@
                 <label>BAJO</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>3</fullName>
                 <default>false</default>
                 <label>MEDIO</label>
             </value>
             <value>
-                <fullName>3</fullName>
+                <fullName>4</fullName>
                 <default>false</default>
                 <label>ALTO</label>
+            </value>
+            <value>
+                <fullName>2</fullName>
+                <default>false</default>
+                <label>MODERADO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

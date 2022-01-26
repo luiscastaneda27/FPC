@@ -5,6 +5,7 @@ global without sharing class RestCasos {
     global static SolicitudCaso doPost(Case caso, Boolean solicitudExitosa, String error) {
         SolicitudCaso solicitud = new SolicitudCaso();
         try{ 
+            system.debug('Si llego');
             solicitud.solicitudExitosa = true;
             if(caso.Status == 'Cerrado' && Caso.Id != null){
                 Case casoJob = [SELECT CaseNumber,Id,Status,CerrarCasoJob__c FROM CASE WHERE Id = :Caso.Id];

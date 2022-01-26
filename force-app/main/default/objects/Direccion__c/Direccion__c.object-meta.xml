@@ -163,7 +163,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Direcciones</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

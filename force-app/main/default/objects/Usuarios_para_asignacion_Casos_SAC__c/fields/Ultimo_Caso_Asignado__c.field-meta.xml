@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Ultimo_Caso_Asignado__c</fullName>
     <externalId>false</externalId>
-    <label>Último Caso Asignado</label>
+    <label>Último Registro Asignado</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>DateTime</type>

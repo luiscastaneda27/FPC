@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://fpc.secure.force.com/planillas/</value>
+        <value xsi:type="xsd:string">https://fpcloudcod-fpc.cs34.force.com/planillas/</value>
     </values>
 </CustomMetadata>
