@@ -1,0 +1,142 @@
+<apex:page title="Ficohsa FPC" showheader="false" sidebar="false" cache="false" expires="0" controller="controllerAprobarClientesPEP"
+           applyHtmlTag="false" standardStylesheets="false" showQuickActionVfHeader="false" docType="html-5.0" id="page" applyBodyTag="false" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <title>Clientes PEP</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+            
+            <style>
+                html, body {
+                background: #FFF;
+                }  
+                
+                #topMenuZonaTransaccional {
+                position: relative;
+                width: 80%;
+                float: left;
+                left: 10%;
+                }
+                
+            </style>
+        </head>
+        <body>
+            
+            <apex:form id="theForm" >
+                
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
+                        <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                            <div style="display: inline-block; padding: 2px; background-color: #fff; width: 45px;">
+                                <img src="http://fpc-fpc.cs40.force.com/PortalAutoGestion/resource/1570731998000/load_gif" style="float: left; margin: 8px; width: 25px;" />
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+                
+                <div class="slds-scope">
+                    <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>     
+                    
+                    <figure class="slds-image slds-image--avatar slds-align--absolute-center">
+                        <apex:image value="{!$Resource.LogoFPC}"/>
+                    </figure>
+                    <br/>
+                    <apex:outputPanel id="theForm">
+                        <!------class="slds-table slds-table--bordered"--------->
+                        <div style="width:100%; overflow-x:scroll; height: 100%">
+                            <table class="slds-table slds-table_bordered slds-table_col-bordered" 
+                                   style="border-top:0px; border-collapse:collapse; border-radius:5px;">
+                                <thead>
+                                    <tr class="slds-text-title_caps">
+                                        
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Empresa"><strong>IDENTIDAD</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Fecha"><strong>NOMBRE</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tipo Planilla"><strong>FECHA CREACIÓN</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tipo Planilla"><strong>LISTA</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Total"><strong>CARGO</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Total"><strong>FECHA INCLUSION LISTA PEP</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Tasa compra"><strong>USUARIO</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="Denegar"><strong>Denegar</strong></div>
+                                        </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!ListAprobacionPEP}" var="Item" >
+                                        <tr>
+                                        	<!--td>
+                                                <apex:outputText value="{!Item.numIdentidad}" style="font-size:15px;" />
+                                            </td-->
+                                            <td scope="row" data-label="Cuenta" style= "text-align: center;">
+                        <div class="slds-truncate" > 
+                            {!Item.numIdentidad}
+                        </div>
+               </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.nombreCompleto}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.fechaCreacion}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.lista}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.cargo}" style="font-size:15px;" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!Item.fechaInclusionLista}" style="font-size:15px;" />
+                                            </td> 
+                                            <td>
+                                                <apex:outputText value="{!Item.usuario}" style="font-size:15px;" />
+                                            </td>                                        
+                                            <td>
+                                                <div class="slds-scope">
+                                                    <apex:commandLink action="{!AprobarPEP}" styleclass="slds-button slds-button--brand" value="Aprobar" status="status" reRender="theForm">
+                                                        <apex:param value="{!Item.numIdentidad}" AssignTo="{!identificador}"  name="APV1APROBACION" />
+                                                    </apex:commandLink>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-scope">
+                                                    <apex:commandLink action="{!DenegarPEP}" styleclass="slds-button slds-button--brand" value="Denegar" status="status" reRender="theForm"> 
+                                                        <apex:param value="{!Item.numIdentidad}" AssignTo="{!identificador}"  name="APV1APROBACION" />
+                                                	</apex:commandLink>
+                                                </div>
+                                            </td>
+                                            </tr>
+                                    </apex:repeat>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

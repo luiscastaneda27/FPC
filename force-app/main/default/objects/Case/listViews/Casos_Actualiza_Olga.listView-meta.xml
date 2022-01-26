@@ -19,7 +19,7 @@
         <operation>equals</operation>
         <value>Pendiente de aprobación,Pendiente segunda aprobación</value>
     </filters>
-    <label>Casos Actualiza Olga/Cintya</label>
+    <label>Casos Actualiza Maria</label>
     <sharedTo>
         <role>Oficial_de_Operaciones_Back_Office</role>
         <role>Sub_Gerente_de_Operaciones_y_Tecnolog_a</role>

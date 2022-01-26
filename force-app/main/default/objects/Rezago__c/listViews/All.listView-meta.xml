@@ -2,19 +2,17 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>All</fullName>
     <columns>NAME</columns>
-    <columns>Referencia__c</columns>
-    <columns>OBJECT_ID</columns>
     <columns>Agencia_Origen__c</columns>
     <columns>Asesor_Rezago__c</columns>
     <columns>Banco__c</columns>
-    <columns>Codigo__c</columns>
-    <columns>Codigo_del_Rezago__c</columns>
-    <columns>Cuenta_Credito__c</columns>
-    <columns>Cuenta_Debito__c</columns>
-    <columns>N_Doc__c</columns>
-    <columns>Rezago__c</columns>
-    <columns>Fecha_de_registro__c</columns>
-    <columns>Estatus__c</columns>
+    <columns>Descripcion__c</columns>
+    <columns>Descripcion_Nota__c</columns>
+    <columns>Fecha_del_deposito__c</columns>
+    <columns>Fondo__c</columns>
+    <columns>Moneda_del_deposito__c</columns>
+    <columns>Monto_del_deposito__c</columns>
+    <columns>LAST_UPDATE</columns>
+    <columns>UPDATEDBY_USER</columns>
     <filterScope>Everything</filterScope>
     <label>Todos</label>
 </ListView>

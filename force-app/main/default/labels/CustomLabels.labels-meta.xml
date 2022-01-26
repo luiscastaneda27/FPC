@@ -8,6 +8,20 @@
         <value>5000</value>
     </labels>
     <labels>
+        <fullName>DAU_Cambio_de_Fecha_1</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>DAU_Cambio de Fecha 1</shortDescription>
+        <value>14</value>
+    </labels>
+    <labels>
+        <fullName>DAU_Cambio_de_Fecha_2</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>DAU_Cambio de Fecha 2</shortDescription>
+        <value>26</value>
+    </labels>
+    <labels>
         <fullName>HorasServicioCasos</fullName>
         <language>es</language>
         <protected>false</protected>
@@ -455,19 +469,5 @@ electrónico: &lt;b&gt;[XXXXX]&lt;b&gt;.</value>
         <protected>false</protected>
         <shortDescription>UrlCustomSite</shortDescription>
         <value>&lt;img alt=&quot;Imagen agregada por el usuario&quot; src=&quot;https://fpc.secure.force.com/portalautogestion/resource/1571863243000/FirmaPaola&quot; style=&quot;height: 90px; width: 500px;&quot;&gt;&lt;/img&gt;</value>
-    </labels>
-    <labels>
-        <fullName>DAU_Cambio_de_Fecha_1</fullName>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>DAU_Cambio de Fecha 1</shortDescription>
-        <value>14</value>
-    </labels>
-    <labels>
-        <fullName>DAU_Cambio_de_Fecha_2</fullName>
-        <language>es</language>
-        <protected>false</protected>
-        <shortDescription>DAU_Cambio de Fecha 2</shortDescription>
-        <value>26</value>
     </labels>
 </CustomLabels>
