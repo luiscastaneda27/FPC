@@ -1,0 +1,55 @@
+<template>  
+    <lightning-card title = "Cuentas de partícipe">
+        <div class = "slds-m-around_medium"> 
+            <template if:true={mostrarTablaCuentas}> 
+                <div>  
+  
+                    <lightning-datatable key-field="numeroCuenta"  
+                                         data={cuentasParticipe}  
+                                         columns={columns}
+                                         hide-checkbox-column="true"
+                                         onrowaction={callRowAction} 
+                                         class="slds-max-medium-table_stacked">  
+                    </lightning-datatable>
+                </div>    
+            </template>
+            <template if:true={mostrarMensajeSinCuentas}>                    
+                <div class="div-mensaje-sin-movimientos">
+                    <lightning-icon icon-name="action:close" class="icon-mensaje-sin-movimientos" alternative-text="Sin movimientos" title="Sin movimientos" size="x-small">
+                    </lightning-icon> 
+                    <span class="color-dark-blue slds-text-title_caps">No existen cuentas de partícipe.
+                    </span>
+                </div>                                     
+            </template>  
+        </div>
+    </lightning-card>
+    <template if:true={crearOportunidadAporteVisible}>
+        <div style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Cerrar" onclick={handleCerrarModalCrearOportunidad}>
+                            <lightning-icon icon-name="utility:close" size="medium" variant="inverse">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Cerrar</span>
+                        </button>
+                        <h2 id="modal-crear-oportunidad" class="slds-text-heading_medium slds-hyphenate">Crear oportunidad de aporte</h2>
+                    </header>
+                    <div class="slds-modal__content slds-var-p-around_medium">                                                                  
+                        <c-anefi_crear-oportunidad-de-aporte cliente-id={recordId} numero-cuenta-participe={numeroCuentaSeleccionada} codigo-producto={codigoProductoSeleccionado}
+                        nombre-tipo-registro-cliente={nombreTipoRegistroCliente} onfinalizar={handleFinalizarCreacionOportunidad}>                                
+                        </c-anefi_crear-oportunidad-de-aporte>                         
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cerrar" variant="brand" onclick={handleCerrarModalCrearOportunidad}></lightning-button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>   
+    
+</template>

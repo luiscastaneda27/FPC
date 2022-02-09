@@ -1,0 +1,9 @@
+.div-mensaje-sin-movimientos{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    margin-top: 30px; 
+}
+.icon-mensaje-sin-movimientos{
+    margin-right: 10px;
+}

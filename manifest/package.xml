@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>*</members>
+		<members>ANEFI_SerializadorService</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
-		<members>*</members>
-		<name>ApexPage</name>
+		<members>Account-Persona Natural Sin Campos Obligatorios</members>
+		<name>Layout</name>
 	</types>
 	<types>
-		<members>*</members>
-		<name>ApexTrigger</name>
+		<members>anefi_consultarCuentasParticipe</members>
+		<name>LightningComponentBundle</name>
 	</types>
-	<version>51.0</version>
+	<version>53.0</version>
 </Package>
