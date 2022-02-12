@@ -588,10 +588,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN19331</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN19332</fullName>
             <default>false</default>
         </values>
@@ -672,15 +668,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN26601</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN27254</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HN27403</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HN27739</fullName>
             <default>false</default>
         </values>
     </picklistValues>

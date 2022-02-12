@@ -563,10 +563,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HN19331</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HN19332</fullName>
             <default>false</default>
         </values>
@@ -644,10 +640,6 @@
         </values>
         <values>
             <fullName>HN26479</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN26601</fullName>
             <default>false</default>
         </values>
         <values>

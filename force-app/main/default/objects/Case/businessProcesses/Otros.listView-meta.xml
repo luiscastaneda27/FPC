@@ -10,10 +10,5 @@
     <columns>Propietario_Caso__c</columns>
     <columns>OWNER_NAME</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Propietario_Caso__c</field>
-        <operation>contains</operation>
-        <value>LAURA ABIGAIL</value>
-    </filters>
     <label>Otros</label>
 </ListView>
