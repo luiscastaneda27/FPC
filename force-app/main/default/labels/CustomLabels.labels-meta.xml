@@ -456,4 +456,32 @@ electrónico: &lt;b&gt;[XXXXX]&lt;b&gt;.</value>
         <shortDescription>UrlCustomSite</shortDescription>
         <value>&lt;img alt=&quot;Imagen agregada por el usuario&quot; src=&quot;https://fpc.secure.force.com/portalautogestion/resource/1571863243000/FirmaPaola&quot; style=&quot;height: 90px; width: 500px;&quot;&gt;&lt;/img&gt;</value>
     </labels>
+    <labels>
+        <fullName>DAU_Cambio_de_Fecha_1</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>DAU_Cambio de Fecha 1</shortDescription>
+        <value>14</value>
+    </labels>
+    <labels>
+        <fullName>DAU_Cambio_de_Fecha_2</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>DAU_Cambio_de_Fecha_2</shortDescription>
+        <value>26</value>
+    </labels>
+    <labels>
+        <fullName>MensajeCasoObligatorioAutoGest</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>MensajeCasoObligatorioAutoGest</shortDescription>
+        <value>En cumplimiento con las directrices de nuestro ente regulador, te solicitamos que actualices tus datos. Al terminar, podrás continuar con tus gestiones.</value>
+    </labels>
+    <labels>
+        <fullName>NumMesesParaCrearCasosObligatorios</fullName>
+        <language>es</language>
+        <protected>false</protected>
+        <shortDescription>Num Meses para crear Casos Obligatorios</shortDescription>
+        <value>12</value>
+    </labels>
 </CustomLabels>

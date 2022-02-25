@@ -2,6 +2,7 @@ public class controllerConstanciaPdf{
     private ApexPages.StandardController controller {get; set;}
     Public Case casoTratar {set;get;}
     public String html {set;get;}
+    
     private date hoy = date.today();
     
     private list<Detalle_caso__c> detallesCaso;

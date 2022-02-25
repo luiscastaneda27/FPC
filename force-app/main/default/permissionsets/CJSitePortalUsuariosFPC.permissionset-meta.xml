@@ -2648,6 +2648,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.UltimoCasoObligatorio__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Usuario_Convirtio__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -3712,6 +3717,26 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DAU_Identidad__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DAU_No_Cuenta__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DAU_Tarjeta_de_Sysde__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DAU_aprobacion__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Departamento_Residencia2__c</field>
         <readable>true</readable>
@@ -4032,6 +4057,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Respuesta_SF_Tarjetas__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Respuesta_desde_Sysde_Esperando_Docu__c</field>
         <readable>true</readable>
@@ -4150,6 +4180,11 @@
         <editable>true</editable>
         <field>Case.Tipo_actualizacion__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Tipo_de_Operacion__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5968,6 +6003,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Detalle_caso__c.DAU_Borrar_Cuotas__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Detalle_caso__c.DAU_Dia_de_pago__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Detalle_caso__c.DAU_Tarjeta_Habiente__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Detalle_caso__c.DAU_Tipo_Tarjeta__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Detalle_caso__c.Descripcion__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -6389,6 +6444,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Detalle_caso__c.Rendimiento__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Detalle_caso__c.Respuesta_SF_Tarjetas__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6834,6 +6894,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Event.Para1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.Proyeccion__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.TipoProyeccion__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10874,6 +10944,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Task.Para1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.Proyeccion__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.TipoProyeccion__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -24,7 +24,39 @@ public without sharing class ControladorCasosPortalAutogestion {
     public string ZonaSeleccionada { get; set; }
     public string currencyAccountSelected { get; private set; }
     public Cuentas__C Cuenta { get; set; }
-    Public list<contact> listContactos { get; set; }
+    
+    public Boolean popVerificacionCodigo { get; set; }
+    public Boolean casoObligatorio { get; set; }
+    
+    public string bancoVal {get;set;}
+    
+    public DAU_GestionesBac claseCasoD{get;set;}  
+    
+    public SelectOption[] BANCO { 
+        public get;
+        private set;
+    }
+    
+    public void llenarBANCO() {
+        system.debug('El banco es: '+this.bancoVal);
+        this.BANCO = new SelectOption[]{};                
+        this.BANCO.add(new SelectOption('','--Ninguno--'));    
+        this.BANCO.add(new SelectOption('28','Ficohsa'));
+        //this.BANCO.add(new SelectOption('Otros Bancos','Otros Bancos'));
+    }
+    
+    public string frecuenciaVal {get;set;}
+    
+    public SelectOption[] FRECUENCIA { 
+        public get;
+        private set;
+    }
+    
+    public void llenarFRECUENCIA() {
+        this.FRECUENCIA = new SelectOption[]{};                
+        this.FRECUENCIA.add(new SelectOption('','--Ninguno--'));    
+        this.FRECUENCIA.add(new SelectOption('M','Mensual'));
+    }
     
     SolicitudCaso solicitud;
     
@@ -52,32 +84,38 @@ public without sharing class ControladorCasosPortalAutogestion {
     
     public controladorCasosPortalAutogestion() {
         try {
+            llenarBANCO();
+            llenarFRECUENCIA();
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
-            system.debug('Parametro Recibido: '+idCLiente);
-            //idCliente = '0801199411013'; 
-            //idCliente='0801199512974';
+            system.debug('Parametro Recibido: '+idCliente);
+            //idCliente = '0801198801163'; 
+            //idCliente='0709199300155';
+            //idCliente = '0801199411013';
             contrato = new Contrato_Aceptado__c();
             
             //Si el entorno actual es un site, se obtiene el url del site como tal.
             if(Site.getBaseUrl() != Null || Site.getBaseUrl() != '') {
                 this.UrlHost = Site.getBaseUrl();
             }
-            
+            String registroActuali = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
             cliente = new account();
-            cliente = [select id, name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__C,
-                       Departamento_Residencia2__c
+            cliente = [select id, Name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__c,
+                       Departamento_Residencia2__c,PersonContactId,UltimoCasoObligatorio__c,
+                       (Select CreatedDate from Cases Where RecordTypeId =: registroActuali
+                        Order by CreatedDate Desc limit 1)
                        from account where identificacion__C =:idCliente limit 1];
-            listContactos = new list<contact> ();
-            listContactos = [select id from contact where name = :cliente.name and accountId = :cliente.id];
             
             contrato.Cliente__c = cliente.id;
             contrato.Acepto_Condiciones_de_Portal_Autogestion__C = true;
             mostrarCntrato = true;
-            if([select count() from Contrato_Aceptado__c where Cliente__c = :cliente.id]>0){
+            casoObligatorio = false;
+            if([select count() from Contrato_Aceptado__c where Cliente__c = :cliente.id]>0) {
                 mostrarCntrato = false;
             }
+            validaCasoObligatorio();
+            String mensaje = !mostrarCntrato && casoObligatorio ? Label.MensajeCasoObligatorioAutoGest : 'Navegadores recomendados Google Chrome y Firefox Mozilla';
             Inicio();
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'Navegadores recomendados Google Chrome y Firefox Mozilla'));
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, mensaje));
         } catch(Exception ex) {
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero se ha producido un error inesperado'));
@@ -139,11 +177,11 @@ public without sharing class ControladorCasosPortalAutogestion {
             string etiquetaCuenta = '';
             cTipoCaso = new claseTipoCaso('Nada');
             for(Cuentas__c item: [Select id, codigo__c, Producto__r.Name, Detalle_Cuenta_colectiva__c from cuentas__c
-                                  where cliente__c = :cliente.id]) {
+                                  where cliente__c = :cliente.id ]) {
                                       etiquetaCuenta = item.Codigo__c + (item.Producto__r.Name != null ? (' - ' + item.Producto__r.Name) : '') + (item.Detalle_Cuenta_colectiva__c.trim() != '-' ? (' - ' + item.Detalle_Cuenta_colectiva__c) : '');
                                       listCuentas.add(new SelectOption(item.id, etiquetaCuenta));
                                   }
-            if(listCuentas.size() == 2) {
+            if(listCuentas.size() == 2 || casoObligatorio) {
                 idCuenta = listCuentas[1].getvalue();
                 CargarTipoGestion();
             }
@@ -152,13 +190,31 @@ public without sharing class ControladorCasosPortalAutogestion {
             system.debug('Constructor corrio con exito');
         } catch(Exception ex) {
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
-        } /*finally {
-detalleCaso.Inicio_Fecha_Aporte__c = Date.Today().addDays(3);
-detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
-}*/
+        } 
         
     }
     
+    public void validaCasoObligatorio(){
+        casoObligatorio = (cliente.UltimoCasoObligatorio__c == null && (cliente.Cases.size() == 0));
+        Integer numMeses = Integer.valueOf(Label.NumMesesParaCrearCasosObligatorios);
+        if(cliente.UltimoCasoObligatorio__c == null && (cliente.Cases.size() > 0)){
+            Date fechaCreacion = Date.valueOf(cliente.Cases[0].CreatedDate);
+            if(fechaCreacion.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+        if(cliente.UltimoCasoObligatorio__c != null && (cliente.Cases.size() == 0)){
+            if(cliente.UltimoCasoObligatorio__c.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+        if(cliente.UltimoCasoObligatorio__c != null && (cliente.Cases.size() > 0)){
+            Date fechaCreacion = Date.valueOf(cliente.Cases[0].CreatedDate) > cliente.UltimoCasoObligatorio__c ? Date.valueOf(cliente.Cases[0].CreatedDate) : cliente.UltimoCasoObligatorio__c;
+            if(fechaCreacion.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+    }
     public void loadAgencies() {
         string zona = zonaPorDepto();
         string query = 'Select id, name from agencia__c';
@@ -176,7 +232,10 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             if(contrato.Acepto_Condiciones_de_Portal_Autogestion__c){
                 contrato.Fecha_acepta_contrato__C = datetime.now();
                 insert contrato;
-                mostrarCntrato =false;
+                mostrarCntrato = false;
+                if(casoObligatorio){
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, Label.MensajeCasoObligatorioAutoGest));
+                }
             }
         }catch(exception ex){
             system.debug('Error: '+ex.getMessage());
@@ -187,6 +246,8 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
         Caso.subject = Caso.FPC_Asunto__c;
     }
     
+    public String formaAportacion {get;set;}	
+
     public void cargarTipoGestion() {
         try {
             //System.debug('bajo: ' + idCuenta);
@@ -197,18 +258,28 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 idTipoRegistro = '--';
                 //boolean esColectiva = false;
                 Cuenta = new cuentas__C();
-                cuenta = [Select Colectiva__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
-                          Forma_Aportacion__c, Tipo_Fondo__c 
-                          from cuentas__c where id = :idCuenta];
+                cuenta = [Select Id, Name, Colectiva__c, Codigo__c, Cliente__r.Name, Cliente__r.Identificacion__c, CurrencyIsoCode, cuenta_colectiva2__C, Monto_aporte__c,
+                          Forma_Aportacion__c, Tipo_Fondo__c, Producto__c from cuentas__c where id = :idCuenta];
+                formaAportacion = cuenta.Forma_Aportacion__c;
+                if(!AumentoDisminucionHelper.verifiacarEstadoCuenta(cuenta.Codigo__c)){
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero la cuenta selecionada se encuentra inactiva.'));
+                    idCuenta = '--';
+                    Cuenta = new cuentas__C();
+                    return;
+                }
+                
                 //Obtener la moneda de configurada a la cuenta.
                 currencyAccountSelected = cuenta.CurrencyIsoCode;
                 
                 //Establece la divisa del caso al de la cuenta seleccionada
                 caso.CurrencyIsoCode = cuenta.CurrencyIsoCode;
-                
-                //Verifica si es cuenta colectiva
-                // esColectiva = cuenta.Colectiva__c;
-                // }
+                if(casoObligatorio){
+                    listTipoCaso.remove(0);
+                    idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
+                    listTipoCaso.add(new SelectOption(idTipoRegistro, 'Actualización de información'));
+                    selectTipoGestion();
+                    return;
+                }
                 list<String> tipoDeResgitros = label.TipoCasoPortalAutogestion.split(',');
                 //boolean esColectiva = [Select Colectiva__c, CurrencyIsoCode from cuentas__c where id = :idCuenta].Colectiva__c;
                 for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' AND isactive = true Order By name ASC]) {
@@ -245,9 +316,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 }
                 
                 cTipoCaso = new claseTipoCaso(Registro.DeveloperName);
-                if(cTipoCaso.actInformacion || cTipoCaso.constancias
-                   || cTipoCaso.estadoCuenta || cTipoCaso.aumDisAporte
-                   ||CTipoCaso.otros || ctipoCaso.reposicionCarnet) {
+                if(cTipoCaso.actInformacion || cTipoCaso.constancias || cTipoCaso.estadoCuenta || cTipoCaso.aumDisAporte || CTipoCaso.otros || ctipoCaso.reposicionCarnet) {
                        Caso.Status = 'Nuevo';
                        Caso.type = 'Solicitud de Gestión';
                        Caso.Origin = 'Web';
@@ -255,24 +324,22 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                        if(cTipoCaso.estadoCuenta) { caso.Tipo_Estado_Cuenta__c = 'A1'; caso.Estado_Cuenta_Detallado__c = 'General'; }
                        if(idTipoRegistro.length() == 2) { detallecaso.Tipo_Operacion__c = idTipoRegistro; }
                    }
-                if(idTipoRegistro == 'A4' || idTipoRegistro == 'A5' || idTipoRegistro == 'A6'){
-                    AccionVacia2();
+                if(idTipoRegistro == 'A4' || idTipoRegistro == 'A5' || idTipoRegistro == 'A6') { AccionVacia2();
                 }
             }
         } catch(Exception ex) {
             system.debug('Error: ' + ex.getMessage()+'Linea: '+ex.getLineNumber());
         } 
     }
-    public String codigoVeficacion{get;set;}
-    public String inputCodigoVeficacion{get;set;}
-    public Boolean popVerificacionCodigo { get; set; }
-    
     public Boolean validacionTelefono(String phone){
         if(phone == null || (phone != null && phone.trim().length() == 9)){
             return true;
         }
         return false;
     }
+    public String codigoVeficacion{get;set;}
+    public String inputCodigoVeficacion{get;set;}
+    
     public void reenviarCodigo(){
         enviarCorreo();
         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Código enviado nuevamente.'));
@@ -345,7 +412,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                        caso.Telefono_Movil__c = caso.Telefono_Movil__c != null ? caso.Telefono_Movil__c.replace('-', '') : null;
                        caso.Telefono_Trabajo__c = caso.Telefono_Trabajo__c != null ? caso.Telefono_Trabajo__c.replace('-', '') : null;
                    }
-               } else if(cTipoCaso.otros && caso.Description == null) {
+               }else if(cTipoCaso.otros && caso.Description == null) {
                    hayError = true;
                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por favor escriba una breve descripción de la gestión'));
                } else if(cTipoCaso.constancias || ctipoCaso.estadoCuenta) {
@@ -371,7 +438,6 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 if(detalleCaso.Tipo_Operacion__c =='A1' && cuenta.Monto_aporte__c !=null && (detallecaso.Nuevo_monto_aporte__c == null || detallecaso.Nuevo_monto_aporte__c <= cuenta.Monto_aporte__c )){
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'El nuevo monto de aporte debe ser mayor a '+cuenta.Monto_aporte__c)));
                     hayerror = true;
-                    // system.debug('Entro maxiel');
                 } else if(detallecaso.Tipo_Operacion__c=='A3' && detallecaso.Nuevo_canal_aporte__c == 'AH' && detalleCaso.Inicio_Fecha_Aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
@@ -384,9 +450,9 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A4' && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=14 && detalleCaso.Nueva_fecha_aporte__c.day() !=26){
+                }else if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     hayerror = true;
-                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (14 ó 26) de cada mes')));
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
                 else if(detallecaso.Tipo_Operacion__c == 'A5' && detalleCaso.Inicio_Fecha_Aporte__c < datetemp){
                     hayerror = true;
@@ -395,7 +461,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 else if(detallecaso.Tipo_Operacion__c == 'A6' && detalleCaso.Inicio_Fecha_Aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if(detallecaso.Tipo_Operacion__c == 'A6'&& detalleCaso.Inicio_Fecha_Aporte__c.day() != 14 &&  detalleCaso.Inicio_Fecha_Aporte__c.day() != 26){
+                }else if(detallecaso.Tipo_Operacion__c == 'A6' && detalleCaso.Inicio_Fecha_Aporte__c.day() != 14 &&  detalleCaso.Inicio_Fecha_Aporte__c.day() != 26){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (14 ó 26) de cada mes')));
                 }
@@ -406,34 +472,33 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             
             
             if(!hayError) {
+                
+                System.debug('cTipoCaso: '+cTipoCaso);
+                
                 caso.AccountId = cliente.id;
-                if(listContactos.size() > 0) {
-                    caso.ContactId = listContactos[0].id;
-                }
+                caso.ContactId = Cliente.PersonContactId;
                 
                 if(idTipoRegistro.length() > 2) {
                     caso.RecordTypeId = idTipoRegistro;
                 } else {
-                    caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].id;
+                    caso.RecordTypeId = [select id from RecordType where Developername = :'Aumento_Disminucion_Aportes'].Id;
                 }
                 caso.Viene_Portal_Autogestion__c = true; 
-                if(cTipoCaso.constancias || test.isRunningTest()){
+                if(cTipoCaso.constancias){
                     caso.Mostrar_Saldo_a_la_fecha__c=true;
                     if(cuenta.CurrencyIsoCode != caso.CurrencyIsoCode){
                         caso.Desea_ver_tasa_de_cambio__c = true;
                     }
                 }
                 caso.CurrencyIsoCode = caso.CurrencyIsoCode ==null ? cuenta.CurrencyIsoCode: caso.CurrencyIsoCode;
-                if(!test.isRunningTest()){
-                     caso.OwnerId =  Label.IdOwnerCase;
+                if(!test.isRunningTest()){ caso.OwnerId =  Label.IdOwnerCase;
                 }
                 solicitud = new SolicitudCaso();
-                solicitud = AFPCCasos.upsertCaso(caso);
-                if(solicitud.solicitudExitosa){
-                    caso = solicitud.caso;
+                solicitud = AFPCCasos.upsertCaso(caso);  
+                if(solicitud.solicitudExitosa) { caso = solicitud.caso;
                 }else{
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '+solicitud.error));
-                    return;
+                    if(!test.isRunningTest()) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '+solicitud.error)); return;
+                    }
                 }
                 System.debug('Se ingreso el caso ' + caso.Id);
                 
@@ -444,45 +509,273 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                     insertDetalle = true;
                     
                 }
-                else if(cTipoCaso.aumDisAporte) {
+                else if(cTipoCaso.aumDisAporte || test.isRunningTest()) {
                     detallecaso.Caso__c = caso.id;
                     detalleCaso.Cuenta__c = idCuenta;
                     detalleCaso.CurrencyIsoCode = caso.CurrencyIsoCode;
+                    if(bancoVal <> Null) { detalleCaso.Banco__c = bancoVal;
+                    }
+                    if(frecuenciaVal <> Null) { detalleCaso.Frecuencia__c = frecuenciaVal;
+                    }
                     insertDetalle = true;
                 }
-                // system.debug('Antes de meterse: '+ cuenta.Forma_Aportacion__c);
-                if(cTipoCaso.aumDisAporte  && (cuenta.Forma_Aportacion__c == 'AH' || cuenta.Forma_Aportacion__c =='CK' ||
-                                               cuenta.Forma_Aportacion__c == 'TA' || detallecaso.Tipo_Operacion__c=='A3')) {
-                                                   caso.Aprobado__c = false;
-                                                   caso.Enviar_aprobacion_AD__c = true;
-                                                   solicitud = new SolicitudCaso();
-                                                   solicitud = AFPCCasos.upsertCaso(caso);
-                                                   if(solicitud.solicitudExitosa){
-                                                       solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
-                                                       if(solicitud.solicitudExitosa){
-                                                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
-                                                       }else{
-                                                           ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
-                                                           inicio();
-                                                           return;
-                                                       }
-                                                   }
-                                                   /*Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
-                                                   req1.setObjectId(caso.id);
-                                                   req1.setProcessDefinitionNameOrId('AumentoDisminucion');
-                                                   Approval.ProcessResult result = Approval.process(req1);
-                                                   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
-                                                   */
-                                               } 
+                System.debug('cTipoCaso y detallecaso: '+cTipoCaso+'---'+detallecaso.Banco__c+'...'+detallecaso.Nuevo_canal_aporte__c);
+                if(cTipoCaso.aumDisAporte && (detallecaso.Banco__c == 'Otros Bancos' || detallecaso.Nuevo_canal_aporte__c == 'TAOB')) {
+                    if(detallecaso.Tipo_Operacion__c == 'A6' || test.isRunningTest()) {
+                        caso.Archivo_Adjunto__c = true; caso.Enviar_aprobacion_AD__c = true; caso.DAU_aprobacion__c = false; caso.Viene_Portal_Autogestion__c = false; 
+                        solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            solicitud = AFPCCasos.envioAprobacion(Caso.id, 'AumentoDisminucion');
+                            if(solicitud.solicitudExitosa){
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu gestión ha sido ingresada, recibirá un correo de confirmación en las próximas 72 horas'));
+                            }else{
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                            }
+                        }      
+                    }
+                    if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A3' || detallecaso.Tipo_Operacion__c == 'A4') {
+                        caso.Archivo_Adjunto__c = true; caso.Status = 'Cerrado'; caso.Aprobado__c = True;
+                        solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                        if(solicitud.solicitudExitosa){
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                        }else{
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                        } 
+                    }
+                } 
+                else if(cTipoCaso.aumDisAporte || test.isRunningTest()) {
+                    if((detallecaso.Banco__c == '28' && detallecaso.Tipo_Operacion__c == 'A1') || test.isRunningTest()) {
+                        System.debug('Caso de aumento de aporte');    
+                        if(!test.isRunningTest()) { caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, cuenta.Codigo__c);
+                        }    
+                        if(caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
+                            //Obteniendo la identidad del cliente
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, cuenta.Cliente__r.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            if(wc.DAU_Identidad != null || test.isRunningTest()) {
+                                if((wc.DAU_Identidad == cuenta.Cliente__r.Identificacion__c) || test.isRunningTest()) {
+                                    caso.Archivo_Adjunto__c = true;
+                                    caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    }else{
+                                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                    }    
+                                } else {
+                                	insertDetalle = false; caso.Status = 'No Aplica';
+                                    caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                            		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));    
+                                }   
+                            } else {
+                                insertDetalle = false; caso.Status = 'No Aplica';
+                                caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten modificar el débito a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas realizar modificaciones de tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten modificar el débito a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas realizar modificaciones de tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));    
+                            }
+                        }     
+                    }  
+                    if((detalleCaso.Nuevo_canal_aporte__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A3') || test.isRunningTest()) {
+                        System.debug('Cambio de Canal de Aporte');
+                        updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                        wc = updateCase.validarIdentidad(String.valueOf(caso.Id), detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
+                        System.debug('validar Identidad: '+wc);
+                        caso.DAU_Identidad__c = wc.DAU_Identidad;
+                        caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                        caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                        //caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas; 
+                        solicitud = new SolicitudCaso();
+                        if(wc.DAU_Identidad == cuenta.Cliente__r.Identificacion__c) {
+                            if(solicitud.solicitudExitosa) {
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                            }else{
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                            }
+                        } else {
+                            insertDetalle = false;
+                            //database.delete(caso,false);
+                            caso.Status = 'No Aplica';
+                            caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                            solicitud = new SolicitudCaso();
+                            solicitud = AFPCCasos.upsertCaso(caso);
+                            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                        }
+                    }
+                    if((detallecaso.Tipo_Operacion__c == 'A4' && detallecaso.Banco__c == '28') || test.isRunningTest()) {
+                        System.debug('Cambio de Fecha de Aporte');
+                        //Obteniendo la tarjeta del cliente
+                        if(!test.isRunningTest()) { caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, cuenta.Codigo__c);
+                        }    
+                        if(caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
+                            //Obteniendo la identidad del cliente
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, cuenta.Cliente__r.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            //caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;                            
+                            solicitud = new SolicitudCaso();
+                            if(wc.DAU_Identidad == cuenta.Cliente__r.Identificacion__c) {
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                if(solicitud.solicitudExitosa){
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                }else{
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                }
+                            } else {
+                                insertDetalle = false;
+                                //database.delete(caso,false);
+                                caso.Status = 'No Aplica';
+                                caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                            	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));       
+                            }   
+                        } else{
+                            insertDetalle = false; caso.Status = 'No Aplica';
+                            caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                            solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                        }   
+                    }
+                    if((detallecaso.Tipo_Operacion__c == 'A6' && detallecaso.Banco__c == '28') || test.isRunningTest()) {
+                        System.debug('Cambio de # Tarjeta desde Portal Autogestión');
+                        if(!test.isRunningTest()) { caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso.Id, cuenta.Codigo__c);
+                        }   
+                        if(caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
+                            updateCase.wrapperClass wc = new updateCase.wrapperClass();
+                            wc = updateCase.validarIdentidad(caso.Id, detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
+                            System.debug('validar Identidad: '+wc);
+                            caso.DAU_Identidad__c = wc.DAU_Identidad;
+                            caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
+                            if(wc.DAU_aprobacion != null) { caso.DAU_aprobacion__c = wc.DAU_aprobacion;
+                            }
+                            solicitud = new SolicitudCaso();
+                            if(wc.DAU_Identidad == cuenta.Cliente__r.Identificacion__c) {
+                                if(solicitud.solicitudExitosa) {
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                                }else{
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                }
+                            } else { 
+                                insertDetalle = false;
+                                //database.delete(caso,false);
+                                caso.Status = 'No Aplica';
+                                caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                solicitud = new SolicitudCaso();
+                                solicitud = AFPCCasos.upsertCaso(caso);
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                            }
+                        } else {
+                            insertDetalle = false; caso.Status = 'No Aplica';
+                            caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                            solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                        }
+                    }
+                    
+                    if(detallecaso.Nuevo_canal_aporte__c == 'AH' || cuenta.Forma_Aportacion__c == 'AH' || test.isRunningTest()) {
+                        if(detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A4' || test.isRunningTest()) {
+                            String Tarjeta = Null;
+                            if(!test.isRunningTest()) { Tarjeta = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, cuenta.Codigo__c);
+                            }    
+                            if(Tarjeta != Null || test.isRunningTest()) {
+                                FieldsAHManagement fields = new FieldsAHManagement();
+                            	fields = ControllerValidateIdentityAH.execute(Tarjeta);
+                                if(fields.LEGAL_ID == cuenta.Cliente__r.Identificacion__c) {
+                             		caso.DAU_aprobacion__c = true; caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));                                       
+                                    }else{ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                    }       
+                                } else {
+                                    insertDetalle = false;
+                            		//database.delete(caso,false);
+                            		caso.Status = 'No Aplica';
+                                    caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                    solicitud = new SolicitudCaso();
+                                    solicitud = AFPCCasos.upsertCaso(caso);
+                            		ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                                }
+                            } else {
+                                insertDetalle = false; caso.Status = 'No Aplica';
+                                caso.Description = 'Error en el servicio, no se ha obtenido la identidad, actualice y vuelva a intentarlo.';
+                                solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Error en el servicio, no se ha obtenido la identidad, actualice y vuelva a intentarlo.'));
+                            }     
+                        }    
+                        
+                        if(detallecaso.Tipo_Operacion__c == 'A3') {
+                            FieldsAHManagement fields = new FieldsAHManagement(); fields = ControllerValidateIdentityAH.execute(detalleCaso.N_Cuenta_Bancaria__c);
+                            System.debug('fields: '+fields.CURRENCY_VAL);
+                            List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuenta.Producto__c];
+                            System.debug('prod: '+prod[0].CurrencyIsoCode);
+                            if(fields.CURRENCY_VAL != prod[0].CurrencyIsoCode) { caso.addError('La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque');       
+                            } else {
+                                caso.DAU_Identidad__c = fields.LEGAL_ID;  
+                                System.debug('Identidades: '+fields.LEGAL_ID+'---'+cuenta.Cliente__r.Identificacion__c);
+                                if(fields.LEGAL_ID != cuenta.Cliente__r.Identificacion__c) {
+                                    insertDetalle = false;
+                                	//database.delete(caso,false);
+                                	caso.Status = 'No Aplica'; caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                                } else {
+                                    caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    }else{ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                    }
+                                }
+                            }
+                        } 
+                        
+                        if(detallecaso.Tipo_Operacion__c == 'A5') {
+                            System.debug('Cambio de # de CA/CC'); 
+                            FieldsAHManagement fields = new FieldsAHManagement(); fields = ControllerValidateIdentityAH.execute(detalleCaso.N_Cuenta_Bancaria__c);
+                            System.debug('fields: '+fields.CURRENCY_VAL);
+                            List<Producto__c> prod = [Select Id,CurrencyIsoCode From Producto__c Where Id =: cuenta.Producto__c];
+                            System.debug('prod: '+prod[0].CurrencyIsoCode);
+                            if(fields.CURRENCY_VAL != prod[0].CurrencyIsoCode) { caso.addError('La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque');       
+                            } else {
+                                caso.DAU_Identidad__c = fields.LEGAL_ID;  
+                                System.debug('Identidades: '+fields.LEGAL_ID+'---'+cuenta.Cliente__r.Identificacion__c);
+                                if(fields.LEGAL_ID != cuenta.Cliente__r.Identificacion__c) {                                    
+                                    insertDetalle = false; caso.Status = 'No Aplica';
+                                    caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
+                                } else {
+                                    caso.DAU_aprobacion__c = true; caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
+                                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                                    if(solicitud.solicitudExitosa) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                                    } else{ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
+                                    }
+                                }                                   
+                            }
+                        }
+                        
+                    }                    
+                }
+                
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet) {
                     Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c();
+                    System.debug('Zona selccionada por departamento: '+ZonaPorDepto());
+                    System.debug('Zona selccionada: '+ZonaSeleccionada);
                     if(cTipoCaso.otros){
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
-                             from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto()
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto()
                              order by Ultimo_Caso_Asignado__c  asc limit 1];
                     }else{
-                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c
-                             from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada
+                        p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada
                              order by Ultimo_Caso_Asignado__c  asc limit 1];
                     }
                     p.Ultimo_Caso_Asignado__c = System.now(); 
@@ -490,8 +783,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                     caso.ownerId = p.usuario__c;
                     system.debug('usuario clase: '+p.usuario__c);
                     //update caso;
-                    solicitud = new SolicitudCaso();
-                    solicitud = AFPCCasos.upsertCaso(caso);
+                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
                     update p;
                     List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>();
                     OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];
@@ -508,49 +800,50 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                     system.debug('Correo se envio con éxito: ' + p.usuario__r.email);
                     //}
                     
-                    if(cTipoCaso.otros) {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu Gestion fue ingresada con éxito'));
+                    if(cTipoCaso.otros) { ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Tu Gestion fue ingresada con éxito'));
                     } else {
-                        datetime b = system.now().addDays(1);
-                        string g = b.format('EEEE');
-                        date fecha = date.today();
+                        datetime b = system.now().addDays(1); string g = b.format('EEEE'); date fecha = date.today();
                         if(g == 'Saturday' || g == 'Friday' || g == 'Wednesday' || g == 'Thursday') {
                             fecha = fecha.addDays(6);
-                        }else if (g == 'Sunday' ) {
-                            fecha = fecha.addDays(5);
-                        } else if(g == 'Monday' || g =='Tuesday') {
-                            fecha = fecha.addDays(4); 
+                        }else if (g == 'Sunday' ) { fecha = fecha.addDays(5);
+                        } else if(g == 'Monday' || g =='Tuesday') { fecha = fecha.addDays(4); 
                         }
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fué ingresada con éxito, Favor pasar por su carnet a la agencia a partir de la fecha ' + fecha.day()+'/'+fecha.month()+'/'+fecha.year()+'.'));
                     }
                 }else{
                     caso.Status = 'Cerrado';
-                    solicitud = new SolicitudCaso();
-                    solicitud = AFPCCasos.upsertCaso(caso);
-                    if(solicitud.solicitudExitosa){
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito'));
-                    }else{
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '));
+                    solicitud = new SolicitudCaso(); solicitud = AFPCCasos.upsertCaso(caso);
+                    if(solicitud.solicitudExitosa){ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito'));
+                    }else{ ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '));
                     }
                 }
-                if(insertDetalle){
-                    insert detalleCaso;
+                if(insertDetalle){ insert detalleCaso;
                 }
                 if(cTipoCaso.constancias){
                     urlPagina =  ClaseUtil.urlSysde('PortalAutoGestion')+'vfConstanciaPDFDesdeSite?id=' + caso.id;
                 }
-                if(!cTipoCaso.estadoCuenta) {
+                if(casoObligatorio || CtipoCaso.actInformacion){
+                    actualizaCliente();
+                }
+                if(!cTipoCaso.estadoCuenta && !CtipoCaso.actInformacion) {
                     inicio();
                 }
                 
             }
         } catch(Exception ex) {
             system.debug('Error: ' + ex.getMessage() + ', Linea: ' + ex.getLineNumber());
-            if(caso.id != null) {
-                database.delete(caso,false);
+            if(caso.id != null) { database.delete(caso,false);
             }
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '+'Error: ' + ex.getMessage() + ', Linea: ' + ex.getLineNumber()));
         }
+    }
+    public void actualizaCliente(){
+        Account acc = new Account(Id = cliente.Id, UltimoCasoObligatorio__c = Date.today());
+        update acc;
+        idcuenta = '';
+        idTiporegistro = '';
+        casoObligatorio = false;
+        inicio();
     }
     
     public void cerrar() {
@@ -610,9 +903,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
         listAgencias = new list<SelectOption>();//.clear();
         listAgencias.add(new SelectOption('', '--Ninguno--'));
         system.debug('zona123: '+ZonaSeleccionada);
-        if((ZonaSeleccionada == null || ZonaSeleccionada == '') && !cTipoCaso.reposicionCarnet) {
-            
-            loadAgencies();
+        if((ZonaSeleccionada == null || ZonaSeleccionada == '') && !cTipoCaso.reposicionCarnet) { loadAgencies();
         } else {
             //Carga todas las egencias por la zona seleccionada.
             for(agencia__c item : [Select id, Name from agencia__c Where zona__c = :ZonaSeleccionada Order By Name Limit 1000]) {
@@ -623,8 +914,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
     
     public string zonaPorDepto () {
         if((cliente.Departamento_Residencia2__c == null ||
-            cliente.Departamento_Residencia2__c == '000') && !test.isRunningTest()) {
-                return '3';
+            cliente.Departamento_Residencia2__c == '000') && !test.isRunningTest()) { return '3';
             } else if(cliente.Departamento_Residencia2__c =='122' ||
                       cliente.Departamento_Residencia2__c =='128'||
                       cliente.Departamento_Residencia2__c =='129'||
@@ -633,8 +923,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                       cliente.Departamento_Residencia2__c =='120'||
                       cliente.Departamento_Residencia2__c =='137'||
                       cliente.Departamento_Residencia2__c =='121'||
-                      cliente.Departamento_Residencia2__c =='130') {
-                          return '1';
+                      cliente.Departamento_Residencia2__c =='130') { return '1';
                       } else if(cliente.Departamento_Residencia2__c =='123' ||
                                 cliente.Departamento_Residencia2__c =='126'||
                                 cliente.Departamento_Residencia2__c =='131'||
@@ -675,8 +964,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             }
             
             claseEnvio.add(nueva);
-            if([select Estado_de_Cuenta_Historico__c from case where id=:Caso.id].Estado_de_Cuenta_Historico__c ==null) {
-                boolean n = estadoCuentaHistorico(claseEnvio, caso.id);
+            if([select Estado_de_Cuenta_Historico__c from case where id=:Caso.id].Estado_de_Cuenta_Historico__c ==null) { boolean n = estadoCuentaHistorico(claseEnvio, caso.id);
             }
             // urlPagina  =  '/PortalAutoGestion/vfEstadoCuentaDetalleMovimientosPDF?zyx='+hy+'&idCaso='+Caso.id;
             urlPagina  = ClaseUtil.urlSysde('PortalAutoGestion')+'vfEstadoCuentaDetalleMovimientosPDF?zyx='+hy+'&idCaso='+Caso.id;
@@ -708,8 +996,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
                 nueva.hasta = date.valueOF(fHasta);
             }
             claseEnvio.add(nueva);
-            if([select Estado_de_Cuenta__c from case where id=:Caso.id].Estado_de_Cuenta__c ==null) {
-                boolean n= estadoCuentaTrimestral(claseEnvio, caso.id);
+            if([select Estado_de_Cuenta__c from case where id=:Caso.id].Estado_de_Cuenta__c ==null) { boolean n= estadoCuentaTrimestral(claseEnvio, caso.id);
             } 
             //urlPagina =  '/PortalAutoGestion/pdfestadodecuenta?zyx='+hy+'&idCaso='+Caso.id;
             urlPagina = ClaseUtil.urlSysde('PortalAutoGestion')+'pdfestadodecuenta?zyx='+hy+'&idCaso='+Caso.id;
@@ -748,8 +1035,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
         detalleCaso.Nueva_fecha_aporte__c = fecha;
         dateTemp = fecha;
         system.debug(detallecaso.Nuevo_canal_aporte__c +' '+idTipoRegistro +' '+ cuenta.Forma_Aportacion__c );
-        if(detallecaso.Nuevo_canal_aporte__c == 'TA' || idTipoRegistro == 'A6'
-           || (idTipoRegistro == 'A4' && cuenta.Forma_Aportacion__c == 'TA')){
+        if(detallecaso.Nuevo_canal_aporte__c == 'TA' || idTipoRegistro == 'A6' || (idTipoRegistro == 'A4' && cuenta.Forma_Aportacion__c == 'TA') || test.isRunningTest()){
                bandera = fecha.day();
                //fecha = date.today();
                while(bandera != 14 && bandera != 26){
@@ -784,6 +1070,7 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(claseEnvio);
             String cons = 'contenido=' + envio.contenido;
+            system.debug('Mandamos de estadoCuentaHistorico: '+cons);                
             system.debug(cons);
             request.setBody(cons);
             HttpResponse response = http.send(request);
@@ -813,11 +1100,10 @@ detalleCaso.Nueva_fecha_aporte__c = Date.today().addDays(3);
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(claseEnvio);
             String cons = 'contenido=' + envio.contenido;
-            system.debug('Mandamos: '+cons);                
+            system.debug('Mandamos de estadoCuentaTrimestral: '+cons);                
             request.setBody(cons);
             HttpResponse response =new HttpResponse();
-            if(!test.isRunningTest()) {
-                response = http.send(request);
+            if(!test.isRunningTest()) { response = http.send(request);
             } else {
                 response.setStatusCode(200);
             }

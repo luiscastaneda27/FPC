@@ -47,11 +47,6 @@
                 <label>2025</label>
             </value>
             <value>
-                <fullName>2026</fullName>
-                <default>false</default>
-                <label>2026</label>
-            </value>
-            <value>
                 <fullName>2017</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -62,6 +57,12 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>2018</label>
+            </value>
+            <value>
+                <fullName>2026</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>2026</label>
             </value>
         </valueSetDefinition>
     </valueSet>

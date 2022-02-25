@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Factor_Variables__c</fullName>
+    <externalId>false</externalId>
+    <label>Factor Variables</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CL</fullName>
+                <default>false</default>
+                <label>Tipo de Cliente</label>
+            </value>
+            <value>
+                <fullName>TP</fullName>
+                <default>false</default>
+                <label>Tipo de Persona</label>
+            </value>
+            <value>
+                <fullName>TD</fullName>
+                <default>false</default>
+                <label>Tipo de Documento</label>
+            </value>
+            <value>
+                <fullName>FA</fullName>
+                <default>false</default>
+                <label>Fecha de Afiliación</label>
+            </value>
+            <value>
+                <fullName>FN</fullName>
+                <default>false</default>
+                <label>Fecha de Nacimiento</label>
+            </value>
+            <value>
+                <fullName>FC</fullName>
+                <default>false</default>
+                <label>Fecha de Constitución</label>
+            </value>
+            <value>
+                <fullName>GE</fullName>
+                <default>false</default>
+                <label>Giro de la Empresa</label>
+            </value>
+            <value>
+                <fullName>TR</fullName>
+                <default>false</default>
+                <label>Trabaja</label>
+            </value>
+            <value>
+                <fullName>OC</fullName>
+                <default>false</default>
+                <label>Ocupación</label>
+            </value>
+            <value>
+                <fullName>LE</fullName>
+                <default>false</default>
+                <label>Lista de excepciones</label>
+            </value>
+            <value>
+                <fullName>LP</fullName>
+                <default>false</default>
+                <label>Lista PEPs</label>
+            </value>
+            <value>
+                <fullName>PR</fullName>
+                <default>false</default>
+                <label>Producto</label>
+            </value>
+            <value>
+                <fullName>CA</fullName>
+                <default>false</default>
+                <label>Comercialización</label>
+            </value>
+            <value>
+                <fullName>MU</fullName>
+                <default>false</default>
+                <label>Municipalidad - Domicilio</label>
+            </value>
+            <value>
+                <fullName>NA</fullName>
+                <default>false</default>
+                <label>Nacionalidad</label>
+            </value>
+            <value>
+                <fullName>UE</fullName>
+                <default>false</default>
+                <label>Ubicación de la Empresa</label>
+            </value>
+            <value>
+                <fullName>J</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>JURIDICO</label>
+            </value>
+            <value>
+                <fullName>N</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>NATURAL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

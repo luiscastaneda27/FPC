@@ -181,7 +181,7 @@ public class EstadosDeCuenta {
 				
 		   }
            //system.debug('Variable correos: ' + listCorreo);
-           Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
+           /*Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
            system.debug('Correos enviados correctamente: '+results);
            list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
            todosCorreos = [select cliente__C, enviado__C, id, enviado_mensual__C from Correo_estado_cuenta__c where cliente__C in :idClientes];
@@ -202,7 +202,7 @@ public class EstadosDeCuenta {
                }
            }
           
-           update todosCorreos;
+           update todosCorreos;*/
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());	
         }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidarCliente</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Cliente__c != null, Prospecto__c != null)</errorConditionFormula>
+    <errorMessage>La proyección solo puede estar relacionada a cliente o prospecto, no ambos.</errorMessage>
+</ValidationRule>

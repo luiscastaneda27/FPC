@@ -12,34 +12,38 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>W</fullName>
+                <default>false</default>
+                <label>Semanal</label>
+            </value>
+            <value>
                 <fullName>M</fullName>
                 <default>false</default>
                 <label>Mensual</label>
             </value>
             <value>
-                <fullName>T</fullName>
-                <default>false</default>
-                <label>Trimestral</label>
-            </value>
-            <value>
-                <fullName>S</fullName>
-                <default>false</default>
-                <label>Semestral</label>
-            </value>
-            <value>
                 <fullName>A</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Anual</label>
             </value>
             <value>
                 <fullName>Q</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Quincenal</label>
             </value>
             <value>
-                <fullName>W</fullName>
+                <fullName>S</fullName>
                 <default>false</default>
-                <label>Semanal</label>
+                <isActive>false</isActive>
+                <label>Semestral</label>
+            </value>
+            <value>
+                <fullName>T</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Trimestral</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,208 @@
+<apex:page renderAs="PDF" sidebar="false" cache="false" applyBodyTag="false" standardController="Proyeccion__c" extensions="ControladorProyeccionConsolidado"  >
+    <apex:includeScript value="{!URLFOR($Resource.jQuery)}"/>
+    <head>
+        <style type="text/css" media="print" >
+            @page {
+                size: landscape;
+                margin-top:1.5cm; 
+                margin-bottom:1.5cm; 
+                margin-left:0.5cm;
+                margin-right:0.5cm;
+                @bottom-left {
+            		content: element(footerLeft);
+            	}
+            	@bottom-right {
+            		content: element(footerRight);
+            	}
+            
+            }
+            div.header {
+            	padding: 10px;
+            	position: running(header);
+            }
+            div.footerLeft {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;
+                font-size:11px;
+            	position: running(footerLeft);
+            }
+            div.footerRight {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;
+                font-size:11px;
+            	text-align:right;
+            	position: running(footerRight);
+            }
+            .pagenumber:before {
+            	content: counter(page);
+            }
+            .pagecount:before {
+            	content: counter(pages);
+            }
+            
+        </style>
+    </head>
+    <apex:form >
+        <div class="footerLeft" >{!piePaginaIzquierdo}</div>
+        <div class="footerRight">
+            <span class="pagenumber"/> / <span class="pagecount"/>
+        </div>
+        <body style="font-family: Open Sans Light,Helvetica,Arial,sans-serif;">
+            <table  style="width:100%;border-color:black;">
+                <tbody>
+                    <tr>
+                        <td valign="top" style="width:50%vertical-align: baseline;">
+                            <p><apex:image value="{!$Resource.LogoFPC}" style="height:30px; width:150px" /></p>
+                        </td>
+                        <td valign="top" style="width:50%font-size:11px;text-align:right;border-color:#bdd6ee;">
+                            <table style="width:100%;font-size:11px;text-align:right;color:#3e577f;">
+                                <tbody> 
+                                    <tr >
+                                        <td style="width:80%;" >Aporte Inicial </td> 
+                                        <td style="width:20%;" ><apex:outputField value="{!Proyeccion__c.AporteInicial__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td  >Aporte Mensual </td> 
+                                        <td  ><apex:outputField value="{!Proyeccion__c.AporteMensual__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td  >Rendimiento </td> 
+                                        <td  ><apex:outputField value="{!Proyeccion__c.Rendimiento__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td  >Comisión Aporte </td> 
+                                        <td >
+                                            <apex:outputField rendered="{!Proyeccion__c.EsComisionPorAporte__c}" value="{!Proyeccion__c.ComisionAporte__c}" />
+                                            <apex:outputText rendered="{!!Proyeccion__c.EsComisionPorAporte__c}" value="0.00%" /> 
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td>Comisión Saldo </td> 
+                                        <td>
+                                            <apex:outputField rendered="{!!Proyeccion__c.EsComisionPorAporte__c}" value="{!Proyeccion__c.ComisionSaldo__c}" />
+                                            <apex:outputText rendered="{!Proyeccion__c.EsComisionPorAporte__c}" value="0.00%" />
+                                        </td> 
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>Años </td> 
+                                        <td><apex:outputField value="{!Proyeccion__c.Anios__c}" /> </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+            <apex:repeat value="{!listDetalladoShow}" var="v" >
+                <table align="center" border="1" cellpadding="0" cellspacing="0" class="table" width="100%" style="border-color:#bdd6ee;" >
+                    <tr  style="text-align:center;font-size:12px; color:#3e577f;" >
+                        <td bgcolor="#bdd6ee" style="width:3%; border-color:#bdd6ee;">
+                            Num
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;">
+                            Mes
+                        </td>
+                        
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;">
+                            Aporte Ordinario
+                        </td >
+                        <td bgcolor="#bdd6ee" style="width:5%;border-color:#bdd6ee;">
+                            Aporte Extraordinario
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;" >
+                            Comision aporte ordinario
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:5%;border-color:#bdd6ee;">
+                            Comision aporte extraordinario
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;" >
+                            Comision por saldo
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;" >
+                            Gasto Total
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:6%;border-color:#bdd6ee;" >
+                            A CIC
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:8%;border-color:#bdd6ee;" >
+                            Interes real
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:8%;border-color:#bdd6ee;" >
+                            Saldo
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:7%;border-color:#bdd6ee;" >
+                            Rentabilidad
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:7%;border-color:#bdd6ee;" >
+                            Flujos
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:7%;border-color:#bdd6ee;" >
+                            Comision Acumulada
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:7%;border-color:#bdd6ee;" >
+                            Aporte Acumulado
+                        </td>
+                        <td bgcolor="#bdd6ee" style="width:7%;border-color:#bdd6ee;" >
+                            Interes Acumulado
+                        </td>
+                    </tr>
+                    <apex:repeat value="{!v.listProyDetallado}" var="item" >
+                        <tr>
+                            <td  style="font-size:11px;border-color:#bdd6ee;">                       
+                                {!item.num}
+                            </td>
+                            <td style="font-size:11px;border-color:#bdd6ee;">
+                                {!item.mes}
+                            </td>
+                            <td style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mAporteOrdinario}
+                            </td>
+                            <td style="font-size:11px;text-align:right;border-color:#bdd6ee;" >
+                                {!item.mAporteExtraordinario}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;" >
+                                {!item.mComisionAporteOrdinario}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mComisionAporteExtraordinario}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mComisionPorSaldo}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mGastoTotal}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.MACIC}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mInteresReal}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mSaldo}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mRentabilidad}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mFlujos}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mComisionAcumulada}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mAporteAcumulado}
+                            </td>
+                            <td  style="font-size:11px;text-align:right;border-color:#bdd6ee;">
+                                {!item.mInteresAcumulado}
+                            </td>
+                        </tr>  
+                    </apex:repeat>
+                </table>
+                <div style="{!v.cortePagina}" />
+        </apex:repeat>
+        
+    </body>
+</apex:form>
+<!--/html-->
+</apex:page>

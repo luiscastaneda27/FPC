@@ -23,7 +23,7 @@ public without sharing class ControllerProductoAgn {
     public boolean validadosBeneficiarios{get;set;}
     public boolean validadosBeneficiariosC{get;set;}
     public boolean disCumplimiento{get;set;}
-    //public boolean desCheckListas{get;set;}
+    //public boolean desCheckListas{get;set;} 
     //
     public Cuentas__c cuentas {get;set;}
     String[] lPromotores = new String[]{};

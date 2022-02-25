@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>NumerosID</label>
+    <protected>false</protected>
+    <values>
+        <field>id__c</field>
+        <value xsi:type="xsd:string">0801197205033
+0801199118048
+0801196504966
+0801198716036
+0709199300155</value>
+    </values>
+</CustomMetadata>
