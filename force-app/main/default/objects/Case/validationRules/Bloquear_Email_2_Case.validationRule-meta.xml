@@ -4,7 +4,9 @@
     <active>true</active>
     <errorConditionFormula>OR(
 AND(
-SuppliedEmail = &apos;ficohsapensiones@ficohsa.com&apos;,ISNEW()
+CONTAINS($Label.CorreosRestringidosEmail2Case, SuppliedEmail),
+ISNEW(),
+RecordType.DeveloperName = &apos;Email_to_Case&apos;
 ),
 AND( RecordType.DeveloperName != &apos;Email_to_Case&apos;, AccountId == Null, ISNEW())
 )</errorConditionFormula>

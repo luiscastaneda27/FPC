@@ -201,7 +201,12 @@
                 </table>
                 <div style="{!v.cortePagina}" />
         </apex:repeat>
-        
+        <p style="color:#3e577f; font-size:11px;">
+                ***Los cálculos realizados son estimaciones y cualquier variación en los supuestos puede modificar el
+                resultado. La tasa de rentabilidad es fluctuante y varía de acuerdo a las condiciones del mercado, por lo que
+                la rentabilidad estimada puede variar en el futuro. Estas cifras no comprometen de modo alguno a Ficohsa
+                Pensiones y Cesantías a garantizar un monto de pensión determinado.
+            </p>
     </body>
 </apex:form>
 <!--/html-->

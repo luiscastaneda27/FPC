@@ -1,407 +1,407 @@
 <apex:page controller="controllerPortalFPC" tabStyle="Detalle_caso__c" sidebar="false" cache="false" id="pagina" showHeader="false" docType="html-5.0">
     <style>    
         html, body{
-          min-height: 100%;
+        min-height: 100%;
         }
         body{
-          position: relative;
+        position: relative;
         }
-          
+        
         .custPopup{
-            background-color: white;
-            border-width: 2px;
-            border-style: solid;
-            z-index: 9999;
-            left: 30%;
-            padding:10px;
-            position: absolute;
-            width: 70%;
-            margin-left: -150px;
-            top:50%;
+        background-color: white;
+        border-width: 2px;
+        border-style: solid;
+        z-index: 9999;
+        left: 30%;
+        padding:10px;
+        position: absolute;
+        width: 70%;
+        margin-left: -150px;
+        top:50%;
         }
         
         .popupBackground{
-            background-color:black;
-            opacity: 0.20;
-            filter: alpha(opacity = 20);
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 9998;    
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;    
         }
-
+        
     </style>
     
     <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
     <script>
         $(document).ready( function () { 
-            
-            
-                
-               
-        });
-        function activate() { alert('Entra');
-            return false;
-        }
+        
+        
+        
+        
+    });
+    function activate() { alert('Entra');
+                         return false;
+                        }
     </script>
     
     <SCRIPT>
-      
-      function isNumberKey(evt)
-      {
-         var charCode = (evt.which) ? evt.which : event.keyCode
-         if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
- 
-         return true;
-      }
-      function conMayusculas(field) 
+        
+        function isNumberKey(evt)
+        {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+        return false;
+        
+        return true;
+        }
+        function conMayusculas(field) 
         { 
-            field.value = field.value.tolowerCase() 
+        field.value = field.value.tolowerCase() 
         }  
-   </SCRIPT>
-   <apex:actionStatus id="status" startText="Espere..." startStyle="background-color: #C70A0A; color: #FFFFFF; font-size:14px; left: 0px; padding: 3px 20px 3px 20px; position: fixed; margin: 0px; top: 0px; width: 100%; z-index: 9999;" onstart="mostrarFondo();" onstop="ocultarFondo();"/>
+    </SCRIPT>
+    <apex:actionStatus id="status" startText="Espere..." startStyle="background-color: #C70A0A; color: #FFFFFF; font-size:14px; left: 0px; padding: 3px 20px 3px 20px; position: fixed; margin: 0px; top: 0px; width: 100%; z-index: 9999;" onstart="mostrarFondo();" onstop="ocultarFondo();"/>
     <body>
-        <apex:form >
-      <center>
-                   <figure class="row justify-content-center" style="  text-align: center; width: 85%; ">
+        <apex:form id="idForm" >
+            <center>
+                <figure class="row justify-content-center" style="  text-align: center; width: 85%; ">
                     <apex:image value="{!$Resource.LogoFPC}" style="height:90px; width:400px;"  />
-                   </figure>
-                                                         
+                </figure>
+                
             </center>
-      <apex:pageBlock id="block">
-          <apex:outputPanel id="msj">
-              <apex:pageMessages />
-          </apex:outputPanel>
-          
-          <apex:pageBlockSection columns="2">
-              <apex:inputText label="Identidad o RTN:" value="{!identidad}" size="20"/>
-              
-              <!--<apex:inputText label="Nombre" value="{!nombre}" style="text-transform:capitalize;"/>-->
-              <apex:outputPanel id="botones" >
-                  <apex:commandButton value="Buscar" action="{!buscar}" status="status" reRender="msj,block,tabla,pros,lista,listaCAD,popObjeto,mensaje1"/>
-                  <apex:commandButton value="Documentos" action="{!documentos}" reRender="docs,block"/>
-                  <apex:commandButton value="Registrar Gestión" action="{!registrarLLamada}" reRender="popLlamada" rendered="{!registrar2}"/>
-                  <apex:commandButton value="Registrar Gestión" action="{!registrarLLamada}" reRender="popLlamada" rendered="{!registrar}" />                 
-              </apex:outputPanel>
-          </apex:pageBlockSection>
-          
-          <apex:pageBlockTable value="{!cuentas}" var="c" id="tabla" rendered="{!mostrarCliente}">    
-                   
-              <apex:column headerValue="Nombre">
-                  <apex:commandLink action="{!ver}" status="status" reRender="lista,botones">
-                      <apex:outputField value="{!c.Name}" />
-                      <apex:param name="selec" value="{!c.id}" assignTo="{!cliente.id}"/>
-                  </apex:commandLink>
-              </apex:column>              
-              <apex:column headerValue="Identificación">
-                  <apex:outputField value="{!c.Identificacion__c}" />
-              </apex:column>
-              <apex:column headerValue="Tipo de Identificación">
-                  <apex:outputField value="{!c.Tipo_Identificacion__c}" />
-              </apex:column>
-              <apex:column headerValue="Correo">
-                  <apex:outputField value="{!c.Correo_Electronico_Oficina__c}" />
-              </apex:column>
-              <apex:column headerValue="Teléfono">
-                  <apex:outputField value="{!c.Phone}" />
-              </apex:column>
-              <apex:column headerValue="Cliente único del banco">
-                  <apex:outputField value="{!c.Cliente_Unico_Banco__c}" />
-              </apex:column>
-          </apex:pageBlockTable>
-          
-          <apex:pageBlockTable value="{!prospectos}" var="p" id="pros" rendered="{!mostrarCandida}">              
-              <apex:column headerValue="Nombre">
-                  <apex:commandLink action="{!ver}" >
-                      <apex:outputField value="{!p.Name}" />
-                      <apex:param name="candido" value="{!p.id}" assignTo="{!candidato.id}"/>
-                  </apex:commandLink>
-              </apex:column>              
-              <apex:column headerValue="Identificación">
-                  <apex:outputField value="{!p.Identificacion__c}" />
-              </apex:column>
-              <apex:column headerValue="Tipo de Identificación">
-                  <apex:outputField value="{!p.Tipo_Identificacion__c}" />
-              </apex:column>
-              <apex:column headerValue="Cliente único del banco">
-                  <apex:outputField value="{!p.Cliente_Unico_Banco__c}" />
-              </apex:column>
-          </apex:pageBlockTable>
-      </apex:pageBlock> 
-      
-      <apex:outputPanel id="popObjeto">
-        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop1}"/>
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop1}">
-                            
-            <apex:pageBlock >
-                <apex:outputPanel id="mensaje1">
+            <apex:pageBlock id="block">
+                <apex:outputPanel id="msj">
                     <apex:pageMessages />
                 </apex:outputPanel>
+                
                 <apex:pageBlockSection columns="2">
-                    <apex:selectList label="Crear Nuevo: " value="{!idObjeto}" size="1">
-                        <apex:selectOptions value="{!Objetos}" />
-                    </apex:selectList>
-                    <apex:outputPanel >
-                        <apex:commandButton value="Crear" action="{!crear}" reRender="popObjeto,popCliente,popCandidato" />
-                        <apex:commandButton value="Cancelar" action="{!cerrar}" reRender="popObjeto"/>
+                    <apex:inputText label="Identidad o RTN:" value="{!identidad}" size="20"/>
+                    
+                    <!--<apex:inputText label="Nombre" value="{!nombre}" style="text-transform:capitalize;"/>-->
+                    <apex:outputPanel id="botones" >
+                        <apex:commandButton value="Buscar" action="{!buscar}" status="status" reRender="msj,block,tabla,pros,lista,listaCAD,popObjeto,mensaje1"/>
+                        <apex:commandButton value="Documentos" action="{!documentos}" reRender="docs,block"/>
+                        <apex:commandButton value="Registrar Gestión" action="{!registrarLLamada}" reRender="popLlamada" rendered="{!registrar2}"/>
+                        <apex:commandButton value="Registrar Gestión" action="{!registrarLLamada}" reRender="popLlamada" rendered="{!registrar}" />                 
                     </apex:outputPanel>
                 </apex:pageBlockSection>
-            </apex:pageBlock>
-            </apex:outputPanel>
-        </apex:outputPanel>
-        <apex:outputPanel id="popCandidato">
-        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop3}"/>
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop3}">
-                            
-            <apex:pageBlock title="Nuevo Prospecto" >
-                <apex:outputPanel id="mensaje3">
-                    <apex:pageMessages />
+                
+                <apex:pageBlockTable value="{!cuentas}" var="c" id="tabla" rendered="{!mostrarCliente}">    
+                    
+                    <apex:column headerValue="Nombre">
+                        <apex:commandLink action="{!ver}" status="status" reRender="lista,botones">
+                            <apex:outputField value="{!c.Name}" />
+                            <apex:param name="selec" value="{!c.id}" assignTo="{!cliente.id}"/>
+                        </apex:commandLink>
+                    </apex:column>              
+                    <apex:column headerValue="Identificación">
+                        <apex:outputField value="{!c.Identificacion__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Tipo de Identificación">
+                        <apex:outputField value="{!c.Tipo_Identificacion__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Correo">
+                        <apex:outputField value="{!c.Correo_Electronico_Oficina__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Teléfono">
+                        <apex:outputField value="{!c.Phone}" />
+                    </apex:column>
+                    <apex:column headerValue="Cliente único del banco">
+                        <apex:outputField value="{!c.Cliente_Unico_Banco__c}" />
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+                <apex:pageBlockTable value="{!prospectos}" var="p" id="pros" rendered="{!mostrarCandida}">              
+                    <apex:column headerValue="Nombre">
+                        <apex:commandLink action="{!ver}" >
+                            <apex:outputField value="{!p.Name}" />
+                            <apex:param name="candido" value="{!p.id}" assignTo="{!candidato.id}"/>
+                        </apex:commandLink>
+                    </apex:column>              
+                    <apex:column headerValue="Identificación">
+                        <apex:outputField value="{!p.Identificacion__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Tipo de Identificación">
+                        <apex:outputField value="{!p.Tipo_Identificacion__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Cliente único del banco">
+                        <apex:outputField value="{!p.Cliente_Unico_Banco__c}" />
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock> 
+            
+            <apex:outputPanel id="popObjeto">
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop1}"/>
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop1}">
+                    
+                    <apex:pageBlock >
+                        <apex:outputPanel id="mensaje1">
+                            <apex:pageMessages />
+                        </apex:outputPanel>
+                        <apex:pageBlockSection columns="2">
+                            <apex:selectList label="Crear Nuevo: " value="{!idObjeto}" size="1">
+                                <apex:selectOptions value="{!Objetos}" />
+                            </apex:selectList>
+                            <apex:outputPanel >
+                                <apex:commandButton value="Crear" action="{!crear}" reRender="popObjeto,popCliente,popCandidato" />
+                                <apex:commandButton value="Cancelar" action="{!cerrar}" reRender="popObjeto"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
                 </apex:outputPanel>
-                <apex:pageBlockSection columns="2">
-                    
-                    <apex:inputField value="{!candidato.Motivo_Contacto__c}" id="Fmotivo" required="true" />
-                    
-                    <!-- apex:inputField value="{!candidato.Pais_Trabajo__c}" id="pccodpais" onchange="llenarDepartamento();" required="true"/>
-                    
-                    <apex:inputField value="{!candidato.Departamento__c}" required="true"/ -->
-                                  
-                    <apex:inputField value="{!candidato.F_Codigo_Empleado__c}" id="Fcodigo" type="number" html-maxlength="5" required="true"/>
-                    
-                    <apex:inputField value="{!candidato.FirstName}" id="Fnombre" required="true"/>
-                    <apex:inputField value="{!candidato.lastName}" id="Fapellido"/>
-                    
-                    <apex:inputField value="{!candidato.Tipo_Identificacion__c}" id="Ftipo" required="true"/>
-                    <apex:inputField value="{!candidato.Identificacion__c}" id="Fiden" required="true"/>
-                    
-                    <apex:inputField value="{!candidato.Sexo__c}" required="true"/>
-                    <apex:inputField value="{!candidato.Phone}" id="Ftel" required="true" onkeypress="return isNumberKey(event)"/>
-                    <apex:inputField value="{!candidato.Telefono_Trabajo__c}" onkeypress="return isNumberKey(event)"/>    
-                                    
-                    <apex:inputField value="{!candidato.Email}" id="Femail" onkeyup="javascript:this.value=this.value.toLowerCase();" required="true"/>                    
-                    <apex:inputField value="{!candidato.Nombre_Empresa__c}"/>                       
-                                       
-                    <apex:inputField value="{!candidato.Description}" id="Fdesc" required="true"/>
-                    
-                    
-                                                        
-                    
-                    <!--<apex:outputText label="Origen" value="{!candidato.Description}"/>
-                    <apex:outputText label="Usuario de Referencia" value="{!candidato.Description}"/>-->
-                </apex:pageBlockSection>
-                
-                
-                <div class="pbSubsection">
-                    <table class="detailList" border="0" cellpadding="0" cellspacing="0">
-                        <tbody class="detailList" border="0" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <th class="labelCol vfLabelColTextWrap first" scope="row">
-                                    <label for="pagina:j_id2:j_id99:j_id126:Fmotivo">
-                                        <span class="assistiveText">*</span>País
-                                    </label>
-                                </th>
-                                <td class="dataCol first">
-                                    <div class="requiredInput">
-                                        <div class="requiredBlock"></div>
-                                        <apex:selectList required="required" id="Fpais" size="1" value="{!pais}">
-                                            <apex:selectoptions value="{!Paises}"/>
-                                            <apex:actionSupport event="onchange" reRender="Fciudad"/>
-                                        </apex:selectList>                                        
-                                    </div>
-                                </td>
-                                <th class="labelCol vfLabelColTextWrap first" scope="row">
-                                    <label for="pagina:j_id2:j_id99:j_id126:Fcodigo">
-                                        <span class="assistiveText">*</span>Estado/Departamento
-                                    </label>
-                                </th>
-                                <td class="dataCol first">
-                                    <div class="requiredInput">
-                                        <div class="requiredBlock"></div>
-                                        <apex:selectList required="required" size="1" value="{!depto}" id="Fciudad">
-                                            <apex:selectoptions value="{!Depart}"/>
-                                        </apex:selectList> 
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>    
-                    </table>
-                </div>
-                
-
-                <apex:pageBlockButtons >
-                        <apex:commandButton value="Guardar" status="status" action="{!guardarPop}" reRender="popCandidato,mensaje3,listaCAD,msj" />
-                        <apex:commandButton value="Cancelar" status="status" action="{!cerrar}" immediate="true" reRender="popCandidato"/>
-                </apex:pageBlockButtons>
-            </apex:pageBlock>
             </apex:outputPanel>
-        </apex:outputPanel>
-
-        <apex:outputPanel id="popLlamada">
-        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop4}"/>
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop4}">
+            <apex:outputPanel id="popCandidato">
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop3}"/>
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop3}">
+                    
+                    <apex:pageBlock title="Nuevo Prospecto" >
+                        <apex:outputPanel id="mensaje3">
+                            <apex:pageMessages />
+                        </apex:outputPanel>
+                        <apex:pageBlockSection columns="2">
                             
-            <apex:pageBlock title="Nueva Llamada" >
-                <apex:outputPanel id="mensaje4">
-                    <apex:pageMessages />
+                            <apex:inputField value="{!candidato.Motivo_Contacto__c}" id="Fmotivo" required="true" />
+                            
+                            <!-- apex:inputField value="{!candidato.Pais_Trabajo__c}" id="pccodpais" onchange="llenarDepartamento();" required="true"/>
+
+<apex:inputField value="{!candidato.Departamento__c}" required="true"/ -->
+                            
+                            <apex:inputField value="{!candidato.F_Codigo_Empleado__c}" id="Fcodigo" type="number" html-maxlength="5" required="true"/>
+                            
+                            <apex:inputField value="{!candidato.FirstName}" id="Fnombre" required="true"/>
+                            <apex:inputField value="{!candidato.lastName}" id="Fapellido"/>
+                            
+                            <apex:inputField value="{!candidato.Tipo_Identificacion__c}" id="Ftipo" required="true"/>
+                            <apex:inputField value="{!candidato.Identificacion__c}" id="Fiden" required="true"/>
+                            
+                            <apex:inputField value="{!candidato.Sexo__c}" required="true"/>
+                            <apex:inputField value="{!candidato.Phone}" id="Ftel" required="true" onkeypress="return isNumberKey(event)"/>
+                            <apex:inputField value="{!candidato.Telefono_Trabajo__c}" onkeypress="return isNumberKey(event)"/>    
+                            
+                            <apex:inputField value="{!candidato.Email}" id="Femail" onkeyup="javascript:this.value=this.value.toLowerCase();" required="true"/>                    
+                            <apex:inputField value="{!candidato.Nombre_Empresa__c}"/>                       
+                            
+                            <apex:inputField value="{!candidato.Description}" id="Fdesc" required="true"/>
+                            
+                            
+                            
+                            
+                            <!--<apex:outputText label="Origen" value="{!candidato.Description}"/>
+<apex:outputText label="Usuario de Referencia" value="{!candidato.Description}"/>-->
+                        </apex:pageBlockSection>
+                        
+                        
+                        <div class="pbSubsection">
+                            <table class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                <tbody class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <th class="labelCol vfLabelColTextWrap first" scope="row">
+                                            <label for="pagina:j_id2:j_id99:j_id126:Fmotivo">
+                                                <span class="assistiveText">*</span>País
+                                            </label>
+                                        </th>
+                                        <td class="dataCol first">
+                                            <div class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:selectList required="required" id="Fpais" size="1" value="{!pais}">
+                                                    <apex:selectoptions value="{!Paises}"/>
+                                                    <apex:actionSupport event="onchange" reRender="Fciudad"/>
+                                                </apex:selectList>                                        
+                                            </div>
+                                        </td>
+                                        <th class="labelCol vfLabelColTextWrap first" scope="row">
+                                            <label for="pagina:j_id2:j_id99:j_id126:Fcodigo">
+                                                <span class="assistiveText">*</span>Estado/Departamento
+                                            </label>
+                                        </th>
+                                        <td class="dataCol first">
+                                            <div class="requiredInput">
+                                                <div class="requiredBlock"></div>
+                                                <apex:selectList required="required" size="1" value="{!depto}" id="Fciudad">
+                                                    <apex:selectoptions value="{!Depart}"/>
+                                                </apex:selectList> 
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>    
+                            </table>
+                        </div>
+                        
+                        
+                        <apex:pageBlockButtons >
+                            <apex:commandButton value="Guardar" status="status" action="{!guardarPop}" reRender="popCandidato,mensaje3,listaCAD,msj" />
+                            <apex:commandButton value="Cancelar" status="status" action="{!cerrar}" immediate="true" reRender="popCandidato"/>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
                 </apex:outputPanel>
-                <apex:pageBlockSection columns="2">
-                    <!--<apex:outputField value="{!Llamada.Subject}" />
-                    <apex:outputField value="{!llamada.WhatId}" rendered="{!if((llamada.whatId == null),false,true)}" />
-                    <apex:outputPanel rendered="{!if((llamada.whatId == null),true,false)}" />-->     
-                    <!--<apex:selectList label="Motivo del Contacto" value="{!idMotivoLlamada}" size="1" required="true">
-                        <apex:selectOptions value="{!motivosLlamada}" />    
-                    </apex:selectList>-->
-                    <apex:inputField value="{!fantasma.Motivo_Contacto2__c}" required="true"/> 
-                    <apex:inputField value="{!fantasma.Tipo_Gestion__c}" required="true"/>     
-                    <apex:inputField value="{!fantasma.Telefono_actual__c}" required="true" onkeypress="return isNumberKey(event)" />
-                    <apex:inputField value="{!fantasma.Correo_electronico__c}" required="true"/>                    
-                    <apex:inputField value="{!fantasma.Descripcion__c}" required="true"/>                                                                            
-                </apex:pageBlockSection>
-                
-                <apex:pageBlockButtons >
-                        <apex:commandButton value="Guardar" status="status" action="{!guardarLlamada}" reRender="popLlamada,mensaje4,lista,listaCAD" />
-                        <apex:commandButton value="Cancelar" status="status" action="{!cerrar}" reRender="popLlamada" />
-                </apex:pageBlockButtons>
-            </apex:pageBlock>
             </apex:outputPanel>
-        </apex:outputPanel>                
-        
-        
-        <!-- NUEVO CASO -->
-        <apex:outputPanel id="popNCaso" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popCaso}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popCaso}">                           
-                <apex:pageBlock title="Nuevo Caso" >
+            
+            <apex:outputPanel id="popLlamada">
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!pop4}"/>
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!pop4}">
+                    
+                    <apex:pageBlock title="Nueva Llamada" >
+                        <apex:outputPanel id="mensaje4">
+                            <apex:pageMessages />
+                        </apex:outputPanel>
+                        <apex:pageBlockSection columns="2">
+                            <!--<apex:outputField value="{!Llamada.Subject}" />
+<apex:outputField value="{!llamada.WhatId}" rendered="{!if((llamada.whatId == null),false,true)}" />
+<apex:outputPanel rendered="{!if((llamada.whatId == null),true,false)}" />-->     
+                            <!--<apex:selectList label="Motivo del Contacto" value="{!idMotivoLlamada}" size="1" required="true">
+<apex:selectOptions value="{!motivosLlamada}" />    
+</apex:selectList>-->
+                            <apex:inputField value="{!fantasma.Motivo_Contacto2__c}" required="true"/> 
+                            <apex:inputField value="{!fantasma.Tipo_Gestion__c}" required="true"/>     
+                            <apex:inputField value="{!fantasma.Telefono_actual__c}" required="true" onkeypress="return isNumberKey(event)" />
+                            <apex:inputField value="{!fantasma.Correo_electronico__c}" required="true"/>                    
+                            <apex:inputField value="{!fantasma.Descripcion__c}" required="true"/>                                                                            
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockButtons >
+                            <apex:commandButton value="Guardar" status="status" action="{!guardarLlamada}" reRender="popLlamada,mensaje4,lista,listaCAD" />
+                            <apex:commandButton value="Cancelar" status="status" action="{!cerrar}" reRender="popLlamada" />
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:outputPanel>                
+            
+            
+            <!-- NUEVO CASO -->
+            <apex:outputPanel id="popNCaso" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popCaso}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popCaso}">                           
+                    <apex:pageBlock title="Nuevo Caso" >
                         <apex:outputPanel id="msjCaso">
-                        <apex:pageMessages />
-                    </apex:outputPanel>
-                    <apex:pageBlockButtons location="top">
-                        <apex:commandButton value="Guardar" status="status" action="{!claseCasoD.guardar}" rendered="{!claseCasoD.paso2}" reRender="popNCaso,msjCaso,popVCaso"/>
-                        <apex:commandButton value="Continuar" status="status" rendered="{!claseCasoD.paso1}" action="{!claseCasoD.continuarAlPaso2}" reRender="popNCaso,msjCaso"/>
-                        <apex:commandButton value="Cancelar" action="{!claseCasoD.cerrarCaso}" reRender="popNCaso" immediate="true"/>
-                    </apex:pageBlockButtons>
-                    
-                    <!-- PASO 1 -->
-                    <apex:pageBlockSection columns="1" title="Paso 1" rendered="{!claseCasoD.paso1}">
+                            <apex:pageMessages />
+                        </apex:outputPanel>
+                        <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Guardar" status="status" action="{!claseCasoD.guardar}" rendered="{!claseCasoD.paso2}" reRender="popNCaso,msjCaso,popVCaso"/>
+                            <apex:commandButton value="Continuar" status="status" rendered="{!claseCasoD.paso1}" action="{!claseCasoD.continuarAlPaso2}" reRender="popNCaso,msjCaso"/>
+                            <apex:commandButton value="Cancelar" action="{!claseCasoD.cerrarCaso}" reRender="popNCaso" immediate="true"/>
+                        </apex:pageBlockButtons>
                         
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Origen"/>
-                            <apex:selectList value="{!claseCasoD.Caso.Origin}" size="1">
-                                <apex:selectOptions value="{!claseCasoD.portalOrigen}" />
-                                <apex:actionSupport event="onchange" status="status" reRender="popNCaso" action="{!claseCasoD.tiposDeCasoSegunOrigen}" />
-                            </apex:selectList>                       
-                        </apex:pageBlockSectionItem>
+                        <!-- PASO 1 -->
+                        <apex:pageBlockSection columns="1" title="Paso 1" rendered="{!claseCasoD.paso1}">
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Origen"/>
+                                <apex:selectList value="{!claseCasoD.Caso.Origin}" size="1">
+                                    <apex:selectOptions value="{!claseCasoD.portalOrigen}" />
+                                    <apex:actionSupport event="onchange" status="status" reRender="popNCaso" action="{!claseCasoD.tiposDeCasoSegunOrigen}" />
+                                </apex:selectList>                       
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Tipo de caso" />
+                                <apex:selectList value="{!claseCasoD.idTipoRCaso}" size="1" disabled="{!claseCasoD.Caso.Origin =''}" >
+                                    <apex:selectOptions value="{!claseCasoD.tipoRCaso}" />
+                                    <apex:actionSupport event="onchange" status="status" reRender="popNCaso" action="{!claseCasoD.cambiarTipoCaso}" />
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Cuentas"/>
+                                <apex:selectList value="{!claseCasoD.idCuenta}" size="1" disabled="{!OR(claseCasoD.idTipoRCaso ='Estados_Cuenta',
+                                                                                                   claseCasoD.idTipoRCaso ='Actualizacion_informacion',
+                                                                                                   claseCasoD.idTipoRCaso ='Reposicion_Carnet',
+                                                                                                   claseCasoD.idTipoRCaso ='')}">
+                                    <apex:selectOptions value="{!claseCasoD.listCuentas}" />
+                                </apex:selectList>                       
+                            </apex:pageBlockSectionItem>
+                            
+                            
+                            <apex:outputfield rendered="{!claseCasoD.idTipoRCaso !='Otros'}" value="{!claseCasoD.Caso.type}" />
+                            <apex:selectList rendered="{!claseCasoD.idTipoRCaso ='Otros'}" size="1" value="{!claseCasoD.Caso.type}">
+                                <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
+                                <apex:selectOption itemLabel="Reclamo" itemValue="Reclamo" />
+                                <apex:selectOption itemLabel="Solicitud de Gestión" itemValue="Solicitud" />
+                                <apex:actionSupport status="status" action="{!claseCasoD.cambiarTipo}" event="onchange" reRender="popNCaso" />
+                            </apex:selectList>  
+                            
+                            <apex:outputField value="{!claseCasoD.Caso.Status}"/> 
+                            <apex:outputField value="{!claseCasoD.Caso.Priority}" />
+                            <apex:inputField label="Código Empleado *" value="{!claseCasoD.Caso.Codigo_empleado__c}" OnKeyPress="return CampoNumeroRTN(event, this)" />
+                            <apex:inputField label="Nombre Empleado *" value="{!claseCasoD.Caso.Nombre_Empleado__c }" />
+                            <apex:inputField label="Correo Electronico *" value="{!claseCasoD.Caso.Correo_electronico_empleado__c}" />
+                            <apex:inputField label="Agencia *" value="{!claseCasoD.caso.Nombre_agencia__c }" rendered="{!claseCasoD.caso.Origin = 'Agencias_Banco'}" />
+                            
+                            <!--apex:outputField value="{!claseCasoD.Caso.Origin}"/>
+<apex:outputField value="{!claseCasoD.Caso.Usuario_referencia__c}"/-->                                                
+                        </apex:pageBlockSection>
                         
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Tipo de caso" />
-                            <apex:selectList value="{!claseCasoD.idTipoRCaso}" size="1" disabled="{!claseCasoD.Caso.Origin =''}" >
-                                <apex:selectOptions value="{!claseCasoD.tipoRCaso}" />
-                                <apex:actionSupport event="onchange" status="status" reRender="popNCaso" action="{!claseCasoD.cambiarTipoCaso}" />
-                             </apex:selectList>
-                         </apex:pageBlockSectionItem>
+                        <!-- PASO 2 -->
+                        <apex:pageBlockSection columns="1" title="Paso 2" rendered="{!claseCasoD.paso2}">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Cuentas"/>
+                                <apex:selectList value="{!claseCasoD.idCuenta}" size="1" disabled="{!!claseCasoD.cTipoCaso.constancias}">
+                                    <apex:selectOptions value="{!claseCasoD.listCuentas}" />
+                                </apex:selectList>                       
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
                         
+                        <apex:pageBlockSection columns="2" rendered="{!claseCasoD.paso2}">
+                            <apex:outputField value="{!claseCasoD.Caso.Type}" />
+                            <apex:outputField value="{!claseCasoD.Caso.RecordTypeId}" />
+                            <apex:outputField value="{!claseCasoD.Caso.Priority}"/> 
+                            <apex:outputField value="{!claseCasoD.Caso.Status}"/>                         
+                            <apex:outputField value="{!claseCasoD.Caso.Origin}"/>  
+                            <apex:outputField value="{!claseCasoD.Caso.Usuario_referencia__c}"/>                                                                        
+                        </apex:pageBlockSection>
                         
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Cuentas"/>
-                            <apex:selectList value="{!claseCasoD.idCuenta}" size="1" disabled="{!OR(claseCasoD.idTipoRCaso ='Estados_Cuenta',
-                                                                                               claseCasoD.idTipoRCaso ='Actualizacion_informacion',
-                                                                                               claseCasoD.idTipoRCaso ='Reposicion_Carnet',
-                                                                                               claseCasoD.idTipoRCaso ='')}">
-                                <apex:selectOptions value="{!claseCasoD.listCuentas}" />
-                            </apex:selectList>                       
-                        </apex:pageBlockSectionItem>
-                                
+                        <apex:pageBlockSection title="Detalle" columns="2" id="idrepo"  rendered="{!AND(claseCasoD.paso2, claseCasoD.cTipoCaso.reposicionCarnet)}">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Zona *" />
+                                <apex:selectList value="{!claseCasoD.ZonaSeleccionada}" size="1">
+                                    <apex:selectOptions value="{!claseCasoD.listaZonas}" />
+                                    <apex:actionSupport event="onchange" action="{!claseCasoD.getListAgentsByZone}" reRender="idrepo" status="status" />
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Agencia *" />
+                                <apex:selectList value="{!claseCasoD.caso.Agencia__c}" size="1">
+                                    <apex:selectOptions value="{!claseCasoD.listAgencias}" />
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:pageBlockSectionItem rendered="{!claseCasoD.Caso.Origin = 'Agencias_Banco'}" >
+                                <apex:outputLabel value="Código de Barra *" />
+                                <apex:inputField styleclass="slds-input" value="{!claseCasoD.Caso.Codigo_barra__c}" />
+                            </apex:pageBlockSectionItem>
+                            
+                        </apex:pageBlockSection>
                         
-                        <apex:outputfield rendered="{!claseCasoD.idTipoRCaso !='Otros'}" value="{!claseCasoD.Caso.type}" />
-                        <apex:selectList rendered="{!claseCasoD.idTipoRCaso ='Otros'}" size="1" value="{!claseCasoD.Caso.type}">
-                            <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
-                            <apex:selectOption itemLabel="Reclamo" itemValue="Reclamo" />
-                            <apex:selectOption itemLabel="Solicitud de Gestión" itemValue="Solicitud" />
-                            <apex:actionSupport status="status" action="{!claseCasoD.cambiarTipo}" event="onchange" reRender="popNCaso" />
-                        </apex:selectList>  
-                        
-                        <apex:outputField value="{!claseCasoD.Caso.Status}"/> 
-                        <apex:outputField value="{!claseCasoD.Caso.Priority}" />
-                        <apex:inputField label="Código Empleado *" value="{!claseCasoD.Caso.Codigo_empleado__c}" OnKeyPress="return CampoNumeroRTN(event, this)" />
-                        <apex:inputField label="Nombre Empleado *" value="{!claseCasoD.Caso.Nombre_Empleado__c }" />
-                        <apex:inputField label="Correo Electronico *" value="{!claseCasoD.Caso.Correo_electronico_empleado__c}" />
-                        <apex:inputField label="Agencia *" value="{!claseCasoD.caso.Nombre_agencia__c }" rendered="{!claseCasoD.caso.Origin = 'Agencias_Banco'}" />
-                                                 
-                         <!--apex:outputField value="{!claseCasoD.Caso.Origin}"/>
-                         <apex:outputField value="{!claseCasoD.Caso.Usuario_referencia__c}"/-->                                                
-                    </apex:pageBlockSection>
-                    
-                    <!-- PASO 2 -->
-                    <apex:pageBlockSection columns="1" title="Paso 2" rendered="{!claseCasoD.paso2}">
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Cuentas"/>
-                            <apex:selectList value="{!claseCasoD.idCuenta}" size="1" disabled="{!!claseCasoD.cTipoCaso.constancias}">
-                                <apex:selectOptions value="{!claseCasoD.listCuentas}" />
-                            </apex:selectList>                       
-                        </apex:pageBlockSectionItem>
-                     </apex:pageBlockSection>
-                        
-                     <apex:pageBlockSection columns="2" rendered="{!claseCasoD.paso2}">
-                        <apex:outputField value="{!claseCasoD.Caso.Type}" />
-                        <apex:outputField value="{!claseCasoD.Caso.RecordTypeId}" />
-                        <apex:outputField value="{!claseCasoD.Caso.Priority}"/> 
-                        <apex:outputField value="{!claseCasoD.Caso.Status}"/>                         
-                        <apex:outputField value="{!claseCasoD.Caso.Origin}"/>  
-                        <apex:outputField value="{!claseCasoD.Caso.Usuario_referencia__c}"/>                                                                        
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" id="idrepo"  rendered="{!AND(claseCasoD.paso2, claseCasoD.cTipoCaso.reposicionCarnet)}">
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Zona *" />
-                            <apex:selectList value="{!claseCasoD.ZonaSeleccionada}" size="1">
-                                <apex:selectOptions value="{!claseCasoD.listaZonas}" />
-                                <apex:actionSupport event="onchange" action="{!claseCasoD.getListAgentsByZone}" reRender="idrepo" status="status" />
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.otros)}">
+                            
+                            <apex:selectList size="1" value="{!claseCasoD.caso.FPC_Asunto__c}" >
+                                <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
+                                <apex:selectOption itemLabel="Problemas Sitio Transaccional" itemValue="Problemas Sitio Transaccional" />
+                                <apex:selectOption itemLabel="Problemas en la Aplicación Móvil" itemValue="Problemas en la Aplicación Móvil" />
+                                <apex:selectOption itemLabel="Problemas Interbanca" itemValue="Problemas Interbanca" />
+                                <apex:selectOption itemLabel="Consulta Seguro Vida" itemValue="Consulta Seguro Vida" />
+                                <apex:selectOption itemLabel="No se Realizó Aporte" itemValue="No se Realizó Aporte" />
+                                <apex:selectOption itemLabel="Problemas Caja Banco" itemValue="Problemas Caja Banco" />
+                                <apex:selectOption rendered="{!claseCasoD.caso.origin != 'Agencias_Banco'}" itemLabel="Actualización Información" itemValue="Actualización Información" />
+                                <apex:selectOption rendered="{!claseCasoD.caso.origin = 'Agencias_Banco'}" itemLabel="Actualización Beneficiarios" itemValue="Actualización Información" />
+                                <apex:selectOption rendered="{!claseCasoD.caso.origin != 'Agencias_Banco'}" itemLabel="Modificación Aportes" itemValue="Modificación Aportes" />
+                                <apex:selectOption itemLabel="Estado Cuenta" itemValue="Estado Cuenta" /> 
+                                <apex:selectOption itemLabel="Constancia" itemValue="Constancia" />
+                                <apex:selectOption itemLabel="Reversiones" itemValue="Reversiones" />
+                                <apex:selectOption itemLabel="Varios Débitos" itemValue="Varios Débitos" />
+                                <apex:selectOption itemLabel="Consulta Proceso Retiro" itemValue="Consulta Proceso Retiro" />
+                                <apex:selectOption itemLabel="Consulta Préstamos" itemValue="Consulta Préstamos" />
+                                <apex:selectOption itemLabel="Consulta Cuenta" itemValue="Consulta Cuenta" />
+                                <apex:actionSupport action="{!ClaseCasoD.CambioAsunto}" event="onchange" status="status" reRender="popNCaso" />
                             </apex:selectList>
-                        </apex:pageBlockSectionItem>
+                            <apex:inputField style="witdh:100%;" value="{!claseCasoD.Caso.Description}"/>  
+                            <apex:outputField value="{!claseCasoD.Caso.Subject}" />  
+                        </apex:pageBlockSection>
                         
-                        <apex:pageBlockSectionItem >
-                            <apex:outputLabel value="Agencia *" />
-                            <apex:selectList value="{!claseCasoD.caso.Agencia__c}" size="1">
-                                <apex:selectOptions value="{!claseCasoD.listAgencias}" />
-                            </apex:selectList>
-                        </apex:pageBlockSectionItem>
-                        
-                        <apex:pageBlockSectionItem rendered="{!claseCasoD.Caso.Origin = 'Agencias_Banco'}" >
-                            <apex:outputLabel value="Código de Barra *" />
-                             <apex:inputField styleclass="slds-input" value="{!claseCasoD.Caso.Codigo_barra__c}" />
-                        </apex:pageBlockSectionItem>
-                        
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.otros)}">
-                        
-                        <apex:selectList size="1" value="{!claseCasoD.caso.FPC_Asunto__c}" >
-                            <apex:selectOption itemLabel="--Ninguno--" itemValue="" />
-                            <apex:selectOption itemLabel="Problemas Sitio Transaccional" itemValue="Problemas Sitio Transaccional" />
-                            <apex:selectOption itemLabel="Problemas en la Aplicación Móvil" itemValue="Problemas en la Aplicación Móvil" />
-                            <apex:selectOption itemLabel="Problemas Interbanca" itemValue="Problemas Interbanca" />
-                            <apex:selectOption itemLabel="Consulta Seguro Vida" itemValue="Consulta Seguro Vida" />
-                            <apex:selectOption itemLabel="No se Realizó Aporte" itemValue="No se Realizó Aporte" />
-                            <apex:selectOption itemLabel="Problemas Caja Banco" itemValue="Problemas Caja Banco" />
-                            <apex:selectOption rendered="{!claseCasoD.caso.origin != 'Agencias_Banco'}" itemLabel="Actualización Información" itemValue="Actualización Información" />
-                            <apex:selectOption rendered="{!claseCasoD.caso.origin = 'Agencias_Banco'}" itemLabel="Actualización Beneficiarios" itemValue="Actualización Información" />
-                            <apex:selectOption rendered="{!claseCasoD.caso.origin != 'Agencias_Banco'}" itemLabel="Modificación Aportes" itemValue="Modificación Aportes" />
-                            <apex:selectOption itemLabel="Estado Cuenta" itemValue="Estado Cuenta" /> 
-                            <apex:selectOption itemLabel="Constancia" itemValue="Constancia" />
-                            <apex:selectOption itemLabel="Reversiones" itemValue="Reversiones" />
-                            <apex:selectOption itemLabel="Varios Débitos" itemValue="Varios Débitos" />
-                            <apex:selectOption itemLabel="Consulta Proceso Retiro" itemValue="Consulta Proceso Retiro" />
-                            <apex:selectOption itemLabel="Consulta Préstamos" itemValue="Consulta Préstamos" />
-                            <apex:selectOption itemLabel="Consulta Cuenta" itemValue="Consulta Cuenta" />
-                            <apex:actionSupport action="{!ClaseCasoD.CambioAsunto}" event="onchange" status="status" reRender="popNCaso" />
-                            </apex:selectList>
-                        <apex:inputField style="witdh:100%;" value="{!claseCasoD.Caso.Description}"/>  
-                        <apex:outputField value="{!claseCasoD.Caso.Subject}" />  
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" id="blockAD" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.aumDisAporte)}">
+                        <apex:pageBlockSection title="Detalle" id="blockAD" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.aumDisAporte)}">
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="Tipo de operación" />
                                 <apex:actionRegion >
@@ -410,32 +410,32 @@
                                     </apex:inputField> 
                                 </apex:actionRegion>
                             </apex:pageBlockSectionItem>                                                                  
-                        
+                            
                             <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}" required="true" 
-                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2')}"/>
-                        
+                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2')}"/>
+                            
                             <apex:pageBlockSectionItem rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',true,false)}">
                                 <apex:outputLabel value="Nuevo canal de aporte" />
                                 <apex:actionRegion >
-                                <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" required="true">
-                                    <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia2}" reRender="blockAD"/>
-                                </apex:inputField>  
+                                    <apex:inputField value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" required="true">
+                                        <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia2}" reRender="blockAD"/>
+                                    </apex:inputField>  
                                 </apex:actionRegion>
                             </apex:pageBlockSectionItem>
                             
                             <apex:inputField label="# Cuenta bancaria / # Tarjeta" value="{!claseCasoD.detalleCaso.N_Cuenta_Bancaria__c}" 
-                                                required="true"
-                                                rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',
-                                                        claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                    AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
-                                                    OR(claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'AH', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA')))}"/>
+                                             required="true"
+                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',
+                                                       claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                       AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
+                                                       OR(claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'AH', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA')))}"/>
                             
                             <apex:inputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" required="true"
-                                            rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4',true,false)}"/>
+                                             rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4',true,false)}"/>
                             
                             <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                    AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
-                                                    claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">
+                                                                 AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
+                                                                 claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">
                                 <apex:outputLabel value="Fecha de vencimiento" />
                                 <apex:outputPanel >
                                     <apex:inputField value="{!claseCasoD.detalleCaso.Mes__c}" />
@@ -444,31 +444,23 @@
                             </apex:pageBlockSectionItem>
                             
                             <apex:inputField value="{!claseCasoD.detalleCaso.Frecuencia__c}" 
-                                            rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3')}"/>    
+                                             rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                       claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3')}"/>    
+                            
+                            <apex:inputField value="{!claseCasoD.detalleCaso.POS__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                                                                AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}" />
+                            
+                        </apex:pageBlockSection>
                         
-                        <apex:inputField value="{!claseCasoD.detalleCaso.POS__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                        AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}" />
-                                                            
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.estadoCuenta)}">
-                        <apex:outputField value="{!claseCasoD.Caso.Tipo_Estado_Cuenta__c}" /> 
-                        <apex:outputField value="{!claseCasoD.Caso.Estado_Cuenta_Detallado__c}" /> 
-                            <!--apex:pageBlockSectionItem >
-                                <apex:outputLabel value="Estado de cuenta detallado" />
-                                <apex:actionRegion >
-                                    <apex:inputField value="{!claseCasoD.Caso.Estado_Cuenta_Detallado__c}" required="true">
-                                        <apex:actionSupport event="onchange" action="{!claseCasoD.accionVacia2}" reRender="blockAD"/>
-                                    </apex:inputField> 
-                                </apex:actionRegion>
-                            </apex:pageBlockSectionItem-->
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.estadoCuenta)}">
+                            <apex:outputField value="{!claseCasoD.Caso.Tipo_Estado_Cuenta__c}" /> 
+                            <apex:outputField value="{!claseCasoD.Caso.Estado_Cuenta_Detallado__c}" /> 
                             
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_desde__c}" />
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_hasta__c}"/>   
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Datos críticos" columns="2" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Datos críticos" columns="2" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
                             <apex:inputField value="{!claseCasoD.Caso.Nombre_Cliente__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Segundo_nombre__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Apellidos__c}" />
@@ -478,9 +470,9 @@
                             <apex:inputField value="{!claseCasoD.Caso.Sexo__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_Nacimiento__c}" />
                             <apex:inputField value="{!claseCasoD.Caso.Correo_Electronico__c}" /> 
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Datos no críticos" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.actInformacion)}">
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Datos no críticos" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.actInformacion)}">
                             <apex:inputField value="{!claseCasoD.Caso.Lugar_Nacimiento__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Nacionalidad__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Estado_Civil__c}" />
@@ -499,15 +491,147 @@
                             <apex:inputField value="{!claseCasoD.Caso.Rango_salarial_Lps__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_Ingreso__c}" /> 
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_salida__c}" />   
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" id="blockCON" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.constancias)}">
-                           
-                        <apex:inputField value="{!claseCasoD.Caso.Constancia__c}">
-                            <apex:actionSupport event="onchange" status="status" action="{!claseCasoD.CambioConstancia}" reRender="blockCON,msjCaso"/>
-                        </apex:inputField>
-                                   
-                                         
+                        </apex:pageBlockSection>
+                        <apex:pageBlockSection title="Beneficiarios" id="beneficiarios" columns="1" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                            <apex:outputPanel style="width:100%;" rendered="{!claseCasoD.beneficiario.modificado}" >
+                                <table width="100%">
+                                    <tr>
+                                        <th style="width: 7.7%;">
+                                            <div title="Cuenta">Cuenta</div>
+                                        </th>
+                                        <th  style="width: 7.7%;">
+                                            <div title="Beneficiario">Beneficiario</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Primer Nombre">Primer N...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Segundo Nombre">Segundo N...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Primer Apellido">Primer A...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Segundo Apellido">Segundo A...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Porcentaje">Porcentaje</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Fecha Nacimiento">Fecha Nac...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Sexo">Sexo</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Tipo de Identificación">Tipo Ident...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Identificación">Identidad</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Parentesco">Parentesco</div>
+                                        </th>
+                                        <th style="width: 7.6%;">
+                                            <div  title=""></div>
+                                        </th>
+                                    </tr>
+                                    <apex:repeat value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                        <tr>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList value="{!benef.cuentaId}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listCuentasSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.tipoBeneficiario}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listTipoBeneficiariosSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.primerNombre}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.segundoNombre}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.primerApellido}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.segundoApellido}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.porcentaje}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:input type="date" style="width: 95%;" value="{!benef.fechanacimiento}"  >
+                                                    <apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiario}" event="onchange" >
+                                                        <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />
+                                                    </apex:actionSupport>
+                                                </apex:input>
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.sexo}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listSexoSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.tipoIdentificacion}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listIdentificacionSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.identificacion}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.parentesco}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listParentescoSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td  style="width: 7.6%;"> 
+                                                <apex:commandLink value="Eliminar" action="{!claseCasoD.eliminarBeneficiario}" status="status" reRender="idForm">
+                                                    <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />                                 
+                                                </apex:commandLink> 
+                                                <!--apex:outputText value="{!benef.grado}" /-->
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:pageBlockTable rendered="{!!claseCasoD.beneficiario.modificado}" value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                <apex:column headerValue="Cuenta" >
+                                    <apex:outputText value="{!benef.cuenta}" />
+                                </apex:column>
+                                <apex:column headerValue="Beneficiario" >
+                                    <apex:outputText value="{!benef.tipoBeneficiario}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Nombre" >
+                                    <apex:outputText value="{!benef.primerNombre}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Apellido" >
+                                    <apex:outputText value="{!benef.primerApellido}" />
+                                </apex:column>
+                                <apex:column headerValue="Procentaje" >
+                                    <apex:outputText value="{!benef.porcentaje}" />
+                                </apex:column>
+                                <apex:column headerValue="Identidad" >
+                                    <apex:outputText value="{!benef.identificacion}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockButtons location="bottom" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}" id="botonesBenef" >
+                            <apex:commandButton value="Actualizar" status="status" rendered="{!!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.desbloquearBeneficiario}" reRender="idForm"/>
+                            <apex:commandButton value="Cancelar" status="status" rendered="{!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.getBeneficiario}" reRender="idForm"/>
+                            <apex:commandButton value="Nuevo" status="status" rendered="{!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.agregarBeneficiario}" reRender="idForm"/>
+                        </apex:pageBlockButtons>
+                        
+                        <apex:pageBlockSection title="Detalle" id="blockCON" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.constancias)}">
+                            
+                            <apex:inputField value="{!claseCasoD.Caso.Constancia__c}">
+                                <apex:actionSupport event="onchange" status="status" action="{!claseCasoD.CambioConstancia}" reRender="blockCON,msjCaso"/>
+                            </apex:inputField>
+                            
+                            
                             <apex:inputField value="{!claseCasoD.Caso.Embajadas__c}" />  
                             <apex:inputField value="{!claseCasoD.Caso.CurrencyIsoCode}" />
                             
@@ -516,148 +640,148 @@
                                 <apex:commandButton value="Agregar cuenta" action="{!claseCasoD.agregarCuenta}" status="status" reRender="popNCaso,msjCaso"/>
                             </apex:pageBlockSectionItem>
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_desde__c}"  
-                                                    rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
-                                                    claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/> 
+                                             rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
+                                                       claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/> 
                             <apex:inputField value="{!claseCasoD.Caso.Fecha_hasta__c}" 
-                                                    rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
-                                                    claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/>
-                                                     
+                                             rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
+                                                       claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/>
+                            
                             <apex:inputField value="{!claseCasoD.Caso.Monto_compromiso_aporte__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>    
+                                             rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>    
                             <apex:inputField value="{!claseCasoD.Caso.Frecuencia__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>
-                                                    
+                                             rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>
+                            
                             <apex:inputField value="{!claseCasoD.Caso.Nombre_Usuario_Firmador__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}" />  
-                         <apex:inputField value="{!claseCasoD.Caso.Apellido_Usuario_Firmador__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}" />  
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockTable value="{!claseCasoD.cuentasCaso}" var="item" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.constancias)}">
-                        <apex:column headerValue="Cuenta">
-                            <apex:commandLink action="{!claseCasoD.eliminarCuenta}" >
-                                  Eliminar
-                                  <apex:param name="pDC1" value="{!item.Cuenta__c}" assignTo="{!claseCasoD.idDetalleEliminar}"/>     
-                              </apex:commandLink>
-                        </apex:column>
-                        <apex:column headerValue="Cuenta">
-                            <apex:OutputField value="{!item.Cuenta__c}"/>
-                        </apex:column>
-                        <apex:column headerValue="Aporte">
-                            <apex:commandLink action="{!claseCasoD.verAportes}" reRender="popAportes,popNCaso" status="status">
-                                 Ver
-                                 <apex:param name="pAporte" value="{!item.Cuenta__c}" assignTo="{!claseCasoD.idDetalleEliminar}"/>     
-                             </apex:commandLink>
-                        </apex:column>
-                        <apex:column headerValue="Monto">
-                            <apex:OutputText value="{!item.Nuevo_monto_aporte__c}"/>
-                        </apex:column>
-                        <apex:column headerValue="Fecha de realización">
-                            <apex:OutputField value="{!item.Fecha_aporte__c}"/>
-                        </apex:column> 
-                    </apex:pageBlockTable>  
-                           
-                </apex:pageBlock>
-            </apex:outputPanel>
-        </apex:outputPanel>   
-        
-        <!-- VER CASO -->
-        <apex:outputPanel id="popVCaso" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popVerCaso}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popVerCaso}">                           
-                <apex:pageBlock title="Caso # {!claseCasoD.Caso.CaseNumber}" >
-                    <apex:pageBlockButtons location="top">
+                                             rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}" />  
+                            <apex:inputField value="{!claseCasoD.Caso.Apellido_Usuario_Firmador__c}" 
+                                             rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}" />  
+                        </apex:pageBlockSection>
                         
-                        <apex:commandButton value="Cerrar Caso" status="status" rendered="{!AND(!claseCasoD.mostrarEnviarAprobacion, claseCasoD.caso.status='Nuevo', !claseCasoD.Ctipocaso.otros, OR(!claseCasoD.Ctipocaso.reposicionCarnet, AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco')))}" action="{!claseCasoD.cerrarCasoStatusCerrado}" reRender="popVCaso"/>
+                        <apex:pageBlockTable value="{!claseCasoD.cuentasCaso}" var="item" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.constancias)}">
+                            <apex:column headerValue="Cuenta">
+                                <apex:commandLink action="{!claseCasoD.eliminarCuenta}" >
+                                    Eliminar
+                                    <apex:param name="pDC1" value="{!item.Cuenta__c}" assignTo="{!claseCasoD.idDetalleEliminar}"/>     
+                                </apex:commandLink>
+                            </apex:column>
+                            <apex:column headerValue="Cuenta">
+                                <apex:OutputField value="{!item.Cuenta__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Aporte">
+                                <apex:commandLink action="{!claseCasoD.verAportes}" reRender="popAportes,popNCaso" status="status">
+                                    Ver
+                                    <apex:param name="pAporte" value="{!item.Cuenta__c}" assignTo="{!claseCasoD.idDetalleEliminar}"/>     
+                                </apex:commandLink>
+                            </apex:column>
+                            <apex:column headerValue="Monto">
+                                <apex:OutputText value="{!item.Nuevo_monto_aporte__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Fecha de realización">
+                                <apex:OutputField value="{!item.Fecha_aporte__c}"/>
+                            </apex:column> 
+                        </apex:pageBlockTable>  
                         
-                         <!--apex:commandButton value="Cerrar Caso" status="status" rendered="{!AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco')}" action="{!claseCasoD.cerrarCasoStatusCerrado}" reRender="popVCaso"/>
-                        -->
-                        <apex:commandButton value="Generar Constancia" status="status" action="{!claseCasoD.generarConstancia}" 
-                                            reRender="popConstancia" rendered="{!OR(AND(claseCasoD.cTipoCaso.constancias, claseCasoD.caso.Constancia__c !='A6'), AND(claseCasoD.cTipoCaso.constancias, claseCasoD.caso.Constancia__c ='A6', claseCasoD.caso.status='Cerrado'))}"/>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:outputPanel>   
+            
+            <!-- VER CASO -->
+            <apex:outputPanel id="popVCaso" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popVerCaso}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popVerCaso}">                           
+                    <apex:pageBlock title="Caso # {!claseCasoD.Caso.CaseNumber}" >
+                        <apex:pageBlockButtons location="top">
+                            
+                            <apex:commandButton value="Cerrar Caso" status="status" rendered="{!AND(!claseCasoD.mostrarEnviarAprobacion, claseCasoD.caso.status='Nuevo', !claseCasoD.Ctipocaso.otros, OR(!claseCasoD.Ctipocaso.reposicionCarnet, AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco')))}" action="{!claseCasoD.cerrarCasoStatusCerrado}" reRender="popVCaso"/>
+                            
+                            <!--apex:commandButton value="Cerrar Caso" status="status" rendered="{!AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco')}" action="{!claseCasoD.cerrarCasoStatusCerrado}" reRender="popVCaso"/>
+-->
+                            <apex:commandButton value="Generar Constancia" status="status" action="{!claseCasoD.generarConstancia}" 
+                                                reRender="popConstancia" rendered="{!OR(AND(claseCasoD.cTipoCaso.constancias, claseCasoD.caso.Constancia__c !='A6'), AND(claseCasoD.cTipoCaso.constancias, claseCasoD.caso.Constancia__c ='A6', claseCasoD.caso.status='Cerrado'))}"/>
+                            
+                            <apex:commandButton value="Generar EDC" rendered="{!AND(claseCasoD.cTipoCaso.estadoCuenta,esBanco)}" 
+                                                action="{!claseCasoD.generarED}" reRender="popEDC"/>
+                            
+                            <apex:commandButton value="Formulario para el cliente" rendered="{!AND(claseCasoD.mostrarFormulario,claseCasoD.caso.status='Nuevo' )}" 
+                                                action="{!claseCasoD.formularioCliente}" reRender="popFormularioCliente"/>
+                            
+                            <apex:commandButton value="Adjuntar archivos" action="{!claseCasoD.adjuntarArchivo}"
+                                                rendered="{!OR(AND(claseCasoD.mostrarFormulario, claseCasoD.caso.status='Nuevo'), 
+                                                          AND(claseCasoD.caso.status='Cerrado', claseCasoD.CtipoCaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco'),
+                                                          AND(claseCasoD.caso.status='Cerrado', claseCasoD.CtipoCaso.constancias, claseCasoD.caso.Constancia__C='A6', claseCasoD.caso.Origin = 'Agencias_Banco'))}"  reRender="popAdjuntar"  />
+                            <apex:commandButton value="Asignar Caso"  rendered="{!claseCasoD.caso.Mostrar_Asignar__c}"
+                                                action="{!claseCasoD.AsignacarCaso}" status="status" reRender="popVCaso"/>
+                            <apex:commandButton value="Enviar a Aprobación"  rendered="{!AND(claseCasoD.mostrarEnviarAprobacion,claseCasoD.caso.status='Nuevo')}"
+                                                action="{!claseCasoD.enviarParaAprobacion}" status="status" reRender="popVCaso"/>
+                            
+                            <apex:commandButton value="Salir" status="status" rendered="{!OR(claseCasoD.caso.status !='Nuevo', AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin != 'Agencias_Banco'), claseCasoD.mostrarSalir)}" action="{!claseCasoD.cerrarCaso}" reRender="popVCaso" />
+                            <!--apex:commandButton value="Salir" status="status" rendered="{!claseCasoD.mostrarSalir}" action="{!claseCasoD.cerrarCaso}" reRender="popVCaso" />
+-->
+                            
+                            <apex:commandButton value="VER PDF" action="{!claseCasoD.PDFCaso}" rendered="{!AND(claseCasoD.CtipoCaso.estadoCuenta, claseCasoD.caso.Origin = 'Agencias_Banco')}"  reRender="popFormularioCliente"  />
+                            
+                            
+                            <apex:commandButton value="Imprimir Carnet" action="{!claseCasoD.ImprimirCarnet}"
+                                                rendered="{!AND(claseCasoD.CtipoCaso.reposicionCarnet, claseCasoD.caso.status='Cerrado')}"  reRender="popFormularioCliente"  />
+                            
+                            
+                        </apex:pageBlockButtons>
+                        <apex:pageMessages />
+                        <apex:pageBlockSection columns="2">
+                            <apex:OUTputField value="{!claseCasoD.Caso.Type}" />
+                            <apex:OUTputField value="{!claseCasoD.Caso.RecordTypeId}" /> 
+                            <apex:OUTputField value="{!claseCasoD.Caso.Status}"/>                         
+                            <apex:OUTputField value="{!claseCasoD.Caso.Origin}" /> 
+                            <apex:OUTputField value="{!claseCasoD.Caso.Priority}"/>                                                
+                        </apex:pageBlockSection>
                         
-                        <apex:commandButton value="Generar EDC" rendered="{!AND(claseCasoD.cTipoCaso.estadoCuenta,esBanco)}" 
-                                            action="{!claseCasoD.generarED}" reRender="popEDC"/>
+                        <apex:pageBlockSection title="Detalle" columns="2" id="idrepo"  rendered="{!claseCasoD.cTipoCaso.reposicionCarnet}">
+                            <apex:outputField value="{!claseCasoD.caso.agencia__r.Zona__c}" title="Zona" />
+                            <apex:outputField title="Agencia" value="{!claseCasoD.caso.agencia__r.name}" /> 
+                            <apex:outputField rendered="{!claseCasoD.Caso.Origin = 'Agencias_Banco'}" styleclass="slds-input" value="{!claseCasoD.Caso.Codigo_barra__c}" />
+                            
+                        </apex:pageBlockSection>
                         
-                        <apex:commandButton value="Formulario para el cliente" rendered="{!AND(claseCasoD.mostrarFormulario,claseCasoD.caso.status='Nuevo' )}" 
-                                            action="{!claseCasoD.formularioCliente}" reRender="popFormularioCliente"/>
-                        
-                        <apex:commandButton value="Adjuntar archivos" action="{!claseCasoD.adjuntarArchivo}"
-                                            rendered="{!OR(AND(claseCasoD.mostrarFormulario, claseCasoD.caso.status='Nuevo'), 
-                                                      AND(claseCasoD.caso.status='Cerrado', claseCasoD.CtipoCaso.reposicionCarnet, claseCasoD.caso.Origin = 'Agencias_Banco'),
-                                                      AND(claseCasoD.caso.status='Cerrado', claseCasoD.CtipoCaso.constancias, claseCasoD.caso.Constancia__C='A6', claseCasoD.caso.Origin = 'Agencias_Banco'))}"  reRender="popAdjuntar"  />
-                        <apex:commandButton value="Asignar Caso"  rendered="{!claseCasoD.caso.Mostrar_Asignar__c}"
-                                            action="{!claseCasoD.AsignacarCaso}" status="status" reRender="popVCaso"/>
-                        <apex:commandButton value="Enviar a Aprobación"  rendered="{!AND(claseCasoD.mostrarEnviarAprobacion,claseCasoD.caso.status='Nuevo')}"
-                                            action="{!claseCasoD.enviarParaAprobacion}" status="status" reRender="popVCaso"/>
-                          
-                        <apex:commandButton value="Salir" status="status" rendered="{!OR(claseCasoD.caso.status !='Nuevo', AND(claseCasoD.Ctipocaso.reposicionCarnet, claseCasoD.caso.Origin != 'Agencias_Banco'), claseCasoD.mostrarSalir)}" action="{!claseCasoD.cerrarCaso}" reRender="popVCaso" />
-                        <!--apex:commandButton value="Salir" status="status" rendered="{!claseCasoD.mostrarSalir}" action="{!claseCasoD.cerrarCaso}" reRender="popVCaso" />
-                        -->
-                        
-                          <apex:commandButton value="VER PDF" action="{!claseCasoD.PDFCaso}" rendered="{!AND(claseCasoD.CtipoCaso.estadoCuenta, claseCasoD.caso.Origin = 'Agencias_Banco')}"  reRender="popFormularioCliente"  />
-                        
-                        
-                          <apex:commandButton value="Imprimir Carnet" action="{!claseCasoD.ImprimirCarnet}"
-                                            rendered="{!AND(claseCasoD.CtipoCaso.reposicionCarnet, claseCasoD.caso.status='Cerrado')}"  reRender="popFormularioCliente"  />
-                        
-                        
-                    </apex:pageBlockButtons>
-                    <apex:pageMessages />
-                     <apex:pageBlockSection columns="2">
-                        <apex:OUTputField value="{!claseCasoD.Caso.Type}" />
-                        <apex:OUTputField value="{!claseCasoD.Caso.RecordTypeId}" /> 
-                        <apex:OUTputField value="{!claseCasoD.Caso.Status}"/>                         
-                        <apex:OUTputField value="{!claseCasoD.Caso.Origin}" /> 
-                        <apex:OUTputField value="{!claseCasoD.Caso.Priority}"/>                                                
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" id="idrepo"  rendered="{!claseCasoD.cTipoCaso.reposicionCarnet}">
-                        <apex:outputField value="{!claseCasoD.caso.agencia__r.Zona__c}" title="Zona" />
-                        <apex:outputField title="Agencia" value="{!claseCasoD.caso.agencia__r.name}" /> 
-                        <apex:outputField rendered="{!claseCasoD.Caso.Origin = 'Agencias_Banco'}" styleclass="slds-input" value="{!claseCasoD.Caso.Codigo_barra__c}" />
-                        
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.otros}">
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.otros}">
                             <apex:OUTputField value="{!claseCasoD.Caso.Subject}" />                               
-                        <apex:OUTputField value="{!claseCasoD.Caso.Description}"/>  
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.aumDisAporte}">
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Cuenta__c}" />
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Tipo_Operacion__c}" />                                                                
+                            <apex:OUTputField value="{!claseCasoD.Caso.Description}"/>  
+                        </apex:pageBlockSection>
                         
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}"  
-                                        rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',
-                                                      claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2')}"/>
-                                        
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" 
-                                rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',true,false)}" />                     
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.aumDisAporte}">
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Cuenta__c}" />
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Tipo_Operacion__c}" />                                                                
+                            
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Nuevo_monto_aporte__c}"  
+                                              rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A1',
+                                                        claseCasoD.detalleCaso.Tipo_Operacion__c = 'A2')}"/>
+                            
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Nuevo_canal_aporte__c}" 
+                                              rendered="{!If(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3',true,false)}" />                     
+                            
+                            <apex:outputField value="{!claseCasoD.detalleCaso.N_Cuenta_Bancaria__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',
+                                                                                                               claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                                                                               AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
+                                                                                                               OR(claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'AH', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA')))}"/>
+                            
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" rendered="{!claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4'}"/>
+                            
+                            <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                                 AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
+                                                                 claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">
+                                <apex:outputLabel value="Fecha de vencimiento" />
+                                <apex:outputPanel >
+                                    <apex:outputField value="{!claseCasoD.detalleCaso.Mes__c}" />
+                                    <apex:outputField value="{!claseCasoD.detalleCaso.Ano_tarjeta__c}" />
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            
+                            <apex:outputField value="{!claseCasoD.detalleCaso.Frecuencia__c}" 
+                                              rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
+                                                        claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3')}"/>    
+                            
+                        </apex:pageBlockSection>
                         
-                        <apex:outputField value="{!claseCasoD.detalleCaso.N_Cuenta_Bancaria__c}" rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',
-                                                claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
-                                                OR(claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'AH', claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA')))}"/>
-                        
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Nueva_fecha_aporte__c}" rendered="{!claseCasoD.detalleCaso.Tipo_Operacion__c = 'A4'}"/>
-                        
-                        <apex:pageBlockSectionItem rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                                AND(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3', 
-                                                   claseCasoD.detalleCaso.Nuevo_canal_aporte__c = 'TA'))}">
-                            <apex:outputLabel value="Fecha de vencimiento" />
-                            <apex:outputPanel >
-                                <apex:outputField value="{!claseCasoD.detalleCaso.Mes__c}" />
-                                   <apex:outputField value="{!claseCasoD.detalleCaso.Ano_tarjeta__c}" />
-                               </apex:outputPanel>
-                        </apex:pageBlockSectionItem>
-                        
-                        <apex:outputField value="{!claseCasoD.detalleCaso.Frecuencia__c}" 
-                                        rendered="{!OR(claseCasoD.detalleCaso.Tipo_Operacion__c = 'A5',claseCasoD.detalleCaso.Tipo_Operacion__c = 'A6',
-                                            claseCasoD.detalleCaso.Tipo_Operacion__c = 'A3')}"/>    
-                                            
-                  </apex:pageBlockSection>
-                  
-                    <apex:pageBlockSection title="Datos críticos" columns="2" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                        <apex:pageBlockSection title="Datos críticos" columns="2" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
                             <apex:outputField value="{!claseCasoD.Caso.Nombre_Cliente__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Segundo_nombre__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Apellidos__c}" />
@@ -667,9 +791,9 @@
                             <apex:outputField value="{!claseCasoD.Caso.Sexo__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_Nacimiento__c}" />
                             <apex:outputField value="{!claseCasoD.Caso.Correo_Electronico__c}" /> 
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Datos No críticos" columns="2" rendered="{!claseCasoD.cTipoCaso.actInformacion}">
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Datos No críticos" columns="2" rendered="{!claseCasoD.cTipoCaso.actInformacion}">
                             <apex:outputField value="{!claseCasoD.Caso.Lugar_Nacimiento__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Nacionalidad__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Estado_Civil__c}" />
@@ -688,264 +812,307 @@
                             <apex:outputField value="{!claseCasoD.Caso.Rango_salarial_Lps__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_Ingreso__c}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_salida__c}" />   
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.estadoCuenta}">
+                        </apex:pageBlockSection>
+                         <apex:pageBlockSection title="Beneficiarios" columns="1" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                            <apex:pageBlockTable value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                <apex:column headerValue="Cuenta" >
+                                    <apex:outputText value="{!benef.cuenta}" />
+                                </apex:column>
+                                <apex:column headerValue="Beneficiario" >
+                                    <apex:outputText value="{!benef.tipoBeneficiario}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Nombre" >
+                                    <apex:outputText value="{!benef.primerNombre}" />
+                                </apex:column>
+                                <apex:column headerValue="Segundo Nombre" >
+                                    <apex:outputText value="{!benef.segundoNombre}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Apellido" >
+                                    <apex:outputText value="{!benef.primerApellido}" />
+                                </apex:column>
+                                 <apex:column headerValue="Segundo Apellido" >
+                                    <apex:outputText value="{!benef.segundoApellido}" />
+                                </apex:column>
+                                <apex:column headerValue="Procentaje" >
+                                    <apex:outputText value="{!benef.porcentaje}" />
+                                </apex:column>
+                                <apex:column headerValue="Fecha de Nacimiento" >
+                                    <apex:outputText value="{!benef.porcentaje}" />
+                                </apex:column>
+                                 <apex:column headerValue="Sexo" >
+                                    <apex:outputText value="{!benef.sexo}" />
+                                </apex:column>
+                                <apex:column headerValue="Tipo Identidad" >
+                                    <apex:outputText value="{!benef.tipoidentificacionLabel}" />
+                                </apex:column>
+                                <apex:column headerValue="Identidad" >
+                                    <apex:outputText value="{!benef.identificacion}" />
+                                </apex:column>
+                                 <apex:column headerValue="Parentesco" >
+                                    <apex:outputText value="{!benef.parentescoLabel}" />
+                                </apex:column>
+                                <apex:column headerValue="Grado" >
+                                    <apex:outputText value="{!benef.grado}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.estadoCuenta}">
                             <apex:outputField value="{!claseCasoD.Caso.Tipo_Estado_Cuenta__c}"/> 
                             <apex:outputField value="{!claseCasoD.Caso.Estado_Cuenta_Detallado__c}"/> 
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_desde__c}" />
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_hasta__c}"/>   
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.constancias}">
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.constancias}">
                             <apex:outputField value="{!claseCasoD.Caso.Constancia__c}" />
                             <apex:outputField value="{!claseCasoD.Caso.Embajadas__c}"/>     
                             <apex:outputField value="{!claseCasoD.Caso.CurrencyIsoCode}" /> 
                             <apex:outputField value="{!claseCasoD.Caso.Usuario_firmador__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}"/>    
+                                              rendered="{!claseCasoD.Caso.Constancia__c = 'A4'}"/>    
                             
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_desde__c}" 
-                                                    rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
-                                                    claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/> 
+                                              rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
+                                                        claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/> 
                             <apex:outputField value="{!claseCasoD.Caso.Fecha_hasta__c}" 
-                                                    rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
-                                                    claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/>
-                                                     
+                                              rendered="{!AND(claseCasoD.Caso.Constancia__c != 'A4', 
+                                                        claseCasoD.Caso.Constancia__c != 'Saldo', claseCasoD.Caso.Constancia__c != 'A5')}"/>
+                            
                             <apex:outputField value="{!claseCasoD.Caso.Monto_compromiso_aporte__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>    
+                                              rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>    
                             <apex:outputField value="{!claseCasoD.Caso.Frecuencia__c}" 
-                                                    rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>                                            
-                    </apex:pageBlockSection>
-                    
-                    <apex:pageBlockTable value="{!claseCasoD.cuentasCaso}" var="item" rendered="{!claseCasoD.cTipoCaso.constancias}">
-                        <apex:column headerValue="Cuenta">
-                            <apex:OutputField value="{!item.Cuenta__c}"/>
-                        </apex:column>
-                        <apex:column headerValue="Monto">
-                            <apex:OutputField value="{!item.Nuevo_monto_aporte__c}"/>
-                        </apex:column>
-                        <apex:column headerValue="Fecha de realización">
-                            <apex:OutputField value="{!item.Fecha_aporte__c}"/>
-                        </apex:column> 
-                    </apex:pageBlockTable>  
-                    
-                </apex:pageBlock>
+                                              rendered="{!claseCasoD.Caso.Constancia__c = 'A6'}"/>                                            
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockTable value="{!claseCasoD.cuentasCaso}" var="item" rendered="{!claseCasoD.cTipoCaso.constancias}">
+                            <apex:column headerValue="Cuenta">
+                                <apex:OutputField value="{!item.Cuenta__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Monto">
+                                <apex:OutputField value="{!item.Nuevo_monto_aporte__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Fecha de realización">
+                                <apex:OutputField value="{!item.Fecha_aporte__c}"/>
+                            </apex:column> 
+                        </apex:pageBlockTable>  
+                        
+                    </apex:pageBlock>
+                </apex:outputPanel>
             </apex:outputPanel>
-        </apex:outputPanel>
-        
-        <apex:outputPanel id="popAdjuntar" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popAdjuntar}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popAdjuntar}">                           
-                <apex:pageBlock title="Adjuntar archivos" >
-                    <apex:pageBlockButtons location="top">
-                        <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popAdjuntar,popFormularioCliente"/>
-                     </apex:pageBlockButtons>
-                    <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="200"/>
-                </apex:pageBlock>
-            </apex:outputPanel>
-        </apex:outputPanel>   
-        
-        <apex:outputPanel id="popFormularioCliente" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popFormulario}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popFormulario}"> 
-                <apex:pageBlock >
-                    <apex:pageBlockButtons location="top">
-                        <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popFormularioCliente"/>
-                     </apex:pageBlockButtons>                      
-                    <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="700"/>
+            
+            <apex:outputPanel id="popAdjuntar" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popAdjuntar}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popAdjuntar}">                           
+                    <apex:pageBlock title="Adjuntar archivos" >
+                        <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popAdjuntar,popFormularioCliente"/>
+                        </apex:pageBlockButtons>
+                        <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="200"/>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:outputPanel>   
+            
+            <apex:outputPanel id="popFormularioCliente" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popFormulario}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popFormulario}"> 
+                    <apex:pageBlock >
+                        <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popFormularioCliente"/>
+                        </apex:pageBlockButtons>                      
+                        <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="700"/>
                         <!--iframe id="contenido" src="/Apex/vfFormularioPDFSite?Id=50054000003kbUOAAY" scrolling="false" style="border:none;" width="100%" height="700"/-->
-                </apex:pageBlock>
+                    </apex:pageBlock>
+                </apex:outputPanel>
             </apex:outputPanel>
-        </apex:outputPanel>
-        
-        <apex:outputPanel id="popConstancia" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popConstancia}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popConstancia}"> 
-                <apex:pageBlock >
-                    <apex:pageBlockButtons location="top">
-                        <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popConstancia"/>
-                     </apex:pageBlockButtons>                          
-                    <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="700"/>
-                </apex:pageBlock>
+            
+            <apex:outputPanel id="popConstancia" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popConstancia}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popConstancia}"> 
+                    <apex:pageBlock >
+                        <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Cerrar" status="status" action="{!claseCasoD.cerrar}" reRender="popConstancia"/>
+                        </apex:pageBlockButtons>                          
+                        <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="700"/>
+                    </apex:pageBlock>
+                </apex:outputPanel>
             </apex:outputPanel>
-        </apex:outputPanel>
-        
-          <apex:outputPanel id="popEDC" > 
+            
+            <apex:outputPanel id="popEDC" > 
                 <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popEDC}"/>          
                 <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popEDC}"> 
                     <apex:pageBlock >
                         <apex:pageBlockButtons location="top">
                             <apex:commandButton value="Cerrar" action="{!claseCasoD.cerrar}" reRender="popEDC"/>
-                         </apex:pageBlockButtons>                          
+                        </apex:pageBlockButtons>                          
                         <iframe id="contenido" src="/leadfpcsecure{!claseCasoD.urlFormulario}" scrolling="false" style="border:none;" width="100%" height="700"/>
                     </apex:pageBlock>
                 </apex:outputPanel>
             </apex:outputPanel>
-      
-        <apex:outputPanel id="popAportes" > 
-            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popAporte}"/>          
-            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popAporte}">                           
-                <apex:pageBlock title="Aportes" >
+            
+            <apex:outputPanel id="popAportes" > 
+                <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!claseCasoD.popAporte}"/>          
+                <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!claseCasoD.popAporte}">                           
+                    <apex:pageBlock title="Aportes" >
                         <apex:pageBlockButtons location="top">
                             <apex:commandButton value="Cerrar" action="{!claseCasoD.cerrar}" reRender="popAportes,popNCaso"/>
-                     </apex:pageBlockButtons>
+                        </apex:pageBlockButtons>
                         <apex:pageBlockTable value="{!claseCasoD.listAportes}" var="item">
-                        <apex:column headerValue="Monto">
-                            <apex:commandLink action="{!claseCasoD.selecAporte}" reRender="popAportes,popNCaso">
-                                <apex:OutputText value="{!item.monto}"/>   
-                                 <apex:param name="SctAporte" value="{!item.indice}" assignTo="{!claseCasoD.cuentasCaso[0].Nuevo_monto_aporte__c}"/>                                       
-                            </apex:commandLink> 
-                           </apex:column>
-                           <apex:column headerValue="Fecha de realización">
+                            <apex:column headerValue="Monto">
+                                <apex:commandLink action="{!claseCasoD.selecAporte}" reRender="popAportes,popNCaso">
+                                    <apex:OutputText value="{!item.monto}"/>   
+                                    <apex:param name="SctAporte" value="{!item.indice}" assignTo="{!claseCasoD.cuentasCaso[0].Nuevo_monto_aporte__c}"/>                                       
+                                </apex:commandLink> 
+                            </apex:column>
+                            <apex:column headerValue="Fecha de realización">
                                 <apex:OutputText value="{!item.fechaAporte}"/>                           
-                        </apex:column>                                                                                 
-                    </apex:pageBlockTable> 
-                </apex:pageBlock>
-            </apex:outputPanel>
-        </apex:outputPanel>   
-                
-      </apex:form>
-      
+                            </apex:column>                                                                                 
+                        </apex:pageBlockTable> 
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:outputPanel>   
+            
+        </apex:form>
+        
         <apex:outputPanel id="lista" >
-          <apex:detail subject="{!cliente}" relatedList="false" title="false" />    
-          <apex:form >
-              <apex:pageBlock rendered="{!registrar}"> 
-                  <apex:pageBlockSection title="Casos" columns="1" rendered="{!!esBanco}"> 
-                      <apex:pageBlockSectionItem >
-                          <apex:inputText id="numCaso" value="{!nCasoBuscar}"/>
-
-                          <apex:outputPanel >
-                              <apex:commandButton value="Buscar" action="{!buscarCasos}" reRender="tablaCasos"/>
-                              <apex:commandButton value="Nuevo caso" status="status" action="{!nuevoCaso}" reRender="popNCaso"/>
-                          </apex:outputPanel>
-                      </apex:pageBlockSectionItem>
-                      
-                      <apex:pageBlockTable value="{!listCasos}" var="item" id="tablaCasos" >                           
-                          <apex:column headerValue="Número de gestión">
-                            <apex:commandLink action="{!verCaso}" reRender="popVCaso">
-                                <apex:outputField value="{!item.CaseNumber}" />
-                                <apex:param name="idDelCaso" value="{!item.id}" assignTo="{!idCaso}"/>                                       
-                             </apex:commandLink> 
-                          </apex:column>
-                          <apex:column headerValue="Estado">
-                              <apex:outputField value="{!item.Status}" />
-                          </apex:column>
-                          <apex:column headerValue="Fecha de creación">
-                              <apex:outputField value="{!item.CreatedDate}" />
-                          </apex:column>
-                          <apex:column headerValue="Tipo de gestión">
-                              <apex:outputField value="{!item.RecordTypeID}" />
-                          </apex:column>
-                      </apex:pageBlockTable>
-                  </apex:pageBlockSection> 
-                  
-                  <apex:pageBlockSection title="Actividades" columns="1">                
-                      <apex:pageBlockTable value="{!tareas}" var="a" id="tablaTareas" >                           
-                          <apex:column headerValue="Asignada a:">
-                              <apex:outputField value="{!a.ownerId}" />
-                          </apex:column>
-                          <apex:column headerValue="Asunto">
-                              <apex:outputField value="{!a.subject}" />
-                          </apex:column>
-                          <apex:column headerValue="Nombre">
-                              <apex:outputField value="{!a.whatId}" />
-                          </apex:column>
-                          <apex:column headerValue="Fecha de vencimiento">
-                              <apex:outputField value="{!a.ActivityDate}" />
-                          </apex:column>
-                          <apex:column headerValue="Estado">
-                              <apex:outputField value="{!a.Status}" />
-                          </apex:column>
-                          <apex:column headerValue="Descripción">
-                              <apex:outputField value="{!a.Description}" />
-                          </apex:column>
-                      </apex:pageBlockTable>
-                  </apex:pageBlockSection> 
-                  <!--apex:pageBlockTable value="{!actividades}" var="a" id="tabla" >                           
-                      <apex:column headerValue="Asunto">
-                          <apex:outputField value="{!a.subject}" />
-                      </apex:column>
-                      <apex:column headerValue="Nombre">
-                          <apex:outputField value="{!a.WhoId}" />
-                      </apex:column>
-                      <apex:column headerValue="Fecha de vencimiento">
-                          <apex:outputField value="{!a.ActivityDate}" />
-                      </apex:column>
-                      <apex:column headerValue="Estado">
-                          <apex:outputField value="{!a.Status}" />
-                      </apex:column>
-                      <apex:column headerValue="Descripción">
-                          <apex:outputField value="{!a.Description}" />
-                      </apex:column>
-                  </apex:pageBlockTable -->
-              </apex:pageBlock> 
-          </apex:form> 
-      </apex:outputPanel>
-      
+            <apex:detail subject="{!cliente}" relatedList="false" title="false" />    
+            <apex:form >
+                <apex:pageBlock rendered="{!registrar}"> 
+                    <apex:pageBlockSection title="Casos" columns="1" rendered="{!!esBanco}"> 
+                        <apex:pageBlockSectionItem >
+                            <apex:inputText id="numCaso" value="{!nCasoBuscar}"/>
+                            
+                            <apex:outputPanel >
+                                <apex:commandButton value="Buscar" action="{!buscarCasos}" reRender="tablaCasos"/>
+                                <apex:commandButton value="Nuevo caso" status="status" action="{!nuevoCaso}" reRender="popNCaso"/>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockTable value="{!listCasos}" var="item" id="tablaCasos" >                           
+                            <apex:column headerValue="Número de gestión">
+                                <apex:commandLink action="{!verCaso}" reRender="popVCaso">
+                                    <apex:outputField value="{!item.CaseNumber}" />
+                                    <apex:param name="idDelCaso" value="{!item.id}" assignTo="{!idCaso}"/>                                       
+                                </apex:commandLink> 
+                            </apex:column>
+                            <apex:column headerValue="Estado">
+                                <apex:outputField value="{!item.Status}" />
+                            </apex:column>
+                            <apex:column headerValue="Fecha de creación">
+                                <apex:outputField value="{!item.CreatedDate}" />
+                            </apex:column>
+                            <apex:column headerValue="Tipo de gestión">
+                                <apex:outputField value="{!item.RecordTypeID}" />
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection> 
+                    
+                    <apex:pageBlockSection title="Actividades" columns="1">                
+                        <apex:pageBlockTable value="{!tareas}" var="a" id="tablaTareas" >                           
+                            <apex:column headerValue="Asignada a:">
+                                <apex:outputField value="{!a.ownerId}" />
+                            </apex:column>
+                            <apex:column headerValue="Asunto">
+                                <apex:outputField value="{!a.subject}" />
+                            </apex:column>
+                            <apex:column headerValue="Nombre">
+                                <apex:outputField value="{!a.whatId}" />
+                            </apex:column>
+                            <apex:column headerValue="Fecha de vencimiento">
+                                <apex:outputField value="{!a.ActivityDate}" />
+                            </apex:column>
+                            <apex:column headerValue="Estado">
+                                <apex:outputField value="{!a.Status}" />
+                            </apex:column>
+                            <apex:column headerValue="Descripción">
+                                <apex:outputField value="{!a.Description}" />
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection> 
+                    <!--apex:pageBlockTable value="{!actividades}" var="a" id="tabla" >                           
+<apex:column headerValue="Asunto">
+<apex:outputField value="{!a.subject}" />
+</apex:column>
+<apex:column headerValue="Nombre">
+<apex:outputField value="{!a.WhoId}" />
+</apex:column>
+<apex:column headerValue="Fecha de vencimiento">
+<apex:outputField value="{!a.ActivityDate}" />
+</apex:column>
+<apex:column headerValue="Estado">
+<apex:outputField value="{!a.Status}" />
+</apex:column>
+<apex:column headerValue="Descripción">
+<apex:outputField value="{!a.Description}" />
+</apex:column>
+</apex:pageBlockTable -->
+                </apex:pageBlock> 
+            </apex:form> 
+        </apex:outputPanel>
+        
         <apex:outputPanel id="docs"  >
-          <apex:pageBlock title="Documentos" rendered="{!verDoc}">
-              <apex:form >
-              <apex:pageBlockTable value="{!documentos}" var="a"  >                           
-                  <apex:column >
-                      <apex:commandLink value="{!a.name}" reRender="frme">
-                          <apex:param name="dct" value="{!a.id}" assignTo="{!idDoc}"/>
-                      </apex:commandLink>
-                  </apex:column>
-                  <apex:column value="{!a.Type}" />
-                  <apex:column value="{!a.Description}" />              
-              </apex:pageBlockTable>
-              </apex:form>
-          </apex:pageBlock>
-          <apex:outputPanel id="frme" rendered="{!verDoc}" >
-              <iFrame id="ext-comp-1017" name="ext-comp-1017" frameborder="0" src="/servlet/servlet.FileDownload?file={!idDoc}" class=" x-border-panel" style="left: 0px; top: 0px; width: 100%; height: 500px;"></iFrame> 
-          </apex:outputPanel>    
-      </apex:outputPanel>
-      
-      <apex:outputPanel id="listaCAD" >
-          <apex:detail subject="{!candidato}" relatedList="false" title="false" />    
-          <apex:form >
-              <apex:pageBlock rendered="{!registrar2}">            
+            <apex:pageBlock title="Documentos" rendered="{!verDoc}">
+                <apex:form >
+                    <apex:pageBlockTable value="{!documentos}" var="a"  >                           
+                        <apex:column >
+                            <apex:commandLink value="{!a.name}" reRender="frme">
+                                <apex:param name="dct" value="{!a.id}" assignTo="{!idDoc}"/>
+                            </apex:commandLink>
+                        </apex:column>
+                        <apex:column value="{!a.Type}" />
+                        <apex:column value="{!a.Description}" />              
+                    </apex:pageBlockTable>
+                </apex:form>
+            </apex:pageBlock>
+            <apex:outputPanel id="frme" rendered="{!verDoc}" >
+                <iFrame id="ext-comp-1017" name="ext-comp-1017" frameborder="0" src="/servlet/servlet.FileDownload?file={!idDoc}" class=" x-border-panel" style="left: 0px; top: 0px; width: 100%; height: 500px;"></iFrame> 
+            </apex:outputPanel>    
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="listaCAD" >
+            <apex:detail subject="{!candidato}" relatedList="false" title="false" />    
+            <apex:form >
+                <apex:pageBlock rendered="{!registrar2}">            
                     <apex:pageBlockTable value="{!tareas}" var="a" id="tablaTareasCAD" >    
                         <apex:column headerValue="Asignada a:">
-                          <apex:outputField value="{!a.ownerId}" />
-                      </apex:column>                       
-                      <apex:column headerValue="Asunto">
-                          <apex:outputField value="{!a.subject}" />
-                      </apex:column>
-                      <apex:column headerValue="Nombre">
-                          <apex:outputField value="{!a.WhoId}" />
-                      </apex:column>
-                      <apex:column headerValue="Fecha de vencimiento">
-                          <apex:outputField value="{!a.ActivityDate}" />
-                      </apex:column>
-                      <apex:column headerValue="Estado">
-                          <apex:outputField value="{!a.Status}" />
-                      </apex:column>
-                      <apex:column headerValue="Descripción">
-                          <apex:outputField value="{!a.Description}" />
-                      </apex:column>
-                  </apex:pageBlockTable>
-                        
-                  <!-- <apex:pageBlockTable value="{!actividades}" var="a" id="tablaCAD" >                           
-                      <apex:column headerValue="Asunto">
-                          <apex:outputField value="{!a.subject}" />
-                      </apex:column>
-                      <apex:column headerValue="Nombre">
-                          <apex:outputField value="{!a.WhoId}" />
-                      </apex:column>
-                      <apex:column headerValue="Fecha de vencimiento">
-                          <apex:outputField value="{!a.ActivityDate}" />
-                      </apex:column>
-                      <apex:column headerValue="Estado">
-                          <apex:outputField value="{!a.Status}" />
-                      </apex:column>
-                      <apex:column headerValue="Descripción">
-                          <apex:outputField value="{!a.Description}" />
-                      </apex:column>
-                  </apex:pageBlockTable> -->
-              </apex:pageBlock> 
-          </apex:form> 
-      </apex:outputPanel>
+                            <apex:outputField value="{!a.ownerId}" />
+                        </apex:column>                       
+                        <apex:column headerValue="Asunto">
+                            <apex:outputField value="{!a.subject}" />
+                        </apex:column>
+                        <apex:column headerValue="Nombre">
+                            <apex:outputField value="{!a.WhoId}" />
+                        </apex:column>
+                        <apex:column headerValue="Fecha de vencimiento">
+                            <apex:outputField value="{!a.ActivityDate}" />
+                        </apex:column>
+                        <apex:column headerValue="Estado">
+                            <apex:outputField value="{!a.Status}" />
+                        </apex:column>
+                        <apex:column headerValue="Descripción">
+                            <apex:outputField value="{!a.Description}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    
+                    <!-- <apex:pageBlockTable value="{!actividades}" var="a" id="tablaCAD" >                           
+<apex:column headerValue="Asunto">
+<apex:outputField value="{!a.subject}" />
+</apex:column>
+<apex:column headerValue="Nombre">
+<apex:outputField value="{!a.WhoId}" />
+</apex:column>
+<apex:column headerValue="Fecha de vencimiento">
+<apex:outputField value="{!a.ActivityDate}" />
+</apex:column>
+<apex:column headerValue="Estado">
+<apex:outputField value="{!a.Status}" />
+</apex:column>
+<apex:column headerValue="Descripción">
+<apex:outputField value="{!a.Description}" />
+</apex:column>
+</apex:pageBlockTable> -->
+                </apex:pageBlock> 
+            </apex:form> 
+        </apex:outputPanel>
         <script>
         function CampoNumero(e, field) {
             key = e.keyCode ? e.keyCode : e.which

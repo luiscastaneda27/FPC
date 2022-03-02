@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Correo Proyección</label>
+    <protected>false</protected>
+    <values>
+        <field>Cuerpo__c</field>
+        <value xsi:type="xsd:string">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+   &lt;head&gt;
+      &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+      &lt;title&gt;simple&lt;/title&gt;
+      &lt;meta  name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, maximum-scale=1.0,&quot; /&gt;
+      &lt;link href=&apos;https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,700,600italic,700italic,800,800italic&apos; rel=&apos;stylesheet&apos; type=&apos;text/css&apos; /&gt;
+     &lt;body&gt;
+      &lt;!-- OUR PRICING STARTS --&gt;
+      &lt;table align=&quot;center&quot; bgcolor=&quot;#555555&quot; border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;100%&quot;&gt;
+         &lt;tr&gt;
+            &lt;td align=&quot;center&quot;&gt;
+               &lt;table align=&quot;center&quot; bgcolor=&quot;#ffffff&quot; border=&quot;0&quot; class=&quot;display-width&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;700&quot;&gt;
+                  &lt;tr&gt;
+                     &lt;td align=&quot;center&quot;&gt;
+                        &lt;table align=&quot;center&quot; border=&quot;0&quot; class=&quot;display-width&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;650&quot;&gt;
+                           &lt;tr&gt;
+                              &lt;td&gt;&lt;img style=&quot;width: 700px; height: 175px;&quot; src=&quot;https://fpcloudcod-fpc.cs34.force.com/portalautogestion/resource/1646095445000/EncabezadoCorreoProyecciones?&quot; /&gt;&lt;/td&gt;
+                           &lt;/tr&gt;
+                           &lt;tr&gt;
+                              &lt;td  style=&quot;padding:10px 50px; color: #0f4f9e; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:16px; padding: 70px 70px 0 70px; background-image: url(https://ficohsa--fpc--c.cs18.content.force.com/servlet/servlet.ImageServer?id=01511000000m8Lr&amp;oid=00D1100000C1oP1&amp;lastMod=1499988486000)&quot;&gt;
+                                 &lt;p style=&quot;text-align: justify;&quot; &gt;                     &lt;b&gt; Estimado(a) [getName],&lt;/b&gt; &lt;br/&gt;&lt;br/&gt;
+		                                 	En nombre de Ficohsa Pensiones y Cesantías, le enviamos un saludo cordial.&lt;br/&gt;&lt;br/&gt;  
+		                                 	                     Nos complace compartir con usted la proyección de un Fondo de Pensión, esperando sea de utilidad para su planificación financiera.  Le reiteramos que Ficohsa Pensiones y Cesantías garantiza que las inversiones que realiza, ofrecen seguridad y rentabilidad a sus afiliados.&lt;br/&gt;&lt;br/&gt;
+		                                 	                     Nos dará mucho gusto contestar sus consultas y ampliar la información proporcionada.&lt;br/&gt;&lt;br/&gt;
+		                                 	                     Atentamente,&lt;br/&gt;
+		                                 	                     &lt;b&gt;[getNombreAsesor]&lt;/b&gt;&lt;br/&gt;
+		                                 	                     [getEmail]&lt;br/&gt;
+		                                 	                     [getTelefonoOficina]&lt;br/&gt;
+		                                 	                     [getTelefonoCelular]&lt;br/&gt;
+
+                              &lt;/td&gt;
+                           &lt;/tr&gt;
+                           &lt;tr&gt;
+                              &lt;td&gt;&lt;img style=&quot;width: 700px; height: 125px; margin-top: 70px;&quot; src=&quot;https://fpcloudcod-fpc.cs34.force.com/portalautogestion/resource/1646095484000/FooterCorreoProyecciones?&quot; /&gt;&lt;/td&gt;
+                           &lt;/tr&gt;
+                        &lt;/table&gt;
+                     &lt;/td&gt;
+                  &lt;/tr&gt;
+               &lt;/table&gt;
+            &lt;/td&gt;
+         &lt;/tr&gt;
+      &lt;/table&gt;
+      &lt;!-- OUR PRICING ENDS --&gt;
+   &lt;/body&gt;
+&lt;/html&gt;</value>
+    </values>
+</CustomMetadata>

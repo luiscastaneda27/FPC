@@ -80,13 +80,16 @@ public class ControladorGraficoProyecciones {
             efa.setBody(b);
             listArchivos.add(efa);
         } 
-        String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = \'correoGeneral\'';
+        String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = \'CorreoProyeccion\'';
 	    Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
-        
+        User usuario = [Select Name, Email, Phone, MobilePhone  from User where Id = :UserInfo.getUserId()];
         String cuerpo = cuerpoCorreo.Cuerpo__c;
-        cuerpo = cuerpo.replace('[getAsunto]','Te adjuntamos proyecciones de Ficohsa Pensiones y cesatías');
         cuerpo = cuerpo.replace('[getName]', proy.Cliente__r.Name != null ? proy.Cliente__r.Name : proy.Prospecto__r.Name);
-        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];  
+        cuerpo = cuerpo.replace('[getNombreAsesor]', usuario.Name);
+        cuerpo = cuerpo.replace('[getEmail]', usuario.Email);
+        cuerpo = cuerpo.replace('[getTelefonoOficina]', usuario.Phone);
+         cuerpo = cuerpo.replace('[getTelefonoCelular]', usuario.MobilePhone);
+        //OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];  
 			
         
         List<Messaging.SingleEmailMessage> MessageList = new List<Messaging.SingleEmailMessage>();

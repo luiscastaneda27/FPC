@@ -108,7 +108,7 @@ public class controllerConstanciaPdf{
             queryRelated += camposDetalle;
             //camposDetalle = camposDetalle.replace(',Nuevo_Subproducto__r.name', '');
             queryRelated +=',Nuevo_Subproducto__r.name,cuenta__r.Subproducto__r.name,es_refinanciamiento__C ,Nueva_Cuenta_colectiva2__r.cuenta_colectiva2__r.codigo__C, Nuevo_Subproducto__r.producto__r.name';
-            queryRelated += ', Cuenta__r.Codigo__c,toLabel(Caso__r.Constancia__c),Porcentaje__c,Parentesco__c,Fecha_nacimiento__c';
+            queryRelated += ', Cuenta__r.Codigo__c,toLabel(Caso__r.Constancia__c),Porcentaje__c,Parentesco__c,Fecha_nacimiento__c,TipoBeneficiario__c,Sexo__c';
             queryRelated += ',Primer_Nombre__c,Total_saldo_patronal__C,Monto_a_Pignorar__c,Monto_Prestamo__c,Total_saldo_personal__C,monto_pignorado__C,Segundo_Nombre__c,caso__r.fecha_hasta__C,Primer_Apellido__c,Segundo_Apellido__c,Identificacion__c, Monto_bruto_retirar__c, cuenta__r.Cuenta_colectiva2__C';
             queryRelated += ' From Detalle_caso__c';
             queryRelated += ' Where Caso__c = \'' + casoTratar.Id + '\'';
@@ -755,7 +755,7 @@ public class controllerConstanciaPdf{
             html = html.replace('[getColoTrabajo]', revisarVacioNulo(Casotratar.Colonia_Avenida_Trabajo__r.Name));
         }
         
-        if(html.contains('[getBeneficiarios]') || test.isRunningTest()){
+        if(html.contains('[getBeneficiariosDirectos]') || test.isRunningTest()){
             String tabla = '<table align="center" border="1" cellpadding="0" cellspacing="0" style="width:100%">';
             tabla += '<tbody> <tr>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Cuenta</strong></span></span></td>';
@@ -763,27 +763,37 @@ public class controllerConstanciaPdf{
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Nº de Identidad</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Fecha de nacimiento</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Parentesco</strong></span></span></td>';
+            tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Parentesco</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>%</strong></span></span></td>';
             tabla += '</tr>';
+            String tablaConti = tabla;
             
             For(Detalle_Caso__c item : detallesCaso){
-                tabla += '<tr> ';
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + item.Cuenta__r.Codigo__c + '</span></td>';
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + item.Primer_Nombre__c + ' ' + item.Segundo_Nombre__c + ' ' + item.Primer_Apellido__c + ' ' + item.Segundo_Apellido__c +'</span></td>';      
+                String itemBenef = '<tr> ';
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Cuenta__r.Codigo__c + '</span></td>';
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Primer_Nombre__c + ' ' + item.Segundo_Nombre__c + ' ' + item.Primer_Apellido__c + ' ' + item.Segundo_Apellido__c +'</span></td>';      
                 string Iden = item.Identificacion__c != null ? item.Identificacion__c : ''; 
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + Iden + '</span></td>'; 
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + Iden + '</span></td>'; 
                 String fechaN = '';
                 if(item.Fecha_nacimiento__c != null){
                     fechaN = item.Fecha_nacimiento__c.day()+'-'+item.Fecha_nacimiento__c.month()+'-'+item.Fecha_nacimiento__c.year();   
                 }
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + fechaN + '</span></td>'; 
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + fechaN + '</span></td>'; 
                 string paren = item.Parentesco__c != null ? item.Parentesco__c : ''; 
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + paren + '</span></td>';      
-                tabla += '<td style="text-align:center"><span style="font-size:10px">' + item.Porcentaje__c + '</span></td>';               
-                tabla += '</tr>';
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + paren + '</span></td>';
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Sexo__c + '</span></td>';
+                itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Porcentaje__c + '</span></td>';               
+                itemBenef += '</tr>';
+                if(item.TipoBeneficiario__c == 'Directo'){
+                    tabla += itemBenef;
+                }else if(item.TipoBeneficiario__c == 'Contingencia'){
+                    tablaConti += itemBenef;
+                }
             }
             tabla += '</tbody> </table>';
-            html = html.replace('[getBeneficiarios]', tabla);
+            tablaConti += '</tbody> </table>';
+            html = html.replace('[getBeneficiariosDirectos]', tabla.replace('null', ''));
+            html = html.replace('[getBeneficiariosContingencia]', tablaConti.replace('null', ''));
         }
         
         if(html.contains('[nuevaPagina]')){

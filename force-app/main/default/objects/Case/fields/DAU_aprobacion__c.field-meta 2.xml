@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DAU_aprobacion__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Flag para validar si el caso pasa a aprobación.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Flag para validar si el caso pasa a aprobación.</inlineHelpText>
+    <label>DAU aprobación</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

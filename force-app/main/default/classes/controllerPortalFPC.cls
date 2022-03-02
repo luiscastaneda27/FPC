@@ -42,6 +42,8 @@ public class controllerPortalFPC {
     public string pais {get; set;}
     public string depto {get; set;}
     
+    public ControladorBeneficiarios.ResultWrapper beneficiario{get;set;}
+    
     public list<selectoption> getPaises() {
        list<selectoption> options= new list<selectoption>();
        list<Pais_R__c> pais= [select Id,Name,codigo__c,nombre__c from Pais_R__c];
@@ -62,6 +64,8 @@ public class controllerPortalFPC {
    }
     
     public controllerPortalFPC(){
+        beneficiario = ControladorBeneficiarios.getBeneficiarios('0012f00000i7vTgAAI', false);
+        System.debug('Retorno: '+beneficiario.listBeneficiarios.size());
         cuentas = new list<Account>();
         prospectos = new list<Lead>();
         cliente = new Account();
