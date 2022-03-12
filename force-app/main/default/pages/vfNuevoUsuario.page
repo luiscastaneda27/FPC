@@ -269,6 +269,10 @@
                                                     <label class="slds-form-element__label">Aprobación de Usuarios</label>
                                                     <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!AprobacionUsuario}" />
                                                 </apex:pageBlockSectionItem> 
+                                                <apex:pageBlockSectionItem >
+                                                    <label class="slds-form-element__label">Estado de Cuenta</label>
+                                                    <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!estadoCuenta}" />
+                                                </apex:pageBlockSectionItem> 
                                                 <apex:pageBlockSectionItem rendered="{!bloqueado}">
                                                     <label class="slds-form-element__label">Desbloquear</label>
                                                     <apex:inputCheckbox styleClass="slds-checkbox" label="Aprobación de Usuarios" value="{!bloqueado}" />

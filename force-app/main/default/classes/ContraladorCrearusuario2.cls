@@ -17,37 +17,32 @@ public class ContraladorCrearusuario2 {
     public string contrasenaNueva{get;set;}
     public string contrasenaRepetida{get;set;}
     public string Nombre_Empresa{get;set;}
-    public ContraladorCrearusuario2()
-    {
-        try
-        {
+    
+    public ContraladorCrearusuario2(){
+        try {
             Codigo_Unico_Banco=ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
-         	Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
+            Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
             popModificar=false;
             banderaTiempo=0;
             Nombre_Empresa=[select name from Account where id=:Codigo_unico_banco].name;
             Permisos = [Select Aceptar_Planilla__c, Crear_Usuarios__c, Aprobacion_Usuarios__c,Cargar_Generar_Planilla__c,
-						Usuario__c, Usuario__r.Contrasena2__c 
-                         From Usuario_x_Empresa__c 
-                         Where empresa2__c =: Codigo_Unico_Banco 
-                         And Usuario__c =: Usuario];
+                        Usuario__c, Usuario__r.Contrasena2__c 
+                        From Usuario_x_Empresa__c 
+                        Where empresa2__c =: Codigo_Unico_Banco 
+                        And Usuario__c =: Usuario];
             
             //MostrarNuevousuario=Permisos.Crear_Usuarios__c;
             //Autorizacionusuario=Permisos.Aprobacion_Usuarios__c; 
             
             Cargarusuarios();
-           popModificar=false;
+            popModificar=false;
             popCambioContrasena = False;
-            
             contrasenaActual = '';
             contrasenaNueva = '';
             contrasenaRepetida = '';
-        		
-        }
-        catch(exception ex)
-        {
+        }catch(exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente')); 
+                                                       'Lo sentimos, hubo un error intentelo nuevamente')); 
         }
     }
      public void registrarTiempo()
@@ -72,11 +67,11 @@ public class ContraladorCrearusuario2 {
             listAprobacionesPendientes= new list<Usuario_Empresa_Temporal__c> ();
             listUsuarios=[select id,Usuario__r.name, Usuario__r.Identidad__c, Usuario__r.Apellidos__C, Aceptar_Planilla__c, Activo__c,
                           Aprobacion_Usuarios__c, Calculo_De_Pilares__c, Cargar_Generar_Planilla__c, Crear_Usuarios__c, Nuevo_Personal__c,
-                          Nuevos_Salarios__c, Planilla_Seguro_Social__c, Reportes__c
+                          Nuevos_Salarios__c, Planilla_Seguro_Social__c, Reportes__c, EstadoDeCuenta__c
                           from Usuario_X_Empresa__c where empresa2__c=:codigo_Unico_banco];
             
             listAprobacionesPendientes = [select  id,Usuario__r.name, Usuario__r.Apellidos__C, Usuario__r.Identidad__c, Aprobacion_Usuarios__c ,activo__c,Usuario__r.Email__c ,Cargar_Generar_Planilla__c, Aceptar_Planilla__c,Calculo_De_Pilares__c,
-                  Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
+                  Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, EstadoDeCuenta__c,
                   Reportes__c from Usuario_Empresa_Temporal__c where Estado__c=0 and empresa2__c=:codigo_Unico_banco];
             if(listUsuarios.size()>0 && Permisos.Crear_Usuarios__c)
             {
@@ -160,21 +155,17 @@ public class ContraladorCrearusuario2 {
         }
     }
     
-    public void ActivarModalModificarusuario()
-    {
+    public void ActivarModalModificarusuario(){
         try{
-             if(banderaTiempo==0)
-        {
-            registrarTiempo();
-        }
+            if(banderaTiempo==0) {
+                registrarTiempo();
+            }
             Url_pagina='/apex/vfNuevousuario?Eldudhdhyudb=' + Codigo_Unico_Banco + '&jsdhvfuyssdfyuv=1&iden='+Num_identidad;
-          popModificar=true;            
-        }
-        catch(exception ex)
-        {
+            popModificar=true;            
+        }catch(exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Lo sentimos, hubo un error intentelo nuevamente'));
-             popModificar=false;  
+                                                       'Lo sentimos, hubo un error intentelo nuevamente'));
+            popModificar=false;  
         }
     }
     
@@ -250,7 +241,7 @@ public class ContraladorCrearusuario2 {
             boolean Modificado = [select Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_banco ].Modificado__C;
             Usuario_Empresa_Temporal__C Usuariotemporal=new Usuario_Empresa_Temporal__C();
             Usuariotemporal = [select  id,Usuario__r.name, Usuario__r.Apellidos__C, Usuario__r.Identidad__c, Aprobacion_Usuarios__c ,activo__c,Usuario__r.Email__c ,Cargar_Generar_Planilla__c, Aceptar_Planilla__c,Calculo_De_Pilares__c,
-                  Crear_Usuarios__c, Usuario__r.bloqueado__C, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
+                  Crear_Usuarios__c, Usuario__r.bloqueado__C, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, EstadoDeCuenta__c,
                   Reportes__c, Modificado__c from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_identidad];
             if(!Modificado)
              {
@@ -300,6 +291,7 @@ public class ContraladorCrearusuario2 {
                     UserEmpre.Usuario__c=IdUser;
                     UserEmpre.Activo__c=Usuariotemporal.Activo__c;
                     userEmpre.Aprobacion_Usuarios__c=Usuariotemporal.Aprobacion_Usuarios__c;
+                    userEmpre.EstadoDeCuenta__c = Usuariotemporal.EstadoDeCuenta__c;
                     insert UserEmpre; 
                     
                     Usuario_Empresa_Temporal__c yeah6= new Usuario_Empresa_Temporal__c();
@@ -337,6 +329,7 @@ public class ContraladorCrearusuario2 {
                    UserEmpre.Planilla_Seguro_Social__c=Usuariotemporal.Planilla_Seguro_Social__c;
                    UserEmpre.Activo__c=Usuariotemporal.Activo__c;
                    UserEmpre.Reportes__c=Usuariotemporal.Reportes__c;
+                   UserEmpre.EstadoDeCuenta__c=Usuariotemporal.EstadoDeCuenta__c;
                    UserEmpre.id=hola; 
                    update UserEmpre; 
                 

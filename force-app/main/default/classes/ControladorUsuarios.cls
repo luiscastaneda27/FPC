@@ -40,57 +40,51 @@ public class ControladorUsuarios {
     public boolean MostrarPersonas {get;set;}
     public string NombreP{get;set;}
     public boolean MostrarIdent {get;set;}
-     public string correovf{get;set;}
+    public string correovf{get;set;}
+    
+    public Boolean estadoCuenta{get;set;}
     
     public ControladorUsuarios (){
-       
-        try
-        { Codigo_Unico_Banco=ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
-        Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
-        nuevo=ApexPages.currentPage().getParameters().get('jsdhvfuyssdfyuv');
-        Num_identidad =ApexPages.currentPage().getParameters().get('iden');
-         options = new List<SelectOption>();
-        MostrarPersonas=false;
-        Nombre_EMpresa=[select name from Account where id=:Codigo_Unico_banco].name;
-        Mguardar='false';
-        MActualizar='false';
-         RNombre =true;
-         RApellido=true;
-        RIdentidad =true;
-        RCorreo =true;
-        j=0;
-        Bloqueado=false;
-        mostrarbloqueado=false;
-        Usua=new Usuario_Portal_Empresarial__c ();
-         if(Nuevo=='1')
-        {
-            MActualizar='true';
-            NombreP='Actualización de Usuario';
-            
-            MostrarIdent=true;
-            RNombre =false;
-            RApellido=false;
-            RIdentidad =false;
-            RCorreo =false;
-            LLenarDatos();
-            Activo=true;
-        }
-        else{
-            Mguardar='true';
-            NombreP='Nuevo Usuario';
-            MostrarIdent=false;
-            
-        }
-        }
-        catch(exception ex)
-        {
+        try{
+            Codigo_Unico_Banco=ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
+            Usuario=ApexPages.currentPage().getParameters().get('loetdncdhjch');
+            nuevo=ApexPages.currentPage().getParameters().get('jsdhvfuyssdfyuv');
+            Num_identidad =ApexPages.currentPage().getParameters().get('iden');
+            options = new List<SelectOption>();
+            MostrarPersonas=false;
+            Nombre_EMpresa=[select name from Account where id=:Codigo_Unico_banco].name;
+            Mguardar='false';
+            MActualizar='false';
+            RNombre =true;
+            RApellido=true;
+            RIdentidad =true;
+            RCorreo =true;
+            j=0;
+            Bloqueado=false;
+            mostrarbloqueado=false;
+            Usua=new Usuario_Portal_Empresarial__c ();
+            if(Nuevo=='1') {
+                MActualizar='true';
+                NombreP='Actualización de Usuario';
+                
+                MostrarIdent=true;
+                RNombre =false;
+                RApellido=false;
+                RIdentidad =false;
+                RCorreo =false;
+                LLenarDatos();
+                Activo=true;
+            } else{
+                Mguardar='true';
+                NombreP='Nuevo Usuario';
+                MostrarIdent=false;
+                
+            }
+        }catch(exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
-                        'Ha ocurrido un error'));
-        }
-       
-        
-		 
-      }
+                                                       'Ha ocurrido un error'));
+        }		 
+    }
     
     
     public void crearUsuariosinAutorizacion()
@@ -147,6 +141,7 @@ public class ControladorUsuarios {
                    UserEmpre.Reportes__c=Reportes;
                    UserEmpre.Usuario__c=IdUser;
                    UserEmpre.Activo__c=Activo;
+                   UserEmpre.EstadoDeCuenta__c =estadoCuenta;
                    UserEmpre.Aprobacion_Usuarios__c=AprobacionUsuario;
                    insert UserEmpre; 
                 LimpiarPantalla();
@@ -243,6 +238,7 @@ public class ControladorUsuarios {
                         userempre.Aprobacion_Usuarios__c=AprobacionUsuario;
                        UserEmpre.Modificado__c=false;
                        UserEmpre.Estado__c=0;
+                       UserEmpre.EstadoDeCuenta__c =estadoCuenta;
                        insert UserEmpre;  
                        LimpiarPantalla();
                        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
@@ -287,7 +283,7 @@ public class ControladorUsuarios {
         try{
             Usuario_X_Empresa__c  ki= new Usuario_X_Empresa__c ();
             ki=[select  Usuario__r.name, Usuario__r.Apellidos__C, Usuario__r.Identidad__c,activo__c,Usuario__r.Email__c ,Cargar_Generar_Planilla__c, Aceptar_Planilla__c,Calculo_De_Pilares__c,
-                  Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, 
+                  Crear_Usuarios__c, Nuevo_Personal__c, Nuevos_Salarios__c, Planilla_Seguro_Social__c, EstadoDeCuenta__c,
                   Reportes__c, Aprobacion_Usuarios__c, usuario__r.bloqueado__C from Usuario_X_Empresa__c where Usuario__r.Identidad__c=:Num_identidad and empresa2__c=:Codigo_Unico_banco limit 1];
             
             Nombre=ki.Usuario__r.name;
@@ -305,6 +301,7 @@ public class ControladorUsuarios {
             AprobacionPlanilla =ki.Aceptar_Planilla__c;
             activo=ki.Activo__c;
             AprobacionUsuario=ki.Aprobacion_Usuarios__c;
+            estadoCuenta = ki.EstadoDeCuenta__c;
         }
         catch(Exception ex)
         {
@@ -365,6 +362,7 @@ public class ControladorUsuarios {
            		   UserEmpre.Aprobacion_Usuarios__c=AprobacionUsuario;
                    UserEmpre.Activo__c=Activo;
                    UserEmpre.Reportes__c=Reportes;
+                   UserEmpre.EstadoDeCuenta__c =estadoCuenta;
                    UserEmpre.id=yeah;
                     update UserEmpre; 
             		//LimpiarPantalla();
@@ -405,8 +403,8 @@ public class ControladorUsuarios {
             		
             
             
-            string yeah =[select id  from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id;
-            	 string yeah1=[select id  from Usuario_Temporal__c where Identidad__c=:Num_Identidad].id;
+               string yeah =[select id  from Usuario_Empresa_Temporal__c where Usuario__r.Identidad__c=:Num_Identidad and empresa2__c=:Codigo_Unico_Banco].id;
+               string yeah1=[select id  from Usuario_Temporal__c where Identidad__c=:Num_Identidad].id;
             
                    Usuario_Empresa_Temporal__c UserEmpre = new Usuario_Empresa_Temporal__c();
                    Usuario_Temporal__c User = new Usuario_Temporal__c();
@@ -434,55 +432,41 @@ public class ControladorUsuarios {
             	   userEmpre.Aprobacion_Usuarios__c=AprobacionUsuario;
             	   UserEmpre.Estado__C=0;
                    UserEmpre.Modificado__c=true;
+                   UserEmpre.EstadoDeCuenta__c = estadoCuenta;
                     update UserEmpre; 
             		//LimpiarPantalla();
             		ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                    'Usuario actualizado exitosamente'));
-           }
-            else
-            {
+           }else{
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                    'Faltan campos obligatorios')); 
             }
-            
             			
-        }
-        CAtch(Exception ex)
-        {
+        } catch(Exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                    'El correo no tiene el formato correcto')); 
         }
     }
     
     
-    public void LimpiarPantalla()
-    {
-        try{
-           
-                Num_Identidad='';
-                Nombre='';
-                Apellido='';
-                correovf='';
-                mostrarModal=false;
-                usuarios=false;
-                Planillas=false;
-                NuevoPersonal=false;
-                NuevosSalarios=false;
-                PlanillaSS =false;
-                Pilares=false;
-                Reportes =false;
-                activo=false;
-                Usuarios=false;
-                AprobacionPlanilla =false;
-                Usua.Email__c=null;  
-                AprobacionUsuario=false;
-              
-        }
-        catch(Exception ex)
-        {
-           
-        }
-        
+    public void LimpiarPantalla() {
+        Num_Identidad='';
+        Nombre='';
+        Apellido='';
+        correovf='';
+        mostrarModal=false;
+        usuarios=false;
+        Planillas=false;
+        NuevoPersonal=false;
+        NuevosSalarios=false;
+        PlanillaSS =false;
+        Pilares=false;
+        Reportes =false;
+        activo=false;
+        Usuarios=false;
+        AprobacionPlanilla =false;
+        Usua.Email__c=null;  
+        AprobacionUsuario=false;
     }
     
     

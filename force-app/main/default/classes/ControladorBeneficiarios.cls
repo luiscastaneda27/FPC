@@ -215,7 +215,6 @@ public class ControladorBeneficiarios {
     public  static List<PicklistOption> getPicklistOptions(String objApiName, String fieldApiName){
         List<PicklistOption> lOptions = new List<PicklistOption>();
         SObjectType objectType = Schema.getGlobalDescribe().get(objApiName);
-        Map<String, PicklistOption> mapOptiones = new Map<String, PicklistOption>();
         List<Schema.PicklistEntry> ple = objectType.getDescribe().fields.getMap().get(fieldApiName).getDescribe().getPickListValues();
         for(Schema.PicklistEntry entry : ple)  {
             String label = entry.getLabel().length() < 13 ? entry.getLabel() : entry.getLabel().substring(0, 12);
@@ -227,7 +226,6 @@ public class ControladorBeneficiarios {
      public  static List<SelectOption> getPicklistOptionsSO(String objApiName, String fieldApiName){
         List<SelectOption> lOptions = new List<SelectOption>();
         SObjectType objectType = Schema.getGlobalDescribe().get(objApiName);
-        Map<String, PicklistOption> mapOptiones = new Map<String, PicklistOption>();
         List<Schema.PicklistEntry> ple = objectType.getDescribe().fields.getMap().get(fieldApiName).getDescribe().getPickListValues();
         for(Schema.PicklistEntry entry : ple)  {
             String label = entry.getLabel().length() < 13 ? entry.getLabel() : entry.getLabel().substring(0, 12);
