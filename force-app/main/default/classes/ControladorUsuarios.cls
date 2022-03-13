@@ -1,21 +1,13 @@
 public class ControladorUsuarios {    
-    public string NombreUsuario{get;set;}
-    public string NombreEmpresa{get;set;}
-    public string UltimoIngreso{get;set;}
-   
-    public string UltimoIngreso1{get;set;}
-    public bitacora_Login__C prueba{get;set;}
-	
+    
     public boolean RNombre {get;set;}
     public boolean RApellido {get;set;}
     public boolean RIdentidad {get;set;}
     public boolean RCorreo {get;set;}
     integer j;
     public string Nombre_Empresa{get;set;}
-    public string Mensaje{get;set;}
     public Usuario_Portal_Empresarial__c Usua{get;set;}
     public string Num_Identidad{get;set;}
-     public string Correo{get;set;}
     public string Nombre{get;set;}
     string Codigo_Unico_Banco{get; Set;}
     public string Apellido{get;set;}
@@ -251,24 +243,16 @@ public class ControladorUsuarios {
                     
                 }
                     
-            }
-             else
-            {
+            }else {
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                         'Numero de identidad invalido'));
-                
             }
-           }
-           else
-           {
+           }else{
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                         'Faltan campos obligatorios'));
-           }
-                
+           }    
            
-        }
-        catch(Exception ex) 
-        {
+        }catch(Exception ex) {
             system.debug(ex.getLineNumber()+ ex.getMessage());
         }
         

@@ -7,6 +7,7 @@ public class ControladorEstadoDeCuentaPlanilla {
     public Usuario_X_Empresa__c usuarioEmpresa{get;set;}
     public EstadosDeCuenta.VarURL datosEDC{get;set;}
     public String urlPagina{get;set;}
+    Tiempo_Inactividad__c hora {get;set;}
     
     public ControladorEstadoDeCuentaPlanilla(){
         empresa = ApexPages.currentPage().getParameters().get('Eldudhdhyudb');
@@ -16,6 +17,7 @@ public class ControladorEstadoDeCuentaPlanilla {
                           from Usuario_X_Empresa__c 
                           where Empresa2__c =: empresa
                           AND Usuario__c =: Usuario Limit 1];
+        hora = [select Hora_ultima_consulta__c,id from Tiempo_Inactividad__c where usuario__C =:usuario limit 1];
     }
     public void generarEDC(){
         datosEDC = new EstadosDeCuenta.VarURL();
@@ -29,5 +31,7 @@ public class ControladorEstadoDeCuentaPlanilla {
     
     public void cerrar(){
         urlPagina = null;
+        hora.Hora_ultima_consulta__c = System.now();
+        update hora;
     }
 }
