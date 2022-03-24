@@ -718,18 +718,24 @@ public without sharing class ControllerProductoAgn {
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null') { pcFATCA = false;
-                }
-                else 
-                {
-                    pcFATCA = true;
-                }
-                IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null') { pcFATCANC = false;
-                }
-                else 
-                {
-                    pcFATCANC = true;
-                }
+        if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        {
+            VentanaFatca = true;
+            pcFATCA = true;  
+        }
+        else
+        {   
+            if (pccodpais == '053' || pccodpais == '144')
+            {
+                VentanaFatca = true;
+                pcFATCA = true;
+            }
+            else
+            {
+                VentanaFatca = false;
+                pcFATCA = false;
+            }
+        }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
                     Activo = fcsd.pcEst_cuenta;
@@ -911,6 +917,7 @@ public without sharing class ControllerProductoAgn {
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
                 }
                 /*cargo politico*/
+               
                 IF (fcsd.pcEjerce_Cargo_Publico =='N'||fcsd.pcEjerce_Cargo_Publico == 'null'||fcsd.pcEjerce_Cargo_Publico == null)
                 {
                     OcultaCarNO = True;
@@ -926,6 +933,9 @@ public without sharing class ControllerProductoAgn {
                 if (fcsd.Cargo_Pulbico != 'null')
                 {
                     pcCargoEjercido = fcsd.Cargo_Pulbico;
+                    OcultaCarSI = TRUE;
+                    CargoSI();
+                    
                 }
                 periodoPep = fcsd.periodoPep;
                 institucionPep = fcsd.institucionPep;
@@ -1647,14 +1657,17 @@ insert reg;
     }
     
     public void llenarAnioTarjeta() {
-        this.AnioTarjeta = new SelectOption[]{};                                                               
-            this.AnioTarjeta.add(new SelectOption('2019',' 2019'));
-        this.AnioTarjeta.add(new SelectOption('2020',' 2020'));
-        this.AnioTarjeta.add(new SelectOption('2021',' 2021'));
+        this.AnioTarjeta = new SelectOption[]{};  
+            this.AnioTarjeta.add(new SelectOption('2021',' 2021'));
         this.AnioTarjeta.add(new SelectOption('2022',' 2022'));
         this.AnioTarjeta.add(new SelectOption('2023',' 2023'));
         this.AnioTarjeta.add(new SelectOption('2024',' 2024'));
         this.AnioTarjeta.add(new SelectOption('2025',' 2025'));
+       this.AnioTarjeta.add(new SelectOption('2026',' 2026'));
+        this.AnioTarjeta.add(new SelectOption('2027',' 2027'));
+        this.AnioTarjeta.add(new SelectOption('2028',' 2028'));
+        this.AnioTarjeta.add(new SelectOption('2029',' 2029'));
+        this.AnioTarjeta.add(new SelectOption('2030',' 2030'));
     }
     
     public void llenarPOS() {
@@ -2736,15 +2749,24 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
             {
                 opcionDepartamento.add(new selectOption(item.codigo_departamento__c, item.Departamento__c));
             }
-            if(pccodpais == '053' || pccodpais == '144')
+                    if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        {
+            VentanaFatca = true;
+            pcFATCA = true;  
+        }
+        else
+        {   
+            if (pccodpais == '053' || pccodpais == '144')
             {
-                VentanaFatca =  true;
+                VentanaFatca = true;
                 pcFATCA = true;
             }
-            else{
-                VentanaFatca =  false; 
+            else
+            {
+                VentanaFatca = false;
                 pcFATCA = false;
-            }    
+            }
+        } 
         }catch(exception e){
             
         }
@@ -4343,6 +4365,7 @@ paso2Cuerpo = 'slds-hide';
     //METODO EL CUAL ENVIARA TODA LA INFORMACION 
     public pageReference guardar() {
         try{
+            
             ClienteNaturales naturalEnvio = new ClienteNaturales();
             //ValidaRiesgo();
             naturalEnvio.numtran = numtran; //Agregado 08/04/2020
@@ -4879,6 +4902,8 @@ return null;
     public pageReference actualizar(){
         try{
             
+            NacionalidadFatca();
+            
             NaturalActualizar naturalEnvio = new NaturalActualizar();
             
             naturalEnvio.RTN = RTN;
@@ -5337,18 +5362,22 @@ insert reg;
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null') { pcFATCA = false;
-                }
-                else 
-                {
-                    pcFATCA = true;
-                }
-                IF (fcsd.pcFATCANC == 'N'||fcsd.pcFATCANC == 'null'||fcsd.pcFATCANC == ''||fcsd.pcFATCANC == null)
-                {
-                    pcFATCANC = false;
-                }
-                else { pcFATCANC = true;
-                }
+if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        {
+      
+            pcFATCA = true;  
+        }
+        else
+        {   
+            if (pccodpais == '053' || pccodpais == '144')
+            {
+                pcFATCA = true;
+            }
+            else
+            {
+                pcFATCA = false;
+            }
+        }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
                     Activo = fcsd.pcEst_cuenta;
@@ -5925,6 +5954,7 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
             requestJSONPDF=JSON.serialize(fcsd);//Arismel
             system.debug('Respuestaaaaaaa: '+fcsd);
             
+            
             if (fcsd.pcprimernombre != 'null')
             {
                 CuentaMostrar = pc_codCuenta;
@@ -5951,24 +5981,29 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                     fcsd.pdfechasuscripcion = fcsd.pdfechasuscripcion.addHours(6);
                     fechasuscripcion=date.valueOf(fcsd.pdfechasuscripcion.year()+'-'+fcsd.pdfechasuscripcion.month()+'-'+fcsd.pdfechasuscripcion.day());
                 }
-                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') { pcPEP = false;
+                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') 
+                { 
+                    pcPEP = false;
                 }
                 else 
                 {
                     pcPEP = true; 
                 }    
-                IF (fcsd.pcFATCA =='N'||fcsd.pcFATCA == 'null'||fcsd.pcFATCA == null)
-                {
-                    pcFATCA = false;
-                }
-                else { pcFATCA = true;
-                }
-                IF (fcsd.pcFATCANC =='N'||fcsd.pcFATCANC == 'null'||fcsd.pcFATCANC == null)
-                {
-                    pcFATCANC = false;
-                }
-                else { pcFATCANC = true;
-                }
+        if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        {
+            pcFATCA = true;  
+        }
+        else
+        {   
+            if (pccodpais == '053' || pccodpais == '144')
+            {
+                pcFATCA = true;
+            }
+            else
+            {
+                pcFATCA = false;
+            }
+        }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
                     Activo = fcsd.pcEst_cuenta;
@@ -6187,24 +6222,29 @@ Cuenta22.Parentesco__c = fcsd.pcParentescoDependencia;
                     pcNombreCompletoPV = fcsd.pcNombreCompletoPV;
                 }
                 /*cargo politico*/
+                 system.debug('EJERCEeeeee: '+fcsd.pcEjerce_Cargo_Publico);
                 IF (fcsd.pcEjerce_Cargo_Publico =='N'||fcsd.pcEjerce_Cargo_Publico == 'null'||fcsd.pcEjerce_Cargo_Publico == null)
                 {
                     OcultaCarNO = True;
                     OcultaCarSI = false;
-                    if(rolLogin == 'OFSRCU') { CargoNO();
+                    if(rolLogin == 'OFJROP' || rolLogin == 'ACTUAL' || rolLogin == 'AFILI' || rolLogin == 'CONFON') { 
+                        CargoNO();
                     } 
                 }
                 else
                 {
                     OcultaCarNO = false;
                     OcultaCarSI = TRUE;
-                    if(rolLogin == 'OFSRCU'){
+                    if(rolLogin == 'OFJROP' || rolLogin == 'ACTUAL' || rolLogin == 'AFILI' || rolLogin == 'CONFON'){
                         CargoSI();
                     } 
                 }  
                 if (fcsd.Cargo_Pulbico != 'null' && fcsd.Cargo_Pulbico != 'N/A')
                 {
                     pcCargoEjercido = fcsd.Cargo_Pulbico;
+                    OcultaCarSI = TRUE;
+                    CargoSI();
+            
                 }
                 periodoPep = fcsd.periodoPep == 'null' ? '' : fcsd.periodoPep;
                 institucionPep = fcsd.institucionPep == 'null' ? '' : fcsd.institucionPep;
@@ -6731,11 +6771,13 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                     {
                         OcultaCarNO = false;
                         OcultaCarSI = TRUE;
-                        //CargoSI();
+                       // CargoSI();
                     }  
                     if (fcsd.Cargo_Pulbico != 'null')
                     {
                         pcCargoEjercido = fcsd.Cargo_Pulbico;
+                        OcultaCarSI = TRUE;
+                    	CargoSI();
                     }
                     IF (fcsd.pcAPNFD =='S')
                     {
@@ -7398,7 +7440,7 @@ EstadoCivil.add(new selectOption(p.getValue(),p.getLabel()));
     public void BusCuentas()
     {
         BuscarCuentas=true;
-        if (rolLogin == 'OFSRCU'){
+        if (rolLogin == 'OFJROP' || rolLogin == 'ACTUAL' || rolLogin == 'AFILI' || rolLogin == 'CONFON'){
             disCumplimiento = false;
         }else{
             OcultaCarSI_1 = true;

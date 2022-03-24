@@ -413,6 +413,8 @@
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <font class="padding-left-2em fontStyle">Seleccione una Cuenta: </font>
                                 <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
+                      
+                            
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" id="idCuenta" value="{!idCuenta}"  size="1">
@@ -438,7 +440,8 @@
                         <font class="padding-left-1em font-subtitle">Datos Generales</font>
                         <div class="margin-top-1em slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                                <font class="padding-left-2em fontStyle">Estado Civil: </font>
+                 
+                               <font class="padding-left-2em fontStyle">Estado Civil: </font>
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.Estado_Civil__c}" />

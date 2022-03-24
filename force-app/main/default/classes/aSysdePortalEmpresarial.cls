@@ -1,6 +1,6 @@
 public class aSysdePortalEmpresarial {
        
-     public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
+       public static classDolares.classRespuestaDolares CompraVentaDolares(string moneda, decimal monto, string cliente){
         classDolares.classRespuestaDolares respuesta = new classDolares.classRespuestaDolares();
         try{
             Compra_Venta_Dolares__mdt dato = new Compra_Venta_Dolares__mdt();
@@ -40,28 +40,16 @@ public class aSysdePortalEmpresarial {
                 response.setStatusCode(200);
             }
             system.debug('Codigo: '+response.getStatusCode());
-            system.debug('Respuesta del servicio: '+response.getbody());
+            system.debug('Respuesta: '+response.getbody());
             if(response.getStatusCode() == 200){
                 respuesta = (classDolares.classRespuestaDolares)System.JSON.deserialize(response.getBody(), classDolares.classRespuestaDolares.class);
-                system.debug('Respuesta luego del status 200 Antes de Aplicar Parche: '+respuesta);           
-                if(respuesta.montoAcreditado==null && respuesta.tasaCambio!=null && respuesta.montoDebitado!=null){
-                    if(respuesta.monedaOrigen=='HNL'){
-                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)/Decimal.valueOf(respuesta.tasaCambio);
-                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
-                    }
-                    if(respuesta.monedaOrigen=='USD'){
-                        Decimal MontoAcr = Decimal.valueOf(respuesta.montoDebitado)*Decimal.valueOf(respuesta.tasaCambio);
-                        respuesta.montoAcreditado = String.valueOf(MontoAcr.setScale(4));
-                    }
-                    
-                }
-                system.debug('Respuesta luego del status 200 Despues de Aplicar Parche: '+respuesta);
             }
         }catch(Exception ex){
             system.debug('Error ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());	
         }
         return respuesta;
     }
+   
     
     public static list<string> fechaCierreSysde() { 
          Http http = new Http();  
@@ -444,7 +432,7 @@ public class aSysdePortalEmpresarial {
 		request.setTimeout(120000);
         try
         {
-           system.debug('String: '+ personas); 
+           system.debug('Error en Enviar Aportes:'+ personas); 
            list<string> todos= new list<string>();
            list<string> individual; 
             todos=personas.split('::::');
@@ -464,7 +452,6 @@ public class aSysdePortalEmpresarial {
                 nueva.codigoReferencia = codigo;
                 nueva.cuenta=individual[3];
                 //nueva.codigoCuenta=integer.valueOf(individual[4]);
-                
                 nueva.codigoMoneda=individual[5];
                 
                 boolean bandera = false;
@@ -498,10 +485,10 @@ public class aSysdePortalEmpresarial {
                     bandera = true;
                 }
                 
-                
                 nueva.periodoAporte=periodoaporte;
                 nueva.fechaRecaudo=fecha;
-                if( bandera){
+                
+                if(bandera)  {
                     claseenvio.add(nueva); 
                 }
                
@@ -511,7 +498,7 @@ public class aSysdePortalEmpresarial {
 			envio.contenido = JSON.serialize(claseenvio);
             system.debug(claseenvio.size());
 			String cons = 'Contenido= ' + envio.contenido;
-            system.debug('ENviamos a sysde: '+cons);
+            system.debug('Yo no se mañana dijo Luis Enrique: '+cons);
 			request.setBody(cons);
             HttpResponse response = new HttpResponse();
             if(!test.isRunningTest()){

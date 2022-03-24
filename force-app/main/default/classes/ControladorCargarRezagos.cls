@@ -206,7 +206,7 @@ global class ControladorCargarRezagos {
                                 //String FCS = FechaCierreSysde[0].Fecha_cierre__c;
                                 Date FCS = Date.valueOf(datecomplete);
                                 System.debug('Cierre desde Sysde: '+FechaCierreSysde[0].Fecha_cierre__c+' Cierrre desde Archivo: '+FCS);
-                                If(FechaCierreSysde[0].Fecha_cierre__c==FCS){
+                                If(FechaCierreSysde[0].Fecha_cierre__c == FCS){
                                     if(DTime > DateTime.now()){
                                         datecomplete = dateyear+'-'+dateday+'-'+datemonth+' 06:00:00';
                                         DTime = DateTime.valueOf(datecomplete);
@@ -365,7 +365,6 @@ global class ControladorCargarRezagos {
     }
     
     public pageReference Guardar(){
-        system.debug('entramos HURRA!');
         
         try{
             List<Rezago__c> resuelto = new List<Rezago__c>();

@@ -290,6 +290,7 @@
 			</div> 
                     
 			<a href="javascript:CalculoDePilares();" style="display:{!MPilares}" title="Calculo Pilares">Calculo Pilares</a>
+            <a href="javascript:estadoCuenta();" style="display:{!MEDC}" title="Estado de Cuenta">Estado de Cuenta</a>
            
 			<div class="dropdown" style="display:{!MSeguro_Social}">
 				<button class="dropbtn" title="Planilla Seguro Social">Planilla IHSS</button>
@@ -361,6 +362,7 @@
             <apex:actionFunction action="{!GenerarPlanillaSS}" name="GenerarPlanillaSS"/>
            <apex:actionFunction action="{!Home}" name="Home"/>
             <apex:actionFunction name="SeleccionarEmpresa"  action="{!SeleccionarEmpresa}" />
+             <apex:actionFunction name="estadoCuenta"  action="{!estadoCuenta}" />
                 
             <apex:actionFunction name="Colaboradesvigentes"  action="{!Colaboradesvigentes}" />
                 

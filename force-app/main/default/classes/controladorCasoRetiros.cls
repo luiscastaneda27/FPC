@@ -911,6 +911,26 @@ public class controladorCasoRetiros {
                 addRecords = 'position:relative; pointer-events:none !important;';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No se encontraron registros'));        
             }   
+            
+            //Actualizando saldos
+            //list<Pago_Beneficiario__c> listPagosBeneficiarios2
+            /*getSaldoCuenta saldos = new getSaldoCuenta();
+            saldos = aSysdeCallouts.traerSaldos(cuentaCliente.Codigo__c);
+            For(classSaldos item : saldosTempo.saldos){
+                if(item.tipoSaldo=='12'){
+                    totalSaldo += double.valueOF(item.montoSaldo.replace(',',''));
+                }
+            }*/
+            System.debug('Los saldos desde aquí: '+detalleCaso.Monto_bruto_retirar__c);
+            List<Pago_Beneficiario__c> updatePagos = new List<Pago_Beneficiario__c>(); 
+            for(Pago_Beneficiario__c pb : listPagosBeneficiarios2) {
+            	pb.Monto_bruto__c = detalleCaso.Monto_bruto_retirar__c * (pb.Porcentaje__c / 100);
+                pb.Monto_neto_retirar__c = pb.Monto_bruto__c - pb.Comisiones_cargos__c;
+                updatePagos.add(pb);
+            }
+            if(!updatePagos.isEmpty()) {
+               update updatePagos;
+            }
         }Catch(Exception e){
             
         }    

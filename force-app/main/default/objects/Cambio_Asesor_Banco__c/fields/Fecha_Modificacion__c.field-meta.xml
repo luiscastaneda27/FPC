@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fecha_Modificacion__c</fullName>
+    <description>Captura la fecha del usuario que realiza la carga del archivo</description>
+    <externalId>false</externalId>
+    <label>Fecha_Modificacion</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

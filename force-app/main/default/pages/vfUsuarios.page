@@ -193,9 +193,7 @@
                     </span>
                 </h3>
                 </div>
-                <br/>
-        
-                              
+                <br/>        
         
             <apex:DataTable value="{!listUsuarios}" var="item" styleClass="slds-table slds-table--bordered" >
                 
@@ -250,6 +248,10 @@
                 <apex:column headerValue="Aprobar Usuarios">
                         <apex:outputfield value="{!item.Aprobacion_Usuarios__c}"/>   
                  </apex:column>
+                <!-------Estados de Cuenta----------->
+                <apex:column headerValue="EDC">
+                    <apex:outputfield value="{!item.EstadoDeCuenta__c}"/>   
+                </apex:column>
                </apex:DataTable> 
                          
                          
@@ -257,70 +259,73 @@
         </apex:outputPanel>
         <apex:outputPanel rendered="{!Autorizacionusuario}">
             
-        <div id="Resumen">
+            <div id="Resumen">
                 <h3 class="Row">
                     <strong>Aprobaciones Pendientes</strong>
                     <span>
                     </span>
                 </h3>
-                </div>
-                <br/>
-                        <apex:DataTable value="{!listAprobacionesPendientes}" var="item" styleClass="slds-table slds-table--bordered ">
+            </div>
+            <br/>
+            <apex:DataTable value="{!listAprobacionesPendientes}" var="item" styleClass="slds-table slds-table--bordered ">
                 
-                 <apex:column headerValue="Identificación">
-                        <apex:outputfield value="{!item.Usuario__r.Identidad__c}" />   
-                 </apex:column>
-                 <apex:column headerValue="Nombre">
-                        <apex:outputfield value="{!item.Usuario__r.name}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Apellido">
-                        <apex:outputfield value="{!item.Usuario__r.Apellidos__c}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Activo">
-                        <apex:outputfield value="{!item.Activo__c}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Planillas">
-                        <apex:outputfield value="{!item.Cargar_Generar_Planilla__c}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Personal">
-                        <apex:outputfield value="{!item.Nuevo_Personal__c}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Salarios">
-                        <apex:outputfield value="{!item.Nuevos_Salarios__c}"/>   
-                 </apex:column>
-                 <apex:column headerValue="Aprobar planilla">
-                        <apex:outputfield value="{!item.Aceptar_Planilla__c}" />   
-                 </apex:column> 
-                 <apex:column headerValue="Planilla IHSS">
-                        <apex:outputfield value="{!item.Planilla_Seguro_Social__c}"/>   
-                 </apex:column>  
-                 <apex:column headerValue="Calculo de Pilares">
-                        <apex:outputfield value="{!item.Calculo_De_Pilares__c}"/>   
-                 </apex:column> 
-                 <apex:column headerValue="Reportes">
-                        <apex:outputfield value="{!item.Reportes__c}"/>   
-                 </apex:column>  
-                 <apex:column headerValue="Usuarios">
-                        <apex:outputfield value="{!item.Crear_Usuarios__c}"/>   
-                 </apex:column>
-                <apex:column headerValue="Aprobar Usuarios">
-                        <apex:outputfield value="{!item.Aprobacion_Usuarios__c}"/>   
-                 </apex:column>
+                <apex:column headerValue="Identificación">
+                    <apex:outputfield value="{!item.Usuario__r.Identidad__c}" />   
+                </apex:column>
+                <apex:column headerValue="Nombres">
+                    <apex:outputText value="{!item.Usuario__r.name +' '+ item.Usuario__r.Apellidos__c}"/>   
+                </apex:column>
+                <!--apex:column headerValue="Apellido">
+                    <apex:outputfield value="{!item.Usuario__r.Apellidos__c}"/>   
+                </apex:column-->
+                <apex:column headerValue="Activo">
+                    <apex:outputfield value="{!item.Activo__c}"/>   
+                </apex:column>
+                <apex:column headerValue="Planillas">
+                    <apex:outputfield value="{!item.Cargar_Generar_Planilla__c}"/>   
+                </apex:column>
+                <apex:column headerValue="Personal">
+                    <apex:outputfield value="{!item.Nuevo_Personal__c}"/>   
+                </apex:column>
+                <apex:column headerValue="Salarios">
+                    <apex:outputfield value="{!item.Nuevos_Salarios__c}"/>   
+                </apex:column>
+                <apex:column headerValue="Aprobar planilla">
+                    <apex:outputfield value="{!item.Aceptar_Planilla__c}" />   
+                </apex:column> 
+                <apex:column headerValue="Planilla IHSS">
+                    <apex:outputfield value="{!item.Planilla_Seguro_Social__c}"/>   
+                </apex:column>  
+                <apex:column headerValue="Calculo de Pilares">
+                    <apex:outputfield value="{!item.Calculo_De_Pilares__c}"/>   
+                </apex:column> 
+                <apex:column headerValue="Reportes">
+                    <apex:outputfield value="{!item.Reportes__c}"/>   
+                </apex:column>  
+                <apex:column headerValue="Usuarios">
+                    <apex:outputfield value="{!item.Crear_Usuarios__c}"/>   
+                </apex:column>
+                <apex:column headerValue="Aprob Usuar">
+                    <apex:outputfield value="{!item.Aprobacion_Usuarios__c}"/>   
+                </apex:column>
+                <apex:column headerValue="EDC">
+                    <apex:outputfield value="{!item.EstadoDeCuenta__c}"/>   
+                </apex:column>
                 
-                <apex:column headerValue="Aceptar"> 
-                        <div class="slds-scope">
-                             <apex:commandLink value="Aceptar"  action="{!Aprobar}">  
+                <apex:column headerValue=""> 
+                    <div class="slds-scope">
+                        <apex:commandLink value="Aceptar"  action="{!Aprobar}">  
                             <apex:param value="{!Item.Usuario__r.Identidad__c}" AssignTo="{!Num_Identidad}" name="CambioTasa" /> </apex:commandLink>
-                     </div>   
-                 </apex:column>
-                            
-                 <apex:column headerValue="Denegar">
-                         <div class="slds-scope">
-                             <apex:commandLink value="Denegar"  action="{!Denegar}">  
+                    </div>   
+                </apex:column>
+                
+                <apex:column headerValue="">
+                    <div class="slds-scope">
+                        <apex:commandLink value="Denegar"  action="{!Denegar}">  
                             <apex:param value="{!Item.Usuario__r.Identidad__c}" AssignTo="{!Num_Identidad}" name="CambioTasa" /> </apex:commandLink>
-                     </div>  
-                 </apex:column>
-               </apex:DataTable> 
+                    </div>  
+                </apex:column>
+            </apex:DataTable> 
               
         </apex:outputPanel>
        

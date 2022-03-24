@@ -296,8 +296,9 @@ public class updateCase {
                         } else {
                             System.debug('Tarjeta dada de baja');
                             wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID;  
+                            wc.Description = 'Tarjeta dada de baja';
                             wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
-                            wc.DAU_aprobacion = false;
+                            wc.DAU_aprobacion = true;
                         }  
                     }    
                 }    
@@ -311,8 +312,8 @@ public class updateCase {
     public static void validarIdentidad2(String casoId, String pccuentapago, String pcnroid) {
                 
         Case caso = new Case();
-        caso = [Select Id, Status, Description, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c, Respuesta_SF_Tarjetas__c 
-                   From case where Id =: casoId];
+        caso = [Select Id, Status, Description, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c, 
+                Respuesta_SF_Tarjetas__c, DAU_Tarjeta_de_Sysde__c From case where Id =: casoId];
         
         if(caso.Id != Null) {
             
@@ -339,14 +340,16 @@ public class updateCase {
                 	caso.DAU_Identidad__c = 'Error: No se obtuvo la identidad';
                 }    
                 caso.DAU_aprobacion__c = false;  
-                solicitud = AFPCCasos.upsertCaso(caso);
+                //solicitud = AFPCCasos.upsertCaso(caso);
+                update caso;
             } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
                 System.debug('CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID');
                 caso.DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
                 caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
                 caso.DAU_aprobacion__c = true;  
                 caso.Description = 'Error: CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID';
-                solicitud = AFPCCasos.upsertCaso(caso);               
+                //solicitud = AFPCCasos.upsertCaso(caso);
+                update caso;               
             } else {
                 if(resultJson.CARD_STATUS == '20 - TARJETA NORMAL') {
                     //if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
@@ -379,7 +382,11 @@ public class updateCase {
                         //    solicitud = AFPCCasos.envioAprobacion(caso.id, 'AumentoDisminucion');
                         //}                     
                     }*/  
-                }    
+                } else {
+                	System.debug('Tarjeta dada de baja');
+                    caso.Description = 'Tarjeta dada de baja'; 
+                    Update Caso;
+                }  
             }    
         }   
     }
@@ -401,11 +408,11 @@ public class updateCase {
                 caso.DAU_aprobacion__c = false;
                 caso.Enviar_aprobacion_AD__c = true;
                 solicitud = AFPCCasos.upsertCaso(caso);
-                if(solicitud.solicitudExitosa){
+                if(solicitud.solicitudExitosa) {
                     solicitud = AFPCCasos.envioAprobacion(caso.id, 'AumentoDisminucion');
                 }
             } else {
-                caso.Archivo_Adjunto__c = true; caso.Status = 'Cerrado'; caso.Aprobado__c = True; solicitud = AFPCCasos.upsertCaso(caso);
+                caso.Archivo_Adjunto__c = true; caso.Status = 'Cerrado'; caso.Aprobado__c = True; update caso; //solicitud = AFPCCasos.upsertCaso(caso);
             }
         } else {
             User us = [Select Id,Name,Zona__c From User Where Id =: pcpromotor];
@@ -415,7 +422,8 @@ public class updateCase {
                      And Objeto__c = 'Case' And Usuario__r.IsActive = true
                      order by Ultimo_Caso_Asignado__c asc limit 1];
                 caso.OwnerId = p.usuario__C; caso.Description = 'La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque';
-            	solicitud = AFPCCasos.upsertCaso(caso);
+            	update caso;
+                //solicitud = AFPCCasos.upsertCaso(caso);
             }    
         }
     }

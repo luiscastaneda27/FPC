@@ -85,6 +85,7 @@ global class ControllerPantallaConsultaRezagos_Test {
         ControllerPantallaConsultaRezagos cr = new ControllerPantallaConsultaRezagos();
         cr.llenartabla();
         cr.Aplicar();
+        cr.Cerrar();
         test.stopTest();
     }
 }

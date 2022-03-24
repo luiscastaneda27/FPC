@@ -413,7 +413,8 @@ public without sharing class ControladorCasosPortalAutogestion {
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                }else if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
+                //detallecaso.Tipo_Operacion__c == 'A1' || 
+                }else if((detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }

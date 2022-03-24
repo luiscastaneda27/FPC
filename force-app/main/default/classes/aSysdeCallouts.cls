@@ -751,29 +751,50 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             
             String queryCliente = queryCaso;
             queryCaso += 'Account.Cliente_Unico_Banco__c,AccountId,CaseNumber,RecordType.Name,CreatedDate,Owner.Name,';
+            queryCaso += 'OwnerId,LastModifiedBy.Codigo__c,';
             queryCaso += camposCaso;
             queryCaso += ' From Case Where Id = \'' + idCaso + '\'';                    
             caso = dataBase.query(queryCaso);
-            if(caso.Tipo_Identificacion__c=='PASAPORTE') { caso.Tipo_Identificacion__c='4';  
+                        
+            Map<String, String> mapTipoIdentidades = new Map<String, String>();
+            mapTipoIdentidades.put('PASAPORTE','4');
+            mapTipoIdentidades.put('CARNET DE RESIDENTE','2');
+            mapTipoIdentidades.put('RTN','9');
+            mapTipoIdentidades.put('CEDULA DE IDENTIDAD','1');
+            
+            if(mapTipoIdentidades.containsKey(caso.Tipo_Identificacion__c)){
+                caso.Tipo_Identificacion__c = mapTipoIdentidades.get(caso.Tipo_Identificacion__c);
+            }
+            String VE_USUARIO_ACTUALIZA;
+            String VE_USUARIO_APRUEBA = caso.LastModifiedBy.Codigo__c;
+            for(User item: [Select Codigo__c from User where Id =: caso.OwnerId ]){
+                VE_USUARIO_ACTUALIZA = item.Codigo__c;
+            }
+            
+            /*if(caso.Tipo_Identificacion__c=='PASAPORTE') { caso.Tipo_Identificacion__c='4';  
             }
             else if(caso.Tipo_Identificacion__c=='CARNET DE RESIDENTE') { caso.Tipo_Identificacion__c='2';  
             }
             else if(caso.Tipo_Identificacion__c=='RTN') { caso.Tipo_Identificacion__c='9';  
             }
             else if(caso.Tipo_identificacion__c=='CEDULA DE IDENTIDAD' || caso.Tipo_identificacion__c==null) { caso.Tipo_Identificacion__c='1';  
-            }
+            }*/
             
             queryCliente += camposCliente;
             queryCliente += ' From Account Where Id = \'' + caso.AccountId + '\'';                      
             Cliente = dataBase.query(queryCliente);
             
-            if(cliente.Tipo_Identificacion__c=='PASAPORTE') { cliente.Tipo_Identificacion__c='4';  
+            /*if(cliente.Tipo_Identificacion__c=='PASAPORTE') { cliente.Tipo_Identificacion__c='4';  
             }
             else if(cliente.Tipo_Identificacion__c=='CARNET DE RESIDENTE') { cliente.Tipo_Identificacion__c='2';  
             }
             else if(cliente.Tipo_Identificacion__c=='RTN') { cliente.Tipo_Identificacion__c='9';  
             }
             else if(cliente.Tipo_identificacion__c=='CEDULA DE IDENTIDAD') { cliente.Tipo_Identificacion__c='1';  
+            }*/
+            //
+            if(mapTipoIdentidades.containsKey(cliente.Tipo_Identificacion__c)){
+                cliente.Tipo_Identificacion__c = mapTipoIdentidades.get(cliente.Tipo_Identificacion__c);
             }
             beneficiarios = [Select Primer_Nombre__c, Primer_Apellido__c, Identificacion__c, Parentesco__c,
                              Porcentaje__c, Cuenta__r.Codigo__c, Fecha_nacimiento__c, Grado_parentesco__c, Sexo__c,
@@ -792,7 +813,11 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 if(beneficiarios[i].Porcentaje__c==0 && beneficiarios[i].ID_Externo__c !=null) {
                     clientesaeliminar.add(beneficiarios[i].ID_Externo__c); 
                 }
-                if(beneficiarios[i].Tipo_identificacion__c=='PASAPORTE'){
+                //
+                if(mapTipoIdentidades.containsKey(beneficiarios[i].Tipo_identificacion__c)){
+                    beneficiarios[i].Tipo_identificacion__c = mapTipoIdentidades.get(beneficiarios[i].Tipo_identificacion__c);
+                }
+                /*if(beneficiarios[i].Tipo_identificacion__c=='PASAPORTE'){
                     beneficiarios[i].Tipo_identificacion__c='4'; 
                 }else if(beneficiarios[i].Tipo_identificacion__c=='CARNET RESIDENCIA'){
                     beneficiarios[i].Tipo_identificacion__c='2'; 
@@ -800,7 +825,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     beneficiarios[i].Tipo_identificacion__c='9'; 
                 }else if(beneficiarios[i].Tipo_identificacion__c=='CEDULA DE IDENTIDAD' || beneficiarios[i].Tipo_identificacion__c==null){
                     beneficiarios[i].Tipo_identificacion__c='1'; 
-                }
+                }*/
                 
                 if(beneficiarios[i].Grado_parentesco__c=='Primero'){
                     beneficiarios[i].Grado_parentesco__c='1'; 
@@ -860,6 +885,9 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 }
             }
             classActualizacionInfo claseEnvio = new classActualizacionInfo();
+            claseEnvio.VE_USUARIO_ACTUALIZA = VE_USUARIO_ACTUALIZA;
+            claseEnvio.VE_USUARIO_APRUEBA = VE_USUARIO_APRUEBA;
+            //claseEnvio.usuarioAprueba = usuarioActualiza != usuarioAprueba ? usuarioAprueba : null;
             
             claseEnvio.direcciones = new list<classActualizacionInfo.classDirecciones>();
             claseEnvio.beneficiarios = new list<classActualizacionInfo.classBeneficiarios>();
@@ -1041,6 +1069,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 if (response.getStatusCode() == 200) {
                     System.debug('Respuesta de Traer saldos: '+response.getBody());
                     respuesta = (getSaldoCuenta)System.JSON.deserialize(response.getBody(), getSaldoCuenta.class); 
+                    //respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"33178","montoPignorado":"null","saldoTotal":"475.09","saldos":[{"tipoSaldo":"11","montoSaldo":"46.00"},{"tipoSaldo":"10","montoSaldo":"424.09"}]}', getSaldoCuenta.class);
                 }
             }else{
                 respuesta = (getSaldoCuenta)System.JSON.deserialize('{"cuenta":"51600","montoPignorado":"null","saldoTotal":"8583.79","saldos":[{"tipoSaldo":"11","montoSaldo":"8412.11"},{"tipoSaldo":"13","montoSaldo":"171.68"}]}', getSaldoCuenta.class); 

@@ -158,11 +158,13 @@
                             <apex:inputCheckbox value="{!AprobacionUsuario}" />
 				          </div>
 				          <div class="slds-form-element slds-size_2-of-3">
-				           <apex:commandButton value="Salir" action="{!regresar}" styleClass="slds-button slds-button--brand" />
+                              <label class="slds-form-element__label">Estado de Cuenta</label>
+                              <apex:inputCheckbox value="{!estadoCuenta}" />
 				          </div>
                           <div class="slds-form-element slds-size_2-of-3">
 				            <div class="slds-button-group" role="group">
-				          		<apex:commandButton value="Guardar" action="{!crearUsuario}" styleClass="slds-button slds-button--brand" />
+                                <apex:commandButton value="Salir" action="{!regresar}" styleClass="slds-button slds-button--brand slds-m-left_x-small" />&nbsp;
+				          		<apex:commandButton value="Guardar" action="{!crearUsuario}" styleClass="slds-button slds-button--brand slds-m-left_x-small" />
 				            </div>
 				          </div>
 				        </div>

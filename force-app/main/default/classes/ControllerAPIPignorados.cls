@@ -11,7 +11,7 @@ public class ControllerAPIPignorados {
 		request.setMethod('GET');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);
-		request.setEndpoint(url + 'api/CuentaPign/'+ cuentapig);
+		request.setEndpoint(url + 'api/PignoradosCuenta/'+ cuentapig);
         classpignorados fcsd = new classpignorados();
         string respuesta = '';
         system.debug('Entro al REST del EDC');

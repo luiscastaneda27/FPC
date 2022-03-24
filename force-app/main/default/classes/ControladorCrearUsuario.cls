@@ -26,6 +26,7 @@ public class ControladorCrearUsuario {
     public boolean Usuarios {get;set;}
     public boolean AprobacionPlanilla {get;set;}
     public boolean Activo{get;set;}
+    public boolean estadoCuenta{get;set;}
     public List<SelectOption> options {get;set;}
     
     private ApexPages.StandardController stdController;
@@ -102,20 +103,21 @@ public class ControladorCrearUsuario {
             {
                 if(Num_identidad.length()==13)
                 {
-				  Usuario_X_Empresa__c UserEmpre = new Usuario_X_Empresa__c();
-                   UserEmpre.Aceptar_Planilla__c=AprobacionPlanilla;
-                   UserEmpre.Calculo_De_Pilares__c=pilares;
-                   UserEmpre.Cargar_Generar_Planilla__c=Planillas;
-                   userEmpre.Crear_Usuarios__c=Usuarios;
-                   UserEmpre.Empresa2__c=Codigo_Unico_banco;
-                   UserEmpre.Nuevo_Personal__c=NuevoPersonal;
-                   UserEmpre.Nuevos_Salarios__c=nuevosSalarios;
-                   UserEmpre.Planilla_Seguro_Social__c=PlanillaSS;
-                   UserEmpre.Reportes__c=Reportes;
-                   UserEmpre.Usuario__c=IdUser;
-                   UserEmpre.Activo__c=Activo;
-                  userempre.Aprobacion_Usuarios__c=AprobacionUsuario;
-                   insert UserEmpre; 
+                    Usuario_X_Empresa__c UserEmpre = new Usuario_X_Empresa__c();
+                    UserEmpre.Aceptar_Planilla__c=AprobacionPlanilla;
+                    UserEmpre.Calculo_De_Pilares__c=pilares;
+                    UserEmpre.Cargar_Generar_Planilla__c=Planillas;
+                    userEmpre.Crear_Usuarios__c=Usuarios;
+                    UserEmpre.Empresa2__c=Codigo_Unico_banco;
+                    UserEmpre.Nuevo_Personal__c=NuevoPersonal;
+                    UserEmpre.Nuevos_Salarios__c=nuevosSalarios;
+                    UserEmpre.Planilla_Seguro_Social__c=PlanillaSS;
+                    UserEmpre.Reportes__c=Reportes;
+                    UserEmpre.Usuario__c=IdUser;
+                    UserEmpre.Activo__c=Activo;
+                    UserEmpre.EstadoDeCuenta__c = estadoCuenta;
+                    userempre.Aprobacion_Usuarios__c=AprobacionUsuario;
+                    insert UserEmpre; 
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 
                         'Usuario Creado Exitosamente'));
                    		 LimpiarPantalla();
@@ -168,13 +170,11 @@ public class ControladorCrearUsuario {
         }
     }
         
-    public void LimpiarPantalla()
-    {
-        try{
+    public void LimpiarPantalla(){
         Num_Identidad='';
         Nombre='';
         Apellido='';
-       	correo='';
+        correo='';
         mostrarModal=false;
         usuarios=false;
         Planillas=false;
@@ -188,11 +188,7 @@ public class ControladorCrearUsuario {
         AprobacionPlanilla =false;
         Usua.Email__c=null;  
         AprobacionUsuario=false;
-        }
-        catch(Exception ex)
-        {
-           
-        }
+        estadoCuenta = false;
     }
     
     

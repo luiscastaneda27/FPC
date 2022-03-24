@@ -903,9 +903,13 @@
                                     <apex:commandButton value="Guardar" action="{!guardar}" styleClass="slds-button slds-button--brand"
                                                         rendered="{!AND(mostrarGuardar, !cTipoCaso.reversiones, !cTipoCaso.subProducto)}" reRender="theForm" status="status"/>
                                     
-                                    <apex:commandButton value="Guardar" styleClass="slds-button slds-button--brand" rendered="{!AND(detalleCaso.Id == Null, cTipoCaso.subProducto)}" reRender="cambioSubproducto">
+                                    <apex:commandButton value="Guardar" styleClass="slds-button slds-button--brand" rendered="{!AND(mostrarGuardar, cTipoCaso.subProducto)}" reRender="cambioSubproducto">
                                         <apex:actionSupport event="onclick" action="{!guardar}" onComplete="hideButtonSave" />
                                     </apex:commandButton>
+                                    
+                                    <!--<apex:commandButton value="Guardar" styleClass="slds-button slds-button--brand" rendered="{!AND(detalleCaso.Id == Null, cTipoCaso.subProducto)}" reRender="cambioSubproducto">
+                                        <apex:actionSupport event="onclick" action="{!guardar}" onComplete="hideButtonSave" />
+                                    </apex:commandButton>-->  
                                     
                                                                         
                                     <!-- apex:commandButton value="Finalizar" action="{!finalizar}" styleClass="slds-button slds-button--brand"

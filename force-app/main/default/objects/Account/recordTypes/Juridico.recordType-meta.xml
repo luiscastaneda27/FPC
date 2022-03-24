@@ -512,15 +512,15 @@
             <fullName>138100000000</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>141000000000</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Asesor_Agn__c</picklist>
         <values>
             <fullName>HN19320</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HN19331</fullName>
             <default>false</default>
         </values>
         <values>

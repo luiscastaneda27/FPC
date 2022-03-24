@@ -154,7 +154,7 @@ public class EstadosDeCuenta {
 				
 		   }
            Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-           //system.debug('Correos enviados correctamente: '+results);
+           system.debug('Correos enviados correctamente: '+results.size());
            
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());	

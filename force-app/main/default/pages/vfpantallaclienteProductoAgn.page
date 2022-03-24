@@ -359,7 +359,8 @@
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />
+                                                                    <!--<apex:inputcheckbox disabled="{!disCumplimiento}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />-->
+                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" value="{!OcultaCarSI}" id="pcPEP" styleclass="slds-input"    />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;" ></span>
                                                                 </label>
                                                                 
@@ -368,7 +369,7 @@
                                                                 </label>
                                                                 
                                                                 <label class="slds-checkbox">
-                                                                    <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
+                                                                   <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input"    />
                                                                     <span class="slds-checkbox--faux" style="height:15px; width:15px;"  ></span>
                                                                 </label>
                                                                 
@@ -2145,7 +2146,7 @@
                                                                 ¿Ejerce o ha ejercido un cargo público nacional o internacional?
                                                             </label> 
                                                             
-                                                            <label class="slds-form-element__label" for="inputSample">
+                                                            <label class="slds-form-element__label" for="inputSample">hh
                                                                 <abbr class="slds-required" title="required"></abbr> SI
                                                             </label>
                                                             <label class="slds-checkbox">

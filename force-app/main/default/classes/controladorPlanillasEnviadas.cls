@@ -421,6 +421,9 @@ public class controladorPlanillasEnviadas {
             String rezago;
             String codigo;
             
+            Integer FechaPlanilla = 0;
+            Integer FechaSysde = 0;
+            
             for(integer i=0; i<planillas.size(); i++){
                 if(id_planilla == planillas[i].id_cambiarSalario){
                     PlanillaAprobada.fecha__c = planillas[i].Planilla_Aprobada;
@@ -428,6 +431,17 @@ public class controladorPlanillasEnviadas {
                     tasa = planillas[i].Primer_Apellido =='true' ? 0 : 1;
                     nombreEmpresa = planillas[i].Primer_Nombre;
                     rezago = Rez_SI_NO == 'Si' ? 'S' : 'N';
+                    
+                    FechaPlanilla = integer.valueOf(string.valueOf(planillas[i].Planilla_Aprobada).replace('"','').replace('-',''));
+                    FechaSysde = integer.valueOf(fechacierra[0].replace('"','') + fechacierra[1].replace('"','') + fechacierra[2].replace('"',''));
+                        
+                    System.debug(
+                        			'PRUEBAS fechas planilla y sysde'+planillas[i].Primer_Apellido 
+                        			+' Fecha planilla '+planillas[i].Planilla_Aprobada
+                                	+' Fecha cierre SYSDE '+ fechacierra[0] +'-'+ fechacierra[1] +'-'+ fechacierra[2]
+                        			+' Fecha planilla formato fecha '+ integer.valueOf(string.valueOf(planillas[i].Planilla_Aprobada).replace('"','').replace('-',''))
+                        			+' Fecha cierre SYSDE formato fecha '+ integer.valueOf(fechacierra[0].replace('"','') + fechacierra[1].replace('"','') + fechacierra[2].replace('"',''))
+                        		);
 
                     codigo = Num_CodReferencia_Rez.trim();
                     if(codigo.trim() =='Sin Informacion'){
@@ -473,9 +487,11 @@ public class controladorPlanillasEnviadas {
                 }
             }
 
-            if((integer.valueOf(fechacierra[0].replace('"','')) == fecha.year() &&
-                integer.valueOf(fechacierra[1]) == fecha.month() &&
-                integer.valueOf(fechacierra[2]) == fecha.day() && tasa == 0) || tasa == 1 || test.isRunningTest()){
+            //if((integer.valueOf(fechacierra[0].replace('"','')) == fecha.year() &&
+            //    integer.valueOf(fechacierra[1]) == fecha.month() &&
+            //    integer.valueOf(fechacierra[2]) == fecha.day() && tasa == 0) || tasa == 1 || test.isRunningTest()){
+              System.debug('Valores de las fechas antes de entrar al IF' +' Planilla: '+FechaPlanilla +' SYSDE: '+FechaSysde);
+              if((FechaPlanilla >= FechaSysde) || test.isRunningTest()){        
                     Planilla__c planilla = [SELECT Id, CurrencyIsoCode, Total__c,estado2__c, rezago__c,Cod_Referencia__c, ErrorPlanillasEnviadas__c, ServicioEjecutado__c
                                             FROM planilla__c WHERE Id=:id_planilla];
                     if(tasa == 0 && (Planilla.ServicioEjecutado__c == null || Planilla.ServicioEjecutado__c == 0)){
@@ -517,7 +533,7 @@ public class controladorPlanillasEnviadas {
                         PlanillaAprobada.rezago__c = rezago;
                         PlanillaAprobada.Cod_Referencia__c = codigo;
                         system.debug('Antes de actualizar la planilla: '+rezago+' - '+codigo);
-                        String result='';
+                        String result='OK';
                         //System.debug('Antes de aplicar el rezago: CodRef:'+PlanillaAprobada.Cod_Referencia__c+' - Planilla:'+num_CodCuenta_Rez+' - MCalc:'+Monto_Calculado+' - MSal:'+Monto_Sal+' - Mone:'+Moneda+' - CDol:'+Compra_Dolar);
                         if(PlanillaAprobada.Cod_Referencia__c != 'NoAplica'){
                             System.debug('Se aplica el rezago a: '+PlanillaAprobada.Cod_Referencia__c);
@@ -534,7 +550,7 @@ public class controladorPlanillasEnviadas {
                         }
                     }
                 }else{
-                    MensajeError = 'Error al Aprobar Planilla en el Metodo: AprobarPlanilla. <br/>La fecha de la planilla no coincide con la fecha de cierre de Sysde: '+fechacierra[0];
+                    MensajeError = 'Error al Aprobar Planilla en el Metodo: AprobarPlanilla. <br/>La fecha de la planilla no coincide con la fecha de cierre de Sysde: '+fechacierra[0] +' '+ fechacierra[1] +' '+ fechacierra[2];
                     MensajeErr = true;
                     return;
                 }
@@ -611,12 +627,14 @@ public class controladorPlanillasEnviadas {
                 planilla.ServicioEjecutado__c = 1;
                 planilla.Cod_Referencia__c = codigo;
                 
-                String result='';
+                String result='OK';
                 //System.debug('Antes de aplicar el rezago: CodRef:'+planilla.Cod_Referencia__c+' - Planilla:'+num_CodCuenta_Rez+' - MCalc:'+Monto_Calculado+' - MSal:'+Monto_Sal+' - Mone:'+Moneda+' - CDol:'+Compra_Dolar);
+                System.debug('Antes de evaluar el no aplicaXD: '+planilla.Cod_Referencia__c);
+                
                 if(planilla.Cod_Referencia__c != 'NoAplica'){
                     System.debug('Se aplica el rezago a: '+planilla.Cod_Referencia__c);
                     result = AplicarRezago(planilla.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);
-                }
+                } 
                 if(result == 'OK'){
                     System.debug('Antes de Actualizar la Planilla: '+rezago+'-'+codigo);
                     update Cuenta_planilla;
@@ -628,7 +646,7 @@ public class controladorPlanillasEnviadas {
                     system.debug('Error al aplicar rezago: ');
                     MensajeError = 'Error en Compra/Venta de Dolares en el Metodo: CambioTasa. <br/>Mensaje: '+result;
                     MensajeErr = true;
-                }
+                }       
             } 
         }catch(Exception ex){
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());

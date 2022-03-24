@@ -36,6 +36,7 @@ public class TestConciliacion {
         mm.Monto_Calculado='40';
         mm.Num_CodCuenta_Rez='100110';
         
+        
         //
         
         Pantalla_Aportes__c nw = new Pantalla_Aportes__c();
@@ -258,6 +259,7 @@ public class TestConciliacion {
         mm.showPopup();
         mm.SearchValores();
         mm.Monto = '40.12';
+        mm.Rezagosn = 'SI';
         mm.aplicar();
         ControllerApiRezagos.AplicaRetiro('FPC222', '1', '400');
         

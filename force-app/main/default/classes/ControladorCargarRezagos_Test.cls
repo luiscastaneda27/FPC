@@ -79,6 +79,11 @@ global class ControladorCargarRezagos_Test {
         Autonumerico_cuentas_Syste__c gtp= new Autonumerico_cuentas_Syste__c();
         gtp.Id_Formulario_Sysde__c=0;
         insert gtp;
+        
+        FechaDC_Sysde__c PFS = new FechaDC_Sysde__c();
+        PFS.Fecha_cierre__c = Date.valueOf('2020-08-04');
+        PFS.Name = 'CierreAlDia';
+        insert PFS;
 
         test.startTest();
         string stringCSV ='"FONDO ","REFERENCIA","FECHA DEL DEPOSITO","MONEDA DEL DEPOSITO","MONTO DEL DEPOSITO","DESCRIPCION","DESCRIPCION NOTA","BANCO","AGENCIA ORIGEN","ASESOR"\n101,9519458630,"8/4/20","HNL"," 3,000.00 ","Transferencia entre Cuentas","Descripcion",28,"AGN PRINCIPAL TGU","TODOS"\n101,9519458631,"8/4/20","HNL"," 3,000.00 ","Transferencia entre Cuentas","Descripcion",28,"AGN PRINCIPAL TGU","HN19964"';
