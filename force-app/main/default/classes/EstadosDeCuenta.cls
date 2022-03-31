@@ -18,6 +18,8 @@ public class EstadosDeCuenta {
     			map<String, String> mapNombre = new map<String, String>();
     			list<string> idClientes= new list<string>();
                 List<Account> clientes = new List<Account>();
+                Date desde;
+                Date hasta;
     			if(idCaso != null){
                     system.debug('Entró en True casos');
                     string idclientenuevo =[select  accountid from case where id in :idCaso limit 1].accountid;
@@ -42,7 +44,8 @@ public class EstadosDeCuenta {
     					mapFDesde.put(item.Account.Identificacion__c, fDesde);
     					mapFHasta.put(item.Account.Identificacion__c, fHasta);
                         fechaHoy = item.Fecha_Hasta__c;
-    					
+    					desde = item.Fecha_Desde__c;
+                        hasta = item.Fecha_Hasta__c;               
     				}
     			}else{
                     idClientes = ObtenerCorreos(tipoEDC);
@@ -109,6 +112,10 @@ public class EstadosDeCuenta {
 				For(classECPortada item : respuestaDetallado){
                     Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
                     String cuerpo = cuerpoCorreo.Cuerpo__c;
+                    if(desde != null && hasta != null){
+                        cuerpo = cuerpo.replace('A la Fecha:', 'Período del');
+                        cuerpo = cuerpo.replace('[getAlaFecha]', desde.day()+'-'+(desde.month()<10 ? '0'+desde.month() : ''+desde.month())+'-'+desde.year()+' al '+ item.fechaCierre);
+                    }
 					cuerpo = cuerpo.replace('[getAlaFecha]', item.fechaCierre);
 					String lps = item.fondosLempiras != null ? '<br/> &nbsp; &nbsp; &nbsp; Total Fondos en Lempiras: ' + item.fondosLempiras : '';
 					cuerpo = cuerpo.replace('[getFondosLempira]', lps);
@@ -243,6 +250,42 @@ public class EstadosDeCuenta {
 		return respuesta;   
     }
     
+    public static list<classECPortada> estadoCuentaCorreoMasivo(list<classClientesEC> claseEnvio) {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		//String url = claseUtil.urlSysde('Test');	
+		String url = 'https://api-fpc.herokuapp.com/';	
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+		request.setEndpoint(url + 'api/ec/portada');
+		
+		list<classECPortada> respuesta = new list<classECPortada>();
+		system.debug('Entro al REST del EDC');
+		try{
+						
+			classJson envio = new classJson();
+			envio.contenido = JSON.serialize(claseEnvio);
+			String cons = 'contenido=' + envio.contenido;
+			system.debug(cons);		
+			request.setBody(cons);	
+			
+	    		HttpResponse response = http.send(request);
+	    		System.debug('Respuesta de Sysde: '+response.getBody());
+	        	if (response.getStatusCode() == 200) {
+           		
+           		respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
+	        	}       	
+                       
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage());	
+		} 
+		return respuesta;   
+    }
+    
     public static list<classECMensual> estadoCuentaMensual(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -308,7 +351,8 @@ public class EstadosDeCuenta {
     public static list<classECTrimestral> estadoCuentaTrimestralMasivo(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
+		//String url = claseUtil.urlSysde('Test');	
+		String url = 'https://api-fpc.herokuapp.com/';		
 		request.setMethod('POST');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setEndpoint(url + 'api/ec/trimestral' );
@@ -332,8 +376,6 @@ public class EstadosDeCuenta {
 		}Catch(Exception e){
 			system.debug('EDC Trimestral: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
         } 
-        Case caso =[select id, Estado_de_Cuenta__c from case ];
-        respuesta = (list<classECTrimestral>)System.JSON.deserialize(caso.Estado_de_Cuenta__c, list<classECTrimestral>.class);
         return respuesta;   
     }
    
@@ -366,15 +408,14 @@ public class EstadosDeCuenta {
 		}Catch(Exception e){
 			system.debug('EDC Historico: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
 		} 
-        respuesta = (list<classECHistorico>)System.JSON.deserialize('[{"fecha":"31/03/2020","nombreCliente":"CINTYA DOMITILA ALCANTARA GIRON","emailCliente":"cintya.alcantara@ficohsa.com","numeroCliente":"152892","rendimientoLempiras":"null%","rendimientoDolares":"null%","movimientos":[{"moneda":" Dólares","cuenta":"33178","totalPersonal":"19,703.17","totalPatronal":"0.00","granTotal":"19,703.17","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"12,308.25","aportePatronal":"0.00","aporteTotal":"12,308.25"},{"fecha":"12/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"10.00","aportePatronal":"0.00","aporteTotal":"10.00"},{"fecha":"27/02/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"7,641.11","aportePatronal":"0.00","aporteTotal":"7,641.11"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Seguro de Vida","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"202.88","aportePatronal":"0.00","aporteTotal":"202.88"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-459.07","aportePatronal":"0.00","aporteTotal":"-459.07"}]},{"moneda":" Lempiras","cuenta":"38054","totalPersonal":"304,126.36","totalPatronal":"304,097.76","granTotal":"608,224.12","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"286,268.12","aportePatronal":"286,240.07","aporteTotal":"572,508.19"},{"fecha":"13/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"14/02/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"15/01/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"6,998.24","aportePatronal":"6,997.57","aporteTotal":"13,995.81"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-2,143.20","aportePatronal":"-2,143.08","aporteTotal":"-4,286.28"}]},{"moneda":" Lempiras","cuenta":"25587","totalPersonal":"545,971.22","totalPatronal":"545,102.20","granTotal":"1,091,073.42","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"535,901.88","aportePatronal":"535,048.68","aporteTotal":"1,070,950.56"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"12,802.97","aportePatronal":"12,782.60","aporteTotal":"25,585.57"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-2,733.63","aportePatronal":"-2,729.08","aporteTotal":"-5,462.71"}]},{"moneda":" Lempiras","cuenta":"107498","totalPersonal":"0.00","totalPatronal":"0.00","granTotal":"0.00","transacciones":[{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"}]}]}]', list<classECHistorico>.class);
-                  	
-		return respuesta;   
+        return respuesta;   
     }
 
     public static list<classECHistorico> estadoCuentaHistoricoMasivo(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
+		//String url = claseUtil.urlSysde('Test');	
+		String url = 'https://api-fpc.herokuapp.com/';		
 		request.setMethod('GET');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setEndpoint(url + 'api/ec/historico');
@@ -399,9 +440,7 @@ public class EstadosDeCuenta {
 		}Catch(Exception e){
 			system.debug('EDC Historico: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
 		} 
-        respuesta = (list<classECHistorico>)System.JSON.deserialize('[{"fecha":"31/03/2020","nombreCliente":"CINTYA DOMITILA ALCANTARA GIRON","emailCliente":"cintya.alcantara@ficohsa.com","numeroCliente":"152892","rendimientoLempiras":"null%","rendimientoDolares":"null%","movimientos":[{"moneda":" Dólares","cuenta":"33178","totalPersonal":"19,703.17","totalPatronal":"0.00","granTotal":"19,703.17","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"12,308.25","aportePatronal":"0.00","aporteTotal":"12,308.25"},{"fecha":"12/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"10.00","aportePatronal":"0.00","aporteTotal":"10.00"},{"fecha":"27/02/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"7,641.11","aportePatronal":"0.00","aporteTotal":"7,641.11"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Seguro de Vida","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"202.88","aportePatronal":"0.00","aporteTotal":"202.88"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-459.07","aportePatronal":"0.00","aporteTotal":"-459.07"}]},{"moneda":" Lempiras","cuenta":"38054","totalPersonal":"304,126.36","totalPatronal":"304,097.76","granTotal":"608,224.12","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"286,268.12","aportePatronal":"286,240.07","aporteTotal":"572,508.19"},{"fecha":"13/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"14/02/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"15/01/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"4,334.40","aportePatronal":"4,334.40","aporteTotal":"8,668.80"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"6,998.24","aportePatronal":"6,997.57","aporteTotal":"13,995.81"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-2,143.20","aportePatronal":"-2,143.08","aporteTotal":"-4,286.28"}]},{"moneda":" Lempiras","cuenta":"25587","totalPersonal":"545,971.22","totalPatronal":"545,102.20","granTotal":"1,091,073.42","transacciones":[{"fecha":"01/01/2020","descripcionTransaccion":"Saldo Acumulado al 01/01/2020","aportePersonal":"535,901.88","aportePatronal":"535,048.68","aporteTotal":"1,070,950.56"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Extraordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"12,802.97","aportePatronal":"12,782.60","aporteTotal":"25,585.57"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"-2,733.63","aportePatronal":"-2,729.08","aporteTotal":"-5,462.71"}]},{"moneda":" Lempiras","cuenta":"107498","totalPersonal":"0.00","totalPatronal":"0.00","granTotal":"0.00","transacciones":[{"fecha":"31/03/2020","descripcionTransaccion":"Aportes Ordinarios","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Intereses","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"},{"fecha":"31/03/2020","descripcionTransaccion":"Comisiones","aportePersonal":"0.00","aportePatronal":"0.00","aporteTotal":"0.00"}]}]}]', list<classECHistorico>.class);
-                  	
-		return respuesta;   
+        return respuesta;   
     }
     
     

@@ -57,12 +57,14 @@ public class formularioIdentificacion_PDF_CONT {
     public Decimal comiAporte {get;set;}
     public List<beneficiario> ListBeneficiariosC {get;set;}
     
+    public String anio {get;set;}
+    
     public formularioIdentificacion_PDF_CONT(){   
         fechaform= date.today();
         try{
             nacionalidades=0;
             cuenta = ApexPages.currentPage().getParameters().get('codigoCuenta');
-            
+            anio = String.valueOf(Date.today().Year()).right(2);
             ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(cuenta);
             String JsonString;
             if (!test.isRunningTest()){

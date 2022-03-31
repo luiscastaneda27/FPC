@@ -17,7 +17,10 @@ public class beneficiario {
     public double Grado{get;set;} 
     public datetime fechaNacimiento{get;set;}
     public date fechaBeneficiario{get;set;}
-    public decimal idGuardar{get;set;} 
+    public decimal idGuardar{get;set;}
+    
+    public String usuarioActualiza { get; set; }
+    public String usuarioAprueba { get; set; }
     
     public beneficiario( decimal idGuardar, string tipoId, string numeroId, string PEPbeneficiario, string FATCAbeneficiario, 
                          string FATCANCbeneficiario, string tipoBeneficiario, string genero, string primerNombre, 

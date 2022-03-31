@@ -22,8 +22,8 @@ global class batchEnvioEDC implements Database.Batchable<sObject>, Database.Allo
     global void finish(Database.BatchableContext bc) {
         decimal contador = [select count() from Correo_estado_cuenta__c where enviado__C=false];
         Autonumerico_cuentas_Syste__c c= [select Contador_EDC__c, id from Autonumerico_cuentas_Syste__c limit 1];
-       // if(contador > 0 && c.Contador_EDC__c <48){ // DESARROLLO
-       if(contador > 0 && c.Contador_EDC__c <100){ // PRODUCCIÓN
+        if(contador > 0 && c.Contador_EDC__c <48){ // DESARROLLO
+       //if(contador > 0 && c.Contador_EDC__c <100){ // PRODUCCIÓN
             batchEnvioEDC l = new batchEnvioEDC();
             Id batchprocessid = Database.executeBatch(l,1);
         }else {

@@ -13,6 +13,8 @@ public class classActualizacionInfo
     public String nacionalidad { get; set; }
     public String estadoCivil { get; set; }
     public String correo { get; set; }
+    public String VE_USUARIO_ACTUALIZA { get; set; }
+    public String VE_USUARIO_APRUEBA { get; set; }
     public List<classTelefonos> telefonos { get; set; }
     public List<classDirecciones> direcciones { get; set; }
     public List<classBeneficiarios> beneficiarios { get; set; }
@@ -51,5 +53,8 @@ public class classActualizacionInfo
         public String sexo { get; set; }
         public String tipoId { get; set; }
         public String accion { get; set; }
+        public String usuarioAprueba { get; set; }
+        public String usuarioActualiza { get; set; }
+        public String tipoBeneficiario { get; set; }
     }
 }

@@ -21,7 +21,8 @@ public class EnvioCorreosEDC {
             
             idClientes = estadosDeCuenta.ObtenerCorreos('A1');
             fechaHoy = fechaHoy.addDays(-fechaHoy.Day());
-            date fecha =fechaHoy;  
+            date fecha =fechaHoy; 
+            System.debug('idClientes: '+idClientes);
             list<string> codigosclientes = new list<string>(); 
             
             for(Cuentas__C item: [select cliente__C from cuentas__C where Fecha_Apertura__c <: fecha and cliente__C in :idClientes]) { 
@@ -50,9 +51,10 @@ public class EnvioCorreosEDC {
             
             queryCorreo += '\'EDC_Portada\'';
             
-            respuestaDetallado = !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreo(claseEnvio) :  (list<classECPortada>)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', list<classECPortada>.class);
+            respuestaDetallado = !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreoMasivo(claseEnvio) :  (list<classECPortada>)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', list<classECPortada>.class);
             for(account item : clientes) {
                 for(integer i=0; i<respuestaDetallado.size(); i++) {
+                    System.debug(item.Identificacion__c+ ' --- '+respuestaDetallado[i].identidad+ ' '+item.Identificacion__c==respuestaDetallado[i].identidad);
                     if(item.Identificacion__c==respuestaDetallado[i].identidad){
                         respuestaDetallado[i].nombrecliente=item.name;
                         respuestaDetallado[i].emailCliente=item.PersonEmail;
@@ -100,7 +102,7 @@ public class EnvioCorreosEDC {
             
             //system.debug('Variable correos: ' + listCorreo);
             Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-            system.debug('Correos enviados correctamente: '+results);
+            system.debug('Correos enviados correctamente: '+results.size() + results[0].getErrors());
             FechaDC_Sysde__c fcsd = new FechaDC_Sysde__c();
             if(!test.isRunningTest()){ fcsd = [Select  id, Total_Correos_Enviados__C From FechaDC_Sysde__c Where Name = 'CierreAlDia'];
             }else{
@@ -130,7 +132,7 @@ public class EnvioCorreosEDC {
                 Messaging.SingleEmailMessage[] listEmail = new List<Messaging.SingleEmailMessage>(); 
                 listEmail.add(email); 
                 system.debug('Tamano de lista: '+listEmail.size());
-                results = Messaging.sendEmail(listEmail, false); 
+                //results = Messaging.sendEmail(listEmail, false); 
             }
         }Catch(Exception e){
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());   

@@ -43,12 +43,16 @@ public class ControladorGraficoProyecciones {
     }
     
     @auraEnabled
-    public static void envioCorreo(String recordId, String correo, String tipoProyeccion){
+    public static String envioCorreo(String recordId, String correo, String tipoProyeccion){
         Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         PageReference pdf;
+        User usuario = [Select Name, Email, Phone, MobilePhone  from User where Id = :UserInfo.getUserId()];
+        if(usuario.Phone == null || usuario.MobilePhone == null){
+            return 'Datos imcompletos para enviar el correo, teléfono y móvil.';
+        }
         List<Messaging.EmailFileAttachment> listArchivos = new List<Messaging.EmailFileAttachment>();
-        Proyeccion__c proy = [Select Cliente__r.PersonContactId,Cliente__r.Name,PersonContact__c,Prospecto__r.Name from Proyeccion__c Where Id=:recordId ];
+        Proyeccion__c proy = [Select Cliente__r.PersonContactId,NombreCliente__c,PersonContact__c,Preventa__c from Proyeccion__c Where Id=:recordId ];
         if(tipoProyeccion == 'Ambas' || tipoProyeccion == 'Consolidado'){
             pdf = Page.vfProyeccionConsolidado; 
             pdf.setRedirect(False);
@@ -82,9 +86,8 @@ public class ControladorGraficoProyecciones {
         } 
         String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = \'CorreoProyeccion\'';
 	    Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
-        User usuario = [Select Name, Email, Phone, MobilePhone  from User where Id = :UserInfo.getUserId()];
         String cuerpo = cuerpoCorreo.Cuerpo__c;
-        cuerpo = cuerpo.replace('[getName]', proy.Cliente__r.Name != null ? proy.Cliente__r.Name : proy.Prospecto__r.Name);
+        cuerpo = cuerpo.replace('[getName]', proy.NombreCliente__c);
         cuerpo = cuerpo.replace('[getNombreAsesor]', usuario.Name);
         cuerpo = cuerpo.replace('[getEmail]', usuario.Email);
         cuerpo = cuerpo.replace('[getTelefonoOficina]', usuario.Phone);
@@ -97,15 +100,28 @@ public class ControladorGraficoProyecciones {
         mail.setSubject('Proyecciones Ficohsa Pensiones y Cesantías '+tipoProyeccion);
         mail.setHtmlBody(cuerpo);
         mail.setFileAttachments(listArchivos);
-        mail.setTargetObjectId(Proy.PersonContact__c);
-        mail.setSaveAsActivity(true);
+        if(Proy.PersonContact__c != null){
+            mail.setTargetObjectId(Proy.PersonContact__c);
+            mail.setSaveAsActivity(true);
+        }
         MessageList.add(mail);    
-        
+        Task tarea = new Task();
         Messaging.sendEmail(MessageList);
-        Task tarea = [Select Id, Proyeccion__c, TipoProyeccion__c  from Task Where WhoId =:Proy.PersonContact__c Order by CreatedDate Desc limit 1];
-        tarea.TipoProyeccion__c = tipoProyeccion;
-        tarea.Proyeccion__c = recordId;
-        update tarea;
+        if(Proy.PersonContact__c != null){
+            tarea = [Select Id, Proyeccion__c, TipoProyeccion__c  from Task Where WhoId =:Proy.PersonContact__c Order by CreatedDate Desc limit 1];
+            tarea.TipoProyeccion__c = tipoProyeccion;
+            tarea.Proyeccion__c = recordId;
+            update tarea;
+        }else{
+            tarea.WhatId = Proy.Preventa__c;
+            tarea.TipoProyeccion__c = tipoProyeccion;
+            tarea.Proyeccion__c = recordId;
+            tarea.Subject = 'Correo electrónico: '+mail.getSubject();
+            tarea.Status = 'Completado';
+            tarea.ActivityDate = Date.today();
+            insert tarea;
+        }
+        return 'Exitoso';
     }
     
     @auraEnabled
