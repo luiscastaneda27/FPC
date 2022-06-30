@@ -739,7 +739,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             camposCaso += 'Lugar_Nacimiento__c,Departamento_Residencia2__c,';
             camposCaso += 'Departamento_Trabajo2__c,Ciudad_Residencia2__c,Ciudad_Trabajo2__c,Colonia_Avenida_Residencia__c,';
             camposCaso += 'Colonia_Avenida_Trabajo__c,Punto_Referencia_Residencia__c,Punto_Referencia_Trabajo__c,';
-            camposCaso += 'Tipo_Identificacion__c,Identificacion__c,Sexo__c';
+            camposCaso += 'Tipo_Identificacion__c,Identificacion__c,Sexo__c,FrecuenciaEnvioEDC__c';
             
             camposCliente = 'FirstName,LastName,Nacionalidad__pc,Estado_Civil__pc,PersonEmail,Celular__c,Phone,PersonOtherPhone,PersonBirthdate,';
             camposCliente += camposCaso;
@@ -798,7 +798,8 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             }
             beneficiarios = [Select Primer_Nombre__c, Primer_Apellido__c, Identificacion__c, Parentesco__c,
                              Porcentaje__c, Cuenta__r.Codigo__c, Fecha_nacimiento__c, Grado_parentesco__c, Sexo__c,
-                             Segundo_Nombre__c, Segundo_Apellido__c, ID_Externo__c,Tipo_identificacion__c
+                             Segundo_Nombre__c, Segundo_Apellido__c, ID_Externo__c,Tipo_identificacion__c,
+                             TipoBeneficiario__c
                              From Detalle_caso__c
                              Where Caso__c =: Caso.id];
             list<string> idexternos = new list<string>();
@@ -957,6 +958,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             claseEnvio.direcciones.add(direccionTrabajo);
             claseEnvio.direcciones.add(direccionResi);
             // BENEFICIARIOS
+            List<String> listIdExterno = new List<String>();
             For(Detalle_Caso__c Item : beneficiarios){
                 classActualizacionInfo.classBeneficiarios nuevo = new classActualizacionInfo.classBeneficiarios();
                 nuevo.cuenta = item.Cuenta__r.Codigo__c;
@@ -967,20 +969,67 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 nuevo.segundoApellido = item.Segundo_Apellido__c;
                 nuevo.codigoParentesco = item.Parentesco__c;
                 if(item.Porcentaje__c != null){
-                    nuevo.porcentaje = String.valueOF(item.Porcentaje__c); 
-                    nuevo.Accion = item.Porcentaje__c <= 0 ? 'E' : null;
+                    nuevo.porcentaje = String.valueOF(item.Porcentaje__c);
                 }
-                if(item.ID_Externo__c != null) { nuevo.idExterno = String.valueOF(item.ID_Externo__c);   
-                }
-                
+                nuevo.idExterno = item.ID_Externo__c != null ? String.valueOF(item.ID_Externo__c) : null;   
                 nuevo.gradoParentesco = item.Grado_parentesco__c;
-                if(item.Fecha_nacimiento__c != null){
-                    DateTime dt = DateTime.newInstanceGMT(item.Fecha_nacimiento__c.year(), item.Fecha_nacimiento__c.month(), item.Fecha_nacimiento__c.day(), 0, 0, 0);
-                    nuevo.fechaNacimiento = dt;
-                }
+                nuevo.fechaNacimiento = item.Fecha_nacimiento__c != null ? DateTime.newInstanceGMT(item.Fecha_nacimiento__c.year(), item.Fecha_nacimiento__c.month(), item.Fecha_nacimiento__c.day(), 0, 0, 0) : null;
                 nuevo.tipoId = item.Tipo_identificacion__c;
                 nuevo.sexo = item.Sexo__c;
+                //nuevo.usuarioActualiza = VE_USUARIO_ACTUALIZA;
+                //nuevo.usuarioAprueba = VE_USUARIO_APRUEBA;
+                nuevo.tipoBeneficiario = item.TipoBeneficiario__c == 'Directo' ? 'D' : 'C';
+                nuevo.accion = 'M';
+                
+                nuevo.estado ='A';
+                nuevo.incluidoPor = VE_USUARIO_ACTUALIZA;
+                nuevo.fechaInclusion = Caso.CreatedDate;
+                nuevo.autorizadoPor =VE_USUARIO_APRUEBA;
+                nuevo.modificadoPor =VE_USUARIO_ACTUALIZA;
+                nuevo.fechaModificacion = System.Now();
+                if(item.ID_Externo__c != null){
+                    listIdExterno.add(String.valueOF(item.ID_Externo__c));
+                }
                 claseEnvio.beneficiarios.add(nuevo);
+            }
+            List<Beneficiario__C> listBene = new List<Beneficiario__C>();
+            if(claseEnvio.beneficiarios.size() > 0){
+                System.debug('Se metio: '+claseEnvio.beneficiarios.size());
+                for(Beneficiario__C item: 
+                    [Select Id,Cuenta__c,Cuenta__r.Codigo__c, Tipo_de_Identificaci_n__c, Identidad__c ,
+                     Primer_Nombre__c, Segundo_Nombre__c,Primer_Apellido__c, Segundo_Apellido__c, 
+                     TipoBeneficiario__c,Porcentaje__c,Fecha_Nacimiento__c, Sexo__c,
+                     Grado_Parentesco__c,Parentesco__c ,ID_Externo__c
+                     from Beneficiario__C
+                     where Cuenta__r.Cliente__c =: caso.AccountId]){
+                         if(String.valueOf(item.ID_Externo__c) != null && !listIdExterno.contains(String.valueOf(item.ID_Externo__c))){
+                             listBene.add(new Beneficiario__c(Id = item.Id));
+                         }
+                         classActualizacionInfo.classBeneficiarios benef = new classActualizacionInfo.classBeneficiarios();
+                         benef.cuenta = item.Cuenta__r.Codigo__c;
+                         benef.idExterno = String.valueOf(item.ID_Externo__c);
+                         benef.primerNombre = item.Primer_Nombre__c;
+                         benef.segundoNombre = item.Segundo_Nombre__c;
+                         benef.primerApellido = item.Primer_Apellido__c;
+                         benef.segundoApellido = item.Segundo_Apellido__c;
+                         benef.tipoId = item.Tipo_de_Identificaci_n__c;
+                         benef.identidad = item.Identidad__c;
+                         benef.porcentaje = String.valueOf(item.Porcentaje__c);
+                         benef.fechaNacimiento = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
+                         benef.sexo = item.Sexo__c;
+                         benef.codigoParentesco = item.Parentesco__c;
+                         benef.gradoParentesco = item.Grado_Parentesco__c;
+                         benef.tipoBeneficiario = item.TipoBeneficiario__c == 'Directo' ? 'D' : 'C';
+                         benef.accion = 'E';
+                         
+                         benef.estado ='I';
+                         benef.incluidoPor = VE_USUARIO_ACTUALIZA;
+                         benef.fechaInclusion = Caso.CreatedDate;
+                         benef.autorizadoPor =VE_USUARIO_APRUEBA;
+                         benef.modificadoPor =VE_USUARIO_ACTUALIZA;
+                         benef.fechaModificacion = System.now();
+                         claseEnvio.beneficiarios.add(benef);
+                     }
             }
             
             For(String item : camposCaso.split(',')){
@@ -1018,7 +1067,8 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     }
                 }
             }
-            
+            List<classActualizacionInfo.classBeneficiarios> listBeneficiarios = claseEnvio.beneficiarios;
+            claseEnvio.beneficiarios = new List<classActualizacionInfo.classBeneficiarios>();
             claseEnvio.bitacora = bitacoras;
             
             classJson envio = new classJson();
@@ -1032,9 +1082,15 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             request.setTimeout(120000);
             system.debug('lo que manda el request: '+request);
             HttpResponse response = http.send(request);
+            String respuestaBenef = listBeneficiarios.size() > 0 ? '\n' +actualizacionInformBenef(listBeneficiarios) : '';
             system.debug(response.getBody());
-            Caso.Respuesta_desde_Sysde__c = response.getBody();
+            Caso.Respuesta_desde_Sysde__c = response.getBody() +  respuestaBenef;
             aSysdeSincronizador.actializarClienteIndividual(caso.Account.Cliente_Unico_Banco__c);
+            delete listBene;
+            if(caso.FrecuenciaEnvioEDC__c != null){
+                Account acc = new Account(FrecuenciaEnvioEDC__c = caso.FrecuenciaEnvioEDC__c, Id = Caso.AccountId);
+                update acc;
+            }
             claseUtil.stopTrigger();            
             update Caso;
             if(clientesaeliminar.size()>0){
@@ -1048,6 +1104,23 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         }Catch(Exception e){
             system.debug('Error del llamado' + e.getMessage() + ' Linea - ' + e.getLineNumber());   
         }  
+    }
+    
+    public static String actualizacionInformBenef(List<classActualizacionInfo.classBeneficiarios> listBeneficiarios) {
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        String url = claseUtil.urlSysde('Test');
+        //url = 'https://api-fpc.herokuapp.com/';
+        request.setEndpoint(url + 'api/info/beneficiarios');
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.setBody(Json.serialize(listBeneficiarios));
+        request.setTimeout(120000);
+        System.debug('Mandamos: '+request.getBody());
+        HttpResponse response = http.send(request);
+        System.debug('Codigo: '+response.getStatusCode());
+        System.debug('Body: '+response.getBody());
+        return response.getBody(); 
     }
     
     // +++++++++++++++++++++++++++++++++ RETIROS ++++++++++++++++++++++ 
@@ -1450,10 +1523,11 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             fechacierre = date.valueOf(response.getBody().replace('"',''));
             FechaDC_Sysde__c fdcs = [Select Fecha_cierre__c, id, Trimestre_Terminado__C, Total_Correos_Enviados__C From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
             fdcs.Fecha_cierre__c = fechacierre;
-            if(fechacierre.day() == 1 && !fdcs.Trimestre_Terminado__C && (fechacierre.month() == 1 || fechacierre.month() == 4 || fechacierre.month() == 7 || fechacierre.month() == 10)){
-                    fdcs.Trimestre_Terminado__C = true;
-                    fdcs.Total_Correos_Enviados__C = 0;
-                }
+            if(fechacierre.day() == 1 && !fdcs.Trimestre_Terminado__C){
+                fdcs.Trimestre_Terminado__C = true;
+                fdcs.Total_Correos_Enviados__C = 0;
+                FPC_ClaseUtilEDC.notificacionInicioEnvioEDC();
+            }
             update fdcs;
             for(CronTrigger item : [SELECT id FROM CronTrigger where CronJobDetail.Name = 'FechaCierreSysde']){
                 System.abortJob(item.id);
@@ -1513,7 +1587,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         try{
             HttpResponse response;
             if(!test.isRunningTest()){ response=http.send(request);respuesta = response.getBody();}
-            
+            system.debug('Helowww: ' + respuesta);
             //System.debug(response.getBody());             
             //if(response.getBody()!=null && response.getBody().trim()!=''){respuesta = response.getBody();} 
             if(respuesta == '' || respuesta == 'null' || test.isRunningTest()) {
@@ -1522,6 +1596,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         }catch(System.CalloutException e){
             system.debug(e.getMessage());   
         }
+        
         return respuesta;    
     }
     
