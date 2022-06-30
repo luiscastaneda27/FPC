@@ -198,9 +198,9 @@
         <div style="border-bottom:1px solid black;width:390px;display:inline-block;">
         <!--¿Posee más de una nacionalidad?País{!info.pccodpais} {!pais}-->
         </div><br/><br/>
-          6. Lugar de Nacimiento &nbsp;
+          6. País de Nacimiento &nbsp;
         <div style="border-bottom:1px solid black;width:590px;display:inline-block;">
-        <!--Lugar de Nacimiento-->{!info.pdLugarNacimientoCN}
+        <!--Lugar de Nacimiento-->{!info.pcPaisNacimiento}
         </div><br/><br/>
           7. Dirección de Domicilio &nbsp;
         <div style="border-bottom:1px solid black;width:580px;display:inline-block;">
@@ -233,8 +233,8 @@
             <apex:outputPanel rendered="{!info.ES_Residente=='N'}">
                 <img src="/img/checkbox_checked.gif"/>
             </apex:outputPanel>
-            <font></font>
-        <p>2. ¿Es residente para Efectos Migratorios en los Estados Unidos?
+            <font></font><br/><br/>
+        <!--p>2. ¿Es residente para Efectos Migratorios en los Estados Unidos?
          Si<font></font>
             <apex:outputPanel rendered="{!info.ES_Residente_EfectosMi=='N'||info.ES_Residente==null||info.ES_Residente_EfectosMi==' '}">
             <img src="/img/checkbox_unchecked.gif"/>
@@ -253,16 +253,16 @@
                 <img src="/img/checkbox_checked.gif"/>
             </apex:outputPanel>
             <font></font>
-        </p>  
-        3. País de Residencia para Efectos Fiscales:
+        </p-->  
+        2. País de Residencia para Efectos Fiscales:
         <div style="border-bottom:1px solid black;width:470px;display:inline-block;">
         <!--País de Residencia para Efectos Fiscales {!info.pccodpais}-->{!mun}
         </div><br/><br/>
-        4. Número de Identificación Fiscal de los Estados Unidos (TIN)
+        3. Número de Identificación Fiscal de los Estados Unidos (TIN)
         <div style="border-bottom:1px solid black;width:350px;display:inline-block;">
         <!--Número de Identificación Fiscal de los Estados Unidos (TIN)-->{!info.NumeroID_Fiscal_EEUU}
         </div><br/><br/>
-        5. Número de Identificación Fiscal de otro país
+        4. Número de Identificación Fiscal de otro país
         <div style="border-bottom:1px solid black;width:450px;display:inline-block;">
         <!--Número de Identificación Fiscal de otro país-->{!info.NumeroID_Fiscal_OtroPais}
         </div><br/><br/><br/> 

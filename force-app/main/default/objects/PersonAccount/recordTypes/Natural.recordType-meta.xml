@@ -5481,6 +5481,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FrecuenciaEnvioEDC__c</picklist>
+        <values>
+            <fullName>Mensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trimestral</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Frecuencia_del_Aporte__c</picklist>
         <values>
             <fullName>A</fullName>

@@ -3,7 +3,7 @@
     <fullName>Enviado__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Enviado Trimestal</label>
+    <label>Enviado</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

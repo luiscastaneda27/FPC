@@ -80,6 +80,7 @@
 		<members>Account.Fecha_de_Ingreso_FPC__c</members>
 		<members>Account.Forma_PagoN__c</members>
 		<members>Account.Forma_de_Pago__c</members>
+		<members>Account.FrecuenciaEnvioEDC__c</members>
 		<members>Account.Frecuencia_del_Aporte__c</members>
 		<members>Account.Grado_Familiar__c</members>
 		<members>Account.Hijos__c</members>
@@ -193,6 +194,7 @@
 		<members>Account.Total_Afiliados_que_Aportan__c</members>
 		<members>Account.Total_Monto_de_Aporte_en_D__c</members>
 		<members>Account.Total_Monto_de_Aporte_en_L__c</members>
+		<members>Account.UltimoCasoObligatorio__c</members>
 		<members>Account.UltimoEmail2case__c</members>
 		<members>Account.Usuario_Convirtio__c</members>
 		<members>Account.Volumen_Ventas__c</members>
@@ -275,8 +277,13 @@
 		<members>Beneficiario__c.Segundo_Nombre__c</members>
 		<members>Beneficiario__c.Sexo__c</members>
 		<members>Beneficiario__c.Telefono__c</members>
+		<members>Beneficiario__c.TipoBeneficiario__c</members>
 		<members>Beneficiario__c.Tipo_cuenta__c</members>
 		<members>Beneficiario__c.Tipo_de_Identificaci_n__c</members>
+		<members>BitacoraCreacionUsuario__c.Cliente__c</members>
+		<members>BitacoraCreacionUsuario__c.Codigo__c</members>
+		<members>BitacoraCreacionUsuario__c.Request__c</members>
+		<members>BitacoraCreacionUsuario__c.Response__c</members>
 		<members>Bitacora_Conciliacion__c.Actividades__c</members>
 		<members>Bitacora_Conciliacion__c.Evento__c</members>
 		<members>Bitacora_Conciliacion__c.Fecha__c</members>
@@ -292,6 +299,8 @@
 		<members>Bitacora_Sync__c.Cuentas_Correctas__c</members>
 		<members>Bitacora_Sync__c.Cuentas__c</members>
 		<members>Bitacora_Sync__c.Fecha__c</members>
+		<members>Bitacora_Sync__c.RespuestaClienteJuridico__c</members>
+		<members>Bitacora_Sync__c.RespuestaClienteNatural__c</members>
 		<members>Bitacora_Sync__c.Resultado__c</members>
 		<members>CambioAsesor__c.Asesor_Actual__c</members>
 		<members>CambioAsesor__c.Asesor_Nuevo__c</members>
@@ -343,6 +352,7 @@
 		<members>Case.Apellido_Usuario_Firmador__c</members>
 		<members>Case.Apellidos__c</members>
 		<members>Case.Aplica_Saldo_patronal__c</members>
+		<members>Case.AprobacionBeneficiarios__c</members>
 		<members>Case.Aprobado__c</members>
 		<members>Case.Aprueba_SAC__c</members>
 		<members>Case.Archivo_Adjunto__c</members>
@@ -397,6 +407,7 @@
 		<members>Case.Fecha_salida__c</members>
 		<members>Case.Finalizar_SLA_Aprobacion__c</members>
 		<members>Case.Finalizar_SLA__c</members>
+		<members>Case.FrecuenciaEnvioEDC__c</members>
 		<members>Case.Frecuencia__c</members>
 		<members>Case.Identificacion__c</members>
 		<members>Case.Limite_exoneracion_aprobado__c</members>
@@ -823,6 +834,7 @@
 		<members>Detalle_caso__c.Sexo__c</members>
 		<members>Detalle_caso__c.Subtipo_transaccion__c</members>
 		<members>Detalle_caso__c.Tiene_Cuenta_Colectiva__c</members>
+		<members>Detalle_caso__c.TipoBeneficiario__c</members>
 		<members>Detalle_caso__c.Tipo_Cuenta__c</members>
 		<members>Detalle_caso__c.Tipo_Operacion__c</members>
 		<members>Detalle_caso__c.Tipo_Politica_Retiro_Saldo_Patronal__c</members>
@@ -878,6 +890,8 @@
 		<members>Estado_Cuenta__c.CodigoEstado__c</members>
 		<members>Estado_de_cuenta_envio_y_repuesta__c.Envio__c</members>
 		<members>Estado_de_cuenta_envio_y_repuesta__c.Respuesta__c</members>
+		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Contacto__c</members>
+		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Error__c</members>
 		<members>Fantasma_portal__c.Asignado_A__c</members>
 		<members>Fantasma_portal__c.Correo_electronico__c</members>
 		<members>Fantasma_portal__c.Descripcion__c</members>
@@ -902,7 +916,9 @@
 		<members>Fondo_Pignorado__c.Fecha_Pignoracion__c</members>
 		<members>Fondo_Pignorado__c.Monto_Pignorado__c</members>
 		<members>Fondo_Pignorado__c.Monto_Prestamo__c</members>
+		<members>Fondo_Pignorado__c.Num_Prestamo__c</members>
 		<members>Fondo_Pignorado__c.Numero_Prestamo__c</members>
+		<members>Fondo_Pignorado__c.Referencia__c</members>
 		<members>Fondo_Pignorado__c.Secuencia__c</members>
 		<members>Fondo_Pignorado__c.Total_Fondos__c</members>
 		<members>Fondo_Pignorado__c.Usuario__c</members>
@@ -912,6 +928,7 @@
 		<members>InformeEDC__c.ClienteUnicoBanco__c</members>
 		<members>InformeEDC__c.Cliente__c</members>
 		<members>InformeEDC__c.CorreoElectronico__c</members>
+		<members>InformeEDC__c.FPC_ErrorEnvio__c</members>
 		<members>InformeEDC__c.FechaEnvio__c</members>
 		<members>InformeEDC__c.FechaQueSeAbrio__c</members>
 		<members>InformeEDC__c.IdExterno__c</members>
@@ -1518,10 +1535,14 @@
 		<members>Subproducto__c.De_23_anos__c</members>
 		<members>Subproducto__c.De_34_anos__c</members>
 		<members>Subproducto__c.De_45_anos__c</members>
+		<members>Subproducto__c.FPC_Comercializable__c</members>
 		<members>Subproducto__c.Mas_5_anos__c</members>
 		<members>Subproducto__c.Monto_Saldo_Minimo_CRA__c</members>
 		<members>Subproducto__c.Producto__c</members>
+		<members>Subproducto__c.Rango__c</members>
 		<members>Subproducto__c.Retiro_Saldos_Patronales__c</members>
+		<members>Subproducto__c.TipoComision__c</members>
+		<members>Subproducto__c.TipoFondoN__c</members>
 		<members>Subproducto__c.TipoProducto__c</members>
 		<members>Subproducto__c.Tipo_Fondo__c</members>
 		<members>Subproducto__c.Tipo__c</members>
@@ -1790,7 +1811,6 @@
 		<members>AccountContactRole</members>
 		<members>ActivacionCuenta__c</members>
 		<members>Activity</members>
-		<members>ActivityRecurrence2Exception</members>
 		<members>Afiliacion_Electronica__c</members>
 		<members>Agencia__c</members>
 		<members>Asesor_Banco__c</members>
@@ -1806,6 +1826,7 @@
 		<members>AuthorizationFormText</members>
 		<members>Autonumerico_cuentas_Syste__c</members>
 		<members>Beneficiario__c</members>
+		<members>BitacoraCreacionUsuario__c</members>
 		<members>Bitacora_Conciliacion__c</members>
 		<members>Bitacora_Login__c</members>
 		<members>Bitacora_Sync__c</members>
@@ -1894,6 +1915,7 @@
 		<members>ExpressionFilter</members>
 		<members>ExpressionFilterCriteria</members>
 		<members>ExternalEventMapping</members>
+		<members>FPC_ErroresEstadosDeCuenta__c</members>
 		<members>Fantasma_portal__c</members>
 		<members>FechaDC_Sysde__c</members>
 		<members>Fecha_SYSDE__c</members>

@@ -180,6 +180,7 @@ public  with sharing class ClienteNaturales {
 
     public String usuarioActualiza { get; set; }
     public String usuarioAprueba { get; set; }
+    public String pcPaisNacimiento { get; set; }
     
     //Lista para mostrar los datos de beneficiarios
     public List<beneficiario> ListBeneficiarios {get;set;}

@@ -300,7 +300,6 @@ table[class=display-width] table[class="pricing"] {
 </style>
 </head>
 <body>
-
 <!-- OUR PRICING STARTS -->
 <table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="100%">
   <tr>
@@ -313,21 +312,23 @@ table[class=display-width] table[class="pricing"] {
               <tr>
                 <td><!-- TABLE LEFT -->
                   
-                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="60%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                  <table align="left" border="0" cellpadding="0" cellspacing="0" width="67%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
                     <tr>
-                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; font-weight:400; line-height:20px; padding-right: 20px"><p>A la fecha: <br />
+                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:12px; font-weight:400; line-height:20px; padding-right: 20px"><p>
+                          {!textoFecha} <br />
                           Nombre del cliente:<br />
                           No. de cliente:</p></td>
-                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:10px; font-weight:400; line-height:20px;"><p> {!cuentas.fecha} <br />
+                      <td align="left" class="MsoNormal" style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:10px; font-weight:400; line-height:20px;"><p> 
+                          {!cuentas.fecha}<br />
                           {!cuentas.nombreCliente} <br />
                           {!cuentas.numeroCliente} </p></td>
                       </tr>
                       <tr>
-                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >Rendimiento (HNL):</apex:outputText> </td>
+                          <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!textoRendimientoHNL}</apex:outputText> </td>
                           <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>                       
                       </tr>
                       <tr>
-                          <td style="color:#0f4f9e;"> <apex:outputText rendered="{!rendimientoUSD}" >Rendimiento (USD):</apex:outputText></td>
+                          <td style="color:#0f4f9e;"> <apex:outputText rendered="{!rendimientoUSD}" >{!textoRendimientoUSD}</apex:outputText></td>
                           <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
                       </tr>
                   </table>
@@ -341,7 +342,7 @@ table[class=display-width] table[class="pricing"] {
                   
                   <!-- TABLE RIGHT -->
                   
-                  <table align="right" border="0" cellpadding="0" cellspacing="0" width="34%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+                  <table align="right" border="0" cellpadding="0" cellspacing="0" width="27%" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
                     <tr>
                       <td align="right" class="MsoNormal" style="color:#005baa; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:45px; font-weight:700; line-height:24px;"><img src="https://fpc.secure.force.com/estadosCuenta/resource/1545328005000/Logo_Estado_de_cuentas" style="height:50px; width:200px" /></td>
                     </tr>
@@ -594,7 +595,27 @@ table[class=display-width] table[class="pricing"] {
   </tr>
 </table>
 <!-- OUR PRICING ENDS -->
-
+    <apex:outputPanel rendered="{!cuentas.nombreCliente == null}" >
+        <apex:slds rendered="{!cuentas.nombreCliente == null}" />
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header" >
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Manteniemiento</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium ">
+                    <div class="slds-form slds-form_compound slds-align--absolute-left">
+                        <fieldset class="slds-form-element">
+                            <div class="slds-modal__content slds-p-around--medium">
+                                <h3 class="slds-text-heading_medium slds-hyphenate">En estos momentos estamos realizando un mantenimiento a nuestros sistemas. Próximamente podrás ingresar de nuevo para consultar tu información. Gracias por tu comprensión.</h3>  
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </apex:outputPanel>
 </body>
 </html>
 </apex:page>

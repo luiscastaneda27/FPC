@@ -60,12 +60,14 @@ public class formularioIdentificacion_PDF_CONT {
     public Decimal comiSaldo {get;set;}
     public Decimal comiAporte {get;set;}
     
+    public String anio {get;set;}
+    
     public formularioIdentificacion_PDF_CONT(){   
         fechaform= date.today();
         try{
             nacionalidades=0;
             cuenta = ApexPages.currentPage().getParameters().get('codigoCuenta');
-            
+            anio = String.valueOf(Date.today().Year()).right(2);
             ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoClienteC(cuenta);
             String JsonString;
             if (!test.isRunningTest()){
@@ -161,30 +163,34 @@ public class formularioIdentificacion_PDF_CONT {
                 pcAgn = info.pcUsuarioCN.split('/').get(0);
             }*/            
           
-            Map<String,String> mapPa=new Map<String,String>(); 
-            Map<String,String> mapPaFis=new Map<String,String>();
+            Map<String,Pais_R__c> mapPais=new Map<String,Pais_R__c>(); 
+            //Map<String,String> mapPaFis=new Map<String,String>();
             Map<String,String> mapDepart=new Map<String,String>();
             Map<String,String> mapMuni=new Map<String,String>();
             Map<String,String> mapColo=new Map<String,String>();
-            Map<String,String> mapNac=new Map<String,String>();
-            Map<String,String> mapNaFis=new Map<String,String>();
+            //Map<String,String> mapNac=new Map<String,String>();
+            //Map<String,String> mapNaFis=new Map<String,String>();
+            
+            for(Pais_R__c item:[SELECT Nombre__c, Codigo__c, Nacionalidad__c  from Pais_R__c]){
+                mapPais.put(item.codigo__c,item);
+            }
             
             for(integer i=0; i<info.ListDirecciones.size(); i++){
-                for(Pais_R__c item:[SELECT nombre__c, codigo__c  from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
+                /*for(Pais_R__c item:[SELECT nombre__c, codigo__c  from Pais_R__c where codigo__c =:info.ListDirecciones[i].paisDir limit 1]){
                     mapPa.put(item.codigo__c,item.nombre__c);
-                }
-                P = mapPa.get(info.ListDirecciones[i].paisDir);  
+                }*/
+                P = mapPais.containsKey(info.PaisResidenciaEfectosFiscales) ? mapPais.get(info.ListDirecciones[i].paisDir).Nombre__c : null;  
             
                 //PAIS FISCAL
-                for(Pais_R__c itemFis:[SELECT nombre__c, codigo__c from Pais_R__c where codigo__c =: info.PaisResidenciaEfectosFiscales limit 1]){
+               /* for(Pais_R__c itemFis:[SELECT nombre__c, codigo__c from Pais_R__c where codigo__c =: info.PaisResidenciaEfectosFiscales limit 1]){
                     mapPaFis.put(itemFis.codigo__c,itemFis.nombre__c);                    
-                }
-                PFis = mapPaFis.get(info.PaisResidenciaEfectosFiscales); 
+                }*/
+                PFis = mapPais.containsKey(info.PaisResidenciaEfectosFiscales) ? mapPais.get(info.PaisResidenciaEfectosFiscales).Nombre__c : null; 
                                
-                for(Pais_R__c itemNAFis:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.PaisResidenciaEfectosFiscales limit 1]){
+                /*for(Pais_R__c itemNAFis:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.PaisResidenciaEfectosFiscales limit 1]){
                     mapNaFis.put(itemNAFis.codigo__c,itemNAFis.nacionalidad__c);
-                }               
-				PFisNacionalidad = mapNaFis.get(info.PaisResidenciaEfectosFiscales );                  
+                } */              
+				PFisNacionalidad = mapPais.containsKey(info.PaisResidenciaEfectosFiscales) ? mapPais.get(info.PaisResidenciaEfectosFiscales ).Nacionalidad__c : null;                  
                 //NACIONALIDAD
                 
                /* for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =: info.pcnacionalidad limit 1]){
@@ -193,12 +199,13 @@ public class formularioIdentificacion_PDF_CONT {
                 */
                 //info.pcnacionalidad2=mapNaci.get(info.pcnacionalidad2);
                 //info.pcnacionalidad3=mapNaci.get(info.pcnacionalidad3);
-                for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
-                mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
-                nac= itemNA.nacionalidad__c;
-                //info.pcnacionalidad2 = itemNA.nacionalidad__c;    
-                     system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad + info.pcnacionalidad2 + Nac2);
-            	}
+                /*for(Pais_R__c itemNA:[select nacionalidad__c, codigo__c,nombre__c from Pais_R__c where codigo__c =:info.pcnacionalidad limit 1]){
+                    mapNac.put(itemNA.codigo__c,itemNA.nacionalidad__c);
+                    
+                    //info.pcnacionalidad2 = itemNA.nacionalidad__c;    
+                    system.debug('NACIONA'+ nac +itemNA.nacionalidad__c + info.pcnacionalidad + info.pcnacionalidad2 + Nac2);
+                }*/
+                nac= mapPais.containsKey(info.pcnacionalidad) ? mapPais.get(info.pcnacionalidad).Nacionalidad__c : null;
                 //DEPARTAMENTO
                 
                 for (Departamentos__c itemDe:[SELECT Departamento__c, codigo_departamento__c,codigo_pais__c from Departamentos__c where codigo_pais__c =: info.ListDirecciones[i].paisDir
@@ -253,8 +260,10 @@ public class formularioIdentificacion_PDF_CONT {
                 }
             }
             
-             system.debug('PaisEmpleador ' + paisEm + deptoEm+ munEm+ colEm +dirEm);
-        system.debug('PaisEmpleado ' + pais + depto+ mun+ col + dir);
+            info.pcPaisNacimiento = mapPais.containsKey(info.pcPaisNacimiento) ? mapPais.get(info.pcPaisNacimiento).Nombre__c : null;
+            
+            system.debug('PaisEmpleador ' + paisEm + deptoEm+ munEm+ colEm +dirEm);
+            system.debug('PaisEmpleado ' + pais + depto+ mun+ col + dir);
             
             /*  for(integer i=0; i<info.ListDirecciones.size(); i++)
 {
@@ -345,7 +354,7 @@ dir = info.ListDirecciones[i].detalleDir;//'Es TRABAJO SF' ;
             Map<String,String> mapColonias=new Map<String,String>();
             Map<String,String> mapMun=new Map<String,String>();
             Map<String,String> mapDepto=new Map<String,String>();
-            Map<String,String> mapPais=new Map<String,String>();
+            //Map<String,String> mapPais=new Map<String,String>();
             for(Colonias_U__c item:[select nombre_colonia__c, codigo_colonia__c,codigo_pais__c,codigo_departamento__c,codigo_municipio__c  from Colonias_U__c where (codigo_pais__c =: info.pccodpais or codigo_pais__c !=null) and (codigo_departamento__c =: info.pcDeptoCN or codigo_departamento__c =: info.pcDeptoEmpleadorCN)
                                     AND (codigo_municipio__c =: info.pcMunicipioCN or codigo_municipio__c =: info.pcMunicipioEmpleadorCN) and (codigo_colonia__c =: info.pcColoniaCN or codigo_colonia__c =: info.pcColoniaEmpleadorCN)]){
                                         //  mapColonias.put(item.codigo_pais__c+item.codigo_departamento__c+item.codigo_municipio__c+item.codigo_colonia__c, item.nombre_colonia__c);
@@ -362,7 +371,7 @@ dir = info.ListDirecciones[i].detalleDir;//'Es TRABAJO SF' ;
             info.pcColoniaCN=mapColonias.get(info.pccodpais+info.pcDeptoCN+info.pcMunicipioCN+info.pcColoniaCN);//item.nombre_colonia__c;
             info.pcMunicipioCN=mapMun.get(info.pccodpais+info.pcDeptoCN+info.pcMunicipioCN);
             info.pcDeptoCN=mapDepto.get(info.pccodpais+info.pcDeptoCN);
-            info.pccodpais=mapPais.get(info.pccodpais);
+            info.pccodpais= mapPais.containsKey(info.pccodpais) ? mapPais.get(info.pccodpais).Nombre__c: null;
             
             
             if(info.pcDependeSI=='S'||info.pcDependeNO=='S'){
@@ -397,7 +406,7 @@ dir = info.ListDirecciones[i].detalleDir;//'Es TRABAJO SF' ;
             info.pcColoniaEmpleadorCN=mapColonias.get(info.pcPaisEmpleadorCN+info.pcDeptoEmpleadorCN+info.pcMunicipioEmpleadorCN+info.pcColoniaEmpleadorCN);
             info.pcMunicipioEmpleadorCN=mapMun.get(info.pcPaisEmpleadorCN+info.pcDeptoEmpleadorCN+info.pcMunicipioEmpleadorCN);
             info.pcDeptoEmpleadorCN=mapDepto.get(info.pcPaisEmpleadorCN+info.pcDeptoEmpleadorCN);
-            info.pcPaisEmpleadorCN=mapPais.get(info.pcPaisEmpleadorCN);
+            info.pcPaisEmpleadorCN= mapPais.containsKey(info.pcPaisEmpleadorCN) ? mapPais.get(info.pcPaisEmpleadorCN).Nombre__c : null;
             if(info.pdfechasuscripcion!=null){
                 info.pdfechasuscripcion= info.pdfechasuscripcion.addHours(6);
                 suscripcionDia=String.valueOf(info.pdfechasuscripcion.day());

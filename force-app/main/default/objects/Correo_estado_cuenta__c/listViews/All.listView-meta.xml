@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>Cliente__c</columns>
+    <columns>Enviado__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Cliente__c</field>
+        <operation>equals</operation>
+        <value>GRAZIAMARIAS MURILLOS CASTRO,PAOLA MARIA CRUZ BONILLA,ANDREA IVETTE ROMERO SOTO</value>
+    </filters>
+    <label>Todos</label>
+</ListView>

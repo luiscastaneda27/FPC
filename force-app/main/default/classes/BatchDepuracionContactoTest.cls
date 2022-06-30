@@ -15,30 +15,30 @@ public class BatchDepuracionContactoTest {
         cliente.PersonEmail = 'test@test.com';
         insert cliente;
         
+        Account acc = [Select PersonContactId, Name from Account Where Id = :cliente.Id];
         
+         Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
+         Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
+                 
+        correo.setHtmlBody('<b>Test</b>');
+        correo.setSubject('Estado de cuenta.');
+        String[] toAddresses = new String[] {'test@test.test'};
+            correo.setToAddresses(toAddresses);  
+        correo.setTargetObjectId(acc.PersonContactId);
+        correo.setSaveAsActivity(true);
+        listCorreo.add(correo);  
+        Messaging.sendEmail(listCorreo, false);
+        
+        FPC_ErroresEstadosDeCuenta__c Error = new FPC_ErroresEstadosDeCuenta__c(
+                    FPC_Contacto__c = acc.PersonContactId,
+                    FPC_Error__c = 'test');
+        insert Error;
         
         ControllerReportEmailStatuses email = new ControllerReportEmailStatuses();
         email.dateStart = date.today().addYears(-10);
         email.dateEnd = date.today();
         email.GenerarReporte();
         
-        
-       /* BatchDepuracionContacto a = new BatchDepuracionContacto(0, system.now().addYears(-10), system.now());
-        Database.executeBatch(a);
-        
-        Contact contacto = new Contact();
-        contacto.Id = [Select id from Contact limit 1].Id;
-        contacto.Estado__c = 'Listo Para Informe';
-        update contacto;
-        
-        BatchDatosInformeEDC b = new BatchDatosInformeEDC( system.now().addYears(-10), system.now());
-        Database.executeBatch(b);*/
-        
-        
-        
     }
     
-    
-    
-
 }

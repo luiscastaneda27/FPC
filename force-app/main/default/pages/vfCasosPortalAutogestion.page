@@ -413,11 +413,9 @@
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <font class="padding-left-2em fontStyle">Seleccione una Cuenta: </font>
                                 <abbr style="color:#42c4dc; font-size:16px;" title="required">*</abbr>
-                      
-                            
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
-                                <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" id="idCuenta" value="{!idCuenta}"  size="1">
+                                <apex:selectList styleclass="custom-select-sizing slds-select padding-left-2em" id="idCuenta" value="{!idCuenta}"  size="1" disabled="{!casoObligatorio}" >
                                     <apex:selectOptions value="{!listCuentas}" />
                                     <apex:actionSupport event="onchange" action="{!CargarTipoGestion}" reRender="theForm" status="status" />
                                 </apex:selectList>
@@ -440,8 +438,7 @@
                         <font class="padding-left-1em font-subtitle">Datos Generales</font>
                         <div class="margin-top-1em slds-grid slds-wrap">
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
-                 
-                               <font class="padding-left-2em fontStyle">Estado Civil: </font>
+                                <font class="padding-left-2em fontStyle">Estado Civil: </font>
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.Estado_Civil__c}" />
@@ -469,6 +466,12 @@
                             </div>
                             <div class="margin-bottom-0-5x100 slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
                                 <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" OnKeyPress="return validateNumber(event, this)" onkeyup="validacionFormTel(event, this)" value="{!Caso.Telefono_Trabajo__c}" html-placeholder="9999-9999" />
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                <font class="padding-left-2em fontStyle">Frecuencia de Envío EDC: </font>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.FrecuenciaEnvioEDC__c}" />
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                 <font class="padding-left-2em fontStyle">Fecha de Nacimiento:</font>
@@ -1137,6 +1140,8 @@
                                                 rendered="{!AND(OR(cTipoCaso.estadoCuenta, cTipoCaso.constancias,
                                                           cTipoCaso.actInformacion, cTipoCaso.aumDisAporte, cTipoCaso.otros,
                                                           cTipoCaso.reposicionCarnet), caso.id=null)}" />
+                            <apex:commandButton action="{!actualizaCliente}" styleClass="Confirmar" style="width:100%;margin-top:8px;" reRender="theForm" status="status" value="No tengo Actualizaciones"
+                                               rendered="{!casoObligatorio}" />
                         </div>
                     </div>                 
                     

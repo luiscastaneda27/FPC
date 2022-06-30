@@ -31,6 +31,18 @@
                 <default>false</default>
                 <label>Individual</label>
             </value>
+            <value>
+                <fullName>Pen</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Pen</label>
+            </value>
+            <value>
+                <fullName>V</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>V</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

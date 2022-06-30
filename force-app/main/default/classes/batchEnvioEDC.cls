@@ -5,7 +5,7 @@ global class batchEnvioEDC implements Database.Batchable<sObject>, Database.Allo
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC){
-        return Database.getQueryLocator('select Contador_EDC__c, id from Autonumerico_cuentas_Syste__c');
+        return Database.getQueryLocator('select Contador_EDC__c, Id from Autonumerico_cuentas_Syste__c');
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> scope) {
@@ -24,8 +24,7 @@ global class batchEnvioEDC implements Database.Batchable<sObject>, Database.Allo
         Autonumerico_cuentas_Syste__c c= [select Contador_EDC__c, id from Autonumerico_cuentas_Syste__c limit 1];
        // if(contador > 0 && c.Contador_EDC__c <48){ // DESARROLLO
        if(contador > 0 && c.Contador_EDC__c <100){ // PRODUCCIÓN
-            batchEnvioEDC l = new batchEnvioEDC();
-            Id batchprocessid = Database.executeBatch(l,1);
+            Database.executeBatch(new batchEnvioEDC(), 1);
         }else {
             c.Contador_EDC__c = 0;
             update c;

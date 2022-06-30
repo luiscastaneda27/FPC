@@ -34,7 +34,7 @@
         <table style="width: 100%">
             <tr>
                 <td style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;">
-                    Fecha: {!cuentas.fecha}
+                    {!textoFecha}
                 </td>
             </tr>
             <tr>
@@ -53,11 +53,11 @@
             </tr>
         </table>
         <apex:outputPanel style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;" rendered="{!mostrarHNL}">
-            <SUP>*</SUP>Rendimiento (HNL): {!cuentas.rendimientoLempiras} <br />
+            <SUP>*</SUP>{!textoRendimientoHNL} <br />
         </apex:outputPanel>
         
         <apex:outputPanel style="color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:9pt;" rendered="{!mostrarUSD}">
-            <SUP>*</SUP>Rendimiento (USD): {!cuentas.rendimientoDolares} <br />
+            <SUP>*</SUP>{!textoRendimientoUSD} <br />
         </apex:outputPanel>
         <br/><br/>
          <!--div style="border: 1px solid #0f4f9e;  border-left: 0px; border-top: 0px;"-->
@@ -73,12 +73,12 @@
                                cellpadding="0"
                                >
                             <tr>
-                                <th width="4%" rowspan="2" style="background: #1d7482;border-top-left-radius: 20pt;
+                                <!--th width="4%" rowspan="2" style="background: #1d7482;border-top-left-radius: 20pt;
                                     border-bottom-left-radius: 20pt;">
                                     <img
                                          src="https://fpc.secure.force.com/portalautogestion/resource/1568949451000/aportes_voluntarios?"
                                          />
-                                </th>
+                                </th-->
                                 <apex:repeat value="{!linea.cuentas}" var="item">
                                     <th style="background: #54868e;color: #ffffff;
                                         padding: 10px;
@@ -98,35 +98,37 @@
                                                           >
                                             <p style="font-weight: bold; font-size: 10pt;padding-left:10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">
                                                 Número de Cuenta: {!item.numeroCuenta}
-                                                <br /> Fecha de Incorporación:
+                                                <br /> Fecha de Afiliación:
                                                 {!item.fechaIncorporacion}
                                             </p>
                                             <hr style="border: 1px solid #0f4f9e;width: 240pt;"/>
                                             <p style="font-weight: normal; font-size: 9pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;"
                                                ><font style="font-weight: bold; font-size: 9pt;padding-left:10pt;"
                                                       >Totales Acumulados desde Fecha de
-                                                Incorporación:</font
+                                                Afiliación:</font
                                                 ><br />
-                                                <font style="padding-left:10pt; font-size: 10pt;"
-                                                      >Aportes Empleado:
+                                                
+                                                <font style="padding-left:10pt; font-size: 10pt;">Total Aportes Personal: {!item.totalAportesEmpleado}</font> <br />
+                                                <!--font style="padding-left:10pt; font-size: 10pt;"
+                                                      >Personal Obligatorio:
                                                     {!item.aportesEmpleado}</font
                                                     >
                                                 <br />
                                                 <font style="padding-left:10pt;"
-                                                      >Aportes Extraordinarios Empleado:
+                                                      >Personal Voluntario:
                                                     {!item.aportesExtraEmpleado}</font
                                                     >
-                                                <br />
-                                                <font style="padding-left:10pt;"
-                                                      ><SUP>**</SUP>Aportes Empleador:
+                                                <br /-->
+                                                <font style="padding-left:10pt; font-size: 10pt;">Total Aportes Empleador: {!item.totalAportesEmpleador}</font><br />
+                                                <!--font style="padding-left:10pt;"
+                                                      ><SUP>**</SUP>Patronal Obligatorio:
                                                     {!item.aportesEmpleador}</font
                                                     >
                                                 <br />
                                                 <font style="padding-left:10pt;"
-                                                      ><SUP>**</SUP>Aportes Extraordinarios
-                                                    Empleador:
+                                                      ><SUP>**</SUP>Patronal Voluntario:
                                                     {!item.aporteExtraEmpleador}</font
-                                                    ><br />
+                                                    ><br /-->
                                                 <font style="padding-left:10pt;"
                                                       >Aportes Seguro de Vida:
                                                     {!item.aporteSeguroVida}</font
@@ -161,7 +163,7 @@
                                                    >
                                                 <tr>
                                                     <td scope="col">
-                                                       <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:{!item.porcentajeMisAportes},{!item.porcentajeEmpleadorAportes},{!item.porcentajeFicohsaAportes}&chs=250x100&chco=3a9fd6,1649a9,f17e31" />
+                                                       <img src="https://chart.googleapis.com/chart?cht=p3&chd=t:{!item.porcentajeMisAportes},{!item.porcentajeEmpleadorAportes},{!item.porcentajeFicohsaAportes}&chs=250x100&chco=3a9fd6,1649a9,00A94f" />
                                                         <br/>
                                                         <div style="margin-left: 8px;">
                                                             
@@ -176,12 +178,11 @@
                                                                  style="margin-right: 5px"
                                                                  src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afAH&oid=00Dj0000001rVac&lastMod=1515191517000"
                                                                  /> <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeEmpleadorAportes}%.
-                                                            Aportes de mi Empleador.</span><br />
+                                                                Aportes Patronales .</span><br />
                                                             <br />
                                                             <img
-                                                                 style="margin-right: 5px"
-                                                                 src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002afA7&oid=00Dj0000001rVac&lastMod=1515191463000"
-                                                                 /> <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeFicohsaAportes}%. Lo
+                                                                 style="margin-right: 5px; height:20px;width:20px;" src="{!$Resource.PuntoVerdeEDC}" />
+                                                                  <span style="font-weight: bold; font-size: 10pt;color:#0f4f9e; font-family:'Segoe UI', Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif;">{!item.porcentajeFicohsaAportes}%. Lo
                                                             que Ficohsa Pensiones y Cesantías ha
                                                             trabajado por mi.</span>
                                                         </div>
@@ -212,21 +213,13 @@
                                             </table>
                                         </apex:outputPanel>
                                         
-                                        <apex:outputPanel rendered="{!item.numeroCuenta == null}"
-                                                          >
-                                            <table
-                                                   class="chart"
-                                                   width="100%"
-                                                   border="0"
-                                                   cellspacing="0"
-                                                   cellpadding="0"
-                                                   >
+                                        <apex:outputPanel rendered="{!item.numeroCuenta == null}" >
+                                            <table class="chart" width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td scope="col">
-                                                        <img
-                                                             id="publicidad"
-                                                             src="https://fpc.secure.force.com/portalautogestion/servlet/servlet.ImageServer?id=015f1000002wU6z&oid=00Dj0000001rVac&lastMod=1539276939000"
-                                                             />
+                                                        <a href="https://www.tuconcienciafinanciera.com/#/jubilacion" target="_blank">
+                                                            <img src = "{!$Resource.LogoEstadoCuenta}"  style="width: 100%; height: 100%;"  />
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -397,9 +390,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>*</SUP>El rendimiento corresponde al promedio diario neto del año
-                    en curso a la fecha. Desempeños pasados no son necesariamente
-                    indicativos de resultados futuros.
+                    <SUP>*</SUP>El rendimiento corresponde al promedio del período mostrado. Desempeños pasados no son necesariamente indicativos de resultados futuros.
                 </td>
             </tr>
             <tr>
@@ -408,9 +399,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>**</SUP>Los aportes patronales a tu fondo de pensión aplican
-                    solamente para las personas afiliadas a un fondo empresarial
-                    contributivo.
+                    <SUP>**</SUP>Permanece igual.
                 </td>
             </tr>
             <tr>
@@ -419,15 +408,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>***</SUP>La estimación de tu pensión mensual considera: tu
-                    promedio de aportes <b>Individuales</b> mensuales desde tu fecha de
-                    incorporación, tu edad actual y tu edad de jubilación de 65 años, una
-                    pensión pagadera en 10 años y el rendimiento del período actual el
-                    cual no es indicativo de futuros resultados. Los valores de los fondos
-                    en dólares fueron convertidos al tipo de cambio vigente. No se
-                    considera inflación en dicha proyección. La información presentada no
-                    garantiza la obligación de pagar la mensualidad estimada. Si deseas
-                    hacer diferentes estimaciones puedes hacerlo ingresando a
+                    <SUP>***</SUP>La estimación de tu pensión mensual considera: El saldo total de tus fondos personales desde tu fecha de afiliación, tu edad actual y tu edad de jubilación de 65 años, una pensión pagadera en 10 años y el rendimiento del período actual el cual no es indicativo de futuros resultados. Los valores de los fondos en dólares fueron convertidos al tipo de cambio vigente. No se considera inflación en dicha proyección. La información presentada no garantiza la obligación de pagar la mensualidad estimada. Si deseas hacer diferentes estimaciones puedes hacerlo ingresando a 
                     <a href="https://www.ficohsapensiones.hn/calculadora"
                        >https://www.ficohsapensiones.hn/calculadora</a
                         >
@@ -439,9 +420,7 @@
                            Arial, Verdana, Trebuchet MS, sans-serif;
                            font-size:10pt;font-weight: 500;"
                     >
-                    <SUP>****</SUP>Si tienes mas de un fondo, el estimado del incremento
-                    mensual se realizó considerando que lo hagas a la cuenta con el
-                    promedio de aporte más alto.
+                    <SUP>****</SUP>Si tienes más de un fondo, el estimado del incremento mensual se realizó considerando que lo hagas a la cuenta con el saldo más alto. 
                 </td>
             </tr>
         </table>

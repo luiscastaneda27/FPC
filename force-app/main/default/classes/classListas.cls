@@ -43,4 +43,5 @@ public with sharing class classListas {
     public String PaisResidenciaEfectosFiscales { get; set; }
     public String NumeroID_Fiscal_EEUU { get; set; }
     public String NumeroID_Fiscal_OtroPais { get; set; } 
+    public String pcPaisNacimiento { get; set; }
 }

@@ -1,0 +1,11 @@
+<apex:page controller="test123" renderAs="PDF" showHeader="false" applyBodyTag="false" cache="false" docType="html-5.0" >
+    <head>
+    </head>
+        <apex:includeScript value="{!URLFOR($Resource.jQuery)}"/>
+        <body>
+            <!--font style="color: red; position: absolute; top: 150px;left: 230px; font-size: 30px;"  >Prueba carnet</font>
+            <img src="https://ficohsafpc--stagefpc--c.visualforce.com/resource/1578345573000/Banner1?" /-->
+            
+            <apex:outputText escape="false" value="{!gf}" ></apex:outputText>
+        </body>
+</apex:page>

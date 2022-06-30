@@ -15,11 +15,6 @@
                 <label>ABUELO(A)</label>
             </value>
             <value>
-                <fullName>12</fullName>
-                <default>false</default>
-                <label>AFILIADO(A)</label>
-            </value>
-            <value>
                 <fullName>13</fullName>
                 <default>false</default>
                 <label>AMIGO(A)</label>

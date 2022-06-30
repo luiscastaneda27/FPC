@@ -1,11 +1,6 @@
 public class ControllerConstactProject {
     
-    //public  List<Correo_Personas_Sin_Aportar__c> listRepetidos {get;set;}
-    //public  List<Correo_Personas_Sin_Aportar_Temp__c> ListaTempRetiros  {get;set;}
-    public static List<Correo_Personas_Sin_Aportar_Temp__c> ListaFinalCorreo {get;set;}
-    public  List<Correo_Personas_Sin_Aportar_Temp__c> ListaFinalRepetido {get;set;}
     public list<string> Cod_ClienteTemp = new  list<string>();
-    //public list<string> TempA = new  list<string>();
     public list<ControllerAPIConstanct.classCorreosAniversario> resultado = new list<ControllerAPIConstanct.classCorreosAniversario>();
     public string fechaIn {get; set;}  
     public string FechaDia {get; set;}  
@@ -22,6 +17,7 @@ public class ControllerConstactProject {
             system.debug('listado de correos: '+resultado);
         	OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
         	Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
+            EmailTemplate EmailT = [Select HTMLValue,Subject  from EmailTemplate where Name = 'Correo de Aniversario'];
         	if (resultado.size() > 0)
             {
             	for(integer i=0; i<resultado.size(); i++)
@@ -29,23 +25,16 @@ public class ControllerConstactProject {
                 	if((resultado[i].V_FO_Correo != '@' || resultado[i].V_FO_Correo != 'NOTIENE@.HN'))
                     {
                         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        mail.setHtmlBody( 
-                                           '<img src="https://ficohsafpc--pensiones--c.cs77.content.force.com/servlet/servlet.ImageServer?id=0150t0000009TTD&oid=00D0t000000Cogc&lastMod=1531428570000" WIDTH=700 HEIGHT=900/>'
-                                        );
-                        mail.setSubject('Te felicitamos por pensar en tu futuro Estimad@ '+  resultado[i].V_NOMBRE + ' ' + resultado[i].V_APELLIDO);
-                        //String[] toAddresses = new String[] {'wendy.alvarado@ficohsa.com'};
-                		//mail.setToAddresses(toAddresses);
-                		//resultado[i].V_FO_Correo='wendy.alvarado@ficohsa.com';
+                        mail.setHtmlBody(EmailT.HtmlValue);
+                        mail.setSubject(EmailT.Subject);
                         mail.setToAddresses(new String[] {resultado[i].V_FO_Correo});
                         mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                        mail.setSaveAsActivity(true);
                         listCorreo.add(mail);
                     }
                	}
                 Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
                 system.debug('Correos enviados correctamente: '+results);
                 system.debug('ListaCorreoAenviar' + listCorreo);
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
            }
         }
         catch(exception ex)
@@ -66,6 +55,7 @@ public class ControllerConstactProject {
             
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];  
             Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
+            EmailTemplate EmailT = [Select HTMLValue,Subject  from EmailTemplate where Name = 'Correo de Aniversario'];
             if (resultado.size() > 0)
             {
                 for(integer i=0; i<resultado.size(); i++)
@@ -73,21 +63,16 @@ public class ControllerConstactProject {
                     if((resultado[i].V_FO_Correo != '@' || resultado[i].V_FO_Correo != 'NOTIENE@.HN'))
                     {
                         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
-                        mail.setHtmlBody( 
-                            '<img src="https://ficohsafpc--pensiones--c.cs77.content.force.com/servlet/servlet.ImageServer?id=0150t0000009TTD&oid=00D0t000000Cogc&lastMod=1531428570000" WIDTH=700 HEIGHT=900/>'
-                        );
-                        mail.setSubject('Te felicitamos por pensar en tu futuro Estimad@ '+  resultado[i].V_NOMBRE + ' ' + resultado[i].V_APELLIDO);
-                        //resultado[i].V_FO_Correo='wendy.alvarado@ficohsa.com';
+                        mail.setHtmlBody(EmailT.HtmlValue);
+                        mail.setSubject(EmailT.Subject);
                         mail.setToAddresses(new String[] {resultado[i].V_FO_Correo});
                         mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                        mail.setSaveAsActivity(true);
                         listCorreo.add(mail);
                      }
                 }
               	Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
               	system.debug('Correos enviados correctamente: '+results);
               	system.debug('ListaCorreoAenviar' + listCorreo);
-              	//ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Envio de correo automatico'));
          	}
         }
         catch(exception ex)

@@ -2810,6 +2810,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>FrecuenciaEnvioEDC__c</picklist>
+        <values>
+            <fullName>Mensual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trimestral</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Frecuencia__c</picklist>
         <values>
             <fullName>Anual</fullName>
@@ -3145,10 +3156,6 @@
         </values>
         <values>
             <fullName>Agencias_Banco</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LAEFE</fullName>
             <default>false</default>
         </values>
         <values>

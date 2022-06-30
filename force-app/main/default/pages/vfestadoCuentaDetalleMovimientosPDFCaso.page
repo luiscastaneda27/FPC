@@ -125,7 +125,7 @@
             <div style="font-size:10px;margin: 0; padding: 0;" class="footerR">
                 <table styleClass="tabla2" style="width: 100%;">
                     <tr>
-                        <td style="font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;color:#0f4f9e;" >A la fecha: </td>
+                        <td style="font-family: 'Open Sans', Arial, Helvetica Neue, Helvetica, sans-serif !important;color:#0f4f9e;" >{!textoFecha} </td>
                         <td style="width: 50%;color:#0f4f9e;">{!cuentas.fecha} </td>
                         <td  rowspan="3"><apex:image styleClass="logos" url="{!URLFOR($Resource.LogoFPC)}"/></td>
                     </tr>
@@ -138,11 +138,11 @@
                         <td style="color:#0f4f9e;">{!cuentas.numeroCliente}</td>
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >Rendimiento (HNL):</apex:outputText> </td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!textoRendimientoHNL}</apex:outputText> </td>
                         <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoHNL}" >{!cuentas.rendimientoLempiras}</apex:outputText></td>
                     </tr>
                     <tr>
-                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >Rendimiento (USD):</apex:outputText></td>
+                        <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!textoRendimientoUSD}</apex:outputText></td>
                         <td style="color:#0f4f9e;"><apex:outputText rendered="{!rendimientoUSD}" >{!cuentas.rendimientoDolares}</apex:outputText></td>
                    </tr>
                 </table>

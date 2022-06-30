@@ -15,10 +15,5 @@
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>Cuenta__c</field>
-        <operation>equals</operation>
-        <value>99514</value>
-    </filters>
     <label>Todos</label>
 </ListView>

@@ -19,6 +19,8 @@ public class EstadosDeCuenta {
                 map<String, String> mapTypeCliente = new map<String, String>();
                 String recordTypeIdNatural = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Natural').getRecordTypeId();
                 list<string> idClientes= new list<string>();
+                Date desde;
+                Date hasta;
                 if(idCaso != null){
                     system.debug('Entró en True casos');
                     For(Case item :
@@ -50,6 +52,8 @@ public class EstadosDeCuenta {
                              mapFDesde.put(item.Account.Identificacion__c, fDesde);
                              mapFHasta.put(item.Account.Identificacion__c, fHasta);
                              fechaHoy = item.Fecha_Hasta__c;
+                             desde = item.Fecha_Desde__c;
+                             hasta = item.Fecha_Hasta__c; 
                                          
                     }
                 }
@@ -82,6 +86,10 @@ public class EstadosDeCuenta {
 				For(classECPortada item : respuestaDetallado){
                     Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
                     String cuerpo = mapBodyEmail.get(mapTypeCliente.get(item.identidad));
+                    if(desde != null && hasta != null){
+                        cuerpo = cuerpo.replace('A la Fecha:', 'Período del');
+                        cuerpo = cuerpo.replace('[getAlaFecha]', desde.day()+'-'+(desde.month()<10 ? '0'+desde.month() : ''+desde.month())+'-'+desde.year()+' al '+ item.fechaCierre);
+                    }
 					cuerpo = cuerpo.replace('[getAlaFecha]', item.fechaCierre);
 					String lps = item.fondosLempiras != null ? '<br/> &nbsp; &nbsp; &nbsp; Total Fondos en Lempiras: ' + item.fondosLempiras : '';
 					cuerpo = cuerpo.replace('[getFondosLempira]', lps);
@@ -196,6 +204,42 @@ public class EstadosDeCuenta {
 		return respuesta;   
     }
     
+    public static list<classECPortada> estadoCuentaCorreoMasivo(list<classClientesEC> claseEnvio) {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');	
+		//String url = 'https://api-fpc.herokuapp.com/';	
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setTimeout(120000);
+		request.setEndpoint(url + 'api/ec/portada');
+		
+		list<classECPortada> respuesta = new list<classECPortada>();
+		system.debug('Entro al REST del EDC');
+		try{
+						
+			classJson envio = new classJson();
+			envio.contenido = JSON.serialize(claseEnvio);
+			String cons = 'contenido=' + envio.contenido;
+			system.debug(cons);		
+			request.setBody(cons);	
+			
+	    		HttpResponse response = http.send(request);
+	    		System.debug('Respuesta de Sysde: '+response.getBody());
+	        	if (response.getStatusCode() == 200) {
+           		
+           		respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
+	        	}       	
+                       
+		}catch(System.CalloutException e){
+			system.debug(e.getMessage());
+	
+        }Catch(Exception e){
+			system.debug(e.getMessage());	
+		} 
+		return respuesta;   
+    }
+    
     public static list<classECMensual> estadoCuentaMensual(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -256,6 +300,37 @@ public class EstadosDeCuenta {
 		return respuesta;   
     }
     
+    public static list<classECTrimestral> estadoCuentaTrimestralMasivo(list<classClientesEC> claseEnvio) {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');	
+		//String url = 'https://api-fpc.herokuapp.com/';		
+		request.setMethod('POST');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setEndpoint(url + 'api/ec/trimestral' );
+		request.setTimeout(120000);
+		
+		list<classECTrimestral> respuesta = new list<classECTrimestral>();
+
+		try{
+			classJson envio = new classJson();
+			envio.contenido = JSON.serialize(claseEnvio);
+			String cons = 'contenido=' + envio.contenido;
+			system.debug(cons);		
+			request.setBody(cons);
+		
+			HttpResponse response = http.send(request);
+			System.debug('Respuesta: '+response.getBody());
+            if (response.getStatusCode() == 200) {
+                respuesta = (list<classECTrimestral>)System.JSON.deserialize(response.getBody(), list<classECTrimestral>.class);
+            }       	
+                       
+		}Catch(Exception e){
+			system.debug('EDC Trimestral: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
+        } 
+        return respuesta;   
+    }
+    
     public static list<classECHistorico> estadoCuentaHistorico(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -285,6 +360,38 @@ public class EstadosDeCuenta {
 			system.debug('EDC Historico: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
 		} 
 		return respuesta;   
+    }
+    
+    public static list<classECHistorico> estadoCuentaHistoricoMasivo(list<classClientesEC> claseEnvio) {
+        Http http = new Http();
+		HttpRequest request = new HttpRequest();
+		String url = claseUtil.urlSysde('Test');	
+		//String url = 'https://api-fpc.herokuapp.com/';		
+		request.setMethod('GET');
+		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+		request.setEndpoint(url + 'api/ec/historico');
+		request.setTimeout(120000);
+
+		list<classECHistorico> respuesta = new list<classECHistorico>();
+
+		try{
+
+			classJson envio = new classJson();
+			envio.contenido = JSON.serialize(claseEnvio);
+			String cons = 'contenido=' + envio.contenido;
+            system.debug(request.getEndpoint()+' --- '+cons);		
+            request.setBody(cons);
+            
+            HttpResponse response = http.send(request);
+            System.debug('Respuesta: '+response.getBody());
+            if (response.getStatusCode() == 200) {
+                respuesta = (list<classECHistorico>)System.JSON.deserialize(response.getBody(), list<classECHistorico>.class);
+            }       	
+                       
+		}Catch(Exception e){
+			system.debug('EDC Historico: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
+		} 
+        return respuesta;   
     }
     
     

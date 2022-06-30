@@ -14,12 +14,12 @@
             <value>
                 <fullName>1</fullName>
                 <default>false</default>
-                <label>Seguro con Prima Variable</label>
+                <label>Protección integral</label>
             </value>
             <value>
                 <fullName>2</fullName>
                 <default>false</default>
-                <label>Seguro con Prima Definida</label>
+                <label>Seguro de vida Opcional</label>
             </value>
         </valueSetDefinition>
     </valueSet>

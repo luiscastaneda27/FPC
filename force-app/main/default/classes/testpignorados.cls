@@ -1,32 +1,11 @@
-@isTest  (seeAllData=true)
+@isTest
 public class testpignorados {
     
     static testMethod void controllerpignorados()
-    {
-        test.startTest();   
-        
-        Fondo_Pignorado__c archivo = new Fondo_Pignorado__c  ();
-        archivo.Numero_Prestamo__c = '08234344';
-        archivo.Monto_Pignorado__c = 3234335;
-        archivo.Fecha_Pignoracion__c = date.today();
-        archivo.Fecha_Liberacion__c = date.today();
-        archivo.Monto_Prestamo__c = 12435435;
-        archivo.Total_Fondos__c = 34545666;
-        archivo.Usuario__c = 'HN19577';
-        archivo.Estatus__c = 'A';
-        archivo.Estado__c = 'P';
-        archivo.Cuenta__c = '33999';    
-        archivo.Descripcion__c = 'sdasadda';    
-        insert archivo;
-        
-        Fondo_Pignorado__c xx = new Fondo_Pignorado__c (Id = 'a1A0t00000B54hdEAB', Numero_Prestamo__c = '08234344', Monto_Pignorado__c = 3234335, Fecha_Pignoracion__c = date.today(),
-                                                             Fecha_Liberacion__c = date.today(), Monto_Prestamo__c = 12435435, Total_Fondos__c = 34545666,
-                                                             Usuario__c = 'HN19577', Estatus__c = 'A', Estado__c = 'P', Cuenta__c = '33999');
+    { 
        
-        
         controllerpignorados p = new controllerpignorados();
 		p.validatenum('32434343');
-        p.cuentapig = '';
     	p.id_pign = '';
     	p.usuario = 'HN17795';
    		p.nombrepig = 'Prueba';
@@ -43,32 +22,12 @@ public class testpignorados {
     	p.nom_empleado = 'Prueba';
     	p.cod_empleado = 'HN1235';
 		p.correoEmpleado = 'prueba@hotmail.com';
-       
-        p.popDenegarSalir();
-        p.MostrarVentanaDenegacion();
-        p.popSalirImagen();
         
-        p.Busca1();
-        p.BuscaInfor1();
-        
-        p.Enviar();
-        p.iniciar();
-        p.Autorizar();
-        p.correoUsuario();
-        p.DenegarLista();
-        p.limpiar1();
-        p.LimpiarTabla();
-        p.Cancelar();
-        //p.validateid(null);
-        p.Busca2();
-        p.BuscaInfor2();
-        p.Busca3();
-        p.BuscaInfor3();
-        p.ListPignorados = new List <classpignorados>();
+
         list<Fondo_Pignorado__c> McontenidoPign = new list<Fondo_Pignorado__c>();
         
-          classpignorados fe = new classpignorados();
-        fe.cuentapig = '43434';
+          classcambiopignorados fe = new classcambiopignorados();
+        fe.codcuenta = '43434';
     	fe.id_pign = '0801199717795';
         fe.num_prest = '321322311';
 		fe.nombrepig = 'nombre';
@@ -80,15 +39,45 @@ public class testpignorados {
 		fe.tot_fondos_pig = 321332;
 		fe.m_prestamo = 3424324;
         fe.m_pignorado = 231223;
-        fe.usuario = 'hn23245';
-        fe.num_prestamo = '21313';
-        fe.monto_pign = 342432;
-        fe.fechapign = date.today()+3;
-        fe.fechalib = date.today()+3;
-        fe.num_prestamo1 = '321321';
-        fe.tot_fondos = 32124;
-        fe.monto_prest = 321321;
-        fe.estatus = 'z';    
+        
+        /*ListaPignorados*/
+        p.ListPignorados = new List <classcambiopignorados>();
+        
+        p.ListPignorados.add(fe);
+        
+        /**/
+        p.cuentapig = '43434';
+        p.Busca1();
+        
+        p.cuentapig = '';
+        p.Busca1();
+        
+        p.popDenegarSalir();
+        p.MostrarVentanaDenegacion();
+        p.popSalirImagen();
+        p.actList();
+        p.Busca1();
+        p.BuscaInfor1();
+        p.Busca2();
+        p.BuscaInfor2();
+        p.Busca3();
+        p.BuscaInfor3();
+        p.Enviar();
+        p.iniciar();
+        p.Autorizar();
+        p.correoUsuario();
+        
+        /*DENEGARLISTA*/
+        
+        p.DenegarLista();
+        
+        /**/
+        p.limpiar1();
+        p.LimpiarTabla();
+        p.Cancelar();
+        //p.validateid(null);
+       
+       
         
         Usuarios_de_Pantallas__c u = new Usuarios_de_Pantallas__c ();
         u.Activo__c = true;
@@ -127,7 +116,7 @@ public class testpignorados {
         p1.popDenegarSalir();
         p1.MostrarVentanaDenegacion();
         p1.popSalirImagen();
-        p1.validatenum('prueba');
+        p1.validatenum(p1.cuentapig);
         p1.Busca1();
         p1.BuscaInfor1();
         
@@ -139,7 +128,7 @@ public class testpignorados {
         p1.limpiar1();
         p1.LimpiarTabla();
         p1.Cancelar();
-        p1.ListPignorados = new List <classpignorados>();
+        p1.ListPignorados = new List <classcambiopignorados>();
         p1.McontenidoPign =[ select Id, Numero_Prestamo__c,Monto_Pignorado__c,Fecha_Pignoracion__c,Fecha_Liberacion__c,Monto_Prestamo__c ,
                                     Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c
                             from Fondo_Pignorado__c
@@ -255,17 +244,17 @@ public class testpignorados {
 		p6.correoEmpleado = 'prueba@hotmail.com';
         
         classActualizaPignorados s = new classActualizaPignorados();
-        s.num_prestamo='32321321';
-        s.monto_pign = 23131;
-        s.fechapign = date.today()+3;
-        s.fechalib = date.today()+3;
-        s.num_prestamo1 = '231312';
-        s.tot_fondos = 23423;
-        s.monto_prest = 233231;
+        s.numero_prestamo='32321321';
+        s.monto_pignorado = 23131;
+        s.fechapignoracion = date.today()+3;
+        s.fechaliberacion = date.today()+3;
+        s.numero_prestamo1 = '231312';
+        s.total_fondos = 23423;
+        s.monto_prestamo = 233231;
         s.estatus = 'x';
         s.usuario = 'hn123141';
-        
-        
+        s.secuencia = 235;
+        s.codcuenta = '111111';
         
         p6.Enviar();
         
@@ -281,5 +270,28 @@ public class testpignorados {
        	ControllerAPIPignorados.ActualizarPignorados(env); 
        	
         
+        Fondo_Pignorado__c archivo = new Fondo_Pignorado__c  ();
+        archivo.Numero_Prestamo__c = '08234344';
+        archivo.Num_Prestamo__c = '08234344';
+        archivo.Monto_Pignorado__c = 3234335;
+        archivo.Fecha_Pignoracion__c = date.today();
+        archivo.Fecha_Liberacion__c = date.today();
+        archivo.Monto_Prestamo__c = 12435435;
+        archivo.Total_Fondos__c = 34545666;
+        archivo.Usuario__c = 'HN19577';
+        archivo.Estatus__c = 'A';
+        archivo.Estado__c = 'P';
+        archivo.Cuenta__c = '33999';    
+        archivo.Descripcion__c = 'sdasadda';    
+        insert archivo;
+        
+        Fondo_Pignorado__c xx = new Fondo_Pignorado__c (Id = 'a1A0t00000B54hdEAB', Numero_Prestamo__c = '08234344', Monto_Pignorado__c = 3234335, Fecha_Pignoracion__c = date.today(),
+                                                             Fecha_Liberacion__c = date.today(), Monto_Prestamo__c = 12435435, Total_Fondos__c = 34545666,
+                                                             Usuario__c = 'HN19577', Estatus__c = 'A', Estado__c = 'P', Cuenta__c = '33999');
+       
+        
+        
+        
     }
+   
 }

@@ -283,19 +283,19 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
     //Metodos Nuevos Agregados Luis 01/12/2019
     public void ACI(){
         Desactivartab();
-        pagina = 'vfAfiliacionclienteindividual?usuario='+usuario;
+        pagina = 'vfAfiliacionClienteIndividual?usuario='+usuario;
     }
     public void ACC(){
         Desactivartab();
-        pagina = 'vfAfiliacionescarga?usuario='+usuario;
+        pagina = 'vfAfiliacionesCarga?usuario='+usuario;
     }
     public void ACYC(){
         Desactivartab();
-        pagina = 'vfAfiliacionclientescargados?usuario='+usuario;
+        pagina = 'vfAfiliacionClientesCargados?usuario='+usuario;
     }
     public void AME(){
         Desactivartab();
-        pagina = 'vfAfiliacionmasivaEmpresa?usuario='+usuario;
+        pagina = 'vfAfiliacionMasivaEmpresa?usuario='+usuario;
     }
     public void EKC(){
         Desactivartab();

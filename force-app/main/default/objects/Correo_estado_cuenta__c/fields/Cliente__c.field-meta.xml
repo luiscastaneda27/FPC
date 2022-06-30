@@ -3,7 +3,7 @@
     <fullName>Cliente__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Cuenta</label>
+    <label>Cliente</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Correo estado de cuenta</relationshipLabel>
     <relationshipName>Correo_estado_de_cuenta</relationshipName>

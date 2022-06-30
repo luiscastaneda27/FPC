@@ -8,5 +8,10 @@
     <columns>nombre_municipio__c</columns>
     <columns>Codigo_Departamento_Municipio__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>codigo_pais__c</field>
+        <operation>equals</operation>
+        <value>053</value>
+    </filters>
     <label>Todos</label>
 </ListView>

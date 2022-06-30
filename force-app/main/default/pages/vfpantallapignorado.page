@@ -296,55 +296,67 @@
                           </div>	
                         <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPignorados}" var="item">
                              
-                    			<apex:column headerValue="Codigo de Cuenta" >
+                    			<apex:column style="text-align: center;" headerValue="Codigo de Cuenta" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.codcuenta}" />
                    				</apex:column>
-                            	<apex:column headerValue="Monto Pignorado" >
+                            	<apex:column style="text-align: center;" headerValue="Monto Pignorado" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.m_pignorado}" />
                          		<div>   
-                        		<apex:input type="text" id="monto_pign" value="{!item.monto_pign}"  styleclass="slds-input" style="height:20px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		<apex:input type="text" id="m_pignorado" value="{!item.m_pignorado}"  styleclass="slds-input" style="height:20px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
                         		</div>   
                    				</apex:column>
-                            	<apex:column headerValue="Fecha Pignoración" >
-                                    <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.fpignoracion}" />
-                         		<div>   
-                        		<apex:input type="datetime-local" id="fechapign" value="{!item.fechapign}"  styleclass="slds-input" style="height:30px; width:160px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
-                        		</div>   
+                            	<apex:column style="text-align: center;" headerValue="Fecha Pignoración" >
+                                    <apex:outputText style="margin-left:10px; margin-right:10px;" value="{0,date,MM'/'dd'/'yyyy}">
+                                                     <apex:param value="{!item.fpignoracion}"/> 
+                                    </apex:outputText>
+                                	<apex:param value="1"/>
+                         		<!--<div>   
+                        		<apex:input type="datetime-local" id="fpignoracion" value="{!item.fpignoracion}"  styleclass="slds-input" style="height:30px; width:160px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		</div> -->   
                    				</apex:column>
-                            	<apex:column headerValue="Fecha Liberación" >
+                            	<apex:column style="text-align: center;" headerValue="Fecha Liberación" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.fliberacion}" />
                          		<div>   
-                        		<apex:input type="datetime-local" id="fechalib" value="{!item.fechalib}"  styleclass="slds-input" style="height:30px; width:160px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		<apex:input type="datetime-local" id="fliberacion" value="{!item.fliberacion}"  styleclass="slds-input" style="height:30px; width:160px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
                         		</div>   
                    				</apex:column>
- 								<apex:column headerValue="Número de Prestamo" >
+ 								<apex:column style="text-align: center;" headerValue="Número de Prestamo" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.num_prest1}" />
                          		<div>   
-                        		<apex:input type="text" id="num_prestamo1" value="{!item.num_prestamo1}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
-                        		</div>   
-                   				</apex:column>                           
-                   				<apex:column headerValue="Total Fondos" >
+                        		<apex:input type="text" id="num_prest1" value="{!item.num_prest1}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		</div>
+                                    
+                               </apex:column> 
+                           	 	<apex:column style="text-align: center;" headerValue="Total Fondos" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.tot_fondos_pig}" />
-                         		<div>   
-                        		<apex:input type="text" id="tot_fondos" value="{!item.tot_fondos}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
-                        		</div>   
+                         		<!--<div>   
+                        		<apex:input type="text" id="tot_fondos_pig" value="{!item.tot_fondos_pig}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		</div> -->  
                    				</apex:column>         
-                            	<apex:column headerValue="Monto Prestamo" >
+                            	<apex:column style="text-align: center;" headerValue="Monto Prestamo" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.m_prestamo}" />
-                         		<div>   
-                        		<apex:input type="text" id="monto_prest" value="{!item.monto_prest}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
-                        		</div>   
+                         		<!-- <div>   
+                        		<apex:input type="text" id="m_prestamo" value="{!item.m_prestamo}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		</div> -->  
                    				</apex:column>     
-                   				<apex:column headerValue="Secuencia" >
+                   				<apex:column style="text-align: center;" headerValue="Secuencia" >
                         		<apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.sec_pig}" />
                    				</apex:column>     
-								<apex:column headerValue="Estatus" >
-                                    <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.est_pig}" />
+								<apex:column style="text-align: center;" headerValue="Estatus" >
+                                   <!-- <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.est_pig}" />
                          		<div>   
-                        		<apex:input type="text" id="estatus" value="{!item.estatus}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
-                        		</div>   
+                        		<apex:input type="text" id="est_pig" value="{!item.est_pig}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px; text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();" />
+                        		</div>   -->
+                                 <apex:selectList styleclass="slds-input"  size="1" value="{!item.est_pig}" style="margin-left:10px; width:150px; margin-right:10px;">
+                                                           	<apex:selectOption itemLabel="PIGNORADO" itemValue="A" />
+                                                            <apex:selectOption itemLabel="DESPIGNORADO" itemValue="I"  />
+                                                            
+                                                        </apex:selectList>
                    				</apex:column>                               
-                    			
+                    			<apex:column style="text-align: center;" headerValue="Subir Archivo" >
+                        		<apex:inputFile id="referencia" value="{!item.referenciaImg}" style="margin-left:10px; margin-right:10px;" > 
+                                    </apex:inputFile>
+                   				</apex:column>
                          </apex:dataTable>       
                     </apex:outputPanel>
                      <br/>
@@ -356,40 +368,39 @@
                           </div>	
                         <apex:dataTable rowClasses="even,odd" cellPadding="1"  border="1px;" value="{!ListPignorados}" var="item">
                              
-                    			<apex:column headerValue="Codigo de Cuenta" >
+                    			<apex:column style="text-align: center;" headerValue="Codigo de Cuenta" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.codcuenta}" />
                    				</apex:column>
-                            	<apex:column headerValue="Monto Pignorado" >
+                            	<apex:column style="text-align: center;" headerValue="Monto Pignorado" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.m_pignorado}" />
                          		
                    				</apex:column>
-                            	<apex:column headerValue="Fecha Pignoración" >
+                            	<apex:column style="text-align: center;" headerValue="Fecha Pignoración" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.fpignoracion}" />
                          		
                    				</apex:column>
-                            	<apex:column headerValue="Fecha Liberación" >
+                            	<apex:column style="text-align: center;" headerValue="Fecha Liberación" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.fliberacion}" />
                          		
                    				</apex:column>
- 								<apex:column headerValue="Número de Prestamo" >
+ 								<apex:column style="text-align: center;" headerValue="Número de Prestamo" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.num_prest1}" />
                          		
                    				</apex:column>                           
-                   				<apex:column headerValue="Total Fondos" >
+                   				<apex:column style="text-align: center;" headerValue="Total Fondos" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.tot_fondos_pig}" />
                          		
                    				</apex:column>         
-                            	<apex:column headerValue="Monto Prestamo" >
+                            	<apex:column style="text-align: center;" headerValue="Monto Prestamo" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.m_prestamo}" />
                          		
                    				</apex:column>     
-                   				<apex:column headerValue="Secuencia" >
+                   				<apex:column style="text-align: center;" headerValue="Secuencia" >
                         		<apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.sec_pig}" />
                    				</apex:column>     
-								<apex:column headerValue="Estatus" >
-                                    <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.est_pig}" />
-                         		 
-                   				</apex:column>                               
+								<apex:column style="text-align: center;" headerValue="Estatus" >
+                                 <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.est_pig}" />
+                         		 </apex:column>                               
                     			
                          </apex:dataTable>       
                     </apex:outputPanel>

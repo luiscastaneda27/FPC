@@ -557,8 +557,141 @@
                             <!--apex:inputField value="{!claseCasoD.Caso.Cargo_actual__c}" /--> 
                             <apex:inputField value="{!claseCasoD.Caso.Rango_salarial_Lps__c}" /> 
                             <!--apex:inputField value="{!claseCasoD.Caso.Fecha_Ingreso__c}" /--> 
-                            <apex:inputField value="{!claseCasoD.Caso.Fecha_salida__c}" />   
+                            <apex:inputField value="{!claseCasoD.Caso.Fecha_salida__c}" />
+                        	<apex:inputField value="{!claseCasoD.Caso.FrecuenciaEnvioEDC__c}" />
                     </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Beneficiarios" id="beneficiarios" columns="1" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                            <apex:outputPanel style="width:100%;" rendered="{!claseCasoD.beneficiario.modificado}" >
+                                <table width="100%">
+                                    <tr>
+                                        <th style="width: 7.7%;">
+                                            <div title="Cuenta">Cuenta</div>
+                                        </th>
+                                        <th  style="width: 7.7%;">
+                                            <div title="Beneficiario">Beneficiario</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Primer Nombre">Primer N...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Segundo Nombre">Segundo N...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Primer Apellido">Primer A...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Segundo Apellido">Segundo A...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Porcentaje">Porcentaje</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Fecha Nacimiento">Fecha Nac...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Sexo">Sexo</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Tipo de Identificación">Tipo Ident...</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Identificación">Identidad</div>
+                                        </th>
+                                        <th style="width: 7.7%;">
+                                            <div title="Parentesco">Parentesco</div>
+                                        </th>
+                                        <th style="width: 7.6%;">
+                                            <div  title=""></div>
+                                        </th>
+                                    </tr>
+                                    <apex:repeat value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                        <tr>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList value="{!benef.cuentaId}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listCuentasSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.tipoBeneficiario}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listTipoBeneficiariosSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.primerNombre}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.segundoNombre}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.primerApellido}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.segundoApellido}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.porcentaje}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:input type="date" style="width: 95%;" value="{!benef.fechanacimiento}"  >
+                                                    <apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiario}" event="onchange" >
+                                                        <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />
+                                                    </apex:actionSupport>
+                                                </apex:input>
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.sexo}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listSexoSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.tipoIdentificacion}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listIdentificacionSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:inputText style="width: 95%;" value="{!benef.identificacion}" />
+                                            </td>
+                                            <td style="width: 7.7%;">
+                                                <apex:selectList style="width: 95%;" value="{!benef.parentesco}"  size="1">
+                                                    <apex:selectOptions value="{!claseCasoD.beneficiario.listParentescoSO}"/>
+                                                </apex:selectList> 
+                                            </td>
+                                            <td  style="width: 7.6%;"> 
+                                                <apex:commandLink value="Eliminar" action="{!claseCasoD.eliminarBeneficiario}" status="status" reRender="idForm">
+                                                    <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />                                 
+                                                </apex:commandLink> 
+                                                <!--apex:outputText value="{!benef.grado}" /-->
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:pageBlockTable rendered="{!!claseCasoD.beneficiario.modificado}" value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                <apex:column headerValue="Cuenta" >
+                                    <apex:outputText value="{!benef.cuenta}" />
+                                </apex:column>
+                                <apex:column headerValue="Beneficiario" >
+                                    <apex:outputText value="{!benef.tipoBeneficiario}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Nombre" >
+                                    <apex:outputText value="{!benef.primerNombre}" />
+                                </apex:column>
+                                <apex:column headerValue="Primer Apellido" >
+                                    <apex:outputText value="{!benef.primerApellido}" />
+                                </apex:column>
+                                <apex:column headerValue="Procentaje" >
+                                    <apex:outputText value="{!benef.porcentaje}" />
+                                </apex:column>
+                                <apex:column headerValue="Identidad" >
+                                    <apex:outputText value="{!benef.identificacion}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockButtons location="bottom" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}" id="botonesBenef" >
+                            <apex:commandButton value="Actualizar" status="status" rendered="{!!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.desbloquearBeneficiario}" reRender="idForm"/>
+                            <apex:commandButton value="Cancelar" status="status" rendered="{!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.getBeneficiario}" reRender="idForm"/>
+                            <apex:commandButton value="Nuevo" status="status" rendered="{!claseCasoD.beneficiario.modificado}" action="{!claseCasoD.agregarBeneficiario}" reRender="idForm"/>
+                        </apex:pageBlockButtons>
                     
                     <apex:pageBlockSection title="Detalle" id="blockCON" columns="2" rendered="{!AND(claseCasoD.paso2,claseCasoD.cTipoCaso.constancias)}">
                            
@@ -757,8 +890,53 @@
                             <!--apex:outputField value="{!claseCasoD.Caso.Cargo_actual__c}" /--> 
                             <apex:outputField value="{!claseCasoD.Caso.Rango_salarial_Lps__c}" /> 
                             <!--apex:outputField value="{!claseCasoD.Caso.Fecha_Ingreso__c}" /--> 
-                            <apex:outputField value="{!claseCasoD.Caso.Fecha_salida__c}" />   
+                            <apex:outputField value="{!claseCasoD.Caso.Fecha_salida__c}" />
+                        	<apex:outputField value="{!claseCasoD.Caso.FrecuenciaEnvioEDC__c}" />
                     </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Beneficiarios" columns="1" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
+                            <apex:pageBlockTable value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
+                                <apex:column headerValue="Cuenta" >
+                                    <apex:outputText value="{!benef.cuenta}" />
+                                </apex:column>
+                                <apex:column headerValue="Beneficiario" >
+                                    <apex:outputText value="{!benef.tipoBeneficiario}" />
+                                </apex:column>
+                                <apex:column headerValue="Nombres" >
+                                    <apex:outputText value="{!benef.primerNombre + benef.segundoNombre}" />
+                                </apex:column>
+                                <!--apex:column headerValue="Segundo Nombre" >
+                                    <apex:outputText value="{!benef.segundoNombre}" />
+                                </apex:column-->
+                                <apex:column headerValue="Apellidos" >
+                                    <apex:outputText value="{!benef.primerApellido + benef.segundoApellido}" />
+                                </apex:column>
+                                 <!--apex:column headerValue="Segundo Apellido" >
+                                    <apex:outputText value="{!benef.segundoApellido}" />
+                                </apex:column-->
+                                <apex:column headerValue="Procentaje" >
+                                    <apex:outputText value="{!benef.porcentaje}" />
+                                </apex:column>
+                                <apex:column headerValue="Fecha de Nacimiento" >
+                                    <apex:outputText value="{0, date, dd-MM-YYYY}"> <apex:param value="{!benef.fechaNacimiento}" /> </apex:outputText>
+                                </apex:column>
+                                 <apex:column headerValue="Sexo" >
+                                    <apex:outputText value="{!benef.sexo}" />
+                                </apex:column>
+                                <apex:column headerValue="Tipo Identidad" >
+                                    <apex:outputText value="{!benef.tipoidentificacionLabel}" />
+                                </apex:column>
+                                <apex:column headerValue="Identidad" >
+                                    <apex:outputText value="{!benef.identificacion}" />
+                                </apex:column>
+                                 <apex:column headerValue="Parentesco" >
+                                    <apex:outputText value="{!benef.parentescoLabel}" />
+                                </apex:column>
+                                <apex:column headerValue="Grado" >
+                                    <apex:outputText value="{!benef.grado}" />
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                        
                     
                     <apex:pageBlockSection title="Detalle" columns="2" rendered="{!claseCasoD.cTipoCaso.estadoCuenta}">
                             <apex:outputField value="{!claseCasoD.Caso.Tipo_Estado_Cuenta__c}"/> 

@@ -14,7 +14,7 @@
             <value>
                 <fullName>TL</fullName>
                 <default>false</default>
-                <label>Talonario</label>
+                <label>Caja</label>
             </value>
             <value>
                 <fullName>CK</fullName>
@@ -34,7 +34,7 @@
             <value>
                 <fullName>MV</fullName>
                 <default>false</default>
-                <label>Movil</label>
+                <label>App Movil</label>
             </value>
             <value>
                 <fullName>AH</fullName>

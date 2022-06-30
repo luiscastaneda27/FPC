@@ -33,6 +33,7 @@ public class EstadosDeCuentaTest {
         Correo_estado_cuenta__c a = [select Id,enviado__C,enviado_mensual__C from Correo_estado_cuenta__c ];
         a.Enviado__c = false;
         a.Enviado_Mensual__c = false;
+        a.Grupo__c = 1;
         update a;
         
         EstadosDeCuenta.enviarCorreos(null, 'A1');
@@ -40,7 +41,12 @@ public class EstadosDeCuentaTest {
         
 		EstadosDeCuenta.estadoCuentaMensual(new list<classClientesEC>());
         EstadosDeCuenta.estadoCuentaTrimestral(new list<classClientesEC>());
+        EstadosDeCuenta.estadoCuentaTrimestralMasivo(new list<classClientesEC>());
         EstadosDeCuenta.estadoCuentaHistorico(new list<classClientesEC>());
+        EstadosDeCuenta.estadoCuentaHistoricoMasivo(new list<classClientesEC>());
+        EstadosDeCuenta.estadoCuentaCorreoMasivo(new list<classClientesEC>());
+        EstadosDeCuenta.ObtenerCorreos('A1');
+        EstadosDeCuenta.ObtenerCorreos('A2');
     }
     
 

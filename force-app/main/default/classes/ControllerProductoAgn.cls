@@ -455,8 +455,26 @@ public without sharing class ControllerProductoAgn {
     public String usuarioActualiza { get; set; }
     public String usuarioAprueba { get; set; }
     
+    public Boolean popBuscarColonia{ get; set; }
+    public Boolean popDireccion{ get; set; }
+    public Boolean popTelefono{ get; set; }
+    public SubProducto__C subProductoN{ get; set; }
+    public Decimal aporteInicial{ get; set; }
+    
+    public String coloniaJSON{get;set;} 
+    public String coloniaSelec{get;set;}
+    public String paisNacimiento{get;set;}
     
     public ControllerProductoAgn() {  
+        
+       /* List<String> autoC = new List<String>();
+        autoC.add('PRUEBA 1');
+        autoC.add('PRUEBA 2');
+        autoC.add('PRUEBA 3');
+        autoC.add('PRUEBA 4');
+        coloniaJSON = JSOn.serialize(autoC);
+        System.debug('coloniaJSON: '+coloniaJSON);*/
+        
         disCumplimiento = true;
         validadosBeneficiarios =  true;
         validadosBeneficiariosC = true;
@@ -464,6 +482,11 @@ public without sharing class ControllerProductoAgn {
         mostrarBoton = true;
         string prueba2 = '';
         string cuentaG = '';
+        popBuscarColonia = false;
+        popSubProducto = false;
+        popDireccion = false;
+        popTelefono = false;
+        subProductoN = new SubProducto__C();
         llenarEmpresas();
         pcUsuarioCN =  ApexPages.currentPage().getParameters().get('hytrd');
         usuarioActualiza = 'HN24633';//pcUsuarioCN;
@@ -718,22 +741,25 @@ public without sharing class ControllerProductoAgn {
                 {
                     pcPEP = true; 
                 }    
-        if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        if (fcsd.pcnacionalidad2 == '053' || fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144')
         {
             VentanaFatca = true;
-            pcFATCA = true;  
+            pcFATCA = true;
+        
         }
         else
         {   
-            if (pccodpais == '053' || pccodpais == '144')
+            if (fcsd.pccodpais == '053' || fcsd.pccodpais == '144')
             {
                 VentanaFatca = true;
                 pcFATCA = true;
+               
             }
             else
-            {
+            { 
                 VentanaFatca = false;
                 pcFATCA = false;
+              
             }
         }
                 if (fcsd.pcEst_cuenta != 'null')
@@ -1187,6 +1213,9 @@ public without sharing class ControllerProductoAgn {
             Cuenta20.Tipo_Fondo__c = 'I';
             
         }
+        
+        VentanaFatca = true;
+        pcFATCA = false;
     }
     
     public void iniciar()
@@ -1281,22 +1310,24 @@ public without sharing class ControllerProductoAgn {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe agregar al menos una dirección.'));
                 return null;    
             }
-            if( ES_Residente_EfectosMi == TRUE || ES_Residente == true || pccodpais == '053' || pccodpais == '144'||
+            /*if( ES_Residente_EfectosMi == TRUE || ES_Residente == true || pccodpais == '053' || pccodpais == '144'||
                pcnacionalidad2 == '053' || pcnacionalidad2 == '144' || pcnacionalidad3 == '053' || pcnacionalidad3 == '144')
-            {         
-                if (NumeroID_Fiscal_EEUU == '' )
-                {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numeró de identificación Fiscal (TIN) no puede estar vacio'));
-                    return null; 
-                    
-                }
-                if(PaisResidenciaEfectosFiscales == ' --Ninguno-- ')
-                {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'País Residencia Efectos Fiscales no puede estar vacio'));
-                    return null; 
-                }
-                
+            { */        
+            if (String.isBlank(NumeroID_Fiscal_EEUU) && (ES_Residente_EfectosMi == TRUE || ES_Residente == true || pccodpais == '053' || pccodpais == '144'||
+                pcnacionalidad2 == '053' || pcnacionalidad2 == '144' || pcnacionalidad3 == '053' || pcnacionalidad3 == '144')) {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación Fiscal (TIN) no puede estar vacio'));
+                return null; 
+            }else if( String.isNotBlank(NumeroID_Fiscal_EEUU) && NumeroID_Fiscal_EEUU.length() < 9){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación Fiscal (TIN) debe tener al menos 9 caracteres'));
+                return null;
             }
+            if(PaisResidenciaEfectosFiscales == ' --Ninguno-- ')
+            {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'País Residencia Efectos Fiscales no puede estar vacio'));
+                return null; 
+            }
+                
+            //}
             if( pcPrimerNombreReferi1 == '')
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Primer Nombre Referido Vacio'));
@@ -1376,6 +1407,10 @@ public without sharing class ControllerProductoAgn {
                 }
                 
             }
+            if(pcmail == null && pcmailempl == null && ListTelefonos.size() == 0){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe completar el correo o el téfono'));
+                return null;  
+            }
             if(fechaLabor > date.today())
             {          
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha de ingreso a empresa no puede ser mayor a hoy'));
@@ -1451,9 +1486,21 @@ insert reg;
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'¡Usuario no encontrado!'+ ex.getMessage()));      
         }              
     }
-    
+    Public String subProductoSelec{get;set;}
     public void obtieneCodSub (){
-        Subproducto__c sb = [select Id, Codigo__c, Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c, Comisi_n_por_Aporte__c from Subproducto__c where codigo__c =: pcsubproducto];
+        Subproducto__c sb;
+        if(popSubProducto){
+            for(Subproducto__c item : listSubProductos){
+                if(item.Cobrar_si_empleado_sigue_laborando__c){
+                    pcsubproducto = item.codigo__c;
+                    sb = item;
+                }
+            }
+        }else{
+             sb = [select Id, Codigo__c, Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c, Comisi_n_por_Aporte__c from Subproducto__c where codigo__c =: pcsubproducto];
+        }
+        System.debug('pcsubproducto: '+pcsubproducto);
+       
         string label;             
         pcproducto = sb.Producto__r.codigo__c;
         Cuenta20.Tipo_Fondo__c = sb.TipoProducto__c;
@@ -1464,7 +1511,9 @@ insert reg;
                 label = p.getlabel();
             }
         }
+        popSubProducto = false;
         codigoAsignado = 'El Subproducto '+ sb.Codigo__c+ ' es del tipo de Fondo '+label+ ', con un tipo de comision '+ sb.Tipo_Fondo__c + ', con la cual aplica a una comision sobre saldo de : ' + sb.Comisi_n_Sobre_Saldo__c + '% y una comision por aporte de: '+sb.Comisi_n_por_Aporte__c+'%';
+        
     }
     
     public void bloqBotonGuardar(){
@@ -1813,7 +1862,7 @@ insert reg;
             beneficiarioUnico.fechaNacimiento = fechaBeneficiario;
             decimal total2= !test.isRunningTest() ? beneficiarioUnico.Distribucion : 0;
             
-            if((beneficiarioUnico.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnico.genero == ' --Ninguno-- ' || beneficiarioUnico.primerNombre == '' || beneficiarioUnico.primerApellido == '' || beneficiarioUnico.Parentesco == ' --Ninguno-- ') && !test.isRunningTest())
+            if((beneficiarioUnico.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnico.genero == ' --Ninguno-- ' || beneficiarioUnico.primerNombre == '' || beneficiarioUnico.primerApellido == '' || beneficiarioUnico.Parentesco == ' --Ninguno-- ' || fechaBeneficiario == null || String.isBlank(beneficiarioUnico.numeroId)) && !test.isRunningTest())
             {    
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Permiten Campos Vacios En Beneficiarios'));  
                 return null;
@@ -1947,7 +1996,7 @@ insert reg;
             //beneficiarioUnicoC.Distribucion = DistribucionC;
             decimal total2C= !test.isRunningTest() ? beneficiarioUnicoC.Distribucion : 0;
             system.debug('datos beneficiarios contingencias: '+'tipo:'+beneficiarioUnicoC.tipoBeneficiario + ' genero: '+beneficiarioUnicoC.genero +' pNombre: '+beneficiarioUnicoC.primerNombre + ' pApellido: '+beneficiarioUnicoC.primerApellido + ' parentesco: '+beneficiarioUnicoC.Parentesco);
-            if((beneficiarioUnicoC.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnicoC.genero == ' --Ninguno-- ' || beneficiarioUnicoC.primerNombre == '' || beneficiarioUnicoC.primerApellido == '' || beneficiarioUnicoC.Parentesco == ' --Ninguno-- ') && !test.isRunningTest())
+            if((beneficiarioUnicoC.tipoBeneficiario == ' --Ninguno-- ' || beneficiarioUnicoC.genero == ' --Ninguno-- ' || beneficiarioUnicoC.primerNombre == '' || beneficiarioUnicoC.primerApellido == '' || beneficiarioUnicoC.Parentesco == ' --Ninguno-- ' || fechaBeneficiarioC == null || String.isBlank(beneficiarioUnicoC.numeroId)) && !test.isRunningTest())
             {    
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'No Se Permiten Campos Vacios En Beneficiarios'));  
                 return null;
@@ -2320,8 +2369,14 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
     public boolean mostrarTablaModificarDir {get;set;}
     public boolean MostrarTablaDireccion {get;set;}
     
-    PUBLIC pageReference guardarListaDir()
-    {      
+    PUBLIC pageReference guardarListaDir(){      
+        pcColoniaCN = ' --Ninguno-- ';
+        for(selectOption item: opcionColonia){
+            if(item.getLabel() == coloniaSelec){
+                pcColoniaCN = item.getValue();
+            }
+        }
+        
         direccionUnico.paisDir = pccodpais;
         direccionUnico.deptoDir = pcDeptoCN;
         direccionUnico.ciuDir = pcMunicipioCN;
@@ -2329,7 +2384,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         direccionUnico.tipDireccion = Cliente25.Tipo_Direccion__c;        
         direccionUnico.esDefault = Cliente25.Por_defecto__c;          
         direccionUnico.detalleDir = pcCalleDetalleCN;
-        
+        System.debug('coloniaSelec: '+coloniaSelec);
         if(direccionUnico.esDefault == null || direccionUnico.esDefault != null && direccionUnico.tipDireccion == 'C')
         {    
             direccionUnico.esDefault ='S';
@@ -2376,6 +2431,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                 Cliente25.Tipo_Direccion__c = '';
                 Cliente25.Por_Defecto__c = '';
                 pcCalleDetalleCN = '';
+                popDireccion();
             }
             
         }catch(exception e){
@@ -2459,6 +2515,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                     pcMunicipioCN = ListDirecciones[i].ciuDir;                    
                     opcionColonia = new list <selectOption>();
                     opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
+                    List<String> listCol = new List<String>();
                     for (Colonias_U__c item:[select nombre_colonia__c, codigo_colonia__c from Colonias_U__c 
                                              where codigo_pais__c =: ListDirecciones[i].paisDir 
                                              and codigo_departamento__c =: ListDirecciones[i].deptoDir
@@ -2466,10 +2523,19 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                                              and codigo_colonia__c =: ListDirecciones[i].coloDir])
                     {
                         opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
+                        listCol.add(item.nombre_colonia__c);
                     }
                     pcColoniaCN = ListDirecciones[i].coloDir;
                     direccionUnico.secuencia = ListDirecciones[i].secuencia;
                     Cliente25.Por_defecto__c = ListDirecciones[i].esDefault;
+                    
+                    for(selectOption item: opcionColonia){
+                        if(item.getValue() == pcColoniaCN){
+                            coloniaSelec = item.getLabel();
+                        }
+                    }
+                    coloniaJSON =JSON.serialize(listCol);
+                    
                 }
             }
             if(posi != null)
@@ -2531,6 +2597,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                 Cliente25.Tipo_Telefono__c = '';
                 Cliente25.Telefono_Ubicacion__c = '';
                 Cliente25.Por_Defecto_Tel__c = '';
+                popTelefono();
             }      
         }catch(exception e)
         {
@@ -2630,33 +2697,78 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             paginacion = 0;
             listColonias = new list <Colonias_U__c>();
-            listColonias = [select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: pccodpais 
-                            and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN order by nombre_colonia__c asc];
+            String query = 'select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: pccodpais ';
+            query +=' and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN';
+            if(nombreColonia != null && nombreColonia.trim() != ''){
+                query +=' and nombre_colonia__c like \'%'+nombreColonia+'%\'';
+            }
+            query +=' order by nombre_colonia__c asc';
+            listColonias = DataBase.query(query);
+            /*if(opcionColonia != null && opcionColonia.trim() != ''){
+                listColonias = [select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: pccodpais 
+                                and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN order by nombre_colonia__c asc];
+            }else{
+                 listColonias = [select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: pccodpais 
+                                and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN and nombre_colonia__c like : by nombre_colonia__c asc];
+            }*/
             opcionColonia = new list <selectOption>();
             opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            if(listColonias.size()>999) {
+            System.debug('Numero de colonias: '+listColonias.size());
+            List<String> listCol = new List<String>();
+            for (Colonias_U__c item: listColonias){
+                listCol.add(item.nombre_colonia__c);
+                opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
+            }
+			coloniaJSON = listCol.size() > 0 ? JSON.serialize(listCol) : coloniaJSON;
+            System.debug('coloniaJSON: '+coloniaJSON);
+           /* if(listColonias.size()>999) {
                 paginacion++;
                 mostrarBoton =  true;
                 mostrarSiguiente = false;
                 mostrarAnterior = true;
-                
-                for (integer i=0; i< 999; i++)
-                {
+                for (integer i=0; i< 999; i++){
                     opcionColonia.add(new selectOption(listColonias[i].codigo_colonia__c, listColonias[i].nombre_colonia__c));
                 }                
             }
             else{
-                opcionColonia = new list <selectOption>();
-                opcionColonia.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-                for (Colonias_U__c item:[select nombre_colonia__c, codigo_colonia__c from Colonias_U__c where codigo_pais__c =: pccodpais 
-                                         and codigo_departamento__c =: pcDeptoCN and codigo_municipio__c =: pcMunicipioCN order by nombre_colonia__c asc])
+                for (Colonias_U__c item: listColonias)
                 {
                     opcionColonia.add(new selectOption(item.codigo_colonia__c, item.nombre_colonia__c));
                 }
-            }        
+            } */       
         }catch(exception e){
             
         }
+    }
+    
+    public void dependeSI(){
+        if (pcDependeSI){
+            ValidarDependenciaSI(); 
+        }else{
+            ValidarDependenciaSII();
+        }
+    }
+    public void dependeNO(){
+        if (pcDependeNO) {
+            ValidarDependenciaNOV(); 
+        } else {
+            ValidarDependenciaNO(); 
+        } 
+    }
+    
+    public void OcultTerSI(){
+        if (OcultaTerSI){
+            TerceraSI(); 
+        } else {
+            TerceNADA(); 
+        }   
+    }
+    public void OcultTerNO(){
+        if (OcultaTerNO) {
+            TerceraNO(); 
+        } else {
+            TerceNADA(); 
+        }   
     }
     
     public void siguiente(){
@@ -2724,7 +2836,7 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             opcionMunicipio = new list <selectOption>();
             opcionMunicipio.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            for (Municipio__c item:[select nombre_municipio__c, codigo_municipio__c from Municipio__c where codigo_pais__c =: pccodpais and     codigo_departamento__c =: pcDeptoCN])
+            for (Municipio__c item:[select nombre_municipio__c, codigo_municipio__c from Municipio__c where codigo_pais__c =: pccodpais and     codigo_departamento__c =: pcDeptoCN order by nombre_municipio__c asc])
             {
                 opcionMunicipio.add(new selectOption(item.codigo_municipio__c, item.nombre_municipio__c));
             }
@@ -2745,15 +2857,18 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         {
             opcionDepartamento = new list <selectOption>();
             opcionDepartamento.add(new selectOption(' --Ninguno-- ', ' --Ninguno-- '));
-            for (Departamentos__c item:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pccodpais])
+            for (Departamentos__c item:[select Departamento__c, codigo_departamento__c from Departamentos__c where codigo_pais__c =: pccodpais order by Departamento__c asc])
             {
+                System.debug('item.Departamento__c: '+item.Departamento__c);
                 opcionDepartamento.add(new selectOption(item.codigo_departamento__c, item.Departamento__c));
             }
-                    if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
-        {
             VentanaFatca = true;
-            pcFATCA = true;  
-        }
+            pcFATCA = (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144');
+            /*if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+            {
+                VentanaFatca = true;
+                pcFATCA = true;  
+            }
         else
         {   
             if (pccodpais == '053' || pccodpais == '144')
@@ -2766,10 +2881,11 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
                 VentanaFatca = false;
                 pcFATCA = false;
             }
-        } 
+        } */
         }catch(exception e){
             
         }
+        
     }    
     public void llenarPais(){
         
@@ -2778,6 +2894,9 @@ beneficiarioUnico.segundoApellido =  ListBeneficiariosC[i].segundoApellido;*/
         for (Pais_R__c item:[select nombre__c, codigo__c from Pais_R__c]){
             opcionPais.add(new selectOption(item.codigo__c, item.nombre__c));
         }
+    }
+    public void paisNacimiento(){
+        VentanaFatca = true;
     }
     public void PaisFatca(){
         if (pccodpais != '053' || pccodpais != '144')
@@ -4124,9 +4243,9 @@ paso2Cuerpo = 'slds-hide';
                 return null;    
             }
             
-            if( pcnroid == '')
+            if( paisNacimiento == ' --Ninguno-- ')
             {          
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numero ID Vacio'));
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'País de Nacimiento Vacio'));
                 return null;    
             }
             
@@ -4175,21 +4294,20 @@ paso2Cuerpo = 'slds-hide';
                 
             }    
                         
-            if( ES_Residente_EfectosMi == TRUE || ES_Residente == true||pccodpais == '053'||pccodpais == '144'||pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144')
-            {         
-                if (NumeroID_Fiscal_EEUU == '' )
-                {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numeró de identificación Fiscal (TIN) no puede estar vacio'));
-                    return null; 
-                    
-                }
-                if(PaisResidenciaEfectosFiscales == ' --Ninguno-- ')
-                {
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'País Residencia Efectos Fiscales no puede estar vacio'));
-                    return null; 
-                }
+            //if( ES_Residente_EfectosMi == TRUE || ES_Residente == true||pccodpais == '053'||pccodpais == '144'||pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'){         
+            if (String.isBlank(NumeroID_Fiscal_EEUU) && ( ES_Residente_EfectosMi == TRUE || ES_Residente == true||pccodpais == '053'||pccodpais == '144'||pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144')){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numeró de identificación Fiscal (TIN) no puede estar vacio'));
+                return null; 
+            }else if(String.isNotBlank(NumeroID_Fiscal_EEUU) &&NumeroID_Fiscal_EEUU.length() < 9){
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Numeró de identificación Fiscal (TIN) debe tener al menos 9 caracteres'));
+                return null;
+            }
+            if(PaisResidenciaEfectosFiscales == ' --Ninguno-- ') {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'País Residencia Efectos Fiscales no puede estar vacio'));
+                return null; 
+            }
                 
-            }     
+            //}     
             //Agregado para validar las listas
             if (ListTelefonos.size() == 0)
             {
@@ -4747,7 +4865,7 @@ return null;
                 Autonumerico_cuentas_Syste__c af = [Select Id, Id_Formulario_Sysde__c from Autonumerico_cuentas_Syste__c Limit 1];
                 pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
                 naturalEnvio.pnnrocertificado = pnnrocertificado;
-                
+                naturalEnvio.pcPaisNacimiento = paisNacimiento;
                 String resultado = '';
                 
                 System.debug('Tipo de Moneda: '+naturalEnvio.pcTipoMoneda + '--- ' + TipMoneda.Tipo_Moneda__c);
@@ -4759,8 +4877,8 @@ return null;
                 
                 //Si la cuenta es AH validar la Moneda antes de guardar
                 if(pcformapago == 'AH') {
-                	FieldsAHManagement fields = new FieldsAHManagement();
-        			fields = ControllerValidateIdentityAH.execute(pccuentapago);
+                    FieldsAHManagement fields = new FieldsAHManagement();
+                    fields = ControllerValidateIdentityAH.execute(pccuentapago);
                     if(fields.CURRENCY_VAL != Null || fields.CURRENCY_VAL != '') { 
                         if(fields.CURRENCY_VAL != valorMoneda) {
                             resultado = 'La moneda del fondo de pensión no es igual a la moneda de la cuenta de ahorro/cheque';	
@@ -4772,23 +4890,20 @@ return null;
                         resultado = 'Error en el servicio, no se ha obtenido la identidad y el tipo de moneda, actualice y vuelva a intentarlo';
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, resultado)); 
                     }    
-                } else {    
-                	resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
+                } else {
+                    resultado = controllerApiClienteNatural.guardarCliente(naturalEnvio);
                 }    
                 
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
-                //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
-                // bloqBotonGuardar();
-                //limpiarAgregado(resultado);
-                // iniciar();
-                //limpiar();
-                
+                Boolean esExitoso = resultado.contains('Proceso realizado Correctamente');
                 aSysdeReporteCalidad.ClassReporteCalidad respuesta = new aSysdeReporteCalidad.ClassReporteCalidad();
-                if((idAfiliacion !=null || checkcorreo) && resultado.contains('Proceso realizado Correctamente')){
+                if(esExitoso){
                     respuesta= aSysdeReporteCalidad.infoCliente(pcnroid);
+                    CrearUsuarioPortalAutogestion.crearUsuarioWS(pcprimernombre, pcprimerapellido, pcmail, pcnroid, respuesta.numCuenta, pctipoid);
+                    aSysdeSincronizador.actializarClienteIndividual(respuesta.clienteUnicoBanco);
+                    
                 }
                 update af;
-                if((idAfiliacion !=null && resultado.contains('Proceso realizado Correctamente')) || test.isRunningTest()) {
+                if((idAfiliacion !=null && esExitoso) || test.isRunningTest()) {
                     afiliacion.Periodicidad__c = Cuenta20.Frecuencia_Aportacion__c;
                     afiliacion.Forma_Pago__c = pcformapago;
                     afiliacion.Numero_Cuenta__c = respuesta.numCuenta;
@@ -4813,7 +4928,7 @@ return null;
                     system.debug('despues del actualizar');                    
                 }
                 
-                if(resultado.contains('Proceso realizado Correctamente')) {                  
+                if(esExitoso) {                  
                      if(checkcorreo && pcmail != null){
                         checkCorreo = false;
                         String queryCorreo = 'Select Cuerpo__c From  Correo_EDC__mdt Where DeveloperName = ';
@@ -4834,8 +4949,8 @@ return null;
           
                     }
                     
-                    String cuenta = resultado.replace('Proceso realizado Correctamente  Número De Cuenta:', '');
-                    cuenta = cuenta.replace('"', '');
+                    String cuenta = respuesta.numCuenta;
+                    //cuenta = cuenta.replace('"', '');
                     system.debug('cuenta guardada: '+cuenta);
                     Integer existe=0;//[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:pc_codCuenta];
                     if(!test.isRunningTest()) { existe=[SELECT count() FROM Cuenta_Formularios__c where Cuenta__c=:cuenta];
@@ -4856,7 +4971,7 @@ return null;
                         FieldsBankManagement fields = new FieldsBankManagement();
                         fields.pctipoid = pctipoid;
                         fields.pcnroid = pcnroid;
-                        fields.cuenta = val2;
+                        fields.cuenta = cuenta;
                         fields.pcprimernombre = pcprimernombre;
                         fields.pcprimerapellido = pcprimerapellido;
                         fields.pcmail = pcmail;
@@ -5207,7 +5322,8 @@ return null;
             
             else
             { 
-                
+                //naturalEnvio = (NaturalActualizar)JSON.deserialize(JSON.serialize(naturalEnvio).toUpperCase(), NaturalActualizar.class);
+                naturalEnvio.pcPaisNacimiento = paisNacimiento;
                 String resultado = controllerApiClienteNatural.actualizaCliente(naturalEnvio);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
@@ -5339,7 +5455,8 @@ insert reg;
                 {
                     pnnrocertificado = fcsd.pnnrocertificado;
                 }
-                
+                paisNacimiento = fcsd.pcPaisNacimiento != 'null' ? fcsd.pcPaisNacimiento : null;
+                pcFATCANC = fcsd.pcFATCANC == 'S';
                 if (fcsd.RTN != 'null'||fcsd.RTN != 'NULL')
                 {
                     RTN = fcsd.RTN;
@@ -5864,10 +5981,10 @@ Else if(fcsd.ListDirecciones[i].tipDireccion == 'T')
 {
 fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO'; 
 }*/
-                    
+                    try{
                     Pais_R__c itemP = [select nombre__c from Pais_R__c
                                        where codigo__c =: fcsd.ListDirecciones[i].paisDir];
-                    
+                    System.debug(fcsd.ListDirecciones[i].paisDir +' -- '+fcsd.ListDirecciones[i].deptoDir);
                     Departamentos__c itemD = [select Departamento__c, codigo_departamento__c from Departamentos__c
                                               where codigo_pais__c =: fcsd.ListDirecciones[i].paisDir 
                                               and codigo_departamento__c =: fcsd.ListDirecciones[i].deptoDir];
@@ -5890,6 +6007,9 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                     
                     ListDirecciones = fcsd.ListDirecciones; 
                     mostrarTablaModificarDir = true;
+                    }Catch(Exception ex){
+                        
+                    }
                 }
                 
                 //Muestra el boton de siguiente pantalla
@@ -5968,8 +6088,12 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 {
                     numtran = fcsd.numtran;
                 }
-                
-                
+                paisNacimiento = fcsd.pcPaisNacimiento != 'null' ? fcsd.pcPaisNacimiento : null;
+                pcFATCANC = fcsd.pcFATCANC == 'S';
+                /*if(fcsd.FATCANC == true||test.isRunningTest()){ 
+                    muestraPopFATCANC = true;
+                    pcFATCANC = true;
+                }*/
                 if (fcsd.RTN != 'null')
                 {
                     RTN = fcsd.RTN;
@@ -5989,19 +6113,23 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 {
                     pcPEP = true; 
                 }    
-        if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+        if (fcsd.pcnacionalidad2 == '053' || fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144')
         {
-            pcFATCA = true;  
+            pcFATCA = true;
+            MostrarVentanaFATCA();
         }
         else
         {   
-            if (pccodpais == '053' || pccodpais == '144')
+            system.debug('ESSSS RESIDENTE: '+ fcsd.ES_Residente);
+            if (fcsd.ES_Residente == 'S')
             {
                 pcFATCA = true;
+                MostrarVentanaFATCA();
             }
             else
             {
                 pcFATCA = false;
+                MostrarVentanaFATCANO();
             }
         }
                 if (fcsd.pcEst_cuenta != 'null')
@@ -6563,7 +6691,8 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado'));      
             }  
             salirCuenta();
-            
+            VentanaFatca = true;
+            pcFATCA = true;
         }Catch(Exception e){
             system.debug('Error al buscar: ' + e.getMessage());
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getLineNumber() + e.getMessage()));       
@@ -6624,7 +6753,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
                 }
                 
                 
-                
+                paisNacimiento = fcsd.pcPaisNacimiento;
                 disbot = false;
                 validar1 = true;
                 if (fcsd.pcprimernombre != 'null'&&fcsd.pcprimernombre != null&&fcsd.pcprimernombre != ''&& fcsd.pcprimernombre != 'NULL'&&fcsd.pcprimernombre != NULL ||Test.isRunningTest())
@@ -7275,7 +7404,56 @@ else*/ if (pcPEP== true && pctipoid == '1')
         pcFATCANC = false;
         pcPEP = false;
         
-    }    
+    }
+    public String nombreColonia {get;set;}
+    public Boolean popSubProducto {get;set;}
+    public list<SubProducto__c> listSubProductos {get;set;}
+    public void popColonias(){
+        nombreColonia = '';
+        popBuscarColonia = !popBuscarColonia;
+    }
+    public void popTelefono(){
+        popTelefono = !popTelefono;
+    }
+    public void popDireccion(){
+        popDireccion = !popDireccion;
+    }
+    public void popSubProducto(){
+        popSubProducto = !popSubProducto;
+        listSubProductos = new list<SubProducto__c>();
+        System.debug('Pop: '+popSubProducto);
+        if(popSubProducto){
+            for(SubProducto__c item: 
+                [Select  Comisi_n_por_Aporte__c, Codigo__c, Rango__c,Cobrar_si_empleado_sigue_laborando__c,
+                 Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c
+                 From SubProducto__c
+                 Where TipoProducto__c =: subProductoN.TipoProducto__c 
+                 and CurrencyIsoCode  =: subProductoN.CurrencyIsoCode 
+                 and TipoComision__c  =: subProductoN.TipoComision__c
+                 and FPC_Comercializable__c = true]){
+                     item.Cobrar_si_empleado_sigue_laborando__c = false;
+                     listSubProductos.add(item);
+                 }
+            System.debug('Sub productos'+listSubProductos);
+        }
+    }  
+    public String monedaSubPro{get;set;}
+    public void popSubProductoPref(){
+        popSubProducto = !popSubProducto;
+        listSubProductos = new list<SubProducto__c>();
+        if(popSubProducto){
+            for(SubProducto__c item: 
+                [Select Comisi_n_por_Aporte__c, Codigo__c, Rango__c,Cobrar_si_empleado_sigue_laborando__c,
+                 Name, TipoProducto__c, toLabel(Tipo_Fondo__c), Producto__r.codigo__c, Comisi_n_Sobre_Saldo__c
+                 From SubProducto__c
+                 Where Comisi_n_por_Aporte__c =: subProductoN.Comisi_n_por_Aporte__c
+                 //and FPC_Comercializable__c = true 
+                 and CurrencyIsoCode  = :monedaSubPro ]){
+                     item.Cobrar_si_empleado_sigue_laborando__c = false;
+                     listSubProductos.add(item);
+                 }
+        }
+    }  
     
     public void BloqBotonCU(){
         
@@ -7311,8 +7489,6 @@ else*/ if (pcPEP== true && pctipoid == '1')
     public void hideVentana(){
         MostraVentana = false;
         Bene_Ocultar_CamPos = False; 
-        
-        
     }
     
     public void bloqPep(){  
@@ -7651,7 +7827,9 @@ EstadoCivil.add(new selectOption(p.getValue(),p.getLabel()));
                     }
                 }
                 mostrarTabla2 = true ;
-            }            
+            }
+            VentanaFatca = true;
+            //pcFATCA = true;            
         }Catch(Exception e)
         {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error desde SYSDE ' + e.getMessage() ));   

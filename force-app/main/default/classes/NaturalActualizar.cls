@@ -107,7 +107,10 @@ public with sharing class NaturalActualizar {
     public string PaisResidenciaEfectosFiscales{get;set;}
     public string NumeroID_Fiscal_EEUU{get;set;}
     public string NumeroID_Fiscal_OtroPais{get;set;}
+    public String paisNacimiento { get; set; }
+    public String pcPaisNacimiento { get; set; }
 
+    
     public List<beneficiario> ListBeneficiarios {get;set;}
     public List<beneficiario> ListBeneficiariosC {get;set;}
     //lista debida diligencia

@@ -244,7 +244,6 @@ public class controllerApiClienteNatural {
 		ClienteNaturales fcsd= new ClienteNaturales();
         list<beneficiario> bene = new list<beneficiario>();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
 		try{
 
 			HttpResponse response = http.send(request);
@@ -256,7 +255,7 @@ public class controllerApiClienteNatural {
             respuesta = respuesta.replace(':"T00:00:00"',':null');
             
             //fcsd = respuesta.split(',');
-            system.debug('debuggRespuesta: ' + respuesta); 
+            system.debug('Respuesta ConsultaInfoClienteC: ' + respuesta); 
             
             if (response.getStatusCode() == 200) 
            {

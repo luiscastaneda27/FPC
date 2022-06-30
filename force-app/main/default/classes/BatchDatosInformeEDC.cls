@@ -9,11 +9,12 @@ global without sharing class BatchDatosInformeEDC implements Database.Batchable<
     }
     
     global Database.QueryLocator start(Database.BatchableContext BC){
-        return Database.getQueryLocator('Select AccountId,Id, '+
-            ' (Select Id, CreatedDate,FirstOpenDate,LastOpenDate,TimesOpened,Task.WhatId  '+
-            ' From EmailStatuses '+
-            ' where Task.Subject = \'Correo electrónico: Estado de cuenta.\' and Task.WhatId = null)' +
-            ' From Contact  ');
+        return Database.getQueryLocator('Select AccountId,Id, EmailBouncedReason, IsEmailBounced,'+
+                                        ' (Select Id, CreatedDate,FirstOpenDate,LastOpenDate,TimesOpened,Task.WhatId  '+
+                                        ' From EmailStatuses '+
+                                        ' where Task.Subject = \'Correo electrónico: Estado de cuenta.\' and Task.WhatId = null),' +
+                                        ' (Select Id,CreatedDate,FPC_Error__c from Errores_Estados_De_Cuentas__r)'+
+                                        ' From Contact  ');
     }
     
     global void execute(Database.BatchableContext bc, List<sObject> scope) {
@@ -34,7 +35,7 @@ global without sharing class BatchDatosInformeEDC implements Database.Batchable<
             ES = !test.isRunningTest() ?  contacto.EmailStatuses : getEmailStatus();
             
             for(EmailStatus emstat : ES){
-                if((desde != null && emstat.CreatedDate < desde) || (hasta != null && emstat.CreatedDate > hasta) ){
+                if((desde != null && emstat.CreatedDate < desde) || (hasta != null && emstat.CreatedDate > hasta.addDays(1)) ){
                     continue;
                 }
                 InformeEDC__c informeEDC  = new InformeEDC__c ();
@@ -44,6 +45,20 @@ global without sharing class BatchDatosInformeEDC implements Database.Batchable<
                 informeEDC.FechaQueSeAbrio__c = emstat.FirstOpenDate;
                 informeEDC.UltimaFechaQueSeAbrio__c = emstat.LastOpenDate;
                 informeEDC.NumeroVecesQueSeAbrio__c = emstat.TimesOpened;
+                informeEDC.FPC_ErrorEnvio__c = contacto.IsEmailBounced ? contacto.EmailBouncedReason : null;
+                listInformeEDC.add(informeEDC);
+                break;
+                
+            }
+            for(FPC_ErroresEstadosDeCuenta__c item : contacto.Errores_Estados_De_Cuentas__r){
+                if((desde != null && item.CreatedDate < desde) || (hasta != null && item.CreatedDate > hasta.addDays(1)) ){
+                    continue;
+                }
+                InformeEDC__c informeEDC  = new InformeEDC__c ();
+                informeEDC.IdExterno__c = item.Id;
+                informeEDC.Cliente__c = contacto.AccountId;
+                informeEDC.FechaEnvio__c = item.CreatedDate;
+                informeEDC.FPC_ErrorEnvio__c = item.FPC_Error__c;
                 listInformeEDC.add(informeEDC);
                 break;
                 

@@ -4,12 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Id__c</field>
-        <value xsi:type="xsd:string">0801-1980-12924
-0801-1987-07728
-0801-1990-05327
-0801-1972-05033
-0801-1992-20733
-0801-1987-16036
-0801-1991-18048</value>
+        <value xsi:type="xsd:string">0801-1972-05033
+0826-1995-00213</value>
     </values>
 </CustomMetadata>

@@ -26,6 +26,7 @@ public without sharing class ControladorCasosPortalAutogestion {
     public Cuentas__C Cuenta { get; set; }
     
     public Boolean popVerificacionCodigo { get; set; }
+    public Boolean casoObligatorio { get; set; }
     
     public string bancoVal {get;set;}
     
@@ -86,7 +87,7 @@ public without sharing class ControladorCasosPortalAutogestion {
             llenarBANCO();
             llenarFRECUENCIA();
             idCliente =  ApexPages.currentPage().getParameters().get('idCliente');
-            system.debug('Parametro Recibido: '+idCLiente);
+            system.debug('Parametro Recibido: '+idCliente);
             //idCliente = '0801198801163'; 
             //idCliente='0709199300155';
             //idCliente = '0801199411013';
@@ -96,19 +97,25 @@ public without sharing class ControladorCasosPortalAutogestion {
             if(Site.getBaseUrl() != Null || Site.getBaseUrl() != '') {
                 this.UrlHost = Site.getBaseUrl();
             }
-            
+            String registroActuali = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
             cliente = new account();
             cliente = [select id, Name, Acepto_Condiciones_de_Portal_Autogestion__C,identificacion__c,
-                       Departamento_Residencia2__c,PersonContactId
+                       Departamento_Residencia2__c,PersonContactId,UltimoCasoObligatorio__c,
+                       (Select CreatedDate from Cases Where RecordTypeId =: registroActuali
+                        Order by CreatedDate Desc limit 1)
                        from account where identificacion__C =:idCliente limit 1];
             
             contrato.Cliente__c = cliente.id;
             contrato.Acepto_Condiciones_de_Portal_Autogestion__C = true;
             mostrarCntrato = true;
-            if([select count() from Contrato_Aceptado__c where Cliente__c = :cliente.id]>0) { mostrarCntrato = false;
+            casoObligatorio = false;
+            if([select count() from Contrato_Aceptado__c where Cliente__c = :cliente.id]>0) {
+                mostrarCntrato = false;
             }
+            validaCasoObligatorio();
+            String mensaje = !mostrarCntrato && casoObligatorio ? Label.MensajeCasoObligatorioAutoGest : 'Navegadores recomendados Google Chrome y Firefox Mozilla';
             Inicio();
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'Navegadores recomendados Google Chrome y Firefox Mozilla'));
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, mensaje));
         } catch(Exception ex) {
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Lo sentimos pero se ha producido un error inesperado'));
@@ -174,7 +181,7 @@ public without sharing class ControladorCasosPortalAutogestion {
                                       etiquetaCuenta = item.Codigo__c + (item.Producto__r.Name != null ? (' - ' + item.Producto__r.Name) : '') + (item.Detalle_Cuenta_colectiva__c.trim() != '-' ? (' - ' + item.Detalle_Cuenta_colectiva__c) : '');
                                       listCuentas.add(new SelectOption(item.id, etiquetaCuenta));
                                   }
-            if(listCuentas.size() == 2) {
+            if(listCuentas.size() == 2 || casoObligatorio) {
                 idCuenta = listCuentas[1].getvalue();
                 CargarTipoGestion();
             }
@@ -187,6 +194,27 @@ public without sharing class ControladorCasosPortalAutogestion {
         
     }
     
+    public void validaCasoObligatorio(){
+        casoObligatorio = (cliente.UltimoCasoObligatorio__c == null && (cliente.Cases.size() == 0));
+        Integer numMeses = Integer.valueOf(Label.NumMesesParaCrearCasosObligatorios);
+        if(cliente.UltimoCasoObligatorio__c == null && (cliente.Cases.size() > 0)){
+            Date fechaCreacion = Date.valueOf(cliente.Cases[0].CreatedDate);
+            if(fechaCreacion.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+        if(cliente.UltimoCasoObligatorio__c != null && (cliente.Cases.size() == 0)){
+            if(cliente.UltimoCasoObligatorio__c.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+        if(cliente.UltimoCasoObligatorio__c != null && (cliente.Cases.size() > 0)){
+            Date fechaCreacion = Date.valueOf(cliente.Cases[0].CreatedDate) > cliente.UltimoCasoObligatorio__c ? Date.valueOf(cliente.Cases[0].CreatedDate) : cliente.UltimoCasoObligatorio__c;
+            if(fechaCreacion.addMonths(numMeses) < date.today()){
+                casoObligatorio = true;
+            }
+        }
+    }
     public void loadAgencies() {
         string zona = zonaPorDepto();
         string query = 'Select id, name from agencia__c';
@@ -204,7 +232,10 @@ public without sharing class ControladorCasosPortalAutogestion {
             if(contrato.Acepto_Condiciones_de_Portal_Autogestion__c){
                 contrato.Fecha_acepta_contrato__C = datetime.now();
                 insert contrato;
-                mostrarCntrato =false;
+                mostrarCntrato = false;
+                if(casoObligatorio){
+                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, Label.MensajeCasoObligatorioAutoGest));
+                }
             }
         }catch(exception ex){
             system.debug('Error: '+ex.getMessage());
@@ -242,7 +273,13 @@ public without sharing class ControladorCasosPortalAutogestion {
                 
                 //Establece la divisa del caso al de la cuenta seleccionada
                 caso.CurrencyIsoCode = cuenta.CurrencyIsoCode;
-                
+                if(casoObligatorio){
+                    listTipoCaso.remove(0);
+                    idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
+                    listTipoCaso.add(new SelectOption(idTipoRegistro, 'Actualización de información'));
+                    selectTipoGestion();
+                    return;
+                }
                 list<String> tipoDeResgitros = label.TipoCasoPortalAutogestion.split(',');
                 //boolean esColectiva = [Select Colectiva__c, CurrencyIsoCode from cuentas__c where id = :idCuenta].Colectiva__c;
                 for(RecordType item : [Select name, id, developerName from Recordtype where SObjecttype = 'Case' AND isactive = true Order By name ASC]) {
@@ -413,8 +450,7 @@ public without sharing class ControladorCasosPortalAutogestion {
                 } else if(detallecaso.Tipo_Operacion__c == 'A4' && detalleCaso.Nueva_fecha_aporte__c < datetemp){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha mínima permitida a partir de '+datetemp.format())));
-                //detallecaso.Tipo_Operacion__c == 'A1' || 
-                }else if((detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
+                }else if((detallecaso.Tipo_Operacion__c == 'A1' || detallecaso.Tipo_Operacion__c == 'A2' || detallecaso.Tipo_Operacion__c == 'A4') && cuenta.Forma_Aportacion__c=='TA' && detalleCaso.Nueva_fecha_aporte__c.day()!=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_1) && detalleCaso.Nueva_fecha_aporte__c.day() !=Integer.ValueOf(Label.DAU_Cambio_de_Fecha_2)){
                     hayerror = true;
                     ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ( 'Fecha de Aporte permitida (' + Label.DAU_Cambio_de_Fecha_1 + ' ó ' + Label.DAU_Cambio_de_Fecha_2 + ') de cada mes')));
                 }
@@ -733,12 +769,14 @@ public without sharing class ControladorCasosPortalAutogestion {
                 
                 else if(cTipoCaso.otros || cTipoCaso.reposicionCarnet) {
                     Usuarios_para_asignacion_Casos_SAC__c p = new Usuarios_para_asignacion_Casos_SAC__c();
+                    System.debug('Zona selccionada por departamento: '+ZonaPorDepto());
+                    System.debug('Zona selccionada: '+ZonaSeleccionada);
                     if(cTipoCaso.otros){
                         p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaPorDepto()
-                             And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1];
+                             order by Ultimo_Caso_Asignado__c  asc limit 1];
                     }else{
                         p = [select id, usuario__C, usuario__r.email, Ultimo_Caso_Asignado__c from Usuarios_para_asignacion_Casos_SAC__c where zona__c = :ZonaSeleccionada
-                             And Objeto__c = 'Case' And Usuario__r.IsActive = true order by Ultimo_Caso_Asignado__c  asc limit 1];
+                             order by Ultimo_Caso_Asignado__c  asc limit 1];
                     }
                     p.Ultimo_Caso_Asignado__c = System.now(); 
                     
@@ -784,7 +822,10 @@ public without sharing class ControladorCasosPortalAutogestion {
                 if(cTipoCaso.constancias){
                     urlPagina =  ClaseUtil.urlSysde('PortalAutoGestion')+'vfConstanciaPDFDesdeSite?id=' + caso.id;
                 }
-                if(!cTipoCaso.estadoCuenta) {
+                if(casoObligatorio || CtipoCaso.actInformacion){
+                    actualizaCliente();
+                }
+                if(!cTipoCaso.estadoCuenta && !CtipoCaso.actInformacion) {
                     inicio();
                 }
                 
@@ -795,6 +836,14 @@ public without sharing class ControladorCasosPortalAutogestion {
             }
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso. '+'Error: ' + ex.getMessage() + ', Linea: ' + ex.getLineNumber()));
         }
+    }
+    public void actualizaCliente(){
+        Account acc = new Account(Id = cliente.Id, UltimoCasoObligatorio__c = Date.today());
+        update acc;
+        idcuenta = '';
+        idTiporegistro = '';
+        casoObligatorio = false;
+        inicio();
     }
     
     public void cerrar() {

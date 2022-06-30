@@ -8,5 +8,10 @@
     <columns>codigo_pais__c</columns>
     <columns>nombre_colonia__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>codigo_pais__c</field>
+        <operation>equals</operation>
+        <value>053</value>
+    </filters>
     <label>Todos</label>
 </ListView>

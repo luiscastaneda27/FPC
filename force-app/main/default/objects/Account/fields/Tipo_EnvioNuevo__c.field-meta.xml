@@ -34,7 +34,6 @@
             <value>
                 <fullName>M</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>SMS</label>
             </value>
         </valueSetDefinition>

@@ -37,11 +37,10 @@ public class classActualizacionInfo
         public String tipo { get; set; }
     }
  
-    public class classBeneficiarios
-    {
+    public class classBeneficiarios{
         public String cuenta { get; set; }
         public String idExterno { get; set; }
-        public String identidad { get; set; }
+        public String tipoBeneficiario { get; set; }
         public String primerNombre { get; set; }
         public String segundoNombre { get; set; }
         public String primerApellido { get; set; }
@@ -51,7 +50,18 @@ public class classActualizacionInfo
         public String porcentaje { get; set; }
         public DateTime fechaNacimiento { get; set; }
         public String sexo { get; set; }
+        public String identidad { get; set; }
         public String tipoId { get; set; }
         public String accion { get; set; }
+        //public String usuarioAprueba { get; set; }
+        //public String usuarioActualiza { get; set; }
+        
+        //Variables neuvas
+        public string estado { get; set; }
+        public string incluidoPor { get; set; }
+        public DateTime fechaInclusion { get; set; }
+        public string autorizadoPor { get; set; }
+        public string modificadoPor { get; set; }
+        public DateTime fechaModificacion { get; set; }
     }
 }

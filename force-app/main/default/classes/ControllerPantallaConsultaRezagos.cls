@@ -266,7 +266,7 @@ public class ControllerPantallaConsultaRezagos {
             apor.TipoSaldo = '13';
             Datetime dT = ListRezagos[count].fechaDeposito;
             apor.FechaDepositoAproba = Date.newinstance(dT.year(), dT.month(), dT.day());
-            //apor.FechaDepositoAproba = Date.today();
+            //apor.FechaDepositoAproba = Date.today()
             Date d= Date.today();
             Integer da = Date.today().Day();
             String dayf = String.valueOf(da);

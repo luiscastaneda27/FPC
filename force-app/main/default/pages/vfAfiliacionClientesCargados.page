@@ -40,7 +40,7 @@
                     <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
                     <apex:outputPanel id="outputPanel1">
-                    <apex:pageMessages />
+                        <apex:pageMessages />
                     </apex:outputPanel>
                     
                     <apex:pageBlockSection rendered="{!listAfiliaciones.size !=0}" title="Afiliciones Pendientes" columns="1">

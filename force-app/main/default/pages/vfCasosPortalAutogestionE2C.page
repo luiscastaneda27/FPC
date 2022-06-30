@@ -553,6 +553,12 @@ function validacionFormTel(e, field) {
                                         <apex:inputField type="tel" styleClass="custom-select-sizing slds-input" OnKeyPress="return validateNumber(event, this)" onkeyup="validacionFormTel(event, this)" html-placeholder="9999-9999" value="{!Caso.Telefono_Trabajo__c}" />
                                     </div>
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
+                                        <font class="padding-left-2em fontStyle">Frecuencia de Envío EDC: </font>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">
+                                        <apex:inputField styleclass="margin-bottom-0-5x100 custom-select-sizing slds-select padding-left-2em" value="{!Caso.FrecuenciaEnvioEDC__c}" />
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_2-of-12">
                                         <font class="padding-left-2em fontStyle">Fecha de Nacimiento:</font>
                                     </div>
                                     <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_10-of-12">

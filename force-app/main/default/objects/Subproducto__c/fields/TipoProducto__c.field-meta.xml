@@ -30,6 +30,11 @@
                 <default>false</default>
                 <label>Cesantía</label>
             </value>
+            <value>
+                <fullName>V</fullName>
+                <default>false</default>
+                <label>Pensión</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

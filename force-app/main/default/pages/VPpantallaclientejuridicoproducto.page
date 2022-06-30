@@ -2359,7 +2359,7 @@
                                                                     <apex:inputText value="{!MostrarCUENTT}" onkeyup=" BloquearBtn()"  id="pc_codCuenta" styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
                                                                     
                                                                     
-                                                                    <apex:commandButton disabled="{!BloquearBtnCu}" value="Buscar Cuenta" action="{!buscarInfoCuenta}"  styleClass="slds-button slds-button--brand" style="margin-left:1px;" />          
+                                                                    <apex:commandButton disabled="{!BloquearBtnCu}" value="" action="{!buscarInfoCuenta}"  styleClass="slds-button slds-button--brand" style="margin-left:1px;" />          
                                                                     <!--Tabla Para Mostrar los beneficiarios-->             
                                                                     
                                                                     <!-- -->    

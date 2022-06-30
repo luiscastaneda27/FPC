@@ -1,6 +1,6 @@
 public class ControllerAPIPignorados {
     
-	public static classpignorados BuscarCuenta(string cuentapig ) {
+	public static classcambiopignorados BuscarCuenta(string cuentapig ) {
        if (cuentapig==null){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe Ingresar un codigo de cuenta para realizar la respectiva busqueda'));   
         }  
@@ -11,8 +11,8 @@ public class ControllerAPIPignorados {
 		request.setMethod('GET');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);
-		request.setEndpoint(url + 'api/PignoradosCuenta/'+ cuentapig);
-        classpignorados fcsd = new classpignorados();
+		request.setEndpoint(url + 'api/CuentaPign/'+ cuentapig);
+        classcambiopignorados fcsd = new classcambiopignorados();
         string respuesta = '';
         system.debug('Entro al REST del EDC');
         try{           
@@ -24,7 +24,7 @@ public class ControllerAPIPignorados {
             system.debug('Respuesta: desde sysde: '+respuesta); 
             
             if (response.getStatusCode() == 200) {
-                fcsd = (classpignorados)System.JSON.deserialize(response.getBody(), classpignorados.class);         
+                fcsd = (classcambiopignorados)System.JSON.deserialize(response.getBody(), classcambiopignorados.class);         
             }
             
 		}Catch(Exception e){
@@ -35,7 +35,7 @@ public class ControllerAPIPignorados {
 		return fcsd;   
     }
     	
-    public static classpignorados BuscarNPrestamo(string num_prest) {
+    public static classcambiopignorados BuscarNPrestamo(string num_prest) {
        if (num_prest==null){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe Ingresar un numero de prestamo para realizar la respectiva busqueda'));   
         }  
@@ -48,7 +48,7 @@ public class ControllerAPIPignorados {
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);           
         request.setEndpoint(url + 'api/NumPrestPign/'+ num_prest);
-        classpignorados fcsd = new classpignorados();
+        classcambiopignorados fcsd = new classcambiopignorados();
         string respuesta = '';
         system.debug('Entro al REST del EDC');
         try{           
@@ -59,7 +59,7 @@ public class ControllerAPIPignorados {
             respuesta = response.getBody();
             system.debug('Respuesta: desde sysde: '+respuesta); 
             if (response.getStatusCode() == 200) {
-                fcsd = (classpignorados)System.JSON.deserialize(response.getBody(), classpignorados.class);         
+                fcsd = (classcambiopignorados)System.JSON.deserialize(response.getBody(), classcambiopignorados.class);         
             }
 		}Catch(Exception e){
 			system.debug('Error: '+e.getMessage()+', Linea: '+e.getLineNumber());	
@@ -69,7 +69,7 @@ public class ControllerAPIPignorados {
 		return fcsd;   
     }
     
-    public static classpignorados BuscarIdentidad(string id_pign) {
+    public static classcambiopignorados BuscarIdentidad(string id_pign) {
        if (id_pign==null){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe Ingresar una identidad para realizar la respectiva busqueda'));   
         }  
@@ -82,7 +82,7 @@ public class ControllerAPIPignorados {
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);           
         request.setEndpoint(url + 'api/IdentidadPign/'+ id_pign);
-        classpignorados fcsd = new classpignorados();
+        classcambiopignorados fcsd = new classcambiopignorados();
         string respuesta = '';
         system.debug('Entro al REST del EDC');
         try{           
@@ -93,7 +93,7 @@ public class ControllerAPIPignorados {
             respuesta = response.getBody();
             system.debug('Respuesta: desde sysde: '+respuesta); 
             if (response.getStatusCode() == 200) {
-                fcsd = (classpignorados)System.JSON.deserialize(response.getBody(), classpignorados.class);         
+                fcsd = (classcambiopignorados)System.JSON.deserialize(response.getBody(), classcambiopignorados.class);         
             }
 		}Catch(Exception e){
 			system.debug('Error: '+e.getMessage()+', Linea: '+e.getLineNumber());	

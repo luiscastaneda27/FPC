@@ -1236,6 +1236,18 @@
                 <default>false</default>
                 <label>ZOOTECNISTA</label>
             </value>
+            <value>
+                <fullName>josualopez95@hotmail.com</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>josualopez95@hotmail.com</label>
+            </value>
+            <value>
+                <fullName>pruebanicolenocritica@ficohsa.com</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>pruebanicolenocritica@ficohsa.com</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

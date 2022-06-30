@@ -29,8 +29,11 @@ public class testJobEDC {
         Autonumerico_cuentas_Syste__c c = new Autonumerico_cuentas_Syste__c (Contador_EDC__c = 1);
         insert c;
         
-        JobEDC b = new JobEDC();
-        b.execute(null);
+        FechaDC_Sysde__c b = new FechaDC_Sysde__c (Fecha_cierre__c=date.today(),Trimestre_Terminado__C = true,name = 'CierreAlDia');
+        insert b;
+        
+        JobEDC d = new JobEDC();
+        d.execute(null);
     }
 
 }
