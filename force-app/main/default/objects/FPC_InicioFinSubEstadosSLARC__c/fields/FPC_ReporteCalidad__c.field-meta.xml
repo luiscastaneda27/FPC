@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FPC_ReporteCalidad__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>Reporte de Calidad</label>
+    <referenceTo>Reporte_Calidad__c</referenceTo>
+    <relationshipLabel>Inicio Fin Sub Estados SLA RC</relationshipLabel>
+    <relationshipName>Inicio_Fin_Sub_Estados_SLA_RC</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

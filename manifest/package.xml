@@ -221,6 +221,8 @@
 		<members>Activity.Motivo_Contacto__c</members>
 		<members>Activity.Origen__c</members>
 		<members>Activity.Para1__c</members>
+		<members>Activity.Proyeccion__c</members>
+		<members>Activity.TipoProyeccion__c</members>
 		<members>Activity.Tipo_Gestion__c</members>
 		<members>Activity.Usuario_referencia__c</members>
 		<members>Afiliacion_Electronica__c.Afiliado__c</members>
@@ -767,6 +769,7 @@
 		<members>Detalle_caso__c.Indice__c</members>
 		<members>Detalle_caso__c.Inicio_Fecha_Aporte__c</members>
 		<members>Detalle_caso__c.Mes__c</members>
+		<members>Detalle_caso__c.ModificadoActInfo__c</members>
 		<members>Detalle_caso__c.Moneda_Cuenta_Destino__c</members>
 		<members>Detalle_caso__c.Monto_ACH_Patrono__c</members>
 		<members>Detalle_caso__c.Monto_ACH__c</members>
@@ -892,6 +895,20 @@
 		<members>Estado_de_cuenta_envio_y_repuesta__c.Respuesta__c</members>
 		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Contacto__c</members>
 		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Error__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_FechaFin__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_FechaInicio__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_ReporteCalidad__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_SubEstadoRCSF__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_TiempoConfigurado__c</members>
+		<members>FPC_Log__c.FPC_Error__c</members>
+		<members>FPC_Log__c.FPC_Grupo__c</members>
+		<members>FPC_Log__c.FPC_Request__c</members>
+		<members>FPC_Log__c.FPC_Response__c</members>
+		<members>FPC_Log__c.FPC_Resultado__c</members>
+		<members>FPC_Log__c.FPC_Servicio__c</members>
+		<members>FPC_TiemposSLARC__c.FPC_Codigo__c</members>
+		<members>FPC_TiemposSLARC__c.FPC_Estado__c</members>
+		<members>FPC_TiemposSLARC__c.FPC_Tiempo__c</members>
 		<members>Fantasma_portal__c.Asignado_A__c</members>
 		<members>Fantasma_portal__c.Correo_electronico__c</members>
 		<members>Fantasma_portal__c.Descripcion__c</members>
@@ -923,12 +940,15 @@
 		<members>Fondo_Pignorado__c.Total_Fondos__c</members>
 		<members>Fondo_Pignorado__c.Usuario__c</members>
 		<members>Identidad__c.Envio__c</members>
-		<members>InformeEDC__c.Abierto__c</members>
 		<members>InformeEDC__c.Asunto__c</members>
 		<members>InformeEDC__c.ClienteUnicoBanco__c</members>
 		<members>InformeEDC__c.Cliente__c</members>
 		<members>InformeEDC__c.CorreoElectronico__c</members>
+		<members>InformeEDC__c.FPC_Abierto__c</members>
+		<members>InformeEDC__c.FPC_Dominio__c</members>
+		<members>InformeEDC__c.FPC_Enviado__c</members>
 		<members>InformeEDC__c.FPC_ErrorEnvio__c</members>
+		<members>InformeEDC__c.FPC_MotivoError__c</members>
 		<members>InformeEDC__c.FechaEnvio__c</members>
 		<members>InformeEDC__c.FechaQueSeAbrio__c</members>
 		<members>InformeEDC__c.IdExterno__c</members>
@@ -1353,6 +1373,23 @@
 		<members>PreVenta__c.asesor__c</members>
 		<members>Product2.Codigo_Sub_Producto__c</members>
 		<members>Producto__c.Codigo__c</members>
+		<members>Proyeccion__c.Anios__c</members>
+		<members>Proyeccion__c.AporteInicial__c</members>
+		<members>Proyeccion__c.AporteMensual__c</members>
+		<members>Proyeccion__c.Cliente__c</members>
+		<members>Proyeccion__c.ComisionAporte__c</members>
+		<members>Proyeccion__c.ComisionSaldo__c</members>
+		<members>Proyeccion__c.Correo__c</members>
+		<members>Proyeccion__c.CreacionUltimoEnvio__c</members>
+		<members>Proyeccion__c.EsComisionPorAporte__c</members>
+		<members>Proyeccion__c.NombreCliente__c</members>
+		<members>Proyeccion__c.PersonContact__c</members>
+		<members>Proyeccion__c.PreVenta__c</members>
+		<members>Proyeccion__c.Prospecto__c</members>
+		<members>Proyeccion__c.Rendimiento__c</members>
+		<members>Proyeccion__c.UltimoCorreoEnviado__c</members>
+		<members>Proyeccion__c.VerConsolidado__c</members>
+		<members>Proyeccion__c.VerDetallado__c</members>
 		<members>Registro_Aportes__c.Aplica_Comision__c</members>
 		<members>Registro_Aportes__c.Codigo_Referencia__c</members>
 		<members>Registro_Aportes__c.Compra_Dolar__c</members>
@@ -1387,6 +1424,7 @@
 		<members>Reporte_Calidad__c.Codigo_T24__c</members>
 		<members>Reporte_Calidad__c.Comentarios__c</members>
 		<members>Reporte_Calidad__c.Cuentas_Colectivas__c</members>
+		<members>Reporte_Calidad__c.DebidaDiligencia__c</members>
 		<members>Reporte_Calidad__c.Documentacion_Recibida__c</members>
 		<members>Reporte_Calidad__c.Empresa__c</members>
 		<members>Reporte_Calidad__c.Entrega_KIT__c</members>
@@ -1408,6 +1446,7 @@
 		<members>Reporte_Calidad__c.Fecha_Inicio_Aporte__c</members>
 		<members>Reporte_Calidad__c.Fecha_Nacimiento__c</members>
 		<members>Reporte_Calidad__c.Fecha_Validacion__c</members>
+		<members>Reporte_Calidad__c.FirmaExpediente__c</members>
 		<members>Reporte_Calidad__c.Forma_Pago__c</members>
 		<members>Reporte_Calidad__c.Formulario_Completo__c</members>
 		<members>Reporte_Calidad__c.Identificacion__c</members>
@@ -1435,6 +1474,7 @@
 		<members>Reporte_Calidad__c.Seguro_USD__c</members>
 		<members>Reporte_Calidad__c.Seguro__c</members>
 		<members>Reporte_Calidad__c.Sexo__c</members>
+		<members>Reporte_Calidad__c.SubEstadoRCSF__c</members>
 		<members>Reporte_Calidad__c.Subproducto__c</members>
 		<members>Reporte_Calidad__c.Tiene_Id__c</members>
 		<members>Reporte_Calidad__c.TipoCliente__c</members>
@@ -1916,10 +1956,15 @@
 		<members>ExpressionFilterCriteria</members>
 		<members>ExternalEventMapping</members>
 		<members>FPC_ErroresEstadosDeCuenta__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c</members>
+		<members>FPC_Log__c</members>
+		<members>FPC_TiemposSLARC__c</members>
 		<members>Fantasma_portal__c</members>
 		<members>FechaDC_Sysde__c</members>
 		<members>Fecha_SYSDE__c</members>
 		<members>FeedItem</members>
+		<members>FlowOrchestrationInstance</members>
+		<members>FlowOrchestrationWorkItem</members>
 		<members>Fondo_Pignorado__c</members>
 		<members>ForecastingAdjustment</members>
 		<members>ForecastingCategoryMapping</members>
@@ -1935,11 +1980,13 @@
 		<members>Listado_Empresas__c</members>
 		<members>Location</members>
 		<members>LocationTrustMeasure</members>
+		<members>MLModel</members>
+		<members>MLModelFactor</members>
+		<members>MLModelFactorComponent</members>
 		<members>Macro</members>
 		<members>MacroAction</members>
 		<members>MacroInstruction</members>
 		<members>MacroUsage</members>
-		<members>ManagedContentVersion</members>
 		<members>Matriz_Riesgo__c</members>
 		<members>Modificaciones_Empleados__c</members>
 		<members>Monto_Capital_Semilla__mdt</members>
@@ -1983,6 +2030,7 @@
 		<members>Producto__c</members>
 		<members>PromptAction</members>
 		<members>PromptError</members>
+		<members>Proyeccion__c</members>
 		<members>QuickText</members>
 		<members>QuickTextUsage</members>
 		<members>Recommendation</members>
@@ -2031,6 +2079,7 @@
 		<members>Transaccion__c</members>
 		<members>URL_conexion_Sysde__mdt</members>
 		<members>User</members>
+		<members>UserExternalCredential</members>
 		<members>UserProvisioningRequest</members>
 		<members>Usuario_Empresa_Temporal__c</members>
 		<members>Usuario_Portal_Empresarial__c</members>
@@ -2045,5 +2094,9 @@
 		<members>reporteT24__c</members>
 		<name>CustomObject</name>
 	</types>
-	<version>53.0</version>
+	<types>
+		<members>*</members>
+		<name>Layout</name>
+	</types>
+	<version>55.0</version>
 </Package>
