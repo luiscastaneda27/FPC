@@ -1,464 +1,278 @@
 <apex:page showHeader="false" applyHtmlTag="false" applyBodyTag="false" renderAs="pdf" controller="formularioIdentificacion_PDF_CONT">
-    <head>
-        <style>
-            @page {
-                size: 8.5in 14in;
-                margin-top:    0.3in;
-                margin-bottom: 0.2in;
-                margin-left:   0.2in;
-                margin-right:  0.2in;
-            }
-            
-            body{
-                font-size: 70%;
-                font-family: sans-serif;
-            }
-            
-            table, th, td, tr{
-                border-collapse: collapse;
-            }
-            
-            th{
-                background-color: black;
-                color: white;
-                text-align: center;
-            }
-            
-            div > table > tr > td{
-                border: 1px solid black;
-                height: 30px;
-            }
-            
-            table > tr > td{
-                height: 30px;
-            }
-            .p{
-             text-align : justify;
-             font-family: Arial;
-             font-size:15px;
-             
-            }
-            table {
-            width: 100%;
-            }
-            .p2{
-             font-family: Arial;
-             font-size:15px;
-             
-            }
-            
-            .logo{
-                position: absolute;
-                width: 15%;
-                height: 14%;
-                top: 0px;
-                left: 0px;
-                Z-index:-100;   
-            }
-            
-            .titulo{
-                position: absolute;                
-                text-align:center;
-                top: 10px;
-                left: 250px;
-                Z-index:-100;
-            }
-            
-            .barraP{
-            background-color: black;
-            height : 3px; 
-            }
-            
-            .barraS{
-            background-color: black;
-            display: table;
-            height:200px;
-            }
-            
-            .text1{
-            position: absolute; 
-            text-align: center; 
-            height : 20px; 
-            width : 700px; 
-            right: 0px;
-            }
-            
-            .text2{
-            position: absolute; 
-            text-align: right; 
-            height : 20px; 
-            width : 750px; 
-            right: 0px;
-            }
-            
-            .text3{
-            position: absolute; 
-            text-align: left; 
-            height : 20px; 
-            width : 750px; 
-            right: 0px;
-            }
-            
-            .containerP{
-            width:100%; 
-            height:50px; 
-            background-color: #cdd0d6; 
-            }
-            
-            .camp1{
-            background-color: #5370aa; 
-            width : 25%;
-            height: 40px; 
-            display: inline; 
-            }
-            
-            .camp2{
-            background-color: #a85932; 
-            width : 25%;
-            height: 40px; 
-            display: inline;
-            }
-                      .camp3{
-            background-color: #6fa036; 
-            width : 25%;
-            height: 40px; 
-            display: inline;
-            }
-                      .camp4{
-            background-color: #5370aa; 
-            width : 25%;
-            height: 40px;
-            display: inline;
-            }
-            
-            #tableCentr {
-             text-align:center; 
-            }
-            
-            #ufila{
-            width:6%;
-            text-align:center;
-            }
-            
-            #textBar{
-            color:#ffffff; 
-            display: table-cell;
-            vertical-align: middle;
-            }
-        </style>    
-    </head>
-    <div class="logo">
-        <apex:image value="{!$Resource.logofico}" width="150"/>
-    </div>
-    <div class="text2">
-        <H4>ARC-ER.F-001-01</H4>
-    </div>
-    <br/>
-   <div class="text1">   
-        <H4>FORMULARIO DE IDENTIFICACIÓN Y VINCULACIÓN PARA PERSONAS <br/>
-        EXPUESTAS POLÍTICAMENTE (NACIONALES Y EXTRANJEROS)</H4>
-    </div>
-    <br/><br/><br/>
-    <div class="text3">
-        <H4>I. &nbsp; &nbsp; DATOS GENERALES OBLIGATORIOS:</H4>
-      
+      <head>
+          <style>
+              @page {
+                  size: 8.5in 14in;
+                  margin-top:    0.3in;
+                  margin-bottom: 0.2in;
+                  margin-left:   0.2in;
+                  margin-right:  0.2in;
+              }
+              
+              body{
+                  font-size: 70%;
+                  font-family: sans-serif;
+              }
+              
+              table, th, td, tr{
+                  border-collapse: collapse;
+              }
+              
+              th{
+                  background-color: black;
+                  color: white;
+                  text-align: center;
+              }
+              
+              div > table > tr > td{
+                  border: 1px solid black;
+                  height: 30px;
+              }
+              
+              table > tr > td{
+                  height: 30px;
+              }
+
+              table {
+              width: 100%;
+              margin-top: -1px;
+              margin-bottom: -1px;
+              padding-top: -1px;
+              padding-bottom: -1px;
+              }
+
+              .cls1{
+                margin-left: 30px;
+              }
+
+              .SiNo{
+                margin-left: -50px;
+              }
+              
+              .logo{
+                  position: absolute;
+                  width: 15%;
+                  height: 14%;
+                  top: 0px;
+                  left: 0px;
+                  Z-index:-100;   
+              }
+
+              .text1{
+              position: absolute; 
+              text-align: center; 
+              height : 20px; 
+              width : 700px; 
+              right: 0px;
+              }
+              
+              .text3{
+              margin-right: 13px;
+              position: absolute; 
+              text-align: left; 
+              height : 20px; 
+              width : 750px; 
+              right: 0px;
+              }   
+ 
+          </style>    
+      </head>
+
+      <div class="logo">
+          <apex:image value="{!$Resource.logofico}" width="150"/>
+      </div>
+      <br/>
+    <div class="text1" style = "text-align: right">   
+          <h3>FORMULARIO DE IDENTIFICACIÓN Y VINCULACIÓN <br/> PARA PERSONAS EXPUESTAS POLÍTICAMENTE <br/> GFF NACIONALES Y EXTRANJEROS</H3>
+          <h4>Grupo Financiero Ficohsa</h4>
+      </div>
+      <br/><br/><br/><br/><br/><br/><br/><br/>
+     
+      <div class="text3">
         <table>
-            <tr>
-                <td>
-                <br/>&nbsp;Nombre Completo:
-                <div style="border-bottom:1px solid black;width:380px;display:inline-block;">
-                    <!--Nombre Completo-->{!info.pcprimernombre}&nbsp;{!info.pcsegundonombre}&nbsp;{!info.pcprimerapellido}&nbsp;{!info.pcsegundoapellido}
-                </div>
-                No. Identificación:
-                <div style="border-bottom:1px solid black;width:160px;display:inline-block;">
-                    <!--No. Identificación-->{!info.pcnroid}
-                </div>
-                
-                <br/><br/>
-                &nbsp;¿Realizará operaciones financieras para actividades directas o indirectas de campañas e Instituciones Políticas? Si___________ No___________<br/> <br/></td>
-            </tr> 
+          <th colspan="3"> I. &nbsp; &nbsp; DATOS GENERALES OBLIGATORIOS:</th>
+          <tr>
+            <td style="text-align: center;"> 
+              &nbsp;Nombre Completo: <br/><br/>{!info.pcprimernombre}&nbsp;{!info.pcsegundonombre}&nbsp;{!info.pcprimerapellido}&nbsp;{!info.pcsegundoapellido}<br/>           
+            </td>
+            <td style="text-align: center;"> 
+              &nbsp;Fecha<br/> de afiliacion:<br/><apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!info.pdfechasuscripcion}" /> </apex:outputText><br/>                
+            </td>
+            <td style="text-align: center;"> 
+              &nbsp;No. Identificación:<br/><br/>{!info.pcnroid}<br/>
+            </td>                       
+          </tr>
+          <tr>
+            <td colspan="2" style="height: 40; border-right: none; ">    
+              <div class="cls1">
+                  Ejerce o ha ejercido un cargo publico nacional o internacional? <br/>
+                  <small>En caso que la respuesta sea "SI" llenar todos los campos del formulario <br/>
+                  si su respuesta es "NO" solamente firmar el formulario</small> 
+              </div>
+           </td>
+           <td style="border-left: none;" >
+            <div class="SiNo" style="text-align: left;">
+              Si
+              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',false,true)}">
+                  <img src="/img/checkbox_unchecked.gif"/>
+              </apex:outputPanel>
+              <font></font>
+              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',true,false)}">
+                  <img src="/img/checkbox_checked.gif"/>
+              </apex:outputPanel>
+              
+              No
+              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',false,true)}">
+                  <img src="/img/checkbox_unchecked.gif"/>
+              </apex:outputPanel>
+              <font></font>
+              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',true,false)}">
+                  <img src="/img/checkbox_checked.gif"/>
+              </apex:outputPanel>
+            </div>
+           </td>
+
+          
+          </tr>
+          <tr style="height: 40; border-left: 0px;">
+            <td style="text-align: center; width: 33%;"> Cargo<br/>{!info.Cargo_Pulbico}</td>
+            <td style="text-align: center; width: 34%;"> Institución<br/><br/>{!info.institucionPep}<br/> </td>
+            <td style="text-align: center; width: 33%;"> Periódo<br/><br/>{!info.periodoPep}<br/> </td> 
+          </tr>
         </table>
-        <table>
+          <br/><br/>
+
+        <table style="width: 800;">
+          <th colspan="3">II. Detalle a los familiares en primer grado de consanguinidad y afinidad</th>
+          <tr>
+              <td style="text-align: center">Datos de los Hijos</td>
+              <td colspan="2" style="text-align: center;">Datos del conyugue y Padres</td>
+              
+          </tr>
+          <tr>
+              <td style="text-align: center; width: 43%;">Nombre completo</td>
+              <td style="text-align: center; width: 14%;">Parentesco</td>
+              <td style="text-align: center; width: 43%;">Nombre completo</td>
+          </tr>
+          <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40; width: 60; text-align: center;" rowspan="2"> Conyugue </td>
+              <td style="height: 40;" rowspan="2">   </td>
+          </tr>      
+          <tr>
+              <td style="height: 40;">   </td>    
+          </tr>
+          <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40; text-align: center;" rowspan="2">  Padre </td>
+              <td style="height: 40;" rowspan="2">   </td>
+          </tr>
+          <tr>
+              <td style="height: 40;">   </td>
+          </tr>
+          <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40; text-align: center;" rowspan="2"> Madre  </td>
+              <td style="height: 40;" rowspan="2">   </td>
+          </tr>
+          <tr>
+              <td style="height: 40;">   </td> 
+          </tr>
+        </table>
+        <br/><br/>
+        <table style="width: 800;" border="2">
+            <th colspan="3">III. Detalle a los familiares en primer grado de consanguinidad y afinidad <br/> (Hermanos, abuelos, nietos, suegros, yernos/nueras, cuñados)</th>
             <tr>
-                <td style="width:170px" align="center"> Responder a las siguientes<br/> Interrogantes</td>
-             <td style="width:20px" align="center">
-                 No
+              <td style="width: 5%; text-align: center">No.</td>
+              <td style="text-align: center;">Nombre completo del familiar</td>
+              <td style="text-align: center;">Parentesco</td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+          </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+              <td style="height: 40;">   </td>
+            </tr>
+            <tr>
+              <td colspan="3"> <div class="cls1"> NOTA: en caso de necesitar detallar mas familiares, debera completar otro formulario </div> </td>
+            </tr>
+            <tr>
+              <td style="height: 200; text-align: center; text-align: start;" colspan="3" > <small>Declaro que los datos aqui consignados, 
+                son correctos y verdaderos y autorizo a la institucion para su comprobacion, en fe de lo cual firmo </small> <br/><br/><br/><br/><br/><br/>
+                <div style="border-bottom:1px solid black;width:380px;display:inline-block;"></div>
+                <br/> Firma del Cliente <br/> 
               </td>
-              <td style="width:20px" align="center">
-                 Si
-              </td>
-                <td style="width:300px" align="center" height="30">Si su respuesta es "Si" complete los datos</td>
-            </tr> 
-        </table>
-        <table>
-            <tr>
-                <td style="width:246px" align="center">¿Es una Figura Pública que desempeña <br/>o ha desempeñado un cargo destacado <br/>público en el país o en un país extrangero?</td>
-                <td style="width:30px" align="center">
-                    <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='N',true,false)}">
-                        X
-                    </apex:outputPanel>
-                    <font></font>  
-                </td>
-                <td style="width:30px" align="center">
-                    <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',true,false)}">
-                        X
-                    </apex:outputPanel>
-                    <font></font>   
-                </td>
-                <td align="left"> 
-                Cargo<br/>
-                 <!--Cargo-->{!info.Cargo_Pulbico}
-                </td>
-                <td align="left"> Periodo {!info.periodoPep}</td>
-                <td align="left">Institución {!info.institucionPep}</td>
-            </tr> 
-        </table>
-        <table>
-            <tr>
-                <td style="width:253px" align="center">¿Tiene un familiar que sea una Figura<br/>Pública? Esposo(a) o compañero(a) de<br/>hogar, Padres, Hijos, Hijos del cónyuge(a), &nbsp;<br/>   &nbsp;&nbsp;Hermanos, Abuelos, Nietos, Suegros,<br/> &nbsp;  Yerno/Nuera, Cuñado. &nbsp;</td>
-                <td style="width:30px" align="center">
-                    <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='N',true,false)}">
-                        X
-                    </apex:outputPanel>
-                    <font></font>  
-                </td>
-                <td style="width:30px" align="center">
-                    <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico=='S',true,false)}">
-                        X
-                    </apex:outputPanel>
-                    <font></font>   
-                </td>
-                <td style="width:197px;" align="left">
-                        <div style="border-bottom:1px solid black;height:73px;max-height:33px;margin-top:0px;">
-                            Nombre completo<br/><!--Nombre-->
-                        </div>
-                        <div style="height:33px;max-height:33px;">
-                            Parentesco
-                        </div> 
-                    <br/>
-                    	
-                </td>
-                <td style="width:246px" align="left">
-                    <div style="border-bottom:1px solid black;height:73px;max-height:33px;margin-top:0px;">
-                    	Cargo {!info.Cargo_Pulbico}
-                    <!--Cargo-->
-                    </div>
-                    <div style="height:33px;max-height:26px;">
-                        Periodo {!info.periodoPep}
-                    </div>  
-                    <div style="height:33px;max-height:26px;">
-                        Institución {!info.institucionPep}
-                    </div>  
-                </td>
-            </tr> 
-        </table>
-        <H4>Nota: Si su respuesta es "No" en ambas preguntas solamente firmar el formulario, en caso de que una de sus respuestas
-            sea "Si" completar formulario con la información solicitada.</H4>
-        <H4>PARA EL OFICIAL O EJECUTIVO: De ser un cargo aplicable según procesos, gestionar el llenado de este formulario para todos los involucrados en el producto.</H4>
-        <H4>II.&nbsp;&nbsp; FUENTE DE FONDOS DE "OTROS INGRESOS" QUE SE RECIBIRAN EN SUS PRODUCTOS (EJEMPLO EN CUENTAS,CDs, PAGO DE PRESTAMOS Y/O TC) (aplica solamente si son clientes y con productos personales vigentes)</H4>
-        <table>
-            <tr>
-                <td style="width:253px" align="center">
-                   Nombre de la Empresa o Actividad de Donde<br/>Recibe Fondos
-                </td>
-                <td style="width:253px" align="center">
-                    Tipo de Fondos (Salario, Rentas,<br/>Ingresos por Negocio, Propio,<br/>Comisiones)
-                </td>
-                <td style="width:253px" align="center">
-                    Ingreso Mensual en L. ó $
-                </td>
             </tr>
-            <tr>
-                <td>
-                    <!--Nombre Empresa-->
-                </td>
-                <td>
-                    <!--Tipo Empresa-->
-                </td>
-                <td>
-                    <!--Ingresó mensual-->
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-       <H4>III.&nbsp;&nbsp; DATOS DE LOS HIJOS</H4>
-        <table>
-            <tr>
-                <td align="center">
-                    Nombre Completo
-                </td>
-                <td align="center">
-                    Edad
-                </td>
-                <td align="center">
-                    Identidad
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table> 
-        <H4>IV.&nbsp;&nbsp; DATOS DEL CONYUGE Y PADRES</H4>
-        <table>
-            <tr>
-                <td align="center">
-                    Nombre Completo
-                </td>
-                <td align="center">
-                    Edad
-                </td>
-                <td align="center">
-                    Identidad
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Cónyuge:
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Madre:
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Padre:
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table> 
-        <H4>V.&nbsp;&nbsp; ¿MANTIENE RELACIÓN A NIVEL DE SOCIO O ACCIONISTA CON ALGUNA EMPRESA NACIONAL O EXTRANJERA?</H4>
-        <H4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si_______No_______ En el caso de Si por favor completar la siguiente información.</H4>
-        <table>
-            <tr>
-                <td align="center" style="width:200px">
-                    Nombre completo de la Empresa
-                </td>
-                <td align="center" style="width:100px">
-                    % de <br/> Participación
-                </td>
-                <td align="center" style="width:260px">
-                    Dirección
-                </td>
-                <td align="center" style="width:100px">
-                    Teléfono
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table> 
-        <H4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRMA DEL CLIENTE ___________________________________________________________________________</H4>
-        <H4>VI.&nbsp;&nbsp; APROBACIÓN RELACIÓN INCIAL DE CLIENTE PEP(USO EXCLUSIVO DE INSTITUCIÓN)</H4>
-        <table>
-            <tr>
-                <td align="justify" style="width:260px">
-                    Nombre y Firma del Oficial o Ejecutivo que atendió:
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td align="justify">
-                    Nombre, Puesto Y Firma del Funcionario <br/> autorizador del ingreso de la persona PEP:
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td align="justify">
-                    Fecha de Autorización del  Funcionario:
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td align="justify">
-                    Agencia:
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-        <H4>Si alguna sección o campos de este formato son insuficientes para completar la información, DEBE llenar otro formato.</H4>
-    </div>
-</apex:page>
+      </table>   
+        <br/><br/>
+      <table style="width: 800;" border="2">
+        <th colspan="4">Aprobacion relacion inicial de PEPS en la empresa(En caso de PEP positivo)</th>
+        <tr style="height: 60;">
+          <td style="text-align: center; width: 25%;">Nombre y firma oficial<br/></td>
+          <td style="text-align: center; width: 25%;">Nombre y frima funcionario<br/></td>
+          <td style="text-align: center; width: 25%;">Fecha de autorizacion<br/></td>
+          <td style="text-align: center; width: 25%;">Agencia<br/></td> 
+        </tr>
+        <tr style="height: 60;">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+
+        <tr>
+            <td colspan="4" style="text-align: center; height: 180;">
+                <br/><br/><br/><br/><br/>
+                <div style="border-bottom:1px solid black;width:380px;display:inline-block;"></div>
+                <br/> Firma del autorizador <br/> 
+              (SOLO PARA USO INTERNO DEL BANCO)
+            </td>
+        </tr>
+      </table>
+      </div>
+
+  </apex:page>

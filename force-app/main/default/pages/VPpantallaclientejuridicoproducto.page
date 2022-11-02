@@ -262,7 +262,8 @@
                                     </center>
                                     <!--FIN Imagen-->
                                     
-                                    
+                                    <apex:commandButton action="{!BusCuentas}" value="Buscar"  styleClass="slds-button slds-button--brand" style=" height:40px; width:80px; margin-left:1200px "/>
+
                                     <div id="content-path-1" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1" style="width=2000px"> <!-- DIV SECUNDARIO -->
                                         
                                         <fieldset class="slds-box slds-align--absolute-center  slds-theme--shade slds-container--large " style="&quot; width:4000px&quot;&gt;">
@@ -2359,7 +2360,7 @@
                                                                     <apex:inputText value="{!MostrarCUENTT}" onkeyup=" BloquearBtn()"  id="pc_codCuenta" styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
                                                                     
                                                                     
-                                                                    <apex:commandButton disabled="{!BloquearBtnCu}" value="" action="{!buscarInfoCuenta}"  styleClass="slds-button slds-button--brand" style="margin-left:1px;" />          
+                                                                    <apex:commandButton disabled="{!BloquearBtnCu}" value="Buscar Cuenta" action="{!buscarInfoCuenta}"  styleClass="slds-button slds-button--brand" style="margin-left:1px;" />          
                                                                     <!--Tabla Para Mostrar los beneficiarios-->             
                                                                     
                                                                     <!-- -->    
@@ -3641,7 +3642,7 @@
                                         </apex:outputPanel>
                                         
                                     </div>
-                					<br/>
+                                    <br/>
                                     <div id="content212" class="slds-tabs--path__content " role="tabpanel" aria-labelledby="tab-path-1"> <!-- DIV SECUNDARIO -->
                                         <apex:outputPanel rendered="{!mostrarTablaModiControlantes}" style="width:1200px; margin-left:35px; "> 
                                             
@@ -4848,7 +4849,7 @@ function validarIDU()
                                             <abbr class="slds-required" title="required"></abbr> Código Empresa
                                         </label>
                                         <!--    <apex:inputText disabled="{!Bene_Ocultar_CamPos}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:1px;  "/>
---> 									<apex:inputText disabled="{!Indirectoo}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:30px;  "/>
+-->                                     <apex:inputText disabled="{!Indirectoo}" onkeypress="return isNumberKey(event)"  value="{!socioUnico.NUMERO_ID_EMPRESA}"  styleclass="slds-input"  style="height:10px; width:170px; margin-left:30px;  "/>
                                         <label class="slds-form-element__label" for="inputSample" style="margin-left:10px;">
                                             <abbr class="slds-required" title="required"></abbr> Cotiza en Bolsa
                                         </label>

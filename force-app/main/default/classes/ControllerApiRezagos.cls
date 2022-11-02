@@ -11,13 +11,12 @@ public class ControllerApiRezagos {
 		request.setEndpoint(url + 'api/insertaRezagos');
 		
 		String respuesta = '';
-		system.debug('Entro al REST del EDC');
 		try{
 						
 			classJson envio = new classJson();
 			envio.contenido = JSON.serialize(RezList);
 			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
+			system.debug('Enviamos: '+cons);		
 			request.setBody(cons);	
             system.debug('request: '+request.getBody());
 			HttpResponse response = http.send(request);
@@ -36,7 +35,8 @@ public class ControllerApiRezagos {
         
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        String url = claseUtil.urlSysde('Test');		
+        String url = claseUtil.urlSysde('Test');
+        //String url = 'http://190.5.68.49:9090/';
         request.setMethod('GET');
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setTimeout(120000);
@@ -74,6 +74,30 @@ public class ControllerApiRezagos {
         return respuest;    
     }
     
+    public static ResponseRezago eliminarRezago(List<ResquestRezago> listRezago) {
+        
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        String url = claseUtil.urlSysde('Test');		
+        request.setMethod('DELETE');
+        request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        request.setTimeout(120000);
+        request.setEndpoint(url + 'api/rezagos');
+        request.setBody('contenido='+Json.serialize(listRezago));
+        ResponseRezago respuesta = new ResponseRezago();
+        try{
+            System.debug('Enviamos : '+Json.serialize(listRezago));
+            HttpResponse response = http.send(request);
+            system.debug(response.getStatusCode() + ' -- Respuesta-- '+ response.getBody()); 
+            if(response.getStatusCode() == 200){
+                respuesta = (ResponseRezago) Json.deserialize(response.getBody(), ResponseRezago.class);
+            }    
+        }Catch(Exception e){
+            system.debug(e.getMessage());	
+        } 
+        return respuesta;   
+    }
+    
     public static String AplicaRezagosDia(ClassClientesRez Rez) {
         
         Http http = new Http();
@@ -91,7 +115,7 @@ public class ControllerApiRezagos {
 			classJson envio = new classJson();
             envio.contenido = JSON.serialize(Rez);
 			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
+			system.debug('AplicaRezagosDia '+cons);		
 			request.setBody(cons);	
             system.debug('request: '+request.getBody());
 			HttpResponse response = http.send(request);
@@ -292,5 +316,13 @@ public class ControllerApiRezagos {
             system.debug('Clase Futura' +e.getMessage() + ' linea ' + e.getLineNumber());
         }
         return respuesta;
+    }
+    
+    public class ResquestRezago{
+        public String codigoRezago { get; set; }
+    }
+    public class ResponseRezago{
+        public Boolean ok { get; set; }
+        public String descripcion { get; set; }
     }
 }

@@ -8,36 +8,39 @@ public class CrearUsuarioPortalAutogestion {
     }
     
     public static String crearUsuarioWS(String nombre, String apellido, String correo ,String identificacion, String cuenta, String tipoIdentificacion){
-        Cliente acc = new Cliente();
-       	acc.Cuenta = Integer.valueOf(cuenta);
-        acc.tipoId = Integer.valueOf(tipoIdentificacion);
-        acc.id = identificacion;
-        acc.nombre = nombre;
-        acc.apellido = apellido;
-        acc.correo = correo;
-        String body = JSON.serialize(acc);
-        System.debug('Mandamos: '+body);
         Http http = new Http();
         String url;
         url = claseUtil.urlSysde('Test');
         HttpRequest request = new HttpRequest();
         request.setEndpoint(url+'api/usuario/portal');
         request.setMethod('POST');
-        request.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        String body = 'nombre='+ nombre +'&apellido=' + apellido + '&correo=' + correo + '&tipoId=' + Integer.valueOf(tipoIdentificacion) + '&id=' + identificacion + '&cuenta=' + Integer.valueOf(cuenta);
+        System.debug('Mandamos: '+body);
         request.setBody(body);
+        request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
         try{
-            HttpResponse response = http.send(request);
+            HttpResponse response = new HttpResponse();
+            if(!Test.isRunningTest()){
+                response = http.send(request);
+            }else{
+                response.setBody('{"ok":true}');
+            }
+             
             System.debug('Respuesta: '+response.getBody());
-            if((response.getStatusCode() != 200 && response.getStatusCode() != 201) || response.getBody().contains('{"ok":false,"')) {
-                BitacoraCreacionUsuario__c bit = new BitacoraCreacionUsuario__c ();
-                bit.Codigo__c = response.getStatusCode();
-                bit.Response__c = response.getBody();
-                bit.Request__c = body;
-                bit.Cliente__r = new Account(Identificacion__c = identificacion);
-                insert bit;
-                return 'Ha ocurrido un error en el registro del usuario de portal, por favor contacte al administrador del sistema.';
-            } else {
+            RespuestaUsuarioPortal rup = (RespuestaUsuarioPortal)JSON.deserialize(response.getBody(), RespuestaUsuarioPortal.class);
+			
+            BitacoraCreacionUsuario__c bit = new BitacoraCreacionUsuario__c ();
+            bit.Codigo__c = response.getStatusCode();
+            bit.Response__c = response.getBody();
+            bit.Request__c = body;
+            bit.Cliente__r = new Account(Identificacion__c = identificacion);
+            insert bit;
+            
+            if(rup.ok) {
                 return 'Usuario de portal registrado correctamente.';
+            } else {
+                return 'Ha ocurrido un error en el registro del usuario de portal, por favor contacte al administrador del sistema.';
             }
         }catch(Exception ex){
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
@@ -46,12 +49,8 @@ public class CrearUsuarioPortalAutogestion {
     }
     
     
-    public class Cliente{
-        public String nombre { get; set; }
-        public String apellido { get; set; }
-        public String correo { get; set; }
-        public Integer tipoId { get; set; }
-        public String id { get; set; }
-        public Integer cuenta { get; set; }
+    public class RespuestaUsuarioPortal{
+        public Boolean ok { get; set; }
+        public String descripcion { get; set; }
     }
 }

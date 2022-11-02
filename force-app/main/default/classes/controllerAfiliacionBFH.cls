@@ -16,6 +16,8 @@ public class controllerAfiliacionBFH {
     string correoOficial;
     public boolean haySeleccionado {get;set;}
     public string tipoPantalla{get;set;}
+    public string subEstado{get;set;}
+    public string idAfiliacion{get;set;}
     
     public controllerAfiliacionBFH(){
         try{
@@ -55,22 +57,23 @@ public class controllerAfiliacionBFH {
     public void reinicar(){
         buscarSubProducto = '';
         buscarEmpresa = '';
+        afiliacion = new Reporte_calidad__C();
         listAfiliaciones = new list<Reporte_calidad__C>();
         listAfiliaciones = [select Addendum__c, Aplica_CS__c , Aportacion_HNL__c ,Aportacion_USD__c ,
                             Asesor_Comercial__c, Comentarios__c, Codigo_Asesor_Comercial__c,Codigo_Oficial_SAC__c ,
                             Empresa__c , Expediente_Completo__c , FATCA__c , Fecha_Envio_Memo__c, Fecha_Validacion__c ,
                             Fecha_Inicio_Aporte__c , Forma_Pago__c,estado__C, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
+                            SubEstadoRCSF__c,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,id,Espediente_Completo__c,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode,Cuentas_Colectivas__c,
-                            Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,
+                            Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,DebidaDiligencia__c,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
                             Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C
-                            where Codigo_Asesor_Comercial__c =:Usuario and Enviar_Sac__C =false
-                            and  Tipo_Afiliacion__c  =:tipoPantalla order by LastModifiedDate Desc limit 950 ];
+                            where Codigo_Asesor_Comercial__c =:Usuario and (Estado__c = 'D' or Estado__c = 'N') 
+                            and  Tipo_Afiliacion__c  =:tipoPantalla and SubEstadoRCSF__c != 'PF'
+                            order by LastModifiedDate Desc limit 950 ];
     }
-    
-    public string idAfiliacion{get;set;}
     
     public void editar(){
         producto =new producto__C();
@@ -78,6 +81,7 @@ public class controllerAfiliacionBFH {
         for(Reporte_calidad__C item:listAfiliaciones ){
             if(idAfiliacion == item.Id){
                 afiliacion = item;
+                subEstado = item.SubEstadoRCSF__c;
                 producto =new producto__C(name =item.Subproducto__r.producto__r.name );
             } 
         }
@@ -88,11 +92,14 @@ public class controllerAfiliacionBFH {
             integer contador = 0;
             for(Reporte_calidad__C item:listAfiliaciones ){
                 if(item.enviar_sac__c){
+                    System.debug('Se metio');
                     item.Fecha_Envio_Memo__c =date.today();
-                    item.estado__C = 'V';
+                    item.estado__C = item.Tipo_Afiliacion__c == 'TV' ? 'A' : 'V';
                     contador ++;
                 }
             }
+            System.debug('Estado__c: '+listAfiliaciones[0].Estado__c);
+            System.debug('Tipo_Afiliacion__c: '+listAfiliaciones[0].Tipo_Afiliacion__c);
             if(contador> 0){
                 Messaging.singleEmailMessage email = new Messaging.singleEmailMessage();
                 email.setSubject(' Nueva Afiliaciones Individuales  - '+ date.today().format()); 
@@ -105,7 +112,9 @@ public class controllerAfiliacionBFH {
                 listEmail.add(email); 
                 system.debug('Tamano de lista: '+listEmail.size());
                 update listAfiliaciones;
-                Messaging.SendEmailResult[] results = Messaging.sendEmail(listEmail, false);
+                if(listAfiliaciones[0].Tipo_Afiliacion__c != 'TV'){
+                    Messaging.sendEmail(listEmail, false);
+                }
                 reinicar();
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Datos guardados exitosamente.'));
             }
@@ -168,6 +177,10 @@ public class controllerAfiliacionBFH {
     }
     public void guardar(){
         system.debug('Primer nombre: '+afiliacion.name);
+        if(afiliacion.Tipo_Afiliacion__c != 'TF' && subEstado == afiliacion.SubEstadoRCSF__c){
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.WARNING, 'Para guardar el registro debe modificar el campo sub Estado RC SF'));
+            return;
+        }
         if((afiliacion.name == null || afiliacion.name.trim() ==''  ||afiliacion.Primer_Apellido__c == null || 
             afiliacion.Tipo_Identificacion__c == null ||afiliacion.Identificacion__c == null || 
             afiliacion.Tiene_Id__c == null ||afiliacion.RTN__c == null ||afiliacion.FATCA__c == null ||

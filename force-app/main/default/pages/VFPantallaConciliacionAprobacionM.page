@@ -175,7 +175,7 @@
         <body>
             <div class="slds-scope">
                 <apex:form id="theForm"> 
-                    <apex:actionStatus id="status">
+                    <!--apex:actionStatus id="status">
                         <apex:facet name="start">
                             <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
                             <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
@@ -184,7 +184,20 @@
                                 </div>
                             </div>
                         </apex:facet>
-                    </apex:actionStatus>
+                    </apex:actionStatus-->
+                    <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                            &nbsp;
+                        </div>
+                        
+                        <div role="status" class="slds-spinner slds-spinner_large">
+                            <span class="slds-assistive-text">Por Favor Espere...</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
                     
                     <div id="topMenuZonaTransaccional">
                         <article class="slds-card slds-theme_default" style="border:0;">
@@ -604,26 +617,72 @@
                         <!-- Modal Seguro que no aplica comision -->
                         
                         <div class="slds-scope">	
-                            <apex:outputPanel rendered="{!VentanaEmergenteNo}" > 
+                            <apex:outputPanel rendered="{!VentanaEmergenteNo}"  >
                                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                     <div class="slds-modal__container">
-                                        <header class="slds-modal__header">
-                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
-                                            <apex:commandLink style="slds-item-align_center"   ><apex:image styleClass="imgx" /> </apex:commandLink>                    
-                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:25px;">
-                                                ¿Esta seguro de no cobrar comisión por aporte?
-                                            </h1>
-                                            <apex:inputText rendered="false" value="{!CodReferenNoCobra}" />      
-                                            <br/><br/>
-                                            <div class="modal-footer">
-                                                <apex:commandButton styleClass="btn btn-danger"  action="{!cerrar}"  value="Cerrar" oncomplete="Clean();" />      
-                                                <apex:commandButton styleClass="btn btn-secondary" style="color:#fff; position: relative; background: #42c4dd;" action="{!AprobarAporte2SinComision}"  value="Aceptar"/> 
-                                            </div>
+                                        <header class="slds-modal__header" >
+                                            <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Cerrar</span>
+                                            </apex:commandLink>
+                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Aporte sin Comisión</h1>
                                         </header>
+                                        <div class="slds-modal__content slds-p-around_medium ">
+                                            <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                                <fieldset class="slds-form-element">
+                                                    
+                                                    <div class="slds-modal__content slds-p-around--medium">
+                                                        <h3 class="slds-text-heading_medium slds-hyphenate">¿Esta seguro de no cobrar comisión por aporte?</h3>  
+                                                        
+                                                    </div>
+                                                    
+                                                    <footer class="slds-modal__footer">
+                                                        <apex:commandButton value="Cerrar" action="{!cerrar}" styleClass="Aceptar" />&nbsp;
+                                                        <apex:commandButton value="Aceptar" action="{!AprobarAporte2SinComision}" styleClass="Aceptar"  />                    
+                                                    </footer>
+                                                </fieldset>
+                                            </div>
+                                        </div>
                                     </div>
                                 </section>
                                 <div class="slds-backdrop slds-backdrop_open"></div>
-                            </apex:outputPanel>	
+                            </apex:outputPanel>
+                            
+                            
+                            <apex:outputPanel rendered="{!popDolar}"  >
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header" >
+                                            <apex:commandLink action="{!popDolar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close" status="status" reRender="theForm" >
+                                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Cerrar</span>
+                                            </apex:commandLink>
+                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Compra / Venta de Dolar</h1>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium ">
+                                            <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                                <fieldset class="slds-form-element">
+                                                    
+                                                    <div class="slds-modal__content slds-p-around--medium">
+                                                        <h3 class="slds-text-heading_medium slds-hyphenate">¿Estas seguro que deseas aprobar un aporte con compra o venta de dólares?</h3>  
+                                                        
+                                                    </div>
+                                                    
+                                                    <footer class="slds-modal__footer">
+                                                        <apex:commandButton value="No" action="{!popDolar}" styleClass="Aceptar" status="status" reRender="theForm" />&nbsp;
+                                                        <apex:commandButton value="Si" action="{!AprobarAporte}" styleClass="Aceptar" status="status" reRender="theForm"  />                    
+                                                    </footer>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </apex:outputPanel>
                         </div>
                     </div>
                     

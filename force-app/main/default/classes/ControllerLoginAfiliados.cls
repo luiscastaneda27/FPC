@@ -15,6 +15,8 @@ public class ControllerLoginAfiliados {
     public String usuarioPrueba{ get; set; }
     public static string EnvioUser {get;set;}
     public integer anio{ get; set; }
+    public String perfil{ get; set; }
+    public String nombreReporteCalidad{ get; set; }
     
     public ControllerLoginAfiliados (){
         //usuario = '';
@@ -135,9 +137,11 @@ public class ControllerLoginAfiliados {
     
     public pageReference sesionIniciada(){
         try{
-            Usuarios_de_Pantallas__c usuario = [Select Contrase_a__c, Usuarios_de_Pantallas__c.Name, Activo__c
+            Usuarios_de_Pantallas__c usuario = [Select Contrase_a__c, Usuarios_de_Pantallas__c.Name, Activo__c,
+                                                Perfil__c
                                                 From Usuarios_de_Pantallas__c
                                                 Where Usuario__c =: usuario Limit 1];
+            perfil = usuario.Perfil__c;
             
             if(usuario.Contrase_a__c == Contrasena){
                 if(usuario.Activo__c){
@@ -216,6 +220,10 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
         insert bita1;
     }
     
+    public  void clicPantallasRC() {
+        System.debug('Bajo: '+nombreReporteCalidad);
+        pagina = nombreReporteCalidad;
+    }
     public  void Mostra()
     {
         resultado2 = new list<controllerApiClienteNatural.classRespuestaMenu>();                    

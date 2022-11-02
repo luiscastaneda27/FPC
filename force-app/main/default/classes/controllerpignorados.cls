@@ -16,11 +16,18 @@ public class controllerpignorados {
     public String Motivo {get;set;} 
     public boolean DenegarVentana {get;set;}
     public boolean DenegarImagen {get;set;}
-     public string Ver_Imagen {get;set;}
+     public Transient string Ver_Imagen {get;set;}
+    public Transient Blob Ver_Pdf {get;set;}
+    public  string ct {get;set;}
     public boolean result {get;set;}
+    public boolean cargarFile {get;set;}
+    public boolean isImage {get;set;}
+    public boolean isPdf {get;set;}
+    public string filename {get;set;}
     public string nom_empleado {get;set;}
     public string cod_empleado {get;set;} //COdigo del empleado
 public string correoEmpleado {get;set;}//correo del empleado
+    public string correoEmpleado2 {get;set;}
     
     
     public controllerpignorados ()  {
@@ -28,17 +35,25 @@ public string correoEmpleado {get;set;}//correo del empleado
         //usuario = 'HN19577';
         try{
             //Usuario =  ApexPages.currentPage().getParameters().get('hytrd');
-            List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
-            System.debug('User: '+usr[0].Name);///////Marcooo
-            Usuario = usr[0].Name;
-           
+            
+            //List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+            //System.debug('User: '+usr[0].Name);///////Marcooo
+            //Usuario = usr[0].Name;
+            
+            string nu;
+            Usuario = ApexPages.currentPage().getParameters().get('hytrd');
+           nu= [select id, Name from Usuarios_de_Pantallas__c where Usuario__c =: Usuario].Usuario__c;
+            //else{nu= [select Name from Usuarios_de_Pantallas__c limit 1].Name;}
+            System.debug('User: '+nu);
+            Usuario = nu;
+          
         }Catch(Exception ex){
             system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
            
         }
         
         McontenidoPign =[ select Numero_Prestamo__c,Num_Prestamo__c,Monto_Pignorado__c,Fecha_Pignoracion__c,Fecha_Liberacion__c,Monto_Prestamo__c ,
-                                    Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c,Secuencia__c
+                                    Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c,Secuencia__c,Referencia__c
                             from Fondo_Pignorado__c
                             where Estado__c = 'P'];        
        	
@@ -63,6 +78,9 @@ public string correoEmpleado {get;set;}//correo del empleado
     public void popSalirImagen()
     {    
         DenegarImagen = false;
+        cargarFile = false;
+        isPdf = false;
+        isImage = false;
              
      }
     
@@ -406,6 +424,7 @@ public string correoEmpleado {get;set;}//correo del empleado
     
     Public void Enviar(){
         Try{
+            
             classActualizaPignorados x = new classActualizaPignorados();//Invocacion a la clase 
             Fondo_Pignorado__c listC;
             listC = new Fondo_Pignorado__c();
@@ -426,8 +445,9 @@ public string correoEmpleado {get;set;}//correo del empleado
                 x.estatus = ListPignorados[i].est_pig;
                 x.usuario = usuario;
                 x.secuencia = ListPignorados[0].sec_pig;
+                //x.referencia = EncodingUtil.base64Encode(ListPignorados[i].referenciaImg);
                 
-                guardar_file('IMG' +num_prest,ListPignorados[i].referenciaImg);
+                guardar_file('file' +num_prest,ListPignorados[i].referenciaImg);
                 system.debug('Listamovimientos: '+ ListPignorados[i].num_prest);
               
             }
@@ -459,6 +479,7 @@ public string correoEmpleado {get;set;}//correo del empleado
                 listC.Cuenta__c = x.codcuenta;
 				listC.Descripcion__c = 'Pendiente';
                 listC.secuencia__c = x.secuencia;
+                //listC.Referencia__c = x.referencia;
                 fondo.add(listC);
                 System.debug('Prestamo '+ num_prest);                
               ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ingresado con éxito'));              
@@ -478,7 +499,7 @@ public string correoEmpleado {get;set;}//correo del empleado
     {    
    
          McontenidoPign =[ select Id, Numero_Prestamo__c,Num_Prestamo__c,Monto_Pignorado__c,Fecha_Pignoracion__c,Fecha_Liberacion__c,Monto_Prestamo__c ,
-                                    Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c, secuencia__c
+                                    Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c, secuencia__c, Referencia__c
                             from Fondo_Pignorado__c
                             where Estado__c = 'P'];        
        
@@ -492,8 +513,7 @@ public string correoEmpleado {get;set;}//correo del empleado
     {
       Try{
             classActualizaPignorados x = new classActualizaPignorados();//Invocacion a la clase 
-			
-          Integer indice = -1;
+			Integer indice = -1;
             for (integer i=0; i < McontenidoPign.size(); i++ ) // ciclo for que recorre la lista para extraer los valores que se van a actualizar
             {
                 if (McontenidoPign[i].Id == cod_obj || test.isRunningTest()){
@@ -507,6 +527,9 @@ public string correoEmpleado {get;set;}//correo del empleado
                 	x.monto_prestamo = McontenidoPign[i].Monto_Prestamo__c;
                 	x.estatus = McontenidoPign[i].Estatus__c;
                 	x.usuario = McontenidoPign[i].Usuario__c;
+                    x.usuarioApro = Usuario;
+                    //x.referencia = McontenidoPign[i].Referencia__c;
+                    System.debug('SE ve la imagen ' + x.referencia);
                     McontenidoPign[i].Estado__c = 'A';
                     indice = i;
                     
@@ -532,6 +555,7 @@ public string correoEmpleado {get;set;}//correo del empleado
         TRY{
             cod_empleado = [select Usuario__c from Fondo_Pignorado__c where Id =: cod_obj].Usuario__c;
         	correoEmpleado = [select Email__c from Usuarios_de_Pantallas__c where Usuario__c =: cod_empleado].Email__c;
+            correoEmpleado2 = [select Email__c from Usuarios_de_Pantallas__c where Usuario__c =: Usuario].Email__c;
             nom_empleado = [select Name from Usuarios_de_Pantallas__c where Usuario__c =: cod_empleado].Name;
         }
         CATCH(exception e){
@@ -552,13 +576,11 @@ public string correoEmpleado {get;set;}//correo del empleado
             else 
             {
                 
-                correoUsuario(); //obtener el correo del oficial
-                   Fondo_Pignorado__c modifi = new Fondo_Pignorado__c ();
+                correoUsuario(); //obtener el correo del oficial que gestiona y el que aprueba
+                Fondo_Pignorado__c modifi = new Fondo_Pignorado__c ();
                     
                     //modifi = [select Codigo_Referencia__c, Oficial_de_negocios__c, Estado_Aporte__c, Descripcion__c from Pantalla_Aportes__c where Codigo_Referencia__c =: Num_CodReferenciaDenegado limit 1];
                 
-             
-            
                 	modifi = [select Numero_Prestamo__c, Estado__c, Descripcion__c from Fondo_Pignorado__c where Id =: cod_obj];
                     modifi.Estado__c = 'D';
                     modifi.Descripcion__c = Motivo; 
@@ -569,16 +591,16 @@ public string correoEmpleado {get;set;}//correo del empleado
            		        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];
 						Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
                         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                        mail.setHtmlBody( 'Buenas '+ nom_empleado +' , el fondo pignorado con el numero de prestamo ' + 
+                        mail.setHtmlBody( 'Buen Dia '+ nom_empleado +' , el fondo pignorado con el numero de prestamo ' + 
                                           num_prest + ' ha sido DENEGADO, Por el siguiente motivo: ' + modifi.Descripcion__c);
                         mail.setSubject('Fondo Pignorado con Número de Prestamo ' + num_prest + ' DENEGADO');
-                        mail.setToAddresses(new String[] {correoEmpleado});
+                        mail.setToAddresses(new String[] {correoEmpleado, correoEmpleado2});
 						mail.setOrgWideEmailAddressId(owea.get(0).Id);
                         mail.setSaveAsActivity(true);
                         listCorreo.add(mail);
                         Messaging.SendEmailResult[] results = Messaging.sendEmail(listCorreo, false);
-                
-                   ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Aporte Denegado'));
+               
+                   ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Registro Denegado'));
                     DenegarVentana = false;
                 	Motivo = null;
             }
@@ -630,50 +652,61 @@ public string correoEmpleado {get;set;}//correo del empleado
             }
      } 
     
-        public void guardar_file(string filename, blob file){
-    ContentVersion f = new ContentVersion();
-    list <ContentVersion> flist = 
-        [select VersionData from ContentVersion
-        where title = : filename
-        and isMajorVersion = false 
-
-        limit 1
-        ];
-        
-    if(file == null){
-            file = blob.valueOf('No hay Referencia');
+    public void guardar_file(string name, blob file){
+    	list <ContentVersion> flist = [select VersionData, ContentDocumentId from ContentVersion where title = : name limit 1]; 
+            
+        if(file == null){
+                file = blob.valueOf('No hay Referencia');
+            }
+        if ( flist.size() > 0 ){
+            ContentDocument cd = [Select id from ContentDocument Where id =: flist[0].ContentDocumentId];
+            delete cd;
         }
-    if ( flist.size() > 0 ){
-        f = flist[0];
-        f.VersionData = file;
-        update f;
-        system.debug('Se actualizo la Imagen');
-   	}else{
-        f.title = filename;
-        f.PathOnClient = filename;
-        f.VersionData = file;
-        f.IsMajorVersion = false;
-    	insert f;
+        
+        transient Contentversion f = new ContentVersion(
+            Title = name,
+            PathOnClient = '/' + filename,
+            VersionData = file);
+       
+        insert f;
         system.debug('Se guardo la Imagen');
-    	}    
+    	  
     }
        public void MostrarImagen(){
            
-           String nombre = 'IMG' + ID_Referencia;
+           String nombre = 'file' + ID_Referencia;
                
            System.debug('secuencia ' + nombre);     
         try
             {
                 /*ControllerAPIPagoIntereses.classRespuestaImagen wer =  new ControllerAPIPagoIntereses.classRespuestaImagen();
             	wer = ControllerAPIPagoIntereses.TraerImagenBD(ID_Referencia);*/
-                ContentVersion flist = [select VersionData from ContentVersion where title = :nombre and isMajorVersion = false limit 1];
+                ContentVersion flist = [select VersionData, FileExtension  from ContentVersion where title = :nombre limit 1];
                 if(flist != null){
+                     System.debug('ext '+ flist.FileExtension);
+                    if(flist.FileExtension == 'pdf'){
+                        ct = 'application/pdf';
+                        isPdf = true;
+                        isImage = false;
+                     }else if(flist.FileExtension == 'png'){
+                     	ct = 'image/png';
+                         isPdf = false;
+                        isImage = true;
+                     }else{
+                         ct = 'image/jpg';
+                         isPdf = false;
+                        isImage = true;
+                     }
+                    
                     Ver_Imagen = EncodingUtil.base64Encode(flist.VersionData);
+                    
+                    
                     if(Ver_Imagen!='Tm8gaGF5IFJlZmVyZW5jaWE='){
-                        DenegarImagen = true;
+                        cargarFile = true;
                     }else{
                 		ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'No hay referencia'));
             		}
+                    
                 }else{
                 	ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'No hay referencia'));
             	}

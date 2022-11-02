@@ -35,6 +35,11 @@
                 <default>false</default>
                 <label>Devuelto</label>
             </value>
+            <value>
+                <fullName>F</fullName>
+                <default>false</default>
+                <label>Firma</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

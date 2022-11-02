@@ -22,7 +22,7 @@ public class testpignorados {
     	p.nom_empleado = 'Prueba';
     	p.cod_empleado = 'HN1235';
 		p.correoEmpleado = 'prueba@hotmail.com';
-        
+        p.correoEmpleado2 = 'prueba@hotmail.com';
 
         list<Fondo_Pignorado__c> McontenidoPign = new list<Fondo_Pignorado__c>();
         
@@ -42,7 +42,7 @@ public class testpignorados {
         
         /*ListaPignorados*/
         p.ListPignorados = new List <classcambiopignorados>();
-        
+        fe.ListPignorados = new List <classcambiopignorados>();
         p.ListPignorados.add(fe);
         
         /**/
@@ -112,7 +112,8 @@ public class testpignorados {
     	p1.nom_empleado = 'Prueba';
     	p1.cod_empleado = 'HN1235';
 		p1.correoEmpleado = 'prueba@hotmail.com';
-       
+        p1.correoEmpleado2 = 'prueba@hotmail.com';
+        p1.ct = 'prueba';
         p1.popDenegarSalir();
         p1.MostrarVentanaDenegacion();
         p1.popSalirImagen();
@@ -133,7 +134,7 @@ public class testpignorados {
                                     Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c
                             from Fondo_Pignorado__c
                             where Estado__c = 'P'];     
-        
+        p1.MostrarImagen();
         
         controllerpignorados p2 = new controllerpignorados(); 
        	p2.cuentapig = '12345';
@@ -153,6 +154,7 @@ public class testpignorados {
     	p2.nom_empleado = 'Prueba';
     	p2.cod_empleado = 'HN1235';
 		p2.correoEmpleado = 'prueba@hotmail.com';
+        p2.correoEmpleado2 = 'prueba@hotmail.com';
         p2.Busca2();
         p2.BuscaInfor2();
         p2.validatenum('prueba');
@@ -175,6 +177,7 @@ public class testpignorados {
     	p3.nom_empleado = 'Prueba';
     	p3.cod_empleado = 'HN1235';
 		p3.correoEmpleado = 'prueba@hotmail.com';
+        p3.correoEmpleado2 = 'prueba@hotmail.com';
         p3.Busca2();
         p3.BuscaInfor2();
         p3.validatenum('354646');
@@ -197,6 +200,7 @@ public class testpignorados {
     	p4.nom_empleado = 'Prueba';
     	p4.cod_empleado = 'HN1235';
 		p4.correoEmpleado = 'prueba@hotmail.com';
+        p4.correoEmpleado2 = 'prueba@hotmail.com';
         p4.Busca3();
         p4.BuscaInfor3();
         p4.validateid('prueba');
@@ -219,6 +223,7 @@ public class testpignorados {
     	p5.nom_empleado = 'Prueba';
     	p5.cod_empleado = 'HN1235';
 		p5.correoEmpleado = 'prueba@hotmail.com';
+        p5.correoEmpleado2 = 'prueba@hotmail.com';
         p5.Busca3();
         p5.BuscaInfor3();
         p5.validateid('354646');
@@ -242,6 +247,7 @@ public class testpignorados {
     	p6.nom_empleado = 'Prueba';
     	p6.cod_empleado = 'HN1235';
 		p6.correoEmpleado = 'prueba@hotmail.com';
+        p6.correoEmpleado2 = 'prueba@hotmail.com';
         
         classActualizaPignorados s = new classActualizaPignorados();
         s.numero_prestamo='32321321';
@@ -255,7 +261,7 @@ public class testpignorados {
         s.usuario = 'hn123141';
         s.secuencia = 235;
         s.codcuenta = '111111';
-        
+        s.referencia = 'prueba';
         p6.Enviar();
         
         

@@ -28,7 +28,7 @@
                 border: medium none;
                 font-weight: bold;
                 position: relative;
-                background-color: #f78d1c;
+                background-color: #0fa24a;
                 color: #FFFFFF !important;
                 font-family: 'Open Sans Bold',Helvetica,Arial,sans-serif;
                 font-size: 13px;
@@ -199,7 +199,7 @@
                 width: 90% !important;
                 text-align: center !important;
                 margin: 1em 0em 0em auto !important;
-                background-color: #f78d1c !important;
+                background-color: #0fa24a !important;
                 }
                 
                 .custom-alignment {
@@ -248,7 +248,7 @@
                 .Confirmar {
                 width: 139% !important;
                 margin: 1em 0em 0em auto !important;
-                background-color: #f78d1c !important;
+                background-color: #0fa24a !important;
                 }
                 
                 .custom-sizing-button {
@@ -288,7 +288,7 @@
                 
                 .Confirmar {
                 width: 100% !important;
-                background-color: #f78d1c !important;
+                background-color: #0fa24a !important;
                 }
                 
                 .custom-help-text {
@@ -406,7 +406,7 @@
                     </apex:actionFunction>
                     
                     <div id="topMenuZonaTransaccional">
-                        <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                        <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#0fa24a; color:#FFF; font-weight: bold; with:70%;"/>
                         
                         <font class="padding-left-0-5em font-title">Solicitud de Gesti&oacute;n</font><br/><br/>
                         <div class="slds-grid slds-wrap">
@@ -1136,7 +1136,7 @@
                     
                     <div class="slds-grid slds-wrap">
                         <div class="custom-alignment slds-col slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12 slds-grid_align-center">
-                            <apex:commandButton action="{!guardar}" styleClass="Confirmar" style="width:100%;margin-top:8px;" reRender="theForm" status="status" value="Guardar"
+                            <apex:commandButton action="{!guardar}" styleClass="Confirmar" style="width:100%;margin-top:8px" reRender="theForm" status="status" value="Guardar"
                                                 rendered="{!AND(OR(cTipoCaso.estadoCuenta, cTipoCaso.constancias,
                                                           cTipoCaso.actInformacion, cTipoCaso.aumDisAporte, cTipoCaso.otros,
                                                           cTipoCaso.reposicionCarnet), caso.id=null)}" />
@@ -1148,7 +1148,7 @@
                     <BR/><BR/>
                     <apex:outputPanel styleClass="position:relative; text-align:center;">
                         <div class="{!IF(OR(detallecaso.Tipo_Operacion__c = 'A1', detallecaso.Tipo_Operacion__c = 'A3', detallecaso.Tipo_Operacion__c = 'A4', detallecaso.Tipo_Operacion__c = 'A5', detallecaso.Tipo_Operacion__c = 'A6'), 'show', 'hide')} slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
-                            <span class="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"> Para realizar o modificar aportes al fondo en nuestro Portal, debes tener una tarjeta de crédito o cuenta de ahorro de Banco Ficohsa. </span>
+                            <span class="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#0fa24a; color:#FFF; font-weight: bold; with:70%;"> Para realizar o modificar aportes al fondo en nuestro Portal, debes tener una tarjeta de crédito o cuenta de ahorro de Banco Ficohsa. </span>
                         </div>
                     </apex:outputPanel>
                     

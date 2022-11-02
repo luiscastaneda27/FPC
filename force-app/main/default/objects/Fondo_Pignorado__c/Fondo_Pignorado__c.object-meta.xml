@@ -142,7 +142,7 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
+    <deploymentStatus>Deployed</deploymentStatus>
     <description>Tabla de Fondos Pignorados</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>

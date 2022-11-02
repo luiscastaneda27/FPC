@@ -1,0 +1,102 @@
+<apex:page controller="ControladorConfiguracionSLARC" title="Afiliación Individual" lightningStylesheets="true" 
+           tabStyle="account" sidebar="false" cache="false" id="page" showHeader="false" docType="html-5.0">
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+            
+            <style>
+                
+                
+            </style>
+        </head>
+        <body>
+            
+            <apex:form id="theForm">
+                
+                
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                            &nbsp;
+                        </div>
+                        
+                        <div role="status" class="slds-spinner slds-spinner_large">
+                            <span class="slds-assistive-text">Por Favor Espere...</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+                <br/>
+                <div style="text-align : center; font-size:25px; color:#53c7dc; font-weight:bold;">
+                    Configuración tiempos SLA
+                </div>
+                <br/><br/>
+                <apex:pageBlock id="idPageBlock" >
+                    <apex:pageMessages />
+                    <apex:pageBlockSection title="Tiempo por estado" columns="1">
+                        <apex:outputPanel >
+                            <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
+                                
+                                <tr >
+                                    <td scope="col" colspan="1">
+                                        Código
+                                    </td >
+                                    <td scope="col" colspan="1">
+                                        Estado
+                                    </td >
+                                    <td scope="col" colspan="1">
+                                        Tiempo (Horas)
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        
+                                    </td>
+                                </tr>
+                                <tbody>
+                                    <apex:repeat value="{!listTiempo}" var="item">
+                                        <tr>
+                                            <td>
+                                                <apex:outputField value="{!item.FPC_Codigo__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.FPC_Estado__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:inputField value="{!item.FPC_Tiempo__c}" />
+                                            </td>
+                                            
+                                            <td>
+                                                <apex:commandLink action="{!guardar}" value="Guardar" reRender="theForm" status="status" styleClass="slds-button slds-button--brand" >
+                                                    <apex:param value="{!item.FPC_Codigo__c}" assignTo="{!codigo}" name="tiempo" />
+                                                </apex:commandLink>
+                                                
+                                            </td>
+                                             <td>
+                                                <apex:commandLink action="{!eliminar}" value="Eliminar" reRender="theForm" status="status" styleClass="slds-button slds-button--brand" rendered="{!item.Id != null}" >
+                                                    <apex:param value="{!item.Id}" assignTo="{!codigo}" name="tiempo" />
+                                                </apex:commandLink>
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                    
+                </apex:pageBlock>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

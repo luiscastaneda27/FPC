@@ -46,7 +46,7 @@ public without sharing class controladorBandejaOperaciones {
             map<string, integer> mapBandera = new map<string, integer>();
             for(Reporte_Calidad__c  item: 
                 [select empresa__r.name, empresa__C from Reporte_Calidad__C where estado__C = 'A' order by empresa__r.name asc]){
-                    if(!mapBandera.containsKey(item.empresa__C)){
+                    if(!mapBandera.containsKey(item.empresa__C) && String.isNotBlank(item.empresa__C)){
                         mapBandera.put(item.empresa__C, 21);
                         listEmpresas.add(new selectOption(item.empresa__C, item.empresa__r.name));
                     }

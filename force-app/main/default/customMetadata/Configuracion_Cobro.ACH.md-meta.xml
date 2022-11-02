@@ -4,10 +4,10 @@
     <protected>false</protected>
     <values>
         <field>Monto__c</field>
-        <value xsi:type="xsd:double">35.0</value>
+        <value xsi:type="xsd:double">40.0</value>
     </values>
     <values>
         <field>Monto_dolar__c</field>
-        <value xsi:type="xsd:double">1.5</value>
+        <value xsi:type="xsd:double">1.65</value>
     </values>
 </CustomMetadata>

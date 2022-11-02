@@ -1342,7 +1342,7 @@ Monto de aporte:
                                 <td>{!ben.primerApellido}</td>
                                 <td>{!ben.segundoApellido}</td>
                                 <td>{!ben.Parentesco}</td>
-                                <td>{!ben.fechaNacimiento}</td>
+                                <td><apex:outputText value="{0, date, dd/MM/YYYY}"> <apex:param value="{!ben.fechaNacimiento}" /> </apex:outputText> </td>
                                 <td>{!ben.numeroId}</td>
                                 <td>{!ben.Distribucion}</td>
                             </tr>

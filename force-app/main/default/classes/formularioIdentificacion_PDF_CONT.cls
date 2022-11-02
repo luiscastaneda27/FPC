@@ -261,7 +261,7 @@ public class formularioIdentificacion_PDF_CONT {
             }
             
             info.pcPaisNacimiento = mapPais.containsKey(info.pcPaisNacimiento) ? mapPais.get(info.pcPaisNacimiento).Nombre__c : null;
-            
+            info.PaisResidenciaEfectosFiscales = mapPais.containsKey(info.PaisResidenciaEfectosFiscales) ? mapPais.get(info.PaisResidenciaEfectosFiscales).Nombre__c : null;
             system.debug('PaisEmpleador ' + paisEm + deptoEm+ munEm+ colEm +dirEm);
             system.debug('PaisEmpleado ' + pais + depto+ mun+ col + dir);
             

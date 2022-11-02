@@ -224,7 +224,7 @@
                                     
                                     
                                     <apex:repeat value="{!resultado2}" var="item">
-                                        <apex:outputPanel rendered="{!AND(item.nombreVisible != 'PantallasSAC', item.nombreVisible != 'PantallasCOM')}">
+                                        <apex:outputPanel rendered="{!AND(item.nombreVisible != 'PantallasSAC', item.nombreVisible != 'PantallasCOM', item.nombreMetodo != 'PantallasOP')}">
                                             <li visible= "true" class="slds-navigation-list--vertical__action slds-text-link--reset"  >
                                                 
                                                 <apex:commandLink styleClass="slds-navigation-list slds-text-link--reset" value="{!item.nombreVisible}" action="{!Mostra}">
@@ -232,13 +232,14 @@
                                                 </apex:commandLink> 
                                             </li>
                                         </apex:outputPanel>
+                                        
                                         <apex:outputPanel rendered="{!item.nombreVisible = 'PantallasSAC'}">
                                             <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger--hover "  aria-haspopup="true">
                                                 <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Reporte de Calidad">
                                                     <span style="padding-top:8px;"  class="slds-truncate">Reporte de Calidad</span>
                                                 </a>
                                                 <div class="slds-context-bar__icon-action slds-p-left--none" tabindex="0">
-                                                    <button class="slds-button slds-button--icon slds-context-bar__button" tabindex="-1" title="Open menu item submenu">
+                                                    <button class="slds-button slds-button--icon slds-context-bar__button" tabindex="-1" title="Reporte de Calidad">
                                                         <svg class="slds-button__icon" aria-hidden="true">
                                                             <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
                                                         </svg>
@@ -247,52 +248,82 @@
                                                 </div>
                                                 <div class="slds-dropdown slds-dropdown--right" >
                                                     <ul class="slds-dropdown__list" role="menu">
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario = 'HN20370', 'block;','none;')}" role="presentation">
-                                                            <a href="javascript:OxA();" role="menuitem" tabindex="-1" title="Reporte de Calidad Individuales">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(OR(perfil = 'SGS', perfil = 'SS'), 'block;','none;')}" role="presentation">
+                                                            <a href="javascript:OxA();" role="menuitem" tabindex="-1" title="Asesor por Oficial">
                                                                 <span class="slds-truncate" >Asesor por Oficial</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario = 'HN20370', 'block;','none;')}" role="presentation">
-                                                            <a href="javascript:OxE();" role="menuitem" tabindex="-1" title="Reporte de Calidad Individuales">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(OR(perfil = 'SGS', perfil = 'SS'), 'block;','none;')}" role="presentation">
+                                                            <a href="javascript:OxE();" role="menuitem" tabindex="-1" title="Oficiales por Empresa">
                                                                 <span class="slds-truncate" >Oficiales por Empresa</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(OR(perfil = 'SGS', perfil = 'SS'), 'block;','none;')}" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Configuración SLA">
+                                                                <apex:param value="vfConfiguracionSLARC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <!--li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:AFC();" role="menuitem" tabindex="-1" title="Reporte de Calidad Individuales">
                                                                 <span class="slds-truncate" >Afiliación Ficopen</span>
                                                             </a>
+                                                        </li-->
+                                                        <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" >
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Ficopen - Agencia">
+                                                                <apex:param value="vfReporteCalidadFicopenSac?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Tarjeta Futura">
+                                                                <apex:param value="vfReporteCalidadAgenciasTF?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Pendiente Físico">
+                                                                <apex:param value="vfReporteCalidadPenFisSac?usuario={!usuario}?pefil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <!--li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCI();" role="menuitem" tabindex="-1" title="Reporte de Calidad Individuales">
                                                                 <span class="slds-truncate" >Reporte de Calidad Individuales</span>
                                                             </a>
+                                                        </li-->
+                                                        <li class="slds-dropdown__item" role="presentation" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Reporte de Calidad Individuales - New">
+                                                                <apex:param value="vfReporteCalidadIndividualNew?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCC();" role="menuitem" tabindex="-1" title="Reporte de Calidad Contributivos">
                                                                 <span class="slds-truncate" >Reporte de Calidad Contributivos</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCNC();" role="menuitem" tabindex="-1" title="Reporte de Calidad No Contributivos">
                                                                 <span class="slds-truncate" >Reporte de Calidad No Contributivos</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCP();" role="menuitem" tabindex="-1" title="Reporte de Calidad Planilla">
                                                                 <span class="slds-truncate" >Reporte de Calidad Planilla</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCBFH();" role="menuitem" tabindex="-1" title="Reporte de Calidad Agencias BFH">
                                                                 <span class="slds-truncate" >Reporte de Calidad Agencias BFH</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:RCPM();" role="menuitem" tabindex="-1" title="Reporte de Calidad Premier">
                                                                 <span class="slds-truncate" >Reporte de Calidad Premier</span>
                                                             </a>
                                                         </li>
-                                                        <li class="slds-dropdown__item" style="display:{!IF(usuario != 'HN20370', 'block;','none;')}" role="presentation">
+                                                         <li class="slds-dropdown__item" role="presentation" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" >
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Reporte SLA">
+                                                                <apex:param value="vfReporteCalidadSLA?usuario={!usuario}&perfil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
                                                             <a href="javascript:EKS();" role="menuitem" tabindex="-1" title="Entrega de Kit">
                                                                 <span class="slds-truncate" >Entrega de Kit</span>
                                                             </a>
@@ -339,12 +370,33 @@
                                                             </a>
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation">
-                                                            <a href="javascript:ABFK();" role="menuitem" tabindex="-1" title="Afiliación Clientes ya cargados">
+                                                            <a href="javascript:ABFK();" role="menuitem" tabindex="-1" title="Afiliación BFH">
                                                                 <span class="slds-truncate" >Afiliación BFH</span>
                                                             </a>
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation">
-                                                            <a href="javascript:APM();" role="menuitem" tabindex="-1" title="Afiliación Clientes ya cargados">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Afiliación - Ficopen" title="Afiliación - Ficopen">
+                                                                <apex:param value="vfAfiliacionBFH?usuario={!usuario}&pantalla=FC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Afiliación - Televenta" title="Afiliación - Televenta">
+                                                                <apex:param value="vfAfiliacionBFH?usuario={!usuario}&pantalla=TV" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Tarjeta Futura" title="Tarjeta Futura">
+                                                                <apex:param value="vfAfiliacionBFH?usuario={!usuario}&pantalla=TF" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Pendiente Físico">
+                                                                <apex:param value="vfReporteCalidadPenFisSac?usuario={!usuario}&perfil=CM" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <a href="javascript:APM();" role="menuitem" tabindex="-1" title="Afiliación Premier">
                                                                 <span class="slds-truncate" >Afiliación Premier</span>
                                                             </a>
                                                         </li>
@@ -352,6 +404,11 @@
                                                             <a href="javascript:AME();" role="menuitem" tabindex="-1" title="Afiliación Masiva de Empresas">
                                                                 <span class="slds-truncate" >Afiliación Masiva de Empresas</span>
                                                             </a>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Reporte SLA">
+                                                                <apex:param value="vfReporteCalidadSLA?usuario={!usuario}&perfil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation">
                                                             <a href="javascript:EKC();" role="menuitem" tabindex="-1" title="Entrega de Kit">
@@ -369,9 +426,50 @@
                                             </li> 
                                         </apex:outputPanel>
                                         
+                                        <apex:outputPanel rendered="{!item.nombreMetodo = 'PantallasOP'}">
+                                            <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger--hover"  aria-haspopup="true">
+                                                <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Reportes">
+                                                    <span style="padding-top:8px;" class="slds-truncate">Reporte de Calidad</span>
+                                                </a>
+                                                <div class="slds-context-bar__icon-action slds-p-left--none" tabindex="0">
+                                                    <button class="slds-button slds-button--icon slds-context-bar__button" tabindex="-1" title="Open menu item submenu">
+                                                        <svg class="slds-button__icon" aria-hidden="true">
+                                                            <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                                                        </svg>
+                                                        <span class="slds-assistive-text">Open menu item submenu</span>
+                                                    </button>
+                                                </div>
+                                                <div class="slds-dropdown slds-dropdown--right" >
+                                                    <ul class="slds-dropdown__list" role="menu">
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Ficopen - SAC">
+                                                                <apex:param value="vfReporteCalidadOperacionesFC?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Bandeja Operaciones">
+                                                                <apex:param value="vfBandejaOperaciones?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Televentas">
+                                                                <apex:param value="vfReporteCalidadTelVenOper?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                         <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Tarjeta Futura">
+                                                                <apex:param value="vfReporteCalidadAgenciasTFOpe?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </li> 
+                                        </apex:outputPanel>
+                                        
                                         
                                     </apex:repeat>
                                     
+                                    <apex:actionFunction action="{!clicPantallasRC}" name="clicPantallasRC" />
                                     <apex:actionFunction action="{!ACI}" name="ACI" />
                                     <apex:actionFunction action="{!ACC}" name="ACC" />
                                     <apex:actionFunction action="{!ACYC}" name="ACYC" />

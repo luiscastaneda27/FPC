@@ -959,6 +959,8 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             claseEnvio.direcciones.add(direccionResi);
             // BENEFICIARIOS
             List<String> listIdExterno = new List<String>();
+            List<classActualizacionInfo.classBeneficiarios> listBenefAct = new List<classActualizacionInfo.classBeneficiarios>();
+            List<classActualizacionInfo.classBeneficiarios> listBenefInac = new List<classActualizacionInfo.classBeneficiarios>();
             For(Detalle_Caso__c Item : beneficiarios){
                 classActualizacionInfo.classBeneficiarios nuevo = new classActualizacionInfo.classBeneficiarios();
                 nuevo.cuenta = item.Cuenta__r.Codigo__c;
@@ -991,6 +993,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     listIdExterno.add(String.valueOF(item.ID_Externo__c));
                 }
                 claseEnvio.beneficiarios.add(nuevo);
+                listBenefAct.add(nuevo);
             }
             List<Beneficiario__C> listBene = new List<Beneficiario__C>();
             if(claseEnvio.beneficiarios.size() > 0){
@@ -1029,6 +1032,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                          benef.modificadoPor =VE_USUARIO_ACTUALIZA;
                          benef.fechaModificacion = System.now();
                          claseEnvio.beneficiarios.add(benef);
+                         listBenefInac.add(benef);
                      }
             }
             
@@ -1067,7 +1071,9 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     }
                 }
             }
-            List<classActualizacionInfo.classBeneficiarios> listBeneficiarios = claseEnvio.beneficiarios;
+            List<classActualizacionInfo.classBeneficiarios> listBeneficiarios  = new List<classActualizacionInfo.classBeneficiarios>();
+            listBeneficiarios.addAll(listBenefInac);
+            listBeneficiarios.addAll(listBenefAct);
             claseEnvio.beneficiarios = new List<classActualizacionInfo.classBeneficiarios>();
             claseEnvio.bitacora = bitacoras;
             
@@ -1075,13 +1081,14 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             envio.contenido = JSON.serialize(claseEnvio);
             
             String cons = 'contenido=' + envio.contenido;
-            system.debug('Mandamos: '+cons);
+            system.debug('Mandamos en Act Inf: '+cons);
+            system.debug('Beneficiarios: '+JSON.serialize(listBeneficiarios));
             cons = cons.replace('Casos Portal AutoGestion Usuario invitado al sitio Web', 'Admin User');
             cons = cons.replace('Claudia Maxiel Vallejo Galo', 'Admin User');
             request.setBody(cons);
             request.setTimeout(120000);
-            system.debug('lo que manda el request: '+request);
             HttpResponse response = http.send(request);
+            
             String respuestaBenef = listBeneficiarios.size() > 0 ? '\n' +actualizacionInformBenef(listBeneficiarios) : '';
             system.debug(response.getBody());
             Caso.Respuesta_desde_Sysde__c = response.getBody() +  respuestaBenef;
@@ -1116,7 +1123,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setBody(Json.serialize(listBeneficiarios));
         request.setTimeout(120000);
-        System.debug('Mandamos: '+request.getBody());
+        System.debug('Mandamos en Benef: '+request.getBody());
         HttpResponse response = http.send(request);
         System.debug('Codigo: '+response.getStatusCode());
         System.debug('Body: '+response.getBody());

@@ -19,9 +19,6 @@ public class controllerEstadoCuentaTrimestral {
             //string tipo = ApexPages.currentPage().getParameters().get('tipo');
             varurl urlDecode = new varurl();
             
-            
-            
-            
             if (url !=null && url!=''){
                 Blob d = EncodingUtil.base64Decode(url);
                 urlDecode= (varurl)System.JSON.deserialize(d.tostring(), varurl.class);

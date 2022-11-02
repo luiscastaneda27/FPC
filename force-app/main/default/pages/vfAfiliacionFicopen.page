@@ -148,42 +148,22 @@
                        </apex:inputText>
                        <apex:outputField value="{!Afiliacion.Empresa__c}" /> 
                            
-                        <!--apex:inputText label="Buscar SubProducto" value="{!buscarSubProducto}" >
-                            <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                       </apex:inputText>
-                       <apex:outputText /-->
-                       
-                       
-                       <apex:outputField value="{!Afiliacion.Subproducto__c}" />
-                            <!--apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                       </apex:inputField>
-                       <apex:outputPanel>
-                           <apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
-                               <apex:selectOptions value="{!listSubProductos}" />
-                               <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                           </apex:selectList>
-                       </apex:outputPanel-->
-                       <apex:outputField value="{!producto.name}"  />
+                        <apex:outputField value="{!Afiliacion.Subproducto__c}" />
+                        <apex:outputField value="{!producto.name}"  />
                        
                       <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
                       <apex:outputField value="{!Afiliacion.Reporte_Calidad__c}" />
                        
-                       
-                       
-                       <!--apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
-                       <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/-->
-                       
                        <apex:outputField value="{!Afiliacion.Oficial_SAC__c}" title="Oficial"/>
                        <apex:outputField value="{!Afiliacion.Codigo_Oficial_SAC__c}" title="Código Oficial"/>
                        
-                       
-                       <!--apex:inputField value="{!Afiliacion.Formulario_Completo__c}" /-->
                        
                        <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" >
                             <apex:actionSupport event="onchange" action="{!accionvacia}" status="status" reRender="idPageBlock" />
                        </apex:inputField>
                        <apex:inputField value="{!afiliacion.Espediente_Completo__c}" />
                        
+                       <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                        <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        
                     </apex:pageBlockSection>

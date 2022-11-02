@@ -31,7 +31,7 @@ public class BatchDepuracionContactoTest {
         
         FPC_ErroresEstadosDeCuenta__c Error = new FPC_ErroresEstadosDeCuenta__c(
                     FPC_Contacto__c = acc.PersonContactId,
-                    FPC_Error__c = 'test');
+                    FPC_Error__c = '500test');
         insert Error;
         
         ControllerReportEmailStatuses email = new ControllerReportEmailStatuses();

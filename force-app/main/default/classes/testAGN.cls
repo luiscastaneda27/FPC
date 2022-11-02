@@ -679,7 +679,16 @@ global class testAGN {
         cliente.NumbDirTable = '1';
         cliente.mostrarTablaModificarDir= false;
         cliente.MostrarTablaDireccion =false;
-               
+            
+        cliente.telefonoUnico.Secuencia = 12;
+        cliente.telefonoUnico.numTelefono = '1231231231';
+        cliente.telefonoUnico.tipTelefono = 'C';
+        cliente.telefonoUnico.extension =  123;
+        cliente.telefonoUnico.esDefault = 'S';
+        cliente.telefonoUnico.TelUbicacion = 'F';
+            
+            
+            
         cliente.guardarListaTel();
         cliente.EliminarTel();
         cliente.EliminarTelADD();
@@ -1379,9 +1388,17 @@ global class testAGN {
         p.valornoDir = false;
         p.NumbDirTable = '1';
                
+        p.telefonoUnico.Secuencia = 12;
+        p.pcTelefonoCN = '1231231231';
+        p.Cliente25.Tipo_Telefono__c = 'C';
+        p.extension =  123;
+        p.Cliente25.Por_Defecto_Tel__c = 'S';
+        p.Cliente25.Telefono_Ubicacion__c = 'C';
+        
         p.guardarListaTel();
         p.EliminarTel();
         p.EliminarTelADD();
+        p.NumbTelTable = '12';
         p.ModificarTel();
         p.limpiaTel();
         p.EliminarDIR();
@@ -2053,7 +2070,32 @@ global class testAGN {
         c.mostPopFATCA();
         c.mostPopFATCANC();
         c.hidePopOtros();
-
+        
+        c.pcDependeSI = true;
+        c.dependeSI();
+        c.pcDependeSI = false;
+        c.dependeSI();
+        
+         c.pcDependeNo = true;
+        c.dependeNo();
+        c.pcDependeNo = false;
+        c.dependeNO();
+        
+        c.OcultaTerSI = true;
+        c.OcultTerSI();
+        c.OcultaTerSI = false;
+        c.OcultTerSI();
+        
+        c.OcultaTerNo = true;
+        c.OcultTerNO();
+        c.OcultaTerNo = false;
+        c.OcultTerNo();
+        
+        c.popSubProducto = false;
+        c.popSubProducto();
+        c.popSubProducto = false;
+        c.popSubProductoPref();
+        
         controllerHomePortalFPC home = new controllerHomePortalFPC();
         home.Afiliaciones();
         home.anio = 2018;

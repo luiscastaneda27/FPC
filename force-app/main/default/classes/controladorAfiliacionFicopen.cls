@@ -59,6 +59,7 @@ public class controladorAfiliacionFicopen {
                             Fecha_Inicio_Aporte__c , Forma_Pago__c,estado__C, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,id,
+                            DebidaDiligencia__c,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode,Cuentas_Colectivas__c,
                             Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,

@@ -6,19 +6,11 @@
             <meta http-equiv="x-ua-compatible" content="ie=edge" />
             <meta http-equiv="X-UA-Compatible" content="IE=8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            
-            <!-- Import the Design System style sheet -->
             <apex:slds />
-             
-            <style>
-                
-                
-            </style>
         </head>
         <body>
             
             <apex:form id="theForm">
-                
                 
                 <apex:actionStatus id="status">
                     <apex:facet name="start">
@@ -44,9 +36,6 @@
                             <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
                                 
                                 <tr >
-                                    <!--td scope="col" colspan="1">
-Enviar
-</td -->
                                     <td scope="col" colspan="1">
                                         Primer Nombre
                                     </td >
@@ -75,17 +64,11 @@ Enviar
                                     <td scope="col" colspan="1">
                                         
                                     </td>
-                                    <!--td scope="col" colspan="1">
-
-</td-->
                                     
                                 </tr>
                                 <tbody>
                                     <apex:repeat value="{!listAfiliaciones}" var="item">
                                         <tr>
-                                            <!--td>
-<apex:inputField value="{!item.Aprueba_SAC__C}" rendered="{!item.Formulario_Completo__c ='Si'}" />
-</td-->
                                             <td>
                                                 <apex:outputField value="{!item.name}" />
                                             </td>
@@ -117,19 +100,11 @@ Enviar
                                                 </apex:commandLink>
                                                 
                                             </td>
-                                            <!--td>
-<apex:commandLink action="{!SelectPopEliminar}" value="Eliminar" reRender="theForm" status="status" >
-<apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-</apex:commandLink>
-</td-->
                                             
                                         </tr>
                                     </apex:repeat>
                                 </tbody>
                             </table>
-                            <!--footer class="slds-modal__footer">
-<apex:commandButton status="status" reRender="idPageBlock" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Enviar" action="{!enviar}"  />
-</footer-->
                         </apex:outputPanel>
                     </apex:pageBlockSection>
                     
@@ -142,8 +117,6 @@ Enviar
                         
                         <apex:outputField value="{!Afiliacion.Tipo_Identificacion__c}" />
                         <apex:outputField value="{!Afiliacion.Identificacion__c}" />
-                            <!--apex:actionSupport action="{!ValidacionIdentidad}" reRender="theForm" event="onchange" status="status" />
-                        </apex:inputField-->
                         
                         <apex:inputField value="{!Afiliacion.Tiene_Id__c}" />
                         <apex:inputField value="{!Afiliacion.RTN__c}" />
@@ -162,12 +135,6 @@ Enviar
                         
                         
                         <apex:outputField value="{!Afiliacion.Subproducto__r.name}" />
-                        <!--apex:outputPanel>
-<apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
-<apex:selectOptions value="{!listSubProductos}" />
-<apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-</apex:selectList>
-</apex:outputPanel-->
                         <apex:outputField value="{!Afiliacion.Subproducto__r.producto__r.name}"  />
                         
                         <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
@@ -190,76 +157,30 @@ Enviar
                             <apex:selectOption itemLabel="No" itemValue="N" />
                         </apex:selectList>
                         
+                         <apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
+                            <apex:selectOption itemLabel="Si" itemValue="S" />
+                            <apex:selectOption itemLabel="No" itemValue="N" />
+                        </apex:selectList>
+                        <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
+                        
+                        <!--apex:inputField value="{!Afiliacion.SubEstadoRCSF__c }" /-->
+                        <apex:selectList value="{!Afiliacion.SubEstadoRCSF__c}" size="1" label="Sub Estado RC SF" > 
+                            <apex:selectOption itemLabel="Nuevo SAC" itemValue="NS" />
+                            <apex:selectOption itemLabel="Nuevo Comercial" itemValue="NC" />
+                            <apex:selectOption itemLabel="Validación Scan" itemValue="VS" />
+                            <apex:selectOption itemLabel="Pendiente Scan" itemValue="PS" />
+                            <apex:selectOption itemLabel="Pendiente Físico" itemValue="PF" />
+                            <apex:selectOption itemLabel="Validación Físico" itemValue="VF" />
+                            <apex:selectOption itemLabel="Devolución Comercial" itemValue="DC" />
+                            <apex:selectOption itemLabel="Devolución Agencia" itemValue="DA" />
+                            <apex:selectOption itemLabel="Cerrado" itemValue="C" />
+                        </apex:selectList>
                         <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                         
                     </apex:pageBlockSection>
                     <footer class="slds-modal__footer">
                         <apex:commandButton status="status" reRender="idPageBlock" rendered="{!Afiliacion.id !=null}" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!Guardar}"  />
                     </footer>
-                    
-                    
-                    <apex:outputPanel rendered="{!popAfiliacion}">
-                        <div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open slds-modal_large">
-                            <div class="slds-modal__container">
-                                <div class="slds-modal__header">
-                                    <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
-                                        <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
-                                        </svg>
-                                        <span class="slds-assistive-text">Cerrar</span>
-                                         <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >{!IF(afiliacion.Tipo_Afiliacion__c = 'YC','AFILIACIÓN DE CLINETE YA CARGADO', 'AFILIACIÓN DE CLINETE POR CARGA')}</h1>
-                                    </apex:commandLink>  
-                                </div>
-                                <div class="slds-modal__content">
-                                    
-                                    <apex:pageBlockSection columns="2" title="{!afiliacion.name} {!afiliacion.Primer_Apellido__c}">
-                                        
-                                        <apex:outputField rendered="{!AND(!cambioCampos,afiliacion.Tipo_Afiliacion__c ='YC')}" value="{!afiliacion.Numero_de_Cliente__c}" />
-                                        <apex:outputField rendered="{!AND(!cambioCampos,afiliacion.Tipo_Afiliacion__c ='YC')}" value="{!afiliacion.Numero_de_Contrato__c}" />
-                                        
-                                        <apex:outputField rendered="{!AND(!cambioCampos,afiliacion.Tipo_Afiliacion__c ='YC')}" value="{!afiliacion.Numero_Cuenta__c}" />
-                                        <apex:outputField rendered="{!!cambioCampos}" label="Empresa" value="{!afiliacion.empresa__r.name}" />
-                                        
-                                        <apex:inputField required="true" rendered="{!AND(afiliacion.CurrencyIsoCode = 'HNL', !cambioCampos)}" value="{!afiliacion.Aportacion_HNL__c}" />
-                                        <apex:inputField required="true" rendered="{!AND(afiliacion.CurrencyIsoCode = 'USD', !cambioCampos)}" value="{!afiliacion.Aportacion_USD__c}" />
-                                        <apex:inputField required="true" rendered="{!AND(afiliacion.CurrencyIsoCode = 'HNL', !cambioCampos)}" value="{!afiliacion.Seguro_HNL__c}" />
-                                        <apex:inputField required="true" rendered="{!AND(afiliacion.CurrencyIsoCode = 'USD', !cambioCampos)}" value="{!afiliacion.Seguro_USD__c}" />
-                                        
-                                        <apex:inputField rendered="{!!cambioCampos}" required="true" value="{!afiliacion.Periodicidad__c}"  />
-                                        <apex:inputField rendered="{!!cambioCampos}" required="true" value="{!afiliacion.Forma_Pago__c}"  />
-                                        
-                                        <apex:inputField rendered="{!!cambioCampos}" required="true" type="date" showDatePicker="false" value="{!afiliacion.Fecha_Inicio_Aporte__c}"  />
-                                        <!--apex:inputField required="true" type="date" showDatePicker="false" value="{!afiliacion.Fecha_Validacion__c}"  /-->
-                                        <apex:outputField rendered="{!!cambioCampos}" value="{!afiliacion.Fecha_Validacion__c}"  />
-                                        
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" value="{!afiliacion.Nacionalidad__c}" />
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" value="{!afiliacion.Sexo__c}" />
-                                        
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" type="date" showDatePicker="false" value="{!afiliacion.Fecha_Nacimiento__c}" />
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" type="date" showDatePicker="false" value="{!afiliacion.Fecha_Ingreso_Empresa__c}" />
-                                        
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" value="{!afiliacion.Profesion__c}" />
-                                        <apex:inputField rendered="{!cambioCampos}"  value="{!afiliacion.Cargo__c}" />
-                                        
-                                        <apex:inputField rendered="{!cambioCampos}"  value="{!afiliacion.Nombre_Conyuge__c}" />
-                                        <apex:inputField rendered="{!cambioCampos}" required="true" value="{!afiliacion.Estado_CIvil__c}" />
-                                        
-                                         <apex:inputField rendered="{!cambioCampos}" required="true" value="{!afiliacion.Lugar_Nacimiento__c}" />
-                                        
-                                          
-                                    </apex:pageBlockSection> 
-                                    
-                                    <footer class="slds-modal__footer">
-                                        <apex:commandButton status="status" reRender="idPageBlock"  style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="{!IF(!cambioCampos,'Guardar','Enviar a Operaciones')}"   />
-                                    </footer>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slds-backdrop slds-backdrop--open"></div>
-                    </apex:outputPanel>
-                    
-                    
                     
                 </apex:pageBlock>
             </apex:form>

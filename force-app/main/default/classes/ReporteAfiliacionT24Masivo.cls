@@ -46,10 +46,13 @@ global without sharing class ReporteAfiliacionT24Masivo {
     public boolean mostrarSiguiente{get;set;}
     public boolean mostrarANterior{get;set;}
     public boolean mostrarBotonesP{get;set;}
+    public boolean popAgregarRC{get;set;}
+    public String agregarRC{get;set;}
     integer contadorpaginacion;
     
     public ReporteAfiliacionT24Masivo(){      
         opciones=new List<SelectOption>();
+        popAgregarRC = false;
         Asesores();
         btnAsesorUnico=true;
         llenarProductos();
@@ -835,6 +838,18 @@ global without sharing class ReporteAfiliacionT24Masivo {
         }
     }
     
+    public void popAgregarRCMet(){
+        popAgregarRC = true;
+    }
+    public void agregarRCMet(){
+        agregarRC = 'Si';
+		VerPlanilla();        
+    }
+    public void noAgregarRCMet(){
+        agregarRC = '';
+		VerPlanilla();  
+    }
+    
     public void VerPlanilla(){ 
         try{
             //Agregado 21062019
@@ -1026,8 +1041,14 @@ global without sharing class ReporteAfiliacionT24Masivo {
             
             //system.debug('listaEnviar'+ Enviar);  
             //apiReporteT24.guardarT24(Enviar);
-            string csharp;
-            csharp=string.valueOf(apiReporteT24.guardarT24(Enviar)); 
+            string csharp=string.valueOf(apiReporteT24.guardarT24(Enviar)); 
+            System.debug('Primera prueba: '+agregarRC);
+            if(agregarRC == 'Si'){
+                controladorAfiliacionClientesCargados.crearAfilaicionT24(Json.serialize(rellenoTabla));
+            }
+            
+            popAgregarRC = false;
+            agregarRC = '';
             system.debug('lista_afiliacion '+ csharp);
             datosExcel = [ select noEmpleado__c,fechaIngresoCuentas__c, TipoId__c, noEmpresa__c,identificacion__c,
                           pApellidoEmpleado__c, sApellidoEmpleado__c,pNombreEmpleado__c,sNombreEmpleado__c,

@@ -108,12 +108,6 @@
                                                 </apex:commandLink>
                                                 
                                             </td>
-                                            <!--td>
-<apex:commandLink action="{!SelectPopEliminar}" value="Eliminar" reRender="theForm" status="status" >
-<apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-</apex:commandLink>
-</td-->
-                                            
                                         </tr>
                                     </apex:repeat>
                                 </tbody>
@@ -178,8 +172,15 @@
                             <apex:selectOption itemLabel="N / A" itemValue="N / A" />
                             <apex:actionSupport event="onchange" reRender="theForm" status="status" action="{!accionVacia}" />
                         </apex:selectList>
-                        <apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" rendered="{!afiliacion.Tipo_Afiliacion__c ='YC'}"  />
                         
+                        
+                        <apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" rendered="{!afiliacion.Tipo_Afiliacion__c ='YC'}"  />
+                        <apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
+                            <apex:selectOption itemLabel="Si" itemValue="S" />
+                            <apex:selectOption itemLabel="No" itemValue="N" />
+                        </apex:selectList>
+                        
+                        <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                         <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                         
                     </apex:pageBlockSection>

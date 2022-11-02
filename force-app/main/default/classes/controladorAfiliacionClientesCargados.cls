@@ -54,6 +54,7 @@ public class controladorAfiliacionClientesCargados {
                             Fecha_Inicio_Aporte__c , Forma_Pago__c, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,id,
+                            DebidaDiligencia__c,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode,estado__c,
                             Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
@@ -281,6 +282,58 @@ public class controladorAfiliacionClientesCargados {
                      
                  }
             popSubProducto = false;
+        }catch(exception ex){
+            system.debug('Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber());
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.error, 'Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber())); 
+        }
+    }
+    
+    @future(callout=true)
+    public static void crearAfilaicionT24(String dataJson){
+        try{
+            List<reporteT24__c> listT24 = (List<reporteT24__c>) JSON.deserialize(dataJson, List<reporteT24__c>.class);
+            System.debug('listT24: '+json.serialize(listT24));
+            List<Reporte_Calidad__c> listRC = new  List<Reporte_Calidad__c>();
+            Map<string, Oficial_X_Asesor__c> mapAsesoresOficiales = new Map<string, Oficial_X_Asesor__c>();
+            for(Oficial_X_Asesor__c item: [select Codigo_Asesor__c ,Oficial_SAC__r.name, Codigo_Oficial_SAC__c,Asesor__r.name from Oficial_X_Asesor__c]){
+                mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
+            }
+            for(reporteT24__c t24: listT24){
+                Reporte_Calidad__c RC = new Reporte_Calidad__c();
+                Oficial_X_Asesor__c asesor = mapAsesoresOficiales.containsKey(t24.promotor__c) ? mapAsesoresOficiales.get(t24.promotor__c) : new Oficial_X_Asesor__c();
+                aSysdeReporteCalidad.ClassReporteCalidad respuesta = aSysdeReporteCalidad.infoCliente(t24.identificacion__c.replace('-',''));
+                if(respuesta.numCuenta != null){
+                    RC.Name = t24.pNombreEmpleado__c;
+                    RC.Segundo_Nombre__c = t24.sNombreEmpleado__c;
+                    RC.Primer_Apellido__c = t24.pApellidoEmpleado__c;
+                    RC.Segundo_Apellido__c = t24.sApellidoEmpleado__c;
+                    RC.Tiene_Id__c = 'S';
+                    RC.Identificacion__c = t24.identificacion__c.replace('-','');
+                    RC.FATCA__c = 'S';
+                    RC.PEP__c = 'S';
+                    RC.Addendum__c = 'S';
+                    RC.RTN__c = 'S';
+                    RC.WAIVER__c = 'S';
+                    RC.Procedencia__c = 'S';
+                    RC.Numero_Cuenta__c = respuesta.numCuenta;
+                    RC.Subproducto__r = new SubProducto__c(Codigo__c = t24.subProducto__c);
+                    RC.Empresa__r = new Account(Identificacion__c = t24.rtnEmpleador__c);
+                    RC.Reporte_Calidad__c = 'P';
+                    RC.Aplica_CS__c = 'N';
+                    RC.Codigo_Asesor_Comercial__c = asesor.Codigo_Asesor__c;
+                    RC.Asesor_Comercial__c = asesor.Asesor__r.Name;
+                    RC.Codigo_Oficial_SAC__c = asesor.Codigo_Oficial_SAC__c;
+                    RC.Oficial_SAC__c = asesor.Oficial_SAC__r.Name;
+                    RC.Estado__c = 'N';
+                    RC.Tipo_Afiliacion__c  ='YC';
+                    RC.Formulario_Completo__c = 'S';
+                    RC.Cuentas_Colectivas__c = t24.noEmpresa__c;
+                    RC.CurrencyIsoCode = t24.CurrencyIsoCode;
+                    listRC.add(RC);
+                }
+            }
+            System.debug('listRC: '+listRC);
+            DataBase.insert(listRC, false);
         }catch(exception ex){
             system.debug('Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.error, 'Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber())); 

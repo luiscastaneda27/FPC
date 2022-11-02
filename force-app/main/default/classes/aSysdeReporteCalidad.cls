@@ -62,10 +62,10 @@ public class aSysdeReporteCalidad {
             list<cuentas__C> listCuentas = new list<cuentas__C>();
             
             InformeReporteCalidad a = new InformeReporteCalidad();
-            a.accion=accion;
+            a.accion = accion;
             a.desde = date.today().addDays(-10);
-            //a.desde = date.valueOf(datetime.newInstance(2018, 1, 1));
             a.hasta = date.today();
+            //a.desde = date.valueOf(datetime.newInstance(2018, 1, 1));
             /*a.hasta = date.valueOf(datetime.newInstance(2019, 5, 20));
             if(accion=='FC'){
                 a.desde = date.valueOf(datetime.newInstance(2019, 1, 1));
@@ -73,6 +73,14 @@ public class aSysdeReporteCalidad {
             }else if(accion == 'BFK'){
                 a.desde = date.valueOf(datetime.newInstance(2019, 1, 1));
                 a.hasta = date.valueOf(datetime.newInstance(2019, 2, 20));
+            }
+            a.desde = date.valueOf(datetime.newInstance(2022, 6, 1));
+            a.hasta = date.valueOf(datetime.newInstance(2022, 6, 15));
+            
+            if(accion=='IN'){
+                a.hasta = date.valueOf(datetime.newInstance(2022, 6, 2));
+            }else if(accion=='FC'){
+                a.hasta = date.today();
             }*/
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(a);
@@ -80,7 +88,7 @@ public class aSysdeReporteCalidad {
            
             HttpRequest request = new HttpRequest();
             String url = claseUtilPlanillas.urlSysde('Test'); 
-            url='http://190.5.68.49:9090/';
+           // url='http://190.5.68.49:9090/';
             request.setEndpoint(url + 'api/clientes/reportes');
             request.setMethod('POST');
             request.setBody(cons);
@@ -98,8 +106,8 @@ public class aSysdeReporteCalidad {
             string contenido = response.getBody();
             String replace = 'P';
             contenido = contenido.replace(': "', ':"');
-            system.debug('contenido: '+contenido);
             contenido = contenido.replace('	', ' ');
+            System.debug('Respuesta Modificada: '+contenido);
             if(response.getStatusCode() == 200){
                 respuesta = (list<ConsultaCliente>)System.JSON.deserialize(contenido, list<ConsultaCliente>.class); 
             }
@@ -142,6 +150,65 @@ public class aSysdeReporteCalidad {
         return respuesta;
     }
     
+    public static string actualizarCodCausa(){
+        string respuesta;
+        try{ 
+            Http http = new Http();
+            HttpRequest request = new HttpRequest();
+            String url = claseUtilPlanillas.urlSysde('Test'); 
+            String desde = JSON.serialize(Date.today().addDays(-3)).replace('"', '');
+            String hasta = JSON.serialize(Date.today()).replace('"', '');
+            request.setEndpoint(url + 'api/rc/sync?desde=' + desde+ '&hasta=' + hasta );
+            request.setMethod('GET');
+             request.setHeader('Content-Type', 'application/x-www-form-urlencoded'); 
+            request.setTimeout(120000);
+            HttpResponse response = new HttpResponse();
+            if(!test.isRunningTest()){
+                response = http.send(request); 
+            }else{
+                response.setBody('Proceso capital semilla procesado correctamente');
+                response.setStatusCode(200);
+            }
+            System.debug('ENdPOINT: '+request.getEndpoint());
+            respuesta = response.getBody();
+            system.debug('Respuesta desde sysde: '+response.getBody());
+            if(Response.getStatusCode() == 200){
+                CodCausaObj obj = (CodCausaObj)JSON.deserialize(response.getBody(), CodCausaObj.class);
+                List<Reporte_calidad__c> listAfiliaciones = new List<Reporte_calidad__c>();
+                Map<string, Oficial_X_Asesor__c> mapAsesoresOficiales = new Map<string, Oficial_X_Asesor__c>();
+                Map<string, CodCausa> mapCodCausa= new Map<string, CodCausa>();
+                for(Oficial_X_Asesor__c item: [select Codigo_Asesor__c ,Oficial_SAC__r.name, Codigo_Oficial_SAC__c,Asesor__r.name from Oficial_X_Asesor__c]){
+                    mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
+                }
+                for(CodCausa item: obj.datos){
+                    mapCodCausa.put(item.cuenta, item);
+                }
+                for(Reporte_calidad__c item:
+                    [Select Id, Asesor_Comercial__c, Codigo_Asesor_Comercial__c,
+                     Codigo_Oficial_SAC__c ,Oficial_SAC__c,TipoCliente__c , Numero_Cuenta__c
+                     from Reporte_calidad__C
+                     where Numero_Cuenta__c in :mapCodCausa.keySet() ]){
+                         if(mapCodCausa.containsKey(item.Numero_Cuenta__c)){
+                             CodCausa codCausa = mapCodCausa.get(item.Numero_Cuenta__c);
+                             item.TipoCliente__c = codCausa.causa;
+                             if(mapAsesoresOficiales.containsKey(codCausa.oficial)){
+                                 Oficial_X_Asesor__c asesor = mapAsesoresOficiales.get(codCausa.oficial);
+                                 item.Codigo_Oficial_SAC__c = asesor.Codigo_Oficial_SAC__c;
+                                 item.Oficial_SAC__c =  asesor.Oficial_SAC__r.name;
+                                 item.Codigo_Asesor_Comercial__c = codCausa.oficial;
+                                 item.Asesor_Comercial__c = asesor.Asesor__r.name;
+                             }
+                             listAfiliaciones.add(item);
+                         }
+                     }
+                Database.update(listAfiliaciones, false);
+            }
+        }catch(exception ex){
+            system.debug('Error: '+ex.getMessage()+ ', Linea: '+ex.getLineNumber());
+        }
+        return respuesta;
+    }
+    
     
     public class InformeReporteCalidad{
         public string accion {get;set;}
@@ -149,6 +216,18 @@ public class aSysdeReporteCalidad {
         public date hasta {get;set;}
     }
     
+    public class CodCausaObj{
+        public String descripcion;
+        public Boolean ok;
+        public List<CodCausa> datos;
+    }
+    public class CodCausa{
+        public String cuenta;
+        public String causa;
+        public String oficial;
+    }
+
+        
     
     public class ClassReporteCalidad {
         public string clienteUnicoBanco{get;set;}
@@ -178,6 +257,8 @@ public class aSysdeReporteCalidad {
         public String codSubProducto{get;set;}//fo.fo_cuenta
         public String tipoFondo{get;set;} //fo.fo_cuenta
         public String asesor {get;set;}
+        public String codColectiva {get;set;}
+        
         
         public String EMP_AGN{get;set;} 
         public String COD_AGN  {get;set;}

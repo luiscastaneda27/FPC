@@ -35,7 +35,8 @@
                     <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
                     <apex:pageMessages />
-                    <a href="https://ficohsafpc--c.na102.content.force.com/servlet/servlet.FileDownload?file=0153Z000003vxPd" target="_blank" > Descargar Archivo</a><br/>
+                    <!--{!linkPortal}servlet/servlet.FileDownload?file=0153Z000003vxPd-->
+                    <a href="https://ficohsafpc--stagefpc--c.documentforce.com/servlet/servlet.FileDownload?file=0153Z000003vxPd" target="_blank" > Descargar Archivo</a><br/>
                     <!--apex:commandLink value="Descargar Archivo" target="_blank" hreflang="http://fpc-fpc.cs40.force.com/UsuariosFPC/resource/1515546434000/Archivo_Carga_Comercial?"  reRender="theForm" /-->
                     Tipo de Afiliacion<br/>
                     <apex:selectList size="1" value="{!tipoAfiliacion}" title="Tipo de Afiliacion">

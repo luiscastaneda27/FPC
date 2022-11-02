@@ -170,8 +170,15 @@
             
          </style>
         
-       
-        
+            <script>
+       function isNumberKey(evt)
+            {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false; 
+                return true;
+            }
+        </script>
    </head>  
    <body>
     <div class="slds-scope">
@@ -216,21 +223,21 @@
         <center>               
        	    <div class="container" >
 			      
-            <header class="slds-modal__header" style="width:1200px; margin-left:1px;">	
+            <header class="slds-modal__header" style="width:1350px; margin-left:-120px; margin-right:1px;">	
                        <figure class="slds-image slds-image--avatar slds-align--absolute-center">
                         <apex:image value="{!$Resource.LogoFPC}"/>
                        </figure>
             </header>
                
-                <div id="Resumen" style="width:1200px;">
+                <div id="Resumen" style="width:1350px; margin-left:-120px;">
                    <h3 class="Row">
-                       <strong>  Despignoración de Fondos </strong>
+                       <strong>  Pignoración y Despignoración de Fondos </strong>
                        <span></span>
                        
                    </h3>
           		</div>
                 <br/>
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width:1200px; margin-left: 1px;">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="width:1350px; margin-left:-120px;">
                      <table width = "900" style="text-align: center;">
                           
                       	<tr>
@@ -239,7 +246,7 @@
                              <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
                            				<abbr class="slds-required" title="required"></abbr> Identidad del Cliente
                                </label>
-                                <apex:inputText styleclass="slds-input"  id="id_pign" value="{!id_pign}" style="height:10px; width:170px; margin-left:18px;"/>
+                                <apex:inputText styleclass="slds-input"  id="id_pign" value="{!id_pign}" style="height:10px; width:170px; margin-left:18px;" onkeypress="return isNumberKey(event)"/>
                                 <apex:commandButton style="margin-left: 18px;" id="BuscarId" action="{!Busca3}" value="Buscar por Identidad"  styleClass="Aceptar" />
                                 <br/> 
                                <br/> 
@@ -276,7 +283,7 @@
                                <label class="slds-form-element__label" for="inputSample"  style="margin-left:10px;" >
                            				<abbr class="slds-required" title="required"></abbr> Cuenta
                                </label>
-							   <apex:inputText onkeypress="return isNumberKey(event)" id="cuentapig" styleclass="slds-input"  style="height:10px; width:170px; margin-left:99px;"  value="{!cuentapig}" />
+							   <apex:inputText id="cuentapig" styleclass="slds-input"  style="height:10px; width:170px; margin-left:99px;"  value="{!cuentapig}" onkeypress="return isNumberKey(event)"/>
                                <apex:commandButton style="margin-left: 18px;" id="BuscarCuenta" action="{!Busca1}" value="Buscar por Cuenta"  styleClass="Aceptar" />
                                <br/> 
                                <br/>
@@ -302,7 +309,7 @@
                             	<apex:column style="text-align: center;" headerValue="Monto Pignorado" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.m_pignorado}" />
                          		<div>   
-                        		<apex:input type="text" id="m_pignorado" value="{!item.m_pignorado}"  styleclass="slds-input" style="height:20px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		<apex:input type="text" id="m_pignorado" value="{!item.m_pignorado}"  styleclass="slds-input" style="height:20px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;" onkeypress="return isNumberKey(event)"/>
                         		</div>   
                    				</apex:column>
                             	<apex:column style="text-align: center;" headerValue="Fecha Pignoración" >
@@ -323,7 +330,7 @@
  								<apex:column style="text-align: center;" headerValue="Número de Prestamo" >
                                     <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.num_prest1}" />
                          		<div>   
-                        		<apex:input type="text" id="num_prest1" value="{!item.num_prest1}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;"/>
+                        		<apex:input type="text" id="num_prest1" value="{!item.num_prest1}"  styleclass="slds-input" style="height:30px; width:100px; margin-left:10px; margin-right:10px; margin-bottom:10px;" onkeypress="return isNumberKey(event)"/>
                         		</div>
                                     
                                </apex:column> 
@@ -354,7 +361,7 @@
                                                         </apex:selectList>
                    				</apex:column>                               
                     			<apex:column style="text-align: center;" headerValue="Subir Archivo" >
-                        		<apex:inputFile id="referencia" value="{!item.referenciaImg}" style="margin-left:10px; margin-right:10px;" > 
+                        		<apex:inputFile id="referencia" value="{!item.referenciaImg}" fileName="{!filename}" style="margin-left:10px; margin-right:10px;" > 
                                     </apex:inputFile>
                    				</apex:column>
                          </apex:dataTable>       
@@ -399,7 +406,7 @@
                         		<apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.sec_pig}" />
                    				</apex:column>     
 								<apex:column style="text-align: center;" headerValue="Estatus" >
-                                 <apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.est_pig}" />
+                                  <apex:outputText value="{!IF(item.est_pig = 'I', 'DESPIGNORADO', 'PIGNORADO')}"/> 
                          		 </apex:column>                               
                     			
                          </apex:dataTable>       
@@ -408,7 +415,7 @@
 				
 
 				</div>
-			      <footer class="slds-modal__footer" style= "width:1200px; margin-left: 1px;">
+			      <footer class="slds-modal__footer" style="width:1350px; margin-left:-120px;">
 			      	<apex:commandButton style="margin-right: 2px; "  value="Cancelar"  styleClass="Cancelar" action="{!Cancelar}" />&nbsp;
 			       <apex:commandButton style="margin-left: 5px;" id="Enviar" action="{!Enviar}" value="Enviar"  styleClass="Aceptar" />	
                   </footer>

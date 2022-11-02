@@ -1,0 +1,217 @@
+<apex:page renderAs="PDF" sidebar="false" cache="false" applyBodyTag="false" standardController="Proyeccion__c" extensions="ControladorProyeccionConsolidado"  >
+    <apex:includeScript value="{!URLFOR($Resource.jQuery)}"/>
+    <head>
+        <style type="text/css" media="print" >
+            @page {
+                @bottom-left {
+            		content: element(footerLeft);
+            	}
+            	@bottom-right {
+            		content: element(footerRight);
+            	}
+            
+            }
+            div.header {
+            	padding: 10px;
+            	position: running(header);
+            }
+            div.footerLeft {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;
+                font-size:11px;
+            	position: running(footerLeft);
+            }
+            div.footerRight {
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;
+                font-size:11px;
+            	text-align:right;
+            	position: running(footerRight);
+            }
+            .pagenumber:before {
+            	content: counter(page);
+            }
+            .pagecount:before {
+            	content: counter(pages);
+            }
+            
+        </style>
+    </head>
+    <apex:form >
+        <div class="footerLeft" >{!piePaginaIzquierdo}</div>
+        <div class="footerRight">
+            <span class="pagenumber"/> / <span class="pagecount"/>
+        </div>
+        <body style="font-family: Open Sans Light,Helvetica,Arial,sans-serif;">
+            <!--==>{!grafico.datosGrafico1}
+            <br/>==>{!grafico.maximoGrafico1}
+            <br/>==>{!grafico.anios}-->
+            <table  width="100%">
+                <tbody>
+                    <tr>
+                        <td valign="top" style="width:50%;vertical-align: baseline;">
+                            <p><apex:image value="{!$Resource.LogoFPC}" style="height:60px; width:250px" /></p>
+                        </td>
+                        <td valign="top" style="width:50%;font-size:11px;">
+                            <div style="font-size:13px;text-align:center;background-color: #005aaa; color:#ffffff;">
+                               {!Proyeccion__c.NombreCLiente__c}
+                            </div>
+                            <table width="100%" style="font-size:11px;border: 1px solid #095aab;">
+                                <tbody> 
+                                    <tr >
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;border-right:1px solid #b6b8ba;" >Aporte Inicial </td> 
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;" ><apex:outputField value="{!Proyeccion__c.AporteInicial__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;border-right:1px solid #b6b8ba;">Aporte Mensual </td> 
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;"><apex:outputField value="{!Proyeccion__c.AporteMensual__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;border-right:1px solid #b6b8ba;">Rendimiento </td> 
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;"><apex:outputField value="{!Proyeccion__c.Rendimiento__c}" /> </td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;border-right:1px solid #b6b8ba;">Comisión Aporte </td> 
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;">
+                                            <apex:outputField rendered="{!Proyeccion__c.EsComisionPorAporte__c}" value="{!Proyeccion__c.ComisionAporte__c}" />
+                                            <apex:outputText rendered="{!!Proyeccion__c.EsComisionPorAporte__c}" value="0.00 %" /> 
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;border-right:1px solid #b6b8ba;">Comisión Saldo </td> 
+                                        <td style="width:50%;border-bottom:1px solid #b6b8ba;">
+                                            <apex:outputField rendered="{!!Proyeccion__c.EsComisionPorAporte__c}" value="{!Proyeccion__c.ComisionSaldo__c}" />
+                                            <apex:outputText rendered="{!Proyeccion__c.EsComisionPorAporte__c}" value="0.00 %" />
+                                        </td> 
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td style="width:50%;border-right:1px solid #b6b8ba;">Años </td> 
+                                        <td ><apex:outputField value="{!Proyeccion__c.Anios__c}" /> </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <!--div style="border: 1px solid #095aab;"-->
+                
+            
+            <table width="100%">
+                <tr>
+                	<td style="width:65%; background-color:#0fa24a;color:#ffffff; font-size:13px;text-align:center;">Proyección de Saldos</td>
+                    <td style="width:35%; background-color:#b6b8ba" >
+                        <table width="100%">
+                            <tr>
+                            	<td style="width:14%;">
+                                    <div style="width:15px;margin-left: 10px; height: 15px;background-color: #095aab;" />
+                                </td>
+                                <td style="width:25%;font-size:13px;">
+                                    Aportes
+                                </td>
+                                <td style="width:14%;">
+                                    <div style="width: 15px;margin-left: 10px; height: 15px;background-color: #cbc82d;" />
+                                </td>
+                                <td style="width:57%;font-size:13px;">
+                                    Interés
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                <tr>
+                    <td style="width:10%;text-align: center;font-size:13px;align-items: center;font-size:11px;">
+                        <apex:image url="https://chart.apis.google.com/chart?cht=bvs&chs={!medidaWith}x330&chd={!grafico.datosGrafico1}&chxr=1,0,{!grafico.maximoGrafico1}&chds=0,{!grafico.maximoGrafico1}&chco=095aab,cbc82d&chbh=45,20&chxt=x,y&chxl=0:{!grafico.anios}&chg=0,10,5" />
+                        <br/>Años
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table width="100%">
+                <tr>
+                    <td style="width:65%; background-color:#0fa24a;color:#ffffff; font-size:13px;text-align:center;"> Relación entre Intereses y <br/>Comisión por Administración</td>
+                    <td style="width:35%; background-color:#b6b8ba" >
+                        <table width="100%">
+                            <tr>
+                            	<td style="width:14%;">
+                                    <div style="width:15px;margin-left: 10px; height: 15px;background-color: #095aab;" />
+                                </td>
+                                <td style="width:25%;font-size:13px;">
+                                    Comisiones
+                                </td>
+                                <td style="width:14%;">
+                                    <div style="width: 15px;margin-left: 10px; height: 15px;background-color: #cbc82d;" />
+                                </td>
+                                <td style="width:57%;font-size:13px;">
+                                    Interés
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+             <table width="100%">
+                <tr>
+                    <td style="width:100%;text-align: center;font-size:13px;align-items: center;" >
+                        <apex:image url="https://chart.apis.google.com/chart?cht=lc&chs=550x330&chd=t:{!grafico.datosGrafico2}&chxr=1,0,{!grafico.maximoGrafico2}&chds=0,{!grafico.maximoGrafico2}&chco=095aab,cbc82d&chxt=x,y&chxl=0:{!grafico.meses}&chls=2,2,0,3,2,0&chg=0,6.67,5,5{!grafico.datosPunto}"/>
+                        <br/>Meses
+                    </td>
+                </tr>
+            </table>
+            <div style="page-break-after:always;" />
+            <table align="center" border="1" cellpadding="0" cellspacing="0" class="table" width="100%" style="border:1px solid #bdd6ee;" >
+                <tr  style="text-align:center;font-size:12px; color:#ffffff;" >
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;">
+                        Años
+                    </td>
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;">
+                        Aportes
+                    </td >
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;">
+                        Comisión
+                    </td>
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;" >
+                        Interés
+                    </td>
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;">
+                        Saldo
+                    </td>
+                    <td bgcolor="#0fa24a" style="border:0.2px solid black;" >
+                        Capatalización
+                    </td>
+                </tr>
+                <apex:repeat value="{!listProyeccionCons}" var="item">
+                    <tr>
+                        <td  style="font-size:11px;text-align:center;border:0.2px solid black;">                       
+                            {!item.anio}
+                        </td>
+                        <td style="font-size:11px;text-align:center;border:0.2px solid black;">
+                            {!item.Maporte}
+                        </td>
+                        <td style="font-size:11px;text-align:center;border:0.2px solid black;">
+                            {!item.Mcomisison}
+                        </td>
+                        <td style="font-size:11px;text-align:center;border:0.2px solid black;" >
+                            {!item.Minteres}
+                        </td>
+                        <td  style="font-size:11px;text-align:center;border:0.2px solid black;" >
+                            {!item.Msaldo}
+                        </td>
+                        <td  style="font-size:11px;text-align:center;border:0.2px solid black;">
+                            {!item.Mcapitaizacion}
+                        </td>
+                    </tr>  
+                </apex:repeat>
+            </table>
+            <p style="color:#3e577f; font-size:11px;">
+                ***Los cálculos realizados son estimaciones y cualquier variación en los supuestos puede modificar el
+                resultado. La tasa de rentabilidad es fluctuante y varía de acuerdo a las condiciones del mercado, por lo que
+                la rentabilidad estimada puede variar en el futuro. Estas cifras no comprometen de modo alguno a Ficohsa
+                Pensiones y Cesantías a garantizar un monto de pensión determinado.
+            </p>
+        </body>
+    </apex:form>
+    <!--/html-->
+</apex:page>

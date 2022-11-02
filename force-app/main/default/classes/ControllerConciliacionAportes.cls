@@ -17,7 +17,7 @@ public class ControllerConciliacionAportes {
     public boolean CompraDolarNO {get;set;}
     public boolean DolarSI {get;set;}
     public boolean DolarNO {get;set;}
-    
+    public Boolean popDolar {get;set;}
     
     //public date fecha {get;set;} 
     
@@ -44,10 +44,16 @@ public class ControllerConciliacionAportes {
         //ListAportes = new List<ClassConciliacionAportes>();
         //AportesUnicos = new ClassConciliacionAportes('','',0,null,'','','','',null,null,'');
         Usuario = ApexPages.currentPage().getParameters().get('hytrd');  
-        //Usuario = 'HN19577';
+        //Usuario = 'HN007148';
         prueba();
         FormPagoList();
+        cancelar();
+        AplicaComision();
         
+    }
+    
+    public void popDolar(){
+        popDolar = !popDolar;
     }
     
     public void AplicaComision(){
@@ -128,11 +134,12 @@ public class ControllerConciliacionAportes {
         p_periodo_aporte = null;
         BloqueaSI = false;
         BloqueaNO = false;
-        ComisionSI = false;
+        ComisionSI = true;
         ComisionNO = false;
         Cod_referencia = null;
         NADADOLAR();
         TipoMonedaN.Tipo_MonedaN__c = '';
+        popDolar = false;
         
     }    
     
@@ -176,7 +183,7 @@ classAportes_Conciliacion fcsd = ControllerAPICONCILIACION.TraerAporte(Cuenta ,T
         TiSaldo = TipoSaldoN.Tipo_SaldoN__c;
         system.debug('tipo de saldo'+ TiSaldo);
         ControllerAPICONCILIACION.ClassListaAporte kl = new ControllerAPICONCILIACION.ClassListaAporte();
-        kl = ControllerAPICONCILIACION.TraerAporte(Cuenta ,TiSaldo);
+        kl = ControllerAPICONCILIACION.TraerAporte(Cuenta.trim() ,TiSaldo);
         system.debug('respues perido'+' '+kl.Aporte);
         if (kl.p_periodo_aporte != 'null')
         {
@@ -212,6 +219,8 @@ ControllerAPICONCILIACION.GuardarImagen(apo);
              || (compraDolarSI == false && compraDolarNO == false) || comprobante == null) && !test.isRunningTest())
         {    
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'No Pueden Quedar Campos Vacios.'));
+        }else if(compraDolarSI && !popDolar){
+            popDOlar();
         }
         else 
         {     
@@ -270,6 +279,8 @@ ControllerAPICONCILIACION.GuardarImagen(apo);
                 pata.Etiqueta_Forma_Pago__c = 'Cuenta Ahorro';
             }else if(FoPago == 'TA'){
                 pata.Etiqueta_Forma_Pago__c = 'Tarjeta';
+            } else if(FoPago == 'IN'){
+                pata.Etiqueta_Forma_Pago__c = 'Traslado Interno';
             }   
             
             if (Comprobante != null){ 
@@ -278,7 +289,7 @@ ControllerAPICONCILIACION.GuardarImagen(apo);
             pata.Aplica_Comision_SI__c = ComisionSI ? 'S':'N';
             pata.Compra_Dolar__c = CompraDolarSI ? 'S':'N';
             
-            
+            System.debug('Usuario: '+Usuario);
             string nu;
             if(!test.isRunningTest()){nu= [select Name from Usuarios_de_Pantallas__c where Usuario__c =: Usuario].Name;}
             else{nu= [select Name from Usuarios_de_Pantallas__c limit 1].Name;}

@@ -7,9 +7,14 @@ public class ControllerPantallaConsultaRezagos {
     public string p_Mensaje_error {get;set;}
     public string Usuario {get;set;}
     public boolean MensajeErr {get;set;}
+    public String codReferencia {get;set;}
     
     public List<ClientesRez> ListClientesRez {get;set;}
     public ClientesRez AplicaRez{get;set;}
+    
+    public Boolean popAplicar {get;set;}
+    public Boolean popEliminar {get;set;}
+    public String codigo {get;set;}
     
     public ControllerPantallaConsultaRezagos(){
         try{
@@ -17,7 +22,8 @@ public class ControllerPantallaConsultaRezagos {
             List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
             System.debug('User: '+usr[0].Name);///////Marcooo
             Usuario = usr[0].Name;
-            
+            popAplicar = false;
+            popEliminar = false;
             llenartabla();
         }Catch(Exception ex){
             system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
@@ -26,9 +32,32 @@ public class ControllerPantallaConsultaRezagos {
         }
     }
     
-    public void Cerrar() {
+    public void cerrar() {
         p_Mensaje_error = '';
         MensajeErr = false;
+        popAplicar = false;
+        popEliminar = false;
+        codReferencia = null;
+        codigo = null;
+    }
+    
+    public void denegarRezago(){
+        if(!popEliminar){
+            popEliminar = true; 
+            return;
+        }
+        List<ControllerApiRezagos.ResquestRezago> listRezago = new List<ControllerApiRezagos.ResquestRezago>();
+        ControllerApiRezagos.ResquestRezago rezago = new ControllerApiRezagos.ResquestRezago();
+        rezago.codigoRezago = codReferencia;
+        listRezago.add(rezago);
+        ControllerApiRezagos.ResponseRezago respuesta = ControllerApiRezagos.eliminarRezago(listRezago);
+        if(respuesta.ok == true){
+            llenartabla();
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Rezago eliminado con exito.'));
+        }else{
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ha ocurrido un error al intentar eliminar el reazogo ==>'+respuesta.descripcion));
+        }
+        cerrar();
     }
     
     public void llenartabla(){
@@ -44,8 +73,12 @@ public class ControllerPantallaConsultaRezagos {
             List<String> resultado3;
             
             if(resultado.clientes != null && resultado.clientes.size() >= 1){
+                System.debug('resultado.clientes: '+resultado.clientes.size());
                 for(Integer count=0;count<resultado.clientes.size();count++ ){
+                    System.debug('resultado.clientes: '+resultado.clientes[count].rezagoSINO);
+                    //resultado.clientes[count].rezagoSINO = count < 10 ? 'No' : 'Si';
                     if(resultado.clientes[count].rezagoSINO!='SI' && resultado.clientes[count].rezagoSINO!='Si'){
+                    //if(resultado.clientes[count].rezagoSINO =='SI'){
                         clientes Rezago = new clientes('',null,'','',null,'','','','','','','','','','',null,'',null,'');
                         
                         Rezago.idRezago = resultado.clientes[count].idRezago;// Agrego el id Rezago
@@ -152,6 +185,7 @@ public class ControllerPantallaConsultaRezagos {
         public String Cod_banco {get;set;}
         public String Agn_banco {get;set;}
         public String Asesor {get;set;}
+        public String idRezago {get;set;}
         
         public ClaseRezagos(String Monto, String Fondo,String Cod_referencia, String FechaDeposito, String Moneda,
                             String Descripcion, String DescripcionNota, String Usu_ing_Rezago, String Cod_banco, String Agn_banco,
@@ -229,7 +263,7 @@ public class ControllerPantallaConsultaRezagos {
                     asesorstr2='TODOS';
                 }
                 dato.Asesor=asesorstr2;//Traer Asesor
-                
+                dato.idRezago = ListRezagos[count].idRezago;
                 MuestraRezagos.add(dato);
             }
         }Catch(Exception ex){
@@ -242,66 +276,75 @@ public class ControllerPantallaConsultaRezagos {
     
     public void Aplicar(){
         Boolean correcto=true;
+        System.debug('codReferencia: '+codReferencia);
+        if(!popAplicar && codReferencia != null){
+            popAplicar = true;
+            return;
+        }
         for(Integer count=0;count<ListRezagos.size();count++){
-            classAportes_Conciliacion apor =  new classAportes_Conciliacion();
-            apor.Cod_referencia = ListRezagos[count].codReferencia;
-            try{
-                List<Cuenta_Rezago__mdt> codigo = new List<Cuenta_Rezago__mdt>();
-                codigo = [select cuenta__c from Cuenta_Rezago__mdt where fondo__c =: ListRezagos[count].fondo limit 1];
-                if(codigo.size()>0){
-                    apor.Cuenta = codigo[0].cuenta__c ;//Insertar el codigo de cuenta de FPC Rezagos
-                }else{
-                    correcto=false;
-                    p_Mensaje_error = 'ERROR: Verifique que el fondo '+ListRezagos[count].fondo+' este asociado a una Cuenta. <br/>Revisar Metadatos (Cuenta Rezago) en Salesforce.';
+            if(ListRezagos[count].codReferencia == codReferencia || codReferencia == null){
+                system.debug('Contador: '+count);
+                classAportes_Conciliacion apor =  new classAportes_Conciliacion();
+                apor.Cod_referencia = ListRezagos[count].codReferencia;
+                try{
+                    List<Cuenta_Rezago__mdt> codigo = new List<Cuenta_Rezago__mdt>();
+                    codigo = [select cuenta__c from Cuenta_Rezago__mdt where fondo__c =: ListRezagos[count].fondo limit 1];
+                    if(codigo.size()>0){
+                        apor.Cuenta = codigo[0].cuenta__c ;//Insertar el codigo de cuenta de FPC Rezagos
+                    }else{
+                        correcto=false;
+                        p_Mensaje_error = 'ERROR: Verifique que el fondo '+ListRezagos[count].fondo+' este asociado a una Cuenta. <br/>Revisar Metadatos (Cuenta Rezago) en Salesforce.';
+                        MensajeErr = true;
+                        system.debug('Break');
+                        return;
+                    }
+                }catch(Exception ex){
+                    system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
+                    p_Mensaje_error = 'Error al Aplicar los Rezagos en el Metodo: Aplicar. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
                     MensajeErr = true;
-                    system.debug('Break');
+                }
+                
+                apor.TipoSaldo = '13';
+                Datetime dT =  ListRezagos[count].fechaDeposito;
+                apor.FechaDepositoAproba = ListRezagos[count].fechaDeposito != null ? Date.newinstance(dT.year(), dT.month(), dT.day()) : null;
+                //apor.FechaDepositoAproba = Date.today()
+                Date d= Date.today();
+                Integer da = Date.today().Day();
+                String dayf = String.valueOf(da);
+                Integer mo = Date.today().Month();
+                String monthf = String.valueOf(mo);
+                Integer ye = Date.today().Year();
+                String yearf = String.valueOf(ye);
+                
+                apor.p_periodo_aporte = yearf+monthf+dayf; 
+                System.debug('Periodo aporte: '+apor.p_periodo_aporte);
+                
+                if(ListRezagos[count].codigoMoneda=='HNL'){
+                    apor.Moneda = '1';
+                }else{
+                    apor.Moneda = '2';   
+                }
+                apor.Monto = ListRezagos[count].montoRezago;  
+                apor.ComisionSI = 'N';
+                apor.rezago = 'S';
+                system.debug('ResultadoEnviado: '+apor);
+                
+                classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);
+                
+                if(resultado.p_mensaje_error!='OK' && !Test.isRunningTest() ){
+                    correcto = false;
+                    p_Mensaje_error = 'Error al realizar el Aporte a la cuenta '+ apor.Cuenta +'. <br/>'+ resultado.p_mensaje_error;
+                    MensajeErr = true;
                     return;
                 }
-            }catch(Exception ex){
-                system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
-                p_Mensaje_error = 'Error al Aplicar los Rezagos en el Metodo: Aplicar. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
-                MensajeErr = true;
-            }
-            
-            apor.TipoSaldo = '13';
-            Datetime dT = ListRezagos[count].fechaDeposito;
-            apor.FechaDepositoAproba = Date.newinstance(dT.year(), dT.month(), dT.day());
-            //apor.FechaDepositoAproba = Date.today()
-            Date d= Date.today();
-            Integer da = Date.today().Day();
-            String dayf = String.valueOf(da);
-            Integer mo = Date.today().Month();
-            String monthf = String.valueOf(mo);
-            Integer ye = Date.today().Year();
-            String yearf = String.valueOf(ye);
-            
-            apor.p_periodo_aporte = yearf+monthf+dayf; 
-            System.debug('Periodo aporte: '+apor.p_periodo_aporte);
-            
-            if(ListRezagos[count].codigoMoneda=='HNL'){
-                apor.Moneda = '1';
-            }else{
-             	apor.Moneda = '2';   
-            }
-            apor.Monto = ListRezagos[count].montoRezago;  
-            apor.ComisionSI = 'N';
-            apor.rezago = 'S';
-            system.debug('ResultadoEnviado: '+apor);
-            
-            classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);
-            
-            if(resultado.p_mensaje_error!='OK' && !Test.isRunningTest() ){
-                correcto = false;
-                p_Mensaje_error = 'Error al realizar el Aporte a la cuenta '+ apor.Cuenta +'. <br/>'+ resultado.p_mensaje_error;
-                MensajeErr = true;
-                return;
             }
         }
         if(correcto==true){
-        	AplicarRezagoSI();
+            AplicarRezagoSI();
             llenartabla();
             system.debug('Se Aplico el Rezago');
         }
+        cerrar();
     }
     
     public void AplicarRezagoSI(){
@@ -314,47 +357,49 @@ public class ControllerPantallaConsultaRezagos {
             ListClientesRez = new List<ClientesRez>();
             if(ListRezagos.size()>0){
                 for(Integer count=0;count<ListRezagos.size();count++){
-                    AplicaRez = new ClientesRez('','','','','','','','','','','','','');
-                    AplicaRez.idRezago = ListRezagos[count].idRezago;
-                    AplicaRez.montoRezago = ListRezagos[count].montoRezago;
-                    AplicaRez.fondo = ListRezagos[count].fondo;
-                    AplicaRez.codReferencia = ListRezagos[count].codReferencia;
-                    
-                    List<Cuenta_Rezago__mdt> codigo = new List<Cuenta_Rezago__mdt>();
-                    codigo = [select cuenta__c from Cuenta_Rezago__mdt where fondo__c =: AplicaRez.fondo limit 1];
-                    if(codigo.size()>0){
-                        AplicaRez.codCuenta = codigo[0].cuenta__c ;//Insertar el codigo de cuenta de FPC Rezagos
+                    if(ListRezagos[count].codReferencia == codReferencia || codReferencia == null){
+                        AplicaRez = new ClientesRez('','','','','','','','','','','','','');
+                        AplicaRez.idRezago = ListRezagos[count].idRezago;
+                        AplicaRez.montoRezago = ListRezagos[count].montoRezago;
+                        AplicaRez.fondo = ListRezagos[count].fondo;
+                        AplicaRez.codReferencia = ListRezagos[count].codReferencia;
+                        
+                        List<Cuenta_Rezago__mdt> codigo = new List<Cuenta_Rezago__mdt>();
+                        codigo = [select cuenta__c from Cuenta_Rezago__mdt where fondo__c =: AplicaRez.fondo limit 1];
+                        if(codigo.size()>0){
+                            AplicaRez.codCuenta = codigo[0].cuenta__c ;//Insertar el codigo de cuenta de FPC Rezagos
+                        }
+                        
+                        AplicaRez.codPlanilla = null;
+                        System.debug('Fondo: '+AplicaRez.fondo);
+                        for(Integer count1=0;count1<ValorCuotaStr.size();count1++){
+                            String rez = ValorCuotaStr[count1];
+                            
+                            ValorCuotaDia = rez.substringBeforeLast('}');
+                            ValorCuotaDia = ValorCuotaDia.substringAfterLast(':');
+                            
+                            ValorCuotaFondo = rez.substringBeforeLast('",');
+                            ValorCuotaFondo = ValorCuotaFondo.substringAfterLast('"');
+                            
+                            if(AplicaRez.fondo == ValorCuotaFondo){AplicaRez.valorCuotaEntrada=ValorCuotaDia;}                   
+                        }
+                        system.debug('Aplica a la cuenta: '+AplicaRez.codCuenta);
+                        system.debug('Aplica el Valor Cuota: '+AplicaRez.valorCuotaEntrada);
+                        
+                        AplicaRez.valorCuotaSalida = '';
+                        AplicaRez.estado = 'Pendiente';
+                        AplicaRez.valAporteCalculado = '';
+                        AplicaRez.montoParcialAplicado = '';
+                        AplicaRez.montoPendienteAplicar = '';
+                        List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
+                        System.debug('User: '+usr[0].Name);
+                        usuario = usr[0].Name;
+                        AplicaRez.modificadoPor = usuario;
+                        
+                        ListClientesRez.add(AplicaRez);
+                        ValorCuotaFondo='';
+                        ValorCuotaDia='';
                     }
-                    
-                    AplicaRez.codPlanilla = null;
-                    System.debug('Fondo: '+AplicaRez.fondo);
-                    for(Integer count1=0;count1<ValorCuotaStr.size();count1++){
-                        String rez = ValorCuotaStr[count1];
-                        
-                        ValorCuotaDia = rez.substringBeforeLast('}');
-                        ValorCuotaDia = ValorCuotaDia.substringAfterLast(':');
-                        
-                        ValorCuotaFondo = rez.substringBeforeLast('",');
-                        ValorCuotaFondo = ValorCuotaFondo.substringAfterLast('"');
-                        
-                        if(AplicaRez.fondo == ValorCuotaFondo){AplicaRez.valorCuotaEntrada=ValorCuotaDia;}                   
-                    }
-                    system.debug('Aplica a la cuenta: '+AplicaRez.codCuenta);
-                    system.debug('Aplica el Valor Cuota: '+AplicaRez.valorCuotaEntrada);
-                    
-                    AplicaRez.valorCuotaSalida = '';
-                    AplicaRez.estado = 'Pendiente';
-                    AplicaRez.valAporteCalculado = '';
-                    AplicaRez.montoParcialAplicado = '';
-                    AplicaRez.montoPendienteAplicar = '';
-                    List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
-                    System.debug('User: '+usr[0].Name);
-                    usuario = usr[0].Name;
-                    AplicaRez.modificadoPor = usuario;
-                    
-                    ListClientesRez.add(AplicaRez);
-                    ValorCuotaFondo='';
-                    ValorCuotaDia='';
                 }
                 
                 rezagoEnvio.clientes = ListClientesRez;
@@ -363,7 +408,8 @@ public class ControllerPantallaConsultaRezagos {
                 String Resultado = ControllerApiRezagos.AplicaRezagosDia(rezagoEnvio);
                 
                 if(Resultado == '"OK"'){
-                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Rezagos Aplicados Correctamente. '));
+                    String msj =  codReferencia == null ? 'Rezagos Aplicados Correctamente.' : 'Rezago Aplicado Correctamente.' ;
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, msj));
                 }else{
                     p_Mensaje_error = 'Error al Actualizar tabla Rezagos en Sysde. <br/>Metodo: AplicarRezagoSI';
                     MensajeErr = true;

@@ -19,6 +19,17 @@ public class beneficiario {
     public date fechaBeneficiario{get;set;}
     public decimal idGuardar{get;set;} 
     
+    
+    //Variables neuvas
+    public string estado { get; set; }
+    public string incluidoPor { get; set; }
+    public DateTime fechaInclusion { get; set; }
+    public string autorizadoPor { get; set; }
+    public string modificadoPor { get; set; }
+    public DateTime fechaModificacion { get; set; }
+    public String accion { get; set; }
+    public String cuenta { get; set; }
+    
     public beneficiario( decimal idGuardar, string tipoId, string numeroId, string PEPbeneficiario, string FATCAbeneficiario, 
                          string FATCANCbeneficiario, string tipoBeneficiario, string genero, string primerNombre, 
                          string segundoNombre, string primerApellido, string segundoApellido, string Parentesco,

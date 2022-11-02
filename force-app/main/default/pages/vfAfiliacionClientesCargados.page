@@ -120,6 +120,7 @@
                     </apex:pageBlockSection>
                     
                    <apex:pageBlockSection title="Nueva Afiliación" id="pageBlockSectionMsj" columns="2">
+                       
                        <apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" >
                            <apex:actionSupport action="{!buscarCuenta}" reRender="pageBlockSectionMsj,outputPanel1" event="onchange" status="status" />
                        </apex:inputField>
@@ -148,8 +149,8 @@
                        <apex:inputField value="{!Afiliacion.Addendum__c}" />
                        <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
                        
-                         <apex:inputText label="Buscar SubProducto" value="{!buscarSubProducto}" >
-                            <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
+                       <apex:inputText label="Buscar SubProducto" value="{!buscarSubProducto}" >
+                           <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
                        </apex:inputText>
                        <apex:outputText />
                        
@@ -162,12 +163,8 @@
                        </apex:inputText>
                        <apex:outputField value="{!Afiliacion.Empresa__c}" />
                        
-                       <!--apex:selectList size="1" value="{!Afiliacion.Empresa__c}" title="Empresa">
-                           <apex:selectOptions value="{!listEmpresas}" />
-                           <apex:actionSupport action="{!selectCuenta}" event="onchange" reRender="theForm" status="status" />
-                       </apex:selectList-->
                        <apex:inputField value="{!Afiliacion.Reporte_Calidad__c}" />
-                       
+                       <apex:outputText ></apex:outputText>
                        
                        <apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
                        <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/>
@@ -178,6 +175,7 @@
                        <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" />
                        <apex:inputField value="{!Afiliacion.Aplica_CS__c }" />
                        
+                       <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                        <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        
                       

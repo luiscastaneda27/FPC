@@ -7,5 +7,10 @@
     <columns>Nombre_Usuario__c</columns>
     <columns>Identidad__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>equals</operation>
+        <value>soraya</value>
+    </filters>
     <label>Todos</label>
 </ListView>

@@ -170,6 +170,11 @@
                 <default>false</default>
                 <label>Segmentos Winners COVID</label>
             </value>
+            <value>
+                <fullName>Base | Servicios de Adquirencia</fullName>
+                <default>false</default>
+                <label>Base | Servicios de Adquirencia</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

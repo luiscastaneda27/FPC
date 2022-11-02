@@ -1,10 +1,12 @@
 public class EnvioCorreosEDC {
     
      public static boolean enviarCorreos(){
-        try{
-            system.debug('Entró en método enviarCorreos');
-            FechaDC_Sysde__c fdcs = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
-            Date fechaHoy = Date.Today();
+         FPC_Log__c log = new FPC_Log__c();
+         log.FPC_Servicio__c = 'EDC Masivo';
+         try{
+             system.debug('Entró en método enviarCorreos');
+             FechaDC_Sysde__c fdcs = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
+             Date fechaHoy = Date.Today();
             fechaHoy = fdcs.Fecha_cierre__c;
             Boolean esTrimestral = (fechaHoy.month() == 1 || fechaHoy.month() == 4 || fechaHoy.month() == 7 || fechaHoy.month() == 10);
             String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = ';                
@@ -36,13 +38,14 @@ public class EnvioCorreosEDC {
             }
             clientes = [Select Name, PersonEmail, Identificacion__c, PersonContactId, FrecuenciaEnvioEDC__c  
                         From Account Where id in :codigosclientes];
-            
+            System.debug('Cliente: '+JSON.serialize(clientes));
             For(Account item : clientes){
                 Date fechaDesde = item.FrecuenciaEnvioEDC__c  == 'Mensual' ? desdeM : desdeT;
                 classClientesEC nueva = new classClientesEC();
                 nueva.idCliente = item.Identificacion__c;
                 nueva.desde = fechaDesde;
                 nueva.hasta = fechaHoy;
+                System.debug('item.FrecuenciaEnvioEDC__c: '+item.FrecuenciaEnvioEDC__c);
                 if(item.FrecuenciaEnvioEDC__c  == 'Mensual'){
                     claseEnvioMens.add(nueva);
                 }else{
@@ -56,23 +59,33 @@ public class EnvioCorreosEDC {
                 mapFHasta.put(item.Identificacion__c, string.valueOf(nueva.hasta));
                 mapEsTrimestral.put(item.Identificacion__c, item.FrecuenciaEnvioEDC__c  != 'Mensual');
             }                   
-            
+            System.debug(claseEnvioTrim.size() +' -- '+claseEnvioMens.size() );
             
             Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];       
             map<string, integer> mapClientestrimestral = new map<string, integer>();
             
-            queryCorreo += '\'EDC_Portada\'';
-            if(claseEnvioTrim.size() > 0){
-                for(classECPortada item: !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreoMasivo(claseEnvioTrim) : getListTest()){
-                    respuestaDetallado.add(item);
-                }
-            }
-            if(claseEnvioMens.size() > 0){
-                for(classECPortada item: !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreo(claseEnvioMens) : getListTest()){
-                    respuestaDetallado.add(item);
-                }
-            }
+             queryCorreo += '\'EDC_Portada\'';
+             Integer enviado = 0;
+             EstadosDeCuenta.PortadaEDC portada = new EstadosDeCuenta.PortadaEDC();
+             if(claseEnvioTrim.size() > 0){
+                 log.FPC_Request__c = Json.serialize(claseEnvioTrim);    
+                 enviado = claseEnvioTrim.size();
+                 portada = !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreoMasivo(claseEnvioTrim) : getListTest();
+                 for(classECPortada item: portada.respuesta){
+                     respuestaDetallado.add(item);
+                 }
+             }
+             if(claseEnvioMens.size() > 0){
+                 log.FPC_Request__c = Json.serialize(claseEnvioMens); 
+                 portada = !test.isRunningTest() ? EstadosDeCuenta.estadoCuentaCorreo(claseEnvioMens) : getListTest();
+                 enviado = claseEnvioMens.size();
+                 for(classECPortada item: portada.respuesta){
+                     respuestaDetallado.add(item);
+                 }
+             }
+             log.FPC_Response__c = portada.respuestaSysde;
+             log.FPC_Resultado__c = 'Respuesta de Sysde ' + respuestaDetallado.size() +' de '+enviado;
             //respuestaDetallado = !test.isRunningTest() ? esTrimestral ? EstadosDeCuenta.estadoCuentaCorreoMasivo(claseEnvio) : EstadosDeCuenta.estadoCuentaCorreo(claseEnvio)  :  (list<classECPortada>)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', list<classECPortada>.class);
             for(account item : clientes) {
                 for(integer i=0; i<respuestaDetallado.size(); i++) {
@@ -111,6 +124,7 @@ public class EnvioCorreosEDC {
                 url.hasta=mapFHasta.get(item.identidad);
                 url.esMasivo = mapEsTrimestral.get(item.identidad);// esTrimestral;
                 string contenido =JSON.serialize(url);
+                system.debug('contenido en enviarCorreos ' + contenido);
                 string hy = EncodingUtil.base64Encode(Blob.valueof(contenido));
                 cuerpo = cuerpo.replace('[getFPC]', hy);
                 cuerpo = cuerpo.replace('[getDirigidoA]', item.nombreCliente);
@@ -145,7 +159,7 @@ public class EnvioCorreosEDC {
             if(!test.isRunningTest()){
                 update fcsd;
             }
-            
+            System.debug('todosCorreos: '+JSOn.serialize(todosCorreos));
             update todosCorreos;
             insert listErrores;
             
@@ -155,18 +169,21 @@ public class EnvioCorreosEDC {
             Correo_estado_cuenta__c CorreosEDC = Database.query(query);
             decimal mayorGrupo = CorreosEDC.grupo__C;
             decimal grupo = todosCorreos.size() > 0 ? todosCorreos[0].Grupo__c : 0;
-            
+            log.FPC_Grupo__c = [select Grupo__C from Correo_estado_cuenta__c where cliente__C in :idClientes limit 1].grupo__C;
             if(grupo >= mayorGrupo){
                 FPC_ClaseUtilEDC.notificacionFinEnvioEDC(fcsd.Total_Correos_Enviados__c);
             }
         }Catch(Exception e){
+            log.FPC_Error__c = 'Error al enviar correo de EDC: ' + e.getMessage() + ', Linea del error: ' + e.getLineNumber();
             system.debug('Error al enviar correo de EDC: ' + e.getMessage() + ' Linea: ' + e.getLineNumber() + ' Mensaje ' + e.getMessage());   
         }
+         insert log;
         return true;
     }
     
-    public static List<classECPortada> getListTest(){
-        return (list<classECPortada>)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', list<classECPortada>.class);
+    public static EstadosDeCuenta.PortadaEDC getListTest(){
+        EstadosDeCuenta.PortadaEDC portada = (EstadosDeCuenta.PortadaEDC)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', EstadosDeCuenta.PortadaEDC.class);
+        return portada;
     }
     
     public class VarURL{

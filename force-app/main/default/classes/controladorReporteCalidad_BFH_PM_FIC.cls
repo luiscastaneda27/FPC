@@ -14,6 +14,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
     public Map<string, Oficial_X_Asesor__c> mapAsesoresOficiales{get;set;}
     public Map<string, String> mapAsesoresPremier{get;set;}
     public boolean cambioCampos {get;set;}
+    public string subEstado{get;set;}
     
     public controladorReporteCalidad_BFH_PM_FIC(){
         try{
@@ -47,7 +48,8 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                             Fecha_Inicio_Aporte__c , Forma_Pago__c, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,
-                            Documentacion_Recibida__c,Id,
+                            Documentacion_Recibida__c,Id,ExpedienteFisicoRecibido__c, Estado__c,
+                            DebidaDiligencia__c,SubEstadoRCSF__c ,
                             NombreEmpleadoAGN__c,CodigoEmpleadoAGN__c, FechaIngreso__c, NombreAgencia__c,CodigoAGN__c,
                             CurrencyIsoCode,Nacionalidad__c, sexo__C,fecha_nacimiento__C,Fecha_ingreso_empresa__C,
                             profesion__C,estado_civil__C, lugar_nacimiento__C,nombre_conyuge__C,cargo__C,
@@ -56,7 +58,8 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
                             Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C
                             where Codigo_Oficial_SAC__c =:Usuario and Enviar_Sac__C =true and Espediente_Completo__c != 'S'
-                            and Tipo_Afiliacion__C =: tipoPantalla order by LastModifiedDate desc limit 950];
+                            and Tipo_Afiliacion__C =: tipoPantalla and SubEstadoRCSF__c != 'PF'
+                            order by LastModifiedDate desc limit 950];
         if(listAfiliaciones.size() == 0){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'No se han encontrado clientes.'));
         }
@@ -70,6 +73,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                 afiliacion = new Reporte_calidad__C ();
                 producto = new Producto__c();
                 afiliacion = item;
+                subEstado = item.SubEstadoRCSF__c;
                 producto.name = item.Subproducto__r.producto__r.name;
             }
         }
@@ -145,6 +149,8 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                     afiliacion.Subproducto__r = new SubProducto__C(codigo__C = respuesta.codSubProducto );
                     afiliacion.Tipo_Fondo__c = respuesta.tipoFondo == '113' ? 'P' : respuesta.tipoFondo == '106' ? 'D' : 'M'; 
                     afiliacion.Tipo_Afiliacion__c = tipoPantalla;
+                    afiliacion.Estado__c = 'V';
+                    afiliacion.SubEstadoRCSF__c = 'NS';
                     
                     afiliacion.NombreEmpleadoAGN__c = respuesta.EMP_AGN;
                     afiliacion.CodigoEmpleadoAGN__c = respuesta.COD_AGN;
@@ -195,9 +201,15 @@ public class controladorReporteCalidad_BFH_PM_FIC {
     
     public void guardar(){
         try{
-            if(Afiliacion.Espediente_Completo__c == 'N' || afiliacion.Documentacion_Recibida__c == 'N'){
+            if(subEstado == afiliacion.SubEstadoRCSF__c){
+                ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.WARNING, 'Para guardar el registro debe modificar el campo sub Estado RC SF'));
+                return;
+            }
+            if(Afiliacion.Espediente_Completo__c == 'N' || afiliacion.Documentacion_Recibida__c == 'N' || afiliacion.ExpedienteFisicoRecibido__c == 'N'){
                 Afiliacion.Enviar_Sac__c = false;
                 afiliacion.Espediente_Completo__c = null;
+                afiliacion.Estado__c = afiliacion.Fecha_Devolucion__c != null ? 'D' : 'N';
+                afiliacion.Fecha_Devolucion__c = date.today();
                 update afiliacion;
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Datos Guardados Exitosamente.'));
                 reinicar();

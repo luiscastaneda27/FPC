@@ -345,6 +345,14 @@
             <fullName>13900000000</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>140600000000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T10000000000</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Canal_que_Refiere__c</picklist>
@@ -964,6 +972,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Base %7C Servicios de Adquirencia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Call Center</fullName>
             <default>false</default>
         </values>
@@ -1068,6 +1080,10 @@
         </values>
         <values>
             <fullName>BONO MARZO GFF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Base Tarjetas Corporativas</fullName>
             <default>false</default>
         </values>
         <values>

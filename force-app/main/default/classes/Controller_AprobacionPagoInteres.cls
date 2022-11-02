@@ -104,8 +104,8 @@ public class Controller_AprobacionPagoInteres {
     public boolean denegarventanauno {get;set;}
     public boolean popDenegarSalir  {get;set;}
     
-    public blob DesconvertirImagen {get;set;}   
-    public string Ver_Imagen {get;set;}
+    public  blob DesconvertirImagen {get;set;}   
+    public Transient string Ver_Imagen {get;set;}
     public boolean ActivaFechPago {get;set;}
     public date FechInicioPago {get;set;}
     

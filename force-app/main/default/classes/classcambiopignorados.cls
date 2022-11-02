@@ -12,6 +12,6 @@ public decimal m_pignorado { get; set; }
     public string nombrepig { get; set; }
 	public string codcuenta { get; set; }
     public string id_pign { get; set; }
-    public Blob referenciaImg {get;set;}
+    public Transient Blob referenciaImg {get;set;}
     
 }

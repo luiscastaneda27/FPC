@@ -4,7 +4,7 @@
     <description>Este campo almacenera el nombre completo de la forma de pago.</description>
     <externalId>false</externalId>
     <label>Etiqueta Forma Pago</label>
-    <length>15</length>
+    <length>20</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

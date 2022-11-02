@@ -21,6 +21,11 @@
                 <default>false</default>
                 <label>10 años</label>
             </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>No aplica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

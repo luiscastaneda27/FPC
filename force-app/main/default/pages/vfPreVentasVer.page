@@ -168,5 +168,6 @@
     <!-- <apex:relatedList list="EmailStatuses"/> !-->
     <!-- <apex:relatedList list="CampaignMembers"/> !-->
     <apex:relatedList list="Histories"/>
+    <apex:relatedList list="Proyecciones__r"/>
 
   </apex:page>

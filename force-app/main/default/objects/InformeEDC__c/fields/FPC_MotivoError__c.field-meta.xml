@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FPC_MotivoError__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo de Error</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>000</fullName>
+                <default>false</default>
+                <label>Sin categoria</label>
+            </value>
+            <value>
+                <fullName>421</fullName>
+                <default>false</default>
+                <label>Servicio no disponible</label>
+            </value>
+            <value>
+                <fullName>422</fullName>
+                <default>false</default>
+                <label>Limite de buzón</label>
+            </value>
+            <value>
+                <fullName>431</fullName>
+                <default>false</default>
+                <label>Servidor sin espacio</label>
+            </value>
+            <value>
+                <fullName>432</fullName>
+                <default>false</default>
+                <label>Problema temporal</label>
+            </value>
+            <value>
+                <fullName>441</fullName>
+                <default>false</default>
+                <label>Red intermitente</label>
+            </value>
+            <value>
+                <fullName>442</fullName>
+                <default>false</default>
+                <label>Conexión interrumpida</label>
+            </value>
+            <value>
+                <fullName>446</fullName>
+                <default>false</default>
+                <label>Demasiados saltos</label>
+            </value>
+            <value>
+                <fullName>447</fullName>
+                <default>false</default>
+                <label>Tiempo excedido</label>
+            </value>
+            <value>
+                <fullName>449</fullName>
+                <default>false</default>
+                <label>Problema A DNS</label>
+            </value>
+            <value>
+                <fullName>450</fullName>
+                <default>false</default>
+                <label>Comando falló</label>
+            </value>
+            <value>
+                <fullName>451</fullName>
+                <default>false</default>
+                <label>Comando abortado</label>
+            </value>
+            <value>
+                <fullName>452</fullName>
+                <default>false</default>
+                <label>Comando interrumpido</label>
+            </value>
+            <value>
+                <fullName>465</fullName>
+                <default>false</default>
+                <label>Problema de idiomas</label>
+            </value>
+            <value>
+                <fullName>500</fullName>
+                <default>false</default>
+                <label>Comando no reconocido</label>
+            </value>
+            <value>
+                <fullName>501</fullName>
+                <default>false</default>
+                <label>Error de sintaxis</label>
+            </value>
+            <value>
+                <fullName>502</fullName>
+                <default>false</default>
+                <label>Comando no implementado</label>
+            </value>
+            <value>
+                <fullName>503</fullName>
+                <default>false</default>
+                <label>Mala secuencia</label>
+            </value>
+            <value>
+                <fullName>504</fullName>
+                <default>false</default>
+                <label>Comando no implementado.</label>
+            </value>
+            <value>
+                <fullName>510</fullName>
+                <default>false</default>
+                <label>Comprobar destinatarios</label>
+            </value>
+            <value>
+                <fullName>511</fullName>
+                <default>false</default>
+                <label>Problema con destinatarios</label>
+            </value>
+            <value>
+                <fullName>512</fullName>
+                <default>false</default>
+                <label>Host desconocido</label>
+            </value>
+            <value>
+                <fullName>513</fullName>
+                <default>false</default>
+                <label>Direccion vacía</label>
+            </value>
+            <value>
+                <fullName>514</fullName>
+                <default>false</default>
+                <label>Objetos duplicados</label>
+            </value>
+            <value>
+                <fullName>515</fullName>
+                <default>false</default>
+                <label>Buzón valido</label>
+            </value>
+            <value>
+                <fullName>516</fullName>
+                <default>false</default>
+                <label>Cambio de buzón</label>
+            </value>
+            <value>
+                <fullName>517</fullName>
+                <default>false</default>
+                <label>Atributos incorrectos</label>
+            </value>
+            <value>
+                <fullName>521</fullName>
+                <default>false</default>
+                <label>Mensaje demasiado grande</label>
+            </value>
+            <value>
+                <fullName>522</fullName>
+                <default>false</default>
+                <label>Limite de buzón.</label>
+            </value>
+            <value>
+                <fullName>523</fullName>
+                <default>false</default>
+                <label>Tamaño excedido</label>
+            </value>
+            <value>
+                <fullName>524</fullName>
+                <default>false</default>
+                <label>Restricción lista de distribución</label>
+            </value>
+            <value>
+                <fullName>530</fullName>
+                <default>false</default>
+                <label>Problema con MTA</label>
+            </value>
+            <value>
+                <fullName>531</fullName>
+                <default>false</default>
+                <label>Buzón completo</label>
+            </value>
+            <value>
+                <fullName>532</fullName>
+                <default>false</default>
+                <label>No acepta mensajes de red</label>
+            </value>
+            <value>
+                <fullName>533</fullName>
+                <default>false</default>
+                <label>Espacio suficiente</label>
+            </value>
+            <value>
+                <fullName>534</fullName>
+                <default>false</default>
+                <label>Mensaje demasiado grande.</label>
+            </value>
+            <value>
+                <fullName>535</fullName>
+                <default>false</default>
+                <label>IP duplicada</label>
+            </value>
+            <value>
+                <fullName>540</fullName>
+                <default>false</default>
+                <label>Problema DNS</label>
+            </value>
+            <value>
+                <fullName>541</fullName>
+                <default>false</default>
+                <label>Sin respuesta</label>
+            </value>
+            <value>
+                <fullName>542</fullName>
+                <default>false</default>
+                <label>Mala conexión</label>
+            </value>
+            <value>
+                <fullName>543</fullName>
+                <default>false</default>
+                <label>Falla en enrutamiento</label>
+            </value>
+            <value>
+                <fullName>544</fullName>
+                <default>false</default>
+                <label>No se encuentra salto</label>
+            </value>
+            <value>
+                <fullName>546</fullName>
+                <default>false</default>
+                <label>Problema en bucle</label>
+            </value>
+            <value>
+                <fullName>547</fullName>
+                <default>false</default>
+                <label>Tiempo excedido.</label>
+            </value>
+            <value>
+                <fullName>548</fullName>
+                <default>false</default>
+                <label>Directiva incorrecta</label>
+            </value>
+            <value>
+                <fullName>550</fullName>
+                <default>false</default>
+                <label>Buzón no disponible</label>
+            </value>
+            <value>
+                <fullName>551</fullName>
+                <default>false</default>
+                <label>Destinatario no local</label>
+            </value>
+            <value>
+                <fullName>552</fullName>
+                <default>false</default>
+                <label>Buzón lleno</label>
+            </value>
+            <value>
+                <fullName>553</fullName>
+                <default>false</default>
+                <label>Nombre de buzón invalido</label>
+            </value>
+            <value>
+                <fullName>554</fullName>
+                <default>false</default>
+                <label>Operación fracasada</label>
+            </value>
+            <value>
+                <fullName>555</fullName>
+                <default>false</default>
+                <label>Protocolo incorrecto.</label>
+            </value>
+            <value>
+                <fullName>563</fullName>
+                <default>false</default>
+                <label>Máximo de archivos adjuntos</label>
+            </value>
+            <value>
+                <fullName>571</fullName>
+                <default>false</default>
+                <label>Problema de permisos</label>
+            </value>
+            <value>
+                <fullName>572</fullName>
+                <default>false</default>
+                <label>Lista no puede expandirse</label>
+            </value>
+            <value>
+                <fullName>574</fullName>
+                <default>false</default>
+                <label>Incompatibilidad por seguridad</label>
+            </value>
+            <value>
+                <fullName>575</fullName>
+                <default>false</default>
+                <label>Fallo de cifrado.</label>
+            </value>
+            <value>
+                <fullName>576</fullName>
+                <default>false</default>
+                <label>Problema de certificafos</label>
+            </value>
+            <value>
+                <fullName>577</fullName>
+                <default>false</default>
+                <label>Problema de integridad</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

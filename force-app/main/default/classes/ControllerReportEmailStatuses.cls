@@ -4,6 +4,7 @@ public without sharing class ControllerReportEmailStatuses {
     public Date dateEnd {get;set;}
     
     public void GenerarReporte(){
+        
         datetime.newInstance(dateStart.year(), dateStart.month(), dateStart.day(), 5, 0, 0);
         BatchDatosInformeEDC l = new BatchDatosInformeEDC( Datetime.newInstance(dateStart.year(), dateStart.month(), dateStart.day(), 5, 0, 0),
                                                           Datetime.newInstance(dateEnd.year(), dateEnd.month(), dateEnd.day(), 6, 0, 0));

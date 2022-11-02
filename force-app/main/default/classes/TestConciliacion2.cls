@@ -43,6 +43,7 @@ public class TestConciliacion2 {
         aport.hy = '';
         aport.TiSaldo = '';
         aport.FoPago = 'TL';
+        aport.Cuenta = '812456';
         aport.TraerAportee();
         Pantalla_Aportes__c Ba = new Pantalla_Aportes__c(cuenta__c='812456',Nombre_Completo__c='acaaa',Tipo_Moneda__c='1', Fecha_Deposito__c = date.today(),
                                                         Monto_Deposito__c = 25, TIPO_SALDO__c = '10', Forma_de_Pago__c ='TL',  Codigo_Referencia__c= 'AKJ', Periodo_Aporte__c= '20180101',Fecha_Ingreso_Sistema__c = DATE.today(),Oficial_de_negocios__c = 'hn2234' );

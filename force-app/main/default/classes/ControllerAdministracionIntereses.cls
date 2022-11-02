@@ -44,7 +44,7 @@ public class ControllerAdministracionIntereses {
     public string Respuesta {get;set;} 
     
     
-    /*variables booleanas de control de CHECKBOX*/
+    /*variables booleanas de control d CHECKBOX*/
     public boolean FIJO_SI {get;set;} /*CUOTA FIJA*/
     public boolean CALCULADO_SI {get;set;} /*CUOTA CALCULADA*/
     public boolean BloqueaFIJO {get;set;} 
@@ -357,6 +357,8 @@ public class ControllerAdministracionIntereses {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'# Tipo Cuenta Vacio'));
         }else if (Forma_Pago == 'ACH' && Tipo_Cuenta == ' --Ninguno-- ' || Forma_Pago == 'ACH' && Tipo_Cuenta == '--Ninguno--'){
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'# Tipo Cuenta Vacio'));
+        }else if (Comprobante == null){ 
+            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'Comprobante Vacio'));
         }else if (Cuenta == ''|| NombreCompleto == null|| Identidad == null|| TipoFondo == null|| CausaDescripcion == null|| EstadoCuenta == null|| Forma_Pago == '--Ninguno--' || DiadePagos == null ){    
                       ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'No Pueden Quedar Campos Vacios.'));
                   } else{    

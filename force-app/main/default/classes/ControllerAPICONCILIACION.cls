@@ -189,7 +189,7 @@ public class ControllerAPICONCILIACION {
                 envio.contenido = JSON.serialize(claseEnvio);
                 
                 String cons = 'contenido=' + envio.contenido;
-                system.debug(cons);		
+                system.debug('guardarAporte: '+cons);		
                 request.setBody(cons);	
                 HttpResponse response = http.send(request);
                 

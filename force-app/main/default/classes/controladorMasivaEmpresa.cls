@@ -22,10 +22,13 @@ public class controladorMasivaEmpresa {
     public boolean popSubProducto{get;set;}
     public boolean popEmpresas{get;set;}
     
+     public string linkPortal{get;set;}
+    
     public controladorMasivaEmpresa(){
         try{
             usuario = ApexPages.currentPage().getParameters().get('usuario');
             //Usuario = 'HN52892';
+            linkPortal = claseUtil.urlSysde('Site_pantallas');
             asesor = new oficial_X_asesor__C();
             asesor = [select codigo_asesor__C, Codigo_Oficial_SAC__c , oficial_sac__r.name,
                       asesor__r.name, asesor__r.email from oficial_X_asesor__C where codigo_asesor__C =:Usuario limit 1];
@@ -199,10 +202,10 @@ public class controladorMasivaEmpresa {
                 Afiliacion.Codigo_Oficial_SAC__c =item.codigo_oficial_sac__C;
                 Afiliacion.Oficial_SAC__c =item.oficial_sac__r.name;
             }
-            popEmpresas = false;
         }catch(exception ex){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ' La empresa seleccionada no tiene oficial Asignado '));
         }
+        popEmpresas = false;
     }
     
     

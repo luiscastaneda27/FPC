@@ -35,7 +35,7 @@
                         </apex:facet>
                     </apex:actionStatus>
                     <div style="text-align : center; font-size:25px; color:#53c7dc; font-weight:bold;">
-                        Afiliación de Clientes {!IF(tipoPantalla = 'BFK', 'BFH', 'Premier')}
+                        Afiliación de Clientes {!IF(tipoPantalla = 'BFK', 'BFH', IF(tipoPantalla == 'PM', 'Premier', IF(tipoPantalla == 'FC','Ficopen', IF(tipoPantalla == 'TF','Tarjeta Futura','Televentas'))))}
                     </div>
                     <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
@@ -49,9 +49,9 @@
                                             Enviar
                                         </td >
                                         <td scope="col" colspan="1">
-                                            Primer Nombre
+                                            Nombre
                                         </td >
-                                        <td scope="col" colspan="1">
+                                        <!--td scope="col" colspan="1">
                                             Segundo Nombre
                                         </td>
                                         <td scope="col" colspan="1">
@@ -59,10 +59,16 @@
                                         </td>
                                         <td scope="col" colspan="1">
                                             Segundo Apellido
-                                        </td>
+                                        </td-->
                                        
                                         <td scope="col" colspan="1">
                                             Identificación
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Cuenta
+                                        </td>
+                                         <td scope="col" colspan="1">
+                                            Oficial SAC
                                         </td>
                                         <td scope="col" colspan="1">
                                             
@@ -81,9 +87,9 @@
                                                 </apex:inputField>
                                             </td>
                                             <td>
-                                                <apex:outputField value="{!item.name}" />
+                                                <apex:outputText value="{!item.name +' ' + item.Primer_Apellido__c}" />
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <apex:outputField value="{!item.Segundo_Nombre__c}" />
                                             </td>
                                             <td>
@@ -91,10 +97,16 @@
                                             </td>
                                             <td>
                                                 <apex:outputField value="{!item.Segundo_Apellido__c}" />
-                                            </td>
+                                            </td-->
                                            
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                             <td>
+                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
+                                            </td>
+                                             <td>
+                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
                                             </td>
                                             <td>  
                                                 <apex:commandLink action="{!editar}" value="Ver"  reRender="theForm" status="status" >
@@ -121,7 +133,7 @@
                     </apex:pageBlockSection>
                     
                    <apex:pageBlockSection title="Nueva Afiliación" rendered="{!Afiliacion.id != null}" columns="2">
-                    	<apex:inputField value="{!Afiliacion.name}" />
+                       <apex:inputField value="{!Afiliacion.name}" />
                        <apex:inputField value="{!Afiliacion.Segundo_Nombre__c}" />
                        
                        <apex:inputField value="{!Afiliacion.Primer_Apellido__c}" />
@@ -156,21 +168,10 @@
                        
                        
                        <apex:outputField value="{!Afiliacion.Subproducto__c}" />
-                            <!--apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                       </apex:inputField>
-                       <apex:outputPanel>
-                           <apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
-                               <apex:selectOptions value="{!listSubProductos}" />
-                               <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                           </apex:selectList>
-                       </apex:outputPanel-->
                        <apex:outputField value="{!producto.name}"  />
                        
                       <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
                        <apex:outputField value="{!afiliacion.Aplica_CS__c}" />
-                       
-                       
-                       
                        
                        <apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
                        <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/>
@@ -179,11 +180,24 @@
                        <apex:outputField value="{!Afiliacion.Codigo_Oficial_SAC__c}" title="Código Oficial"/>
                        
                        
-                       <!--apex:inputField value="{!Afiliacion.Formulario_Completo__c}" /-->
-                       <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" >
                             <apex:actionSupport event="onchange" action="{!accionvacia}" status="status" reRender="idPageBlock" />
                        </apex:inputField>
+                       <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
+                       
+                       
+                        <apex:selectList value="{!Afiliacion.SubEstadoRCSF__c}" size="1" label="Sub Estado RC SF" > 
+                            <apex:selectOption itemLabel="Nuevo SAC" itemValue="NS" />
+                            <apex:selectOption itemLabel="Nuevo Comercial" itemValue="NC" />
+                            <apex:selectOption itemLabel="Validación Scan" itemValue="VS" />
+                            <apex:selectOption itemLabel="Pendiente Scan" itemValue="PS" />
+                            <apex:selectOption itemLabel="Pendiente Físico" itemValue="PF" />
+                            <apex:selectOption itemLabel="Validación Físico" itemValue="VF" />
+                            <apex:selectOption itemLabel="Devolución Comercial" itemValue="DC" />
+                            <apex:selectOption itemLabel="Devolución Agencia" itemValue="DA" />
+                            <apex:selectOption itemLabel="Cerrado" itemValue="C" />
+                        </apex:selectList>
+                       <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        
                     </apex:pageBlockSection>
                     <footer class="slds-modal__footer">

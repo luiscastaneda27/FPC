@@ -380,7 +380,6 @@ public class controllerApiClienteNatural {
 	    list<classRespuestaMenu> resultado = new list<classRespuestaMenu>();
          
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
 		try{
 
 			HttpResponse response = http.send(request);

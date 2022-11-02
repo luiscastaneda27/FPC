@@ -9,6 +9,7 @@ public class classActualizaPignorados {
         public decimal monto_prestamo { get; set; }
         public string estatus { get; set; }
         public string usuario { get; set; }
+    	 public string usuarioApro { get; set; }
     	public decimal secuencia { get; set; }
-   	 	public Blob referenciaImg {get;set;}
+   	 	public transient string referencia {get;set;}
 }

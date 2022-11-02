@@ -45,7 +45,7 @@ public class controladorReporteCalidad_C_NC_PL {
                             profesion__C,estado_civil__C, lugar_nacimiento__C,nombre_conyuge__C,cargo__C,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,Aprueba_SAC__c ,
                             Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,Subproducto__r.Tipo_Fondo__c,
-                            Espediente_Completo__C,
+                            Espediente_Completo__C,DebidaDiligencia__c,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
                             Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C
                             where Codigo_Oficial_SAC__c =:Usuario and Enviar_Sac__C =true 
@@ -95,7 +95,6 @@ public class controladorReporteCalidad_C_NC_PL {
             cuerpo +='<br/><br/>Muchas Gracias.';
             //URL.Correo_electronico__c = 'paola.cruz@ficohsa.com';
             system.debug(cuerpo);
-            // url.Correo_electronico__c = 'luis.castaneda@intellectsystem.net';
             Messaging.singleEmailMessage email = new Messaging.singleEmailMessage();
             email.setSubject(' Nueva Carga de Afiliaciones - '+date.today().format()); 
             email.setToAddresses(new string[] {url.Correo_electronico__c});
@@ -128,7 +127,7 @@ public class controladorReporteCalidad_C_NC_PL {
     
     public void guardar(){
         try{
-        if(Afiliacion.Espediente_Completo__c == 'N'){
+        if(Afiliacion.Espediente_Completo__c == 'N' || Afiliacion.ExpedienteFisicoRecibido__c == 'N' ){
             Afiliacion.Enviar_Sac__c = false;
             afiliacion.Formulario_Completo__c = 'N';
             afiliacion.Estado__c = 'D'; 

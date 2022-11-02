@@ -36,6 +36,16 @@
                 <default>false</default>
                 <label>Otro</label>
             </value>
+            <value>
+                <fullName>OP</fullName>
+                <default>false</default>
+                <label>Operaciones</label>
+            </value>
+            <value>
+                <fullName>SS</fullName>
+                <default>false</default>
+                <label>Supervisor SAC</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -256,7 +256,7 @@
         </p-->  
         2. País de Residencia para Efectos Fiscales:
         <div style="border-bottom:1px solid black;width:470px;display:inline-block;">
-        <!--País de Residencia para Efectos Fiscales {!info.pccodpais}-->{!mun}
+        <!--País de Residencia para Efectos Fiscales {!info.pccodpais}-->{!info.PaisResidenciaEfectosFiscales}
         </div><br/><br/>
         3. Número de Identificación Fiscal de los Estados Unidos (TIN)
         <div style="border-bottom:1px solid black;width:350px;display:inline-block;">

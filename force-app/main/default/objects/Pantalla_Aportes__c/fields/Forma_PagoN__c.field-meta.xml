@@ -45,6 +45,11 @@
                 <default>false</default>
                 <label>Talonario</label>
             </value>
+            <value>
+                <fullName>IN</fullName>
+                <default>false</default>
+                <label>Traslado Interno</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

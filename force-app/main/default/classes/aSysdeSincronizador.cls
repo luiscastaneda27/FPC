@@ -1,9 +1,9 @@
 public class aSysdeSincronizador {
     
     public static final String URL = claseUtilPlanillas.urlSysde('Test');
-    //public static final String URL = 'http://190.5.68.49:9090/';;
+    //public static final String URL = 'http://190.5.68.49:9090/';
     public static final String NOMBRE_JOB = 'JobSync';
-    
+   
     @future(callout=true)
     public static void actializarClientes (String idCliente) {
         system.debug('llamo el metodo actializarClientes');
@@ -16,6 +16,7 @@ public class aSysdeSincronizador {
             fecha = fecha.minute() > 3 ? fecha.addMinutes(57) :fecha.addHours(1);
             String acron = fecha.second()+' '+fecha.minute()+' '+fecha.hour()+' '+fecha.day()+' '+fecha.month()+' ? '+fecha.year();
             System.schedule(NOMBRE_JOB, acron, new JobSync());
+            //System.debug('URL: '+URL);
         }
         if(datetime.now().hour() == 23){
             EstadosDeCuenta.InsertarCorreos();

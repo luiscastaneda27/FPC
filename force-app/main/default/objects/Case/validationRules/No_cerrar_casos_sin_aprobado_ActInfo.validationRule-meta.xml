@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>No_cerrar_casos_sin_aprobado_ActInfo</fullName>
     <active>true</active>
-    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Actualizacion_informacion&apos; , !Aprobado__c,!Viene_Portal_Autogestion__c , ISCHANGED(Status),  ISPICKVAL(Status, &apos;Cerrado&apos;),  OR( !ISBLANK( Nombre_Cliente__c), !ISBLANK( Apellidos__c), !ISBLANK( Segundo_nombre__c ), !ISBLANK( Segundo_apellido__c ),!ISPICKVAL( Tipo_Identificacion__c,&apos;&apos;), !ISBLANK( Identificacion__c), !ISPICKVAL(Sexo__c,&apos;&apos;),!ISBLANK( Fecha_Nacimiento__c ), !ISBLANK( Correo_Electronico__c )))</errorConditionFormula>
+    <errorConditionFormula>AND( RecordType.DeveloperName = &apos;Actualizacion_informacion&apos; , !Aprobado__c,!Viene_Portal_Autogestion__c , ISCHANGED(Status),  ISPICKVAL(Status, &apos;Cerrado&apos;),  OR( !ISBLANK( Nombre_Cliente__c), !ISBLANK( Apellidos__c), !ISBLANK( Segundo_nombre__c ), !ISBLANK( Segundo_apellido__c ),!ISPICKVAL( Tipo_Identificacion__c,&apos;&apos;), !ISBLANK( Identificacion__c), !ISPICKVAL(Sexo__c,&apos;&apos;),!ISBLANK( Fecha_Nacimiento__c ), !ISBLANK( Correo_Electronico__c ), !Archivo_Adjunto__c, AprobacionBeneficiarios__c ))</errorConditionFormula>
     <errorDisplayField>Status</errorDisplayField>
-    <errorMessage>El caso contiene modificaciones en campos críticos, para poder cerrarlo debe estar aprobado.</errorMessage>
+    <errorMessage>El caso contiene modificaciones en campos críticos, para poder cerrarlo debe estar aprobado y adjuntar archivo.</errorMessage>
 </ValidationRule>

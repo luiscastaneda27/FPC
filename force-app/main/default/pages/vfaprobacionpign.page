@@ -1,61 +1,61 @@
 <apex:page cache="false" expires="0" controller="controllerpignorados"  sidebar="false" showHeader="false" 
-	applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
+    applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  docType="html-5.0">
     
     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
-	
+    
       <head>
-	  <meta charset="utf-8" />
-	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-	  <title>Aprobación de Fondos Pignorados</title>
-	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Aprobación de Fondos Pignorados</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       
-	  <meta charset="utf-8" />
-	  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-	  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
           
-	  <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
+      <apex:includeScript value="{!URLFOR($Resource.xlsx, 'xlsx.js')}" />
       <apex:includeScript value="{!URLFOR($Resource.Recursos_Portal, 'scripts/jquery.js')}" />
     
-	  	<!-- Import the Design System style sheet -->
-	 	<apex:slds />  
+        <!-- Import the Design System style sheet -->
+        <apex:slds />  
           
 
         <style>
          html, body{
-            	background-color: #F2F2F2;
+                background-color: #F2F2F2;
             }
-			#topMenuZonaTransaccional {
-			    position: relative;
-		    	width: 100%;
-		    	float: left;
-			}
-	        #drop{
-	            border:2px dashed #bbb;
-	            -moz-border-radius:5px;
-	            -webkit-border-radius:5px;
-	            border-radius:5px;
-	            padding:25px;
-	            text-align:center;
-	            font:20pt bold,"Vollkorn";color:#bbb
-	        }
+            #topMenuZonaTransaccional {
+                position: relative;
+                width: 100%;
+                float: left;
+            }
+            #drop{
+                border:2px dashed #bbb;
+                -moz-border-radius:5px;
+                -webkit-border-radius:5px;
+                border-radius:5px;
+                padding:25px;
+                text-align:center;
+                font:20pt bold,"Vollkorn";color:#bbb
+            }
             .slds-scope {
-    			font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
-	        #b64data{
-	            width:100%;
-	        }
-	        .columna1 {
-	              float:left; 
-	              width:200px;              
-	              padding-left:50px;
-	              padding-top:15px;
-	        }
-	        .columna2 {
-	              padding-top:15px;  
-	              margin-left:210px;
-	              padding-right:15px;                         
-	        }
-	        
+                font-family: Open Sans Light,Helvetica,Arial,sans-serif;}
+            #b64data{
+                width:100%;
+            }
+            .columna1 {
+                  float:left; 
+                  width:200px;              
+                  padding-left:50px;
+                  padding-top:15px;
+            }
+            .columna2 {
+                  padding-top:15px;  
+                  margin-left:210px;
+                  padding-right:15px;                         
+            }
+            
             #Resumen{
             margin:0 0 0 0;
             }
@@ -119,9 +119,9 @@
             -webkit-box-sizing:border-box;
             
             -webkit-transition: all 0.2s ease;
-            -moz-transition: 	all 0.2s ease;
-            -o-transition: 		all 0.2s ease;
-            transition: 		all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
             }
             .Cancelar{    
             font-weight: bolder !important;
@@ -151,9 +151,9 @@
             -webkit-box-sizing:border-box;
             
             -webkit-transition: all 0.2s ease;
-            -moz-transition: 	all 0.2s ease;
-            -o-transition: 		all 0.2s ease;
-            transition: 		all 0.2s ease;
+            -moz-transition:    all 0.2s ease;
+            -o-transition:      all 0.2s ease;
+            transition:         all 0.2s ease;
             }
             
             .Confirmar:hover{
@@ -178,7 +178,7 @@
               
     <apex:form >
        
-        	 
+             
         <div id="topMenuZonaTransaccional">
             <article class="slds-card slds-theme_default" style="border:0;" >
         
@@ -195,7 +195,7 @@
                                     
                          </h2>
                         <br/>
-                        <span class="slds-text-heading_medium" > Total de Aportes: {!total} </span>
+                        <span class="slds-text-heading_medium" > Total de Fondos: {!total} </span>
                        
                      </div>
                      
@@ -215,16 +215,16 @@
                             </div>
                      
               </header>
- 					
+                    
                 <div style="height:50px;background-color: #F2F2F2;">
-			      <br/>
+                  <br/>
                   <br/>
                 </div>
                               
-			  </div>
-			  
+              </div>
+              
             </article>
-		
+        
         </div>
       
             
@@ -239,7 +239,7 @@
         
 
         <div style="height:50px;background-color: #F2F2F2;">
-			      <br/>
+                  <br/>
                   <br/>
            
         </div>
@@ -249,43 +249,43 @@
        
         <table class="slds-table slds-table_bordered slds-table_col-bordered" 
                 style="border-top:0px; border-collapse:collapse; border-radius:5px;">
-			<thead>
-			 
-			    <tr class="slds-text-heading--label ">
-			      
-			      <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Cuenta"><strong>Código de Cuenta</strong></div>
-			      </th>  
-			      <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Pignorado"><strong>Monto Pignorado</strong></div>
-			      </th>
-			      <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha De Pignoracion"><strong>Fecha de Pignoración</strong></div>
-			      </th>
-			        <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha de Liberacion"><strong>Fecha de Liberación</strong> </div>
-			        </th>
+            <thead>
+             
+                <tr class="slds-text-heading--label ">
+                  
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Cuenta"><strong>Código de Cuenta</strong></div>
+                  </th>  
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto Pignorado"><strong>Monto Pignorado</strong></div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha De Pignoracion"><strong>Fecha de Pignoración</strong></div>
+                  </th>
+                    <th scope="col">
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Fecha de Liberacion"><strong>Fecha de Liberación</strong> </div>
+                    </th>
                      <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Numero de Prestamo"><strong>Numero de Prestamo</strong> </div>
-			        </th>
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Numero de Prestamo"><strong>Numero de Prestamo</strong> </div>
+                    </th>
                      <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Total Fondos"><strong>Total Fondos</strong> </div>
-			        </th>
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Total Fondos"><strong>Total Fondos</strong> </div>
+                    </th>
                     <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto de Prestamo"><strong>Monto de Prestamo</strong> </div>
-			        </th>
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Monto de Prestamo"><strong>Monto de Prestamo</strong> </div>
+                    </th>
                     
                     <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Estatus"><strong>Estatus</strong> </div>
-			        </th>
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Estatus"><strong>Estatus</strong> </div>
+                    </th>
                     
                     <th scope="col">
-			        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Usuario"><strong>Usuario</strong> </div>
-			        </th>
+                    <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Usuario"><strong>Usuario</strong> </div>
+                    </th>
                     
                     <th scope="col">
-			       <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Referencia"><strong>Referencia</strong> </div>
-			        </th>
+                   <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Referencia"><strong>Referencia</strong> </div>
+                    </th>
                     
                     <th scope="col">
                         <div class="slds-truncate" title="Aprobar"><strong>Aprobar</strong></div>
@@ -294,87 +294,87 @@
                             <div class="slds-truncate" title="Denegar"><strong>Denegar</strong></div>
                       </th>
                     
-			    </tr>
-		  </thead>
-		  <tbody>
+                </tr>
+          </thead>
+          <tbody>
           
               <apex:repeat value="{!McontenidoPign}" var="item">
               
                <!--SON 7 <TD> los que se colocaran aqui para que muestre al final los dos botones de aceptar o denegar-->
                <tr>
                <td scope="row" data-label="Cuenta" style= "text-align: center;">
-				        <div class="slds-truncate" > 
-                   			{!item.Cuenta__c}
+                        <div class="slds-truncate" > 
+                            {!item.Cuenta__c}
                         </div>
-			   </td> 
+               </td> 
                 <td scope="row" data-label="Monto Pignorado" style= "text-align: center;">
-				        <div class="slds-truncate" > 
+                        <div class="slds-truncate" > 
                             <apex:outputField value="{!item.Monto_Pignorado__c}" />
                         </div>
-			   </td>  
+               </td>  
                  
                 <td scope="row" data-label="Fecha Pignoracion" style= "text-align: center;">
-				        <div class="slds-truncate" >   
+                        <div class="slds-truncate" >   
                        <!--<apex:outputText style="margin-left:10px; margin-right:10px;" value="{!item.Fecha_Pignoracion__c}" />
                             <apex:inputField type="datetime-local" id="fechapignoracion" value="{!item.Fecha_Pignoracion__c}" showDatePicker="false" styleclass="slds-input" style="height:30px; width:165px; margin-left:10px;"/>-->
                         <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
-                                	<apex:param value="{!item.Fecha_Pignoracion__c}"/>
+                                    <apex:param value="{!item.Fecha_Pignoracion__c}"/>
                                 </apex:outputText>
                     
                     </div>
-			   </td>  
+               </td>  
                
                <td scope="row" data-label="Fecha Liberacion" style= "text-align: center;">
-				        <div class="slds-truncate" > 
+                        <div class="slds-truncate" > 
                          <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
                          <apex:param value="{!item.Fecha_Liberacion__c}"/>
                             </apex:outputText>
                             </div>
-			   </td>          
+               </td>          
                    
                <td scope="row" data-label="NumeroPrestamo" style= "text-align: center;">
-				        <div class="slds-truncate" > 
+                        <div class="slds-truncate" > 
                           {!item.Numero_Prestamo__c}
                         </div>
-			   </td>  
+               </td>  
                    
                <td scope="row" data-label="Total Fondos" style= "text-align: center;">
-				        <div class="slds-truncate" > 
+                        <div class="slds-truncate" > 
                             <apex:outputField value="{!item.Total_Fondos__c}" />
                         </div>
-			   </td>  
+               </td>  
                    
                <td scope="row" data-label="Monto de Prestamo" style= "text-align: center;">
-				        <div class="slds-truncate" > 
-                   			<apex:outputField value="{!item.Monto_Prestamo__c}" />
+                        <div class="slds-truncate" > 
+                            <apex:outputField value="{!item.Monto_Prestamo__c}" />
                         </div>
-			   </td>  
+               </td>  
                    
                <td scope="row" data-label="Estatus" style= "text-align: center;">
-				        <div class="slds-truncate" >
-                   		       <!--  {!item.Estatus__c}-->
+                        <div class="slds-truncate" >
+                               <!--  {!item.Estatus__c}-->
                         <apex:outputText value="{!IF(item.Estatus__c = 'I', 'DESPIGNORADO', 'PIGNORADO')}" />
-                   		</div>
-			   </td>      
+                        </div>
+               </td>      
                  
                <td scope="row" data-label="Usuario" style= "text-align: center;">
-				        <div class="slds-truncate" >
-                   		{!item.Usuario__c}
-                   	    </div>
-			   </td>  
+                        <div class="slds-truncate" >
+                        {!item.Usuario__c}
+                        </div>
+               </td>  
                    
                <td scope="row" data-label="Estado" style= "text-align: center;">
-				        <div class="slds-truncate" >
+                        <div class="slds-truncate" >
                            
-                   		<apex:commandLink action="{!MostrarImagen}" >  
-                                	<apex:image value="{!$Resource.Lupa}" width="40" height="40"/>
+                        <apex:commandLink action="{!MostrarImagen}" >  
+                                    <apex:image value="{!$Resource.Lupa}" width="40" height="40"/>
                                     <apex:param name="referencia" value="{!item.Num_Prestamo__c}" AssignTo="{!ID_Referencia}"/>
                             </apex:commandLink> 
                          </div>
-			   </td>
+               </td>
                    
      
-		
+        
               
                <td  style= "text-align: center;">
                      
@@ -384,18 +384,18 @@
                          <apex:param value="{!item.Id}" AssignTo="{!cod_obj}"  name="APROBACION" />  
                      </apex:commandLink>
                      </div>
-                	  
+                      
               </td>
  
                    
                  <td style= "text-align: center;">
-                	
+                    
                       <div class="slds-scope">
                           
                     <apex:commandLink action="{!MostrarVentanaDenegacion}">
                           <apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
                           <apex:param value="{!item.Id}" AssignTo="{!cod_obj}"  name="APV2DENEGACION" />  
-                          <apex:param value="{!item.Numero_Prestamo__c}" AssignTo="{!num_prest}"  name="DENEGACION" /> 	
+                          <apex:param value="{!item.Numero_Prestamo__c}" AssignTo="{!num_prest}"  name="DENEGACION" />  
                     </apex:commandLink>      
                   
                      </div> 
@@ -405,23 +405,23 @@
               </tr>
             </apex:repeat>
         </tbody>
-		</table>
+        </table>
   </div>
          
  
         
-      <div class="slds-scope" >	
-	      	<apex:outputPanel rendered="{!DenegarImagen}"> 
-	
+      <div class="slds-scope" > 
+            <apex:outputPanel rendered="{!DenegarImagen}"> 
+    
                   <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-				    <div class="slds-modal__container">
-                       <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                    <div class="slds-modal__container">
+                       <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;" />
        
                       <header class="slds-modal__header">
                
-                      	<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Fondo Pignorado</h1>			        
-	      			  </header>
-				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Fondo Pignorado</h1>                   
+                      </header>
+                      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                               <div class="slds-form-element__row slds-text-align_center">
                                 <div class="slds-form-element slds-size_1-of-1">
                                 
@@ -432,38 +432,38 @@
                               <div class="slds-form-element__row slds-text-align_center">
                             
                                
-        						<apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
+                                <apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
              
                               </div>
                             </div> 
-			    		</div>
-				      <footer class="slds-modal__footer">
-				      	
+                        </div>
+                      <footer class="slds-modal__footer">
+                        
                           <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
                           
                         </footer>
 
-				    </div>
-			  </section>
-			  <div class="slds-backdrop slds-backdrop_open"></div>
-			
-			</apex:outputPanel>	
+                    </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            </apex:outputPanel> 
        </div> 
         
         
          <!--Mostrar Modal VerImagen-->
-                            <div class="slds-scope" >	
-                                <apex:outputPanel rendered="{!DenegarImagen}"> 
+                            <div class="slds-scope" >   
+                                <apex:outputPanel rendered="{!isImage}"> 
                                     
                                     <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                         <div class="slds-modal__container">
-                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
+                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; width:1150px; margin-left:-230px;"/>
                                             
-                                            <header class="slds-modal__header">
+                                            <header class="slds-modal__header" style="width:1150px; margin-left:-230px;">
                                                 
-                                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Comprobante</h1>			        
+                                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Comprobante</h1>                   
                                             </header>
-                                            <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                                            <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" style="width:1150px; margin-left:-230px;" height="800px" >
                                                 <div class="slds-form-element__row slds-text-align_center">
                                                     <div class="slds-form-element slds-size_1-of-1">
                                                         
@@ -472,14 +472,12 @@
                                                 
                                                 <div class="slds-form-element__group slds-text-align_center">
                                                     <div class="slds-form-element__row slds-text-align_center">
-                                                        
-                                                        <!--   <apex:image value="data:image/Png;base64,{!DesconvertirImagen}" width="800px" height="400px"/>-->	
-                                                        <apex:image value="data:image/Png;base64,{!Ver_Imagen}" width="800px" height="400px"/>
+                                                        <apex:image value="data:image/jpg;base64,{!Ver_Imagen}" width="800px" height="2000px"/> 
                                                         
                                                     </div>
                                                 </div> 
                                             </div>
-                                            <footer class="slds-modal__footer">
+                                            <footer class="slds-modal__footer" style="width:1150px; margin-left:-230px;">
                                                 
                                                 <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
                                                 
@@ -489,24 +487,64 @@
                                     </section>
                                     <div class="slds-backdrop slds-backdrop_open"></div>
                                     
-                                </apex:outputPanel>	
+                                </apex:outputPanel> 
                             </div>
         <!--FIN MOSTRAR IMAGEN -->
+        <!--Mostrar Modal VerPDF-->
+                            <div class="slds-scope" >   
+                                <apex:outputPanel rendered="{!isPdf}"> 
+                                    
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                        <div class="slds-modal__container">
+                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; width:1150px; margin-left:-230px;"/>
+                                            
+                                            <header class="slds-modal__header" style="width:1150px; margin-left:-230px;">
+                                                
+                                                <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Comprobante</h1>                   
+                                            </header>
+                                            <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" style="width:1150px; margin-left:-230px;" height="800px" >
+                                                <div class="slds-form-element__row slds-text-align_center">
+                                                    <div class="slds-form-element slds-size_1-of-1">
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="slds-form-element__group slds-text-align_center" style="width:1350px; margin-left:-100px;">
+                                                    <div class="slds-form-element__row slds-text-align_center">
+                                                            
+                                                        <iframe   src="data:{!ct};base64,{!Ver_Imagen}" height="2000px" width="100%" ></iframe>
+                                                       
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <footer class="slds-modal__footer" style="width:1150px; margin-left:-230px;">
+                                                
+                                                <apex:commandButton value="Salir" action="{!popSalirImagen}" styleClass="slds-button slds-button_neutral" />
+                                                
+                                            </footer>
+                                            
+                                        </div>
+                                    </section>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                    
+                                </apex:outputPanel> 
+                            </div>
+        <!--FIN MOSTRAR PDF -->
         
         
         
       
-      <div class="slds-scope"  >	
-	      	<apex:outputPanel rendered="{!DenegarVentana}"> 
-				<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-				    <div class="slds-modal__container">
+      <div class="slds-scope"  >    
+            <apex:outputPanel rendered="{!DenegarVentana}"> 
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
                        <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold; with:70%;"/>
        
                       <header class="slds-modal__header">
                
-                      	<h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Denegar Despignoración</h1>			        
-	      			  </header>
-				      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
+                        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Denegar Despignoración</h1>                    
+                      </header>
+                      <div class="slds-modal__content slds-p-around_small" id="modal-content-id-1" >
                               <div class="slds-form-element__row slds-text-align_center">
                                 <div class="slds-form-element slds-size_1-of-1">
                                 
@@ -516,27 +554,27 @@
                             <div class="slds-form-element__group slds-text-align_left">
                               <div class="slds-form-element__row slds-text-align_left">
                             <label class="slds-form-element__label"> Numero de Prestamo </label> <br/>
-						  	<apex:inputText disabled="true" value="{!num_prest}" styleclass="slds-input"   style="height:9px; width:170px; margin-left:1px; "/>
+                            <apex:inputText disabled="true" value="{!num_prest}" styleclass="slds-input"   style="height:9px; width:170px; margin-left:1px; "/>
                              <br/>
                                   
                          <label class="slds-form-element__label"> Motivo </label> <br/>
-						 <apex:inputTextarea styleclass="slds-input"   value="{!Motivo}"  />        
+                         <apex:inputTextarea styleclass="slds-input"   value="{!Motivo}"  />        
                                   
                               </div>
                             </div> 
-			    		</div>
-				      <footer class="slds-modal__footer">
-				      	<apex:commandButton value="Salir" action="{!popDenegarSalir}" styleClass="slds-button slds-button_neutral" />
+                        </div>
+                      <footer class="slds-modal__footer">
+                        <apex:commandButton value="Salir" action="{!popDenegarSalir}" styleClass="slds-button slds-button_neutral" />
                         <apex:commandButton value="Denegar"   action="{!DenegarLista}"  styleClass="slds-button slds-button_neutral" />  
                           
                           
                         </footer>
 
-				    </div>
-			  </section>
-			  <div class="slds-backdrop slds-backdrop_open"></div>
-			
-			</apex:outputPanel>	
+                    </div>
+              </section>
+              <div class="slds-backdrop slds-backdrop_open"></div>
+            
+            </apex:outputPanel> 
        </div>  
       <div id="pqr2" style="Display:inline;">
                         <apex:commandLink status="status" reRender="theForm">  
@@ -549,7 +587,7 @@
        </div>
        </body>
         <script type="text/javascript">
-		function Clean(){
+        function Clean(){
             window.location.href = window.location.href;
            }
         

@@ -1156,83 +1156,111 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
    
    public void getBeneficiario(){
        beneficiario = ControladorBeneficiarios.getBeneficiarios(Caso.AccountId, false);
+       if(beneficiario.listCuentas.size() > 0){
+           beneficiario.cuentaSelecionadalabel = beneficiario.listCuentas[0].value;
+           beneficiario.cuentaSelecionada = beneficiario.listCuentas[0].value;
+           beneficiario.listBeneficiariosCont = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada).listBeneficiariosCont;
+           beneficiario.listBeneficiariosDirec = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada).listBeneficiariosDirec;
+       }
    }
    
    public void eliminarBeneficiario(){
        integer index;
-       for(integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-           if(beneficiario.listBeneficiarios[i].index == beneficiario.beneficiarioSelec){
+       for(integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
+           if(beneficiario.listBeneficiariosDirec[i].index == beneficiario.beneficiarioSelec){
                index = i;
                break;
            }
        }
-       beneficiario.listBeneficiarios.remove(index);
+       beneficiario.listBeneficiariosDirec.remove(index);
    }
-   public void validacionFechaBeneficiario(){
+    public void eliminarBeneficiarioCont(){
+        integer index;
+        for(integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
+            if(beneficiario.listBeneficiariosCont[i].index == beneficiario.beneficiarioSelec){
+                index = i;
+                break;
+            }
+        }
+        beneficiario.listBeneficiariosCont.remove(index);
+    }
+    public void validacionFechaBeneficiario(){
         for(integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-            if(beneficiario.listBeneficiarios[i].index == beneficiario.beneficiarioSelec){
-                if(beneficiario.listBeneficiarios[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiarios[i].fechaNacimiento < beneficiario.fechaMinima){
-                    beneficiario.listBeneficiarios[i].fechaNacimiento = null;
+            if(beneficiario.listBeneficiariosDirec[i].index == beneficiario.beneficiarioSelec){
+                if(beneficiario.listBeneficiariosDirec[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiariosDirec[i].fechaNacimiento < beneficiario.fechaMinima){
+                    beneficiario.listBeneficiariosDirec[i].fechaNacimiento = null;
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha invalida')); 
                 }
             }
         }
-   }
-   public Boolean validacionCamposBeneficiario(){
+    }
+    public void validacionFechaBeneficiarioCont(){
+        for(integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
+            if(beneficiario.listBeneficiariosCont[i].index == beneficiario.beneficiarioSelec){
+                if(beneficiario.listBeneficiariosCont[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiariosCont[i].fechaNacimiento < beneficiario.fechaMinima){
+                    beneficiario.listBeneficiariosCont[i].fechaNacimiento = null;
+                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha invalida')); 
+                }
+            }
+        }
+    }
+   public Boolean validacionCamposBeneficiario(List<ControladorBeneficiarios.Beneficiario> listBeneficiarios){
        //Validación campos en blacos
-       for(Integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-           if(beneficiario.listBeneficiarios[i].cuentaId == null || beneficiario.listBeneficiarios[i].tipoBeneficiario == null ||
-              beneficiario.listBeneficiarios[i].primerNombre == null || beneficiario.listBeneficiarios[i].primerApellido == null ||
-              beneficiario.listBeneficiarios[i].tipoIdentificacion == null || beneficiario.listBeneficiarios[i].identificacion == null ||
-              beneficiario.listBeneficiarios[i].sexo == null || beneficiario.listBeneficiarios[i].fechaNacimiento == null ||
-              beneficiario.listBeneficiarios[i].parentesco == null || beneficiario.listBeneficiarios[i].porcentaje == null ){
+       System.debug(':listBeneficiarios' +Json.serialize(listBeneficiarios));
+       for(Integer i=0; i<listBeneficiarios.size(); i++){
+           if(String.isBlank(listBeneficiarios[i].cuentaId) || String.isBlank(listBeneficiarios[i].tipoBeneficiario) ||
+              String.isBlank(listBeneficiarios[i].primerNombre) || String.isBlank(listBeneficiarios[i].primerApellido) ||
+              String.isBlank(listBeneficiarios[i].tipoIdentificacion) || String.isBlank(listBeneficiarios[i].identificacion) ||
+              String.isBlank(listBeneficiarios[i].sexo) || listBeneficiarios[i].fechaNacimiento == null ||
+              String.isBlank(listBeneficiarios[i].parentesco) || listBeneficiarios[i].porcentaje == null ){
+                  System.debug('En efecto se metio');
                   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campos obligatorios pendientes'));
                   return true;
               }
        }
-       for(Integer j=0; j<beneficiario.listPorcentajes.size(); j++){
-           beneficiario.listPorcentajes[j].porcentajeDireto = 0;
-           beneficiario.listPorcentajes[j].porcentajeContingencia = 0;
+       Decimal porcentaje = 0;
+       for(Integer i=0; i<listBeneficiarios.size(); i++){
+           porcentaje += listBeneficiarios[i].porcentaje;
        }
-       for(Integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-           for(Integer j=0; j<beneficiario.listCuentasSO.size(); j++){
-               System.debug(i+' - '+j);
-               if(beneficiario.listCuentasSO[j].getValue() == beneficiario.listBeneficiarios[i].cuentaId){
-                   beneficiario.listBeneficiarios[i].cuenta =  beneficiario.listCuentasSO[j].getLabel();
+       if(porcentaje != 100){
+           for(SelectOption item: beneficiario.listCuentasSO){
+               if(item.getvalue() == listBeneficiarios[0].cuentaId){
+                   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+item.getLabel()+' el porcentaje de los beneficiarios esta en '+porcentaje.setsCale(2)+'%'));
+                   return true;
                }
            }
        }
        
-       
-       //Validación porcentajes
-       for(Integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-           for(Integer j=0; j<beneficiario.listPorcentajes.size(); j++){
-               if(beneficiario.listBeneficiarios[i].cuenta == beneficiario.listPorcentajes[j].cuenta){
-                   if(beneficiario.listBeneficiarios[i].tipoBeneficiario == 'Directo'){
-                       beneficiario.listPorcentajes[j].porcentajeDireto += beneficiario.listBeneficiarios[i].porcentaje.setsCale(2);
+       /*//Validación porcentajes
+       for(Integer i=0; i<listBeneficiarios.size(); i++){
+           for(Integer j=0; j<listPorcentajes.size(); j++){
+               if(listBeneficiarios[i].cuenta == listPorcentajes[j].cuenta){
+                   if(listBeneficiarios[i].tipoBeneficiario == 'Directo'){
+                       listPorcentajes[j].porcentajeDireto += listBeneficiarios[i].porcentaje.setsCale(2);
                    }else{
-                       beneficiario.listPorcentajes[j].porcentajeContingencia += beneficiario.listBeneficiarios[i].porcentaje.setsCale(2);
+                       listPorcentajes[j].porcentajeContingencia += listBeneficiarios[i].porcentaje.setsCale(2);
                    }
                }
            }
        }
-       System.debug('Nuevo: '+Json.serialize(beneficiario.listBeneficiarios));
-       System.debug('Nuevo: '+beneficiario.listPorcentajes);
-       for(Integer j=0; j<beneficiario.listPorcentajes.size(); j++){
-           if(beneficiario.listPorcentajes[j].porcentajeDireto != 100){
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+beneficiario.listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios directos esta en '+beneficiario.listPorcentajes[j].porcentajeDireto.setsCale(2)+'%'));
+       System.debug('Nuevo: '+Json.serialize(listBeneficiarios));
+       System.debug('Nuevo: '+listPorcentajes);
+       for(Integer j=0; j<listPorcentajes.size(); j++){
+           if(listPorcentajes[j].porcentajeDireto != 100){
+               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios directos esta en '+listPorcentajes[j].porcentajeDireto.setsCale(2)+'%'));
                return true;
-           }else if(beneficiario.listPorcentajes[j].porcentajeContingencia != 100){
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+beneficiario.listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios contingencia esta en '+beneficiario.listPorcentajes[j].porcentajeContingencia.setsCale(2)+'%'));
+           }else if(listPorcentajes[j].porcentajeContingencia != 100){
+               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios contingencia esta en '+listPorcentajes[j].porcentajeContingencia.setsCale(2)+'%'));
                return true;
            }
-       }
+       }*/
        return false;
    }
    
    public void getGrado(){
-       for(Integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-           String valor = beneficiario.listBeneficiarios[i].parentesco;
+       for(Integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
+           beneficiario.listBeneficiariosDirec[i].grado = ControladorBeneficiarios.getGradoLabel(beneficiario.listBeneficiariosDirec[i].parentesco);
+           /*String valor = beneficiario.listBeneficiarios[i].parentesco;
            if(valor == '1' || valor == '2'|| valor == '5'){
                beneficiario.listBeneficiarios[i].grado = 'Primero';
            }else if(valor == '6' || valor == '7'|| valor == '14'){
@@ -1241,19 +1269,64 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                beneficiario.listBeneficiarios[i].grado = 'Tercero';
            }else{
                beneficiario.listBeneficiarios[i].grado = 'Cuarto';
-           }
+           }*/
+       }
+       for(Integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
+           beneficiario.listBeneficiariosCont[i].grado = ControladorBeneficiarios.getGradoLabel(beneficiario.listBeneficiariosCont[i].parentesco);
        }
    }
+    
+    
+    public Boolean validacionBeneficiario(List<ControladorBeneficiarios.Beneficiario> listOriginal,List<ControladorBeneficiarios.Beneficiario> listActual){
+        if(listOriginal.size() != listActual.size()){
+            return true;
+        }
+        for(Integer i=0; i<listOriginal.size(); i++){
+            if(listOriginal[i].cuentaId != listActual[i].cuentaId || listOriginal[i].tipoBeneficiario != listActual[i].tipoBeneficiario ||
+               listOriginal[i].primerNombre != listActual[i].primerNombre || listOriginal[i].primerApellido != listActual[i].primerApellido ||
+               listOriginal[i].tipoIdentificacion != listActual[i].tipoIdentificacion || listOriginal[i].identificacion != listActual[i].identificacion ||
+               listOriginal[i].sexo != listActual[i].sexo || listOriginal[i].fechaNacimiento != listActual[i].fechaNacimiento ||
+               listOriginal[i].parentesco != listActual[i].parentesco || listOriginal[i].porcentaje != listActual[i].porcentaje ){
+                   return true;
+               }
+            
+        }
+        return false;
+    }
    
    
-   public void agregarBeneficiario(){
-       ControladorBeneficiarios.Beneficiario benf = new ControladorBeneficiarios.Beneficiario();
-       benf.index = 0;
-       if(beneficiario.listBeneficiarios.size() > 0){
-           benf.index = beneficiario.listBeneficiarios[beneficiario.listBeneficiarios.size() -1 ].index + 1;
-       }
-       beneficiario.listBeneficiarios.add(benf);
-   }
+    public void agregarBeneficiario(){
+        ControladorBeneficiarios.Beneficiario benf = new ControladorBeneficiarios.Beneficiario();
+        benf.index = 0;
+        benf.cuentaId = beneficiario.cuentaSelecionada;
+        benf.tipoBeneficiario = 'Directo';
+        if(beneficiario.listBeneficiariosDirec.size() > 0){
+            benf.index = beneficiario.listBeneficiariosDirec[beneficiario.listBeneficiariosDirec.size() -1 ].index + 1;
+        }
+        beneficiario.listBeneficiariosDirec.add(benf);
+    }
+    
+    public void agregarBeneficiarioCont(){
+        ControladorBeneficiarios.Beneficiario benf = new ControladorBeneficiarios.Beneficiario();
+        benf.index = 0;
+        benf.cuentaId = beneficiario.cuentaSelecionada;
+        benf.tipoBeneficiario = 'Contingencia';
+        if(beneficiario.listBeneficiariosCont.size() > 0){
+            benf.index = beneficiario.listBeneficiariosCont[beneficiario.listBeneficiariosCont.size() -1 ].index + 1;
+        }
+        beneficiario.listBeneficiariosCont.add(benf);
+    }
+    
+    public void cambiarCuenta(){
+        ControladorBeneficiarios.BeneficiarioWrapper benefWrp = new ControladorBeneficiarios.BeneficiarioWrapper();
+        benefWrp.listBeneficiariosCont = beneficiario.listBeneficiariosCont;
+        benefWrp.listBeneficiariosDirec = beneficiario.listBeneficiariosDirec;
+        beneficiario.mapBeneficiarios.put(beneficiario.cuentaSelecionadaLabel, benefWrp);
+        
+        beneficiario.cuentaSelecionadaLabel = beneficiario.cuentaSelecionada;
+        beneficiario.listBeneficiariosCont = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada).listBeneficiariosCont;
+        beneficiario.listBeneficiariosDirec = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada).listBeneficiariosDirec;
+    }
     
     public void continuarAlPaso2(){
                 
@@ -1656,13 +1729,44 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                        caso.Sexo__c !=null || caso.Fecha_Nacimiento__c !=null || caso.Correo_Electronico__c !=null || beneficiario.modificado ){ 
                         mostrarEnviarAprobacion = TRUE;
                         if(beneficiario.modificado){
-                            hayError = validacionCamposBeneficiario();
-                            getGrado();
+                            cambiarCuenta();
+                            ControladorBeneficiarios.ResultWrapper beneficiarioOriginal = ControladorBeneficiarios.getBeneficiarios(Caso.AccountId, false);
+                            for(String cuenta: beneficiario.mapBeneficiarios.keySet()){
+                                ControladorBeneficiarios.BeneficiarioWrapper benefWrpOriginal = beneficiarioOriginal.mapBeneficiarios.get(cuenta);
+                                ControladorBeneficiarios.BeneficiarioWrapper benefWrpActual = beneficiario.mapBeneficiarios.get(cuenta);
+                                Boolean validaDirectos = validacionBeneficiario(benefWrpOriginal.listBeneficiariosDirec, benefWrpActual.listBeneficiariosDirec);
+                                Boolean validaContingen = validacionBeneficiario(benefWrpOriginal.listBeneficiariosCont, benefWrpActual.listBeneficiariosCont);
+                                if(validaDirectos || validaContingen){
+                                    beneficiario.listBeneficiariosDirec = benefWrpActual.listBeneficiariosDirec;
+                                    beneficiario.listBeneficiariosCont = benefWrpActual.listBeneficiariosCont;
+                                    getGrado();
+                                    if(validaDirectos){
+                                        for(Integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
+                                            beneficiario.listBeneficiariosDirec[i].modificado = true;
+                                        }
+                                        if(validacionCamposBeneficiario(beneficiario.listBeneficiariosDirec)){
+                                            return null;
+                                        }
+                                    }
+                                    if(validaContingen){
+                                        for(Integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
+                                            beneficiario.listBeneficiariosCont[i].modificado = true;
+                                        }
+                                        if(validacionCamposBeneficiario(beneficiario.listBeneficiariosCont)){
+                                            return null;
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            //beneficiario.listBeneficiariosDirec = null;
+                            //hayError = validacionCamposBeneficiario();
+                            //getGrado();
                             caso.AprobacionBeneficiarios__c = true;
                         }
                     }
                 }
-                
+                System.debug('Al salir: '+hayError);
                 if( ctipoCaso.estadoCuenta || test.isRunningTest()){
                     if( caso.Fecha_hasta__c==null || caso.Fecha_desde__c > caso.Fecha_hasta__c) {
                         hayError = true;
@@ -1742,6 +1846,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         beneficiario.listSexoSO = null;
                         beneficiario.listIdentificacionSO = null;
                         beneficiario.listTipoBeneficiariosSO = null;
+                        beneficiario.listBeneficiariosDirec = null;
                         beneficiario = ControladorBeneficiarios.insertarBeneficiarios(caso.Id, Json.serialize(beneficiario));
                     }
                     

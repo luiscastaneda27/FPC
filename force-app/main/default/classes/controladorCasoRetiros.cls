@@ -51,6 +51,7 @@ public class controladorCasoRetiros {
     public list<Cuentas__c> cuentasColectivas{get;set;}
     public list<Subproducto__c> subProductos{get;set;}
     public boolean mostrarGuardar{get;set;}
+    public boolean mostrarGuardarAprob{get;set;}
     public boolean esSalesforce {get;set;}
     
     public boolean popAporte{get;set;}
@@ -126,6 +127,7 @@ public class controladorCasoRetiros {
         listAportes = new list<classAportes>();
         archivoAd = false;
         esSalesforce = false;
+        mostrarGuardarAprob = false;
         string guest = '';
         //nueva lista        
         try{           
@@ -188,7 +190,8 @@ public class controladorCasoRetiros {
                 }
                 if(!cuentasCaso.isEmpty()) {
                     pagosBT = 'display:block;';
-                    
+                    Integer numUser = [Select Count() from GroupMember where Group.Name = 'Aprobacion Intermedia Retiros' and UserOrGroupId = :UserInfo.getUserId()];
+                    mostrarGuardarAprob = Caso.Status == 'Pendiente de aprobación' && cuentasCaso[0].Forma_Retiro__c == 'AH' && numUser > 0;
                     detalleCaso = cuentasCaso[0];
                     idCuenta = detalleCaso.Cuenta__c;
                     cuentaCliente = mapCuentas.get(idCuenta);
@@ -422,6 +425,11 @@ public class controladorCasoRetiros {
         }else if(Caso.Status=='Pendiente de aprobación') { guardar();
             //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El saldo del Prestamo se modifico exitosamente'));
         }
+    }
+    
+     public void actualizarCta(){
+         Detalle_Caso__c detalle = new Detalle_Caso__c(Id = detalleCaso.Id, N_Cuenta_Bancaria__c = detalleCaso.N_Cuenta_Bancaria__c);
+         update detalle;
     }
     
     public void calculoSaldoPatronales(){

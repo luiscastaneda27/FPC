@@ -177,7 +177,7 @@ public without sharing class ControladorCasosPortalAutogestion {
             string etiquetaCuenta = '';
             cTipoCaso = new claseTipoCaso('Nada');
             for(Cuentas__c item: [Select id, codigo__c, Producto__r.Name, Detalle_Cuenta_colectiva__c from cuentas__c
-                                  where cliente__c = :cliente.id ]) {
+                                  where cliente__c = :cliente.id  order by activo__c desc]) {
                                       etiquetaCuenta = item.Codigo__c + (item.Producto__r.Name != null ? (' - ' + item.Producto__r.Name) : '') + (item.Detalle_Cuenta_colectiva__c.trim() != '-' ? (' - ' + item.Detalle_Cuenta_colectiva__c) : '');
                                       listCuentas.add(new SelectOption(item.id, etiquetaCuenta));
                                   }

@@ -442,6 +442,16 @@
                 <label>AGN TOCOA</label>
             </value>
             <value>
+                <fullName>T10000000000</fullName>
+                <default>false</default>
+                <label>TELEVENTAS</label>
+            </value>
+            <value>
+                <fullName>140600000000</fullName>
+                <default>false</default>
+                <label>AGN FORESTA</label>
+            </value>
+            <value>
                 <fullName>01</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

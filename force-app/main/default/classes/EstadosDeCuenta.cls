@@ -62,7 +62,7 @@ public class EstadosDeCuenta {
     			map<string, integer> mapClientestrimestral = new map<string, integer>();
     			if(tipoEDC == 'A1'){
 					queryCorreo += '(\'EDC_Portada\',\'EDC_Portada_Juridicos\')';
-					respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio);
+                    respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio).respuesta;
                     for(integer i=0; i<respuestaDetallado.size(); i++) {
                         respuestaDetallado[i].nombrecliente = mapNombre.get(respuestaDetallado[i].identidad);
                         respuestaDetallado[i].emailCliente = mapCorreos.get(respuestaDetallado[i].identidad);
@@ -70,7 +70,7 @@ public class EstadosDeCuenta {
                     }
 				}else{
 					queryCorreo += '(\'EDC_Mensual2\')';
-                    respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio);
+                    respuestaDetallado = EstadosDeCuenta.estadoCuentaCorreo(claseEnvio).respuesta;
                    for(classECPortada item : respuestaDetallado){
                        if(!mapClientestrimestral.containsKey(item.identidad)){
                            mapClientestrimestral.put(item.identidad,6);
@@ -170,7 +170,7 @@ public class EstadosDeCuenta {
     }  
    
     
-    public static list<classECPortada> estadoCuentaCorreo(list<classClientesEC> claseEnvio) {
+    public static PortadaEDC estadoCuentaCorreo(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
 		String url = claseUtil.urlSysde('Test');		
@@ -178,21 +178,23 @@ public class EstadosDeCuenta {
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setTimeout(120000);
 		request.setEndpoint(url + 'api/ec/portada');
-		
-		list<classECPortada> respuesta = new list<classECPortada>();
+		PortadaEDC portada = new PortadaEDC();
+		//list<classECPortada> respuesta = new list<classECPortada>();
+        portada.respuesta = new list<classECPortada>();
 		system.debug('Entro al REST del EDC');
 		try{
 						
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(claseEnvio);
             String cons = 'contenido=' + envio.contenido;
-            system.debug(cons);		
+            system.debug('El contenido recibido es ' + cons);		
             request.setBody(cons);	
             
             HttpResponse response = http.send(request);
             System.debug('Respuesta de Sysde: '+response.getBody());
+            portada.respuestaSysde = response.getBody();
             if (response.getStatusCode() == 200) {
-               respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
+               portada.respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
             }       	
                        
 		}catch(System.CalloutException e){
@@ -201,10 +203,10 @@ public class EstadosDeCuenta {
         }Catch(Exception e){
 			system.debug(e.getMessage());	
 		} 
-		return respuesta;   
+		return portada;   
     }
     
-    public static list<classECPortada> estadoCuentaCorreoMasivo(list<classClientesEC> claseEnvio) {
+    public static PortadaEDC estadoCuentaCorreoMasivo(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
 		String url = claseUtil.urlSysde('Test');	
@@ -214,30 +216,31 @@ public class EstadosDeCuenta {
 		request.setTimeout(120000);
 		request.setEndpoint(url + 'api/ec/portada');
 		
-		list<classECPortada> respuesta = new list<classECPortada>();
-		system.debug('Entro al REST del EDC');
-		try{
-						
-			classJson envio = new classJson();
-			envio.contenido = JSON.serialize(claseEnvio);
-			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
-			request.setBody(cons);	
-			
-	    		HttpResponse response = http.send(request);
-	    		System.debug('Respuesta de Sysde: '+response.getBody());
-	        	if (response.getStatusCode() == 200) {
-           		
-           		respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
-	        	}       	
-                       
-		}catch(System.CalloutException e){
-			system.debug(e.getMessage());
-	
+        PortadaEDC portada = new PortadaEDC();
+        portada.respuesta = new list<classECPortada>();
+        system.debug('Entro al REST del EDC');
+        try{
+            
+            classJson envio = new classJson();
+            envio.contenido = JSON.serialize(claseEnvio);
+            String cons = 'contenido=' + envio.contenido;
+            system.debug(cons);		
+            request.setBody(cons);	
+            
+            HttpResponse response = http.send(request);
+            System.debug('Respuesta de Sysde: '+response.getBody());
+            portada.respuestaSysde = response.getBody();
+            if (response.getStatusCode() == 200) {
+                portada.respuesta = (list<classECPortada>)System.JSON.deserialize(response.getBody(), list<classECPortada>.class);
+            }       	
+            
+        }catch(System.CalloutException e){
+            system.debug(e.getMessage());
+            
         }Catch(Exception e){
-			system.debug(e.getMessage());	
-		} 
-		return respuesta;   
+            system.debug(e.getMessage());	
+        } 
+        return portada;   
     }
     
     public static list<classECMensual> estadoCuentaMensual(list<classClientesEC> claseEnvio) {
@@ -334,7 +337,8 @@ public class EstadosDeCuenta {
     public static list<classECHistorico> estadoCuentaHistorico(list<classClientesEC> claseEnvio) {
         Http http = new Http();
 		HttpRequest request = new HttpRequest();
-		String url = claseUtil.urlSysde('Test');		
+		String url = claseUtil.urlSysde('Test');
+        //URL = 'http://190.5.68.49:9090/';
 		request.setMethod('GET');
 		request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
 		request.setEndpoint(url + 'api/ec/historico');
@@ -480,6 +484,12 @@ public class EstadosDeCuenta {
         public string idcli{get;set;}
         public string desde{get;set;}
         public string hasta{get;set;}
+        
+    }
+    
+    public class PortadaEDC {
+        public list<classECPortada> respuesta = new list<classECPortada>();
+        public String respuestaSysde{get;set;}
         
     }
     

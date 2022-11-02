@@ -103,11 +103,14 @@ public without sharing class ControllerConciliacionAprobacionM {
     Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
     Public String ValorCuota {get;set;}
     
+    Public Boolean popDolar {get;set;}
+    
     public ControllerConciliacionAprobacionM(){
         p_Mensaje_error = '';
         MensajeErr = false;
         BloqAcep = true;
         FechaActual = date.today();
+        popDolar = false;
         //Usuario = ApexPages.currentPage().getParameters().get('hytrd');
         List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
         System.debug('User: '+usr[0].Name);///////Marcooo
@@ -158,6 +161,10 @@ public without sharing class ControllerConciliacionAprobacionM {
     
     public void MostraVentaEsconder(){
         MostrarVenta12 = false;
+    }
+    
+    public void popDolar(){
+        popDolar = !popDolar;
     }
         
     public void MostraVentana(){
@@ -995,10 +1002,11 @@ public without sharing class ControllerConciliacionAprobacionM {
             system.debug('01- Entramos a AprobarAporte');
             Pantalla_Aportes__c modifi = new Pantalla_Aportes__c ();	
             Num_CodReferenciaDenegado = Num_CodReferencia;
-            
+            Boolean CompraDolar = false;
             for(integer k=0; k<McontenidoAporte.size(); k++ ){
                 if(McontenidoAporte[k].Codigo_Referencia__c==Num_CodReferencia){
                     fechadeposito = McontenidoAporte[k].Fecha_Deposito__c;
+                    compraDolar = McontenidoAporte[k].Compra_Dolar__c == 'S';
                     if(Rez_SI_NO=='SI' || Rez_SI_NO=='Si' || Rez_SI_NO=='si'){
                         rezago ='S';
                     }else{
@@ -1008,6 +1016,11 @@ public without sharing class ControllerConciliacionAprobacionM {
                 }
             }
             
+            if(compraDolar && !popDOlar){
+                popDolar();
+                return;
+            }
+            popDOlar = false;
             CodReferenNoCobra = Num_CodReferencia;
             CodReferenciaTemp = Num_CodReferencia; 
             McontenidoAporte = new list<Pantalla_Aportes__c>();
@@ -1023,7 +1036,7 @@ public without sharing class ControllerConciliacionAprobacionM {
                 
                 classAportes_Conciliacion apor =  new classAportes_Conciliacion();   
                 
-                /*Validacion para que muestre ventana modal cuando no aplique comision...*/
+                System.debug('fechadeposito: '+fechadeposito);
                 system.debug('Cobra: '+McontenidoAporte[i].Aplica_Comision_SI__c +', Codigo: '+McontenidoAporte[i].Codigo_Referencia__c);
                 if(McontenidoAporte[i].Aplica_Comision_SI__c == 'N' ){
                     system.debug('04 - Entro NO Aplica Comision');
@@ -1064,7 +1077,7 @@ public without sharing class ControllerConciliacionAprobacionM {
                             apor.ComisionSI =  McontenidoAporte[i].Aplica_Comision_SI__c;
                             apor.p_periodo_aporte = McontenidoAporte[i].Periodo_Aporte__c;
                             apor.rezago = rezago;
-                            system.debug('06 - Contenido Enviado a Guardar Aporte: '+apor);  
+                            system.debug(apor.FechaDepositoAproba +' 06 - Contenido Enviado a Guardar Aporte: '+JSON.serialize(apor));  
                             
                             classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);//Realiza el aporte a la cuenta del Cliente
                             

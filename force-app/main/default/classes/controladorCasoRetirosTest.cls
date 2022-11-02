@@ -139,7 +139,8 @@ public class controladorCasoRetirosTest {
                         
             controlActinfo.saveAll = true; 
             
-            controlActinfo.traerSaldos();
+        controlActinfo.traerSaldos();
+        controlActinfo.actualizarCta();
             controlActinfo.verPropietarioCuenta();
             controlActinfo.ModificarSaldoPrestamo();
             controlActinfo.guardar();

@@ -1,11 +1,12 @@
 @isTest
 public class TestCasosPortalAutoGestion {   
     
-    static testMethod void TestCasos(){
-
+    @testSetup 
+    static void setupMethod() {
         Account cliente = new Account();
         cliente.Name='Luis Donaire';
         cliente.Identificacion__c='0709199300155';
+        cliente.UltimoCasoObligatorio__c = date.today();
         insert cliente;
         
         Producto__C producto = new Producto__C();
@@ -41,17 +42,22 @@ public class TestCasosPortalAutoGestion {
         municipio.nombre_municipio__C='Test';
         municipio.codigo_departamento__c= '	120';
         insert municipio;       
+	}
+    
+    static testMethod void TestCasos(){
+        
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
         
         ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
         controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
         controlCasos.contrato.Acepto_Condiciones_de_Portal_Autogestion__c = true;
         controlCasos.AceptarTerminos();
+        controlCasos.actualizaCliente();
         
-        list<RecordType> tiposR0 = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Aumento_Disminucion_Aportes'];
         
         //Caso Aumento Disminución de Aporte
         controlCasos.caso = new case();
-        controlCasos.idTipoRegistro = controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
+        controlCasos.idTipoRegistro = controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Aumento_Disminucion_Aportes').getRecordTypeId();
         controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
         controlCasos.Caso.Status = 'Nuevo';
         controlCasos.Caso.type = 'Solicitud de Gestión';
@@ -65,7 +71,7 @@ public class TestCasosPortalAutoGestion {
         controlCasos.guardar();
         
         controlCasos.caso = new case();
-        controlCasos.idTipoRegistro = controlCasos.listTipoCaso[6].getValue();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Aumento_Disminucion_Aportes').getRecordTypeId();
         controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
         controlCasos.Caso.Status = 'Nuevo';
         controlCasos.Caso.type = 'Solicitud de Gestión';
@@ -84,7 +90,7 @@ public class TestCasosPortalAutoGestion {
         controlCasos.guardar();
         
         //Caso Act de Info
-        controlCasos.idTipoRegistro = controlCasos.listTipoCaso[1].getValue();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
         controlCasos.SelectTipoGestion();
         controlCasos.guardar();
         controlCasos.caso.Fecha_Nacimiento__c = date.today().addDays(3);
@@ -108,7 +114,7 @@ public class TestCasosPortalAutoGestion {
         controlCasos.verificarCodigo();
         controlCasos.cerrar();
                
-        //Caso Constancia
+        /*//Caso Constancia
         controlCasos.caso = new case();
         controlCasos.idTipoRegistro = controlCasos.listTipoCaso[2].getValue();
         controlCasos.cTipoCaso = new claseTipoCaso('Constancia');
@@ -168,7 +174,7 @@ public class TestCasosPortalAutoGestion {
         controlCasos.Caso.Priority = 'Media';
         controlCasos.guardar();
         controlCasos.Caso.Description = 'Media';
-        controlCasos.guardar();
+        controlCasos.guardar();*/
         
         controlCasos.caso = new case();
         controlCasos.AccionVacia2();
@@ -176,55 +182,18 @@ public class TestCasosPortalAutoGestion {
     }
     
     static testMethod void execute(){
-
-        Account cliente = new Account();
-        cliente.Name='Luis Donaire';
-        cliente.Identificacion__c='0709199300155';
-        insert cliente;
         
-        Producto__C producto = new Producto__C();
-        producto.Codigo__c='qwqw';
-        producto.name='Prueba';
-        insert producto;
-        
-        Subproducto__c  subProducto = new Subproducto__c ();
-        subProducto.Name='Test';
-        subProducto.Codigo__c='3434';
-        subProducto.Producto__c = producto.id;
-        insert subProducto;
-        
-        Cuentas__C cuenta = new cuentas__C();
-        cuenta.codigo__C='0000';
-        cuenta.Cliente__c = cliente.id;
-        cuenta.Subproducto__c = subProducto.id;
-        cuenta.name='test';
-        cuenta.Monto_aporte__c = 100;
-        cuenta.Forma_Aportacion__c='TA';
-        insert cuenta;
-        
-        Agencia__C agencia = new agencia__C(name='Test', zona__C='2');
-        insert agencia;
-        
-        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
-        f.Zona__c='2';
-        f.Usuario__c = userinfo.getUserId();
-        insert f;
-        
-        municipio__C municipio = new municipio__C();
-        municipio.Codigo_Municipio__c='01';
-        municipio.nombre_municipio__C='Test';
-        municipio.codigo_departamento__c= '	120';
-        insert municipio;       
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
         
         ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
         controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
         controlCasos.contrato.Acepto_Condiciones_de_Portal_Autogestion__c = true;
         controlCasos.AceptarTerminos();
         
-        list<RecordType> tiposR0 = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Aumento_Disminucion_Aportes'];
         
         //Caso Aumento Disminución de Aporte
         controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Aumento_Disminucion_Aportes').getRecordTypeId();
         controlCasos.cTipoCaso = new claseTipoCaso('Aumento_Disminucion_Aportes');
         controlCasos.Caso.Status = 'Nuevo';
         controlCasos.Caso.type = 'Solicitud de Gestión';
@@ -247,6 +216,99 @@ public class TestCasosPortalAutoGestion {
         
         controladorCasosPortalAutogestion.estadoCuentaHistorico(claseEnvio, controlCasos.caso.Id);  
         controladorCasosPortalAutogestion.estadoCuentaTrimestral(claseEnvio, controlCasos.caso.Id);
+    }
+    
+    static testMethod void TestCasoConstancias(){
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
+        
+        ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
+        controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
+        
+        //Caso Constancia
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Constancia').getRecordTypeId();
+        controlCasos.cTipoCaso = new claseTipoCaso('Constancia');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        controlCasos.Caso.constancia__C = 'A1';
+        controlCasos.guardar();
+        controlCasos.Caso.fecha_desde__C = date.today();
+        controlCasos.Caso.fecha_hasta__C = date.today();
+        controlCasos.guardar();
+        controlCasos.Caso.fecha_hasta__C = date.today().addmonths(12);
+        controlCasos.guardar();
+        controlCasos.Caso.fecha_hasta__C = date.today().addmonths(4);
+        controlCasos.guardar();
+    }
+    
+    
+    static testMethod void TestCasoEDC(){
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
+        
+        ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
+        controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
+        
+        //Caso EDC
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Estados_Cuenta').getRecordTypeId();
+        controlCasos.cTipoCaso = new claseTipoCaso('Estados_Cuenta');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        controlCasos.caso.Tipo_Estado_Cuenta__c = 'A1';
+        controlCasos.caso.Estado_Cuenta_Detallado__c = 'General';
+        controlCasos.Caso.fecha_desde__C = date.today().addmonths(-12);
+        controlCasos.Caso.fecha_hasta__C = date.today();
+        controlCasos.guardar();
+        controlCasos.VerEDCDetallado();
+        controlCasos.VerEDCGeneral();
+    }
+    
+    static testMethod void TestCasoRepoCarnet(){
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
+        
+        ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
+        controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
+        
+        //Caso Reposición de Carnet
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Reposicion_Carnet').getRecordTypeId();
+        controlCasos.cTipoCaso = new claseTipoCaso('Reposicion_Carnet');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        controlCasos.guardar();
+        controlCasos.ZonaSeleccionada = controlCasos.listaZonas[1].getValue();
+        controlCasos.getListAgentsByZone();
+        controlCasos.caso.Agencia__c =controlCasos.listAgencias[1].getvalue();
+        controlCasos.guardar();
+        controlCasos.loadAgencies();
+    }
+    
+    
+    
+    static testMethod void TestCasoOtros(){
+        Account cliente = [Select Name,identificacion__C from Account limit 1];
+        
+        ApexPages.currentPage().getParameters().put('idCliente',cliente.identificacion__C);
+        controladorCasosPortalAutogestion controlCasos= new controladorCasosPortalAutogestion();
+        
+        //Caso Otros
+        controlCasos.caso = new case();
+        controlCasos.idTipoRegistro = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Otros').getRecordTypeId();
+        controlCasos.cTipoCaso = new claseTipoCaso('Otros');
+        controlCasos.Caso.Status = 'Nuevo';
+        controlCasos.Caso.type = 'Solicitud de Gestión';
+        controlCasos.Caso.Origin = 'Web';
+        controlCasos.Caso.Priority = 'Media';
+        controlCasos.guardar();
+        controlCasos.Caso.Description = 'Media';
+        controlCasos.asuntoOtro();
+        controlCasos.guardar();
     }
        
 }

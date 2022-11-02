@@ -60,6 +60,7 @@ global class controladorAfiliacionCarga {
                             Fecha_Inicio_Aporte__c , Forma_Pago__c, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,id,
+                            DebidaDiligencia__c,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode, estado__C,
                             Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
@@ -74,18 +75,21 @@ global class controladorAfiliacionCarga {
     
     public void BuscarEmpresa(){
         try{
+            String recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Juridico').getRecordTypeId();
             afiliacion.Empresa__c = null;
-             list<account> listCuentas = [select id, name,Cliente_unico_banco__C from account where name like : '%'+buscarEmpresa+'%' and 
-                                         RecordTypeId =:Schema.SObjectType.Account.getRecordTypeInfosByName().get('Juridico').getRecordTypeId() ];
-            if(listCuentas.size()==0) { ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'No se han encontrado coincidencias.'));
-            }else if(listCuentas.size() >0){
+            List<Cuentas__c> listCuentas = [Select Id, Cliente__c, Cliente__r.Name, Cliente__r.Cliente_unico_banco__c, Codigo__c from Cuentas__c
+                                            Where Cliente__r.Name like : '%'+buscarEmpresa+'%' and  Cliente__r.RecordTypeId =:recordTypeId];
+            if(listCuentas.size()==0) {
+                ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'No se han encontrado coincidencias.'));
+            }else{
                 listPopup = new list<classPoPup> ();
-                for(account item: listCuentas){
+                for(Cuentas__c item: listCuentas){
                     classPoPup a = new classPoPup ();
                     a.seleccionado = false;
-                    a.name = item.name;
-                    a.id= item.id;
-                    a.codigo = item.Cliente_unico_banco__C;
+                    a.name = item.Cliente__r.Name;
+                    a.id = item.Cliente__c;
+                    a.codigo = item.Cliente__r.Cliente_unico_banco__C;
+                    a.cuenta = item.Codigo__c;
                     listPopup.add(a);
                 }
                 popEmpresas = true;
@@ -197,18 +201,18 @@ global class controladorAfiliacionCarga {
         try{
             Afiliacion.Codigo_Oficial_SAC__c = null;
             Afiliacion.Oficial_SAC__c = null;
-            afiliacion.Cuentas_Colectivas__c = '';
-            if(afiliacion.Empresa__c !=null){
-                for(cuentas__C item: [select codigo__C from cuentas__C where cliente__C =: afiliacion.Empresa__c and CurrencyIsoCode =:afiliacion.CurrencyIsoCode limit 1]){
-                    afiliacion.Cuentas_Colectivas__c = item.codigo__C;
+            //afiliacion.Cuentas_Colectivas__c = '';
+            for(classPoPup a : listPopup ){
+                if(a.cuenta == afiliacion.Cuentas_Colectivas__c){
+                    afiliacion.Empresa__c = a.id;
+                    Oficiales_X_Empresa__c item = [select codigo_oficial_sac__C, oficial_sac__r.name
+                                                   from Oficiales_X_Empresa__c 
+                                                   where empresa__C=:afiliacion.Empresa__c 
+                                                   and Codigo_Asesor__c=:asesor.Codigo_Asesor__c
+                                                   limit 1];
+                    Afiliacion.Codigo_Oficial_SAC__c =item.codigo_oficial_sac__C;
+                    Afiliacion.Oficial_SAC__c =item.oficial_sac__r.name;
                 }
-                Oficiales_X_Empresa__c item = [select codigo_oficial_sac__C, oficial_sac__r.name
-                                               from Oficiales_X_Empresa__c 
-                                               where empresa__C=:afiliacion.Empresa__c 
-                                               and Codigo_Asesor__c=:asesor.Codigo_Asesor__c
-                                               limit 1];
-                Afiliacion.Codigo_Oficial_SAC__c =item.codigo_oficial_sac__C;
-                Afiliacion.Oficial_SAC__c =item.oficial_sac__r.name;
             }
             popEmpresas = false;
         }catch(exception ex){
@@ -313,7 +317,7 @@ global class controladorAfiliacionCarga {
             integer pocisionProcedencia = -1;
             integer pocisionAdendum = -1;
             integer pocisionSubproducto = -1;
-            integer pocisionEmpresa = -1;
+            integer pocisionCuentaCltv = -1;
             integer pocisionReporteCalidad = -1;
             //integer pocisionOficialSac = -1;
             integer pocisionFormularioCompleto = -1;
@@ -367,8 +371,8 @@ global class controladorAfiliacionCarga {
                 if(item == 'Subproducto'){
                     pocisionSubproducto= i;
                 }
-                if(item == 'Código Empresa'){
-                    pocisionEmpresa = i;
+                if(item == 'Cuenta Colectiva'){
+                    pocisionCuentaCltv = i;
                 }
                 if(item == 'Reporte de Calidad'){
                     pocisionReporteCalidad = i;
@@ -406,7 +410,7 @@ global class controladorAfiliacionCarga {
             if(pocisionPN == -1 ||pocisionSN == -1 ||pocisionPA == -1 || pocisionSA == -1 ||pocisionTipoIdentificacion == -1 ||
                pocisionIdentificacion == -1 || pocisionTieneId == -1 ||pocisionRTN == -1 || pocisionFATCA == -1 ||
                pocisionWAIVER == -1 ||pocisionPEP == -1 ||pocisionProcedencia == -1 || pocisionAdendum == -1 ||
-               pocisionSubproducto == -1 ||pocisionEmpresa == -1 || pocisionReporteCalidad == -1  ||
+               pocisionSubproducto == -1 ||pocisionCuentaCltv == -1 || pocisionReporteCalidad == -1  ||
                pocisionFormularioCompleto == -1 || pocisionAplicaCS == -1 ||pocisionComentarios == -1){
                    retorno.error='Faltan algunos campos en la plantilla, por favor digitarlos todos';
                }else{
@@ -436,14 +440,20 @@ global class controladorAfiliacionCarga {
                        mapCuentas.put(item.Cliente_Unico_Banco__c, item.id);
                    }
                    
-                   map<String, Oficiales_X_Empresa__c> mapOficialSac =new map<String, Oficiales_X_Empresa__c>();
+                   Map<String, Oficiales_X_Empresa__c> mapOficialSac =new map<String, Oficiales_X_Empresa__c>();
+                   Map<String, Cuentas__c> mapCuentasColec =new map<String, Cuentas__c>();
+                   List<String> listCuentas = new List<String>();
                    for(Oficiales_X_Empresa__c item: 
-                       [select codigo_oficial_sac__C, oficial_sac__r.name, empresa__r.cliente_Unico_banco__c
+                       [select codigo_oficial_sac__C, Empresa__c,oficial_sac__r.name, empresa__r.cliente_Unico_banco__c
                         from Oficiales_X_Empresa__c where Codigo_asesor__c =:usuario]){
+                            listCuentas.add(item.Empresa__c);
                             if(!mapOficialSac.containsKey(item.empresa__r.cliente_Unico_banco__c+usuario)){
                                 mapOficialSac.put(item.empresa__r.cliente_Unico_banco__c+usuario, item);
                             }                         
                         }
+                   for(Cuentas__c item: [Select Codigo__c, Cliente__c, Cliente__r.cliente_Unico_banco__c from cuentas__c Where Cliente__c in :listCuentas ]){
+                       mapCuentasColec.put(item.Codigo__C, item);
+                   }
                    //system.debug(ApexPages.currentPage().getParameters().get('page:theForm:idPageBlock:idUsuario'));
                    //String usuario = ApexPages.currentPage().getParameters().get('page:theForm:idPageBlock:idUsuario');
                    //String usuario = 'HN19962';
@@ -479,8 +489,9 @@ global class controladorAfiliacionCarga {
                            retorno.error='El Reporte de Calidad '+data[pocisionReporteCalidad] +' no existe';
                            return retorno;
                        }
-                       if(!mapOficialSac.containsKey(data[pocisionEmpresa]+usuario)){
-                           retorno.error='La empresa con código '+data[pocisionEmpresa] +' no existe';
+                       String codigo = mapCuentasColec.containsKey(data[pocisionCuentaCltv]) ? mapCuentasColec.get(data[pocisionCuentaCltv]).Cliente__r.cliente_Unico_banco__c : null;
+                       if(String.isBlank(codigo) || !mapOficialSac.containsKey(codigo+usuario)){
+                           retorno.error='La cuenta colectiva '+data[pocisionCuentaCltv] +' no existe';
                            return retorno;
                        }
                        if(!mapSiNo.containsKey(data[pocisionTieneId])){
@@ -519,6 +530,7 @@ global class controladorAfiliacionCarga {
                            retorno.error = data[pocisionAplicaCS] +' Valor Inapropiado para la lista valores';
                            return retorno;
                        }
+                       Cuentas__c cta = mapCuentasColec.get(data[pocisionCuentaCltv]);
                        afiliacion.name = data[pocisionPN];
                        afiliacion.Segundo_Nombre__c = data[pocisionSN];
                        afiliacion.Primer_Apellido__c = data[pocisionPA];
@@ -531,12 +543,12 @@ global class controladorAfiliacionCarga {
                        afiliacion.PEP__c = mapSiNo.get(data[pocisionPEP]);
                        afiliacion.Procedencia__c = mapSiNo.get(data[pocisionProcedencia]);
                        afiliacion.Subproducto__r = new Subproducto__c  (Codigo__c = data[pocisionSubproducto]);
-                       afiliacion.Empresa__r = new Account(Cliente_Unico_Banco__c = data[pocisionEmpresa]);
+                       afiliacion.Empresa__c = cta.Cliente__c;// new Account(Cliente_Unico_Banco__c = data[pocisionEmpresa]);
                        afiliacion.Reporte_Calidad__c = mapReporteCalidad.get(data[pocisionReporteCalidad]);
                        afiliacion.Addendum__c = mapSiNo.get(data[pocisionAdendum]);
                        afiliacion.Tiene_Id__c = mapSiNo.get(data[pocisionTieneId]);
-                       afiliacion.Codigo_Oficial_SAC__c = mapOficialSac.get(data[pocisionEmpresa] + usuario).codigo_oficial_sac__C;
-                       afiliacion.Oficial_SAC__c = mapOficialSac.get(data[pocisionEmpresa] + usuario).oficial_sac__r.name;
+                       afiliacion.Codigo_Oficial_SAC__c = mapOficialSac.get(cta.Cliente__r.cliente_Unico_banco__c + usuario).codigo_oficial_sac__C;
+                       afiliacion.Oficial_SAC__c = mapOficialSac.get(cta.Cliente__r.cliente_Unico_banco__c + usuario).oficial_sac__r.name;
                        afiliacion.Formulario_Completo__c = mapSiNo.get(data[pocisionFormularioCompleto]); 
                        afiliacion.Aplica_CS__c = mapSiNo.get(data[pocisionAplicaCS]);
                        afiliacion.Comentarios__c = data[pocisionComentarios];
@@ -565,6 +577,7 @@ global class controladorAfiliacionCarga {
         public string id {get;set;}
         public string name {get;set;}
         public String codigo {get;set;}
+        public String cuenta {get;set;}
     }
 
 }

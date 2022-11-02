@@ -32,6 +32,24 @@ public class testinteresadministrativa2 {
     	 g.fecha ='';
     	 g.ListRegUsuario = null;
          g.pagoInteres.estadoAprobacion ='R';
+         g.TipSaldo = '';
+         g.CalculoSobre = '';
+         g.EstadoAprobacion = '';
+         g.Totalfondo = '';
+         g.Montopignorado = '';
+         g.vc_CALCULADO = '';
+         g.vc_FIJO = '';
+         g.FIJO_SI = true;
+         g.Monto_pago = 0;
+         g.popVerImangen = false;
+         g.verImagen = '';
+         g.Cuenta = 'temporal';
+         g.ActivaCuentaBanco = false;
+         g.Cancelar();
+         g.Modificar();
+         g.MostrarCamposFormPago();
+         g.formapago();
+         g.popSalirImagen();
          g.MostrarVentanaDenegacion();
          g.DesactivaModificar();
          g.eleccionachno();
@@ -55,10 +73,33 @@ public class testinteresadministrativa2 {
          g.eleccionvacioach();
          g.eleccionvacioachno();
          g.eleccionvaciono();
+         g.verArchivo();
          g.FIJOVacio();
          g.CALCULADOVacio();
          g.llenaTipoId();
+         g.BuscarInfor();
+          ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = '12345', Cuenta__c = '12345');
+         upsert a Cuenta__c;
+         g.insertFIle(Blob.valueOf('test'), g.nombreArchivo, a.Id);
+         g.insertFIle(null, g.nombreArchivo, a.Id);
+         g.NombreCompleto = 'Juan';
+         
          classPagoInteresesFPC manda = new classPagoInteresesFPC();
+         manda.pagotsp = 0;
+         manda.Fec_inclusion = date.valueof(Datetime.now()).addDays(1);
+         manda.fechaHasta = date.valueof(Datetime.now()).addDays(1);
+         manda.idbitacora = '';
+         manda.actividades = '';
+         manda.eventos = '';
+         manda.Fechapago = date.valueof(Datetime.now()).addDays(1);
+         manda.accion = '';
+         manda.valor = '';
+         manda.codidocu = '';
+         manda.usuariodenegacion = '';
+         manda.paso = '';
+         manda.LEE_ERRORES = '';
+         manda.P_ERROR = '';
+         manda.estadoAlAprobar = '';
          g.BitacoraRegistro(manda);
          g.BitacoraModificar(manda);
          g.mostrarTabla = false;
@@ -68,10 +109,15 @@ public class testinteresadministrativa2 {
          g.InteresesEspecificos = null;
    		 g.ListBeneficiarios = null;
     	 g.beneficiarioUnico = null;
-		
-         ObjectoReferenciaArchivos__c a = new ObjectoReferenciaArchivos__c (Name = '12345', Cuenta__c = '12345');
-         upsert a Cuenta__c;
-         
+         g.nombreArchivo = '';
+         g.Tipo_Pago = 'Fijo';
+         g.BloqueaCALCULADO = true;
+         g.FIJO_SI = true;
+         g.BloqueaFIJO = false;
+         g.ActivarMonto = false;
+         g.ActivaDiadePago = false;
+         g.ActivaFormadePago = false;
+                          
          ControllerAdministracionIntereses gaa = new ControllerAdministracionIntereses();
 		 gaa.FechInicioPago = date.valueof(Datetime.now()).addDays(1);
          gaa.pagoInteres.estadoAprobacion ='R';
@@ -91,7 +137,12 @@ public class testinteresadministrativa2 {
          ControllerAdministracionIntereses guri = new ControllerAdministracionIntereses();
 		 guri.Forma_Pago = 'ACH';
          guri.MostrarCamposFormPago();
-         
+         guri.TiposdeBancos();  
+         guri.TiposdeCuentas();
+         guri.ActivaBanco = false;
+         guri.ActivaCuentaBanco = false;
+         guri.ActivaTipoCuenta = false;
+       
          ControllerAdministracionIntereses gure = new ControllerAdministracionIntereses();
 		 gure.Forma_Pago = 'ACR';
          gure.formapago();
@@ -159,6 +210,18 @@ public class testinteresadministrativa2 {
             pagoFPC.accion = 'Insertar';
             pagoFPC.valor = 'Mucho';
             pagoFPC.codidocu = 'varios';
+         	pagoFPC.TotalFondo = '';
+         	pagoFPC.CantidadPignorada = '';
+         	pagoFPC.idbitacora = '';
+         	pagoFPC.actividades = '';
+         	pagoFPC.eventos = '';
+         	pagoFPC.accion = '';
+         	pagoFPC.Fec_inclusion = date.valueOf(Datetime.now());
+         	pagoFPC.fechaHasta = date.valueOf(Datetime.now());
+         	pagoFPC.valor = '';
+         	pagoFPC.codidocu = '';
+         	pagoFPC.usuariodenegacion = '';
+         	pagoFPC.paso = '';
          
          classAdmInteres AdminI = new classAdmInteres();
          AdminI.fec_inclusion = Date.valueOf(Datetime.now());
@@ -223,8 +286,8 @@ public class testinteresadministrativa2 {
          pagorA.P_ERROR = 'Malo';
          
          //PARA API ControllerAPIPagoIntereses
-    	classPagoInteresesFPC fcsds = ControllerAPIPagoIntereses.BuscarCuenta('72333');
-        classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta2('27366');
+    	classPagoInteresesFPC fcsd = ControllerAPIPagoIntereses.BuscarCuenta2('27366');
+        classPagoInteresesFPC fcsds = ControllerAPIPagoIntereses.BuscarCuenta('72333');
         classBitacora bitacora = new classBitacora();
         String resultado2 = ControllerAPIPagoIntereses.INSERTA_BITACORA(bitacora);
         classPagoInteresesFPC ClassInteres = new classPagoInteresesFPC();
@@ -244,6 +307,7 @@ public class testinteresadministrativa2 {
          wer3.p_Error = 'Error1';
          wer3.pc_Imagen = 'ErrorImagen';
          
+         
          //API InteresesAprobados
         // controllerAPIinteresAprobados pago = new controllerAPIinteresAprobados();
          classAdmInteres_2 n = new classAdmInteres_2();
@@ -262,5 +326,102 @@ public class testinteresadministrativa2 {
          
      }
 
+@IsTest
+static void testModificar(){
+    ControllerAdministracionIntereses g = new ControllerAdministracionIntereses();
+    //g.EstadoCuenta =  'I'; 
+    Test.startTest();
+        /*g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Codigocausa = '02';
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Codigocausa = '03';
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Codigocausa = '04';
+        g.Modificar();*/
+        g = new ControllerAdministracionIntereses();
+        g.FIJO_SI = true;
+        g.Monto_pago = null;
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.FIJO_SI = false;
+        g.CALCULADO_SI = true;
+        g.Monto_pago = null;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+        
+        g = new ControllerAdministracionIntereses();
+        g.DiadePagos = ' --Ninguno-- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = ' --Ninguno-- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'ACH';
+        g.Nombre_Banco = ' --Ninguno-- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'AH';
+        g.Cuenta_Banco = '';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
 
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'ACH';
+        g.Cuenta_Banco = '';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'AH';
+        g.Cuenta_Banco = 'Test';
+        g.Tipo_Cuenta = ' --Ninguno-- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'ACH';
+        g.Cuenta_Banco = 'Test';
+        g.Tipo_Cuenta = ' --Ninguno-- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Modificar();
+
+        g = new ControllerAdministracionIntereses();
+        g.Forma_Pago = 'ACH';
+        g.Cuenta_Banco = 'Test';
+        g.Tipo_Cuenta = ' --Ninguno- ';
+        g.FIJO_SI = false;
+        g.Monto_pago = 10.00;
+        g.pagoInteres.estadoAprobacion = 'f';
+        g.Comprobante = Blob.valueOf('Test');
+        g.Cuenta = '1234';
+        g.NombreCompleto = 'Test'; 
+        g.Identidad = '1234' ;
+        g.TipoFondo = '1';
+        g.CausaDescripcion = 'Test'; 
+        g.EstadoCuenta = 'f';  
+        g.DiadePagos = '1';
+        g.Modificar();
+    Test.stopTest();
+    
+}
 }

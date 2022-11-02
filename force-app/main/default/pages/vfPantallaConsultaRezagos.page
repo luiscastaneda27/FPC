@@ -259,6 +259,12 @@
                                     <th scope="col">
                                         <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Rezago"><strong>Asesor</strong> </div>
                                     </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Compra Dolar"><strong>Aplicar</strong> </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-align_absolute-center" style="font-family:Open Sans Light,Helvetica,Arial,sans-serif;" title="Rezago"><strong>Eliminar</strong> </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -319,6 +325,23 @@
                                                 <apex:outputText >{!item.Asesor}</apex:outputText>
                                             </div>
                                         </td>
+                                        <td scope="row" style= "text-align: center;">                                            
+                                            <div >
+                                                <apex:commandLink action="{!Aplicar}" status="status" reRender="theForm" >  
+                                                    <apex:image value="{!$Resource.Acep}" width="40" height="40"/>
+                                                    <apex:param value="{!item.Cod_referencia}" AssignTo="{!codReferencia}"  name="APV1APROBACION" /> 
+                                                </apex:commandLink>
+                                            </div>
+                                        </td>
+                                        <td scope="row" style= "text-align: center;">
+                                            <div class="slds-scope">
+                                                <apex:commandLink action="{!denegarRezago}" status="status" reRender="theForm" >
+                                                    <apex:image value="{!$Resource.Cerrar}" width="40" height="40"/>
+                                                    <apex:param value="{!item.idRezago}" AssignTo="{!codReferencia}"  name="APV2DENEGACION" />
+                                                    <apex:param value="{!item.Cod_referencia}" AssignTo="{!codigo}"  name="APV2DENEGACION" />
+                                                </apex:commandLink>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </apex:repeat>
                             </tbody>
@@ -356,6 +379,73 @@
                             </section>
                             <div class="slds-backdrop slds-backdrop_open"></div>
                         </apex:outputPanel>	
+                        
+                         <apex:outputPanel rendered="{!popEliminar}"  >
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header" >
+                                            <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Cerrar</span>
+                                            </apex:commandLink>
+                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Eliminar Rezago</h1>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium ">
+                                            <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                                <fieldset class="slds-form-element">
+                                                    
+                                                    <div class="slds-modal__content slds-p-around--medium">
+                                                        <h3 class="slds-text-heading_medium slds-hyphenate">¿Está seguro(a) que desea eliminar el rezago con código de referencia {!codigo}?</h3>  
+                                                        
+                                                    </div>
+                                                    
+                                                    <footer class="slds-modal__footer">
+                                                        <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Aceptar" />&nbsp;
+                                                        <apex:commandButton value="Elimiar" action="{!denegarRezago}" styleClass="Aceptar"  />                    
+                                                    </footer>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </apex:outputPanel>
+                        
+                        <apex:outputPanel rendered="{!popAplicar}"  >
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header" >
+                                            <apex:commandLink action="{!cerrar}" styleclass="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close">
+                                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Cerrar</span>
+                                            </apex:commandLink>
+                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >Aplicar Rezago</h1>
+                                        </header>
+                                        <div class="slds-modal__content slds-p-around_medium ">
+                                            <div class="slds-form slds-form_compound slds-align--absolute-left">
+                                                <fieldset class="slds-form-element">
+                                                    
+                                                    <div class="slds-modal__content slds-p-around--medium">
+                                                        <h3 class="slds-text-heading_medium slds-hyphenate">¿Está seguro(a) que desea aplicar el rezago con código de referencia {!codReferencia}?</h3>  
+                                                        
+                                                    </div>
+                                                    
+                                                    <footer class="slds-modal__footer">
+                                                        <apex:commandButton value="Cancelar" action="{!cerrar}" styleClass="Aceptar" />&nbsp;
+                                                        <apex:commandButton value="Aplicar" action="{!Aplicar}" styleClass="Aceptar"  />                    
+                                                    </footer>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </apex:outputPanel>
+                        
                     </div>
                     
                 </apex:form>

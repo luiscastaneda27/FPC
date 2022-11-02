@@ -624,7 +624,7 @@
          
             <div class="slds-scope slds-align--absolute-center" style="width: 1000px;margin: 0 auto;">
             	<div id="Login">
-                	<h3 class="Title"> Ingreso Afiliados </h3>
+                	<h3 class="Title"> Ingreso Afiliados</h3>
                     <div class="" id="formLogin" method="post" novalidate="novalidate">
                  		<div class="Form">
                             <p>

@@ -244,14 +244,22 @@
                                         <apex:selectOption itemValue="I" itemLabel="Forma Individual" />
                                         <apex:selectOption itemValue="M" itemLabel="Forma Masiva" />
                                         <apex:actionSupport event="onchange" action="{!accionVacia}" status="status"  />
-                                    </apex:selectList>
-                                    <a style="display: {!IF(tipoAfiliacion = 'I', 'none;', 'block;')}"  href="{!linkPortal}resource/1593535478000/Plantilla_Afiliacion_Masiva?" target="_blank" > Descargar Plantilla</a>
+                                    </apex:selectList><br/>
+                                    <a style="display: {!IF(tipoAfiliacion = 'I', 'none;', 'block;')}"  href="{!linkPortal}resource/1659229291000/PlantillaAfiliacionMasiva?" target="_blank" > Descargar Plantilla</a>
                                 </td>
                                 <td style="width:50%; ">
-                                    <apex:outputText rendered="{!tipoAfiliacion = 'M'}" value="Buscar Empresa" /><br/>
-                                    <apex:inputText rendered="{!tipoAfiliacion = 'M'}" value="{!buscarEmpresa}" >
-                                        <apex:actionSupport event="onchange" action="{!BuscarEmpresa}" status="status" reRender="idPageBlock" />
-                                    </apex:inputText>
+                                     <table width="100%">
+                                        <tr>
+                                            <td style="width:30%;">
+                                                <apex:outputText rendered="{!tipoAfiliacion = 'M'}" value="Buscar Empresa" /><br/>
+                                                <apex:inputText rendered="{!tipoAfiliacion = 'M'}" value="{!buscarEmpresa}" />
+                                            </td>
+                                            <td style="width:70%;">
+                                                <br/>
+                                                <apex:commandButton rendered="{!tipoAfiliacion = 'M'}"  value="Buscar" action="{!BuscarEmpresa}" styleClass="slds-button slds-button--brand" />
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                             
@@ -260,9 +268,10 @@
                         <!--br/><br/-->
                     </div>
                     
-                    
+                    <br/>
                    <apex:pageBlockSection rendered="{!tipoAfiliacion = 'I'}" title="Nueva Afiliación" columns="2">
-                    	<apex:inputField value="{!Afiliacion.name}" />
+                    	
+                       <apex:inputField value="{!Afiliacion.name}" />
                        <apex:inputField value="{!Afiliacion.Segundo_Nombre__c}" />
                        
                        <apex:inputField value="{!Afiliacion.Primer_Apellido__c}" />
@@ -292,24 +301,15 @@
                        
                        
                        <apex:outputField value="{!Afiliacion.Subproducto__c}" />
-                            <!--apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                       </apex:inputField>
-                       <apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
-                           <apex:selectOptions value="{!listSubProductos}" />
-                           <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                       </apex:selectList-->
                        <apex:outputField value="{!producto.name}"  />
                        
                         <apex:inputText label="Buscar Empresa" value="{!buscarEmpresa}" >
                             <apex:actionSupport event="onchange" action="{!BuscarEmpresa}" status="status" reRender="idPageBlock" />
                        </apex:inputText>
                        <apex:outputField value="{!Afiliacion.Empresa__c}" />
-                       <!--apex:selectList size="1" value="{!Afiliacion.Empresa__c}" title="Empresa">
-                           <apex:selectOptions value="{!listEmpresas}" />
-                           <apex:actionSupport action="{!selectCuenta}" event="onchange" reRender="theForm" status="status" />
-                       </apex:selectList-->
-                       <apex:inputField value="{!Afiliacion.Reporte_Calidad__c}" />
                        
+                       <apex:inputField value="{!Afiliacion.Reporte_Calidad__c}" />
+                       <apex:outputText />
                        
                        <apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
                        <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/>
@@ -320,6 +320,7 @@
                        <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" />
                        <apex:inputField value="{!Afiliacion.Aplica_CS__c }" />
                        
+                       <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                        <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        
                       
@@ -449,19 +450,30 @@
                                             
                                             <div class="slds-modal__content slds-p-around--medium">
                                                <table width="100%" >
+                                                   <tr>
+                                                       <th style="width:10%;" />
+                                                       <th style="width:70%;">
+                                                          <b> Empresa</b>
+                                                       </th>
+                                                       <th style="width:20%;">
+                                                           <b>Cuenta</b>
+                                                       </th>                                                           
+                                                   </tr>
                                                    <apex:repeat value="{!listPopup}" var="item" >
                                                        <tr>
                                                            <td style="width:10%;">
                                                                <apex:inputCheckbox value="{!item.seleccionado}" >
                                                                    <apex:actionSupport event="onchange" status="status" reRender="theForm" action="{!selectCuenta}" >
-                                                                       <apex:param value="{!item.id}" assignTo="{!afiliacion.empresa__c}" name="SUBPEm" />
+                                                                       <apex:param value="{!item.cuenta}" assignTo="{!afiliacion.Cuentas_Colectivas__c}" name="SUBPEm" />
                                                                    </apex:actionSupport>
                                                                </apex:inputCheckbox>
                                                            </td>
-                                                           <td style="width:90%;">
+                                                           <td style="width:70%;">
                                                                <apex:outputText value="{!item.name}" />
                                                            </td>
-                                                           
+                                                           <td style="width:20%;">
+                                                               <apex:outputText value="{!item.cuenta}" />
+                                                           </td>                                                           
                                                        </tr>
                                                    </apex:repeat>
                                                 </table>
@@ -495,10 +507,10 @@
                                                <table width="100%" >
                                                    <tr>
                                                        <th style="width:80%;">
-                                                           <apex:outputText value="Nombre" />
+                                                           <b> <apex:outputText value="Nombre" /></b>
                                                        </th>
-                                                       <th style="width:80%;">
-                                                           <apex:outputText value="Código" />
+                                                       <th style="width:20%;">
+                                                           <b><apex:outputText value="Cuenta" /></b>
                                                        </th>
                                                        
                                                    </tr>
@@ -507,8 +519,8 @@
                                                            <td style="width:80%;">
                                                                <apex:outputText value="{!item.name}" />
                                                            </td>
-                                                           <td style="width:80%;">
-                                                               <apex:outputText value="{!item.codigo}" />
+                                                           <td style="width:20%;">
+                                                               <apex:outputText value="{!item.cuenta}" />
                                                            </td>
                                                            
                                                        </tr>

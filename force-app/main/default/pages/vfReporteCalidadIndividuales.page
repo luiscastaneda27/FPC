@@ -7,7 +7,6 @@
             <meta http-equiv="X-UA-Compatible" content="IE=8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             
-            <!-- Import the Design System style sheet -->
             <apex:slds />
             
             <style>
@@ -44,9 +43,6 @@
                             <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
                                 
                                     <tr >
-                                         <!--td scope="col" colspan="1">
-                                            Enviar
-                                        </td -->
                                         <td scope="col" colspan="1">
                                             Primer Nombre
                                         </td >
@@ -64,25 +60,16 @@
                                             Identificación
                                         </td>
                                         <td scope="col" colspan="1">
-                                            Asesor Comercial
-                                        </td>
-                                        <td scope="col" colspan="1">
                                             Fecha Envío Memo 
                                         </td>
                                         <td scope="col" colspan="1">
                                             
                                         </td>
-                                         <!--td scope="col" colspan="1">
-                                            
-                                        </td-->
                                         
                                     </tr>
                                 <tbody>
                                     <apex:repeat value="{!listAfiliaciones}" var="item">
                                         <tr>
-                                            <!--td>
-                                            	<apex:inputField value="{!item.Aprueba_SAC__C}" rendered="{!item.Formulario_Completo__c ='Si'}" />
-                                            </td-->
                                             <td>
                                                 <apex:outputField value="{!item.name}" />
                                             </td>
@@ -99,9 +86,6 @@
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
                                             </td>
-                                             <td>
-                                                <apex:outputField value="{!item.Asesor_Comercial__c}" />
-                                            </td>
                                             <td>
                                                 <apex:outputField value="{!item.Fecha_Envio_Memo__c}" />
                                             </td>
@@ -111,24 +95,15 @@
                                                 </apex:commandLink>
                                                 
                                             </td>
-                                            <!--td>
-                                                <apex:commandLink action="{!SelectPopEliminar}" value="Eliminar" reRender="theForm" status="status" >
-                                                    <apex:param value="{!item.id}" assignTo="{!idAfiliacion}" name="idAfiliacion" />
-                                                </apex:commandLink>
-                                            </td-->
-                                            
                                         </tr>
                                     </apex:repeat>
                                 </tbody>
                             </table>
-                            <!--footer class="slds-modal__footer">
-                                <apex:commandButton status="status" reRender="idPageBlock" style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Enviar" action="{!enviar}"  />
-                            </footer-->
                         </apex:outputPanel>
                     </apex:pageBlockSection>
                     
                    <apex:pageBlockSection title="Aditar Afiliación" rendered="{!afiliacion.id != null}" columns="2">
-                    	<apex:inputField value="{!Afiliacion.name}" />
+                       <apex:inputField value="{!Afiliacion.name}" />
                        <apex:inputField value="{!Afiliacion.Segundo_Nombre__c}" />
                        
                        <apex:inputField value="{!Afiliacion.Primer_Apellido__c}" />
@@ -150,22 +125,12 @@
                        
                        <apex:inputField value="{!Afiliacion.Addendum__c}" />
                        <apex:outputField label="Nombre de la Empresa" value="{!Afiliacion.Empresa__r.name}" />
-                           
-                        
-                       
                        
                        <apex:outputField value="{!Afiliacion.Subproducto__r.name}" />
-                       <!--apex:outputPanel>
-                           <apex:selectList size="1" value="{!Afiliacion.Subproducto__c}" title="Sub Producto">
-                               <apex:selectOptions value="{!listSubProductos}" />
-                               <apex:actionSupport event="onchange" action="{!SelectSubProducto}" status="status" reRender="idPageBlock" />
-                           </apex:selectList>
-                       </apex:outputPanel-->
                        <apex:outputField value="{!Afiliacion.Subproducto__r.producto__r.name}"  />
                        
-                      <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
+                       <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
                        <apex:outputField value="{!Afiliacion.Formulario_Completo__c}" />
-                       
                        
                        <apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor"/>
                        <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/>
@@ -187,7 +152,8 @@
                            <apex:selectOption itemLabel="N / A" itemValue="N / A" />
                            <apex:actionSupport event="onchange" reRender="theForm" status="status" action="{!accionVacia}" />
                        </apex:selectList>
-                        
+                       
+                       <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                        <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                        
                     </apex:pageBlockSection>

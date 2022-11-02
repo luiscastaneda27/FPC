@@ -790,6 +790,8 @@
                                     <br/>
                                     <apex:commandButton value="Guardar" action="{!guardar}" styleClass="slds-button slds-button--brand"
                                                         rendered="{!AND(mostrarGuardar, !cTipoCaso.reversiones)}"/>
+                                    <apex:commandButton value="Guardar Cta" action="{!actualizarCta}" styleClass="slds-button slds-button--brand"
+                                                        rendered="{!mostrarGuardarAProb}"/>
                                                         
                                 </div>
                             </div>
