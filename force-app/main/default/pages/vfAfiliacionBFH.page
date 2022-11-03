@@ -106,7 +106,7 @@
                                                 <apex:outputField value="{!item.Numero_Cuenta__c}" />
                                             </td>
                                              <td>
-                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
+                                                <apex:outputField value="{!item.Oficial_SAC__c}" />
                                             </td>
                                             <td>  
                                                 <apex:commandLink action="{!editar}" value="Ver"  reRender="theForm" status="status" >
