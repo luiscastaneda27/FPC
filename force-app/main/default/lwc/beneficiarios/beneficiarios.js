@@ -246,7 +246,7 @@ export default class Beneficiarios extends LightningElement {
             if(this.data.listPorcentajes[j].cuenta == this.data.cuentaSelecionadaLabel && this.data.listPorcentajes[j].porcentajeDireto != 100 && this.data.esBeneficiarioDirecto){
                 this.pushMessage('Advertencia', 'warning', 'En la cuenta '+this.data.listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios directos esta en '+this.data.listPorcentajes[j].porcentajeDireto+'%');
                 return;
-            }else if(this.data.listPorcentajes[j].cuenta == this.data.cuentaSelecionadaLabel && this.data.listPorcentajes[j].porcentajeContingencia != 100 && !this.data.esBeneficiarioDirecto){
+            }else if(this.data.listPorcentajes[j].cuenta == this.data.cuentaSelecionadaLabel && this.data.listPorcentajes[j].porcentajeContingencia != 100 && !this.data.esBeneficiarioDirecto && this.data.listBeneficiarios.length > 0){
                 this.pushMessage('Advertencia', 'warning', 'En la cuenta '+this.data.listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios de contingencia esta en '+this.data.listPorcentajes[j].porcentajeContingencia+'%');
                 return;
             }
