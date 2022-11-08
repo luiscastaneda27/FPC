@@ -1,0 +1,43 @@
+<template>
+    <lightning-card title="Proyección de Saldos" icon-name="utility:graph">
+        <lightning-button-icon icon-name="utility:refresh" variant="border-filled" alternative-text="Show More"
+            slot="actions" onclick={init}></lightning-button-icon>
+        <c-chart if:false={showSpinner} type="bar" responsive="true">
+            <c-dataset labels={allData.anios}>
+                <c-data label="Aporte" detail={allData.aportes} backgroundcolor='#095aab' stack="1"></c-data>
+                <c-data label="Interes" detail={allData.intereses} backgroundcolor='#cbc82d' stack="1"></c-data>
+            </c-dataset>
+            <c-cartesian-axis axis="x" stacked="true">
+            </c-cartesian-axis>
+            <c-cartesian-axis axis="y" stacked="true"></c-cartesian-axis>
+        </c-chart>
+    </lightning-card>
+    <br>
+    <lightning-card title="Punto de Equilibrio" icon-name="utility:graph">
+        <c-chart if:false={showSpinner}  type="line" responsive="true">
+            <c-dataset labels='{allData.aniosPuntoEqui}'>
+                <c-data label="Interes" backgroundcolor="#cbc82d" bordercolor="#cbc82d"
+                    detail={allData.interesesPuntoEqui} fill="false"></c-data>
+                <c-data label="Comisión" detail={allData.comisiones} backgroundcolor="#095aab"
+                    bordercolor="#095aab" fill="false"></c-data>
+            </c-dataset>
+            <c-title text="Relación entre Intereses y Comisión por Administración"></c-title>
+            <c-tooltip position="nearest" mode="index" enabled="true"></c-tooltip>
+            <c-line-configuration tension="0.4"></c-line-configuration>
+            <c-cartesian-axis axis="x" position="bottom" type="category"></c-cartesian-axis>
+            <c-cartesian-linear-axis axis="y" position="left"  title-display="false"
+                grid-zerolinecolor="rgba(225, 96, 50, 1" grid-zerolinewidth="3">
+                 </c-cartesian-linear-axis>
+        </c-chart>
+    </lightning-card>
+
+    <template if:true={showSpinner}>
+        <div id="activityIndicator" class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading, Please Wait...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </template>
+</template>

@@ -1,0 +1,278 @@
+<template>
+     <table width="100%" >
+        <tr>
+            <td style="width: 12%;padding-top: 15px;" >
+                Seleccione una cuenta
+            </td>
+            <td style="width: 88%;">
+                <lightning-combobox value={data.cuentaSelecionada}
+                style="width: 20%;" options={data.listCuentas}
+                onchange={handleChangeCuenta} placeholder="Seleccione">
+                </lightning-combobox >
+            </td>
+        </tr>
+    </table>
+    <!--lightning-combobox value={data.cuentaSelecionada} label="Seleccione una cuenta"
+                style="width: 20%;" options={data.listCuentas}
+                onchange={handleChangeCuenta} placeholder="Seleccione">
+                </lightning-combobox-->
+    <br/>
+    <lightning-card icon-name="standard:customers" title={data.tituloDirec}>
+        <lightning-button if:true={mostrarBoton} icon-name="utility:record_update" label="Actualizar" slot="actions" onclick={onclickActualizar} variant="brand">
+        </lightning-button>
+        <lightning-datatable key-field="id" columns={columns} data={data.listBeneficiariosDirec} hide-checkbox-column>
+        </lightning-datatable>
+    </lightning-card>
+    <br/>
+    <lightning-card icon-name="standard:groups" title={data.tituloCont}>
+        <lightning-button if:true={mostrarBoton} icon-name="utility:record_update" label="Actualizar" slot="actions" onclick={onclickActualizarCont} variant="brand">
+        </lightning-button>
+        <lightning-datatable key-field="id" columns={columns} data={data.listBeneficiariosCont} hide-checkbox-column>
+        </lightning-datatable>
+    </lightning-card>
+
+
+    <template if:true={popUpdate}>
+        <div role="dialog" tabindex="-1" aria-labelledby="header43"
+            class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <div class="slds-modal__content">
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cancelar}>
+                            <lightning-icon icon-name="utility:close"
+                                alternative-text="close"
+                                variant="inverse"
+                                size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate"> {data.tituloPop} </h1>
+                    </div>
+                    <div style="margin-top: 10px;margin-left: 10px;margin-right:10px;" class="slds-path">
+                        <div class="slds-grid slds-path__track">
+                            <div class="slds-grid slds-path__scroller-container">
+                                <div class="slds-path__scroller">
+                                    <div class="slds-path__scroller_inner">
+                                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                            <template for:each={steps} for:item="step">
+                                                <li key={step.order} class={step.classList} data-id={step.value}
+                                                    role="presentation">
+                                                    <a data-value={step.value} id={step.value}
+                                                        aria-selected={step.selected} class="slds-path__link" href="#"
+                                                        role="option" tabindex={step.tabIndex}>
+                                                        <span class="slds-path__stage">
+                                                            <lightning-icon icon-name="utility:check"></lightning-icon>
+                                                            <span class="slds-assistive-text">Stage Complete</span>
+                                                        </span>
+                                                        <span class="slds-path__title">{step.label}</span>
+                                                    </a>
+                                                </li>
+                                            </template>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <lightning-layout vertical-align="stretch" multiple-rows="true">
+                        <lightning-layout-item flexibility="auto" padding="around-small" size="12">
+                            <lightning-card icon-name="standard:groups" title={data.titulo}
+                                style="text-align: center;">
+                                <lightning-button label="Nuevo Beneficiario" slot="actions" onclick={onclickNuevoBenef}
+                                    variant="brand" if:false={inputDisabled}></lightning-button>
+                                <!--table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped"  width="100%" -->
+                                <table width="100%">
+                                    <tr>
+                                        <!--th style="width: 7.7%;">
+                                            <div title="Cuenta">Cuenta</div>
+                                        </th>
+                                        <th class="" scope="col" style="width: 7.7%;">
+                                            <div title="Beneficiario">Beneficiario</div>
+                                        </th-->
+                                        <th style="width: 9.1%;">
+                                            <div title="Primer Nombre">Primer N...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Segundo Nombre">Segundo N...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Primer Apellido">Primer A...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Segundo Apellido">Segundo A...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Porcentaje">Porcentaje</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Fecha Nacimiento">Fecha Nac...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Sexo">Sexo</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Tipo de Identificación">Tipo Ident...</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Identificación">Identidad</div>
+                                        </th>
+                                        <th style="width: 9.1%;">
+                                            <div title="Parentesco">Parentesco</div>
+                                        </th>
+                                        <th style="width: 9%;">
+                                            <div if:true={inputDisabled} title="Grado">Grado</div>
+                                        </th>
+                                    </tr>
+                                    <tbody>
+                                        <template for:each={data.listBeneficiarios} for:item="record">
+                                            <tr key={record.id}>
+                                                <!--td>
+                                                    <div title={record.cuenta}>
+                                                        <lightning-combobox name={record.index} value={record.cuentaId}
+                                                            style="width: 95%;" options={data.listCuentas}
+                                                            onchange={handleChangeCuenta} placeholder="Seleccione"
+                                                            disabled={inputDisabled}>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.tipoBeneficiario}>
+                                                        <lightning-combobox name={record.index} style="width: 95%;"
+                                                            value={record.tipoBeneficiario}
+                                                            options={data.listTipoBeneficiarios}
+                                                            onchange={handleChangeTipoBenef} placeholder="Seleccione"
+                                                            disabled={inputDisabled}>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </td-->
+                                                <td>
+                                                    <div title={record.primerNombre}>
+                                                        <lightning-input type="text" name={record.index}
+                                                            value={record.primerNombre} onchange={handleChangePrimerN}
+                                                            style="width: 95%;" disabled={inputDisabled}>
+                                                        </lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.segundoNombre}>
+                                                        <lightning-input type="text" name={record.index}
+                                                            value={record.segundoNombre} onchange={handleChangeSegundoN}
+                                                            style="width: 95%;" disabled={inputDisabled}>
+                                                        </lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.primerApellido}>
+                                                        <lightning-input type="text" name={record.index}
+                                                            value={record.primerApellido} onchange={handleChangePrimerA}
+                                                            style="width: 95%;" disabled={inputDisabled}>
+                                                        </lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.segundoApellido}>
+                                                        <lightning-input type="text" name={record.index}
+                                                            value={record.segundoApellido}
+                                                            onchange={handleChangeSegundoA} style="width: 95%;"
+                                                            disabled={inputDisabled}></lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.porcentaje}>
+                                                        <lightning-input type="number" min="0" step="0.01" max="100"
+                                                            name={record.index} value={record.porcentaje}
+                                                            onchange={handleChangePorcentaje} style="width: 95%;"
+                                                            disabled={inputDisabled}></lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.fechaNacimiento}>
+                                                        <lightning-input type="date" name={record.index}
+                                                            min={data.fechaMinima} max={data.fechaMaxima}
+                                                            value={record.fechaNacimiento}
+                                                            onchange={handleChangeFechaNacimiento} style="width: 95%;"
+                                                            disabled={inputDisabled}></lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.sexo}>
+                                                        <lightning-combobox name={record.index} style="width: 95%;"
+                                                            value={record.sexo} options={data.listSexo}
+                                                            onchange={handleChangeSexo} placeholder="Seleccione"
+                                                            disabled={inputDisabled}>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.tipoIdentificacion}>
+                                                        <lightning-combobox name={record.index} style="width: 95%;"
+                                                            value={record.tipoIdentificacion}
+                                                            onchange={handleChangeTipoIdentidad}
+                                                            placeholder="Seleccione" options={data.listIdentificacion}
+                                                            disabled={inputDisabled}>
+                                                        </lightning-combobox>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.identificacion}>
+                                                        <lightning-input type="text" name={record.index}
+                                                            value={record.identificacion}
+                                                            onchange={handleChangeIdentidad} style="width: 95%;"
+                                                            disabled={inputDisabled}></lightning-input>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div title={record.parentesco}>
+                                                        <lightning-combobox name={record.index} style="width: 95%;"
+                                                            value={record.parentesco} options={data.listParentesco}
+                                                            onchange={handleChangeParentesco} placeholder="Seleccione"
+                                                            disabled={inputDisabled}></lightning-combobox>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <br />
+                                                    <div if:true={inputDisabled} title={record.grado}>
+                                                        {record.grado}
+                                                    </div>
+                                                    <lightning-button-icon icon-name="utility:delete"
+                                                    variant="border-filled" alternative-text="Delete"
+                                                    name={record.index} class="slds-m-left_xx-small"
+                                                    title="Delete" onclick={eliminar} if:false={inputDisabled} ></lightning-button-icon>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                                <br /><br /><br /><br />
+                            </lightning-card>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancelar" title="Cancelar" onclick={cancelar} class="slds-m-left_x-small"
+                        if:false={inputDisabled}>
+                    </lightning-button>
+                    <lightning-button label="Atras" title="Atras" onclick={atras} class="slds-m-left_x-small"
+                        if:true={inputDisabled}>
+                    </lightning-button>
+                    <lightning-button label="Siguiente" title="Siguiente" onclick={onclickSiguiente} variant="brand"
+                        class="slds-m-left_x-small" if:false={inputDisabled}></lightning-button>
+                    <lightning-button label="Confirmar" title="Confirmar" onclick={confirmar} variant="brand"
+                        class="slds-m-left_x-small" if:true={inputDisabled}></lightning-button>
+                </footer>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </template>
+
+
+    <template if:true={showSpinner}>
+        <div id="activityIndicator" class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading, Please Wait...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </template>
+</template>

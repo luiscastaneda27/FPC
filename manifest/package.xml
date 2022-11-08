@@ -2098,5 +2098,11 @@
 		<members>*</members>
 		<name>Layout</name>
 	</types>
+	<types>
+		<members>beneficiarios</members>
+		<members>enviarCorreoProyeccion</members>
+		<members>graficoProyecciones</members>
+		<name>LightningComponentBundle</name>
+	</types>
 	<version>55.0</version>
 </Package>

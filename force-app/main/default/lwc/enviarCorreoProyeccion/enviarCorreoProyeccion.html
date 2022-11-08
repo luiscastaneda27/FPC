@@ -1,0 +1,38 @@
+<template>
+    <header class="slds-modal__header">
+        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Enviar Proyección por Correo
+        </h1>
+    </header>
+    <lightning-card icon-name="standard:email" title="Envio de correo">
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item padding="around-small" size="6">
+                <div class="header-column">
+                    <lightning-input type="mail" name="correo" label="Correo" value={allData.correo}
+                        onchange={handleChange} required ></lightning-input>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="around-small" size="6">
+                <div class="header-column">
+                    <lightning-combobox name="proyeccion" label="Tipo de Proyección" value={allData.proyeccion} placeholder="Selecciona una Opción"
+                        options={options} onchange={handleChange} required ></lightning-combobox>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+    <br><br>
+    <footer class="slds-modal__footer">
+        <lightning-button label="Enviar" class="slds-m-top--medium" variant="brand"
+                    disabled={allData.disabledBoton} onclick={enviarCorreo}></lightning-button>
+    </footer>
+
+    <template if:true={showSpinner}>
+        <div id="activityIndicator" class="slds-spinner_container">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                <span class="slds-assistive-text">Loading, Please Wait...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </template>
+</template>
