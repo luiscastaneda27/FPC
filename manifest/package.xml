@@ -13,6 +13,10 @@
 		<name>ApexTrigger</name>
 	</types>
 	<types>
+		<members>*</members>
+		<name>Flow</name>
+	</types>
+	<types>
 		<members>Accionista__c.Cliente__c</members>
 		<members>Accionista__c.Correo_Electronico__c</members>
 		<members>Accionista__c.Identidad__c</members>
