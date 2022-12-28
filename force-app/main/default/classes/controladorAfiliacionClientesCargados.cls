@@ -87,12 +87,14 @@ public class controladorAfiliacionClientesCargados {
         try{
             integer contador = 0;
             String Codigo;
+            List<Reporte_calidad__C> listUpsert = new List<Reporte_calidad__C>();
             for(Reporte_calidad__C item:listAfiliaciones ){
                 if(item.enviar_sac__c){
                     item.Fecha_Envio_Memo__c =date.today();
                     item.estado__C = 'V';
                     codigo = item.Codigo_Oficial_SAC__c;
                     contador ++;
+                    listUpsert.add(item);
                 }
             }
             if(contador> 0){
@@ -107,8 +109,8 @@ public class controladorAfiliacionClientesCargados {
                 email.setOrgWideEmailAddressId(owea.get(0).Id);
                 Messaging.SingleEmailMessage[] listEmail = new List<Messaging.SingleEmailMessage>(); 
                 listEmail.add(email); 
-                system.debug('Tamano de lista: '+listEmail.size());
-                update listAfiliaciones;
+                system.debug('Tamano de lista: '+JSON.serialize(listAfiliaciones));
+                update listUpsert;
                 reinicar();
                 Messaging.SendEmailResult[] results = Messaging.sendEmail(listEmail, false);
                 ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Datos guardados exitosamente.'));

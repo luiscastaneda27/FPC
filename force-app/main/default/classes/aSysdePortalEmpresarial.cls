@@ -389,7 +389,7 @@ public class aSysdePortalEmpresarial {
             classJson envio = new classJson();
             envio.contenido = JSON.serialize(claseEnvio);
             String cons = 'contenido=' + envio.contenido;
-            system.debug(cons);
+            system.debug('api/planillas: '+cons);
             
             request.setBody(cons);
             HttpResponse response = http.send(request);

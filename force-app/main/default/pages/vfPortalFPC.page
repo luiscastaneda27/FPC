@@ -625,9 +625,9 @@
                                             </td>
                                             <td >
                                                 <apex:input type="date" style="width: 95%;" value="{!benef.fechanacimiento}"  >
-                                                    <apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiario}" event="onchange" >
+                                                    <!--apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiario}" event="onblur" >
                                                         <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />
-                                                    </apex:actionSupport>
+                                                    </apex:actionSupport-->
                                                 </apex:input>
                                             </td>
                                             <td >
@@ -745,9 +745,9 @@
                                             </td>
                                             <td >
                                                 <apex:input type="date" style="width: 95%;" value="{!benef.fechanacimiento}"  >
-                                                    <apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiarioCont}" event="onchange" >
+                                                    <!--apex:actionSupport status="status" reRender="idForm" action="{!claseCasoD.validacionFechaBeneficiarioCont}" event="onchange" >
                                                         <apex:param value="{!benef.index}" AssignTo="{!claseCasoD.beneficiario.beneficiarioSelec}" name="APV2" />
-                                                    </apex:actionSupport>
+                                                    </apex:actionSupport-->
                                                 </apex:input>
                                             </td>
                                             <td >
@@ -1014,43 +1014,43 @@
                         <apex:pageBlockSection title="Beneficiarios" columns="1" rendered="{!AND(claseCasoD.cTipoCaso.actInformacion, claseCasoD.caso.Origin = 'Agencias_Banco')}">
                             <apex:pageBlockTable value="{!claseCasoD.beneficiario.listBeneficiarios}" var="benef" >
                                 <apex:column headerValue="Cuenta" >
-                                    <apex:outputText value="{!benef.cuenta}" />
+                                    <apex:outputText value="{!benef.cuenta}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Beneficiario" >
-                                    <apex:outputText value="{!benef.tipoBeneficiario}" />
+                                    <apex:outputText value="{!benef.tipoBeneficiario}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Nombres" >
-                                    <apex:outputText value="{!benef.primerNombre + benef.segundoNombre}" />
+                                    <apex:outputText value="{!benef.primerNombre + ' '+ benef.segundoNombre}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <!--apex:column headerValue="Segundo Nombre" >
 <apex:outputText value="{!benef.segundoNombre}" />
 </apex:column-->
                                 <apex:column headerValue="Apellidos" >
-                                    <apex:outputText value="{!benef.primerApellido + benef.segundoApellido}" />
+                                    <apex:outputText value="{!benef.primerApellido + ' '+benef.segundoApellido}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <!--apex:column headerValue="Segundo Apellido" >
 <apex:outputText value="{!benef.segundoApellido}" />
 </apex:column-->
                                 <apex:column headerValue="Procentaje" >
-                                    <apex:outputText value="{!benef.porcentaje}" />
+                                    <apex:outputText value="{!benef.porcentaje}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Fecha de Nacimiento" >
-                                    <apex:outputText value="{0, date, dd-MM-YYYY}"> <apex:param value="{!benef.fechaNacimiento}" /> </apex:outputText>
+                                    <apex:outputText rendered="{!benef.modificado}" value="{0, date, dd-MM-YYYY}"> <apex:param value="{!benef.fechaNacimiento}" /> </apex:outputText>
                                 </apex:column>
                                 <apex:column headerValue="Sexo" >
-                                    <apex:outputText value="{!benef.sexo}" />
+                                    <apex:outputText value="{!benef.sexo}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Tipo Identidad" >
-                                    <apex:outputText value="{!benef.tipoidentificacionLabel}" />
+                                    <apex:outputText value="{!benef.tipoidentificacionLabel}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Identidad" >
-                                    <apex:outputText value="{!benef.identificacion}" />
+                                    <apex:outputText value="{!benef.identificacion}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Parentesco" >
-                                    <apex:outputText value="{!benef.parentescoLabel}" />
+                                    <apex:outputText value="{!benef.parentescoLabel}" rendered="{!benef.modificado}" />
                                 </apex:column>
                                 <apex:column headerValue="Grado" >
-                                    <apex:outputText value="{!benef.grado}" />
+                                    <apex:outputText value="{!benef.grado}" rendered="{!benef.modificado}" />
                                 </apex:column>
                             </apex:pageBlockTable>
                         </apex:pageBlockSection>

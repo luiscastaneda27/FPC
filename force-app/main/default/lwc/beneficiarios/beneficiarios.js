@@ -16,18 +16,18 @@ const columns = [
     //{ label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
     { label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
     { label: 'Sexo', fieldName: 'sexo', type: 'text' },
-    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimiento', type: 'date' },
+    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimientoShow', type: 'date' },
     { label: 'Parentesco', fieldName: 'parentescoLabel', type: 'text' }
 ];
 const columnsBeneficiarios = [
    // { label: 'Cuenta', fieldName: 'cuenta', type: 'text' },
    // { label: 'Beneficiario', fieldName: 'tipoBeneficiario', type: 'text' },
     { label: 'Primer Nombre', fieldName: 'primerNombre', type: 'text' },
-    { label: 'Segundo Nombre', fieldName: 'segundorNombre', type: 'text' },
+    { label: 'Segundo Nombre', fieldName: 'segundoNombre', type: 'text' },
     { label: 'Primer Apellido', fieldName: 'primerApellido', type: 'text' },
     { label: 'Segundo Apellido', fieldName: 'segundoApellido', type: 'text' },
     { label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
-    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimiento', type: 'date' },
+    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimientoShow', type: 'date' },
     { label: 'Sexo', fieldName: 'sexo', type: 'text' },
     { label: 'Tipo Identificacón', fieldName: 'tipoIdentificacionLabel', type: 'text' },
     { label: 'Identificacón', fieldName: 'identificacion', type: 'text' },
@@ -105,9 +105,11 @@ export default class Beneficiarios extends LightningElement {
         this.data.esBeneficiarioDirecto = true;
         this.data.tituloPop = 'Actualización de Beneficiarios Directos - ' + this.data.cuentaSelecionadaLabel;
         this.data.listBeneficiarios = this.data.listBeneficiariosDirec;
+        for(let i=0; i<this.data.listBeneficiarios.length; i++){
+        }
         this.data.titulo = 'Beneficiarios Directos ('+this.data.listBeneficiarios.length+')';
     }
-    onclickActualizarCont(){
+    onclickActualizarCont(){ 
         this.popUpdate = true;
         this.inputDisabled = false;
         this.primerPasoRuta();

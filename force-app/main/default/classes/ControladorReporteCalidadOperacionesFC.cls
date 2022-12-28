@@ -3,7 +3,7 @@ public class ControladorReporteCalidadOperacionesFC {
     public List<Reporte_calidad__C> listAfiliaciones{get;set;}
     public Reporte_calidad__C Afiliacion {get;set;}
     String usuario;
-    String tipoPantalla = 'FC';
+    String tipoPantalla = 'FCS';
     public producto__C producto {get;set;} 
     public Boolean popAfiliacion{get;set;}
     public String nombreTipoPantalla {get;set;}
@@ -87,7 +87,8 @@ public class ControladorReporteCalidadOperacionesFC {
             for(AsesoresPremier__mdt item: [Select AsesorPremier__c, AsesorFPC__c from AsesoresPremier__mdt] ){
                 mapAsesoresPremier.put(item.AsesorPremier__c, item.AsesorFPC__c);
             }
-            list<aSysdeReporteCalidad.ConsultaCliente> listRespuesta = aSysdeReporteCalidad.infoClientes(tipoPantalla);
+            String tp = tipoPantalla.contains('FC') ? 'FC' : tipoPantalla;
+            list<aSysdeReporteCalidad.ConsultaCliente> listRespuesta = aSysdeReporteCalidad.infoClientes(tp);
             Map<String, String> mapAGN = new Map<String, String>();
             for(Agencia__c item : [Select name, Codigo_T24__c from agencia__C]){
                 mapAGN.put(item.Codigo_T24__c, item.name);

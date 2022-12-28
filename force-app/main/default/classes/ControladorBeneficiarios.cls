@@ -47,13 +47,14 @@ public class ControladorBeneficiarios {
             benefWrp.listBeneficiariosCont = new List<Beneficiario> ();
             resultado.mapBeneficiarios.put(item.Id, benefWrp);
         }
+        String cuentas = '';
         if(!esCaso || caso.Cuentas_seleccionada__c == 0){
             for(Beneficiario__C item: 
                 [Select Id,Cuenta__c,Cuenta__r.Codigo__c, Tipo_de_Identificaci_n__c, Identidad__c ,
                  Primer_Nombre__c, Segundo_Nombre__c,Primer_Apellido__c, Segundo_Apellido__c, 
                  TipoBeneficiario__c,Porcentaje__c,Fecha_Nacimiento__c, Sexo__c,
                  Grado_Parentesco__c,Parentesco__c, Id_Externo__c 
-                 from Beneficiario__C
+                 from Beneficiario__c
                  where Cuenta__r.Cliente__c =: (esCaso ? caso.AccountId : recordId) And Cuenta__r.Activo__c = true
                  order by Cuenta__r.Codigo__c, TipoBeneficiario__c,Primer_Nombre__c]){
                      Beneficiario benef = new Beneficiario();
@@ -67,7 +68,8 @@ public class ControladorBeneficiarios {
                      benef.cuentaId = item.Cuenta__c;
                      benef.tipoBeneficiario = item.TipoBeneficiario__c == null ? 'Directo' : item.TipoBeneficiario__c;
                      benef.porcentaje = item.Porcentaje__c;
-                     benef.fechaNacimiento = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
+                     benef.fechaNacimiento = item.Fecha_Nacimiento__c;
+                     benef.fechaNacimientoShow = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
                      benef.sexo = item.Sexo__c;
                      benef.parentesco = item.Parentesco__c;
                      benef.grado = getgradoLabel(benef.parentesco);
@@ -85,6 +87,9 @@ public class ControladorBeneficiarios {
                      resultado.mapBeneficiarios.put(benef.cuentaId, benefWrp);
                  }
         }else{
+            if(Caso.Status != 'Nuevo' && Caso.Status != 'Devuelto'){
+                resultado.listCuentas = new List<PicklistOption>();
+            }
              for(Detalle_caso__c item: 
                 [Select Id,Cuenta__c,Cuenta__r.Codigo__c, Tipo_Identificacion__c, Identificacion__c , 
                  Primer_Nombre__c, Segundo_Nombre__c,Primer_Apellido__c, Segundo_Apellido__c, 
@@ -107,7 +112,8 @@ public class ControladorBeneficiarios {
                      benef.cuentaId = item.Cuenta__c;
                      benef.tipoBeneficiario = item.TipoBeneficiario__c == null ? 'Directo' : item.TipoBeneficiario__c;
                      benef.porcentaje = item.Porcentaje__c;
-                     benef.fechaNacimiento = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
+                     benef.fechaNacimiento = item.Fecha_Nacimiento__c;
+                     benef.fechaNacimientoShow = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
                      benef.sexo = item.Sexo__c;
                      benef.parentesco = getParentescoValue(item.Parentesco__c);
                      benef.parentescoLabel = getPicklistLabel(resultado.listParentesco, benef.parentesco);
@@ -118,6 +124,16 @@ public class ControladorBeneficiarios {
                      resultado.listBeneficiarios.add(benef);
                      
                      BeneficiarioWrapper benefWrp = resultado.mapBeneficiarios.get(benef.cuentaId);
+                     if(benef.modificado){
+                         if(!cuentas.contains(item.Cuenta__c) && Caso.Status != 'Nuevo' && Caso.Status != 'Devuelto'){
+                             cuentas += item.Cuenta__c;
+                             resultado.listCuentas.add(new PicklistOption(item.Cuenta__c, item.Cuenta__r.Codigo__c));
+                         }
+                         if(String.isBlank(resultado.cuentaSelecionada)){
+                             resultado.cuentaSelecionada = item.Cuenta__c;
+                             resultado.cuentaSelecionadaLabel = item.Cuenta__r.Codigo__c;
+                         }
+                     }
                      if(benef.tipoBeneficiario == 'Contingencia'){
                          benefWrp.listBeneficiariosCont.add(benef);
                      }else{
@@ -126,7 +142,7 @@ public class ControladorBeneficiarios {
                      resultado.mapBeneficiarios.put(benef.cuentaId, benefWrp);
                  }
         }
-        System.debug('Respuesta: '+Json.serialize(resultado));
+        //System.debug('Respuesta: '+Json.serialize(resultado));
         resultado.titulo = 'Beneficiarios ('+resultado.listBeneficiarios.size()+')';
         return resultado;
     }
@@ -152,6 +168,7 @@ public class ControladorBeneficiarios {
                 BeneficiarioWrapper benfWr = data.mapBeneficiarios.get(pk.value);
                 data.listBeneficiarios.addAll(benfWr.listBeneficiariosDirec);
                 data.listBeneficiarios.addAll(benfWr.listBeneficiariosCont);
+                System.debug(pk.label +' ----- '+benfWr.listBeneficiariosDirec.size() + ' ---- '+benfWr.listBeneficiariosCont.size());
             }else{
                 data.listBeneficiarios.addAll(data.listBeneficiariosDirec);
                 data.listBeneficiarios.addAll(data.listBeneficiariosCont);
@@ -193,6 +210,7 @@ public class ControladorBeneficiarios {
         delete mapDetalle.values();
         return getBeneficiarios(recordId, true);
     }
+    
     public static List<Beneficiario> validacionCamposBeneficiario(List<Beneficiario> listBeneficiarios){
         for(Integer i=0; i<listBeneficiarios.size(); i++){
             listBeneficiarios[i].modificado = true;
@@ -366,6 +384,7 @@ public class ControladorBeneficiarios {
         @AuraEnabled public Decimal porcentaje {get;set;} 
         @AuraEnabled public Decimal idExterno {get;set;}
         @AuraEnabled public Date fechaNacimiento {get;set;} 
+        @AuraEnabled public Date fechaNacimientoShow {get;set;} 
         @AuraEnabled public String sexo {get;set;} 
         @AuraEnabled public String parentesco {get;set;}
         @AuraEnabled public String parentescoLabel {get;set;}

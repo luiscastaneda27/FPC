@@ -4,8 +4,8 @@ public class CrearUsuarioPortalAutogestionTest {
     static testMethod void crearUsuario(){
         
         Account cliente = new Account();
-        cliente.FirstName = 'Test';
-        cliente.LastName = 'Test';
+        cliente.FirstName = 'Test Test';
+        cliente.LastName = 'Test Test';
         cliente.Identificacion__c = '0709199300155';
         cliente.PersonEmail = 'test@test.com';
         cliente.Tipo_Identificacion__c = '1';

@@ -1,6 +1,7 @@
 trigger enviarASysde on Case (before update) {
-    system.debug('Puedo corrrelo ' + claseUtil.canIRun());
-    if(claseUtil.canIRun() && !System.isFuture()) { 
+   // system.debug('Puedo corrrelo ' + Json.serialize(Trigger.new));
+    
+    if(claseUtil.canIRun() && !System.isFuture() && Boolean.valueOf(Label.FPC_EjecutarTrigger) == true) { 
         
         //Inicio Evaluar SLA's de Caso
         set<Id> caso2 = new set<Id>();
@@ -169,7 +170,8 @@ trigger enviarASysde on Case (before update) {
                     (trigger.oldMap.get(item.id).Status != item.Status && FCsysde < fechaCreacioncaso && tiporetiro=='52'
                      && (item.Status=='Pendiente segunda aprobación' || item.Status=='Cerrado') ) ){
                          if(!test.isRunningTest()){
-                             item.addError('¡No se puede procesar la solicitud debido a Sysde no está cerrado al día de hoy!');  
+                             //item.addError('¡No se puede procesar la solicitud debido a Sysde no está cerrado al día de hoy!');  
+                             casosAprobados.put(item, tipoRnombre);
                          }  
                      }else if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Cerrado'){
                          casosAprobados.put(item, tipoRnombre);
@@ -242,9 +244,6 @@ trigger enviarASysde on Case (before update) {
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
                 } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
                     List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c,DAU_Borrar_Cuotas__c,DAU_Dia_de_pago__c,Nueva_fecha_aporte__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
-                    //Detalle_caso__c detC = new Detalle_caso__c(Id = lstDetCase[0].Id);
-                    //System.debug('lstDetCase: '+lstDetCase.size()+'...'+lstDetCase);
-                    //System.debug('Nuevo Canal de aporte y Banco: '+lstDetCase[0].Nuevo_canal_aporte__c+'...'+lstDetCase[0].Banco__c);
                     if(!lstDetCase.isEmpty()) {
                         if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
                             if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
@@ -311,7 +310,7 @@ trigger enviarASysde on Case (before update) {
                                 aSysdeCallouts.aumentoDisminucion(item.id);     
                             }   
                         } 
-                        else /*if(lstCase[0].Tipo_de_Operacion__c <> 'A8' && lstCase[0].Tipo_de_Operacion__c <> 'A7' && lstCase[0].Tipo_de_Operacion__c <> 'A6' && lstCase[0].Tipo_de_Operacion__c <> 'A4' && lstCase[0].Tipo_de_Operacion__c <> 'A3')*/ {
+                        else  {
                             System.debug('Llama a sysde directamente');
                             aSysdeCallouts.aumentoDisminucion(item.id); 
                         } 
@@ -340,5 +339,5 @@ trigger enviarASysde on Case (before update) {
             }
         }
         
-    }        
+    }      
 }

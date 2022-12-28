@@ -520,6 +520,10 @@
     <picklistValues>
         <picklist>Asesor_Agn__c</picklist>
         <values>
+            <fullName>HN02713</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HN19320</fullName>
             <default>false</default>
         </values>

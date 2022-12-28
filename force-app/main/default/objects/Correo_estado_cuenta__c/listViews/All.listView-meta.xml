@@ -6,8 +6,8 @@
     <filterScope>Everything</filterScope>
     <filters>
         <field>Cliente__c</field>
-        <operation>contains</operation>
-        <value>GRAZIAMARIA MURILLO CASTRO,PAOLA MARIA CRUZ BONILLA,ANDREA IVETTE ROMERO SOTO</value>
+        <operation>equals</operation>
+        <value>ANDREA IVETTE ROMERO SOTO,GRAZIAMARIA 2 MURILLO CASTRO,STEFFANY ALMENDARES RIVAS</value>
     </filters>
     <label>Todos</label>
 </ListView>

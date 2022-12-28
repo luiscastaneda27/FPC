@@ -1016,11 +1016,11 @@ public without sharing class ControllerConciliacionAprobacionM {
                 }
             }
             
-            if(compraDolar && !popDOlar){
+            if(compraDolar && !popDolar){
                 popDolar();
                 return;
             }
-            popDOlar = false;
+            popDolar = false;
             CodReferenNoCobra = Num_CodReferencia;
             CodReferenciaTemp = Num_CodReferencia; 
             McontenidoAporte = new list<Pantalla_Aportes__c>();

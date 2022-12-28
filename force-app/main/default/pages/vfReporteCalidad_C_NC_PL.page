@@ -175,10 +175,10 @@
                         
                         
                         <apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" rendered="{!afiliacion.Tipo_Afiliacion__c ='YC'}"  />
-                        <apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
+                        <!--apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
                             <apex:selectOption itemLabel="Si" itemValue="S" />
                             <apex:selectOption itemLabel="No" itemValue="N" />
-                        </apex:selectList>
+                        </apex:selectList-->
                         
                         <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
                         <apex:inputField value="{!Afiliacion.Comentarios__c}" />
@@ -198,7 +198,7 @@
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS221, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
                                         </svg>
                                         <span class="slds-assistive-text">Cerrar</span>
-                                         <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >{!IF(afiliacion.Tipo_Afiliacion__c = 'YC','AFILIACIÓN DE CLINETE YA CARGADO', 'AFILIACIÓN DE CLINETE POR CARGA')}</h1>
+                                         <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" >{!IF(afiliacion.Tipo_Afiliacion__c = 'YC','AFILIACIÓN DE CLIENTE YA CARGADO', 'AFILIACIÓN DE CLIENTE POR CARGA')}</h1>
                                     </apex:commandLink>  
                                 </div>
                                 <div class="slds-modal__content">

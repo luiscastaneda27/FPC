@@ -175,7 +175,7 @@
         <body>
             <div class="slds-scope">
                 <apex:form id="theForm"> 
-                    <!--apex:actionStatus id="status">
+                    <apex:actionStatus id="status">
                         <apex:facet name="start">
                             <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">&nbsp;</div>
                             <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
@@ -184,20 +184,7 @@
                                 </div>
                             </div>
                         </apex:facet>
-                    </apex:actionStatus-->
-                    <apex:actionStatus id="status">
-                    <apex:facet name="start">
-                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
-                            &nbsp;
-                        </div>
-                        
-                        <div role="status" class="slds-spinner slds-spinner_large">
-                            <span class="slds-assistive-text">Por Favor Espere...</span>
-                            <div class="slds-spinner__dot-a"></div>
-                            <div class="slds-spinner__dot-b"></div>
-                        </div>
-                    </apex:facet>
-                </apex:actionStatus>
+                    </apex:actionStatus>
                     
                     <div id="topMenuZonaTransaccional">
                         <article class="slds-card slds-theme_default" style="border:0;">

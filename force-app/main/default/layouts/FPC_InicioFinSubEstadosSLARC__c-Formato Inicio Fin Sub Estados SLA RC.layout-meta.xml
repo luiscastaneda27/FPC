@@ -12,7 +12,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FPC_SubEstadoRCSF__c</field>
+                <field>FPC_EstadoSLA__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

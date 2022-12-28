@@ -43,17 +43,16 @@ public class controllerApiClienteNatural {
 		request.setEndpoint(url + 'api/actualizaClienteNatural');
 		
 		String respuesta = '';
-		system.debug('Entro al REST del EDC');
 		try{
 						
 			classJson envio = new classJson();
 			envio.contenido = JSON.serialize(claseEnvio);
 			String cons = 'contenido=' + envio.contenido;
-			system.debug(cons);		
+			system.debug('Mandamos actualización: '+cons);		
 			request.setBody(cons);	
 			HttpResponse response = http.send(request);
 	    	respuesta = response.getBody();
-            system.debug(respuesta);      
+            system.debug('respuesta: '+respuesta);      
 		}catch(System.CalloutException e){
 			system.debug(e.getMessage());
 	
@@ -201,7 +200,6 @@ public class controllerApiClienteNatural {
         request.setEndpoint(url + 'api/ConsultaInfoCliente/'+ pccontratocolectivo + '/' + pcnroid);
 		ClienteNaturales fcsd= new ClienteNaturales();
 		string respuesta = '';
-		system.debug('Entro al REST del EDC');
 		try{
 
 			HttpResponse response = http.send(request);
@@ -212,7 +210,7 @@ public class controllerApiClienteNatural {
             
             
             //fcsd = respuesta.split(',');
-            system.debug('debuggRespuesta' +''+ respuesta); 
+            system.debug('ConsultaInfoCliente: ' + respuesta); 
             
             if (response.getStatusCode() == 200) 
            {

@@ -132,7 +132,7 @@ public class testCasosNuevo {
             controlSubproducto.buscarSubPro();
             controlSubproducto.guardar();
             //controlSubproducto.updateCasoRetiros();
-
+            
             extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casos[2]));                                  
             controlConsta.agregarCuenta();
             controlConsta.agregarCuenta();
@@ -141,56 +141,56 @@ public class testCasosNuevo {
             controlConsta.guardar();
             //controlConsta.updateCasoRetiros();
             /*
-            extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
-            controlRetiro.verPropietarioCuenta();            
-            controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
-            controlRetiro.detalleCaso.Tipo_retiro__c = '52';
-            controlRetiro.selecTipoRetiro();
-            controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
-            controlRetiro.selecTipoRetiro();
-            controlRetiro.verMovimientos();
-            controlRetiro.selecMovimiento(); 
-            //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
-            //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales();
-            controlRetiro.calculoSaldoPatronales2();
-            controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
-            controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            controlRetiro.calculoSaldoPatronales(); 
-            controlRetiro.calculoSaldoPatronales2();
-            controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '10',
-                                                              Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
-            
-            controlRetiro.ValidacionSaldoPatronales();
-            controlretiro.caso.Aplica_Saldo_patronal__c=true;
-            controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
-            controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
-            controlretiro.caso.CurrencyIsoCode='HNL';
-            controlRetiro.detalleCaso.Prestamo_anterior__c = 'csac';
-            controlRetiro.VerificacionPreatamoRefinanciar();
-            controlRetiro.VerificacionMontoPrestamo();
-            
-            controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.Es_Refinanciamiento__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.Es_Refinanciamiento__c=false;
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=false;
-            controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
-            controlRetiro.detalleCaso.Monto_Pignorado__c =12;
-            controlRetiro.VerificacionCheckPrestamos();
-            
-            controlRetiro.guardar();
-            controlRetiro.cuentasCaso[0].Monto_retirar__c = 200;
-            controlRetiro.guardar();
-            controlRetiro.cuentasCaso[0].Monto_retirar__c = 50;
-            controlRetiro.guardar();
-            
-            controlRetiro.Caso.id=null;
-            controlRetiro.guardar();*/
+extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
+controlRetiro.verPropietarioCuenta();            
+controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
+controlRetiro.detalleCaso.Tipo_retiro__c = '52';
+controlRetiro.selecTipoRetiro();
+controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
+controlRetiro.selecTipoRetiro();
+controlRetiro.verMovimientos();
+controlRetiro.selecMovimiento(); 
+//controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
+//  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
+controlRetiro.calculoSaldoPatronales();
+controlRetiro.calculoSaldoPatronales2();
+controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
+controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
+controlRetiro.calculoSaldoPatronales(); 
+controlRetiro.calculoSaldoPatronales2();
+controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '10',
+Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
+
+controlRetiro.ValidacionSaldoPatronales();
+controlretiro.caso.Aplica_Saldo_patronal__c=true;
+controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
+controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
+controlretiro.caso.CurrencyIsoCode='HNL';
+controlRetiro.detalleCaso.Prestamo_anterior__c = 'csac';
+controlRetiro.VerificacionPreatamoRefinanciar();
+controlRetiro.VerificacionMontoPrestamo();
+
+controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+controlRetiro.VerificacionCheckPrestamos();
+controlRetiro.detallecaso.Es_Refinanciamiento__c=true;
+controlRetiro.VerificacionCheckPrestamos();
+controlRetiro.detallecaso.Es_Refinanciamiento__c=false;
+controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+controlRetiro.VerificacionCheckPrestamos();
+controlRetiro.detallecaso.No_es_primer_prestamo__c=false;
+controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+controlRetiro.detalleCaso.Monto_Pignorado__c =12;
+controlRetiro.VerificacionCheckPrestamos();
+
+controlRetiro.guardar();
+controlRetiro.cuentasCaso[0].Monto_retirar__c = 200;
+controlRetiro.guardar();
+controlRetiro.cuentasCaso[0].Monto_retirar__c = 50;
+controlRetiro.guardar();
+
+controlRetiro.Caso.id=null;
+controlRetiro.guardar();*/
             
             //controllerEDChistoricoPDFCaso PDFCaso = new controllerEDChistoricoPDFCaso(new ApexPages.StandardController(casos[5]));
             
@@ -203,13 +203,13 @@ public class testCasosNuevo {
             controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
             //controlRetiro2.selecTipoRetiro();
             controlRetiro2.guardar();
-           // controlRetiro2.actualizarSaldoPatronalCons();
+            // controlRetiro2.actualizarSaldoPatronalCons();
             controlRetiro2.detalleCaso.Fecha_Despido_Empresa__c = date.today();
             controlRetiro2.detalleCaso.Fecha_Ingreso_Empresa__c = date.today().AddMonths(-21);
             //controlRetiro2.calculoSaldoPatronales();
             controlRetiro2.detalleCaso.Prestamo_anterior__c = '12321';
             controlRetiro2.VerificacionPreatamoRefinanciar();
-           // controlRetiro2.updateCasoRetiros();
+            // controlRetiro2.updateCasoRetiros();
             
             controlRetiro2.detallecaso.No_es_primer_prestamo__c=true;
             controlRetiro2.detallecaso.Es_Refinanciamiento__c=true;
@@ -223,11 +223,11 @@ public class testCasosNuevo {
             controlRetiro2.detallecaso.N_Cuenta_Bancaria__c = '21';
             controlRetiro2.verPropietarioCuenta();
             
-          //  controlRetiro2.calculoSaldoPatronales2();
+            //  controlRetiro2.calculoSaldoPatronales2();
             
             Pago_Beneficiario__c p = new Pago_Beneficiario__c(Caso__c = controlRetiro2.Caso.id);
             insert p;
-           // controlRetiro2.verBeneficiarios2();
+            // controlRetiro2.verBeneficiarios2();
             //controlRetiro2.upsertPagosBeneficiarios();
             //controlRetiro2.upsertBeneficiarios();
             //controlRetiro2.upsertBeneficiarios();
@@ -288,9 +288,9 @@ public class testCasosNuevo {
             //controlada.addPagoBene();
             
             
-           // extensionCasoDetalle plo = new extensionCasoDetalle();
+            // extensionCasoDetalle plo = new extensionCasoDetalle();
             // controlada.extensionCasoDetalle();
-           
+            
             controlada.CambioConstancia();
             controlada.CambioAsunto();
             controlada.cambiarTipoCaso();
@@ -308,15 +308,15 @@ public class testCasosNuevo {
             controlada.getListAgentsByZone();
             controlada.actualizarRezago();
             //controlada.montoExoneradoAlDia();
-           // controlada.ModificarSaldoPrestamo();
+            // controlada.ModificarSaldoPrestamo();
             
             extensionCasoDetalle re= new extensionCasoDetalle();
             extensionCasoDetalle.metodoutil();
             
             /*Integer rowNum = 1;
-            re.delRow();
-            Integer rowNum2 = 1;
-            re.delRow2();*/
+re.delRow();
+Integer rowNum2 = 1;
+re.delRow2();*/
             
             test.stopTest();   
         }catch(exception ex){
@@ -325,8 +325,8 @@ public class testCasosNuevo {
     }
     
     static testMethod void execute(){
-   		extensionCasoDetalle re= new extensionCasoDetalle();
-            
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        
         re.getCambioFechaOptions();
         re.setCambioFecha();
         re.getListAgentsByZone();
@@ -383,7 +383,7 @@ public class testCasosNuevo {
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
-               
+        
         controlConsta.actualizarRezago();
         
         controlConsta.montoExoneradoAlDia();
@@ -499,7 +499,7 @@ public class testCasosNuevo {
         insert ent;
         
         Case casoAumentoD2 = new Case(AccountId = natural2.id, Priority = '', Tipo_de_Operacion__c = 'A5', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR0[0].id);
-
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
     }
     
@@ -520,7 +520,7 @@ public class testCasosNuevo {
         insert natural2;
         
         Date hoy2 = date.today();
-
+        
         Cuentas__c cuentaIndi3 = new Cuentas__c(Name = 'Cuenta2', Codigo__c = '12344', Cliente__c = natural2.id, Producto__c = producto2.id,
                                                 Fecha_Apertura__c = date.today().addyears(-1),
                                                 Subproducto__c = subproducto3.id, currencyIsoCode = 'USD', 
@@ -680,7 +680,7 @@ public class testCasosNuevo {
         controlConsta.getListAgentsByZone();
         
         controlConsta.validacionSaldosP1();
-                
+        
         controlConsta.cambioMontoC1();
         
         controlConsta.cambioTipoSaldo();
@@ -733,7 +733,7 @@ public class testCasosNuevo {
         
         Case casoAumentoD2 = new Case(AccountId = natural2.id, Priority = '', Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'Test', Apellido_Usuario_Firmador__c = 'Test', CurrencyIsoCode = 'HNL', Tipo_de_Operacion__c = 'A5', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR0[0].id);
         Insert casoAumentoD2;
-               
+        
         Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Tipo_transaccion__c = 'Crédito', Subtipo_transaccion__c = 'C10', Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 10000,
                                                       Fecha_nacimiento__c = date.today(), N_Cuenta_Bancaria__c = '456765678', Tipo_Operacion__c = 'A5');
         
@@ -856,7 +856,7 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);
         
         updateCase.validarIdentidad(casoAumentoD2.Id, '456789067', '867656790');
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -916,7 +916,7 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);
         
         updateCase.validarIdentidad(casoAumentoD2.Id, '456789067', '867656790');
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -976,7 +976,7 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);
         
         updateCase.validarIdentidad(casoAumentoD2.Id, '456789067', '867656790');
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -1036,7 +1036,7 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);
         
         updateCase.validarIdentidad(casoAumentoD2.Id, '456789067', '867656790');
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -1089,7 +1089,7 @@ public class testCasosNuevo {
                                                       Fecha_nacimiento__c = date.today(), N_Cuenta_Bancaria__c = '456765678', Banco__c = 'Otros Bancos', Tipo_Operacion__c = 'A6', Nueva_fecha_aporte__c = System.today());
         
         Insert nuevoSP;
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -1149,7 +1149,7 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);
         
         updateCase.validarIdentidad(casoAumentoD2.Id, '456789067', '867656790');
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
         
         controlConsta.guardar();
@@ -1172,18 +1172,28 @@ public class testCasosNuevo {
         insert natural2;
         
         Date hoy2 = date.today();
-        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+        Cuentas__c cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '12345', Cliente__c = natural2.id, Producto__c = producto2.id,
                                                 Fecha_Apertura__c = date.today().addyears(-1),
                                                 Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
                                                 Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
+        
+        cuentaIndi2 = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1234', Cliente__c = natural2.id, Producto__c = producto2.id,
+                                     Fecha_Apertura__c = date.today().addyears(-1),
+                                     Subproducto__c = subproducto3.id, currencyIsoCode = 'HNL', /*Fecha_Apertura__c = hoy2,*/
+                                     Monto_aporte__c = 5000, Forma_Aportacion__c = 'AH');
         insert cuentaIndi2;
         cuentaIndi2.Codigo__c = '123';
         cuentaIndi2.id = null;
         cuentaIndi2.Fecha_Apertura__c = hoy2;
         insert cuentaIndi2;
         
-        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',
+        Beneficiario__c bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system',TipoBeneficiario__c ='Directo',
                                                     Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene3;
+        
+        bene3 = new Beneficiario__c(Cliente__c = natural2.id, Cuenta__c = cuentaIndi2.id, Primer_Apellido__c = 'system', TipoBeneficiario__c ='Contingencia',
+                                    Id_Externo__c = 08011, Fecha_nacimiento__c = date.today());
+        
         insert bene3;
         
         list<RecordType> tiposR0 = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Actualizacion_informacion'];
@@ -1201,8 +1211,59 @@ public class testCasosNuevo {
                                                       Fecha_nacimiento__c = date.today(), N_Cuenta_Bancaria__c = '456765678', Banco__c = '28', Tipo_Operacion__c = 'A4');
         
         Insert nuevoSP;
-         
+        
         extensionCasoDetalle controlConsta = new extensionCasoDetalle(new ApexPages.StandardController(casoAumentoD2));
+        
+        controlConsta.getBeneficiario();
+        controlConsta.desbloquearBeneficiario();
+        controlConsta.agregarBeneficiario();
+        controlConsta.agregarBeneficiarioCont();
+        
+        
+        
+        
+        controlConsta.validacionCamposBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec);
+        for(Integer i =0; i<controlConsta.beneficiario.listBeneficiariosDirec.size(); i++){
+            
+            controlConsta.beneficiario.listBeneficiariosDirec[i].tipoBeneficiario = 'Directo';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].primerApellido = 'PN';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].cuentaId = controlConsta.beneficiario.cuentaSelecionada;
+            controlConsta.beneficiario.listBeneficiariosDirec[i].tipoIdentificacion = '1';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].primerNombre = '1';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].identificacion = '1';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].sexo = 'Masculino';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].parentesco = '1';
+            controlConsta.beneficiario.listBeneficiariosDirec[i].porcentaje = 90;
+            controlConsta.beneficiario.listBeneficiariosDirec[i].fechaNacimiento = Date.today().AddDays(100);
+        }
+        controlConsta.validacionCamposBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec);
+        
+        for(Integer i =0; i<controlConsta.beneficiario.listBeneficiariosDirec.size(); i++){
+            controlConsta.beneficiario.listBeneficiariosDirec[i].fechaNacimiento = Date.today().AddDays(-100);
+        }
+        controlConsta.validacionCamposBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec);
+        controlConsta.beneficiario.beneficiarioSelec = controlConsta.beneficiario.listBeneficiariosCont[controlConsta.beneficiario.listBeneficiariosCont.size() -1].index;
+        controlConsta.eliminarBeneficiarioCont();
+        
+        controlConsta.validacionCamposBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec);
+        for(Integer i =0; i<controlConsta.beneficiario.listBeneficiariosDirec.size(); i++){
+            controlConsta.beneficiario.listBeneficiariosDirec[i].porcentaje = 50;
+        }
+        controlConsta.validacionCamposBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec);
+        controlConsta.getGrado();
+        controlConsta.validacionBeneficiario(controlConsta.beneficiario.listBeneficiariosDirec, controlConsta.beneficiario.listBeneficiariosDirec);
+        
+        
+        
+        
+        controlConsta.beneficiario.beneficiarioSelec = controlConsta.beneficiario.listBeneficiariosDirec[controlConsta.beneficiario.listBeneficiariosDirec.size() -1].index;
+        controlConsta.eliminarBeneficiario();
+        
+        controlConsta.beneficiario.beneficiarioSelec = controlConsta.beneficiario.listBeneficiariosCont[controlConsta.beneficiario.listBeneficiariosCont.size() -1].index;
+        controlConsta.eliminarBeneficiarioCont();
+        
+        controlConsta.cambiarCuenta();
+        
         
         controlConsta.guardar();
         
@@ -1211,101 +1272,39 @@ public class testCasosNuevo {
         controlConsta.formularioCliente();
         
         controlConsta.adjuntarArchivo();
-            
+        
         controlConsta.ImprimirCarnet();
-            
+        
         controlConsta.PDFCaso();
-            
+        
         controlConsta.generarED();
-            
+        
         controlConsta.generarConstancia();
         
         //controlConsta.changeFlag();
-            
+        
         controlConsta.CambioConstancia();
-            
+        
         //controlConsta.CambioAsunto();
-            
+        
         controlConsta.cerrarCaso();
-            
+        
         controlConsta.cerrarCasoStatusCerrado();
-            
+        
         controlConsta.enviarParaAprobacion();
-            
+        
         controlConsta.tiposDeCasoSegunOrigen();
-            
+        
         controlConsta.cambiarTipoCaso();
-            
+        
         controlConsta.cambiarTipo();
-            
+        
         controlConsta.prioridadTipo();
-            
+        
         controlConsta.tipoEstadoDetallado();
     }    
     
-    static testMethod void execute17(){
-         Account cliente = new Account();
-        cliente.Name='Luis Donaire';
-        cliente.Identificacion__c='0709199300155';
-        cliente.UltimoCasoObligatorio__c = date.today();
-        insert cliente;
-        
-        Producto__C producto = new Producto__C();
-        producto.Codigo__c='qwqw';
-        producto.name='Prueba';
-        insert producto;
-        
-        Subproducto__c  subProducto = new Subproducto__c ();
-        subProducto.Name='Test';
-        subProducto.Codigo__c='3434';
-        subProducto.Producto__c = producto.id;
-        insert subProducto;
-        
-        Cuentas__C cuenta = new cuentas__C();
-        cuenta.codigo__C='0000';
-        cuenta.Cliente__c = cliente.id;
-        cuenta.Subproducto__c = subProducto.id;
-        cuenta.name='test';
-        cuenta.Monto_aporte__c = 100;
-        cuenta.Forma_Aportacion__c='TA';
-        insert cuenta;
-        
-        Beneficiario__c b = new Beneficiario__c();
-        b.Cuenta__c = cuenta.Id;
-        b.Id_Externo__c = 12321;
-        b.Primer_Nombre__c = 'PN';
-        b.Primer_Apellido__c = 'PA';
-        b.TipoBeneficiario__c = 'Directo';
-        insert b;
-        
-        b = new Beneficiario__c();
-        b.Cuenta__c = cuenta.Id;
-        b.Id_Externo__c = 123221;
-        b.Primer_Nombre__c = 'PN';
-        b.Primer_Apellido__c = 'PA';
-        b.TipoBeneficiario__c = 'Contingencia';
-        insert b;
-        
-        list<RecordType> tiposR = [Select Name From RecordType Where sObjectType = 'Case' and DeveloperName = 'Actualizacion_informacion' Order by DeveloperName];
-        //Id RT = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Actualizacion_informacion').getRecordTypeId();
-        Test.startTest();
-        Case caso = new Case();
-        caso.RecordTypeId = tiposR[0].Id;
-        caso.Status = 'Nuevo';
-        caso.type = 'Solicitud de Gestión';
-        caso.Origin = 'Web';
-        caso.Priority = 'Media';
-        caso.AccountId = cliente.Id;
-        insert caso;
-        
-        ControladorBeneficiarios.ResultWrapper controlador = ControladorBeneficiarios.getBeneficiarios(caso.Id, true);
-        ControladorBeneficiarios.insertarBeneficiarios(caso.Id, JSON.serialize(controlador));
-        ControladorBeneficiarios.getBeneficiarios(cliente.Id, false);
-        ControladorBeneficiarios.validacionCamposBeneficiario(controlador.listBeneficiarios);
-        Test.stopTest();
-    }
-
-    static testMethod void llamadasREST(){ 
+    /*static testMethod void llamadasREST(){ 
         MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
         mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
         mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
@@ -1318,192 +1317,711 @@ public class testCasosNuevo {
         Test.setMock(HttpCalloutMock.class, mock);        
         
         Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
-            //f.Zona__c='2';
-            f.Usuario__c = userinfo.getUserId();
-            insert f;
-
-            f = new Usuarios_para_asignacion_Casos_SAC__c();
-            f.Zona__c='2';
-            f.Usuario__c = userinfo.getUserId();
-            insert f;
-            
-            
-            FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
-            insert fdcSysde;
-            
-            Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
-            insert producto;
-            
-            Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
-            insert subproducto;
-            
-            Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
-            insert subproducto2;
-            list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
-            Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
-                                          RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
-            insert natural;
-            Date hoy = date.today();
-            Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
-                                                   Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
-                                                   Monto_aporte__c = 5000);
-            insert cuentaIndi;
-            
-            Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
-                                                       Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
-            insert bene;
-            
-            Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
-                                           RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
-            insert juridico;                            
-            
-            Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
-            insert cuentaColec;
-            
-            Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
-                                                        Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
-            insert cuentaIndiColec;
-            
-            //list<RecordType> tiposR = [Select Name From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ];
-            //system.debug(tiposR);
+        //f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        
+        FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
+        insert fdcSysde;
+        
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto;
+        
+        Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
+        insert subproducto;
+        
+        Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
+        insert subproducto2;
+        list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
+                                               Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
+                                               Monto_aporte__c = 5000);
+        insert cuentaIndi;
+        
+        Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
+                                                   Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene;
+        
+        Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert juridico;                            
+        
+        Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
+        insert cuentaColec;
+        
+        Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
+                                                    Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
+        insert cuentaIndiColec;
         
         map<String, String> mapTipoR = new map<String, String>();
         for(RecordType item: [Select Name, DeveloperName, id From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ]){
             mapTipoR.put(item.DeveloperName, item.id);
         }
         
-            Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
-            insert ass;
-            
-            Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
-            insert ent;
-     
-            list<Case> casos = new list<Case>();
-            
-            Case casoActualizacion = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Actualizacion_informacion'));
-            casos.add(casoActualizacion);
-            
-            Case casoSubproducto = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Cambio_Subproducto'));
-            casos.add(casoSubproducto);
-            
-            Case casoConstancia = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Constancia'));
-            casos.add(casoConstancia);
-            
-            Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
-            casos.add(casoRetiros);
-            
-            Case casoAumentoD2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
-            casos.add(casoAumentoD2);
-            
-            Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
-            casos.add(casoRetiros2);
-            
-            Case casoReversiones = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Reversiones'));
-            casos.add(casoReversiones);
-            
-            insert Casos;
-            
-            Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
-            
-            list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
-            Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id);
-            detalleCasos.add(detalle);
-            
-            Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
-                                                           Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
-            detalleCasos.add(detalle1);
-            
-            Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
-                                                           Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
-            detalleCasos.add(detalle2);
-            
-            insert detalleCasos;
-            
-            test.startTest();
-            extensionCasoDetalle controlActinfo = new extensionCasoDetalle(new ApexPages.StandardController(Casos[0]));
-            controlActinfo.selecCuenta();
-            controlActinfo.llenarCuentasDesdeSysde();
-           // controlActinfo.verBeneficiarios2();
-            if(controlActinfo.listBeneficiarios.size()>0){
-                controlActinfo.listBeneficiarios[0].Casilla__c = true;
-            }
-            controlActinfo.agregarBeneficiarios();
-           // controlActinfo.upsertBeneficiarios();
-           // controlActinfo.verPagosBeneficiarios2();
-            //controlActinfo.upsertPagosBeneficiarios();
-            //controlActinfo.addPagoBene();         
-            
-            extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
-            controlRetiro.verPropietarioCuenta();            
-            controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
-            controlRetiro.detalleCaso.Tipo_retiro__c = '52';
-           // controlRetiro.selecTipoRetiro();
-            controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
-           // controlRetiro.selecTipoRetiro();
-            controlRetiro.verMovimientos();
-            controlRetiro.selecMovimiento(); 
-            //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
-            //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-           // controlRetiro.calculoSaldoPatronales();
-            //controlRetiro.calculoSaldoPatronales2();
-            controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
-            controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
-            //controlRetiro.calculoSaldoPatronales(); 
-            //controlRetiro.calculoSaldoPatronales2();
-            controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '12',Tipo_retiro__c = '51',
-                                                              Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
-            
-            //controlRetiro.ValidacionSaldoPatronales();
-            controlretiro.caso.Aplica_Saldo_patronal__c=true;
-            controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
-            controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
-            controlretiro.caso.CurrencyIsoCode='HNL';
-            controlRetiro.detalleCaso.Prestamo_anterior__c = 'csac';
-            controlRetiro.VerificacionPreatamoRefinanciar();
-            controlRetiro.VerificacionMontoPrestamo();
-            
-            controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.Es_Refinanciamiento__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.Es_Refinanciamiento__c=false;
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
-            controlRetiro.VerificacionCheckPrestamos();
-            controlRetiro.detallecaso.No_es_primer_prestamo__c=false;
-            controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
-            controlRetiro.detalleCaso.Monto_Pignorado__c =12;
-            controlRetiro.VerificacionCheckPrestamos();
-            
-            controlRetiro.guardar();
-            controlRetiro.cuentasCaso[0].Monto_retirar__c = 200;
-            controlRetiro.guardar();
-            controlRetiro.cuentasCaso[0].Monto_retirar__c = 50;
-            controlRetiro.guardar();
-            
-            controlRetiro.Caso.id=null;
-            controlRetiro.guardar();
-            
-            //controllerEDChistoricoPDFCaso PDFCaso = new controllerEDChistoricoPDFCaso(new ApexPages.StandardController(casos[5]));
-
-            cuentaIndiColec.fecha_apertura__c = date.today() - 950;
-            update cuentaIndiColec;
-            extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
-           // controlRetiro2.selecCuentaRetiros();
-            controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
-            //controlRetiro2.selecTipoRetiro();
-            controlRetiro2.guardar();
-            
-            extensionCasoDetalle controlADA2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[4]));
-            controlADA2.detalleCaso.Nuevo_monto_aporte__c = 7000; 
-            controlADA2.guardar();
+        Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+        insert ass;
         
-            //controlADA2.idTipoRCaso = mapTipoR.get('tiposR[4].id');
-        	//controlADA2.continuarAlPaso2();
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
         
-            extensionCasoDetalle re= new extensionCasoDetalle();
-            extensionCasoDetalle.metodoutil();
-            test.stopTest();   
+        list<Case> casos = new list<Case>();
+        
+        Case casoActualizacion = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Actualizacion_informacion'));
+        casos.add(casoActualizacion);
+        
+        Case casoSubproducto = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Cambio_Subproducto'));
+        casos.add(casoSubproducto);
+        
+        Case casoConstancia = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Constancia'));
+        casos.add(casoConstancia);
+        
+        Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros);
+        
+        Case casoAumentoD2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        casos.add(casoAumentoD2);
+        
+        Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros2);
+        
+        Case casoReversiones = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Reversiones'));
+        casos.add(casoReversiones);
+        
+        insert Casos;
+        
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        
+        list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
+        Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id);
+        detalleCasos.add(detalle);
+        
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
+                                                       Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
+        detalleCasos.add(detalle1);
+        
+        Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
+                                                       Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
+        detalleCasos.add(detalle2);
+        
+        insert detalleCasos;
+        
+        test.startTest();
+        extensionCasoDetalle controlActinfo = new extensionCasoDetalle(new ApexPages.StandardController(Casos[0]));
+        controlActinfo.selecCuenta();
+        controlActinfo.llenarCuentasDesdeSysde();
+        // controlActinfo.verBeneficiarios2();
+        if(controlActinfo.listBeneficiarios.size()>0){
+            controlActinfo.listBeneficiarios[0].Casilla__c = true;
+        }
+        controlActinfo.agregarBeneficiarios();
+        // controlActinfo.upsertBeneficiarios();
+        // controlActinfo.verPagosBeneficiarios2();
+        //controlActinfo.upsertPagosBeneficiarios();
+        //controlActinfo.addPagoBene();         
+        
+        extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[3]));
+        controlRetiro.verPropietarioCuenta();            
+        controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
+        controlRetiro.detalleCaso.Tipo_retiro__c = '52';
+        // controlRetiro.selecTipoRetiro();
+        controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
+        // controlRetiro.selecTipoRetiro();
+        controlRetiro.verMovimientos();
+        controlRetiro.selecMovimiento(); 
+        //controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
+        //  controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
+        // controlRetiro.calculoSaldoPatronales();
+        //controlRetiro.calculoSaldoPatronales2();
+        controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
+        controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
+        //controlRetiro.calculoSaldoPatronales(); 
+        //controlRetiro.calculoSaldoPatronales2();
+        controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[3].id, Saldo_retirar__c = '12',Tipo_retiro__c = '51',
+                                                          Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
+        
+        //controlRetiro.ValidacionSaldoPatronales();
+        controlretiro.caso.Aplica_Saldo_patronal__c=true;
+        controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
+        controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
+        controlretiro.caso.CurrencyIsoCode='HNL';
+        controlRetiro.detalleCaso.Prestamo_anterior__c = 'csac';
+        controlRetiro.VerificacionPreatamoRefinanciar();
+        controlRetiro.VerificacionMontoPrestamo();
+        
+        controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.Es_Refinanciamiento__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.Es_Refinanciamiento__c=false;
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=false;
+        controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+        controlRetiro.detalleCaso.Monto_Pignorado__c =12;
+        controlRetiro.VerificacionCheckPrestamos();
+        
+        controlRetiro.guardar();
+        controlRetiro.cuentasCaso[0].Monto_retirar__c = 200;
+        controlRetiro.guardar();
+        controlRetiro.cuentasCaso[0].Monto_retirar__c = 50;
+        controlRetiro.guardar();
+        
+        controlRetiro.Caso.id=null;
+        controlRetiro.guardar();
+        
+        //controllerEDChistoricoPDFCaso PDFCaso = new controllerEDChistoricoPDFCaso(new ApexPages.StandardController(casos[5]));
+        
+        cuentaIndiColec.fecha_apertura__c = date.today() - 950;
+        update cuentaIndiColec;
+        extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
+        // controlRetiro2.selecCuentaRetiros();
+        controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
+        //controlRetiro2.selecTipoRetiro();
+        controlRetiro2.guardar();
+        
+        extensionCasoDetalle controlADA2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[4]));
+        controlADA2.detalleCaso.Nuevo_monto_aporte__c = 7000; 
+        controlADA2.guardar();
+        
+        //controlADA2.idTipoRCaso = mapTipoR.get('tiposR[4].id');
+        //controlADA2.continuarAlPaso2();
+        
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        extensionCasoDetalle.metodoutil();
+        test.stopTest();   
+        
+    }*/
+    
+     static testMethod void llamadasREST1(){ 
+        MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
+        mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/info','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/portada?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/trimestral?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/mensual?IdCliente=12345&fechaDesde=2017-07-18&fechaHasta=2017-07-23','mockCuentas');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        Test.setMock(HttpCalloutMock.class, mock);        
+        
+        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
+        //f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        
+        FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
+        insert fdcSysde;
+        
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto;
+        
+        Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
+        insert subproducto;
+        
+        Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
+        insert subproducto2;
+        list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
+                                               Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
+                                               Monto_aporte__c = 5000);
+        insert cuentaIndi;
+        
+        Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
+                                                   Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene;
+        
+        Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert juridico;                            
+        
+        Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
+        insert cuentaColec;
+        
+        Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
+                                                    Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
+        insert cuentaIndiColec;
+        
+        map<String, String> mapTipoR = new map<String, String>();
+        for(RecordType item: [Select Name, DeveloperName, id From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ]){
+            mapTipoR.put(item.DeveloperName, item.id);
+        }
+        
+        Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        list<Case> casos = new list<Case>();
+        
+        Case casoActualizacion = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Actualizacion_informacion'));
+        casos.add(casoActualizacion);
+        
+        Case casoSubproducto = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Cambio_Subproducto'));
+        casos.add(casoSubproducto);
+        
+        Case casoConstancia = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Constancia'));
+        casos.add(casoConstancia);
+        
+        Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros);
+        
+        Case casoAumentoD2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        casos.add(casoAumentoD2);
+        
+        Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros2);
+        
+        Case casoReversiones = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Reversiones'));
+        casos.add(casoReversiones);
+        
+        insert Casos;
+        
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        
+        list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
+        Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id);
+        detalleCasos.add(detalle);
+        
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
+                                                       Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
+        detalleCasos.add(detalle1);
+        
+        Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
+                                                       Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
+        detalleCasos.add(detalle2);
+        
+        insert detalleCasos;
+        
+        test.startTest();
+        extensionCasoDetalle controlActinfo = new extensionCasoDetalle(new ApexPages.StandardController(Casos[0]));
+        controlActinfo.selecCuenta();
+        controlActinfo.llenarCuentasDesdeSysde();
+        // controlActinfo.verBeneficiarios2();
+        if(controlActinfo.listBeneficiarios.size()>0){
+            controlActinfo.listBeneficiarios[0].Casilla__c = true;
+        }
+        controlActinfo.agregarBeneficiarios();
+        // controlActinfo.upsertBeneficiarios();
+        // controlActinfo.verPagosBeneficiarios2();
+        //controlActinfo.upsertPagosBeneficiarios();
+        //controlActinfo.addPagoBene();     
+        
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        extensionCasoDetalle.metodoutil();
+        test.stopTest();   
         
     }
+    
+     static testMethod void llamadasREST2(){ 
+        MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
+        mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/info','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/portada?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/trimestral?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/mensual?IdCliente=12345&fechaDesde=2017-07-18&fechaHasta=2017-07-23','mockCuentas');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        Test.setMock(HttpCalloutMock.class, mock);        
+        
+        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
+        //f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        
+        FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
+        insert fdcSysde;
+        
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto;
+        
+        Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
+        insert subproducto;
+        
+        Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
+        insert subproducto2;
+        list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
+                                               Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
+                                               Monto_aporte__c = 5000);
+        insert cuentaIndi;
+        
+        Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
+                                                   Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene;
+        
+        Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert juridico;                            
+        
+        Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
+        insert cuentaColec;
+        
+        Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
+                                                    Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
+        insert cuentaIndiColec;
+        
+        map<String, String> mapTipoR = new map<String, String>();
+        for(RecordType item: [Select Name, DeveloperName, id From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ]){
+            mapTipoR.put(item.DeveloperName, item.id);
+        }
+        
+        Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        list<Case> casos = new list<Case>();
+        Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros);
+        
+        insert Casos;
+        
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        
+        list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
+                                                       Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
+        detalleCasos.add(detalle1);
+        
+        Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
+                                                       Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
+        detalleCasos.add(detalle2);
+        
+        insert detalleCasos;
+        
+        test.startTest();
+         extensionCasoDetalle controlRetiro = new extensionCasoDetalle(new ApexPages.StandardController(casos[0]));
+        controlRetiro.verPropietarioCuenta();            
+        controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = false;
+        controlRetiro.detalleCaso.Tipo_retiro__c = '52';
+        controlRetiro.detalleCaso.Cliente_quiere_capital_semilla__c = true;
+        controlRetiro.verMovimientos();
+        controlRetiro.selecMovimiento(); 
+        controlRetiro.detalleCaso.Fecha_Despido_Empresa__c=date.today();
+        controlRetiro.detalleCaso.Fecha_Ingreso_Empresa__c=date.today().addyears(-1);
+        controlRetiro.cuentasCaso.add(new Detalle_Caso__c(Cuenta__c = natural.id, Caso__c = casos[0].id, Saldo_retirar__c = '12',Tipo_retiro__c = '51',
+                                                          Monto_Saldo__c = 100, Monto_retirar__c = -2, CurrencyIsoCode='HNL')); 
+        
+        controlretiro.caso.Aplica_Saldo_patronal__c=true;
+        controlRetiro.detalleCaso.Total_Saldo_Personal__c =30;
+        controlRetiro.detalleCaso.Total_Saldo_Patronal__c =30;
+        controlretiro.caso.CurrencyIsoCode='HNL';
+        controlRetiro.detalleCaso.Prestamo_anterior__c = 'csac';
+        controlRetiro.VerificacionPreatamoRefinanciar();
+        controlRetiro.VerificacionMontoPrestamo();
+        
+        controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.Es_Refinanciamiento__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.Es_Refinanciamiento__c=false;
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=true;
+        controlRetiro.VerificacionCheckPrestamos();
+        controlRetiro.detallecaso.No_es_primer_prestamo__c=false;
+        controlRetiro.detallecaso.Es_Primer_Prestamo__c=true;
+        controlRetiro.detalleCaso.Monto_Pignorado__c =12;
+        controlRetiro.VerificacionCheckPrestamos();
+        
+        controlRetiro.guardar();
+        controlRetiro.cuentasCaso[0].Monto_retirar__c = 200;
+        controlRetiro.guardar();
+        controlRetiro.cuentasCaso[0].Monto_retirar__c = 50;
+        controlRetiro.guardar();
+        
+        controlRetiro.Caso.id=null;
+        controlRetiro.guardar();
+        
+        
+        
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        extensionCasoDetalle.metodoutil();
+        test.stopTest();   
+        
+    }
+   
+    
+     static testMethod void llamadasREST3(){ 
+        MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
+        mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/info','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/portada?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/trimestral?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/mensual?IdCliente=12345&fechaDesde=2017-07-18&fechaHasta=2017-07-23','mockCuentas');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        Test.setMock(HttpCalloutMock.class, mock);        
+        
+        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        
+        FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
+        insert fdcSysde;
+        
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto;
+        
+        Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
+        insert subproducto;
+        
+        Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
+        insert subproducto2;
+        list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
+                                               Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
+                                               Monto_aporte__c = 5000);
+        insert cuentaIndi;
+        
+        Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
+                                                   Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene;
+        
+        Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert juridico;                            
+        
+        Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
+        insert cuentaColec;
+        
+        Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
+                                                    Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
+        insert cuentaIndiColec;
+        
+        map<String, String> mapTipoR = new map<String, String>();
+        for(RecordType item: [Select Name, DeveloperName, id From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ]){
+            mapTipoR.put(item.DeveloperName, item.id);
+        }
+        
+        Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        list<Case> casos = new list<Case>();
+        
+        Case casoActualizacion = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Actualizacion_informacion'));
+        casos.add(casoActualizacion);
+        
+        Case casoSubproducto = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Cambio_Subproducto'));
+        casos.add(casoSubproducto);
+        
+        Case casoConstancia = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Constancia'));
+        casos.add(casoConstancia);
+        
+        Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros);
+        
+        Case casoAumentoD2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        casos.add(casoAumentoD2);
+        
+        Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros2);
+        
+        Case casoReversiones = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Reversiones'));
+        casos.add(casoReversiones);
+        
+        insert Casos;
+        
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        
+        list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
+        Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id);
+        detalleCasos.add(detalle);
+        
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
+                                                       Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
+        detalleCasos.add(detalle1);
+        
+        Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
+                                                       Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
+        detalleCasos.add(detalle2);
+        
+        insert detalleCasos;
+        
+        test.startTest();
+        
+        
+        cuentaIndiColec.fecha_apertura__c = date.today() - 950;
+        update cuentaIndiColec;
+        extensionCasoDetalle controlRetiro2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[5]));
+        controlRetiro2.detalleCaso.Tipo_retiro__c = '52';
+        controlRetiro2.guardar();
+        
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        extensionCasoDetalle.metodoutil();
+        test.stopTest();   
+        
+    }
+   
+    
+     static testMethod void llamadasREST4(){ 
+        MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
+        mock.setStaticResource('http://190.5.68.11:9090/api/subproducto','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/aumentodisminucion','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/info','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/portada?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/trimestral?IdCliente=12345','mockCuentas');
+        mock.setStaticResource('http://190.5.68.11:9090/api/ec/mensual?IdCliente=12345&fechaDesde=2017-07-18&fechaHasta=2017-07-23','mockCuentas');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        Test.setMock(HttpCalloutMock.class, mock);        
+        
+        Usuarios_para_asignacion_Casos_SAC__c f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        f = new Usuarios_para_asignacion_Casos_SAC__c();
+        f.Zona__c='2';
+        f.Usuario__c = userinfo.getUserId();
+        insert f;
+        
+        
+        FechaDC_Sysde__c fdcSysde = new FechaDC_Sysde__c(Name = 'CierreAlDia', Fecha_cierre__c  = date.today());
+        insert fdcSysde;
+        
+        Producto__c producto = new Producto__c(Name = 'Producto1', Codigo__c = 'Pro1');
+        insert producto;
+        
+        Subproducto__c subproducto = new Subproducto__c(Name = 'SubProducto1', Codigo__c = 'SubPro1', Producto__c = producto.id);
+        insert subproducto;
+        
+        Subproducto__c subproducto2 = new Subproducto__c(Name = 'SubProducto2', Codigo__c = 'SubPro2', Producto__c = producto.id);
+        insert subproducto2;
+        list<Subproducto__c> listSubrProducto = new list<Subproducto__c>();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345', PersonBirthdate = date.valueOf('1990-10-11'),
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '123', Cliente__c = natural.id, Producto__c = producto.id,
+                                               Subproducto__c = subproducto.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy,
+                                               Monto_aporte__c = 5000);
+        insert cuentaIndi;
+        
+        Beneficiario__c bene = new Beneficiario__c(Cliente__c = natural.id, Cuenta__c = cuentaIndi.id, Primer_Apellido__c = 'system',
+                                                   Id_Externo__c = 0801, Fecha_nacimiento__c = date.today());
+        insert bene;
+        
+        Account juridico = new Account(Name = 'Intellect', Identificacion__c = '54321',
+                                       RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Juridico'].id);
+        insert juridico;                            
+        
+        Cuentas__c cuentaColec = new Cuentas__c(Name = 'Cuenta2',Codigo__c = '789', Cliente__c = juridico.id, currencyIsoCode = 'HNL');
+        insert cuentaColec;
+        
+        Cuentas__c cuentaIndiColec = new Cuentas__c(Name = 'Cuenta3', Codigo__c = '456', Cliente__c = natural.id, 
+                                                    Cuenta_colectiva2__c = cuentaColec.id, currencyIsoCode = 'HNL', Fecha_Apertura__c = hoy);
+        insert cuentaIndiColec;
+        
+        map<String, String> mapTipoR = new map<String, String>();
+        for(RecordType item: [Select Name, DeveloperName, id From RecordType Where sObjectType = 'Case' and name !='Retiros20' Order by DeveloperName ]){
+            mapTipoR.put(item.DeveloperName, item.id);
+        }
+        
+        Asset ass = new Asset(AccountId=juridico.Id,Name='testing');   
+        insert ass;
+        
+        Entitlement ent = new Entitlement(Name='Testing', AccountId=juridico.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
+        insert ent;
+        
+        list<Case> casos = new list<Case>();
+        
+        Case casoActualizacion = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Actualizacion_informacion'));
+        casos.add(casoActualizacion);
+        
+        Case casoSubproducto = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Cambio_Subproducto'));
+        casos.add(casoSubproducto);
+        
+        Case casoConstancia = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Constancia'));
+        casos.add(casoConstancia);
+        
+        Case casoRetiros = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros);
+        
+        Case casoAumentoD2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        casos.add(casoAumentoD2);
+        
+        Case casoRetiros2 = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Retiros'));
+        casos.add(casoRetiros2);
+        
+        Case casoReversiones = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Reversiones'));
+        casos.add(casoReversiones);
+        
+        insert Casos;
+        
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', EntitlementId = ent.Id, Origin = 'Agencias_Banco', Nombre_Usuario_Firmador__c = 'aa', RecordTypeId = mapTipoR.get('Aumento_Disminucion_Aportes'));
+        
+        list<Detalle_caso__c> detalleCasos = new list<Detalle_caso__c>();
+        Detalle_caso__c detalle = new Detalle_Caso__c(Caso__c = Casos[0].id, Cuenta__c = cuentaIndi.id);
+        detalleCasos.add(detalle);
+        
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id,Cabeza_retiro__c = true, Monto_Saldo_Patronal__c = 100,
+                                                       Forma_Retiro__c = 'CK', Porcentaje_Saldo_Patronal__c=12,Porcentaje_CRA_Individual__c=12);
+        detalleCasos.add(detalle1);
+        
+        Detalle_caso__c detalle2 = new Detalle_Caso__c(Caso__c = Casos[3].id, Cuenta__c = cuentaIndi.id, Monto_Saldo_Patronal__c = 100,
+                                                       Saldo_retirar__c = '12', Monto_Saldo__c = 100, Monto_retirar__c = 50);
+        detalleCasos.add(detalle2);
+        
+        insert detalleCasos;
+        
+        test.startTest();
+        extensionCasoDetalle controlADA2 = new extensionCasoDetalle(new ApexPages.StandardController(casos[4]));
+        controlADA2.detalleCaso.Nuevo_monto_aporte__c = 7000; 
+        controlADA2.guardar();
+        
+        extensionCasoDetalle re= new extensionCasoDetalle();
+        extensionCasoDetalle.metodoutil();
+        test.stopTest();   
+        
+    }
+   
+    
+    
 }

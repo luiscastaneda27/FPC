@@ -12,12 +12,17 @@ public class updateCase {
     
 	@future
     public static void processCase(List<Id> caseIds) {
-    	List<Case> lstCase = [Select Id, Milestone_operaciones__c, Status, Paso_por_devolucion__c From Case Where Id in :caseIds Limit 1];
+        List<Case> lstCase = [Select Id, Milestone_operaciones__c, Status, Paso_por_devolucion__c From Case Where Id in :caseIds Limit 1];
+        List<ProcessInstance> listv = [Select Id FROM ProcessInstance Where TargetObjectId in :caseIds];
+        System.debug('Nuevo: '+listv.size());
         for(Case c : lstCase) {
-            if(c.Status == 'Pendiente de aprobación') { c.Milestone_operaciones__c = true;
-            } else if(c.Status == 'Devuelto' && c.Paso_por_devolucion__c == False) { c.Paso_por_devolucion__c = True; 
+            if(c.Status == 'Pendiente de aprobación') { 
+                c.Milestone_operaciones__c = true;
+            } else if(c.Status == 'Devuelto' && c.Paso_por_devolucion__c == False) { 
+                c.Paso_por_devolucion__c = True; 
             }    
         }
+        System.debug('lstCase: '+Json.serialize(lstCase));
         update lstCase;
     }
     @future
@@ -104,6 +109,8 @@ public class updateCase {
     public static void createRecord(List<FieldsBankManagement> values) {
     	System.debug('values: '+values);   
         String pctipoid, pcnroid, cuenta, pcprimernombre, pcprimerapellido, pcmail, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcpromotor, EntitlementValue;
+        String fileName;
+        Blob fileBody;
         Double pcMonto;
         Date pcNuevaFecha;
         for(FieldsBankManagement f : values) {
@@ -129,6 +136,8 @@ public class updateCase {
             pcNuevaFecha = f.pcNuevaFecha;
             pcpromotor = f.pcpromotor;
             EntitlementValue = f.EntitlementValue;
+            fileName = f.fileName;
+            fileBody = f.fileBody;
         }
         System.debug('pctipoid: '+pctipoid+'--- pcnroid: '+pcnroid+'--- cuenta: '+cuenta+'--- pcprimernombre: '+pcprimernombre+'--- pcprimerapellido: '+pcprimerapellido+'--- pcmail: '+pcmail+'--- pnnrocertificado: '+pnnrocertificado+'--- tipoFondo: '+tipoFondo+'--- frecuencia: '+frecuencia+'--- pcformapago: '+pcformapago+'--- pccuentapago: '+pccuentapago+'--- diaPago: '+diaPago);
         List<Account> cuentaExiste = [Select Id,Identificacion__c From Account Where Identificacion__c =: pcnroid Limit 1];
@@ -140,7 +149,7 @@ public class updateCase {
             //cuentac.Subproducto__c = pcsubproducto;
             insert cuentac;
             System.debug('cuentac: '+cuentac);
-            updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue);   
+            updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue, fileName, fileBody);   
         } else {
             System.debug('Cliente no existe');
         	Account cta = new Account();
@@ -153,10 +162,10 @@ public class updateCase {
             //cta.OwnerId = pcpromotor;
             insert cta;
             System.debug('cta: '+cta);
-            updateCase.createCuentaC(pcnroid, cta.Id, cuenta, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue);
+            updateCase.createCuentaC(pcnroid, cta.Id, cuenta, pnnrocertificado, tipoFondo, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue, fileName, fileBody);
         }
     }
-    public static void createCuentaC(String pcnroid, String cliente, String cuenta, String pnnrocertificado, String tipoFondo, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco, Date pcNuevaFecha, String pcpromotor, String EntitlementValue) {
+    public static void createCuentaC(String pcnroid, String cliente, String cuenta, String pnnrocertificado, String tipoFondo, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco, Date pcNuevaFecha, String pcpromotor, String EntitlementValue, String fileName, Blob fileBody) {
     	System.debug('Nueva Cuenta: '+cuenta);
         System.debug('Nuevo cliente: '+cliente);
         Cuentas__c cuentac = new Cuentas__c();
@@ -172,9 +181,10 @@ public class updateCase {
         cuentac.Forma_Aportacion__c = pcformapago;
         insert cuentac;
         system.debug('cuentac: '+cuentac);
-        updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue);    
+        updateCase.createManagementAfiliation(pcnroid, String.valueOf(cuentac.Cliente__c), String.valueOf(cuentac.Id), frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor, EntitlementValue, fileName, fileBody);    
     }
-    public static void createManagementAfiliation(String pcnroid, String cliente, String cuenta, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco, Date pcNuevaFecha, String pcpromotor, String EntitlementValue) {
+   
+    public static void createManagementAfiliation(String pcnroid, String cliente, String cuenta, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco, Date pcNuevaFecha, String pcpromotor, String EntitlementValue, String fileName, Blob fileBody) {
     	//Crear caso de Afiliación de Débito Automático
         String RecordTypeId = [Select Id From RecordType Where SobjectType = 'Case' and Name = 'Modificación de aportes'].Id;          
         Case c = new Case();
@@ -197,9 +207,35 @@ public class updateCase {
         c.DAU_aprobacion__c = false;
         c.EntitlementId = EntitlementValue;
         Insert c;
+        Boolean respuesta = insertFile(fileBody, fileName, c.Id);
         System.debug('Caso guardado: '+c);  
         updateCase.createDetailAfiliation(c, pcnroid, cuenta, frecuencia, pcformapago, pccuentapago, diaPago, pcMes, pcAnio, pcMonto, pcPOS, pcTarjetaHabiente, pcTipoTarjeta, pcBanco, pcNuevaFecha, pcpromotor);    
 	}
+    
+    public static Boolean insertFIle(Blob fileBody, String fileName, Id recordId){
+        try{
+            System.debug('fileName: '+fileName +' ------ recordId: '+recordId);
+            ContentVersion cv = new ContentVersion();
+            cv.ContentLocation = 'S';
+            cv.ContentDocumentId = null;
+            cv.VersionData = fileBody; 
+            cv.Title = fileName; 
+            cv.PathOnClient = fileName; 
+            insert cv;
+            ContentDocumentLink cdl = new ContentDocumentLink();
+            cdl.ContentDocumentId = [SELECT Id, ContentDocumentId FROM ContentVersion WHERE Id =: cv.Id].ContentDocumentId;
+            cdl.LinkedEntityId = recordId; 
+            cdl.ShareType = 'V';
+            insert cdl;
+            system.debug('Éxitoso');
+            return true;
+        }catch(Exception ex){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, 'Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber()));
+            system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());
+            return false;
+        }
+    }
+   
     public static void createDetailAfiliation(Case caso, String pcnroid, String cuentac, String frecuencia, String pcformapago, String pccuentapago, String diaPago, String pcMes, String pcAnio, Double pcMonto, String pcPOS, String pcTarjetaHabiente, String pcTipoTarjeta, String pcBanco, Date pcNuevaFecha, String pcpromotor) {
     	SolicitudCaso solicitud = new SolicitudCaso();
         //Crear detalle de caso de Afiliación de Débito Automático

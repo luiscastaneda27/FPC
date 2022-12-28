@@ -6,5 +6,10 @@
     <columns>Codigo_Municipio_Colonia__c</columns>
     <columns>Codigo_municipio__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>NAME</field>
+        <operation>contains</operation>
+        <value>MARGARITA</value>
+    </filters>
     <label>Todos</label>
 </ListView>

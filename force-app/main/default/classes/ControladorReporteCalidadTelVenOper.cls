@@ -65,6 +65,7 @@ public class ControladorReporteCalidadTelVenOper {
     
     public void traerClientes(){
         try{
+            Usuarios_de_Pantallas__c usuarioP = [Select Name, Apellido__c from Usuarios_de_Pantallas__c Where Usuario__c =:usuario limit 1];
             listAfiliaciones = new list<Reporte_calidad__C>();
             mapAsesoresOficiales = new map<string, Oficial_X_Asesor__c>();
             mapAsesoresPremier = new map<string, String>();
@@ -121,8 +122,8 @@ public class ControladorReporteCalidadTelVenOper {
                     
                     afiliacion.Codigo_Asesor_Comercial__c = respuesta.asesor;
                     afiliacion.Asesor_Comercial__c = asesor.Asesor__r.name;
-                    //Afiliacion.Codigo_Oficial_SAC__c = asesor.Codigo_Oficial_SAC__c;
-                    //afiliacion.Oficial_SAC__c =  asesor.Oficial_SAC__r.name;
+                    Afiliacion.Codigo_Oficial_SAC__c = usuario;
+                    afiliacion.Oficial_SAC__c =  usuarioP.Name + ' '+ usuarioP.Apellido__c;
                     afiliacion.Cuentas_Colectivas__c = respuesta.codColectiva;
                     afiliacion.Estado__c = 'A';
                     

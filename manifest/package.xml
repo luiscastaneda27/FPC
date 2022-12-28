@@ -13,10 +13,6 @@
 		<name>ApexTrigger</name>
 	</types>
 	<types>
-		<members>*</members>
-		<name>Flow</name>
-	</types>
-	<types>
 		<members>Accionista__c.Cliente__c</members>
 		<members>Accionista__c.Correo_Electronico__c</members>
 		<members>Accionista__c.Identidad__c</members>
@@ -389,6 +385,7 @@
 		<members>Case.Departamento_Trabajo2__c</members>
 		<members>Case.Desde_sitio_externo__c</members>
 		<members>Case.Desea_ver_tasa_de_cambio__c</members>
+		<members>Case.Ejecutar_Trigger__c</members>
 		<members>Case.Embajadas__c</members>
 		<members>Case.Empresa__c</members>
 		<members>Case.EnviarEDCPorCorreo__c</members>
@@ -420,6 +417,7 @@
 		<members>Case.Lugar_Nacimiento__c</members>
 		<members>Case.Mes__c</members>
 		<members>Case.Milestone_operaciones__c</members>
+		<members>Case.ModificacionCamposCriticos__c</members>
 		<members>Case.Monto_Comision__c</members>
 		<members>Case.Monto_compromiso_aporte__c</members>
 		<members>Case.Mostrar_Asignar__c</members>
@@ -654,6 +652,7 @@
 		<members>Cuentas__c.Matriz_Comision__c</members>
 		<members>Cuentas__c.Monto_Saldo_Minimo_CRA__c</members>
 		<members>Cuentas__c.Monto_aporte__c</members>
+		<members>Cuentas__c.POS__c</members>
 		<members>Cuentas__c.PSP_De_01_anos__c</members>
 		<members>Cuentas__c.PSP_De_1011_anos__c</members>
 		<members>Cuentas__c.PSP_De_1112_anos__c</members>
@@ -899,10 +898,10 @@
 		<members>Estado_de_cuenta_envio_y_repuesta__c.Respuesta__c</members>
 		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Contacto__c</members>
 		<members>FPC_ErroresEstadosDeCuenta__c.FPC_Error__c</members>
+		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_EstadoSLA__c</members>
 		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_FechaFin__c</members>
 		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_FechaInicio__c</members>
 		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_ReporteCalidad__c</members>
-		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_SubEstadoRCSF__c</members>
 		<members>FPC_InicioFinSubEstadosSLARC__c.FPC_TiempoConfigurado__c</members>
 		<members>FPC_Log__c.FPC_Error__c</members>
 		<members>FPC_Log__c.FPC_Grupo__c</members>
@@ -911,7 +910,9 @@
 		<members>FPC_Log__c.FPC_Resultado__c</members>
 		<members>FPC_Log__c.FPC_Servicio__c</members>
 		<members>FPC_TiemposSLARC__c.FPC_Codigo__c</members>
+		<members>FPC_TiemposSLARC__c.FPC_EstadoSLA__c</members>
 		<members>FPC_TiemposSLARC__c.FPC_Estado__c</members>
+		<members>FPC_TiemposSLARC__c.FPC_PantallaRC__c</members>
 		<members>FPC_TiemposSLARC__c.FPC_Tiempo__c</members>
 		<members>Fantasma_portal__c.Asignado_A__c</members>
 		<members>Fantasma_portal__c.Correo_electronico__c</members>
@@ -1201,6 +1202,7 @@
 		<members>Pantalla_Cambio_Asesor_Banco__c.Codigo_Usuario__c</members>
 		<members>Pantalla_Cambio_Asesor_Banco__c.Oficial_de_negocios__c</members>
 		<members>Parametros_DAU__mdt.DAU_Contrasenia__c</members>
+		<members>Parametros_DAU__mdt.DAU_Dias__c</members>
 		<members>Parametros_DAU__mdt.DAU_Token__c</members>
 		<members>Parametros_DAU__mdt.DAU_Usuario__c</members>
 		<members>Parametros_DAU__mdt.Monto_a_Disminuir__c</members>
@@ -2097,6 +2099,10 @@
 		<members>datoManualT24__c</members>
 		<members>reporteT24__c</members>
 		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Flow</name>
 	</types>
 	<types>
 		<members>*</members>

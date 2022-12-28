@@ -3,7 +3,7 @@ public class ControladorReporteCalidadFicopenSac {
     public List<Reporte_calidad__C> listAfiliaciones{get;set;}
     public Reporte_calidad__C Afiliacion {get;set;}
     String usuario;
-    String tipoPantalla = 'FC';
+    String tipoPantalla = 'FCA';
     public producto__C producto {get;set;} 
     public String idAfiliacion{get;set;}
     public Map<string, String> mapClientes{get;set;}
@@ -20,6 +20,7 @@ public class ControladorReporteCalidadFicopenSac {
     public void reinicar(){
         listAfiliaciones = new list<Reporte_calidad__C>();
         Afiliacion = new Reporte_calidad__C();
+        String tp = tipoPantalla.contains('FC') ? '%FC%' : '%'+tipoPantalla+'%';
         
         listAfiliaciones = [select Addendum__c, Aplica_CS__c , Aportacion_HNL__c ,Aportacion_USD__c ,
              Asesor_Comercial__c, Comentarios__c, Codigo_Asesor_Comercial__c,Codigo_Oficial_SAC__c ,
@@ -28,7 +29,7 @@ public class ControladorReporteCalidadFicopenSac {
              Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
              Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,
              Documentacion_Recibida__c,Id,ExpedienteFisicoRecibido__c,Cuentas_Colectivas__c,
-             Estado__c,Fecha_Devolucion__c,DebidaDiligencia__c,
+             Estado__c,Fecha_Devolucion__c,DebidaDiligencia__c,SubEstadoRCSF__c,
              NombreEmpleadoAGN__c,CodigoEmpleadoAGN__c, FechaIngreso__c, NombreAgencia__c,CodigoAGN__c,
              CurrencyIsoCode,Nacionalidad__c, sexo__C,fecha_nacimiento__C,Fecha_ingreso_empresa__C,
              profesion__C,estado_civil__C, lugar_nacimiento__C,nombre_conyuge__C,cargo__C,
@@ -37,7 +38,7 @@ public class ControladorReporteCalidadFicopenSac {
              Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
              Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c
              from Reporte_calidad__C
-             where Codigo_Oficial_SAC__c =:Usuario and Estado__c = 'V' and Tipo_Afiliacion__C =: tipoPantalla
+             where Codigo_Oficial_SAC__c =:Usuario and Estado__c = 'V' and Tipo_Afiliacion__C like :tp
              order by LastModifiedDate desc limit 950];
         if(listAfiliaciones.size() == 0){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'No se han encontrado clientes.'));
@@ -64,7 +65,8 @@ public class ControladorReporteCalidadFicopenSac {
             for(Oficial_X_Asesor__c item: [select Oficial_SAC__r.name, Codigo_Oficial_SAC__c, Codigo_Asesor__c ,Asesor__r.name from Oficial_X_Asesor__c]){
                 mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
             }
-            list<aSysdeReporteCalidad.ConsultaCliente> listRespuesta = aSysdeReporteCalidad.infoClientes(tipoPantalla);
+            String tp = tipoPantalla.contains('FC') ? 'FC' : tipoPantalla;
+            list<aSysdeReporteCalidad.ConsultaCliente> listRespuesta = aSysdeReporteCalidad.infoClientes(tp);
             Map<String, String> mapAGN = new Map<String, String>();
             for(Agencia__c item : [Select name, Codigo_T24__c from agencia__C]){
                 mapAGN.put(item.Codigo_T24__c, item.name);

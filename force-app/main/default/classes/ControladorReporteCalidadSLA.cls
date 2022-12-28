@@ -21,8 +21,8 @@ public class ControladorReporteCalidadSLA {
             System.debug('listTiemposSLA: '+listTiemposSLA);
             for(FPC_InicioFinSubEstadosSLARC__c tiempo: listTiemposSLA){
                 if(perfil == 'SAC' &&
-                   (tiempo.FPC_SubEstadoRCSF__c == 'NS' || tiempo.FPC_SubEstadoRCSF__c == 'VS' || tiempo.FPC_SubEstadoRCSF__c == 'VF'
-                    || tiempo.FPC_SubEstadoRCSF__c == 'PS' || tiempo.FPC_SubEstadoRCSF__c == 'PF')){
+                   (tiempo.FPC_EstadoSLA__c == 'NS' || tiempo.FPC_EstadoSLA__c == 'VS' || tiempo.FPC_EstadoSLA__c == 'VF'
+                    || tiempo.FPC_EstadoSLA__c == 'PS' || tiempo.FPC_EstadoSLA__c == 'PF')){
                         Integer horasTransc = SAC.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
                         horasTransc -= horasTransc > 0 ? 8 : 0;
                         Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
@@ -33,8 +33,8 @@ public class ControladorReporteCalidadSLA {
                         
                     }
                 if(perfil != 'SAC' &&
-                   (tiempo.FPC_SubEstadoRCSF__c == 'NC' || tiempo.FPC_SubEstadoRCSF__c == 'DC' || tiempo.FPC_SubEstadoRCSF__c == 'DA'
-                    || tiempo.FPC_SubEstadoRCSF__c == 'PS' || tiempo.FPC_SubEstadoRCSF__c == 'PF')){
+                   (tiempo.FPC_EstadoSLA__c == 'NC' || tiempo.FPC_EstadoSLA__c == 'DC' || tiempo.FPC_EstadoSLA__c == 'DA'
+                    || tiempo.FPC_EstadoSLA__c == 'PS' || tiempo.FPC_EstadoSLA__c == 'PF')){
                         Integer horasTransc = comercial.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
                         horasTransc -= horasTransc > 0 ? 8 : 0;
                         Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();

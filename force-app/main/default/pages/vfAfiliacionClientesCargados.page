@@ -52,20 +52,20 @@
                                             Enviar
                                         </td >
                                         <td scope="col" colspan="1">
-                                            Primer Nombre
+                                            Nombre
                                         </td >
-                                        <td scope="col" colspan="1">
-                                            Segundo Nombre
-                                        </td>
-                                        <td scope="col" colspan="1">
-                                            Primer Apellido
-                                        </td>
-                                        <td scope="col" colspan="1">
-                                            Segundo Apellido
-                                        </td>
                                        
                                         <td scope="col" colspan="1">
                                             Identificación
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Cuenta
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Empresa
+                                        </td>
+                                        <td scope="col" colspan="1">
+                                            Cuenta Colectiva
                                         </td>
                                         <td scope="col" colspan="1">
                                             
@@ -82,20 +82,20 @@
                                                 <apex:inputField value="{!item.Enviar_Sac__c}" rendered="{!item.Formulario_Completo__c ='S'}" />
                                             </td>
                                             <td>
-                                                <apex:outputField value="{!item.name}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Nombre__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Primer_Apellido__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Apellido__c}" />
+                                                <apex:outputText value="{!item.name + ' ' + item.Primer_Apellido__c}" />
                                             </td>
                                            
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Empresa__r.Name}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Cuentas_Colectivas__c}" />
                                             </td>
                                             <td>
                                                 <apex:commandLink action="{!editar}" value="Editar" reRender="theForm" status="status" >

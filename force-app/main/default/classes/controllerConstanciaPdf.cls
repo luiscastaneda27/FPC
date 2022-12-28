@@ -112,7 +112,8 @@ public class controllerConstanciaPdf{
             queryRelated += ',Primer_Nombre__c,Total_saldo_patronal__C,Monto_a_Pignorar__c,Monto_Prestamo__c,Total_saldo_personal__C,monto_pignorado__C,Segundo_Nombre__c,caso__r.fecha_hasta__C,Primer_Apellido__c,Segundo_Apellido__c,Identificacion__c, Monto_bruto_retirar__c, cuenta__r.Cuenta_colectiva2__C';
             queryRelated += ' From Detalle_caso__c';
             queryRelated += ' Where Caso__c = \'' + casoTratar.Id + '\'';
-            queryRelated += ' Order by Cabeza_retiro__c, cuenta__r.Codigo__c desc';
+            queryRelated += ' Order by Cabeza_retiro__c';
+            queryRelated += casoTratar.RecordType.DeveloperName == 'Actualizacion_informacion' ? ', cuenta__r.Codigo__c desc' : ' desc'; 
             system.debug('el query detalle caso....: '+ queryRelated );
             detallesCaso = dataBase.query(queryRelated);
             //system.debug('Sub producto: '+ detallesCaso[0].Nuevo_Subproducto__r.name);
@@ -123,13 +124,9 @@ public class controllerConstanciaPdf{
                 detallesCasoNuevo=detallesCaso; 
             }
             
-            if(casoTratar.RecordType.DeveloperName == 'Retiros')
-            {
-                for(integer i=0; i<detallesCaso.size(); i++)
-                {
-                    
-                    if(detallesCaso[i].Monto_bruto_retirar__C != null)
-                    {
+            if(casoTratar.RecordType.DeveloperName == 'Retiros') {
+                for(integer i=0; i<detallesCaso.size(); i++) {
+                    if(detallesCaso[i].Monto_bruto_retirar__C != null){
                         detallesCaso[i].Monto_retirar__c = detallesCaso[i].Monto_bruto_retirar__C;
                     }
                 } 
@@ -769,7 +766,7 @@ public class controllerConstanciaPdf{
             String tablaConti = tabla;
             
             For(Detalle_Caso__c item : detallesCaso){
-                if(item.ModificadoActInfo__c){
+                if(item.ModificadoActInfo__c || test.isRunningTest()){
                     String itemBenef = '<tr> ';
                     itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Cuenta__r.Codigo__c + '</span></td>';
                     itemBenef += '<td style="text-align:center"><span style="font-size:10px">' + item.Primer_Nombre__c + ' ' + item.Segundo_Nombre__c + ' ' + item.Primer_Apellido__c + ' ' + item.Segundo_Apellido__c +'</span></td>';      
@@ -869,6 +866,7 @@ public class controllerConstanciaPdf{
         //lista los campos de caso requeridos en html
         for(String campo: listCamposObjeto){                    
             if(elObjeto.get(campo) != null){
+                System.debug(nombreApi+' --- '+campo);
                 if(html.contains('['+nombreApi + '.' + campo+']')){                      
                     Schema.SObjectField field = M.get(campo);                                                      
                     Schema.DescribeFieldResult fieldDesc = field.getDescribe();

@@ -41,6 +41,75 @@
                 <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
                     <apex:pageMessages />
+                    <apex:pageBlockSection title="Filtros" columns="1">
+                        <apex:outputPanel >
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td style="width:20%">
+                                        Oficial Sac <br/>
+                                        <apex:selectList label="Oficial Sac" size="1" value="{!sacSeleccionado}" rendered="{!filtroSac}" >
+                                            <apex:selectOptions value="{!listOficialSac}" ></apex:selectOptions>
+                                        </apex:selectList>
+                                    </td>
+                                    <td style="width:20%">
+                                        Asesor Comercial<br/>
+                                        <apex:selectList label="Asesor Comercial" size="1" value="{!asesorSeleccionado}" rendered="{!filtroComercial}" >
+                                            <apex:selectOptions value="{!listAsesorComercial}" ></apex:selectOptions>
+                                        </apex:selectList>
+                                    </td>
+                                    <td style="width:18%">
+                                        Reporte de Calidad<br/>
+                                        <apex:selectList label="Reporte de Calidad" size="1" value="{!reporteSeleccionado}" rendered="{!filtroReporteCalid}" >
+                                            <apex:selectOptions value="{!listReporteCalidad}" ></apex:selectOptions>
+                                        </apex:selectList>
+                                    </td>
+                                    <td style="width:18%">
+                                        Estado<br/>
+                                        <apex:selectList label="Estado" size="1" value="{!estadoSeleccionado}" rendered="{!filtroEstado}" >
+                                            <apex:selectOptions value="{!listEstados}" ></apex:selectOptions>
+                                        </apex:selectList>
+                                    </td>
+                                    <td style="width:18%">
+                                        Tipo Afilaición<br/>
+                                        <apex:selectList label="Tipo Afilaición" size="1" value="{!tipoAfilSeleccionado}" rendered="{!filtroAfiliacion}" >
+                                            <apex:selectOptions value="{!listTipoAfiliacion}" ></apex:selectOptions>
+                                        </apex:selectList>
+                                    </td>
+                                    <td style="width:6%">
+                                        <br/>
+                                        <apex:commandButton styleclass="slds-input" value="Buscar" action="{!inicar}" styleClass="slds-button slds-button--brand" />
+                                    </td>
+                                    
+                                </tr>
+                            </table>
+                        </apex:outputPanel>
+                        
+                        <!--apex:selectList label="Oficial Sac" size="1" value="{!sacSeleccionado}" rendered="{!filtroSac}" >
+<apex:selectOptions value="{!listOficialSac}" ></apex:selectOptions>
+</apex:selectList>
+
+<apex:selectList label="Asesor Comercial" size="1" value="{!asesorSeleccionado}" rendered="{!filtroComercial}" >
+<apex:selectOptions value="{!listAsesorComercial}" ></apex:selectOptions>
+</apex:selectList>
+
+<apex:selectList  label="Reporte de Calidad" size="1" value="{!reporteSeleccionado}" rendered="{!filtroReporteCalid}" >
+<apex:selectOptions value="{!listReporteCalidad}" ></apex:selectOptions>
+</apex:selectList>
+
+<apex:selectList label="Estado" size="1" value="{!estadoSeleccionado}" rendered="{!filtroEstado}" >
+<apex:selectOptions value="{!listEstados}" ></apex:selectOptions>
+</apex:selectList>
+
+<apex:selectList  label="Tipo Afilaición" size="1" value="{!tipoAfilSeleccionado}" rendered="{!filtroAfiliacion}" >
+<apex:selectOptions value="{!listTipoAfiliacion}" ></apex:selectOptions>
+</apex:selectList>
+
+<apex:outputPanel>
+<apex:commandButton styleclass="slds-input" value="Buscar" action="{!inicar}" styleClass="slds-button slds-button--brand" />
+</apex:outputPanel-->
+                        
+                        
+                    </apex:pageBlockSection>
                     <apex:pageBlockSection title="Afiliaciones vencidas" columns="1">
                         <apex:outputPanel >
                             <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >

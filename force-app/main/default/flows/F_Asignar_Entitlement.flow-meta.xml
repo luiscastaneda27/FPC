@@ -584,7 +584,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Casos de Actualización de información / Campos Críticos Operaciones</stringValue>
+                <stringValue>Casos de Actualización de información / SAC</stringValue>
             </value>
         </filters>
         <object>Entitlement</object>

@@ -834,7 +834,7 @@ name="btn_processFile2" value="Afiliar"  onclick="" /> -->
                                     <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Agregar al Reporte de Calidad</h1>
                                 </header>
                                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                                    <h3 class="slds-text-heading_medium slds-hyphenate" >¿Desea que estas aflicciones se agreguen al resporte de calidad? </h3>  
+                                    <h3 class="slds-text-heading_medium slds-hyphenate" >¿Desea que estas afiliaciones se agreguen al reporte de calidad? </h3>  
                                     
                                 </div>
                                 <footer class="slds-modal__footer">

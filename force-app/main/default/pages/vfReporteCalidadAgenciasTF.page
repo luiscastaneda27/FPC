@@ -131,7 +131,7 @@ Enviar
                         <apex:inputField value="{!Afiliacion.WAIVER__c}" />
                         
                         <apex:inputField value="{!Afiliacion.PEP__c}" />
-                        <apex:inputField value="{!Afiliacion.Procedencia__c}" />
+                        <apex:outputField value="{!Afiliacion.Procedencia__c}" />
                         
                         <apex:inputField value="{!Afiliacion.Addendum__c}" />
                         <apex:outputField label="Nombre de la Empresa" value="{!Afiliacion.Empresa__r.name}" />
@@ -172,7 +172,18 @@ Enviar
                             <apex:selectOption itemLabel="No" itemValue="N" />
                         </apex:selectList>
                         
-                        <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
+                        <apex:outputField value="{!Afiliacion.DebidaDiligencia__c}" />
+                        <apex:selectList value="{!Afiliacion.SubEstadoRCSF__c}" size="1" label="Sub Estado RC SF" > 
+                            <apex:selectOption itemLabel="Nuevo SAC" itemValue="NS" />
+                            <apex:selectOption itemLabel="Nuevo Comercial" itemValue="NC" />
+                            <apex:selectOption itemLabel="Validación Scan" itemValue="VS" />
+                            <apex:selectOption itemLabel="Pendiente Scan" itemValue="PS" />
+                            <apex:selectOption itemLabel="Pendiente Físico" itemValue="PF" />
+                            <apex:selectOption itemLabel="Validación Físico" itemValue="VF" />
+                            <apex:selectOption itemLabel="Devolución Comercial" itemValue="DC" />
+                            <apex:selectOption itemLabel="Devolución Agencia" itemValue="DA" />
+                            <apex:selectOption itemLabel="Cerrado" itemValue="C" />
+                        </apex:selectList>
                         <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                         
                     </apex:pageBlockSection>

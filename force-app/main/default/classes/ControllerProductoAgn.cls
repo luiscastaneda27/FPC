@@ -1345,7 +1345,7 @@ public without sharing class ControllerProductoAgn {
                         return null; 
                     }
             }
-            if (String.isBlank(NumeroID_Fiscal_EEUU) && (pcFATCA == TRUE || ES_Residente == true || paisNacimiento == '053' ||
+            if (String.isBlank(NumeroID_Fiscal_EEUU) && (ES_Residente == true || paisNacimiento == '053' ||
                 direccionFatca == '053' || pcnacionalidad == '053'  || pcnacionalidad2 == '053' || pcnacionalidad3 == '053')) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación Fiscal (TIN) no puede estar vacio'));
                 return null; 
@@ -1937,7 +1937,7 @@ insert reg;
                     }
                     else
                     {
-                        ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
+                        //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
                         if( mostrarTablaModificar == true)
                         {
                             mostrarTablaModificar = true;
@@ -1945,9 +1945,9 @@ insert reg;
                             {
                                 beneficiarioUnico.tipoId = null;
                             }
-                            ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
-                            disbotBene = true;
+                            //ListBeneficiarios.add(beneficiarioUnico);
+                            //beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
+                            //disbotBene = true;
                         }
                         else
                         {
@@ -1961,16 +1961,17 @@ insert reg;
                             {
                                 beneficiarioUnico.tipoId = null;
                             }
-                            ListBeneficiarios.add(beneficiarioUnico);
-                            beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
-                            disbotBene = true; 
+                            //ListBeneficiarios.add(beneficiarioUnico);
+                            //beneficiarioUnico = new beneficiario(null,'','','','','','','','','','','','',null,null,null);
+                            //disbotBene = true; 
                         }
-                        limpiabeneficiario();
-                        validadosBeneficiarios = true;
-                        return null;
+                        //limpiabeneficiario();
+                        //validadosBeneficiarios = true;
+                        //return null;
                     }
                     
                 }
+                System.debug('total2: '+total2);
                 if(total2 <= 100)
                 {
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Agregado Con Exito!'));
@@ -4348,7 +4349,7 @@ paso2Cuerpo = 'slds-hide';
                         return null; 
                     }
             }
-            if (String.isBlank(NumeroID_Fiscal_EEUU) && (pcFATCA == TRUE || ES_Residente == true || paisNacimiento == '053' ||
+            if (String.isBlank(NumeroID_Fiscal_EEUU) && (ES_Residente == true || paisNacimiento == '053' ||
                 direccionFatca == '053' || pcnacionalidad == '053'  || pcnacionalidad2 == '053' || pcnacionalidad3 == '053')) {
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Número de identificación Fiscal (TIN) no puede estar vacio'));
                 return null; 
@@ -4559,14 +4560,7 @@ paso2Cuerpo = 'slds-hide';
             {
                 naturalEnvio.pcPEP = 'N';
             }
-            if(pcFATCA == true)
-            {
-                naturalEnvio.pcFATCA = 'S';
-            } 
-            else
-            {
-                naturalEnvio.pcFATCA = 'N';
-            }
+            
             if(pcFATCANC == true)
             {
                 naturalEnvio.pcFATCANC = 'S';
@@ -4925,6 +4919,15 @@ return null;
                 pnnrocertificado = 'AF'+af.Id_Formulario_Sysde__c++; 
                 naturalEnvio.pnnrocertificado = pnnrocertificado;
                 naturalEnvio.pcPaisNacimiento = paisNacimiento;
+                naturalEnvio.pcFATCA = 'N';
+                for(ClassDirecion item: naturalEnvio.ListDirecciones){
+                    naturalEnvio.pcFATCA = item.paisDir =='053' || item.paisDir =='144' ? 'S' : naturalEnvio.pcFATCA;
+                }
+                if (naturalEnvio.pcPaisNacimiento =='053' || naturalEnvio.pcPaisNacimiento =='144' ||  naturalEnvio.pcnacionalidad2 == '053' ||
+                    naturalEnvio.pcnacionalidad2 == '144'|| naturalEnvio.pcnacionalidad3 == '053' || naturalEnvio.pcnacionalidad3 == '144'||
+                    naturalEnvio.pcnacionalidad =='053'||naturalEnvio.pcnacionalidad=='144') {
+                        naturalEnvio.pcFATCA = 'S';
+                    }
                 String resultado = '';
                 for(Integer i=0; i<naturalEnvio.listBeneficiarios.size(); i++){
                     naturalEnvio.listBeneficiarios[i].accion = 'M';
@@ -4934,6 +4937,7 @@ return null;
                     naturalEnvio.listBeneficiarios[i].autorizadoPor =userLogin;
                     naturalEnvio.listBeneficiarios[i].modificadoPor =userLogin;
                     naturalEnvio.listBeneficiarios[i].fechaModificacion = System.now();
+                    naturalEnvio.listBeneficiarios[i].idExterno = null;
                 }
                 for(Integer i=0; i<naturalEnvio.listBeneficiariosC.size(); i++){
                     naturalEnvio.listBeneficiariosC[i].accion = 'M';
@@ -4943,6 +4947,7 @@ return null;
                     naturalEnvio.listBeneficiariosC[i].autorizadoPor = userLogin;
                     naturalEnvio.listBeneficiariosC[i].modificadoPor = userLogin;
                     naturalEnvio.listBeneficiariosC[i].fechaModificacion = System.now();
+                    naturalEnvio.listBeneficiariosC[i].idExterno = null;
                 }
                 System.debug('Tipo de Moneda: '+naturalEnvio.pcTipoMoneda + '--- ' + TipMoneda.Tipo_Moneda__c);
                 String valorMoneda = '';
@@ -5124,14 +5129,6 @@ return null;
             else
             {
                 naturalEnvio.pcPEP = 'N';
-            }
-            if(pcFATCA == true)
-            {
-                naturalEnvio.pcFATCA = 'S';
-            } 
-            else
-            {
-                naturalEnvio.pcFATCA = 'N';
             }
             if(pcFATCANC == true)
             {
@@ -5427,6 +5424,7 @@ return null;
             
             else
             { 
+                List<String> listIE = new List<String>();
                 List<beneficiario> listBenef = new List<beneficiario>();
                 List<beneficiario> listBenefC = new List<beneficiario>();
                 for(Integer i=0; i<naturalEnvio.listBeneficiarios.size(); i++){
@@ -5437,8 +5435,13 @@ return null;
                     naturalEnvio.listBeneficiarios[i].autorizadoPor =userLogin;
                     naturalEnvio.listBeneficiarios[i].modificadoPor =userLogin;
                     naturalEnvio.listBeneficiarios[i].fechaModificacion = System.now();
+                    naturalEnvio.listBeneficiarios[i].cuenta = pc_codCuenta;
                     listBenef.add(naturalEnvio.listBeneficiarios[i]);
+                    if(naturalEnvio.listBeneficiarios[i].idExterno != null){
+                        listIE.add(String.valueOf(Integer.valueOf(naturalEnvio.listBeneficiarios[i].idExterno)));
+                    }
                 }
+                naturalEnvio.listBeneficiarios = new List<beneficiario>();
                 for(Integer i=0; i<listBeneficiariosTemp.size(); i++){
                     listBeneficiariosTemp[i].accion = 'E';
                     listBeneficiariosTemp[i].estado ='I';
@@ -5447,9 +5450,12 @@ return null;
                     listBeneficiariosTemp[i].autorizadoPor =userLogin;
                     listBeneficiariosTemp[i].modificadoPor =userLogin;
                     listBeneficiariosTemp[i].fechaModificacion = System.now();
+                    if(listBeneficiariosTemp[i].idExterno != null && !listIE.contains(String.valueOf(Integer.valueOf(listBeneficiariosTemp[i].idExterno)))){
+                        naturalEnvio.listBeneficiarios.add(listBeneficiariosTemp[i]);
+                    }
                 }
-                naturalEnvio.listBeneficiarios = new List<beneficiario>();
-                naturalEnvio.listBeneficiarios.addAll(listBeneficiariosTemp);
+                
+                //naturalEnvio.listBeneficiarios.addAll(listBeneficiariosTemp);
                 naturalEnvio.listBeneficiarios.addAll(listBenef);
                 
                 
@@ -5461,9 +5467,13 @@ return null;
                     naturalEnvio.listBeneficiariosC[i].autorizadoPor = userLogin;
                     naturalEnvio.listBeneficiariosC[i].modificadoPor = userLogin;
                     naturalEnvio.listBeneficiariosC[i].fechaModificacion = System.now();
+                    naturalEnvio.listBeneficiariosC[i].cuenta = pc_codCuenta;
                     listBenefC.add(naturalEnvio.listBeneficiariosC[i]);
+                    if(naturalEnvio.listBeneficiariosC[i].idExterno != null){
+                        listIE.add(String.valueOf(Integer.valueOf(naturalEnvio.listBeneficiariosC[i].idExterno)));
+                    }
                 }
-                
+                naturalEnvio.listBeneficiariosC = new List<beneficiario>();
                 for(Integer i=0; i<listBeneficiariosTempC.size(); i++){
                     listBeneficiariosTempC[i].accion = 'E';
                     listBeneficiariosTempC[i].estado ='I';
@@ -5472,12 +5482,25 @@ return null;
                     listBeneficiariosTempC[i].autorizadoPor =userLogin;
                     listBeneficiariosTempC[i].modificadoPor =userLogin;
                     listBeneficiariosTempC[i].fechaModificacion = System.now();
+                    if(listBeneficiariosTempC[i].idExterno != null && !listIE.contains(String.valueOf(Integer.valueOf(listBeneficiariosTempC[i].idExterno)))){
+                        naturalEnvio.listBeneficiariosC.add(listBeneficiariosTemp[i]);
+                    }
                 }
-                naturalEnvio.listBeneficiariosC = new List<beneficiario>();
-                naturalEnvio.listBeneficiariosC.addAll(listBeneficiariosTempC);
+               
+                //naturalEnvio.listBeneficiariosC.addAll(listBeneficiariosTempC);
                 naturalEnvio.listBeneficiariosC.addAll(listBenefC);
                 //naturalEnvio = (NaturalActualizar)JSON.deserialize(JSON.serialize(naturalEnvio).toUpperCase(), NaturalActualizar.class);
                 naturalEnvio.pcPaisNacimiento = paisNacimiento;
+                
+                naturalEnvio.pcFATCA = 'N';
+                for(ClassDirecion item: naturalEnvio.ListDirecciones){
+                    naturalEnvio.pcFATCA = item.paisDir =='053' || item.paisDir =='144' ? 'S' : naturalEnvio.pcFATCA;
+                }
+                if (naturalEnvio.pcPaisNacimiento =='053' || naturalEnvio.pcPaisNacimiento =='144' ||  naturalEnvio.pcnacionalidad2 == '053' ||
+                    naturalEnvio.pcnacionalidad2 == '144'|| naturalEnvio.pcnacionalidad3 == '053' || naturalEnvio.pcnacionalidad3 == '144'||
+                    naturalEnvio.pcnacionalidad =='053'||naturalEnvio.pcnacionalidad=='144') {
+                        naturalEnvio.pcFATCA = 'S';
+                    }
                 String resultado = controllerApiClienteNatural.actualizaCliente(naturalEnvio);
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));   
                 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campo Agregado')); 
@@ -5493,6 +5516,8 @@ return null;
         }
         return null;
     }
+    
+    
     List<beneficiario> listBeneficiariosTemp = new List<beneficiario>();
     List<beneficiario> listBeneficiariosTempC = new List<beneficiario>();
     public void buscarColectiva()
@@ -5646,7 +5671,13 @@ insert reg;
                 {
                     pcPEP = true; 
                 }    
-                if (pcnacionalidad2 == '053' || pcnacionalidad2 == '144'|| pcnacionalidad3 == '053' || pcnacionalidad3 == '144'||pcnacionalidad =='053'||pcnacionalidad=='144')
+                Boolean flagFatca = false;
+                for(ClassDirecion item: fcsd.ListDirecciones){
+                    flagFatca = item.paisDir =='053' || item.paisDir =='144' ? true : flagFatca;
+                }
+                if (fcsd.pcPaisNacimiento =='053' || fcsd.pcPaisNacimiento =='144' ||  fcsd.pcnacionalidad2 == '053' ||
+                    fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'||
+                    fcsd.pcnacionalidad =='053'||fcsd.pcnacionalidad=='144' || flagFatca == true)
                 {
                     
                     pcFATCA = true;  
@@ -6291,33 +6322,25 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                     fcsd.pdfechasuscripcion = fcsd.pdfechasuscripcion.addHours(6);
                     fechasuscripcion=date.valueOf(fcsd.pdfechasuscripcion.year()+'-'+fcsd.pdfechasuscripcion.month()+'-'+fcsd.pdfechasuscripcion.day());
                 }
-                IF (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') 
-                { 
+                if (fcsd.pcPEP =='N'||fcsd.pcPEP == 'null') { 
                     pcPEP = false;
-                }
-                else 
-                {
+                } else {
                     pcPEP = true; 
-                }    
-        if (fcsd.pcnacionalidad2 == '053' || fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144')
-        {
-            pcFATCA = true;
-            MostrarVentanaFATCA();
-        }
-        else
-        {   
-            system.debug('ESSSS RESIDENTE: '+ fcsd.ES_Residente);
-            if (fcsd.ES_Residente == 'S')
-            {
-                pcFATCA = true;
-                MostrarVentanaFATCA();
-            }
-            else
-            {
-                pcFATCA = false;
-                MostrarVentanaFATCANO();
-            }
-        }
+                }
+                Boolean flagFatca = false;
+                for(ClassDirecion item: fcsd.ListDirecciones){
+                    flagFatca = item.paisDir =='053' || item.paisDir =='144' ? true : flagFatca;
+                }
+                if (fcsd.pcPaisNacimiento =='053' || fcsd.pcPaisNacimiento =='144' || fcsd.pcnacionalidad2 == '053' ||
+                    fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| 
+                    fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144' || fcsd.ES_Residente == 'S' || flagFatca == true)
+                {
+                    pcFATCA = true;
+                    MostrarVentanaFATCA();
+                }else {   
+                    pcFATCA = false;
+                    MostrarVentanaFATCANO();
+                }
                 if (fcsd.pcEst_cuenta != 'null')
                 {
                     Activo = fcsd.pcEst_cuenta;
@@ -6356,14 +6379,36 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 {
                     pcsegundoapellido = fcsd.pcsegundoapellido; 
                 }
-                /*if (fcsd.pcTelefonoCN != 'null')
-{
-pcTelefonoCN = fcsd.pcTelefonoCN;  
-}
-if (fcsd.pcCelularCN != 'null')
-{
-pcCelularCN = fcsd.pcCelularCN;   
-}*/
+                
+                classListas fcsd2 = controllerApiClienteNatural.consultaListas(pcnroid);                
+                if(fcsd2.FATCA == true||test.isRunningTest()){ 
+                    muestraPopFATCA = true;
+                    pcFATCA = true;
+                }
+            system.debug('pcFatca2 desde el modo automatico: '+pcFATCA);
+            system.debug('pcFatca2 desde el modo automatico: '+fcsd2.FATCA);
+            system.debug('pcFatca2 desde el modo automatico: '+pcnroid);
+                
+     /*  if ( fcsd.pcnacionalidad2 == '053' || fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144' || pcFATCA == true)
+        {
+            pcFATCA = true;
+            MostrarVentanaFATCA();
+        }
+        else
+        {   
+            system.debug('ESSSS RESIDENTE: '+ fcsd.ES_Residente);
+            if (fcsd.ES_Residente == 'S')
+            {
+                pcFATCA = true;
+                MostrarVentanaFATCA();
+            }
+            else
+            {
+                pcFATCA = false;
+                MostrarVentanaFATCANO();
+            }
+        }*/
+                
                 if(fcsd.pdfechanacimiento!=null)
                 {
                     fcsd.pdfechanacimiento = fcsd.pdfechanacimiento.addHours(6);
@@ -6381,21 +6426,16 @@ pcCelularCN = fcsd.pcCelularCN;
                 {
                     pcestadocivil = fcsd.pcestadocivil; 
                 } 
-                if (fcsd.pcNombreConyuge != 'null')
-                {
-                    if (fcsd.pcestadocivil == 'C' || fcsd.pcestadocivil == 'U')
-                    {
+                if (fcsd.pcNombreConyuge != 'null')  {
+                    if (fcsd.pcestadocivil == 'C' || fcsd.pcestadocivil == 'U'){
                         BloquearConyugue=false;
                         pcNombreConyuge = fcsd.pcNombreConyuge;    
-                    }
-                    else 
-                    {   
+                    } else  {   
                         pcNombreConyuge = '';
                         BloquearConyugue=true;         
                     } 
                 }
-                if (fcsd.pcProfesionOcupacion != 'null')
-                {
+                if (fcsd.pcProfesionOcupacion != 'null'){
                     TipoProfesion.Profesi_n_Ocupaci_n__c = fcsd.pcProfesionOcupacion;
                 }
                 //Codigo agregado Nuevo
@@ -6812,6 +6852,8 @@ TipoAport.Tipo_Aporte__c = fcsd.pcTipoAporte;
                          item.FATCANCbeneficiario, item.tipoBeneficiario,item.genero, item.primerNombre, 
                          item.segundoNombre, item.primerApellido, item.segundoApellido, item.Parentesco,
                          item.Distribucion, item.Grado, fechaNacimiento));
+                    Integer index = listBeneficiariosTemp.size() - 1;
+                    listBeneficiariosTemp[index].idExterno = item.idExterno;
                 }
                 for(Beneficiario item: ListBeneficiariosC){
                     Date fechaNacimiento = item.fechaNacimiento != null ? Date.valueOf(item.fechaNacimiento) : null;
@@ -6819,6 +6861,8 @@ TipoAport.Tipo_Aporte__c = fcsd.pcTipoAporte;
                          item.FATCANCbeneficiario, item.tipoBeneficiario,item.genero, item.primerNombre, 
                          item.segundoNombre, item.primerApellido, item.segundoApellido, item.Parentesco,
                          item.Distribucion,item.Grado, fechaNacimiento));
+                    Integer index = listBeneficiariosTempC.size() - 1;
+                    listBeneficiariosTempC[index].idExterno = item.idExterno;
                 }
                 
                 //Validación de Teléfonos
@@ -7182,7 +7226,7 @@ fcsd.ListTelefonos[i].esDefault = 'SI';
             } 
             else
             {
-                naturalEnvio.pcFATCA = 'N';
+                nmaturalEnvio.pcFATCA = 'N';
             }
             if(valorsiCont == true)
             {

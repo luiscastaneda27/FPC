@@ -1,9 +1,13 @@
 public class CrearUsuarioPortalAutogestion {
 
+    private static final String EXITOSO = 'Usuario de portal registrado correctamente.';
+    private static final String ERROR = 'Ha ocurrido un error en el registro del usuario de portal, por favor contacte al administrador del sistema.';
 
     @auraEnabled
     public static String crearUsuario(String recordId){
         Cuentas__c cuenta = [Select Codigo__c, Cliente__r.FirstName,Cliente__r.LastName, Cliente__r.PersonEmail, Cliente__r.Tipo_Identificacion__c, Cliente__r.Identificacion__c, Cliente__r.Cliente_Unico_Banco__c from Cuentas__c Where cliente__c =: recordId limit 1];
+        //cuenta.Cliente__r.FirstName = cuenta.Cliente__r.FirstName.contains(' ') ? cuenta.Cliente__r.FirstName.split(' ')[0] : cuenta.Cliente__r.FirstName;
+        //cuenta.Cliente__r.FirstName = cuenta.Cliente__r.LastName.contains(' ') ? cuenta.Cliente__r.LastName.split(' ')[0] : cuenta.Cliente__r.LastName;
         return crearUsuarioWS(cuenta.Cliente__r.FirstName, cuenta.Cliente__r.LastName, cuenta.Cliente__r.PersonEmail, cuenta.Cliente__r.Identificacion__c, cuenta.Codigo__c, cuenta.Cliente__r.Tipo_Identificacion__c);
     }
     
@@ -38,9 +42,9 @@ public class CrearUsuarioPortalAutogestion {
             insert bit;
             
             if(rup.ok) {
-                return 'Usuario de portal registrado correctamente.';
+                return EXITOSO;
             } else {
-                return 'Ha ocurrido un error en el registro del usuario de portal, por favor contacte al administrador del sistema.';
+                return ERROR;
             }
         }catch(Exception ex){
             system.debug('Error: '+ex.getMessage()+', Linea: '+ex.getLineNumber());

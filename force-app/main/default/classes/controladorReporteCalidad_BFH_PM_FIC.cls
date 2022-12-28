@@ -20,6 +20,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
         try{
             usuario = ApexPages.currentPage().getParameters().get('usuario');
             tipoPantalla = ApexPages.currentPage().getParameters().get('idPantalla');
+            System.debug(usuario +' ---- '+tipoPantalla);
             oficial = new Oficial_X_Asesor__c();
             oficial = [select Oficial_SAC__r.name, Zona__c  from Oficial_X_Asesor__c where Codigo_Oficial_SAC__c =:usuario limit 1];
             system.debug('Correo sin problemas '+usuario + '   '+tipoPantalla);

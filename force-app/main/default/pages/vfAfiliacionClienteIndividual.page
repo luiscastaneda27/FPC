@@ -49,9 +49,9 @@
                                         Enviar
                                     </td >
                                     <td scope="col" colspan="1">
-                                        Primer Nombre
+                                        Nombre
                                     </td >
-                                    <td scope="col" colspan="1">
+                                    <!--td scope="col" colspan="1">
                                         Segundo Nombre
                                     </td>
                                     <td scope="col" colspan="1">
@@ -59,10 +59,13 @@
                                     </td>
                                     <td scope="col" colspan="1">
                                         Segundo Apellido
-                                    </td>
+                                    </td-->
                                     
                                     <td scope="col" colspan="1">
                                         Identificación
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Cuenta
                                     </td>
                                     <td scope="col" colspan="1">
                                         
@@ -81,9 +84,9 @@
                                                 </apex:inputField>
                                             </td>
                                             <td>
-                                                <apex:outputField value="{!item.name}" />
+                                                <apex:outputText value="{!item.name +' ' +item.Primer_Apellido__c}" />
                                             </td>
-                                            <td>
+                                            <!--td>
                                                 <apex:outputField value="{!item.Segundo_Nombre__c}" />
                                             </td>
                                             <td>
@@ -91,10 +94,13 @@
                                             </td>
                                             <td>
                                                 <apex:outputField value="{!item.Segundo_Apellido__c}" />
-                                            </td>
+                                            </td-->
                                             
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                             <td>
+                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
                                             </td>
                                             <td>
                                                 <apex:commandLink action="{!editar}" value="Editar" rendered="{!item.Tipo_Afiliacion__c = 'I'}" reRender="theForm" status="status" >

@@ -18,6 +18,10 @@
                 <behavior>Edit</behavior>
                 <field>Monto_a_Disminuir__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DAU_Dias__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

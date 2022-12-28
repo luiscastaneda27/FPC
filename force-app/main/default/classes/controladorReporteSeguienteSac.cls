@@ -67,7 +67,8 @@ public without sharing class controladorReporteSeguienteSac {
             listTipoCarga.add(new filtro('C', 'Cliente por Carga'));
             listTipoCarga.add(new filtro('YC', 'Clientes Cargados'));
             listTipoCarga.add(new filtro('M', 'Afiliación Masiva'));
-            listTipoCarga.add(new filtro('FC', 'FIcopen'));
+            listTipoCarga.add(new filtro('FCS', 'FIcopen - Agencia'));
+            listTipoCarga.add(new filtro('FCA', 'FIcopen - SAC'));
             listTipoCarga.add(new filtro('BFK', 'Agencias BFH'));
             listTipoCarga.add(new filtro('PM', 'Premier'));
             

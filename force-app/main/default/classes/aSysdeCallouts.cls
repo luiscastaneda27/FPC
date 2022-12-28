@@ -368,12 +368,13 @@ public class aSysdeCallouts {
         try{
             caso = [Select Id,AccountId,Account.Name,CaseNumber,RecordType.Name,CreatedDate,Owner.Name, lastModifiedDate, Respuesta_desde_Sysde__c 
                     From Case Where Id =: idCaso];
-            detalle = [Select Id, Tipo_Operacion__c, Nuevo_monto_aporte__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c, 
+            detalle = [Select Id, Tipo_Operacion__c, Nuevo_monto_aporte__c, POS__c, Cuenta__r.Codigo__c, CreatedBy.Codigo__c, Cuenta__c, 
                        Nuevo_canal_aporte__c, Nueva_fecha_aporte__c, N_Cuenta_Bancaria__c, DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c,
                        Cuenta__r.Monto_aporte__c, Cuenta__r.Forma_Aportacion__c, Cuenta__r.Fecha_Aporte__c,Frecuencia__c
                        From Detalle_caso__c Where Caso__c =: Caso.id Limit 1];
             
-            system.debug('detalle: '+detalle);                              
+            system.debug('detalle: '+detalle);  
+            //Cuentas__c cuenta = new Cuentas__c();
             if(detalle.Cuenta__r.Monto_aporte__c==null) { detalle.Cuenta__r.Monto_aporte__c=0; 
             }
             claseEnvio.cuenta = detalle.Cuenta__r.Codigo__c;
@@ -450,8 +451,13 @@ public class aSysdeCallouts {
             
             request.setBody(cons);
             request.setTimeout(120000);
-            
-            HttpResponse response = http.send(request);
+            HttpResponse response = new HttpResponse();
+            if(!test.isRunningTest()){
+                response = http.send(request);
+            }else{
+                response.setStatusCode(200);
+                response.setBody('Ok');
+            }
             
             if (response.getStatusCode() == 200) {
                 System.debug('Respuesta del servicio: '+response.getBody());
@@ -460,6 +466,9 @@ public class aSysdeCallouts {
                 if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' || detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
+                    if(detalle.Tipo_Operacion__c == 'A8'){
+                        cuenta.POS__c = detalle.POS__c;
+                    }
                     update cuenta;
                 } else if(detalle.Tipo_Operacion__c == 'A4') {
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
@@ -799,14 +808,14 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             beneficiarios = [Select Primer_Nombre__c, Primer_Apellido__c, Identificacion__c, Parentesco__c,
                              Porcentaje__c, Cuenta__r.Codigo__c, Fecha_nacimiento__c, Grado_parentesco__c, Sexo__c,
                              Segundo_Nombre__c, Segundo_Apellido__c, ID_Externo__c,Tipo_identificacion__c,
-                             TipoBeneficiario__c
+                             TipoBeneficiario__c, ModificadoActInfo__c, Cuenta__c
                              From Detalle_caso__c
-                             Where Caso__c =: Caso.id];
+                             Where Caso__c =: Caso.id and ModificadoActInfo__c = true];
             list<string> idexternos = new list<string>();
+            list<string> listCuentas = new list<string>();
             list<decimal> clientesaeliminar = new list<decimal>();
             string numeroCuenta='No';
-            for(integer i=0; i<beneficiarios.size(); i++)
-            {
+            for(integer i=0; i<beneficiarios.size(); i++){
                 if(beneficiarios[i].ID_Externo__c==null && beneficiarios[i].Identificacion__c !=null){
                     idexternos.add(beneficiarios[i].Identificacion__c);
                     numeroCuenta=beneficiarios[i].Cuenta__r.Codigo__c;                    
@@ -818,6 +827,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 if(mapTipoIdentidades.containsKey(beneficiarios[i].Tipo_identificacion__c)){
                     beneficiarios[i].Tipo_identificacion__c = mapTipoIdentidades.get(beneficiarios[i].Tipo_identificacion__c);
                 }
+                listCuentas.add(beneficiarios[i].Cuenta__c);
                 /*if(beneficiarios[i].Tipo_identificacion__c=='PASAPORTE'){
                     beneficiarios[i].Tipo_identificacion__c='4'; 
                 }else if(beneficiarios[i].Tipo_identificacion__c=='CARNET RESIDENCIA'){
@@ -838,7 +848,8 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     beneficiarios[i].Grado_parentesco__c='4'; 
                 }
                 
-                if(beneficiarios[i].parentesco__C=='Abuelo(a)'){
+                beneficiarios[i].parentesco__c = ControladorBeneficiarios.getParentescoValue(beneficiarios[i].parentesco__c);
+                /*if(beneficiarios[i].parentesco__C=='Abuelo(a)'){
                     beneficiarios[i].parentesco__C='7';  
                 }else if(beneficiarios[i].parentesco__C=='Conyuge'){
                     beneficiarios[i].parentesco__C='1';  
@@ -858,7 +869,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                     beneficiarios[i].parentesco__C='11';  
                 }else if(beneficiarios[i].parentesco__C=='Afiliado'){
                     beneficiarios[i].parentesco__C='12';  
-                }
+                }*/
                 beneficiarios[i].Sexo__c = (beneficiarios[i].Sexo__c=='Masculino' || beneficiarios[i].Sexo__c=='M') ? 'M' :'F';
                 
                 
@@ -959,6 +970,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             claseEnvio.direcciones.add(direccionResi);
             // BENEFICIARIOS
             List<String> listIdExterno = new List<String>();
+            List<String> benefMod = new List<String>();
             List<classActualizacionInfo.classBeneficiarios> listBenefAct = new List<classActualizacionInfo.classBeneficiarios>();
             List<classActualizacionInfo.classBeneficiarios> listBenefInac = new List<classActualizacionInfo.classBeneficiarios>();
             For(Detalle_Caso__c Item : beneficiarios){
@@ -977,7 +989,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 nuevo.gradoParentesco = item.Grado_parentesco__c;
                 nuevo.fechaNacimiento = item.Fecha_nacimiento__c != null ? DateTime.newInstanceGMT(item.Fecha_nacimiento__c.year(), item.Fecha_nacimiento__c.month(), item.Fecha_nacimiento__c.day(), 0, 0, 0) : null;
                 nuevo.tipoId = item.Tipo_identificacion__c;
-                nuevo.sexo = item.Sexo__c;
+                nuevo.sexo = item.Sexo__c != null ? item.Sexo__c.subString(0, 1) : null;
                 //nuevo.usuarioActualiza = VE_USUARIO_ACTUALIZA;
                 //nuevo.usuarioAprueba = VE_USUARIO_APRUEBA;
                 nuevo.tipoBeneficiario = item.TipoBeneficiario__c == 'Directo' ? 'D' : 'C';
@@ -992,6 +1004,9 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                 if(item.ID_Externo__c != null){
                     listIdExterno.add(String.valueOF(item.ID_Externo__c));
                 }
+                if(item.ModificadoActInfo__c && item.ID_Externo__c != null){
+                    benefMod.add(String.valueOF(item.ID_Externo__c));
+                }
                 claseEnvio.beneficiarios.add(nuevo);
                 listBenefAct.add(nuevo);
             }
@@ -1004,7 +1019,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                      TipoBeneficiario__c,Porcentaje__c,Fecha_Nacimiento__c, Sexo__c,
                      Grado_Parentesco__c,Parentesco__c ,ID_Externo__c
                      from Beneficiario__C
-                     where Cuenta__r.Cliente__c =: caso.AccountId]){
+                     where Cuenta__r.Cliente__c =: caso.AccountId and Cuenta__c in :listCuentas]){
                          if(String.valueOf(item.ID_Externo__c) != null && !listIdExterno.contains(String.valueOf(item.ID_Externo__c))){
                              listBene.add(new Beneficiario__c(Id = item.Id));
                          }
@@ -1019,7 +1034,7 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                          benef.identidad = item.Identidad__c;
                          benef.porcentaje = String.valueOf(item.Porcentaje__c);
                          benef.fechaNacimiento = item.Fecha_Nacimiento__c != null ? item.Fecha_Nacimiento__c.addDays(1) : null;
-                         benef.sexo = item.Sexo__c;
+                         benef.sexo = item.Sexo__c != null ? item.Sexo__c.subString(0, 1) : null;
                          benef.codigoParentesco = item.Parentesco__c;
                          benef.gradoParentesco = item.Grado_Parentesco__c;
                          benef.tipoBeneficiario = item.TipoBeneficiario__c == 'Directo' ? 'D' : 'C';
@@ -1031,8 +1046,11 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
                          benef.autorizadoPor =VE_USUARIO_APRUEBA;
                          benef.modificadoPor =VE_USUARIO_ACTUALIZA;
                          benef.fechaModificacion = System.now();
-                         claseEnvio.beneficiarios.add(benef);
-                         listBenefInac.add(benef);
+                         if(String.valueOf(item.ID_Externo__c) != null && !benefMod.contains(String.valueOf(item.ID_Externo__c))){
+                             claseEnvio.beneficiarios.add(benef);
+                             listBenefInac.add(benef);
+                         }
+                         
                      }
             }
             
@@ -1087,7 +1105,12 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
             cons = cons.replace('Claudia Maxiel Vallejo Galo', 'Admin User');
             request.setBody(cons);
             request.setTimeout(120000);
-            HttpResponse response = http.send(request);
+            HttpResponse response = new HttpResponse();
+            if(!Test.isRunningTest()){
+                response = http.send(request);
+            }else{
+                response.setBody('ok');  
+            } 
             
             String respuestaBenef = listBeneficiarios.size() > 0 ? '\n' +actualizacionInformBenef(listBeneficiarios) : '';
             system.debug(response.getBody());
@@ -1118,10 +1141,11 @@ response.setBody('{"NumeroPrestamo":null,"cuenta":null,"existe":"S","MontoPresta
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');
         //url = 'https://api-fpc.herokuapp.com/';
+        String cons = 'contenido=' + Json.serialize(listBeneficiarios);
         request.setEndpoint(url + 'api/info/beneficiarios');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        request.setBody(Json.serialize(listBeneficiarios));
+        request.setBody(cons);
         request.setTimeout(120000);
         System.debug('Mandamos en Benef: '+request.getBody());
         HttpResponse response = http.send(request);

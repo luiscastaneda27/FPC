@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ejecutar_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Bandera para actualizar el caso para que se reejecute algún proceso.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Bandera para actualizar el caso para que se reejecute algún proceso.</inlineHelpText>
+    <label>Ejecutar Trigger</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -197,7 +197,8 @@ public class aSysdeSincronizador {
                                                 Primer_Nombre__c  = Bene.primerNombre, Segundo_Nombre__c = Bene.segundoNombre, Primer_Apellido__c  = Bene.primerApellido,
                                                 Segundo_Apellido__c = Bene.segundoApellido, Fecha_Nacimiento__c =convertStringDate( Bene.fechaNacimiento),
                                                 parentesco__C = Bene.parentesco, Grado_Parentesco__C = Bene.gradoParentesco, porcentaje__C= convertStringDecimal(Bene.porcentaje),
-                                                sexo__C = Bene.sexo != 'F' ? 'Masculino' : 'Femenino', Identidad__c  =Bene.identidad, Tipo_de_Identificaci_n__c =Bene.tipoId//,
+                                                sexo__c = Bene.sexo != 'F' ? 'Masculino' : 'Femenino', Identidad__c  =Bene.identidad, Tipo_de_Identificaci_n__c =Bene.tipoId,
+                                                TipoBeneficiario__c = Bene.tipoBene == 'C' ? 'Contingencia' : 'Directo'
                                             ));
                                         }
                                         
@@ -612,6 +613,7 @@ public class aSysdeSincronizador {
         public String sexo { get; set; }
         public String identidad { get; set; }
         public String tipoId { get; set; }
+        public String tipoBene { get; set; }
         // public string telefono { get; set; }
         // public string direccion { get; set; } // No tiene 
     }

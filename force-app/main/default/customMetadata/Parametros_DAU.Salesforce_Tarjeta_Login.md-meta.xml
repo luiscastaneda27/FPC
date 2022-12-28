@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Pensiones2020</value>
     </values>
     <values>
+        <field>DAU_Dias__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>DAU_Token__c</field>
         <value xsi:type="xsd:string">7dOJQar50mg3RDNP8XNvH63PS</value>
     </values>

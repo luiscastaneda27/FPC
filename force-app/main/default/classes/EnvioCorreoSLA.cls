@@ -9,29 +9,52 @@ public class EnvioCorreoSLA {
             List<FPC_InicioFinSubEstadosSLARC__c> listTiemposSLA = getRecords('');
             Map<String, List<afilaicionSLA>> mapCorreo = getMapaUsuario(listTiemposSLA);
             Map<String, User> mapUsuarios = getUsuario(mapCorreo);
-            Map<String, String> mapEstados = getEstados('Reporte_Calidad__c', 'SubEstadoRCSF__c');
+            Map<String, String> mapEstados = getEstados('FPC_TiemposSLARC__c', 'FPC_EstadoSLA__c');
             Map<String, String> mapTipoAfiliacion = getEstados('Reporte_Calidad__c', 'Tipo_Afiliacion__c');
             
             for(FPC_InicioFinSubEstadosSLARC__c tiempo: listTiemposSLA){
-                if(tiempo.FPC_SubEstadoRCSF__c == 'NS' || tiempo.FPC_SubEstadoRCSF__c == 'VS' || tiempo.FPC_SubEstadoRCSF__c == 'VF'
-                   || tiempo.FPC_SubEstadoRCSF__c == 'PS' || tiempo.FPC_SubEstadoRCSF__c == 'PF'){
+                Boolean flagSla = true;
+                if(ReporteCalidadTriggerHelper.getTipoAfiliacion(tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c) && (tiempo.FPC_EstadoSLA__c == 'NS' || tiempo.FPC_EstadoSLA__c == 'VS' || tiempo.FPC_EstadoSLA__c == 'VF'
+                   || tiempo.FPC_EstadoSLA__c == 'PS' || tiempo.FPC_EstadoSLA__c == 'PF')){
                        Integer horasTransc = SAC.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
                        horasTransc -= horasTransc > 0 ? 8 : 0;
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
                        List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc);
                        mapCorreo.put(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c, listAfilaicion);
+                       flagSla = false;
                        
                    }
-                if(!esSabado && (tiempo.FPC_SubEstadoRCSF__c == 'NC' || tiempo.FPC_SubEstadoRCSF__c == 'DC' || tiempo.FPC_SubEstadoRCSF__c == 'DA'
-                   || tiempo.FPC_SubEstadoRCSF__c == 'PS' || tiempo.FPC_SubEstadoRCSF__c == 'PF')){
+                if(!esSabado && ReporteCalidadTriggerHelper.getTipoAfiliacion(tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c) 
+                   &&(tiempo.FPC_EstadoSLA__c == 'NC' || tiempo.FPC_EstadoSLA__c == 'DC' || tiempo.FPC_EstadoSLA__c == 'DA'
+                   || tiempo.FPC_EstadoSLA__c == 'PS' || tiempo.FPC_EstadoSLA__c == 'PF')){
                        Integer horasTransc = comercial.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
                        horasTransc -= horasTransc > 0 ? 8 : 0;
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
                        List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc);
                        mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, listAfilaicion);
+                       flagSla = false;
                        
+                   }
+                
+                if(!ReporteCalidadTriggerHelper.getTipoAfiliacion(tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c) && flagSla &&
+                   (tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'V' || tiempo.FPC_EstadoSLA__c == 'D'
+                   || tiempo.FPC_EstadoSLA__c == 'A')){
+                       Integer horasTransc = comercial.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
+                       if(tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'V'){
+                           horasTransc = SAC.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
+                       }
+                       horasTransc -= horasTransc > 0 ? 8 : 0;
+                       Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
+                       horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
+                       if(tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'V'){
+                           List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc);
+                           mapCorreo.put(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c, listAfilaicion);
+                       }else{
+                           List<afilaicionSLA>listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc);
+                           mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, listAfilaicion);
+                       }
                    }
             }
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@grupoficohsa.hn'];
@@ -97,7 +120,7 @@ public class EnvioCorreoSLA {
     }
     public static List<afilaicionSLA> getTiempoSLA(FPC_InicioFinSubEstadosSLARC__c tiempo, List<afilaicionSLA> listAfilaicion, Integer horasTransc){
         afilaicionSLA a = new afilaicionSLA();
-        a.estado = tiempo.FPC_SubEstadoRCSF__c;
+        a.estado = tiempo.FPC_EstadoSLA__c;
         a.nombre = tiempo.FPC_ReporteCalidad__r.Name + ' ' +tiempo.FPC_ReporteCalidad__r.Primer_Apellido__c;
         a.identidad = tiempo.FPC_ReporteCalidad__r.Identificacion__c;
         a.cuenta = tiempo.FPC_ReporteCalidad__r.Numero_Cuenta__c;
@@ -130,14 +153,14 @@ public class EnvioCorreoSLA {
     }
     
     public static List<FPC_InicioFinSubEstadosSLARC__c> getRecords(String condicion){
-        String query = 'Select Id, FPC_SubEstadoRCSF__c, FPC_TiempoConfigurado__c, FPC_FechaInicio__c , FPC_FechaFin__c,'+
+        String query = 'Select Id, FPC_EstadoSLA__c, FPC_TiempoConfigurado__c, FPC_FechaInicio__c , FPC_FechaFin__c,'+
             'FPC_ReporteCalidad__c, FPC_ReporteCalidad__r.Estado__c,'+
             'FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, FPC_ReporteCalidad__r.codigo_oficial_sac__c,'+
             'FPC_ReporteCalidad__r.Name, FPC_ReporteCalidad__r.Primer_Apellido__c,'+
             'FPC_ReporteCalidad__r.Tipo_Afiliacion__c,'+
             'FPC_ReporteCalidad__r.Identificacion__c, FPC_ReporteCalidad__r.Numero_Cuenta__c '+
             'From FPC_InicioFinSubEstadosSLARC__c Where FPC_FechaFin__c = null '+condicion+
-            'order by FPC_SubEstadoRCSF__c';
+            'order by FPC_EstadoSLA__c';
         System.debug('Query: '+query);
         return  DataBase.query(query);
     }

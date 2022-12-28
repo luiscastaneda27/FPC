@@ -59,6 +59,10 @@
                 <behavior>Edit</behavior>
                 <field>Dia_aporte__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>POS__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

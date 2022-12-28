@@ -241,11 +241,7 @@ public class ControllerLoginEmail2Case {
         Desactivartab();
         pagina = 'vfreporteCalidad_bfh_pm_fic?usuario='+usuario+'&idPantalla=PM';
     }
-    
-    public void RCFIC(){
-        Desactivartab();
-        pagina = 'vfreporteCalidad_bfh_pm_fic?usuario='+usuario+'&idPantalla=FC';
-    }
+   
     
      public void EKS(){
         Desactivartab();

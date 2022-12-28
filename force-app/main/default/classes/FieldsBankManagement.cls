@@ -38,4 +38,7 @@ public class FieldsBankManagement {
     public String ACCOUNT_HOLDER_LEGAL_ID;
     public String ACCOUNT_NUMBER;
     public String CARD_STATUS;
+    
+    public Blob fileBody;
+    public String fileName;
 }

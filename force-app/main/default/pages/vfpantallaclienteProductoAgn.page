@@ -2425,13 +2425,13 @@
 
 
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                            <!-- <abbr class="slds-required" title="required"></abbr> --> Fecha Ingreso
+                                                            <abbr class="slds-required" title="required"></abbr> Fecha Ingreso
                                                         </label>
                                                         <apex:input type="date" value="{!fechaLabor}" id="FechaIngreso2" styleclass="slds-input" style="height:10px; width:170px; margin-left:27px;"
                                                         />
 
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                           <!-- <abbr class="slds-required" title="required"></abbr> --> Nivel Ingresos
+                                                            <abbr class="slds-required" title="required"></abbr> Nivel Ingresos
                                                         </label>
                                                         <apex:selectList styleclass="slds-input" id="listNivelIngreso" value="{!llenarNivelIngreso1}" size="1" style="height:10px; width:170px; margin-left: 20px;">
                                                             <apex:selectOptions value="{!NivelIngreso}" />
@@ -2450,20 +2450,20 @@
                                                         <br/>
 
                                                         <label class="slds-form-element__label" for="inputSample" Style="margin-left:0px;">
-                                                          <!--  <abbr class="slds-required" title="required"></abbr> --> Tipo Empresa
+                                                            <abbr class="slds-required" title="required"></abbr> Tipo Empresa
                                                         </label>
 
                                                         <apex:inputField id="pcTipoEmpresaEmpCN" value="{!ClienteTipoId.Tipo_Empresa__c}" styleclass="slds-input" style="height:10px; width:170px; margin-left:50px;"
                                                         />
                                                         <abbr class="slds-required" title="required">*</abbr>
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                          <!--  <abbr class="slds-required" title="required"></abbr> --> RTN Empresa
+                                                            <abbr class="slds-required" title="required"></abbr> RTN Empresa
                                                         </label>
                                                         <apex:inputText value="{!pcrncempl}" id="pcRTNEmpCN" styleclass="slds-input" style="height:10px; width:170px; margin-left:15px;"
                                                             onkeypress="return isNumberKey(event)" />
                                                         <abbr class="slds-required" title="required">*</abbr>
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                          <!--  <abbr class="slds-required" title="required"></abbr> --> Cuenta Colectiva
+                                                            <abbr class="slds-required" title="required"></abbr> Cuenta Colectiva
                                                         </label>
                                                         <apex:inputText value="{!pccontratocolectivo}" id="CuentaColectiva" styleclass="slds-input" style="height:10px; width:170px; margin-left:0px;"
                                                         />
@@ -2483,13 +2483,13 @@
 
                                                 <td>
                                                     <label class="slds-form-element__label" for="inputSample">
-                                                        <!--<abbr class="slds-required" title="required"></abbr>--> Nombre Empresa
+                                                        <abbr class="slds-required" title="required"></abbr> Nombre Empresa
                                                     </label>
                                                     <apex:inputText value="{!pcNombreempl}" id="NombreEmpresa" styleclass="slds-input" style="height:10px; width:462px; margin-left:26px;  "
                                                     />
 
                                                     <label class="slds-form-element__label" for="inputSample">
-                                                       <!-- <abbr class="slds-required" title="required"></abbr>--> Razon Social
+                                                        <abbr class="slds-required" title="required"></abbr> Razon Social
                                                     </label>
                                                     <apex:inputText value="{!pcrazonsocialempl}" onkeypress="return sololetras(event)" id="pcrazonsocialempl" styleclass="slds-input"
                                                         style="height:10px; width:462px; margin-left:24px;  " />
@@ -2502,13 +2502,13 @@
 
                                                     <td>
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                           <!-- <abbr class="slds-required" title="required"></abbr> --> Cargo Empresa
+                                                            <abbr class="slds-required" title="required"></abbr> Cargo Empresa
                                                         </label>
                                                         <apex:inputText value="{!pcCargoEmpresaEmpCN}" onkeypress="return sololetras(event)" id="pcCargoEmpresaEmpCN" styleclass="slds-input"
                                                             style="height:10px; width:170px; margin-left:39px;  " />
 
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                           <!-- <abbr class="slds-required" title="required"></abbr>--> Giro Empresa
+                                                            <abbr class="slds-required" title="required"></abbr> Giro Empresa
                                                         </label>
 
                                                         <apex:inputField id="GiroEmpresa" value="{!Cliente25.sector_n__c}" styleclass="slds-input" style="height:10px; width:170px; margin-left:31px;"
@@ -2528,7 +2528,7 @@
 
 
                                                         <label class="slds-form-element__label" for="inputSample">
-                                                          <!--  <abbr class="slds-required" title="required"></abbr> --> Correo
+                                                            <abbr class="slds-required" title="required"></abbr> Correo
                                                         </label>
                                                         <apex:inputText value="{!pcmailempl}" id="CorreoDatosEmpleador" onblur="CorreoEmpleValidar()" styleclass="slds-input" style="height:10px; width:462px; margin-left:56px;  "
                                                         />
@@ -2567,7 +2567,7 @@
 
                                                                 <!--Informacion-->
                                                                 <label class="slds-form-element__label" for="inputSample" style="margin-left:0px;">
-                                                                   <!-- <abbr class="slds-required" title="required"></abbr>--> Nombre Empresas:
+                                                                    <abbr class="slds-required" title="required"></abbr> Nombre Empresas:
                                                                 </label>
                                                                 <apex:commandButton value="<" action="{!anteriorEmpresas}" disabled="{!mostrarAnteriorEmpresas}" rendered="{!mostrarBotonEmpresas}"
                                                                     styleClass="slds-button slds-button--brand" style=" width:4x; margin-left:22px "
@@ -2588,7 +2588,7 @@
                                                                 <br/>
 
                                                                 <label class="slds-form-element__label" for="inputSample" style="margin-right:133px;">
-                                                                   <!-- <abbr class="slds-required" title="required"></abbr>--> Ingrese Cuenta Colectiva:
+                                                                    <abbr class="slds-required" title="required"></abbr> Ingrese Cuenta Colectiva:
                                                                 </label>
 
                                                                 <apex:inputText value="{!pccontratocolectivo}" id="pccontratocolectivo" styleclass="slds-input" style="height:10px; width:170px; margin-left:-22px;  "

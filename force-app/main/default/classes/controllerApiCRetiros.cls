@@ -11,7 +11,7 @@ public class controllerApiCRetiros {
         string fecha = fecha_retiro.year()+'-'+fecha_retiro.month()+'-'+fecha_retiro.day();
         system.debug('Fecha' + fecha);
         
-        request.setEndpoint(url + 'api/conciliaRetiros/'+ fecha);
+        request.setEndpoint(url + 'api/conciliaRetirosP/'+ fecha);
         
 		classCRetiros fcsd= new classCRetiros();
         list<cuadreRetiros> bene = new list<cuadreRetiros>();

@@ -344,6 +344,12 @@ public class testASYSDECallouts {
             objCaso.EntitlementId = ent.Id;
             insert objCaso;
             
+            Detalle_Caso__c dc = new Detalle_Caso__c();
+            dc.Caso__c = objCaso.Id;
+            dc.Cuenta__c = cuentaIndi.Id;
+            dc.ModificadoActInfo__c = true;
+            insert dc;
+            
             Detalle_caso__c objDetalle = new Detalle_caso__c();
             objDetalle.Caso__c = objCaso.Id;
             objDetalle.Cuenta__c = cuentaIndiColec.Id;

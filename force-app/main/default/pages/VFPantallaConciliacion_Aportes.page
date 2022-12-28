@@ -478,10 +478,10 @@
                                                 <h3 class="slds-text-heading_medium slds-hyphenate">¿Estas seguro que deseas cargar un aporte con compra o venta de dólares?   </h3>  
                                                 
                                             </div>
-                                            
+                                            <!--status="status" reRender="theForm" -->
                                             <footer class="slds-modal__footer">
-                                                <apex:commandButton value="No" action="{!popDolar}" styleClass="Aceptar" status="status" reRender="theForm" />&nbsp;
-                                                <apex:commandButton value="Si" action="{!Guardar}" styleClass="Aceptar" status="status" reRender="theForm"  />                    
+                                                <apex:commandButton value="No" action="{!popDolar}" styleClass="Aceptar" />&nbsp;
+                                                <apex:commandButton value="Si" action="{!Guardar}" styleClass="Aceptar" />                    
                                             </footer>
                                         </fieldset>
                                     </div>

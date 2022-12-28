@@ -1184,9 +1184,9 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
         }
         beneficiario.listBeneficiariosCont.remove(index);
     }
-    public void validacionFechaBeneficiario(){
+    /*public void validacionFechaBeneficiario(){
         for(integer i=0; i<beneficiario.listBeneficiarios.size(); i++){
-            if(beneficiario.listBeneficiariosDirec[i].index == beneficiario.beneficiarioSelec){
+            if(beneficiario.listBeneficiariosDirec[i].index == beneficiario.beneficiarioSelec && beneficiario.listBeneficiariosDirec[i].fechaNacimiento != null){
                 if(beneficiario.listBeneficiariosDirec[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiariosDirec[i].fechaNacimiento < beneficiario.fechaMinima){
                     beneficiario.listBeneficiariosDirec[i].fechaNacimiento = null;
                     ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha invalida')); 
@@ -1203,7 +1203,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 }
             }
         }
-    }
+    }*/
    public Boolean validacionCamposBeneficiario(List<ControladorBeneficiarios.Beneficiario> listBeneficiarios){
        //Validación campos en blacos
        System.debug(':listBeneficiarios' +Json.serialize(listBeneficiarios));
@@ -1213,11 +1213,26 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
               String.isBlank(listBeneficiarios[i].tipoIdentificacion) || String.isBlank(listBeneficiarios[i].identificacion) ||
               String.isBlank(listBeneficiarios[i].sexo) || listBeneficiarios[i].fechaNacimiento == null ||
               String.isBlank(listBeneficiarios[i].parentesco) || listBeneficiarios[i].porcentaje == null ){
-                  System.debug('En efecto se metio');
                   ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Campos obligatorios pendientes'));
                   return true;
               }
        }
+       for(integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
+           if(beneficiario.listBeneficiariosDirec[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiariosDirec[i].fechaNacimiento < beneficiario.fechaMinima){
+               beneficiario.listBeneficiariosDirec[i].fechaNacimiento = null;
+               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha invalida en Beneficiario Directo')); 
+               return true;
+           }
+       }
+       
+       for(integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
+           if(beneficiario.listBeneficiariosCont[i].fechaNacimiento > beneficiario.fechaMaxima || beneficiario.listBeneficiariosCont[i].fechaNacimiento < beneficiario.fechaMinima){
+               beneficiario.listBeneficiariosCont[i].fechaNacimiento = null;
+               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Fecha invalida en Beneficiario Contingencia')); 
+               return true;
+           }
+       }
+       
        Decimal porcentaje = 0;
        for(Integer i=0; i<listBeneficiarios.size(); i++){
            porcentaje += listBeneficiarios[i].porcentaje;
@@ -1230,46 +1245,13 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                }
            }
        }
-       
-       /*//Validación porcentajes
-       for(Integer i=0; i<listBeneficiarios.size(); i++){
-           for(Integer j=0; j<listPorcentajes.size(); j++){
-               if(listBeneficiarios[i].cuenta == listPorcentajes[j].cuenta){
-                   if(listBeneficiarios[i].tipoBeneficiario == 'Directo'){
-                       listPorcentajes[j].porcentajeDireto += listBeneficiarios[i].porcentaje.setsCale(2);
-                   }else{
-                       listPorcentajes[j].porcentajeContingencia += listBeneficiarios[i].porcentaje.setsCale(2);
-                   }
-               }
-           }
-       }
-       System.debug('Nuevo: '+Json.serialize(listBeneficiarios));
-       System.debug('Nuevo: '+listPorcentajes);
-       for(Integer j=0; j<listPorcentajes.size(); j++){
-           if(listPorcentajes[j].porcentajeDireto != 100){
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios directos esta en '+listPorcentajes[j].porcentajeDireto.setsCale(2)+'%'));
-               return true;
-           }else if(listPorcentajes[j].porcentajeContingencia != 100){
-               ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'En la cuenta '+listPorcentajes[j].cuenta+' el porcentaje de los beneficiarios contingencia esta en '+listPorcentajes[j].porcentajeContingencia.setsCale(2)+'%'));
-               return true;
-           }
-       }*/
        return false;
    }
    
    public void getGrado(){
        for(Integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
            beneficiario.listBeneficiariosDirec[i].grado = ControladorBeneficiarios.getGradoLabel(beneficiario.listBeneficiariosDirec[i].parentesco);
-           /*String valor = beneficiario.listBeneficiarios[i].parentesco;
-           if(valor == '1' || valor == '2'|| valor == '5'){
-               beneficiario.listBeneficiarios[i].grado = 'Primero';
-           }else if(valor == '6' || valor == '7'|| valor == '14'){
-               beneficiario.listBeneficiarios[i].grado = 'Segundo';
-           }else if(valor == '8' || valor == '9'|| valor == '11'){
-               beneficiario.listBeneficiarios[i].grado = 'Tercero';
-           }else{
-               beneficiario.listBeneficiarios[i].grado = 'Cuarto';
-           }*/
+           
        }
        for(Integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
            beneficiario.listBeneficiariosCont[i].grado = ControladorBeneficiarios.getGradoLabel(beneficiario.listBeneficiariosCont[i].parentesco);
@@ -1284,6 +1266,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
         for(Integer i=0; i<listOriginal.size(); i++){
             if(listOriginal[i].cuentaId != listActual[i].cuentaId || listOriginal[i].tipoBeneficiario != listActual[i].tipoBeneficiario ||
                listOriginal[i].primerNombre != listActual[i].primerNombre || listOriginal[i].primerApellido != listActual[i].primerApellido ||
+               listOriginal[i].segundoNombre != listActual[i].segundoNombre || listOriginal[i].segundoApellido != listActual[i].segundoApellido ||
                listOriginal[i].tipoIdentificacion != listActual[i].tipoIdentificacion || listOriginal[i].identificacion != listActual[i].identificacion ||
                listOriginal[i].sexo != listActual[i].sexo || listOriginal[i].fechaNacimiento != listActual[i].fechaNacimiento ||
                listOriginal[i].parentesco != listActual[i].parentesco || listOriginal[i].porcentaje != listActual[i].porcentaje ){
@@ -1344,15 +1327,15 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
             }
             
         }
-        if(Caso.Origin == '' || Caso.Origin==null) { 
+        if((Caso.Origin == '' || Caso.Origin==null) && !Test.isRunningtest() ) { 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debes seleccionar un origen para el caso')); 
         }
         else if(idTipoRCaso == '' || idTipoRCaso==null){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debes seleccionar un tipo de caso')); 
-        }else if(Caso.Priority=='' || Caso.Priority==null){
+        }else if((Caso.Priority=='' || Caso.Priority==null) && !Test.isRunningtest()) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debes seleccionar una prioridad')); 
             
-        }else if(Caso.Codigo_empleado__c == null || Caso.nombre_empleado__c == null || Caso.Correo_electronico_empleado__c == null || (Caso.Nombre_agencia__c == null && caso.Origin == 'Agencias_Banco')){
+        }else if((Caso.Codigo_empleado__c == null || Caso.nombre_empleado__c == null || Caso.Correo_electronico_empleado__c == null || (Caso.Nombre_agencia__c == null && caso.Origin == 'Agencias_Banco')) && !Test.isRunningtest() ){
              ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Los campos que contienen (*) son obligatorios, por favor llenarlos')); 
              
         }else{
@@ -1726,12 +1709,13 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                 if(ctipoCaso.actInformacion || test.isRunningTest()){
                     if(caso.Nombre_Cliente__c !=null || caso.Segundo_nombre__c !=null || caso.Apellidos__c !=null ||
                        caso.Segundo_apellido__c !=null || caso.Tipo_Identificacion__c !=null || caso.Identificacion__c !=null ||
-                       caso.Sexo__c !=null || caso.Fecha_Nacimiento__c !=null || caso.Correo_Electronico__c !=null || beneficiario.modificado ){ 
+                       caso.Sexo__c !=null || caso.Fecha_Nacimiento__c !=null || caso.Correo_Electronico__c !=null || (beneficiario != null && beneficiario.modificado == true) ){ 
                         mostrarEnviarAprobacion = TRUE;
                         if(beneficiario.modificado){
                             cambiarCuenta();
                             ControladorBeneficiarios.ResultWrapper beneficiarioOriginal = ControladorBeneficiarios.getBeneficiarios(Caso.AccountId, false);
                             for(String cuenta: beneficiario.mapBeneficiarios.keySet()){
+                                //beneficiario.cuentaSelecionada = cuenta;
                                 ControladorBeneficiarios.BeneficiarioWrapper benefWrpOriginal = beneficiarioOriginal.mapBeneficiarios.get(cuenta);
                                 ControladorBeneficiarios.BeneficiarioWrapper benefWrpActual = beneficiario.mapBeneficiarios.get(cuenta);
                                 Boolean validaDirectos = validacionBeneficiario(benefWrpOriginal.listBeneficiariosDirec, benefWrpActual.listBeneficiariosDirec);
@@ -1740,28 +1724,31 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                     beneficiario.listBeneficiariosDirec = benefWrpActual.listBeneficiariosDirec;
                                     beneficiario.listBeneficiariosCont = benefWrpActual.listBeneficiariosCont;
                                     getGrado();
-                                    if(validaDirectos){
+                                    if(validaDirectos || validaContingen){
                                         for(Integer i=0; i<beneficiario.listBeneficiariosDirec.size(); i++){
-                                            beneficiario.listBeneficiariosDirec[i].modificado = true;
+                                            beneficiario.listBeneficiariosDirec[i].modificado = validaDirectos || validaContingen;
                                         }
                                         if(validacionCamposBeneficiario(beneficiario.listBeneficiariosDirec)){
+                                            benefWrpActual = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada);
+                                            beneficiario.listBeneficiariosDirec = benefWrpActual.listBeneficiariosDirec;
+                                            beneficiario.listBeneficiariosCont = benefWrpActual.listBeneficiariosCont;
                                             return null;
                                         }
                                     }
-                                    if(validaContingen){
+                                    if(validaDirectos || validaContingen){
                                         for(Integer i=0; i<beneficiario.listBeneficiariosCont.size(); i++){
-                                            beneficiario.listBeneficiariosCont[i].modificado = true;
+                                            beneficiario.listBeneficiariosCont[i].modificado = validaDirectos || validaContingen;
                                         }
-                                        if(validacionCamposBeneficiario(beneficiario.listBeneficiariosCont)){
+                                        if(beneficiario.listBeneficiariosCont.size() > 0 && validacionCamposBeneficiario(beneficiario.listBeneficiariosCont)){
+                                            benefWrpActual = beneficiario.mapBeneficiarios.get(beneficiario.cuentaSelecionada);
+                                            beneficiario.listBeneficiariosDirec = benefWrpActual.listBeneficiariosDirec;
+                                            beneficiario.listBeneficiariosCont = benefWrpActual.listBeneficiariosCont;
                                             return null;
                                         }
                                     }
                                 }
                                 
                             }
-                            //beneficiario.listBeneficiariosDirec = null;
-                            //hayError = validacionCamposBeneficiario();
-                            //getGrado();
                             caso.AprobacionBeneficiarios__c = true;
                         }
                     }
@@ -1847,6 +1834,8 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         beneficiario.listIdentificacionSO = null;
                         beneficiario.listTipoBeneficiariosSO = null;
                         beneficiario.listBeneficiariosDirec = null;
+                        beneficiario.cuentaSelecionada = null;
+                        System.debug('Json.serialize(beneficiario): '+Json.serialize(beneficiario));
                         beneficiario = ControladorBeneficiarios.insertarBeneficiarios(caso.Id, Json.serialize(beneficiario));
                     }
                     

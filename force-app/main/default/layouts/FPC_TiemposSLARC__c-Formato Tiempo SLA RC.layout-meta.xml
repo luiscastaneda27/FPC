@@ -22,6 +22,14 @@
                 <behavior>Edit</behavior>
                 <field>FPC_Tiempo__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FPC_PantallaRC__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FPC_EstadoSLA__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

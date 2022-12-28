@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ModificacionCamposCriticos__c</fullName>
+    <externalId>false</externalId>
+    <formula>AND(RecordType.DeveloperName = &quot;Actualizacion_informacion&quot;, 
+OR ( 
+!ISBLANK( Nombre_Cliente__c ),
+!ISBLANK( Segundo_nombre__c ),
+!ISBLANK( Apellidos__c ),
+!ISBLANK( Segundo_apellido__c ),
+!ISPICKVAL(Tipo_Identificacion__c,&apos;&apos;),
+!ISBLANK( Identificacion__c ),
+!ISBLANK(  Fecha_Nacimiento__c  ),
+!ISPICKVAL(Sexo__c,&apos;&apos;),
+ AprobacionBeneficiarios__c 
+)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Modificación campos críticos</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

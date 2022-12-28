@@ -38,8 +38,12 @@ public class ControlorReporteCalidadPenFisSac {
     public void Enviar(){
         for(Reporte_calidad__C item:listAfiliaciones ){
             if(item.Enviar_Sac__c){
-                item.estado__C = 'V'; 
                 item.SubEstadoRCSF__c = 'VF';
+                if(item.Tipo_Afiliacion__c == 'TV'){
+                    item.Estado__c = 'A';
+                }else{
+                    item.estado__C = 'V'; 
+                }
             }
         }
         update listAfiliaciones;

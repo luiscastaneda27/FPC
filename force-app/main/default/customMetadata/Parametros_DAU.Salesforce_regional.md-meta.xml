@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Salesforce regional</label>
+    <protected>false</protected>
+    <values>
+        <field>DAU_Contrasenia__c</field>
+        <value xsi:type="xsd:string">QAFicohsa22</value>
+    </values>
+    <values>
+        <field>DAU_Dias__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_Token__c</field>
+        <value xsi:type="xsd:string">IknMIe5cFUy4x8hJY96asztf</value>
+    </values>
+    <values>
+        <field>DAU_Usuario__c</field>
+        <value xsi:type="xsd:string">juan.vasquez@ficohsa.com.nqanull</value>
+    </values>
+    <values>
+        <field>Monto_a_Disminuir__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
