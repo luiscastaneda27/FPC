@@ -1,4 +1,4 @@
-public without sharing class ControllerConciliacionAprobacionM { 
+public without sharing class ControllerConciliacionAprobacionM{ 
     
     //Variables para Rezagos
     public String CodRef{get;set;}
@@ -20,6 +20,7 @@ public without sharing class ControllerConciliacionAprobacionM {
     public String Compra_Dolar {get;set;}
     public String Correcto {get;set;}
     Public Boolean BTNAplicar {get;set;}
+    Public Boolean popDolar {get;set;}
     //
     
     public list<Pantalla_Aportes__c> McontenidoAporte{get;set;}
@@ -103,7 +104,10 @@ public without sharing class ControllerConciliacionAprobacionM {
     Public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
     Public String ValorCuota {get;set;}
     
-    Public Boolean popDolar {get;set;}
+    public List<controladorPlanillasEnviadas.Rezago> listRezagos {get;set;}
+    public String codigoRezago{get;set;}
+    public String codigoRezagoEliminar{get;set;}
+    
     
     public ControllerConciliacionAprobacionM(){
         p_Mensaje_error = '';
@@ -121,7 +125,9 @@ public without sharing class ControllerConciliacionAprobacionM {
             InfoRezagos Rez = new InfoRezagos();
             Rez.clientes.add(IRc);
             mapInfoRezagos.put(IRc.codReferencia,Rez);
+            System.debug('nada: '+IRc.codReferencia);
         }
+        System.debug('nada: '+mapInfoRezagos.containsKey('FT22147D2WW1A'));
         if(test.isRunningTest()){
             InfoRezagos Rez = new InfoRezagos();
             InfoRezagos.clientes Rezc = new InfoRezagos.clientes();
@@ -166,7 +172,8 @@ public without sharing class ControllerConciliacionAprobacionM {
     public void popDolar(){
         popDolar = !popDolar;
     }
-        
+    
+    
     public void MostraVentana(){
         try{
             MostrarVenta12 = true;
@@ -335,6 +342,7 @@ public without sharing class ControllerConciliacionAprobacionM {
         BTNAplicar = false;
         String consulta = CodRefTest.trim();
         InfoRezagos resultado = new InfoRezagos();
+        System.debug(consulta+ '  mapInfoRezagos.containsKey(consulta): '+mapInfoRezagos.containsKey(consulta));
         if(mapInfoRezagos.containsKey(consulta)){
             resultado = mapInfoRezagos.get(consulta); 
         }
@@ -367,6 +375,12 @@ public without sharing class ControllerConciliacionAprobacionM {
             }else{
                 Existe='Datos de Muestra. '+Existe;
                 BTNAplicar=true;
+                controladorPlanillasEnviadas.Rezago rezag = new controladorPlanillasEnviadas.Rezago();
+                rezag.aplica = Rezagosn;
+                rezag.codigo = consulta;
+                rezag.moneda = Moneda;
+                rezag.monto = Monto;
+                listRezagos.add(rezag);
             }
         }
         if(Existe==''){
@@ -376,6 +390,28 @@ public without sharing class ControllerConciliacionAprobacionM {
             Rezagosn = '';
         }
         return null;
+    }
+    
+    public void aplicarList(){
+        String codigo = '';
+        Integer posic = 0;
+        for(integer count=0;count<McontenidoAporte.size();count++){
+            if(McontenidoAporte[count].Codigo_Referencia__c==CodRef){
+                posic = count;
+            }
+        }
+        for(Integer i=0; i<listRezagos.size(); i++){
+            codigo += listRezagos[i].codigo + ',';
+            Rezagosn = listRezagos[i].aplica;
+            CodRefTest = listRezagos[i].codigo;
+            Moneda = listRezagos[i].moneda;
+            Monto = listRezagos[i].monto;
+            aplicar();
+        }
+        If(codigo.length() > 1){
+            McontenidoAporte[posic].Codigo_Referencia_Rez__c = codigo.substring(0, codigo.length()-1);
+        }
+        closePopup();
     }
     
     //Aplicar el codigo seleccionado al Cod Rezago
@@ -457,7 +493,6 @@ public without sharing class ControllerConciliacionAprobacionM {
             
             for(integer count=0;count<McontenidoAporte.size();count++){
                 if(McontenidoAporte[count].Codigo_Referencia__c==CodRef){
-                    McontenidoAporte[count].Codigo_Referencia_Rez__c=CodRefTest;
                     McontenidoAporte[count].Rezago__c = Rezagosn;
                     if(Rezagosn=='N/A'){
                         McontenidoAporte[count].Monto_Calculado__c = String.valueOf(McontenidoAporte[count].Monto_Deposito__c);
@@ -470,7 +505,7 @@ public without sharing class ControllerConciliacionAprobacionM {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El Monto del Rezago NO puede ser inferior al Monto del Aporte.'));
             Correcto='Fail';
         }
-        closePopup();
+        //closePopup();
     }
     
     public void closePopup() {        
@@ -482,7 +517,8 @@ public without sharing class ControllerConciliacionAprobacionM {
         BTNAplicar=false;
     }
     
-    public PageReference showPopup() {        
+    public PageReference showPopup() {     
+        listRezagos = new List<controladorPlanillasEnviadas.Rezago>();
         displayPopup = true;
         Existe='';
         BTNAplicar=false;
@@ -1003,6 +1039,7 @@ public without sharing class ControllerConciliacionAprobacionM {
             Pantalla_Aportes__c modifi = new Pantalla_Aportes__c ();	
             Num_CodReferenciaDenegado = Num_CodReferencia;
             Boolean CompraDolar = false;
+            
             for(integer k=0; k<McontenidoAporte.size(); k++ ){
                 if(McontenidoAporte[k].Codigo_Referencia__c==Num_CodReferencia){
                     fechadeposito = McontenidoAporte[k].Fecha_Deposito__c;
@@ -1012,17 +1049,18 @@ public without sharing class ControllerConciliacionAprobacionM {
                     }else{
                         rezago ='N';
                     }
+                    codigoRezago = McontenidoAporte[k].Codigo_Referencia_Rez__c;
                     system.debug('02 - Rezago: '+rezago+', Codigo referencia: '+McontenidoAporte[k].Codigo_Referencia__c);
                 }
             }
-            
-            if(compraDolar && !popDolar){
+            if(compraDolar && !popDOlar){
                 popDolar();
                 return;
             }
-            popDolar = false;
+            popDOlar = false;
             CodReferenNoCobra = Num_CodReferencia;
             CodReferenciaTemp = Num_CodReferencia; 
+            popDOlar = false;
             McontenidoAporte = new list<Pantalla_Aportes__c>();
             McontenidoAporte =[select cuenta__c, Tasa__c ,Tipo_MonedaN__c,Monto_Deposito__c, Fecha_Deposito__c,Tipo_SaldoN__c,
                                Forma_PagoN__c,Codigo_Referencia__c,Aplica_Comision_SI__c,rezago__C,Codigo_Referencia_Rez__c,
@@ -1036,7 +1074,7 @@ public without sharing class ControllerConciliacionAprobacionM {
                 
                 classAportes_Conciliacion apor =  new classAportes_Conciliacion();   
                 
-                System.debug('fechadeposito: '+fechadeposito);
+                /*Validacion para que muestre ventana modal cuando no aplique comision...*/
                 system.debug('Cobra: '+McontenidoAporte[i].Aplica_Comision_SI__c +', Codigo: '+McontenidoAporte[i].Codigo_Referencia__c);
                 if(McontenidoAporte[i].Aplica_Comision_SI__c == 'N' ){
                     system.debug('04 - Entro NO Aplica Comision');
@@ -1077,9 +1115,12 @@ public without sharing class ControllerConciliacionAprobacionM {
                             apor.ComisionSI =  McontenidoAporte[i].Aplica_Comision_SI__c;
                             apor.p_periodo_aporte = McontenidoAporte[i].Periodo_Aporte__c;
                             apor.rezago = rezago;
-                            system.debug(apor.FechaDepositoAproba +' 06 - Contenido Enviado a Guardar Aporte: '+JSON.serialize(apor));  
+                            apor.Cod_referencia = apor.cuenta + '-' + codigoRezago;
+                            codigoRezago = null;
+                            system.debug('06 - Contenido Enviado a Guardar Aporte: '+apor);  
                             
                             classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);//Realiza el aporte a la cuenta del Cliente
+                            apor.Cod_referencia = McontenidoAporte[i].Codigo_Referencia__c;
                             
                             p_saldo = resultado.p_saldo;
                             p_monto_pen_aplic = resultado.p_monto_pen_aplic;
@@ -1092,7 +1133,10 @@ public without sharing class ControllerConciliacionAprobacionM {
                                 System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
                                 if((Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false) || test.isRunningTest()){
                                     BTNAplicar=true;
-                                    AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                                    for(Integer j=0; j<listRezagos.size(); j++){
+                                        AplicarRezago(listRezagos[j].codigo, num_CodCuenta_Rez, listRezagos[j].monto, Monto_Dep, Usuario,Moneda, Compra_Dolar);//Aplica El Rezago
+                                    }
+                                    //AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
                                 }else{
                                     System.debug('Rezago NO Aplicado');
                                 }
@@ -1267,7 +1311,11 @@ public without sharing class ControllerConciliacionAprobacionM {
             system.debug('Entramos a AprobarAporte2SinComision');
             VentanaEmergenteNo = false;
             Pantalla_Aportes__c modifi = new Pantalla_Aportes__c ();	
-            
+            for(integer k=0; k<McontenidoAporte.size(); k++ ){
+                if(McontenidoAporte[k].Codigo_Referencia__c==Num_CodReferencia){
+                    codigoRezago = McontenidoAporte[k].Codigo_Referencia_Rez__c;
+                }
+            }
             McontenidoAporte =[select cuenta__c, Tasa__c, Tipo_MonedaN__c, Monto_Deposito__c, Fecha_Deposito__c, Tipo_SaldoN__c,
                                Forma_PagoN__c, Codigo_Referencia__c, Aplica_Comision_SI__c, rezago__c,Codigo_Referencia_Rez__c,
                                Compra_Dolar__c, Periodo_Aporte__c, Oficial_de_negocios__c,Monto_Calculado__c
@@ -1301,10 +1349,12 @@ public without sharing class ControllerConciliacionAprobacionM {
                         
                         apor.ComisionSI =  McontenidoAporte[i].Aplica_Comision_SI__c;
                         apor.rezago = rezago;
-                        
+                        apor.Cod_referencia = apor.cuenta + '-' + codigoRezago;
+                        codigoRezago = null;
                         system.debug('03 - ResultadoEnviado: '+apor);  
                         
                         classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);
+                        apor.Cod_referencia = McontenidoAporte[i].Codigo_Referencia__c;
                         
                         p_saldo = resultado.p_saldo;
                         p_monto_pen_aplic = resultado.p_monto_pen_aplic;
@@ -1317,7 +1367,10 @@ public without sharing class ControllerConciliacionAprobacionM {
                             System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
                             if((Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false) || test.isRunningTest()){
                                 BTNAplicar=true;
-                                AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                                for(Integer j=0; j<listRezagos.size(); j++){
+                                    AplicarRezago(listRezagos[j].codigo, num_CodCuenta_Rez, listRezagos[j].monto, Monto_Dep, Usuario,Moneda, Compra_Dolar);//Aplica El Rezago
+                                }
+                                //AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
                             }
                         }else{
                             System.debug('Rezago NO Aplicado');
@@ -1501,8 +1554,11 @@ public without sharing class ControllerConciliacionAprobacionM {
                         wer.Monto =  string.valueOf(totalDo);  
                         wer.ComisionSI =  McontenidoTasa[i].Aplica_Comision_SI__c;
                         wer.Rezago = rezago;
-                        
+                        wer.Cod_referencia = wer.cuenta + '-' + codigoRezago;
+                        codigoRezago = null;
                         classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(wer);
+                        wer.Cod_referencia = McontenidoTasa[i].Codigo_Referencia__c;
+                        
                         System.debug('Resultado de Guardar Aporte: '+resultado);
                         p_saldo = resultado.p_saldo;
                         p_monto_pen_aplic = resultado.p_monto_pen_aplic;
@@ -1515,7 +1571,10 @@ public without sharing class ControllerConciliacionAprobacionM {
                             System.debug('Antes de aplicar el rezago: ' + Num_CodReferencia_Rez+' - '+MensajeErr+' - '+VentanaEmergenteNo+' - '+BTNAplicar);
                             if((Num_CodReferencia_Rez!='Sin Registro' && MensajeErr==false && BTNAplicar!=true && VentanaEmergenteNo == false) || test.isRunningTest()){
                                 BTNAplicar=true;
-                                AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
+                                for(Integer j=0; j<listRezagos.size(); j++){
+                                    AplicarRezago(listRezagos[j].codigo, num_CodCuenta_Rez, listRezagos[j].monto, Monto_Dep, Usuario,Moneda, Compra_Dolar);//Aplica El Rezago
+                                }
+                                //AplicarRezago(Num_CodReferencia_Rez, num_CodCuenta_Rez, Monto_Calculado, Monto_Dep, Usuario, Moneda, Compra_Dolar);//Aplica El Rezago
                             }else{
                                 System.debug('Rezago NO Aplicado');
                             }
@@ -1637,6 +1696,16 @@ public without sharing class ControllerConciliacionAprobacionM {
             p_Mensaje_error = 'Error al Aprobar el aporte en el Metodo: CambioTasa. <br/>Error: ' + ex.getMessage() + '<br/>Linea: ' + ex.getLineNumber();
             MensajeErr = true; 
         }
-    } 
+    }
+    
+    public void eliminarRezago(){
+        Integer count = 0;
+        for(Integer i=0; i<listRezagos.size(); i++){
+            if(listRezagos[i].codigo == codigoRezagoEliminar){
+                count = i;
+            }
+        }
+        listRezagos.remove(count);
+    }
     
 } // de la clase principal

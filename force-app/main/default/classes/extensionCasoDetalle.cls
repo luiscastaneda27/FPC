@@ -183,7 +183,7 @@ public class extensionCasoDetalle {
                         //account.Departamento_Residencia__r.Codigo_Departamento__c,
                         Enviar_a_aprobacion__c,Aplica_Saldo_patronal__c ,Aprobado__c, Nombre_agencia__c, agencia__c, Agencia__r.Name, 
                         account.Departamento_Residencia2__c, Monto_compromiso_aporte__c, Frecuencia__c, Codigo_barra__C, DAU_No_Cuenta__c, 
-                        DAU_Tarjeta_de_Sysde__c, Tipo_de_Operacion__c, Respuesta_SF_Tarjetas__c, DAU_Identidad__c
+                        DAU_Tarjeta_de_Sysde__c, Tipo_de_Operacion__c, Respuesta_SF_Tarjetas__c, DAU_Identidad__c, DAU_aprobacion__c
                         From Case Where Id =: CasoSTD.Id Limit 1]; 
                 if(caso.Account.PersonBirthdate!=null){
                     date gdcs=caso.Account.PersonBirthdate;
@@ -233,7 +233,7 @@ public class extensionCasoDetalle {
                              Cobro_ACH__c, Cobro_Cheque__c, Cobro_TSP__c,Monto_cheque__c,Monto_TSP__c, Monto_ACH__c,
                              Monto_Saldo__c,Saldo_Total__c, Fecha_desde__c, Fecha_Hasta__c,Rendimiento__c,Monto_comision_saldo__c,
                              Monto_comision_aporte__c,Pago_terceros__c,Cuenta_destino__c,Propietario_cuenta__c,Cargo_Empleado_Paga_Empresa__C,
-                             Monto_TSP_Patrono__c, Monto_Cheque_Patrono__c, Monto_ACH_Patrono__c, Numero_prestamo__c,
+                             Monto_TSP_Patrono__c, Monto_Cheque_Patrono__c, Monto_ACH_Patrono__c, Numero_prestamo__c,FPC_TipoPrestamo__c,
                              Cuenta_Colectiva_Anterior__c,cuenta__r.codigo__C, cuenta__r.Cuenta_colectiva2__c, 
                              Monto_Pignorar_Refinanciamiento__C, Cuenta__r.Forma_Aportacion__c, Cuenta__r.Name,
                              rezago__C, cod_referencia__C, Producto_Anterior__C,Fecha_Deposito__C,Inicio_Fecha_Aporte__c,
@@ -1555,16 +1555,16 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             System.debug('Cambio de Canal de Aporte o Afiliación de Débito Automático');
                             updateCase.wrapperClass wc = new updateCase.wrapperClass();
                             wc = updateCase.validarIdentidad(String.valueOf(Caso.Id), detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
-                            System.debug('validar Identidad: '+wc);
+                            System.debug('validar Identidad: '+wc.DAU_aprobacion);
                             caso.DAU_Identidad__c = wc.DAU_Identidad;
                             caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
                             if(wc.DAU_aprobacion != null) {
                             	caso.DAU_aprobacion__c = wc.DAU_aprobacion;
                             }    
-                            caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
+                            //caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                             caso.Description = wc.Description;
                         }
-                        if(detalleCaso.Tipo_Operacion__c == 'A4' && caso.DAU_No_Cuenta__c == Null) {
+                        if((detalleCaso.Tipo_Operacion__c == 'A1' || detalleCaso.Tipo_Operacion__c == 'A2' || detalleCaso.Tipo_Operacion__c == 'A4') && caso.DAU_No_Cuenta__c == Null) {
                             Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
                             if(Caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
                                 updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1672,12 +1672,11 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                         }                            
                     }
                     if(saveTrue) {
-                    	update Caso;    
+                    	update Caso;   System.debug('Actualizado: '+Caso); 
                     	upsert detalleCaso;
                     }    
                 }else if(cTipoCaso.actInformacion){
-                    upsert cuentasCaso;
-                    
+                    upsert cuentasCaso; 
                 }else{               
                     if(saveTrue == true) {
                         upsert detalleCaso;

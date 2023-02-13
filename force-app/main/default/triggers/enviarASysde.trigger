@@ -1,6 +1,6 @@
 trigger enviarASysde on Case (before update) {
    // system.debug('Puedo corrrelo ' + Json.serialize(Trigger.new));
-    
+   
     if(claseUtil.canIRun() && !System.isFuture() && Boolean.valueOf(Label.FPC_EjecutarTrigger) == true) { 
         
         //Inicio Evaluar SLA's de Caso
@@ -220,7 +220,7 @@ trigger enviarASysde on Case (before update) {
                              listCasoConstancia.add(item.id);
                          }
             }
-            if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Esperando Documentación') { listCasoConstancia.add(item.id);
+            if(trigger.oldMap.get(item.id).Status != item.Status && item.constancia__C == 'P1' && (item.Status == 'Esperando Documentación' || item.status == 'No Aplica')) { listCasoConstancia.add(item.id);
             }
             system.debug('Estado: '+item.status);
             estadoConstancia = item.status;
@@ -238,92 +238,15 @@ trigger enviarASysde on Case (before update) {
             For(Case item : casosAprobados.keySet()){
                 String tipoRnombre = casosAprobados.get(item);
                 if( tipoRnombre == 'Cambio_Subproducto'){                   
-                    aSysdeCallouts.accionSubProducto(item.id);  
-                    
+                    aSysdeCallouts.accionSubProducto(item.id);                    
                 } else if(tipoRnombre == 'Actualizacion_informacion'){
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
-                } else if(tipoRnombre == 'Aumento_Disminucion_Aportes') {
-                    List<Detalle_caso__c> lstDetCase = [Select Id,Tipo_Operacion__c,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c,DAU_Borrar_Cuotas__c,DAU_Dia_de_pago__c,Nueva_fecha_aporte__c From Detalle_caso__c Where Caso__c =: lstCase[0].id Limit 1];
-                    if(!lstDetCase.isEmpty()) {
-                        if(lstDetCase[0].Nuevo_canal_aporte__c == 'TA' || lstDetCase[0].Banco__c == '28') {
-                            if((lstCase[0].Tipo_de_Operacion__c == 'A3' || lstCase[0].Tipo_de_Operacion__c == 'A8') && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
-                                System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+lstCase[0].Tipo_de_Operacion__c); 
-                                Set<Id> caseIds = new Set<Id>();
-                                caseIds.add(item.Id);
-                                String tipoGestion = 'ADI';
-                                String beneficiario = lstCase[0].Account.Name;
-                                String diaPago = lstDetCase[0].DAU_Dia_de_pago__c;
-                                Salesforce_Tarjetas.processCase(caseIds, tipoGestion, beneficiario, diaPago);                           
-                            } else if(lstCase[0].Tipo_de_Operacion__c == 'A4') {
-                                System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+lstCase[0].Tipo_de_Operacion__c); 
-                                Set<Id> caseIds = new Set<Id>();
-                                caseIds.add(item.Id);
-                                String tipoGestion = 'MOD';
-                                String beneficiario = lstCase[0].Account.Name;
-                                Date dia = lstDetCase[0].Nueva_fecha_aporte__c;
-                                Salesforce_Tarjetas.processCase(caseIds,tipoGestion,beneficiario,String.valueOf(dia.Day()));   
-                            } else if(lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
-                                System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+lstCase[0].Tipo_de_Operacion__c);
-                                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = lstCase[0].Id, DAU_PrimerServicio__c = true));
-                                // Call method to publish events
-                                List<Database.SaveResult> results = EventBus.publish(Logs);
-                            } else if(lstCase[0].Tipo_de_Operacion__c == 'A7') {
-                                Set<Id> caseIds = new Set<Id>();
-                                caseIds.add(item.Id);
-                                String tipoGestion = 'DEC';
-                                Salesforce_Tarjetas.processCase(caseIds,tipoGestion,'','');
-                            } else {
-                                System.debug('Llama a sysde directamente');
-                                if(lstCase[0].Description != Null && !lstCase[0].Description.contains('Error')) {
-                                    aSysdeCallouts.aumentoDisminucion(item.id);  
-                                } else {
-                                    aSysdeCallouts.aumentoDisminucion(item.id);    
-                                }  
-                            }
-                        } 
-                        else if(lstDetCase[0].Nuevo_canal_aporte__c == 'TAOB' || lstDetCase[0].Banco__c == 'Otros Bancos') {
-                            System.debug('Entra a llamar al servicio de Otros Bancos'); 
-                            if(lstCase[0].Tipo_de_Operacion__c == 'A6' && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
-                                System.debug('Entra a llamar a servicios de Tarjeta BAC para: '+lstCase[0].Tipo_de_Operacion__c);
-                                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = lstCase[0].Id, DAU_PrimerServicio__c = true));
-                                // Call method to publish events
-                                List<Database.SaveResult> results = EventBus.publish(Logs);
-                            } else {
-                                DAU_GestionesBac.execute(item.id); 
-                            }    
-                        } 
-                        else if((lstDetCase[0].Nuevo_canal_aporte__c == 'AH' || lstDetCase[0].Cuenta__r.Forma_Aportacion__c == 'AH') && item.Status == 'Cerrado') {
-                            System.debug('Entra a llamar a servicios de Cuenta de Ahorro');
-                            if(lstCase[0].Tipo_de_Operacion__c == 'A5' && lstCase[0].Respuesta_SF_Tarjetas__c == Null) {
-                                System.debug('Entra a llamar a servicios de Cuenta de Ahorro para: '+lstCase[0].Tipo_de_Operacion__c);
-                                List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = lstCase[0].Id, DAU_PrimerServicio__c = true));
-                                // Call method to publish events
-                                List<Database.SaveResult> results = EventBus.publish(Logs);
-                            } else if(lstDetCase[0].Nuevo_canal_aporte__c == 'AH') {
-                                ControllerServiciosCuentaAhorro.execute(item.id); 
-                            } else if(lstCase[0].Tipo_de_Operacion__c == 'A1' || lstCase[0].Tipo_de_Operacion__c == 'A2' || lstCase[0].Tipo_de_Operacion__c == 'A4' || lstCase[0].Tipo_de_Operacion__c == 'A7') { 
-                                ControllerServiciosCuentaAhorro.execute(item.id);    
-                            } else {
-                                aSysdeCallouts.aumentoDisminucion(item.id);     
-                            }   
-                        } 
-                        else  {
-                            System.debug('Llama a sysde directamente');
-                            aSysdeCallouts.aumentoDisminucion(item.id); 
-                        } 
-                    }    
                 } else if(tipoRnombre == 'Retiros' || test.isRunningTest()){
-                    aSysdeCallouts.retiros(item.id);    
-                    
-                }else if(tipoRnombre == 'Reposicion_Carnet'){
+                    aSysdeCallouts.retiros(item.id);      
+                } else if(tipoRnombre == 'Reposicion_Carnet'){
                     aSysdeCallouts.ReposicionCarnet(item.id);
-                }
-                else if(tipoRnombre == 'Reversiones' || test.isRunningTest()){
-                    aSysdeCallouts.reversar(item.id);  
-                    
+                } else if(tipoRnombre == 'Reversiones' || test.isRunningTest()){
+                    aSysdeCallouts.reversar(item.id);    
                 }
             }   
         }if((!casosEDCtrimestral.isEmpty() || test.isRunningTest()) && lstCase[0].SuppliedEmail == Null) {

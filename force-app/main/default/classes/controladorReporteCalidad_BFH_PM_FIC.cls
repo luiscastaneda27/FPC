@@ -14,7 +14,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
     public Map<string, Oficial_X_Asesor__c> mapAsesoresOficiales{get;set;}
     public Map<string, String> mapAsesoresPremier{get;set;}
     public boolean cambioCampos {get;set;}
-    public string subEstado{get;set;}
+    public String subEstado{get;set;}
     
     public controladorReporteCalidad_BFH_PM_FIC(){
         try{
@@ -50,7 +50,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,
                             Documentacion_Recibida__c,Id,ExpedienteFisicoRecibido__c, Estado__c,
-                            DebidaDiligencia__c,SubEstadoRCSF__c ,
+                            DebidaDiligencia__c,SubEstadoRCSF__c ,Fecha_Devolucion__c,
                             NombreEmpleadoAGN__c,CodigoEmpleadoAGN__c, FechaIngreso__c, NombreAgencia__c,CodigoAGN__c,
                             CurrencyIsoCode,Nacionalidad__c, sexo__C,fecha_nacimiento__C,Fecha_ingreso_empresa__C,
                             profesion__C,estado_civil__C, lugar_nacimiento__C,nombre_conyuge__C,cargo__C,
@@ -232,6 +232,7 @@ public class controladorReporteCalidad_BFH_PM_FIC {
                 
             }
         }catch(exception ex){
+            System.debug('Error: '+ex.getMessage()+ ', Línea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error, por favor contacte su admin.'));
         }
         

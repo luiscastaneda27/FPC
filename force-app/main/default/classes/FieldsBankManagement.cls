@@ -36,6 +36,7 @@ public class FieldsBankManagement {
     
     public String CARD_HOLDER_LEGAL_ID;
     public String ACCOUNT_HOLDER_LEGAL_ID;
+    public String ACCOUNT_HOLDER_NAME;
     public String ACCOUNT_NUMBER;
     public String CARD_STATUS;
     

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Salesforce regional afiliación</label>
+    <protected>false</protected>
+    <values>
+        <field>DAU_Contrasenia__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_Dias__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_EndPoint__c</field>
+        <value xsi:type="xsd:string">https://cs211.salesforce.com/services/Soap/class/WS_DAU_Pensiones</value>
+    </values>
+    <values>
+        <field>DAU_Token__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>DAU_Usuario__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Monto_a_Disminuir__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

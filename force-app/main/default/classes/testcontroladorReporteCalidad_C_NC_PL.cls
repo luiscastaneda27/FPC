@@ -29,10 +29,11 @@ public class testcontroladorReporteCalidad_C_NC_PL {
          subP.Tipo_Fondo__c = 'L';
          insert subP;
          
-        subP = new SubProducto__C ();
-        subP.Producto__c = producto.id;
-        subP.Codigo__c = 'USD';
-        subP.Name = 'Sub 2';
+         subP = new SubProducto__C ();
+         subP.Producto__c = producto.id;
+         subP.Codigo__c = 'USD';
+         subP.Name = 'Sub 2';
+         subP.Tipo_Fondo__c = 'L';
         insert subP;
         
         

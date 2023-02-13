@@ -9,15 +9,11 @@
             <apex:slds />
              
             <style>
-                
-                
             </style>
         </head>
         <body>
             
             <apex:form id="theForm">
-                
-                
                 <apex:actionStatus id="status">
                     <apex:facet name="start">
                         <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
@@ -43,20 +39,16 @@
                                 
                                 <tr >
                                     <td scope="col" colspan="1">
-                                        Primer Nombre
+                                        Nombre
                                     </td >
                                     <td scope="col" colspan="1">
-                                        Segundo Nombre
-                                    </td>
-                                    <td scope="col" colspan="1">
-                                        Primer Apellido
-                                    </td>
-                                    <td scope="col" colspan="1">
-                                        Segundo Apellido
-                                    </td>
-                                    
-                                    <td scope="col" colspan="1">
                                         Identificación
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Oficial Sac
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Asesor
                                     </td>
                                     <td scope="col" colspan="1">
                                         Fecha Afiliación 
@@ -73,20 +65,16 @@
                                     <apex:repeat value="{!listAfiliaciones}" var="item">
                                         <tr>
                                             <td>
-                                                <apex:outputField value="{!item.name}" />
+                                                <apex:outputText value="{!item.name+' '+item.Primer_Apellido__c}" />
                                             </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Nombre__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Primer_Apellido__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Apellido__c}" />
-                                            </td>
-                                            
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Codigo_Oficial_SAC__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Asesor_Comercial__c}" />
                                             </td>
                                              <td>
                                                 <apex:outputField value="{!item.FechaIngreso__c}" />
@@ -140,13 +128,15 @@
                         <apex:outputField value="{!Afiliacion.Tipo_Fondo__c}" />
                         <apex:inputField value="{!Afiliacion.Formulario_Completo__c}" />
                         
+                        <apex:outputField value="{!Afiliacion.Asesor_Comercial__c}" title="Asesor" /> 
+                        <apex:outputField value="{!Afiliacion.Codigo_Asesor_Comercial__c}" title="Código Asesor"/>
+                        
                         
                          <apex:selectList value="{!Afiliacion.Codigo_Oficial_SAC__c}" size="1" label="Oficial SAC" > 
                              <apex:selectOptions value="{!listOficiales}" />
                              <apex:actionSupport event="onchange" action="{!cambioOficialSAC}" status="status" reRender="theForm" />
                         </apex:selectList>
                         <apex:outputField value="{!Afiliacion.Codigo_Oficial_SAC__c}" title="Código Oficial"/>
-                        
                         
                         <apex:selectList value="{!Afiliacion.Espediente_Completo__c}" size="1" label="Expediente Completo" > 
                             <apex:selectOption itemLabel="Si" itemValue="S" />

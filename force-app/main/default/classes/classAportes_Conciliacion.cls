@@ -18,6 +18,7 @@ public class classAportes_Conciliacion {
     public string pc_Imagen { get; set; }
     public string rezago { get; set; }
     
+    
     public Date FechaDeposito { get; set; }
     
     //Variables de salida

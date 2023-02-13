@@ -14,13 +14,13 @@ public class EnvioCorreoSLA {
             
             for(FPC_InicioFinSubEstadosSLARC__c tiempo: listTiemposSLA){
                 Boolean flagSla = true;
-                if(ReporteCalidadTriggerHelper.getTipoAfiliacion(tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c) && (tiempo.FPC_EstadoSLA__c == 'NS' || tiempo.FPC_EstadoSLA__c == 'VS' || tiempo.FPC_EstadoSLA__c == 'VF'
-                   || tiempo.FPC_EstadoSLA__c == 'PS' || tiempo.FPC_EstadoSLA__c == 'PF')){
+                if(ReporteCalidadTriggerHelper.getTipoAfiliacion(tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c) && 
+                   (tiempo.FPC_EstadoSLA__c == 'NS' || tiempo.FPC_EstadoSLA__c == 'VS' || tiempo.FPC_EstadoSLA__c == 'VF' || tiempo.FPC_EstadoSLA__c == 'PF')){
                        Integer horasTransc = SAC.getNoOfBusinessDaysBetweenDates(tiempo.FPC_FechaInicio__c, System.now()) * 8;
                        horasTransc -= horasTransc > 0 ? 8 : 0;
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
-                       List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc);
+                       List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc * 60);
                        mapCorreo.put(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c, listAfilaicion);
                        flagSla = false;
                        
@@ -32,7 +32,7 @@ public class EnvioCorreoSLA {
                        horasTransc -= horasTransc > 0 ? 8 : 0;
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
-                       List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc);
+                       List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc * 60);
                        mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, listAfilaicion);
                        flagSla = false;
                        
@@ -49,10 +49,10 @@ public class EnvioCorreoSLA {
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
                        if(tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'V'){
-                           List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc);
+                           List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc * 60);
                            mapCorreo.put(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c, listAfilaicion);
                        }else{
-                           List<afilaicionSLA>listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc);
+                           List<afilaicionSLA>listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc * 60);
                            mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, listAfilaicion);
                        }
                    }
@@ -125,14 +125,15 @@ public class EnvioCorreoSLA {
         a.identidad = tiempo.FPC_ReporteCalidad__r.Identificacion__c;
         a.cuenta = tiempo.FPC_ReporteCalidad__r.Numero_Cuenta__c;
         a.afiliacion = tiempo.FPC_ReporteCalidad__r.Tipo_Afiliacion__c;
-        if(horasTransc >= tiempo.FPC_TiempoConfigurado__c){
+        
+        if(horasTransc >= tiempo.FPC_TiempoConfigurado__c * 60){
             a.estaVencida = true;
-        }else if(horasTransc >= tiempo.FPC_TiempoConfigurado__c * 0.8){
+        }else if(horasTransc >= tiempo.FPC_TiempoConfigurado__c * 60 *  0.8){
             a.esta80 = true;
-        }else if( horasTransc >=tiempo.FPC_TiempoConfigurado__c * 0.5){
+        }else if( horasTransc >=tiempo.FPC_TiempoConfigurado__c * 60 * 0.5){
             a.esta50 = true;
         }
-        System.debug('a: '+a);
+        System.debug(horasTransc+' a: '+a);
         if(a.estaVencida || a.esta80 || a.esta50){
             listAfilaicion.add(a);
         }
@@ -159,7 +160,9 @@ public class EnvioCorreoSLA {
             'FPC_ReporteCalidad__r.Name, FPC_ReporteCalidad__r.Primer_Apellido__c,'+
             'FPC_ReporteCalidad__r.Tipo_Afiliacion__c,'+
             'FPC_ReporteCalidad__r.Identificacion__c, FPC_ReporteCalidad__r.Numero_Cuenta__c '+
-            'From FPC_InicioFinSubEstadosSLARC__c Where FPC_FechaFin__c = null '+condicion+
+            'From FPC_InicioFinSubEstadosSLARC__c Where FPC_FechaFin__c = null and FPC_ReporteCalidad__c != null '+
+            'and FPC_ReporteCalidad__r.codigo_oficial_sac__c != null and FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c != null '+
+            condicion +
             'order by FPC_EstadoSLA__c';
         System.debug('Query: '+query);
         return  DataBase.query(query);

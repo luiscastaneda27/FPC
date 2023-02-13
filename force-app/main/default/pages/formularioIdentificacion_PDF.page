@@ -103,7 +103,7 @@
             </td>                       
           </tr>
           <tr>
-            <td colspan="2" style="height: 40; border-right: none; ">    
+           <td colspan="2" style="height: 40; border-right: none; ">    
               <div class="cls1">
                   Ejerce o ha ejercido un cargo publico nacional o internacional? <br/>
                   <small>En caso que la respuesta sea "SI" llenar todos los campos del formulario <br/>
@@ -112,30 +112,31 @@
            </td>
            <td style="border-left: none;" >
             <div class="SiNo" style="text-align: left;">
-              Si
-              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',false,true)}">
-                  <img src="/img/checkbox_unchecked.gif"/>
-              </apex:outputPanel>
-              <font></font>
-              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',true,false)}">
-                  <img src="/img/checkbox_checked.gif"/>
-              </apex:outputPanel>
-              
-              No
-              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',false,true)}">
-                  <img src="/img/checkbox_unchecked.gif"/>
-              </apex:outputPanel>
-              <font></font>
-              <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',true,false)}">
-                  <img src="/img/checkbox_checked.gif"/>
-              </apex:outputPanel>
+                Si<font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',false,true)}">
+                    <img src="/img/checkbox_unchecked.gif"/>
+                    </apex:outputPanel>
+                    <font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',true,false)}">
+                    <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    <font></font>
+                 No<font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',false,true)}">
+                    <img src="/img/checkbox_unchecked.gif"/>
+                    </apex:outputPanel>
+                    <font></font>
+                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',true,false)}">
+                    <img src="/img/checkbox_checked.gif"/>
+                    </apex:outputPanel>
+                    <font></font>
             </div>
            </td>
 
           
           </tr>
           <tr style="height: 40; border-left: 0px;">
-            <td style="text-align: center; width: 33%;"> Cargo<br/>{!info.Cargo_Pulbico}</td>
+            <td style="text-align: center; width: 33%;"> Cargo<br/><br/>{!info.Cargo_Pulbico}<br/> </td> 
             <td style="text-align: center; width: 34%;"> Institución<br/><br/>{!info.institucionPep}<br/> </td>
             <td style="text-align: center; width: 33%;"> Periódo<br/><br/>{!info.periodoPep}<br/> </td> 
           </tr>

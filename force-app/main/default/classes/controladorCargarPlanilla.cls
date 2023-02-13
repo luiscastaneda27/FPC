@@ -41,7 +41,7 @@ global class controladorCargarPlanilla {
     public  List<planilla> ListClientesN {get;set;}
     public  List<planilla> MListClientesN {get;set;}
     public list<empresa_x_empleado__c>empleadosCuentaMala{get;set;}
-    public list<Account>empleadosCuentaMala2{get;set;}
+    public list<Account> empleadosCuentaMala2{get;set;}
     public  List<planilla> duplicados{get;set;}
     public  List<planilla> NuevosEm{get;set;}
     
@@ -625,6 +625,7 @@ Pcomplemetario = fr[i].codigo__C;
                     lopp.add(bmw.get(pla[i].Empleado2__r.Identificacion__c));
                     for(integer lk=0; lk<lopp[0].cuentasAEV.size(); lk++)
                     {
+                        system.debug('setea bandera = 0');
                         integer bandera=0;
                         integer lkk=0;
                         for(integer lkkt=0; lkkt<lopp[0].cuentasAPV.size(); lkkt++)
@@ -673,6 +674,7 @@ Pcomplemetario = fr[i].codigo__C;
                     
                 }
             }
+            
             //insert Cuenta_planilla;
             database.insert(Cuenta_planilla,false);
             pla = new list<Contenido_Planilla__c>();
@@ -761,6 +763,7 @@ Pcomplemetario = fr[i].codigo__C;
             system.debug('id de la planilla: '+NuevaPlanilla.id);
             ListCLientesNuevos = new list<Planilla>();
             duplicados = new list<Planilla>();
+            system.debug('duplicados inicio: '+duplicados);
             boolean band = true;
             list<string> ident = new list<string>();
             map<string, planilla> todosr= new map<string, planilla>();
@@ -777,10 +780,10 @@ Pcomplemetario = fr[i].codigo__C;
                      system.debug('t cuenta: '+t.cuenta__c);
                      if(!todosr2.containsKey(t.cuenta__c) && band)
                      {
-                         system.debug('Algo: '+todosr2.containsKey(t.cuenta__c)+' '+band);
+                         system.debug('Algo: '+!todosr2.containsKey(t.cuenta__c)+' '+band);
                          if(t.cuenta__c!='NADANADA')
                          {
-                             todosr2.put(t.cuenta__c, 9);
+                             todosr2.put(t.cuenta__c, 9);                             
                          }
                          ident.add(t.Identidad__c);
                          if(ApexPages.currentPage().getParameters().get('Moneda')=='HNL')
@@ -791,6 +794,7 @@ Pcomplemetario = fr[i].codigo__C;
                                                                  t.Cuenta__c, t.Aporte_Reserva_Laboral__c));
                              duplicados.add(new Planilla(t.Identidad__c, 0, t.cuenta__c));
                              system.debug('duplicados revisar: '+duplicados);
+                             system.debug('duplicados condici: '+ApexPages.currentPage().getParameters().get('Moneda'));
                              /*duplicados.add(new Planilla(t.Identidad__c, 0,t.Aporte_Patronal_Obligatorio__c ,
 t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Empleado_Voluntario__c,0.0));*/
                          }
@@ -898,6 +902,7 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                     }
                 }                
                 //agregado 07-07-2020 privilegios todas la cuentas en la planilla
+                
                 empleadosCuenta = [Select identificacion__c, FirstName, Lastname from Account where identificacion__c = :listIdCuentas]; 
                 map<string, Account> identidadesempleadosC = new map<string, Account>();
                 for(integer i=0; i<empleadosCuenta.size(); i++)
@@ -991,6 +996,7 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                                                                        cuentasempleadoExtraordinario, cuentaspatronoExtraordinario, cuentasSeguroVida,
                                                                        //
                                                                        '','',''));
+                                        system.debug('setea bander 1: '+duplicados[i].bandera);
                                         duplicados[i].bandera=1;
                                     }
                                     else{
@@ -1039,7 +1045,7 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                                                                        //
                                                                        '','',''));
                                         }
-                                        
+                                        system.debug('setear bandera con 1');
                                         duplicados[i].bandera=1; 
                                     }
                                     
@@ -1065,7 +1071,7 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                                         //
                                         ListCLientesN[posicion].reserva_laboral +=ListCLientesNuevos[i].reserva_laboral;
                                         duplicados[i].bandera=1;
-                                        
+                                        system.debug('setear bandera saa 1');
                                     }
                                     //system.debug('lo que esta antes del ese: '+listcuentasEmpleados[h].Cuenta_colectiva2__C);
                                     else if(listcuentasEmpleados[h].Cuenta_colectiva2__C ==null && ListCLientesNuevos[i].a.Trim() !='NADANADA')
@@ -1086,6 +1092,7 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                                         //
                                         ListCLientesN[posicion].reserva_laboral +=ListCLientesNuevos[i].reserva_laboral;
                                         duplicados[i].bandera=1;
+                                        system.debug('setear bandera a 1');
                                     }
                                     
                                     
@@ -1103,9 +1110,10 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                 boolean empleadosNuevos2= false;
                 empleadosCuentaMala = new list<empresa_x_empleado__C>();
                 empleadosCuentaMala2 = new list<Account>();
-                
+
                 for(integer i=0; i<duplicados.size(); i++)
                 {
+                    
                     //modificado 07-07-2020 privilegios todas la cuentas en la planilla
                     if(identidadesempleados.containsKey(duplicados[i].Num_identidad) || identidadesempleadosC.containsKey(duplicados[i].Num_identidad))
                     {
@@ -1115,8 +1123,10 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                             empleadosCuentaMala.add(identidadesempleados.get(duplicados[i].Num_identidad));
                             //agregado 07-07-2020 privilegios todas la cuentas en la planilla
                             empleadosCuentaMala2.add(identidadesempleadosC.get(duplicados[i].Num_identidad));
+                            system.debug('Se setea empleadoscuentaerronea 1:'+duplicados[i].bandera+' '+duplicados[i].Num_identidad+' '+duplicados[i].a);
                             empleadoscuentaerronea=true;
                         }
+                        system.debug('setea bandera en 1');
                         duplicados[i].bandera=1;
                         //  empleadosNuevos2=true;
                     }
@@ -1126,7 +1136,9 @@ t.Aporte_Empleado_Obligatorio__c,t.Aporte_Patronal_Voluntario__c,t.Aporte_Emplea
                         {
                             
                             clientesCuentas2.add(duplicados[i].num_identidad);
+                            system.debug('Se setea empleadoscuentaerronea: 2');
                             empleadoscuentaerronea=true;
+                            system.debug('set bandera con 1');
                             duplicados[i].bandera=1;
                         }
                         
@@ -1237,9 +1249,9 @@ j=NuevosEm.size();
                     {
                         ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Nuevos empleados.'));
                     }
-                    else if(empleadoscuentaerronea )
+                    else if(empleadoscuentaerronea)
                     {
-                        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Se han detectado inconsistencias en la carga actual, favor revisar la moneda y/o empresa de la planilla. Las personas resaltadas en color rojo no serán excluidas al momento de enviar la planilla'));
+                        ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, empleadoscuentaerronea+'Se han detectado inconsistencias en la carga actual, favor revisar la moneda y/o empresa de la planilla. Las personas resaltadas en color rojo no serán excluidas al momento de enviar la planilla'));
                     }
                     //   ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Nuevos Empleados, Empleados con la cuenta mala, fueron eliminados'));
                 }
@@ -1644,11 +1656,11 @@ ListCLientesN[i].colorrl='color:red;';
                     }
                     
                     if(clientes[i].length()>1)
-                    {
+                    {                        
                         string kike2;
                         string kike=clientes[i];
                         clientes2 = kike.split(',');
-                        
+                        system.debug('lo que acabo de poner (Eli y E forever)'+clientes2[a]);
                         if(a<clientes2.size() && b<clientes2.size() && c<clientes2.size() &&
                            d<clientes2.size() && e<clientes2.size() && h<clientes2.size() && f<clientes2.size() &&
                            //agregadp wp 06-11-2019

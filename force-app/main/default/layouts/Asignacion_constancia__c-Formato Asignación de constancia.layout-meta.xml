@@ -19,6 +19,10 @@
                 <behavior>Edit</behavior>
                 <field>Constancia__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FPC_TipoPersona__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

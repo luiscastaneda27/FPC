@@ -23,6 +23,7 @@ public class controllerConstanciaPdf{
     public boolean mostrarMenbrete {get;set;}
     public string margen{get;set;}
     classRespuestaConstancias constancias;
+    updateCase.wrapperClass informacionTercero = new updateCase.wrapperClass();
     
     public controllerConstanciaPdf() {
         inicio(ApexPages.currentPage().getParameters().get('id'));
@@ -38,6 +39,7 @@ public class controllerConstanciaPdf{
         String urlOrigen = ApexPages.currentPage().getUrl();
         mostrarMenbrete = false;
         margen = '4.5cm';
+        informacionTercero = new updateCase.wrapperClass();
         detallesCasoNuevo = new list<Detalle_caso__c>();
         try {
             
@@ -46,7 +48,7 @@ public class controllerConstanciaPdf{
             
             // Caso
             camposCaso = 'toLabel(Constancia__c),Monto_compromiso_aporte__c';
-            camposCaso += ',Fecha_desde__c,Fecha_Hasta__c,currencyisocode,embajadas__c,Frecuencia__c';
+            camposCaso += ',Fecha_desde__c,Fecha_Hasta__c,currencyisocode,embajadas__c,Frecuencia__c,DAU_Identidad__c,DAU_No_Cuenta__c';
             camposCaso += ',Telefono_Casa__c,Telefono_Movil__c,Telefono_Trabajo__c,Punto_Referencia_Trabajo__c';
             camposCaso += ',Correo_Electronico__c,Fecha_Nacimiento__c,Lugar_Nacimiento__c,Estado_Civil__c';
             camposCaso += ',Nombre_Cliente__c,Segundo_nombre__c,Segundo_apellido__c,Apellidos__c,toLabel(Estado_Cuenta_Detallado__c)';
@@ -70,7 +72,7 @@ public class controllerConstanciaPdf{
             camposCaso = camposCaso.replace(')','');
             
             // CLIENTE RELACIONADO
-            camposCliente = 'FirstName,Celular__c,Nombre_empresa__c,LastName,toLabel(Tipo_Identificacion__c),Identificacion__c';
+            camposCliente = 'RecordType.DeveloperName, FirstName,Celular__c,Name,Nombre_empresa__c,LastName,toLabel(Tipo_Identificacion__c),Identificacion__c';
             camposCliente += ',PersonBirthdate,toLabel(Estado_Civil__pc),Lugar_Nacimiento__c,PersonEmail,PersonMobilePhone';
             queryRelated = 'Select ';
             queryRelated += camposCliente;
@@ -195,15 +197,24 @@ public class controllerConstanciaPdf{
                            // system.debug('Se metio al else: '+casoTratar.Constancia__c);
                            queryAsig += ' toLabel(Carta__c) = \'' + casoTratar.Constancia__c + '\'';
                        }
-                   } else {
-                       queryAsig += ' Carta__c = null';
+                   } else if(casoTratar.RecordType.DeveloperName == 'Aumento_Disminucion_Aportes' 
+                             && (detallesCaso[0].Tipo_Operacion__c == 'Afiliación de Débito Automático' || detallesCaso[0].Tipo_Operacion__c == 'Cambio de Canal de Aporte'
+                                || detallesCaso[0].Tipo_Operacion__c == 'Cambio de # Tarjeta')){
+                                    esConstancia = false; 
+                                    if(String.isNotBlank(casoTratar.DAU_Identidad__c) && casoTratar.DAU_Identidad__c != casoTratar.Account.Identificacion__c){
+                                        queryAsig += ' FPC_TipoPersona__c = \'Tercero\'';
+                                        informacionTercero = updateCase.validarIdentidad(casoTratar.Id, detallesCaso[0].N_Cuenta_Bancaria__c, casoTratar.Account.Identificacion__c);
+                                    }else{
+                                         queryAsig += ' FPC_TipoPersona__c = \'Titular\'';
+                                    }
+                   }else {
+                       queryAsig += ' FPC_TipoPersona__c = null';
                        esConstancia = false;
                    }                            
                    queryAsig += ' Limit 1';
                    //system.debug('Tipo de caso--:'+ casoTratar.RecordType.DeveloperName);
-                   system.debug('el query para el html : '+queryAsig);
+                   system.debug(' el query para el html : '+queryAsig);
                    asignacion = dataBase.query(queryAsig);      
-                   system.debug('el query para el html : '+queryAsig);
                    html = asignacion.Constancia__r.html_espanol__c; 
                    if(casoTratar.Viene_Portal_Autogestion__c && casoTratar.constancia__c =='A1' && !urlOrigen.contains('vfFormularioPDF')){
                        html=html.substring(75, html.length());
@@ -211,6 +222,14 @@ public class controllerConstanciaPdf{
                    else if(casoTratar.Viene_Portal_Autogestion__c && casoTratar.constancia__c =='Saldo' && !urlOrigen.contains('vfFormularioPDF')){
                        html=html.substring(152, html.length());
                    }
+                   
+                   
+                   if(cliente.RecordType.DeveloperName == 'Juridico' 
+                      && (CasoTratar.Constancia__c == 'Pignoración' || CasoTratar.Constancia__c == 'Saldo' ||
+                          CasoTratar.Constancia__c == 'Aportación Extraordinaria' || CasoTratar.Constancia__c == 'Aportación Ordinaria')){
+                              html = html.replace('de identidad', 'RTN');
+                              html = html.replace('el (la) Señor (a)', 'la Empresa ');
+                          }
                    
                    
                    if(casoTratar.RecordType.DeveloperName == 'Aumento_Disminucion_Aportes' ||test.isRunningTest()) {
@@ -285,6 +304,12 @@ public class controllerConstanciaPdf{
                 }                 
                 system.debug('Campos camposCuenta'+camposCuenta);
             }           
+        }
+        if(html.contains('[Tercero.Name]')){
+            informacionTercero.DAU_Name = String.isNotBlank(informacionTercero.DAU_Name) ? informacionTercero.DAU_Name : '';
+            informacionTercero.DAU_Identidad = String.isNotBlank(informacionTercero.DAU_Identidad) ? informacionTercero.DAU_Identidad : '';
+            html=html.replace('[Tercero.Name]',informacionTercero.DAU_Name);
+            html=html.replace('[Tercero.Identidad]',informacionTercero.DAU_Identidad);
         }
         user u = [select zona__C, Department  from user where id =:userinfo.getUserId()];
         u.Department = u.Department != null ? u.Department :'';
@@ -760,7 +785,7 @@ public class controllerConstanciaPdf{
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Nº de Identidad</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Fecha de nacimiento</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Parentesco</strong></span></span></td>';
-            tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Parentesco</strong></span></span></td>';
+            tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>Sexo</strong></span></span></td>';
             tabla += '<td colspan="1" rowspan="1" style="text-align:center"><span style="font-size:10px"><span style="font-family:Arial,Helvetica,sans-serif"><strong>%</strong></span></span></td>';
             tabla += '</tr>';
             String tablaConti = tabla;
@@ -855,15 +880,10 @@ public class controllerConstanciaPdf{
     public void reemplazarCampos(sObject elObjeto, String nombreApi, String camposConsulta){
         try{Map<String,Schema.SObjectType> gd = Schema.getGlobalDescribe();  
         Schema.SObjectType sobjType = gd.get(nombreApi); 
-        //system.debug('prubando  : '+sobjType );
         Schema.DescribeSObjectResult r = sobjType.getDescribe();  
         Map<String,Schema.SObjectField> M = r.fields.getMap();
-        // system.debug('Campos a splitear : '+camposConsulta);
-        // system.debug('Campos a elObjeto : '+elObjeto);
-        // system.debug('Campos a nombreApi : '+nombreApi);
         list<String> listCamposObjeto = camposConsulta.split(',');
         
-        //lista los campos de caso requeridos en html
         for(String campo: listCamposObjeto){                    
             if(elObjeto.get(campo) != null){
                 System.debug(nombreApi+' --- '+campo);

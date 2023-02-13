@@ -294,15 +294,21 @@ public class controladorAfiliacionClientesCargados {
     public static void crearAfilaicionT24(String dataJson){
         try{
             List<reporteT24__c> listT24 = (List<reporteT24__c>) JSON.deserialize(dataJson, List<reporteT24__c>.class);
-            System.debug('listT24: '+json.serialize(listT24));
+            System.debug('listT24: '+dataJson);
             List<Reporte_Calidad__c> listRC = new  List<Reporte_Calidad__c>();
-            Map<string, Oficial_X_Asesor__c> mapAsesoresOficiales = new Map<string, Oficial_X_Asesor__c>();
-            for(Oficial_X_Asesor__c item: [select Codigo_Asesor__c ,Oficial_SAC__r.name, Codigo_Oficial_SAC__c,Asesor__r.name from Oficial_X_Asesor__c]){
-                mapAsesoresOficiales.put(item.Codigo_Asesor__c, item);
+            Map<string, Oficiales_X_Empresa__c> mapAsesoresOficiales = new Map<string, Oficiales_X_Empresa__c>();
+            Map<string, String> mapTipoFondo = new Map<string, String>();
+            for(Oficiales_X_Empresa__c item: [select Id, Asesor__r.Name, Codigo_Asesor__c, Oficial_SAC__r.Name , Codigo_Oficial_SAC__c, Empresa__c, Empresa__r.Identificacion__c from Oficiales_X_Empresa__c where Codigo_Asesor__c != null and  Empresa__r.Identificacion__c != null order by Codigo_Asesor__c]){
+                mapAsesoresOficiales.put(item.Codigo_Asesor__c+item.Empresa__r.Identificacion__c, item);
+            }
+            for(SubProducto__c item: [select Codigo__c,  Tipo_Fondo__c from SubProducto__c]){
+                mapTipoFondo.put(item.Codigo__c, item.Tipo_Fondo__c);
             }
             for(reporteT24__c t24: listT24){
                 Reporte_Calidad__c RC = new Reporte_Calidad__c();
-                Oficial_X_Asesor__c asesor = mapAsesoresOficiales.containsKey(t24.promotor__c) ? mapAsesoresOficiales.get(t24.promotor__c) : new Oficial_X_Asesor__c();
+                t24.identificacion__c = t24.identificacion__c.replace('-','');
+                String keyMap = t24.promotor__c + t24.rtnEmpleador__c;
+                Oficiales_X_Empresa__c asesor = mapAsesoresOficiales.containsKey(keyMap) ? mapAsesoresOficiales.get(keyMap) : new Oficiales_X_Empresa__c();
                 aSysdeReporteCalidad.ClassReporteCalidad respuesta = aSysdeReporteCalidad.infoCliente(t24.identificacion__c.replace('-',''));
                 if(respuesta.numCuenta != null){
                     RC.Name = t24.pNombreEmpleado__c;
@@ -310,6 +316,7 @@ public class controladorAfiliacionClientesCargados {
                     RC.Primer_Apellido__c = t24.pApellidoEmpleado__c;
                     RC.Segundo_Apellido__c = t24.sApellidoEmpleado__c;
                     RC.Tiene_Id__c = 'S';
+                    RC.Tipo_Identificacion__c = t24.TipoId__c;
                     RC.Identificacion__c = t24.identificacion__c.replace('-','');
                     RC.FATCA__c = 'S';
                     RC.PEP__c = 'S';
@@ -329,16 +336,16 @@ public class controladorAfiliacionClientesCargados {
                     RC.Estado__c = 'N';
                     RC.Tipo_Afiliacion__c  ='YC';
                     RC.Formulario_Completo__c = 'S';
+                    RC.Tipo_Fondo__c = String.isNotBlank(t24.subProducto__c) ? mapTipoFondo.get(t24.subProducto__c) : null;
                     RC.Cuentas_Colectivas__c = t24.noEmpresa__c;
                     RC.CurrencyIsoCode = t24.CurrencyIsoCode;
                     listRC.add(RC);
                 }
             }
-            System.debug('listRC: '+listRC);
+            System.debug('listRC: '+JSON.serialize(listRC));
             DataBase.insert(listRC, false);
         }catch(exception ex){
-            system.debug('Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber());
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.error, 'Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber())); 
+            system.debug('Error: '+ex.getMessage()+',  Linea: '+ex.getLineNumber()); 
         }
     }
     

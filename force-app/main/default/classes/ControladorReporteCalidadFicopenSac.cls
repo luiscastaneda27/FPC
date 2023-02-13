@@ -3,7 +3,7 @@ public class ControladorReporteCalidadFicopenSac {
     public List<Reporte_calidad__C> listAfiliaciones{get;set;}
     public Reporte_calidad__C Afiliacion {get;set;}
     String usuario;
-    String tipoPantalla = 'FCA';
+    String tipoPantalla;
     public producto__C producto {get;set;} 
     public String idAfiliacion{get;set;}
     public Map<string, String> mapClientes{get;set;}
@@ -15,12 +15,12 @@ public class ControladorReporteCalidadFicopenSac {
     
     public ControladorReporteCalidadFicopenSac(){
         usuario = ApexPages.currentPage().getParameters().get('usuario');
+        tipoPantalla = ApexPages.currentPage().getParameters().get('pantalla');
     }
     
     public void reinicar(){
         listAfiliaciones = new list<Reporte_calidad__C>();
         Afiliacion = new Reporte_calidad__C();
-        String tp = tipoPantalla.contains('FC') ? '%FC%' : '%'+tipoPantalla+'%';
         
         listAfiliaciones = [select Addendum__c, Aplica_CS__c , Aportacion_HNL__c ,Aportacion_USD__c ,
              Asesor_Comercial__c, Comentarios__c, Codigo_Asesor_Comercial__c,Codigo_Oficial_SAC__c ,
@@ -38,7 +38,7 @@ public class ControladorReporteCalidadFicopenSac {
              Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
              Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c
              from Reporte_calidad__C
-             where Codigo_Oficial_SAC__c =:Usuario and Estado__c = 'V' and Tipo_Afiliacion__C like :tp
+             where Codigo_Oficial_SAC__c =:Usuario and Estado__c = 'V' and Tipo_Afiliacion__c = :tipoPantalla 
              order by LastModifiedDate desc limit 950];
         if(listAfiliaciones.size() == 0){
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.warning, 'No se han encontrado clientes.'));
@@ -125,6 +125,7 @@ public class ControladorReporteCalidadFicopenSac {
                        afiliacion.Oficial_SAC__c =  asesor.Oficial_SAC__r.name;
                        afiliacion.Cuentas_Colectivas__c = respuesta.codColectiva;
                        afiliacion.Estado__c = 'V';
+                       afiliacion.SubEstadoRCSF__c = 'NS';
                        
                        afiliacion.NombreEmpleadoAGN__c = respuesta.EMP_AGN;
                        afiliacion.CodigoEmpleadoAGN__c = respuesta.COD_AGN;

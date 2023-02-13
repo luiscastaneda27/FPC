@@ -604,6 +604,27 @@
                         <!-- Modal Seguro que no aplica comision -->
                         
                         <div class="slds-scope">	
+                            <!--apex:outputPanel rendered="{!VentanaEmergenteNo}" > 
+                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                    <div class="slds-modal__container">
+                                        <header class="slds-modal__header">
+                                            <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
+                                            <apex:commandLink style="slds-item-align_center"   ><apex:image styleClass="imgx" /> </apex:commandLink>                    
+                                            <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:25px;">
+                                                ¿Esta seguro de no cobrar comisión por aporte?
+                                            </h1>
+                                            <apex:inputText rendered="false" value="{!CodReferenNoCobra}" />      
+                                            <br/><br/>
+                                            <div class="modal-footer">
+                                                <apex:commandButton styleClass="btn btn-danger"  action="{!cerrar}"  value="Cerrar" oncomplete="Clean();" />      
+                                                <apex:commandButton styleClass="btn btn-secondary" style="color:#fff; position: relative; background: #42c4dd;" action="{!AprobarAporte2SinComision}"  value="Aceptar"/> 
+                                            </div>
+                                        </header>
+                                    </div>
+                                </section>
+                                <div class="slds-backdrop slds-backdrop_open"></div>
+                            </apex:outputPanel-->	
+                            
                             <apex:outputPanel rendered="{!VentanaEmergenteNo}"  >
                                 <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                                     <div class="slds-modal__container">
@@ -684,10 +705,23 @@
                                         <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Codigos de Rezago</h1>
                                         <br/><br/>
                                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="font-size:15px;">
-                                            <apex:inputText value="{!CodRefTest}" html-placeholder="{!CodRef}">
+                                            <!--apex:inputText value="{!CodRefTest}" html-placeholder="{!CodRef}">
                                                 <apex:actionSupport event="onchange" action="{!SearchValores}"/>
                                             </apex:inputText><br/><br/>
-                                            <Strong><apex:outputText value="{!Existe}"/></Strong>
+                                            <Strong><apex:outputText value="{!Existe}"/></Strong-->
+                                            <table width="100%" >
+                                                <tr>
+                                                    <td style="width:20%">
+                                                        
+                                                    </td>
+                                                    <td style="width:30%">
+                                                        <apex:inputText value="{!CodRefTest}" html-placeholder="{!CodRef}" />
+                                                    </td>
+                                                    <td style="width:50%">
+                                                        <apex:commandButton style="width: 200px; color:#fff; height: 28px;position: relative;background: #42c4dd;" action="{!SearchValores}"  value="Buscar"/> 
+                                                    </td>
+                                                </tr>
+                                            </table>
                                             <br/><br/>
                                             <table style="border: 1px solid black;">
                                                 <tr>
@@ -695,18 +729,31 @@
                                                     <th style="text-align: center; vertical-align: middle;">Moneda</th>
                                                     <th style="text-align: center; vertical-align: middle;">Monto</th>
                                                 </tr>
-                                                <tr>
+                                                <!--tr>
                                                     <td style="text-align: center; vertical-align: middle;">{!Rezagosn}</td>
                                                     <td style="text-align: center; vertical-align: middle;">{!Moneda}</td>
                                                     <td style="text-align: center; vertical-align: middle;">{!Monto}</td>
-                                                </tr>
+                                                </tr-->
+                                                <apex:repeat value="{!listRezagos}" var="item" >
+                                                    <tr>
+                                                        <td style="text-align: center; vertical-align: middle;">{!item.codigo}</td>
+                                                        <td style="text-align: center; vertical-align: middle;">{!item.aplica}</td>
+                                                        <td style="text-align: center; vertical-align: middle;">{!item.Moneda}</td>
+                                                        <td style="text-align: center; vertical-align: middle;">{!item.Monto}</td>
+                                                        <td style="text-align: center; vertical-align: middle;">
+                                                            <apex:commandLink action="{!eliminarRezago}" value="Eliminar" status="status" reRender="theForm" >  
+                                                                <apex:param value="{!item.codigo}" assignTo="{!codigoRezagoEliminar}" name="APV" /> 
+                                                            </apex:commandLink>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
                                             </table>
                                         </h2>
                                         <br/><br/>
                                         <apex:commandLink action="{!closePopup}" status="status" reRender="theForm" >  
                                             <apex:commandButton style="width: 200px; color:#fff; height: 28px;position: relative;background: #42c4dd;"  value="Cerrar"/> 
                                         </apex:commandLink>
-                                        <apex:commandLink action="{!aplicar}" status="status" reRender="theForm" rendered="{!BTNAplicar}">  
+                                        <apex:commandLink action="{!aplicarList}" status="status" reRender="theForm" rendered="{!listRezagos.size != 0}">  
                                             <apex:commandButton style="width: 200px; color:#fff; height: 28px;position: relative;background: #42c4dd;" value="Aplicar Codigo"/> 
                                         </apex:commandLink>
                                     </header>

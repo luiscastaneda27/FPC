@@ -1,0 +1,112 @@
+<apex:page tabStyle="account" sidebar="false" cache="false" id="page" showHeader="false" title="Reporte de Calidad"  docType="html-5.0"  lightningStylesheets="true"   controller="ClassVehiculo" >
+ <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge" />
+            <meta http-equiv="X-UA-Compatible" content="IE=8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            
+            <!-- Import the Design System style sheet -->
+            <apex:slds />
+             
+            <style>
+                
+                
+            </style>
+        </head>
+        <body>
+            
+            <apex:form id="theForm">
+                
+                
+                <apex:actionStatus id="status">
+                    <apex:facet name="start">
+                        <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                            &nbsp;
+                        </div>
+                        
+                        <div role="status" class="slds-spinner slds-spinner_large">
+                            <span class="slds-assistive-text">Por Favor Espere...</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+                <div style="text-align : center; font-size:25px; color:#53c7dc; font-weight:bold;">
+                    Pantalla de Vehiculos
+                </div>
+                <br/><br/>
+                <apex:pageBlock id="idPageBlock" >
+                    <apex:pageMessages />
+                    <apex:pageBlockSection title="Vehiculos Disponibles" columns="1">
+                        <apex:outputPanel >
+                            <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
+                                
+                                <tr >
+                                     <td scope="col" colspan="1">
+                                        Marca
+                                    </td >
+                                    <td scope="col" colspan="1">
+                                        Modelo
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Año
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Editar
+                                    </td>
+                                    
+                                    <td scope="col" colspan="1">
+                                        Eliminar
+                                    </td>
+                                </tr>
+                                <tbody>
+                                    <apex:repeat value="{!listVehiculos}" var="item">
+                                        <tr>
+                                            <td>
+                                                <apex:outputText value="{!item.marca}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!item.modelo}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputText value="{!item.anio}" />
+                                            </td>
+                                            <td>
+                                                <apex:commandLink value="Editar" reRender="theForm" status="status" action="{!popEditar}" >
+                                                    <apex:param value="{!item.id}" assignTo="{!vehiculoId}" name="vehiculoId" />
+                                                </apex:commandLink>
+                                            </td>
+                                            
+                                            <td>
+                                                <apex:commandLink value="Eliminar" reRender="theForm" status="status" action="{!deleteVehiculos}">
+                                                    <apex:param value="{!item.idSF}" assignTo="{!vehiculoId}" name="vehiculoId" />
+                                                </apex:commandLink>
+                                            </td>
+                                            
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+                    </apex:pageBlockSection>
+                     <apex:pageBlockSection title="Nuevo Vehiculo" rendered="{!popNV}" columns="2">
+                         <apex:inputText label="Marca" value="{!vehiculo.marca}" />
+                          <apex:inputText label="Modelo" value="{!vehiculo.modelo}" />
+                         
+                         <apex:inputText label="Año" value="{!vehiculo.anio}" />
+                          <apex:inputText label="Precio" value="{!vehiculo.precio}" />
+                         
+                         <apex:inputText label="Existencia" value="{!vehiculo.existencia}" />
+                          <apex:outputText label="Id" value="{!vehiculo.id}" />
+                    </apex:pageBlockSection>
+                    <footer class="slds-modal__footer">
+                        <apex:commandButton rendered="{!!popNV}" status="status" reRender="theForm"  style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Nuevo Vehiculo" action="{!popVehiculo}"  />
+                        <apex:commandButton rendered="{!AND(popNV, vehiculo.idSF = null )}" status="status" reRender="theForm"  style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!postVehiculos}"  />
+                        <apex:commandButton rendered="{!AND(popNV, vehiculo.idSF != null )}" status="status" reRender="theForm"  style="margin-right:8px;"  styleClass="slds-button slds-button--brand"  value="Guardar" action="{!putVehiculos}"  />
+                    </footer>
+                </apex:pageBlock>
+            </apex:form>
+     </body>
+    </html>
+</apex:page>

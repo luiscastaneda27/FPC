@@ -126,6 +126,7 @@ public class ControladorReporteCalidadTelVenOper {
                     afiliacion.Oficial_SAC__c =  usuarioP.Name + ' '+ usuarioP.Apellido__c;
                     afiliacion.Cuentas_Colectivas__c = respuesta.codColectiva;
                     afiliacion.Estado__c = 'A';
+                    afiliacion.SubEstadoRCSF__c = 'NS';
                     
                     
                     afiliacion.PEP__c = (respuesta.pep=='N' || respuesta.pep == null || respuesta.pep == '') ? 'N' : 'S'; 

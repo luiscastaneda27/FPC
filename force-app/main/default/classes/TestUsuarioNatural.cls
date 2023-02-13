@@ -54,6 +54,7 @@ public class TestUsuarioNatural
      controllerApiUsuarioNatural api = new controllerApiUsuarioNatural();
      
      ControllerLoginAfiliados login = new ControllerLoginAfiliados();
+     login.clicPantallasRC();
      Usuarios_de_Pantallas__c user = new Usuarios_de_Pantallas__c();
      user.Activo__c = true;
      user.Apellido__c = 'castaneda';

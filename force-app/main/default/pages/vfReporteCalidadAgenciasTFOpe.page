@@ -125,7 +125,7 @@
                         <apex:outputField value="{!Afiliacion.WAIVER__c}" />
                         
                         <apex:outputField value="{!Afiliacion.PEP__c}" />
-                        <apex:inputField value="{!Afiliacion.Procedencia__c}" />
+                        <apex:outputField value="{!Afiliacion.Procedencia__c}" />
                         
                         <apex:outputField value="{!Afiliacion.Addendum__c}" />
                         <apex:outputField label="Nombre de la Empresa" value="{!Afiliacion.Empresa__r.name}" />
@@ -160,7 +160,7 @@
                             <apex:selectOption itemLabel="No" itemValue="N" />
                         </apex:selectList>
                         
-                        <apex:inputField value="{!Afiliacion.DebidaDiligencia__c }" />
+                        <apex:outputField value="{!Afiliacion.DebidaDiligencia__c }" />
                         <apex:inputField value="{!Afiliacion.Comentarios__c}" />
                         
                     </apex:pageBlockSection>

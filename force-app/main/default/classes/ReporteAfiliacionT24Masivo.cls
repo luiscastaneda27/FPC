@@ -1042,7 +1042,6 @@ global without sharing class ReporteAfiliacionT24Masivo {
             //system.debug('listaEnviar'+ Enviar);  
             //apiReporteT24.guardarT24(Enviar);
             string csharp=string.valueOf(apiReporteT24.guardarT24(Enviar)); 
-            System.debug('Primera prueba: '+agregarRC);
             if(agregarRC == 'Si'){
                 controladorAfiliacionClientesCargados.crearAfilaicionT24(Json.serialize(rellenoTabla));
             }

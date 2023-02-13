@@ -3,11 +3,12 @@
     <fullName>All</fullName>
     <columns>Cliente__c</columns>
     <columns>Enviado__c</columns>
+    <columns>Grupo__c</columns>
     <filterScope>Everything</filterScope>
     <filters>
         <field>Cliente__c</field>
         <operation>equals</operation>
-        <value>ANDREA IVETTE ROMERO SOTO,GRAZIAMARIA 2 MURILLO CASTRO,STEFFANY ALMENDARES RIVAS</value>
+        <value>ANDREA IVETTE ROMERO SOTO,GRAZIAMARIA 2 MURILLO CASTRO,STEFFANY ALMENDARES RIVAS,JOSE RAMON BARAHONA ASEJO,ELIAS JACOBO CASTILLO CHAVEZ</value>
     </filters>
     <label>Todos</label>
 </ListView>

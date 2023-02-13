@@ -5,6 +5,15 @@ public class EstadosDeCuenta {
     		try{
                 system.debug('Entró en método enviarCorreos');
                
+                String urlSite = claseUtilPlanillas.urlSysde('EstadosCuenta');
+                
+                StaticResource staticResource = [SELECT Id, SystemModStamp, Name
+                                                 FROM StaticResource 
+                                                 WHERE Name = 'CintilloPortadaEDC'
+                                                 LIMIT 1];
+                String urlResource = 'resource/' + String.valueOf(staticResource.SystemModStamp.getTime())+ '/' + staticResource.Name;
+
+                
                 Date fechaHoy = Date.Today();
     			String queryCorreo = 'Select Cuerpo__c,DeveloperName From Correo_EDC__mdt Where DeveloperName in ';                
     			list<classECMensual> respuesta = new list<classECMensual>();
@@ -77,8 +86,11 @@ public class EstadosDeCuenta {
                        }
                    }
 				}
+                System.debug(urlSite+'---'+urlResource);
                 Map<String, String> mapBodyEmail = new Map<String, String>();
                 for(Correo_EDC__mdt item : dataBase.query(queryCorreo)){
+                    item.Cuerpo__c = item.Cuerpo__c.replace('[getSite]', urlSite);
+                    item.Cuerpo__c = item.Cuerpo__c.replace('[getCintillo]', urlResource);
                     mapBodyEmail.put(item.DeveloperName, item.Cuerpo__C);
                 }
 			

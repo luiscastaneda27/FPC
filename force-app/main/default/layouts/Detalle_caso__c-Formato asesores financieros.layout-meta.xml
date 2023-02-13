@@ -243,6 +243,10 @@
                 <behavior>Edit</behavior>
                 <field>Monto_Pignorar_Refinanciamiento__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FPC_TipoPrestamo__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

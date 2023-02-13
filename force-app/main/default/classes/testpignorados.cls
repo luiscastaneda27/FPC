@@ -1,4 +1,4 @@
-@isTest
+@isTest (SeeAllData = FALSE)
 public class testpignorados {
     
     static testMethod void controllerpignorados()

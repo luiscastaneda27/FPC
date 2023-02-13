@@ -105,9 +105,7 @@ public class ControladorReporteCalidadOperacionesFC {
             for(aSysdeReporteCalidad.ConsultaCliente respuesta: listRespuesta){
                 if(respuesta.identificacion != null && !mapClientes.containsKey(respuesta.Identificacion.replace('-','')+respuesta.numCuenta)
                   && listAgenciasFicopen.contains(respuesta.AGN)){
-                      //asesor = new Oficial_X_Asesor__c();
-                      respuesta.asesor = mapAsesoresPremier.get(respuesta.asesor);
-                      //asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();
+                      Oficial_X_Asesor__c asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();
                       
                       Afiliacion = new Reporte_calidad__C ();
                       afiliacion.Documentacion_Recibida__c ='S';
@@ -131,8 +129,8 @@ public class ControladorReporteCalidadOperacionesFC {
                       afiliacion.FATCA__c =(respuesta.fatca == 'N' || respuesta.fatca == null || respuesta.fatca == '') ? 'N' : 'S'; 
                       afiliacion.WAIVER__c = (respuesta.waiver == 'N' || respuesta.waiver == null || respuesta.waiver == '') ? 'N' : 'S';
                       
-                      //afiliacion.Codigo_Asesor_Comercial__c = respuesta.asesor;
-                      //afiliacion.Asesor_Comercial__c = asesor.Asesor__r.name;
+                      afiliacion.Codigo_Asesor_Comercial__c = respuesta.asesor;
+                      afiliacion.Asesor_Comercial__c = asesor.Asesor__r.Name;
                       //Afiliacion.Codigo_Oficial_SAC__c = asesor.Codigo_Oficial_SAC__c;
                       //afiliacion.Oficial_SAC__c =  asesor.Oficial_SAC__r.name;
                       //afiliacion.OficialOperaciones__c = asesorOperaciones.Asesor__r.Name;

@@ -22,10 +22,12 @@ public class ControlorReporteCalidadPenFisSac {
             'Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode,DebidaDiligencia__c ,'+
             'Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,SubEstadoRCSF__c,'+
             'Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,'+
-            'Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C '+
+            'Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__c '+
             'Where SubEstadoRCSF__c = \'PF\' ';
         query += perfil == 'SAC' ? 'and Codigo_Oficial_SAC__c = \'' + usuario + '\' ' : 'and Codigo_Asesor_Comercial__c = \'' + usuario + '\' ';
         query += 'order by LastModifiedDate desc limit 950';
+         System.debug(perfil);
+        System.debug(perfil == 'SAC' + ' Query: '+query.split('Where')[1]);
         for(Reporte_calidad__c item: DataBase.query(query)){
             item.Enviar_Sac__c = false;
             listAfiliaciones.add(item);

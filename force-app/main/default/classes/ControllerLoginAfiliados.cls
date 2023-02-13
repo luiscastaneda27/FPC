@@ -337,17 +337,17 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
     
     public void RCBFH(){
         Desactivartab();
-        pagina = 'vfReporteCalidad_bfh_pm_fic?usuario='+usuario+'&idPantalla=BFK';
+        pagina = 'vfReporteCalidad_BFH_PM_FIC?usuario='+usuario+'&idPantalla=BFK';
     }
     
     public void RCPM(){
         Desactivartab();
-        pagina = 'vfReporteCalidad_bfh_pm_fic?usuario='+usuario+'&idPantalla=PM';
+        pagina = 'vfReporteCalidad_BFH_PM_FIC?usuario='+usuario+'&idPantalla=PM';
     }
     
     public void RCFIC(){
         Desactivartab();
-        pagina = 'vfReporteCalidad_bfh_pm_fic?usuario='+usuario+'&idPantalla=FC';
+        pagina = 'vfReporteCalidad_BFH_PM_FIC?usuario='+usuario+'&idPantalla=FC';
     }
     
     public void EKS(){
@@ -362,7 +362,7 @@ Numcuentas.add(resultado[j].cuentas[i].cuenta);
     
     public void AFC(){
         Desactivartab();
-        pagina ='vfAfiliacionficopen?usuario='+usuario;
+        pagina ='vfAfiliacionFicopen?usuario='+usuario;
     }
     
     public void ABFK(){

@@ -327,6 +327,7 @@ public class ControllerPantallaConsultaRezagos {
                 apor.Monto = ListRezagos[count].montoRezago;  
                 apor.ComisionSI = 'N';
                 apor.rezago = 'S';
+                
                 system.debug('ResultadoEnviado: '+apor);
                 
                 classAportes_Conciliacion resultado = ControllerAPICONCILIACION.guardarAporte(apor);

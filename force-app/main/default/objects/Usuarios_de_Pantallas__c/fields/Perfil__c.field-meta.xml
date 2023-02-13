@@ -46,6 +46,21 @@
                 <default>false</default>
                 <label>Supervisor SAC</label>
             </value>
+            <value>
+                <fullName>OSP</fullName>
+                <default>false</default>
+                <label>Oficial Sr. de Proyectos</label>
+            </value>
+            <value>
+                <fullName>JO</fullName>
+                <default>false</default>
+                <label>Jefe Operaciones</label>
+            </value>
+            <value>
+                <fullName>OO</fullName>
+                <default>false</default>
+                <label>Oficial de Operaciones</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -147,7 +147,7 @@
                         <apex:inputField value="{!Afiliacion.Procedencia__c}" />
                         
                         <apex:inputField value="{!Afiliacion.Addendum__c}" />
-                        <apex:outputText ></apex:outputText>
+                        <apex:outputField value="{!Afiliacion.Numero_Cuenta__c}" />
                         
                         <apex:inputText label="Buscar Empresa" value="{!buscarEmpresa}" >
                             <apex:actionSupport event="onchange" action="{!BuscarEmpresa}" status="status" reRender="idPageBlock" />

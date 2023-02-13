@@ -578,29 +578,30 @@ public without sharing class ControladorCasosPortalAutogestion {
                         }     
                     }  
                     if((detalleCaso.Nuevo_canal_aporte__c == 'TA' && detallecaso.Tipo_Operacion__c == 'A3') || test.isRunningTest()) {
-                        System.debug('Cambio de Canal de Aporte');
+                        System.debug('Cambio de Canal de Aporte'); System.debug('Entra 1');
+                        solicitud = new SolicitudCaso();
                         updateCase.wrapperClass wc = new updateCase.wrapperClass();
                         wc = updateCase.validarIdentidad(String.valueOf(caso.Id), detalleCaso.N_Cuenta_Bancaria__c, caso.Account.Identificacion__c);
-                        System.debug('validar Identidad: '+wc);
+                        System.debug('validar Identidad: '+wc.DAU_Identidad);
                         caso.DAU_Identidad__c = wc.DAU_Identidad;
                         caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
                         caso.DAU_aprobacion__c = wc.DAU_aprobacion;
                         //caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas; 
-                        solicitud = new SolicitudCaso();
-                        if(wc.DAU_Identidad == cuenta.Cliente__r.Identificacion__c) {
-                            if(solicitud.solicitudExitosa) {
-                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));
+                        System.debug('Cliente Iden: '+cuenta.Cliente__r.Identificacion__c);
+                        if(wc.DAU_Identidad != Null) { System.debug('Entra 2');
+                            //if(solicitud.solicitudExitosa) { System.debug('Entra 3');
                                 caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro'; caso.Status = 'Cerrado';
                                 solicitud = AFPCCasos.upsertCaso(caso);
-                            }else{
+                            if(solicitud.solicitudExitosa) { System.debug('Entra 3');
+                                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Su gestion fue ingresada con éxito.'));                                
+                            }else{ System.debug('Entra 4');
                                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Se ha producido un error al guardar el caso.'));
                             }
-                        } else {
-                            insertDetalle = false;
+                        } else { System.debug('Entra 5');
+                            //insertDetalle = false;
                             //database.delete(caso,false);
                             caso.Status = 'No Aplica';
                             caso.Description = 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.';
-                            solicitud = new SolicitudCaso();
                             solicitud = AFPCCasos.upsertCaso(caso);
                             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Por tu seguridad, nuestros canales digitales solo permiten débitos a tarjetas de crédito y cuentas de ahorro de Banco Ficohsa. Si deseas afiliar tarjetas de crédito de otros bancos, puedes hacerlo visitando cualquier Agencia Ficohsa.'));
                         }

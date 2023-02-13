@@ -35,7 +35,7 @@
                         </apex:facet>
                     </apex:actionStatus>
                     <div style="text-align : center; font-size:25px; color:#53c7dc; font-weight:bold;">
-                        Afiliación de Clientes {!IF(tipoPantalla = 'BFK', 'BFH', IF(tipoPantalla == 'PM', 'Premier', IF(tipoPantalla == 'FC','Ficopen', IF(tipoPantalla == 'TF','Tarjeta Futura','Televentas'))))}
+                        Afiliación de Clientes {!IF(tipoPantalla = 'BFK', 'BFH', IF(tipoPantalla == 'PM', 'Premier', IF(tipoPantalla == 'FCA','Ficopen', IF(tipoPantalla == 'TF','Tarjeta Futura','Televentas'))))}
                     </div>
                     <br/><br/>
                 <apex:pageBlock id="idPageBlock" >
@@ -154,7 +154,7 @@
                        <apex:inputField value="{!Afiliacion.Procedencia__c}" />
                        
                        <apex:inputField value="{!Afiliacion.Addendum__c}" />
-                       <apex:outputText ></apex:outputText>
+                       <apex:outputText value="{!Afiliacion.Numero_Cuenta__c}"></apex:outputText>
                        
                        <apex:inputText label="Buscar Empresa" value="{!buscarEmpresa}" >
                             <apex:actionSupport event="onchange" action="{!BuscarEmpresa}" status="status" reRender="idPageBlock" />

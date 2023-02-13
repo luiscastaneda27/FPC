@@ -67,8 +67,11 @@ public class testaSysdeReporteCalidad {
         c.tipoFondo= '';
         c.asesor= '';
         
-        
+        Reporte_calidad__C RC = new Reporte_calidad__C();
+        RC.Numero_Cuenta__c = '36139';
+        insert RC;
         aSysdeReporteCalidad.infoClienteCuenta('');
+        aSysdeReporteCalidad.actualizarCodCausa();
         
     }
     

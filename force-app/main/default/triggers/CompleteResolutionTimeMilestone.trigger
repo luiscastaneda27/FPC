@@ -124,7 +124,7 @@ trigger CompleteResolutionTimeMilestone on Case (after Insert, after update) {
                     if(c.Id != null)
                     caseId.add(c.Id);
                     if(c.Owner.Profile.Name == 'PortalAutoGestion Perfil') {
-                		updateCase.processCasePortalAuto(caseId);
+                        updateCase.processCasePortalAuto(caseId);
                     }    
                 }   
                

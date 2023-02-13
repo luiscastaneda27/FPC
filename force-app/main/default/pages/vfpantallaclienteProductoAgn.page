@@ -2110,7 +2110,8 @@
                                                             <abbr class="slds-required" title="required"></abbr> NO
                                                         </label>
                                                         <label class="slds-checkbox">
-                                                            <apex:inputcheckbox onclick="OcultResidenNO()" disabled="{!OcultarResidenciaNO}" value="{!ES_Residente_no}" id="ReNO" styleclass="slds-input"
+                                                            <apex:inputcheckbox onclick="OcultResidenNO()" disabled="{!OcultarResidenciaNO}" value="{!ES_Residente_no
+                                                                                                                                                    }" id="ReNO" styleclass="slds-input"
                                                             />
                                                             <span class="slds-checkbox--faux" style=" width:15px; margin-left:1px"></span>
                                                         </label>
@@ -2530,10 +2531,9 @@
                                                         <label class="slds-form-element__label" for="inputSample">
                                                             <abbr class="slds-required" title="required"></abbr> Correo
                                                         </label>
-                                                        <apex:inputText value="{!pcmailempl}" id="CorreoDatosEmpleador" onblur="CorreoEmpleValidar()" styleclass="slds-input" style="height:10px; width:462px; margin-left:56px;  "
+                                                        <apex:inputText value="{!pcmailempl}" id="CorreoDatosEmpleador" onblur="CorreoEmpleValidar()" styleclass="slds-input" style="height:10px; width:462px; margin-left:56px;"
                                                         />
-
-
+                                                        
                                                         <br/>
                                                         <br/>
                                                     </td>

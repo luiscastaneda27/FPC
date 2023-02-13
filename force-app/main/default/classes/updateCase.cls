@@ -1,11 +1,12 @@
 public class updateCase {
         
     public class wrapperClass {
-       public String DAU_Identidad {get;set;}
-       public String DAU_No_Cuenta {get;set;}
-       public Boolean DAU_aprobacion {get;set;} 
-       public String Respuesta_SF_Tarjetas {get;set;}
-       public String Description {get;set;}
+        public String DAU_Identidad {get;set;}
+        public String DAU_No_Cuenta {get;set;}
+        public Boolean DAU_aprobacion {get;set;} 
+        public String Respuesta_SF_Tarjetas {get;set;}
+        public String Description {get;set;}
+        public String DAU_Name  {get;set;}
     }
     
     public static boolean IsAfilationAGN {get;set;}
@@ -37,7 +38,7 @@ public class updateCase {
     public static void createDetail(List<Id> detail, set<Id> casoOrigen) {
         try {
             List<Case> caso = [Select Id,Status,DAU_Tarjeta_de_Sysde__c,Account.Identificacion__c,DAU_Identidad__c,DAU_No_Cuenta__c,
-                               DAU_aprobacion__c From Case Where Id In: detail Limit 1];
+                               DAU_aprobacion__c,Tipo_de_Operacion__c From Case Where Id In: detail Limit 1];
             
             List<Detalle_caso__c> detcaso = [Select Id,Caso__c,Cuenta__c,Cuenta__r.Codigo__c,banco__c,Cuenta__r.Forma_Aportacion__c 
                                              From Detalle_caso__c Where Caso__c In: casoOrigen Limit 1]; 
@@ -54,7 +55,7 @@ public class updateCase {
             dcase.add(new Detalle_caso__c(Caso__c = caso[0].Id,Cuenta__c = detcaso[0].Cuenta__c,Accion__c = 'A2',Tipo_Operacion__c = 'A7',Tipo_saldo_modificar2__c = '10',Banco__c=banco));
             
             System.debug('Se actualiza el caso automático de Cancelación');
-            if(banco == '28') { // Banco Ficohsa
+            if(banco == '28' || caso[0].Tipo_de_Operacion__c == 'A1') { // Banco Ficohsa
                 caso[0].DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(caso[0].Id, detcaso[0].Cuenta__r.Codigo__c);
                 caso[0].DAU_aprobacion__c = true;
                 System.debug('caso[0].Id: '+caso[0].Id);
@@ -291,7 +292,7 @@ public class updateCase {
         wrapperClass wc = new wrapperClass();
         
         List<Case> caso = new List<Case>();
-        caso = [Select Id, Status, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c From case where Id =: casoId /*and Status <> 'Cerrado and DAU_Identidad__c = null'*/];
+        caso = [Select Id, Status, DAU_aprobacion__c, DAU_Identidad__c, DAU_No_Cuenta__c From case where Id =: casoId];
         
         if(!caso.isEmpty()) {
        
@@ -305,38 +306,46 @@ public class updateCase {
             fields.diaCobro = '';
             fields.montoDebito = '';
             
-            FieldsBankManagement resultJson = ControllerBankManagement.Execute(fields);  
+            FieldsBankManagement resultJson = ControllerBankManagement.Execute(fields);
             System.debug('val: '+resultJson.CARD_HOLDER_LEGAL_ID);
             System.debug('val2: '+resultJson.ACCOUNT_HOLDER_LEGAL_ID);
             System.debug('val3: '+resultJson.ACCOUNT_NUMBER);
             System.debug('val4: '+resultJson.CARD_STATUS);
-                     
-            if(caso[0].Status <> 'Cerrado') {
+        
+            if(caso[0].Status <> 'Cerrado') { 
                 if(resultJson.CARD_HOLDER_LEGAL_ID == Null) { 
                     System.debug('Error: No se obtuvo la identidad');
                     wc.DAU_Identidad = 'Error: No se obtuvo la identidad';
-                    wc.DAU_aprobacion = false;
-                } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
+                    wc.DAU_aprobacion = true;
+                } /*else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
                     System.debug('Error: CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID');
                     wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID; 
                     wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER; 
                     wc.Description = 'Error: CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID';
                     wc.DAU_aprobacion = true;  
+                } */
+                else if(resultJson.CARD_STATUS == '10 - Cuenta Normal') { 
+                    /*if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
+                          System.debug('Tarjeta Normal');
+                          wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID; 
+                          wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER; 
+                          wc.DAU_aprobacion = true;
+                    } else {*/
+                        //System.debug('Tarjeta dada de baja');
+                        System.debug('Tarjeta Normal: '+resultJson.CARD_STATUS);
+                        wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID;  
+                        wc.Description = 'Card Status: '+resultJson.CARD_STATUS;
+                        wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                        wc.DAU_aprobacion = false;
+                        System.debug('Los valores son: '+wc);
+                    //}  
                 } else {
-                    if(resultJson.CARD_STATUS == '20 - TARJETA NORMAL') {
-                        if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
-                            System.debug('Tarjeta Normal');
-                            wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID; 
-                            wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER; 
-                            wc.DAU_aprobacion = true;
-                        } else {
-                            System.debug('Tarjeta dada de baja');
-                            wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID;  
-                            wc.Description = 'Tarjeta dada de baja';
-                            wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
-                            wc.DAU_aprobacion = true;
-                        }  
-                    }    
+                	System.debug('Tarjeta dada de baja' +resultJson.CARD_STATUS);
+                    wc.DAU_Identidad = resultJson.CARD_HOLDER_LEGAL_ID;  
+                    wc.Description = 'Tarjeta dada de baja '+resultJson.CARD_STATUS;
+                    wc.DAU_No_Cuenta = resultJson.ACCOUNT_NUMBER;
+                    wc.DAU_aprobacion = true;
+                    wc.DAU_Name = resultJson.ACCOUNT_HOLDER_NAME;  
                 }    
             }
         }   
@@ -378,7 +387,7 @@ public class updateCase {
                 caso.DAU_aprobacion__c = false;  
                 //solicitud = AFPCCasos.upsertCaso(caso);
                 update caso;
-            } else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
+            } /*else if(resultJson.CARD_HOLDER_LEGAL_ID != resultJson.ACCOUNT_HOLDER_LEGAL_ID) {
                 System.debug('CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID');
                 caso.DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
                 caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
@@ -386,44 +395,43 @@ public class updateCase {
                 caso.Description = 'Error: CARD_HOLDER_LEGAL_ID diferente a ACCOUNT_HOLDER_LEGAL_ID';
                 //solicitud = AFPCCasos.upsertCaso(caso);
                 update caso;               
+            }*/ 
+            else if(resultJson.CARD_STATUS == '10 - Cuenta Normal') {
+                //if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
+                System.debug('Tarjeta Normal');
+                caso.DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
+                caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
+                caso.DAU_aprobacion__c = false; caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro';
+                if(IsAfilationAGN == true) {
+                    caso.Status = 'Cerrado';
+                }    
+                update Caso;
+                //solicitud = AFPCCasos.upsertCaso(caso);
+                if(caso.Respuesta_SF_Tarjetas__c == Null && IsAfilationAGN != true){
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_SegundoServicio__c = True));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);
+                }                      
+                if(caso.Respuesta_SF_Tarjetas__c != Null && IsAfilationAGN != true && caso.Respuesta_SF_Tarjetas__c.contains('éxito')) {
+                    List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_CuartoServicio__c = True));
+                    // Call method to publish events
+                    List<Database.SaveResult> results = EventBus.publish(Logs);    
+                }
+                /*} else {
+                    System.debug('Las identidades son distintas');
+                    caso.DAU_Identidad__c = 'Error: Las identidades son distintas: '+resultJson.CARD_HOLDER_LEGAL_ID;
+                    caso.DAU_aprobacion__c = true; caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER; solicitud = AFPCCasos.upsertCaso(caso);
+                    //if(solicitud.solicitudExitosa){
+                    //    solicitud = AFPCCasos.envioAprobacion(caso.id, 'AumentoDisminucion');
+                    //}                     
+                }*/  
             } else {
-                if(resultJson.CARD_STATUS == '20 - TARJETA NORMAL') {
-                    //if(resultJson.CARD_HOLDER_LEGAL_ID == pcnroid) {
-                    System.debug('Tarjeta Normal');
-                    caso.DAU_Identidad__c = resultJson.CARD_HOLDER_LEGAL_ID;
-                    caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER;
-                    caso.DAU_aprobacion__c = true; caso.Archivo_Adjunto__c = true; caso.Reason = 'Otro';
-                    if(IsAfilationAGN == true) {
-                        caso.Status = 'Cerrado';
-                    }    
-                    update Caso;
-                    //solicitud = AFPCCasos.upsertCaso(caso);
-                    if(caso.Respuesta_SF_Tarjetas__c == Null && IsAfilationAGN != true){
-                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_SegundoServicio__c = True));
-                        // Call method to publish events
-                        List<Database.SaveResult> results = EventBus.publish(Logs);
-                    }                      
-                    if(caso.Respuesta_SF_Tarjetas__c != Null && IsAfilationAGN != true && caso.Respuesta_SF_Tarjetas__c.contains('éxito')) {
-                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_CuartoServicio__c = True));
-                        // Call method to publish events
-                        List<Database.SaveResult> results = EventBus.publish(Logs);    
-                    }
-                    /*} else {
-                        System.debug('Las identidades son distintas');
-                        caso.DAU_Identidad__c = 'Error: Las identidades son distintas: '+resultJson.CARD_HOLDER_LEGAL_ID;
-                        caso.DAU_aprobacion__c = true; caso.DAU_No_Cuenta__c = resultJson.ACCOUNT_NUMBER; solicitud = AFPCCasos.upsertCaso(caso);
-                        //if(solicitud.solicitudExitosa){
-                        //    solicitud = AFPCCasos.envioAprobacion(caso.id, 'AumentoDisminucion');
-                        //}                     
-                    }*/  
-                } else {
-                	System.debug('Tarjeta dada de baja');
-                    caso.Description = 'Tarjeta dada de baja'; 
-                    Update Caso;
-                }  
-            }    
+             	System.debug('Tarjeta dada de baja' +resultJson.CARD_STATUS);
+                caso.Description = 'Tarjeta dada de baja '+resultJson.CARD_STATUS; 
+                Update Caso;
+            }      
         }   
     }
     
@@ -448,7 +456,7 @@ public class updateCase {
                     solicitud = AFPCCasos.envioAprobacion(caso.id, 'AumentoDisminucion');
                 }
             } else {
-                caso.Archivo_Adjunto__c = true; caso.Status = 'Cerrado'; caso.Aprobado__c = True; update caso; //solicitud = AFPCCasos.upsertCaso(caso);
+            	caso.Archivo_Adjunto__c = true; caso.Status = 'Cerrado'; caso.Aprobado__c = True; update caso; //solicitud = AFPCCasos.upsertCaso(caso);
             }
         } else {
             User us = [Select Id,Name,Zona__c From User Where Id =: pcpromotor];

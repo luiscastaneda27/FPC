@@ -131,7 +131,7 @@ Enviar
                         <apex:inputField value="{!Afiliacion.WAIVER__c}" />
                         
                         <apex:inputField value="{!Afiliacion.PEP__c}" />
-                        <apex:outputField value="{!Afiliacion.Procedencia__c}" />
+                        <apex:inputField value="{!Afiliacion.Procedencia__c}" />
                         
                         <apex:inputField value="{!Afiliacion.Addendum__c}" />
                         <apex:outputField label="Nombre de la Empresa" value="{!Afiliacion.Empresa__r.name}" />
@@ -172,7 +172,7 @@ Enviar
                             <apex:selectOption itemLabel="No" itemValue="N" />
                         </apex:selectList>
                         
-                        <apex:outputField value="{!Afiliacion.DebidaDiligencia__c}" />
+                        <apex:inputField value="{!Afiliacion.DebidaDiligencia__c}" />
                         <apex:selectList value="{!Afiliacion.SubEstadoRCSF__c}" size="1" label="Sub Estado RC SF" > 
                             <apex:selectOption itemLabel="Nuevo SAC" itemValue="NS" />
                             <apex:selectOption itemLabel="Nuevo Comercial" itemValue="NC" />

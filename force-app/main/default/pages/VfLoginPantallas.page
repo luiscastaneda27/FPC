@@ -263,16 +263,21 @@
                                                                 <apex:param value="vfConfiguracionSLARC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
                                                         </li>
-                                                        <!--li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
-                                                            <a href="javascript:AFC();" role="menuitem" tabindex="-1" title="Reporte de Calidad Individuales">
+                                                        <li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
+                                                            <a href="javascript:AFC();" role="menuitem" tabindex="-1" title="Afiliación Ficopen">
                                                                 <span class="slds-truncate" >Afiliación Ficopen</span>
                                                             </a>
-                                                        </li-->
+                                                        </li>
                                                         <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" >
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Ficopen - Agencia">
-                                                                <apex:param value="vfReporteCalidadFicopenSac?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                                <apex:param value="vfReporteCalidadFicopenSac?usuario={!usuario}&pantalla=FCA" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
                                                         </li>
+                                                        <!--li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" >
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Ficopen - Sac">
+                                                                <apex:param value="vfReporteCalidadFicopenSac?usuario={!usuario}&pantalla=FCS" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li!-->
                                                         <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}">
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Tarjeta Futura">
                                                                 <apex:param value="vfReporteCalidadAgenciasTF?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
@@ -280,7 +285,7 @@
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation"  style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}">
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Pendiente Físico">
-                                                                <apex:param value="vfReporteCalidadPenFisSac?usuario={!usuario}?pefil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                                <apex:param value="vfReporteCalidadPenFisSac?usuario={!usuario}&perfil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
                                                         </li>
                                                         <!--li class="slds-dropdown__item" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" role="presentation">
@@ -318,7 +323,7 @@
                                                                 <span class="slds-truncate" >Reporte de Calidad Premier</span>
                                                             </a>
                                                         </li>
-                                                         <li class="slds-dropdown__item" role="presentation" style="display:{!IF(AND(perfil != 'SGS', perfil != 'SS'), 'block;','none;')}" >
+                                                         <li class="slds-dropdown__item" role="presentation" >
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Reporte SLA">
                                                                 <apex:param value="vfReporteCalidadSLA?usuario={!usuario}&perfil=SAC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
@@ -376,7 +381,7 @@
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation">
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Afiliación - Ficopen" title="Afiliación - Ficopen">
-                                                                <apex:param value="vfAfiliacionBFH?usuario={!usuario}&pantalla=FC" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                                <apex:param value="vfAfiliacionBFH?usuario={!usuario}&pantalla=FCA" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
                                                         </li>
                                                         <li class="slds-dropdown__item" role="presentation">
@@ -459,6 +464,11 @@
                                                          <li class="slds-dropdown__item" role="presentation">
                                                             <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Tarjeta Futura">
                                                                 <apex:param value="vfReporteCalidadAgenciasTFOpe?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
+                                                            </apex:commandLink>
+                                                        </li>
+                                                        <li class="slds-dropdown__item" role="presentation">
+                                                            <apex:commandLink action="{!clicPantallasRC}" styleClass="slds-navigation-list slds-text-link--reset" value="Reporte SLA">
+                                                                <apex:param value="vfReporteCalidadSLA?usuario={!usuario}" AssignTo="{!nombreReporteCalidad}" name="APV1" />
                                                             </apex:commandLink>
                                                         </li>
                                                     </ul>

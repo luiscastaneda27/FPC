@@ -16,7 +16,7 @@ const columns = [
     //{ label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
     { label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
     { label: 'Sexo', fieldName: 'sexo', type: 'text' },
-    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimientoShow', type: 'date' },
+    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimiento', type: 'date' },
     { label: 'Parentesco', fieldName: 'parentescoLabel', type: 'text' }
 ];
 const columnsBeneficiarios = [
@@ -27,7 +27,7 @@ const columnsBeneficiarios = [
     { label: 'Primer Apellido', fieldName: 'primerApellido', type: 'text' },
     { label: 'Segundo Apellido', fieldName: 'segundoApellido', type: 'text' },
     { label: 'Porcentaje', fieldName: 'porcentaje', type: 'text' },
-    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimientoShow', type: 'date' },
+    { label: 'Fecha de Nacimiento', fieldName: 'fechaNacimiento', type: 'date' },
     { label: 'Sexo', fieldName: 'sexo', type: 'text' },
     { label: 'Tipo Identificacón', fieldName: 'tipoIdentificacionLabel', type: 'text' },
     { label: 'Identificacón', fieldName: 'identificacion', type: 'text' },
@@ -79,7 +79,7 @@ export default class Beneficiarios extends LightningElement {
            if(response.listCuentas.length > 0){
                 this.mapPrimeraCuenta();
             }
-           if(response.estado != 'Nuevo'){
+           if(response.estado != 'Nuevo' && response.estado != 'Devuelto' ){
                this.columns = columnsBeneficiarios;
                this.mostrarBoton = false;
            }
@@ -105,11 +105,9 @@ export default class Beneficiarios extends LightningElement {
         this.data.esBeneficiarioDirecto = true;
         this.data.tituloPop = 'Actualización de Beneficiarios Directos - ' + this.data.cuentaSelecionadaLabel;
         this.data.listBeneficiarios = this.data.listBeneficiariosDirec;
-        for(let i=0; i<this.data.listBeneficiarios.length; i++){
-        }
         this.data.titulo = 'Beneficiarios Directos ('+this.data.listBeneficiarios.length+')';
     }
-    onclickActualizarCont(){ 
+    onclickActualizarCont(){
         this.popUpdate = true;
         this.inputDisabled = false;
         this.primerPasoRuta();
@@ -162,7 +160,7 @@ export default class Beneficiarios extends LightningElement {
         const rowId = event.target.name;
         const valor = event.target.value;
         let posicion = this.buscarBeneficiario(rowId);
-        this.data.listBeneficiarios[posicion].fechaNacimiento = valor.trim() != '' ? valor.trim() : null;
+        this.data.listBeneficiarios[posicion].fechaNacimiento = valor;
     }
     handleChangeSexo(event){
         const rowId = event.target.name;
@@ -364,6 +362,9 @@ export default class Beneficiarios extends LightningElement {
            this.showSpinner = false;
            this.popUpdate = false;
            this.pushMessage('Exitoso', 'success', 'Datos guardados exitosamente.');
+           setTimeout(() => {
+            eval("$A.get('e.force:refreshView').fire();");
+            }, 2000);
         }).catch(error => {
             this.showSpinner = false;
             this.pushMessage('Error', 'error', 'Ha ocurrido un error, por favor contacte a su admin.');

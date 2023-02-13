@@ -13,5 +13,10 @@
     <columns>Comisi_n_por_Aporte__c</columns>
     <columns>Comisi_n_Sobre_Saldo__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Codigo__c</field>
+        <operation>equals</operation>
+        <value>FPC2R,FPC2N</value>
+    </filters>
     <label>Todos</label>
 </ListView>

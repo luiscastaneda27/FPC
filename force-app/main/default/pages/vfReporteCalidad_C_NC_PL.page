@@ -142,8 +142,8 @@
                         <apex:inputField value="{!Afiliacion.Addendum__c}" />
                         <apex:outputField label="Nombre de la Empresa" value="{!Afiliacion.Empresa__r.name}" />
                         
-                        <apex:outputField rendered="{!Afiliacion.Numero_Cuenta__c != null}" value="{!Afiliacion.Numero_Cuenta__c}" />
-                        <apex:outputText rendered="{!Afiliacion.Numero_Cuenta__c != null}" />
+                        <apex:outputField value="{!Afiliacion.Numero_Cuenta__c}" />
+                        <apex:outputText />
                         
                         <apex:outputField value="{!Afiliacion.Subproducto__r.name}" />
                         <apex:outputField value="{!Afiliacion.Subproducto__r.producto__r.name}"  />
@@ -174,8 +174,8 @@
                         </apex:selectList>
                         
                         
-                        <apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" rendered="{!afiliacion.Tipo_Afiliacion__c ='YC'}"  />
-                        <!--apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
+                        <!--apex:inputField value="{!Afiliacion.Numero_Cuenta__c}" rendered="{!afiliacion.Tipo_Afiliacion__c ='YC'}"  />
+                        <apex:selectList value="{!Afiliacion.ExpedienteFisicoRecibido__c }" size="1" label="Expediente en físico recibido " > 
                             <apex:selectOption itemLabel="Si" itemValue="S" />
                             <apex:selectOption itemLabel="No" itemValue="N" />
                         </apex:selectList-->

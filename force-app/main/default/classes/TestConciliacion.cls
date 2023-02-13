@@ -1,4 +1,4 @@
-@isTest //(seeAllData=true)
+@isTest 
 public class TestConciliacion {
 
     static testMethod void ControllerConciliacionAprobacionM(){

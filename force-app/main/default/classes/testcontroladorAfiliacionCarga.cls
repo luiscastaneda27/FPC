@@ -47,7 +47,16 @@ public class testcontroladorAfiliacionCarga {
         empresa.Cliente_Unico_Banco__c = '123456';
         insert empresa;
         
-        cuentas__C cuenta = new cuentas__C ();
+        cuentas__C  cuenta = new cuentas__C ();
+        cuenta.Cliente__c = empresa.id;
+        cuenta.Activo__c = true;
+        cuenta.Producto__c = producto.Id;
+        cuenta.Subproducto__c = subP.Id;
+        cuenta.Codigo__c = '123456';
+        insert cuenta; 
+        String idCuenta = cuenta.Id;
+        
+        cuenta = new cuentas__C ();
         cuenta.Cliente__c = empresa.id;
         cuenta.Activo__c = true;
         cuenta.Producto__c = producto.Id;
@@ -110,6 +119,7 @@ public class testcontroladorAfiliacionCarga {
         controller.SelectSubProductoPop();
         controller.editar();
         controller.listAfiliaciones[0].enviar_sac__c = true;
+        controller.listAfiliaciones[0].Codigo_Oficial_SAC__c = usuario.Usuario__c;
 		controller.Enviar();
         controller.cerrar();
         controller.EliminarAfiliacion();
@@ -119,7 +129,7 @@ public class testcontroladorAfiliacionCarga {
         controller.accionVacia();
         controller.SelectSubProducto();
         
-        String f= '"Primer Nombre","Segundo Nombre","Primer Apellido","Segundo Apellido","Tipo Identificación","Identificación","Tiene Id","RTN","FATCA","WAIVER","PEP","Procedencia","Addendum","Subproducto","Código Empresa","Reporte de Calidad","Oficial SAC","Formulario Completo","Aplica CS","Comentarios"\n"Luis","Enrique","Castaneda","Donaire","Cédula de Identidad","0303-1994-00043","Si","Si","Si","Si","Si","Si","Si","FI010",123456,"Contributivo","HN17575","Si","Si",';
+        String f= '"Primer Nombre","Segundo Nombre","Primer Apellido","Segundo Apellido","Tipo Identificación","Identificación","Cuenta Colectiva","Tiene Id","RTN","FATCA","WAIVER","PEP","Procedencia","Addendum","Subproducto","Código Empresa","Reporte de Calidad","Oficial SAC","Formulario Completo","Aplica CS","Comentarios"\n"Luis","Enrique","Castaneda","Donaire","Cédula de Identidad","0303-1994-00043","123456","Si","Si","Si","Si","Si","Si","Si","FI010",123456,"Contributivo","HN17575","Si","Si",';
         controladorAfiliacionCarga.subirInformacion(f, usuario.usuario__C);
         
         

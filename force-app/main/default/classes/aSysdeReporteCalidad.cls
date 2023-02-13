@@ -1,5 +1,6 @@
 public class aSysdeReporteCalidad {
     
+    
     public static ConsultaClienteCuenta infoClienteCuenta(String cuenta){
         ConsultaClienteCuenta  respuesta = new ConsultaClienteCuenta ();
         try{
@@ -98,7 +99,7 @@ public class aSysdeReporteCalidad {
             if(!test.isRunningTest()){
                 response = http.send(request); 
             }else{
-                response.setBody('[ { "FECHA_INGRESO": "14-FEB-19", "NUM_FORMULARIO": "2500116310201", "numContrato": "98098", "COD_CLIENTE": "258585", "numCuenta": "95803", "primerNombre": "MARIA ", "segundoNombre": "OLIMPIA ", "primerApellido": "VIJIL ", "segundoApellido": "CONTRERAS ", "tipoIdentificacion": "1", "identificacion": "1707-1984-00037", "RTN": "", "NOMBRE_AGENCIA": "", "AGN": "110000000000", "COD_AGN": "14440", "EMP_AGN": "ROBERTO ISAAC BORJAS FLORES ", "MONEDA": "HNL", "CANAL_APORTE": "TL", "TIPO_CLIENTE": "AFILIACION POR SOLICITUD", "asesor": "HN22258", "codSubProducto": "FPC1O", "waiver": "", "addendum": "", "fatca": "N", "pep": "N", "procedencia": "PAGO DE SEGURO DE VIDA POR FALLECIMIENTO DE HIJO QUE PROVIENE DE INJUPEMP", "tipoFondo": "101", "codEmpresa": "" } ]');
+                response.setBody('[ { "FECHA_INGRESO": "14-FEB-19", "NUM_FORMULARIO": "2500116310201", "numContrato": "98098", "COD_CLIENTE": "258585", "numCuenta": "95803", "primerNombre": "MARIA ", "segundoNombre": "OLIMPIA ", "primerApellido": "VIJIL ", "segundoApellido": "CONTRERAS ", "tipoIdentificacion": "1", "identificacion": "1707-1984-00037", "RTN": "", "NOMBRE_AGENCIA": "", "AGN": "110000000000", "COD_AGN": "14440", "EMP_AGN": "ROBERTO ISAAC BORJAS FLORES ", "MONEDA": "HNL", "CANAL_APORTE": "TL", "TIPO_CLIENTE": "AFILIACION POR SOLICITUD", "asesor": "HN22258", "codSubProducto": "FPC1O", "waiver": "", "addendum": "", "fatca": "N", "pep": "N", "procedencia": "PAGO DE SEGURO DE VIDA POR FALLECIMIENTO DE HIJO QUE PROVIENE DE INJUPEMP", "tipoFondo": "101", "codEmpresa": "" }, { "FECHA_INGRESO": "14-FEB-19", "NUM_FORMULARIO": "2500116310201", "numContrato": "98094", "COD_CLIENTE": "258584", "numCuenta": "95805", "primerNombre": "MARIA ", "segundoNombre": "OLIMPIA ", "primerApellido": "VIJIL ", "segundoApellido": "CONTRERAS ", "tipoIdentificacion": "1", "identificacion": "1707-1984-00037", "RTN": "", "NOMBRE_AGENCIA": "", "AGN": "100000000001", "COD_AGN": "14440", "EMP_AGN": "ROBERTO ISAAC BORJAS FLORES ", "MONEDA": "HNL", "CANAL_APORTE": "TL", "TIPO_CLIENTE": "AFILIACION POR SOLICITUD", "asesor": "HN22258", "codSubProducto": "FPC1O", "waiver": "", "addendum": "", "fatca": "N", "pep": "N", "procedencia": "PAGO DE SEGURO DE VIDA POR FALLECIMIENTO DE HIJO QUE PROVIENE DE INJUPEMP", "tipoFondo": "101", "codEmpresa": "" } ]');
                 response.setStatusCode(200);
             }
             system.debug('Respuesta desde sysde: '+response.getBody());
@@ -150,7 +151,8 @@ public class aSysdeReporteCalidad {
         return respuesta;
     }
     
-    public static string actualizarCodCausa(){
+    @future(callout=true)
+    public static void actualizarCodCausa(){
         string respuesta;
         try{ 
             Http http = new Http();
@@ -166,7 +168,7 @@ public class aSysdeReporteCalidad {
             if(!test.isRunningTest()){
                 response = http.send(request); 
             }else{
-                response.setBody('Proceso capital semilla procesado correctamente');
+                response.setBody('{"ok":true,"descripcion":"Datos consultados correctamente.","datos":[{"cuenta":"36139","causa":"AFILIACION POR SOLICITUD","oficial":"HN21892","modificado":"2023-01-17T16:26:19"}]}');
                 response.setStatusCode(200);
             }
             System.debug('ENdPOINT: '+request.getEndpoint());
@@ -202,11 +204,10 @@ public class aSysdeReporteCalidad {
                          }
                      }
                 Database.update(listAfiliaciones, false);
-            }
+            }            
         }catch(exception ex){
             system.debug('Error: '+ex.getMessage()+ ', Linea: '+ex.getLineNumber());
         }
-        return respuesta;
     }
     
     

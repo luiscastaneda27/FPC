@@ -176,51 +176,16 @@ public class testcontroladorAfilClientesCarga {
         controller.Afiliacion.Numero_Cuenta__c = 'N';
         controller.buscarCuenta();
         
-        
-        
-        //controller.Afiliacion.espediente_completo__C = 'S';
-        
-        
-        /*
-        
-        
-        
-        controller.idAfiliacion = Afiliacion.Id;
-        
-        controller.Afiliacion.name = 'PN';
-        controller.Afiliacion.primer_apellido__C = 'PA';
-        controller.Afiliacion.Tipo_Identificacion__c='1';
-        controller.Afiliacion.Identificacion__c = '12345445';
-        
-        controller.Afiliacion.Tiene_Id__c = 'S';
-        controller.Afiliacion.RTN__c = 'N';
-        controller.Afiliacion.FATCA__c = 'N';
-        controller.Afiliacion.WAIVER__c = 'N';
-        controller.Afiliacion.PEP__c = 'N';
-        controller.Afiliacion.Procedencia__c = 'N';
-        controller.Afiliacion.Addendum__c = 'N';
-        controller.Afiliacion.Tipo_Fondo__c = 'M';
-        controller.Afiliacion.Formulario_Completo__c = 'S';
-        controller.Afiliacion.espediente_completo__C = 'S';
-        
-        //controller.reinicar();
-        controller.agregarAfiliacion();
-        //controller.idAfiliacion = controller.listAfiliaciones[0].id;
-        controller.editar();
-        controller.Enviar();
-        controller.cerrar();
-        controller.EliminarAfiliacion();
-        controller.SelectPopEliminar();
-        //controller.Afiliacion.Identificacion__c = '12345445';
-        controller.ValidacionIdentidad();
-        controller.selectCuenta();
-        controller.guardar();
-        controller.accionVacia();
-        controller.SelectSubProducto();
-        controller.BuscarEmpresa();
-        controller.SelectSubProductoPop();
-        */
-        
+        List<reporteT24__c> listReporte = new List<reporteT24__c>();
+        reporteT24__c reporte = new reporteT24__c();
+		reporte.identificacion__c = '000';
+        reporte.subProducto__c = 'FPC009';
+        reporte.rtnEmpleador__c = '0802-1745-4578';
+        reporte.promotor__c = usuario.Usuario__c;
+        reporte.noEmpleado__c = '12';
+        listReporte.add(reporte);
+        insert listReporte;
+        controladorAfiliacionClientesCargados.crearAfilaicionT24(JSON.serialize(listReporte));
         Test.StopTest();
     } 
 }

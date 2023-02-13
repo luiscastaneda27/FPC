@@ -51,8 +51,6 @@ public class controladorReporteCalidad_C_NC_PL {
                             where Codigo_Oficial_SAC__c =:Usuario and Enviar_Sac__C =true 
                             and (Espediente_Completo__c != 'S' OR(estado__C = 'A' AND Enviar_Afiliacion__C = false))
                             and Reporte_Calidad__c   =:tipoPantalla order by LastModifiedDate desc limit 950];
-        
-       // agregarAfiliacion();
     }
     
     
@@ -199,6 +197,7 @@ public class controladorReporteCalidad_C_NC_PL {
                }
             
             if(afiliacion.Tipo_Afiliacion__c =='YC' || cambioCampos){
+                system.debug('Subproducto__c: '+afiliacion.Subproducto__c);
                 system.debug('Tipo de Fondo: '+afiliacion.Subproducto__r.Tipo_Fondo__c);
                 Compra_Venta_Dolares__mdt  dato = [select Cuenta_Destino__c ,Cuenta_Origen__c ,
                                                    Nivel_Cinco__c , Nivel_Cuatro__c , Nivel_Dos__c ,

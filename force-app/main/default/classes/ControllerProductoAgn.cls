@@ -734,12 +734,12 @@ public without sharing class ControllerProductoAgn {
                 paisNacimiento = fcsd.pcPaisNacimiento;
                 es_Residente = fcsd.ES_Residente == 'S';
                 ES_Residente_no = !es_Residente;
-                if (fcsd.ES_Residente == 'S'){
+                if (fcsd.ES_Residente == 'S'||fcsd.pcFatca == 'S'){
                     pcFATCA = true;
                     MostrarVentanaFATCA();
                 }else{
                     pcFATCA = false;
-                    MostrarVentanaFATCANO();
+                    MostrarVentanaFATCA();
                 }
                 if(fcsd.pdfechasuscripcion!=null)
                 {
@@ -4344,7 +4344,7 @@ paso2Cuerpo = 'slds-hide';
                 if(validaTipoTrab() &&
                    (fechaLabor  == null ||  String.isBlank(llenarNivelIngreso1) ||String.isBlank(ClienteTipoId.Tipo_Empresa__c)  ||
                     String.isBlank(pcNombreempl) || String.isBlank(pcrazonsocialempl) || String.isBlank(pcCargoEmpresaEmpCN)
-                    || String.isBlank(Cliente25.sector_n__c) || String.isBlank(pcmailempl) )){
+                    || String.isBlank(Cliente25.sector_n__c))){
                         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Por Favor Completar los datos de actividad economica.'));
                         return null; 
                     }
@@ -4983,6 +4983,7 @@ return null;
                     //Creacion del usuario sitio WEB
                     CrearUsuarioPortalAutogestion.crearUsuarioWS(pcprimernombre, pcprimerapellido, pcmail, pcnroid, respuesta.numCuenta, pctipoid);
                     aSysdeSincronizador.actializarClienteSysde(respuesta.clienteUnicoBanco);
+                    System.debug('Sincronizacion automatica al crear el cliente Codigo_cliente: '+respuesta.clienteUnicoBanco);
                 }
                 System.debug('paisNacimiento: '+paisNacimiento);
                 update af;
@@ -5111,8 +5112,8 @@ return null;
     
     public pageReference actualizar(){
         try{
-            
-            NacionalidadFatca();
+
+			NacionalidadFatca();
             
             NaturalActualizar naturalEnvio = new NaturalActualizar();
             
@@ -5138,6 +5139,18 @@ return null;
             {
                 naturalEnvio.pcFATCANC = 'N';
             }
+            if(pcFATCA == true)
+            {
+                naturalEnvio.pcFATCA = 'S';
+            } 
+            else
+            {
+                naturalEnvio.pcFATCA = 'N';
+            }
+            
+            System.debug('PEPPP: '+pcPEP);
+            System.debug('pcFATCA3 booleano: '+pcFATCA);
+            System.debug('pcFATCA3 enviado a la base: '+naturalEnvio.pcFATCA);
             naturalEnvio.pctipoid = pctipoid;   
             naturalEnvio.pcnroid = pcnroid;
             naturalEnvio.pcFechaVencimientoCN = fechaVencimiento;
@@ -5492,13 +5505,13 @@ return null;
                 //naturalEnvio = (NaturalActualizar)JSON.deserialize(JSON.serialize(naturalEnvio).toUpperCase(), NaturalActualizar.class);
                 naturalEnvio.pcPaisNacimiento = paisNacimiento;
                 
-                naturalEnvio.pcFATCA = 'N';
+                //naturalEnvio.pcFATCA = 'N';
                 for(ClassDirecion item: naturalEnvio.ListDirecciones){
                     naturalEnvio.pcFATCA = item.paisDir =='053' || item.paisDir =='144' ? 'S' : naturalEnvio.pcFATCA;
                 }
                 if (naturalEnvio.pcPaisNacimiento =='053' || naturalEnvio.pcPaisNacimiento =='144' ||  naturalEnvio.pcnacionalidad2 == '053' ||
                     naturalEnvio.pcnacionalidad2 == '144'|| naturalEnvio.pcnacionalidad3 == '053' || naturalEnvio.pcnacionalidad3 == '144'||
-                    naturalEnvio.pcnacionalidad =='053'||naturalEnvio.pcnacionalidad=='144') {
+                    naturalEnvio.pcnacionalidad =='053'||naturalEnvio.pcnacionalidad=='144' || pcFATCA == true) {
                         naturalEnvio.pcFATCA = 'S';
                     }
                 String resultado = controllerApiClienteNatural.actualizaCliente(naturalEnvio);
@@ -5636,6 +5649,13 @@ insert reg;
             ClienteNaturales claseEnvio = new ClienteNaturales();
             ClienteNaturales fcsd = controllerApiClienteNatural.ConsultaInfoCliente(MostrarCUENTT, NumIDBuscar);
             
+            classListas fcsd2 = controllerApiClienteNatural.consultaListas(NumIDBuscar);                
+                if(fcsd2.FATCA == true||test.isRunningTest()||fcsd.pcFATCA != 'N'){ 
+                    muestraPopFATCA = true;
+                    pcFATCA = true;
+                    fcsd.pcFATCA = 'S';
+                }
+            
             system.debug('Respuestaaaaaaa: '+fcsd);
             
             if (fcsd.pcprimernombre != 'null')
@@ -5677,14 +5697,14 @@ insert reg;
                 }
                 if (fcsd.pcPaisNacimiento =='053' || fcsd.pcPaisNacimiento =='144' ||  fcsd.pcnacionalidad2 == '053' ||
                     fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'||
-                    fcsd.pcnacionalidad =='053'||fcsd.pcnacionalidad=='144' || flagFatca == true)
+                    fcsd.pcnacionalidad =='053'||fcsd.pcnacionalidad=='144' || flagFatca == true || fcsd2.FATCA == true)
                 {
                     
                     pcFATCA = true;  
                 }
                 else
                 {   
-                    if (pccodpais == '053' || pccodpais == '144')
+                    if (pccodpais == '053' || pccodpais == '144' || fcsd2.FATCA == true)
                     {
                         pcFATCA = true;
                     }
@@ -6381,13 +6401,16 @@ fcsd.ListDirecciones[i].tipDireccion = 'TRABAJO';
                 }
                 
                 classListas fcsd2 = controllerApiClienteNatural.consultaListas(pcnroid);                
-                if(fcsd2.FATCA == true||test.isRunningTest()){ 
+                if(fcsd2.FATCA == true||test.isRunningTest()||fcsd.pcFATCA != 'N'){ 
                     muestraPopFATCA = true;
                     pcFATCA = true;
+                    fcsd.pcFATCA = 'S';
                 }
-            system.debug('pcFatca2 desde el modo automatico: '+pcFATCA);
-            system.debug('pcFatca2 desde el modo automatico: '+fcsd2.FATCA);
-            system.debug('pcFatca2 desde el modo automatico: '+pcnroid);
+            
+            system.debug('pcFATCA2 desde el modo automatico desde la base: '+fcsd.pcFATCA);
+            system.debug('pcFATCA2 desde el modo automatico desde el servicio: '+fcsd2.FATCA);
+            system.debug('pcFATCA2 desde el modo automatico el check: '+pcFATCA);
+            system.debug('pcFATCA2 desde el modo automatico: '+pcnroid);
                 
      /*  if ( fcsd.pcnacionalidad2 == '053' || fcsd.pcnacionalidad2 == '144'|| fcsd.pcnacionalidad3 == '053' || fcsd.pcnacionalidad3 == '144'|| fcsd.pcnacionalidad =='053'|| fcsd.pcnacionalidad=='144' || pcFATCA == true)
         {

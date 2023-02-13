@@ -7,22 +7,25 @@ public class DAU_TG_LogHelper {
                  Respuesta_desde_Sysde__c, Respuesta_SF_Tarjetas__c, DAU_Tarjeta_de_Sysde__c,
                  DAU_No_Cuenta__c From case Where Id =: st[0].DAU_IdCaso__c];
             
-            List<Detalle_caso__c> detailCase = [Select Id,Caso__c,N_Cuenta_Bancaria__c,DAU_Dia_de_pago__c, DAU_Borrar_Cuotas__c, Cuenta__r.Name, 
-                       Cuenta__r.CurrencyIsoCode,Cuenta__r.Forma_Aportacion__c,Nuevo_canal_aporte__c,Banco__c From Detalle_caso__c where Caso__c =: c.Id Limit 1];
+            List<Detalle_caso__c> detailCase = [SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
+                    Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Cuenta__r.Seguro_Vida__c, 
+                    Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Nueva_fecha_aporte__c, Nuevo_monto_aporte__c,
+                    CreatedDate,Caso__r.Account.Pais_Residencia__c, Tipo_Operacion__c, Cuenta__r.Forma_Aportacion__c,Banco__c,DAU_Borrar_Cuotas__c 
+                    From Detalle_caso__c where Caso__c =: c.Id Limit 1];
             
             Set<Id> caseIds = new Set<Id>();
             caseIds.add(c.Id);
             
-            if(!detailCase.isEmpty()) {
+            if(!detailCase.isEmpty()) { System.debug('Datos: '+detailCase[0].Nuevo_canal_aporte__c+'--'+detailCase[0].Banco__c+'--'+detailCase[0].Cuenta__r.Forma_Aportacion__c);
                 //Llamar al servico de *Salesforce Tarjetas* cuando la forma de aportación de la cuenta es: Tarjeta de Crédito/Debito
                 if(detailCase[0].Nuevo_canal_aporte__c == 'TA' || detailCase[0].Banco__c == '28' || detailCase[0].Cuenta__r.Forma_Aportacion__c == 'TA') {
                     if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
                         //Bandera para que el trigger de caso llama al Servio de Salesforce Tarjetas                
-                        if(st[0].DAU_EjecutarSYSDE__c == true) {
+                        if(st[0].DAU_EjecutarSYSDE__c == true && (!c.Respuesta_SF_Tarjetas__c.contains('Error') || !c.Respuesta_SF_Tarjetas__c.contains('System.ListException'))) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }                        
                         //LLamar al servicio que procesa el caso en Sysde cuando es débito a tercero y caso pasa por aprobación de Operaciones
-                        if(st[0].DAU_EjecutarSYSDEOper__c == true && st[0].DAU_Borrar_Cuotas_S10__c == false) {
+                        if(st[0].DAU_EjecutarSYSDEOper__c == true && st[0].DAU_Borrar_Cuotas_S10__c == false && (!c.Respuesta_SF_Tarjetas__c.contains('Error') || !c.Respuesta_SF_Tarjetas__c.contains('System.ListException'))) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }                       
                         //Llamar al servicio que borra las cuotas del saldo 10 en el caso de Afiliación de Débito Automático
@@ -51,21 +54,29 @@ public class DAU_TG_LogHelper {
                     
                     if(c.Tipo_de_Operacion__c == 'A6' /*&& !c.Description.contains('Error')*/) { 
                         System.debug('Caso de Cambio de TC Ficohsa');
-                        if(st[0].DAU_PrimerServicio__c == true) { updateCase.validarIdentidad2(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);
+                        if(st[0].DAU_PrimerServicio__c == true) { 
+                            updateCase.validarIdentidad2(c.Id, c.DAU_Tarjeta_de_Sysde__c, c.Account.Identificacion__c);
                             System.debug('Se ejecuta primera validación de identidad');
                         }                 
                         if(st[0].DAU_SegundoServicio__c == true) {
                             System.debug('Se procede a ejecutar la Cancelación por cambio de tarjeta');
-                        	Salesforce_Tarjetas.processCase(caseIds, 'DEC', '', '');     
+                        	//Salesforce_Tarjetas.processCase(caseIds, 'DEC', '', '');    
+                        	String tipoGestion = 'BAJA';
+                            ID jobID = System.enqueueJob(new SCH_CallCardServiceFicohsa(detailCase, tipoGestion)); 
                         }
-                        if(st[0].DAU_TercerServicio__c == true) { updateCase.validarIdentidad2(c.Id, detailCase[0].N_Cuenta_Bancaria__c, c.Account.Identificacion__c);
+                        if(st[0].DAU_TercerServicio__c == true) { 
+                            updateCase.validarIdentidad2(c.Id, detailCase[0].N_Cuenta_Bancaria__c, c.Account.Identificacion__c);
                         	System.debug('Se ejecuta segunda validación de identidad');
                         }
-                        if(st[0].DAU_CuartoServicio__c == true) { Salesforce_Tarjetas.processCase(caseIds, 'ADI', c.Account.Name, detailCase[0].DAU_Dia_de_pago__c); 
+                        if(st[0].DAU_CuartoServicio__c == true) { 
+                            //Salesforce_Tarjetas.processCase(caseIds, 'ADI', c.Account.Name, detailCase[0].DAU_Dia_de_pago__c);
+                            String tipoGestion = 'ALTA';
+                            ID jobID = System.enqueueJob(new SCH_CallCardServiceFicohsa(detailCase, tipoGestion)); 
                             System.debug('Se procede a ejecutar la Afiliación por cambio de tarjeta');
                         }                         
                         //LLamar al servicio que procesa el caso en Sysde 
-                        if(st[0].DAU_EjecutarSYSDE__c == true) { aSysdeCallouts.aumentoDisminucion(c.id); 
+                        if(st[0].DAU_EjecutarSYSDE__c == true) { 
+                            aSysdeCallouts.aumentoDisminucion(c.id); 
                             System.debug('Se ejecuta llamada a Sysde');
                         }
                         //Llamar al servicio que borra las cuotas del saldo 10 en el caso de Afiliación de Débito Automático
@@ -84,7 +95,7 @@ public class DAU_TG_LogHelper {
                     }
                     
                     //DAU - Cancelación
-                    if(c.Tipo_de_Operacion__c == 'A7') {                                               
+                    if(c.Tipo_de_Operacion__c == 'A7') {                                        
                         //LLamar al servicio que procesa el caso en Sysde 
                         if(st[0].DAU_EjecutarSYSDE__c == true && c.Respuesta_desde_Sysde__c == Null) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
@@ -97,23 +108,25 @@ public class DAU_TG_LogHelper {
                         //Cancelación disparada desde un retiro Total
                         if(st[0].DAU_PrimerServicio__c == true) {
                             System.debug('Cancelación de TA se disparada desde un retiro Total');
-                            String tipoGestion = 'DEC';
-                        	Salesforce_Tarjetas.processCase(caseIds,tipoGestion,'','');
+                            /*String tipoGestion = 'DEC';
+                        	Salesforce_Tarjetas.processCase(caseIds,tipoGestion,'','');*/
+                            String tipoGestion = 'BAJA';
+                            ID jobID = System.enqueueJob(new SCH_CallCardServiceFicohsa(detailCase, tipoGestion));
                         }                        
                     }	    
                 } 
                 
                 //Llamar al servico de *BAC* cuando la forma de aportación de la cuenta es: Tarjeta de Crédito/Debito otros Bancos
-                else if(detailCase[0].Nuevo_canal_aporte__c == 'TAOB' || detailCase[0].Banco__c == 'Otros Bancos' || test.isRunningTest()) {
+                else if(detailCase[0].Nuevo_canal_aporte__c == 'TAOB' || detailCase[0].Banco__c == 'Otros Bancos') {
                     //Caso de Cambio de Canal de Aporte	
-                    if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8' || test.isRunningTest()) {
+                    if(c.Tipo_de_Operacion__c == 'A3' || c.Tipo_de_Operacion__c == 'A8') {
                         //Bandera para que el trigger de caso llama al Servio de Salesforce Tarjetas                
                         if(st[0].DAU_EjecutarSYSDE__c == true) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }
                         
                         //LLamar al servicio que procesa el caso en Sysde cuando es débito a tercero y caso pasa por aprobación de Operaciones
-                        if((st[0].DAU_EjecutarSYSDEOper__c == true && st[0].DAU_Borrar_Cuotas_S10__c == false) || test.isRunningTest()) {
+                        if(st[0].DAU_EjecutarSYSDEOper__c == true && st[0].DAU_Borrar_Cuotas_S10__c == false) {
                             aSysdeCallouts.aumentoDisminucion(c.id); 
                         }
                         

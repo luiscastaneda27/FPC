@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FPC_ContarNumeroPrestamo__c</fullName>
+    <externalId>false</externalId>
+    <label>Contar Numero de Prestamo</label>
+    <summaryFilterItems>
+        <field>Detalle_caso__c.Numero_Prestamo__c</field>
+        <operation>notEqual</operation>
+        <value></value>
+    </summaryFilterItems>
+    <summaryForeignKey>Detalle_caso__c.Caso__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

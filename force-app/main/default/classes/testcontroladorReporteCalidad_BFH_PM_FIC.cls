@@ -78,6 +78,7 @@ public class testcontroladorReporteCalidad_BFH_PM_FIC {
         controlador.editar();
         controlador.Afiliacion.espediente_completo__C = 'S';
         afiliacion.Documentacion_Recibida__c = 'S';
+        controlador.subEstado = 'S';
         controlador.guardar();
         controlador.accionVacia();
         

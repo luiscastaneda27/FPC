@@ -625,9 +625,10 @@ public class aSysdeCallouts {
             claseEnvio.codCuenta = detalle.Cuenta__r.Codigo__c;
             claseEnvio.montoPignorado = (detalle.Monto_Pignorar_Refinanciamiento__c ==null || detalle.Monto_Pignorar_Refinanciamiento__c ==0) ? detalle.monto_a_pignorar__C.setscale(2) : detalle.Monto_Pignorar_Refinanciamiento__c.setscale(2);
             claseEnvio.numeroPrestamo = detalle.numero_prestamo__C != null ? detalle.numero_prestamo__C : caso.id;
+            claseEnvio.numeroPrestamo = status != 'No Aplica' ? claseEnvio.numeroPrestamo : '01';
             //claseEnvio.prestamoAterior = detalle.Prestamo_anterior__c ;
             claseEnvio.accion = 'I';
-            if(Status=='Cerrado'){
+            if(status=='Cerrado'){
                 claseEnvio.numeroPrestamoId = caso.id;
                 claseEnvio.accion = 'A';
                 claseEnvio.prestamoAterior =detalle.Es_Refinanciamiento__c ? detalle.Prestamo_anterior__c:null;

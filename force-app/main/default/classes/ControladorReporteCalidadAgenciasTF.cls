@@ -73,13 +73,12 @@ public class ControladorReporteCalidadAgenciasTF {
             for(Reporte_calidad__C item: [select identificacion__C,Numero_Cuenta__c  from Reporte_calidad__C where identificacion__C in :listIdentidades ]){
                 mapClientes.put(item.Identificacion__c.replace('-','')+item.Numero_Cuenta__c, item.Numero_Cuenta__c );
             }
-            Oficial_X_Asesor__c asesor;
+            
             for(aSysdeReporteCalidad.ConsultaCliente respuesta: listRespuesta){
                 if(respuesta.identificacion != null && !mapClientes.containsKey(respuesta.Identificacion.replace('-','')+respuesta.numCuenta)){
                     //respuesta.asesor = 'HN22258';
-                    asesor = new Oficial_X_Asesor__c();
-                    asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();
-                    
+                    Oficial_X_Asesor__c asesor = mapAsesoresOficiales.containsKey(respuesta.asesor) ? mapAsesoresOficiales.get(respuesta.asesor) : new Oficial_X_Asesor__c();
+                    System.debug('asesor'+asesor);
                     Afiliacion = new Reporte_calidad__C ();
                     afiliacion.Documentacion_Recibida__c ='S';
                     Afiliacion.Tipo_Identificacion__c = respuesta.tipoIdentificacion;

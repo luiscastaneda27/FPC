@@ -13,6 +13,7 @@ public class ControllerBankManagement {
         String respuesta2 = '';
         String respuesta3 = '';
         String respuesta4 = '';
+         String respuesta5 = '';
 		system.debug('Entro al metodo API');
 		try{		
 			classJson envio = new classJson();
@@ -46,10 +47,15 @@ public class ControllerBankManagement {
                     System.debug('ACCOUNT_NUMBER: '+respuesta3);
                     fields.ACCOUNT_NUMBER = respuesta3;                    
                 }
-                if(parser.getCurrentName() == 'CARD_STATUS') {
+                if(parser.getCurrentName() == 'ACCOUNT_STATUS') {
                     parser.nextValue(); respuesta4 = parser.getText();
-                    System.debug('CARD_STATUS: '+respuesta4);
+                    System.debug('ACCOUNT_STATUS: '+respuesta4);
                     fields.CARD_STATUS = respuesta4;
+                }
+                if(parser.getCurrentName() == 'ACCOUNT_HOLDER_NAME') {
+                    parser.nextValue(); respuesta5 = parser.getText();
+                    System.debug('ACCOUNT_HOLDER_NAME: '+respuesta5);
+                    fields.ACCOUNT_HOLDER_NAME = respuesta5;
                 }
             }           
 		} catch(System.CalloutException e){

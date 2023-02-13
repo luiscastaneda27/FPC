@@ -16,8 +16,7 @@ public class controllerpignorados {
     public String Motivo {get;set;} 
     public boolean DenegarVentana {get;set;}
     public boolean DenegarImagen {get;set;}
-     public Transient string Ver_Imagen {get;set;}
-    public Transient Blob Ver_Pdf {get;set;}
+    public Transient string Ver_Imagen {get;set;}
     public  string ct {get;set;}
     public boolean result {get;set;}
     public boolean cargarFile {get;set;}
@@ -29,24 +28,14 @@ public class controllerpignorados {
 public string correoEmpleado {get;set;}//correo del empleado
     public string correoEmpleado2 {get;set;}
     
-    
     public controllerpignorados ()  {
         
-        //usuario = 'HN19577';
         try{
-            //Usuario =  ApexPages.currentPage().getParameters().get('hytrd');
-            
-            //List<User> usr = [Select Id, Name From User Where Id=:UserInfo.getUserId() Limit 1];
-            //System.debug('User: '+usr[0].Name);///////Marcooo
-            //Usuario = usr[0].Name;
-            
+          
             string nu;
             Usuario = ApexPages.currentPage().getParameters().get('hytrd');
            nu= [select id, Name from Usuarios_de_Pantallas__c where Usuario__c =: Usuario].Usuario__c;
-            //else{nu= [select Name from Usuarios_de_Pantallas__c limit 1].Name;}
             System.debug('User: '+nu);
-            Usuario = nu;
-          
         }Catch(Exception ex){
             system.debug('Error: ' + ex.getMessage() + ' Linea: ' + ex.getLineNumber());
            
@@ -92,12 +81,9 @@ public string correoEmpleado {get;set;}//correo del empleado
         Pattern MyPattern = Pattern.compile(regex);
         Matcher MyMatcher = MyPattern.matcher(tovalidate);
         result = MyMatcher.matches();
-        /*
-        string respuesta = string.valueOf(result);
-         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, respuesta));*/
+
         return result;
     }
-	//^[0-9]{3,4}(-[0-9]{3,4})?$
 	public Boolean validateid (string tovalidate)
     {
         
@@ -106,9 +92,7 @@ public string correoEmpleado {get;set;}//correo del empleado
         Pattern MyPattern = Pattern.compile(regex);
         Matcher MyMatcher = MyPattern.matcher(tovalidate);
         result = MyMatcher.matches();
-        /*
-        string respuesta = string.valueOf(result);
-         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, respuesta));*/
+
         return result;
     }
     
@@ -331,8 +315,7 @@ public string correoEmpleado {get;set;}//correo del empleado
             tama = ListPignorados.size();//Indica los numeros de elemento que hay en la lista cuando se ejecuta la consulta 
             validateid(id_pign);
             if(id_pign == ''){
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe ingresar una identidad'));    
-                
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Debe ingresar una identidad'));         
             }
         	
             else if(result == false){
@@ -340,11 +323,9 @@ public string correoEmpleado {get;set;}//correo del empleado
                 limpiar1 ();
             } 
                 
-            else if ( tama == 0){
-                
+            else if ( tama == 0){ 
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Cliente no encontrado por favor revise los datos que ingreso'));
-                limpiar1 ();
-                
+                limpiar1 ();  
             }
             else{
                 BuscaInfor3();   
@@ -352,8 +333,7 @@ public string correoEmpleado {get;set;}//correo del empleado
             //system.debug('LOQUEENVIA: '+identidad);
         }
         Catch(Exception e){
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
-            
+            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));    
         }
         
     }
@@ -361,7 +341,6 @@ public string correoEmpleado {get;set;}//correo del empleado
     
     public void BuscaInfor3(){        
         try{    
-            
             classcambiopignorados  claseEnvio = new classcambiopignorados();
             classcambiopignorados fcsd = ControllerAPIPignorados.BuscarIdentidad(id_pign);//parametros que se extraen de la api BucarCuenta
             system.debug('Respueta BuscaInfor: '+fcsd); 
@@ -382,18 +361,12 @@ public string correoEmpleado {get;set;}//correo del empleado
                 MuestraTabla = false;
                 MuestraTabla2 = true;
                 ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El cliente tiene varias cuentas, tome la que necesita para realizar la búsqueda específica'));
-
             }
-            
-            
-            
             if(ListPignorados != null){
                 cuentapig = ListPignorados[0].codcuenta;
                 nombrepig = ListPignorados[0].nombrepig;
                 id_pign = ListPignorados[0].id_pign;
-                num_prest = ListPignorados[0].num_prest1;
-                
-                
+                num_prest = ListPignorados[0].num_prest1;   
             }
             for(integer i=0; i< ListPignorados.size(); i++)
                 //extrae de la clase todos elementos que se encuentran dentro de la tabla
@@ -411,12 +384,8 @@ public string correoEmpleado {get;set;}//correo del empleado
                 p.m_prestamo = ListPignorados[i].m_prestamo;
                 p.nombrepig = ListPignorados[i].nombrepig;
             }
-            
-            //  } //fin else
-            //system.debug('LOQUEENVIA1: '+identidad);
         }
         Catch(Exception e){
-            //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Error1: ' + e.getMessage()+' LINEA '+ e.getLineNumber()));
             
         }
     }
@@ -452,20 +421,13 @@ public string correoEmpleado {get;set;}//correo del empleado
               
             }
             if (x.fechapignoracion > Date.today()) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'La fecha de pignoración no puede ser mayor que hoy'));   
-            }
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'La fecha de pignoración no puede ser mayor que hoy'));}
             else if (x.fechaliberacion > Date.today()) {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'La fecha de liberación no puede ser mayor que hoy'));
-            } 
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'La fecha de liberación no puede ser mayor que hoy'));} 
             else if (x.estatus != 'I' && x.estatus !=  'A') {
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El estatus solo puede ser A (Activo) o I (Inactivo)'));
-            }
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El estatus solo puede ser A (Activo) o I (Inactivo)'));}
             
-            else {
-                /*string resultado = ControllerAPIPignorados.ActualizarPignorados(x);//codigo que envia al api la accion para actualizar
-                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Confirm, resultado));//Codigo para mostrar en mensaje si hay error o esta ejecutando la accion bien.
-                */ 
-                               
+            else {           
                 listC.Numero_Prestamo__c = x.numero_prestamo1;
                 listC.Num_Prestamo__c = num_prest;
                 listC.Monto_Pignorado__c = x.monto_pignorado;
@@ -479,20 +441,17 @@ public string correoEmpleado {get;set;}//correo del empleado
                 listC.Cuenta__c = x.codcuenta;
 				listC.Descripcion__c = 'Pendiente';
                 listC.secuencia__c = x.secuencia;
-                //listC.Referencia__c = x.referencia;
                 fondo.add(listC);
                 System.debug('Prestamo '+ num_prest);                
               ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ingresado con éxito'));              
             }
             insert fondo;
             
-            limpiar1 ();
-               
+            limpiar1 ();      
         }
         Catch(Exception e){
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
-        }
-        
+        }  
     }
     
     public void iniciar()
@@ -502,11 +461,8 @@ public string correoEmpleado {get;set;}//correo del empleado
                                     Total_Fondos__c,Usuario__c,Estatus__c, Estado__c, Cuenta__c, secuencia__c, Referencia__c
                             from Fondo_Pignorado__c
                             where Estado__c = 'P'];        
-       
-       
         total = McontenidoPign.size();
         System.debug('McontenidoPign '+ McontenidoPign);
-     
     }
     
     Public void Autorizar()
@@ -528,12 +484,10 @@ public string correoEmpleado {get;set;}//correo del empleado
                 	x.estatus = McontenidoPign[i].Estatus__c;
                 	x.usuario = McontenidoPign[i].Usuario__c;
                     x.usuarioApro = Usuario;
-                    //x.referencia = McontenidoPign[i].Referencia__c;
                     System.debug('SE ve la imagen ' + x.referencia);
                     McontenidoPign[i].Estado__c = 'A';
                     indice = i;
-                    
-                  
+  
                 }
             }
             
@@ -543,11 +497,8 @@ public string correoEmpleado {get;set;}//correo del empleado
                     delete McontenidoPign[indice];
                 } //elimina el contenido del objeto
       			iniciar(); 
-          
         }
-        Catch(Exception e){
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));
-        }  
+        Catch(Exception e){ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Errro: ' + e.getMessage()+' LINEA '+E.getLineNumber()));}  
       
     }
     
@@ -560,9 +511,7 @@ public string correoEmpleado {get;set;}//correo del empleado
         }
         CATCH(exception e){
             
-        }
-        
-        
+        }  
     }
    
     public void DenegarLista()
@@ -578,15 +527,11 @@ public string correoEmpleado {get;set;}//correo del empleado
                 
                 correoUsuario(); //obtener el correo del oficial que gestiona y el que aprueba
                 Fondo_Pignorado__c modifi = new Fondo_Pignorado__c ();
-                    
-                    //modifi = [select Codigo_Referencia__c, Oficial_de_negocios__c, Estado_Aporte__c, Descripcion__c from Pantalla_Aportes__c where Codigo_Referencia__c =: Num_CodReferenciaDenegado limit 1];
-                
+                                   
                 	modifi = [select Numero_Prestamo__c, Estado__c, Descripcion__c from Fondo_Pignorado__c where Id =: cod_obj];
                     modifi.Estado__c = 'D';
                     modifi.Descripcion__c = Motivo; 
-                    delete modifi;
-                			
-                
+                    delete modifi;                
            
            		        OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'ficohsapensiones@ficohsa.com'];
 						Messaging.SingleEmailMessage[] listCorreo = new List<Messaging.SingleEmailMessage>();
@@ -603,21 +548,15 @@ public string correoEmpleado {get;set;}//correo del empleado
                    ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Registro Denegado'));
                     DenegarVentana = false;
                 	Motivo = null;
-            }
-                    
-             
-           iniciar();
-             
+            }  
+           iniciar();         
          }catch(exception e)
             {
                 system.debug('Error: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());
                 //ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.Error, 'Ha ocurrido un error!'));
              }   
      }
-    
-    
-    
-    
+
     public void limpiar1 () {
         cuentapig = null;
         num_prest = null;
@@ -627,8 +566,7 @@ public string correoEmpleado {get;set;}//correo del empleado
         MuestraTabla = false;
         MuestraTabla2 = false;
     }
-    
-    
+
     public void LimpiarTabla() {
         MuestraTabla = false;
         MuestraTabla2 = false;
@@ -660,8 +598,7 @@ public string correoEmpleado {get;set;}//correo del empleado
             }
         if ( flist.size() > 0 ){
             ContentDocument cd = [Select id from ContentDocument Where id =: flist[0].ContentDocumentId];
-            delete cd;
-        }
+            delete cd;}
         
         transient Contentversion f = new ContentVersion(
             Title = name,
@@ -679,8 +616,6 @@ public string correoEmpleado {get;set;}//correo del empleado
            System.debug('secuencia ' + nombre);     
         try
             {
-                /*ControllerAPIPagoIntereses.classRespuestaImagen wer =  new ControllerAPIPagoIntereses.classRespuestaImagen();
-            	wer = ControllerAPIPagoIntereses.TraerImagenBD(ID_Referencia);*/
                 ContentVersion flist = [select VersionData, FileExtension  from ContentVersion where title = :nombre limit 1];
                 if(flist != null){
                      System.debug('ext '+ flist.FileExtension);
@@ -710,8 +645,7 @@ public string correoEmpleado {get;set;}//correo del empleado
                 }else{
                 	ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'No hay referencia'));
             	}
-            	
-            
+  
         }
         catch(exception e)
         {

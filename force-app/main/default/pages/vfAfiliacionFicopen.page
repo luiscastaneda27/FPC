@@ -44,34 +44,33 @@
                         <apex:outputPanel >
                             <table width="100%"  class="slds-table slds-table_bordered slds-table_col-bordered" >
                                 
-                                    <tr >
-                                         <td scope="col" colspan="1">
-                                            Enviar
-                                        </td >
-                                        <td scope="col" colspan="1">
-                                            Primer Nombre
-                                        </td >
-                                        <td scope="col" colspan="1">
-                                            Segundo Nombre
-                                        </td>
-                                        <td scope="col" colspan="1">
-                                            Primer Apellido
-                                        </td>
-                                        <td scope="col" colspan="1">
-                                            Segundo Apellido
-                                        </td>
-                                       
-                                        <td scope="col" colspan="1">
-                                            Identificación
-                                        </td>
-                                        <td scope="col" colspan="1">
-                                            
-                                        </td>
-                                         <td scope="col" colspan="1">
-                                            
-                                        </td>
+                                <tr >
+                                    <td scope="col" colspan="1">
+                                        Enviar
+                                    </td >
+                                    <td scope="col" colspan="1">
+                                        Nombre
+                                    </td >
+                                    <td scope="col" colspan="1">
+                                        Identificación
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Oficial Sac
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Fecha Afiliación 
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        Cuenta 
+                                    </td>
+                                    <td scope="col" colspan="1">
                                         
-                                    </tr>
+                                    </td>
+                                    <td scope="col" colspan="1">
+                                        
+                                    </td>
+                                    
+                                </tr>
                                 <tbody>
                                     <apex:repeat value="{!listAfiliaciones}" var="item">
                                         <tr>
@@ -81,20 +80,19 @@
                                                 </apex:inputField>
                                             </td>
                                             <td>
-                                                <apex:outputField value="{!item.name}" />
+                                                <apex:outputText value="{!item.name+' '+item.Primer_Apellido__c}" />
                                             </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Nombre__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Primer_Apellido__c}" />
-                                            </td>
-                                            <td>
-                                                <apex:outputField value="{!item.Segundo_Apellido__c}" />
-                                            </td>
-                                           
                                             <td>
                                                 <apex:outputField value="{!item.Identificacion__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Codigo_Oficial_SAC__c}" />
+                                            </td>
+                                             <td>
+                                                <apex:outputField value="{!item.FechaIngreso__c}" />
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.Numero_Cuenta__c}" />
                                             </td>
                                             <td>
                                                 <apex:commandLink action="{!editar}" value="Editar"  reRender="theForm" status="status" >

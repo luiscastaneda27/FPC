@@ -3,61 +3,69 @@ public class EnvioCorreosEDC {
      public static boolean enviarCorreos(){
          FPC_Log__c log = new FPC_Log__c();
          log.FPC_Servicio__c = 'EDC Masivo';
+         String urlSite = claseUtilPlanillas.urlSysde('EstadosCuenta');
+         
+         StaticResource staticResource = [SELECT Id, SystemModStamp, Name
+                                           FROM StaticResource 
+                                           WHERE Name = 'CintilloPortadaEDC'
+                                           LIMIT 1];
+         String urlResource = 'resource/' + String.valueOf(staticResource.SystemModStamp.getTime())+ '/' + staticResource.Name;
+         
          try{
              system.debug('Entró en método enviarCorreos');
              FechaDC_Sysde__c fdcs = [Select Fecha_cierre__c From FechaDC_Sysde__c Where Name = 'CierreAlDia' Limit 1];
              Date fechaHoy = Date.Today();
-            fechaHoy = fdcs.Fecha_cierre__c;
-            Boolean esTrimestral = (fechaHoy.month() == 1 || fechaHoy.month() == 4 || fechaHoy.month() == 7 || fechaHoy.month() == 10);
-            String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = ';                
-            list<classECMensual> respuesta = new list<classECMensual>();
-            list<classECPortada> respuestaDetallado = new list<classECPortada>();
-            list<classClientesEC> claseEnvioTrim = new list<classClientesEC>();
-            list<classClientesEC> claseEnvioMens = new list<classClientesEC>();
-            map<String, String> mapClientes = new map<String, String>();
-            map<String, String> mapFDesde = new map<String, String>();
-            map<String, String> mapFHasta = new map<String, String>();
-            map<String, String> mapContacto = new map<String, String>();
-            map<String, String> mapNombre = new map<String, String>();
-            map<String, Boolean> mapEsTrimestral = new map<String, Boolean>();
-            list<string> idClientes= new list<string>();
-            List<Account> clientes = new List<Account>();
-            List<FPC_ErroresEstadosDeCuenta__c> listErrores = new List<FPC_ErroresEstadosDeCuenta__c>();
-            list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
-            
-            idClientes = estadosDeCuenta.ObtenerCorreos('A1');
-            map<Id, Contact> mapContactosReenvio = new map<Id, Contact>([Select Id, EmailBouncedReason from Contact 
-                                                                 Where IsEmailBounced = true And AccountId in :idClientes]);
-            fechaHoy = fechaHoy.addDays(-fechaHoy.Day());
-            Date desdeT = fechaHoy.addDays(1).addMonths(-fechaHoy.month());
-            Date desdeM = fechaHoy.addDays(1).addMonths(-1);
-            list<string> codigosclientes = new list<string>(); 
-            
-            for(Cuentas__C item: [select cliente__C from cuentas__C where Fecha_Apertura__c <: fechaHoy and cliente__C in :idClientes]) { 
-                codigosclientes.add(item.cliente__C);
-            }
-            clientes = [Select Name, PersonEmail, Identificacion__c, PersonContactId, FrecuenciaEnvioEDC__c  
-                        From Account Where id in :codigosclientes];
-            System.debug('Cliente: '+JSON.serialize(clientes));
-            For(Account item : clientes){
-                Date fechaDesde = item.FrecuenciaEnvioEDC__c  == 'Mensual' ? desdeM : desdeT;
-                classClientesEC nueva = new classClientesEC();
-                nueva.idCliente = item.Identificacion__c;
-                nueva.desde = fechaDesde;
-                nueva.hasta = fechaHoy;
-                System.debug('item.FrecuenciaEnvioEDC__c: '+item.FrecuenciaEnvioEDC__c);
-                if(item.FrecuenciaEnvioEDC__c  == 'Mensual'){
-                    claseEnvioMens.add(nueva);
-                }else{
-                    claseEnvioTrim.add(nueva);
-                }
-                
-                mapClientes.put(item.Identificacion__c, item.Identificacion__c);
-                mapContacto.put(item.Identificacion__c, item.PersonContactId);
-                mapNombre.put(item.Identificacion__c, item.Name); 
-                mapFDesde.put(item.Identificacion__c, string.valueOf(nueva.desde));
-                mapFHasta.put(item.Identificacion__c, string.valueOf(nueva.hasta));
-                mapEsTrimestral.put(item.Identificacion__c, item.FrecuenciaEnvioEDC__c  != 'Mensual');
+             fechaHoy = fdcs.Fecha_cierre__c;
+             Boolean esTrimestral = (fechaHoy.month() == 1 || fechaHoy.month() == 4 || fechaHoy.month() == 7 || fechaHoy.month() == 10);
+             String queryCorreo = 'Select Cuerpo__c From Correo_EDC__mdt Where DeveloperName = ';                
+             list<classECMensual> respuesta = new list<classECMensual>();
+             list<classECPortada> respuestaDetallado = new list<classECPortada>();
+             list<classClientesEC> claseEnvioTrim = new list<classClientesEC>();
+             list<classClientesEC> claseEnvioMens = new list<classClientesEC>();
+             map<String, String> mapClientes = new map<String, String>();
+             map<String, String> mapFDesde = new map<String, String>();
+             map<String, String> mapFHasta = new map<String, String>();
+             map<String, String> mapContacto = new map<String, String>();
+             map<String, String> mapNombre = new map<String, String>();
+             map<String, Boolean> mapEsTrimestral = new map<String, Boolean>();
+             list<string> idClientes= new list<string>();
+             List<Account> clientes = new List<Account>();
+             List<FPC_ErroresEstadosDeCuenta__c> listErrores = new List<FPC_ErroresEstadosDeCuenta__c>();
+             list<Correo_estado_cuenta__c> todosCorreos = new list<Correo_estado_cuenta__c>();
+             
+             idClientes = estadosDeCuenta.ObtenerCorreos('A1');
+             map<Id, Contact> mapContactosReenvio = new map<Id, Contact>([Select Id, EmailBouncedReason from Contact 
+                                                                          Where IsEmailBounced = true And AccountId in :idClientes]);
+             fechaHoy = fechaHoy.addDays(-fechaHoy.Day());
+             Date desdeT = fechaHoy.addDays(1).addMonths(-fechaHoy.month());
+             Date desdeM = fechaHoy.addDays(1).addMonths(-1);
+             list<string> codigosclientes = new list<string>(); 
+             
+             for(Cuentas__C item: [select cliente__C from cuentas__C where Fecha_Apertura__c <: fechaHoy and cliente__C in :idClientes]) { 
+                 codigosclientes.add(item.cliente__C);
+             }
+             clientes = [Select Name, PersonEmail, Identificacion__c, PersonContactId, FrecuenciaEnvioEDC__c  
+                         From Account Where id in :codigosclientes];
+             System.debug('Cliente: '+JSON.serialize(clientes));
+             For(Account item : clientes){
+                 Date fechaDesde = item.FrecuenciaEnvioEDC__c  == 'Mensual' ? desdeM : desdeT;
+                 classClientesEC nueva = new classClientesEC();
+                 nueva.idCliente = item.Identificacion__c;
+                 nueva.desde = fechaDesde;
+                 nueva.hasta = fechaHoy;
+                 System.debug('item.FrecuenciaEnvioEDC__c: '+item.FrecuenciaEnvioEDC__c);
+                 if(item.FrecuenciaEnvioEDC__c  == 'Mensual'){
+                     claseEnvioMens.add(nueva);
+                 }else{
+                     claseEnvioTrim.add(nueva);
+                 }
+                 
+                 mapClientes.put(item.Identificacion__c, item.Identificacion__c);
+                 mapContacto.put(item.Identificacion__c, item.PersonContactId);
+                 mapNombre.put(item.Identificacion__c, item.Name); 
+                 mapFDesde.put(item.Identificacion__c, string.valueOf(nueva.desde));
+                 mapFHasta.put(item.Identificacion__c, string.valueOf(nueva.hasta));
+                 mapEsTrimestral.put(item.Identificacion__c, item.FrecuenciaEnvioEDC__c  != 'Mensual');
             }                   
             System.debug(claseEnvioTrim.size() +' -- '+claseEnvioMens.size() );
             
@@ -107,7 +115,9 @@ public class EnvioCorreosEDC {
                 }
             }
             
-            Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
+             Correo_EDC__mdt cuerpoCorreo = dataBase.query(queryCorreo);
+             cuerpoCorreo.Cuerpo__c = cuerpoCorreo.Cuerpo__c.replace('[getSite]', urlSite);
+             cuerpoCorreo.Cuerpo__c = cuerpoCorreo.Cuerpo__c.replace('[getCintillo]', urlResource);
             
             For(classECPortada item : respuestaDetallado){
                 Messaging.SingleEmailMessage correo = new Messaging.SingleEmailMessage(); 
@@ -182,7 +192,7 @@ public class EnvioCorreosEDC {
     }
     
     public static EstadosDeCuenta.PortadaEDC getListTest(){
-        EstadosDeCuenta.PortadaEDC portada = (EstadosDeCuenta.PortadaEDC)System.JSON.deserialize('[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]', EstadosDeCuenta.PortadaEDC.class);
+        EstadosDeCuenta.PortadaEDC portada = (EstadosDeCuenta.PortadaEDC)System.JSON.deserialize('{"respuestaSysde":"Test","respuesta":[{"nombreCliente":"","identidad":"1234567890123","emailCliente":"","fondosObligatorios":false,"totalPension":"0.00","coberturaLaboral":"0.00","fondosLempiras":"8,122.75","fondosDolares":null,"fechaCierre":"27-01-2020"}]}', EstadosDeCuenta.PortadaEDC.class);
         return portada;
     }
     

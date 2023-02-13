@@ -564,7 +564,7 @@ public class testASYSDECallouts {
         Entitlement ent = new Entitlement(Name='Testing', AccountId=natural2.Id, StartDate=Date.valueof(System.now().addDays(-2)), EndDate=Date.valueof(System.now().addYears(2)), AssetId=ass.Id);
         insert ent;
         
-        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A7', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id);
+        Case casoAumentoD2 = new Case(AccountId = natural2.id, Tipo_de_Operacion__c = 'A7', EntitlementId = ent.Id, Status = 'Nuevo', RecordTypeId = tiposR2[1].id, DAU_aprobacion__c = false);
         Insert casoAumentoD2;
         
         Detalle_caso__c nuevoSP = new Detalle_Caso__c(Caso__c = casoAumentoD2.id, Cuenta__c = cuentaIndi2.id, Nuevo_Subproducto__c = subproducto4.id, Nuevo_monto_aporte__c = 8000,

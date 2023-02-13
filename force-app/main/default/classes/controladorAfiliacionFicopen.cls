@@ -18,7 +18,6 @@ public class controladorAfiliacionFicopen {
     public controladorAfiliacionFicopen(){
         try{
             usuario = ApexPages.currentPage().getParameters().get('usuario');
-            // usuario = 'HN17575';
             asesor = new Usuarios_de_Pantallas__c ();
             asesor = [select Apellido__c , name , usuario__C, email__C
                       from Usuarios_de_Pantallas__c  where usuario__C =:Usuario];
@@ -59,18 +58,18 @@ public class controladorAfiliacionFicopen {
                             Fecha_Inicio_Aporte__c , Forma_Pago__c,estado__C, Formulario_Completo__c, Identificacion__c ,
                             Numero_de_Cliente__c , Numero_de_Contrato__c ,Numero_Cuenta__c ,Oficial_SAC__c ,PEP__c ,
                             Periodicidad__c , name , Procedencia__c , Reporte_Calidad__c,RTN__c ,id,
-                            DebidaDiligencia__c,
+                            DebidaDiligencia__c,FechaIngreso__c ,Fecha_Devolucion__c,
                             Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,CurrencyIsoCode,Cuentas_Colectivas__c,
                             Subproducto__r.name,Empresa__r.name, Subproducto__r.producto__r.name,
                             Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,
                             Tiene_Id__c , Tipo_Fondo__c , Tipo_Identificacion__c ,WAIVER__c from Reporte_calidad__C
-                            where Codigo_Oficial_SAC__c =:Usuario and Tipo_Afiliacion__c='FC' and estado__C ='V' ];
+                            where Codigo_Oficial_SAC__c =:Usuario and Tipo_Afiliacion__c='FCS' and estado__C ='V' ];
         agregarAfiliacion();
     }
     public void agregarAfiliacion(){
         Afiliacion = new Reporte_calidad__C(/*Asesor_Comercial__c= asesor.asesor__r.name, Codigo_Asesor_Comercial__c =asesor.codigo_asesor__C,*/
             Codigo_Oficial_SAC__c =usuario, Oficial_SAC__c =asesor.name +' '+asesor.apellido__C,
-            Tipo_Afiliacion__c  ='FC ', Reporte_calidad__C = 'F', estado__C='V');
+            Tipo_Afiliacion__c  ='FCS ', Reporte_calidad__C = 'F', estado__C='V');
         SelectSubProductoPop();
     }
     public string idAfiliacion{get;set;}

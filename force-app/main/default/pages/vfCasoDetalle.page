@@ -129,6 +129,28 @@
                     searchFunction2();
                 }        
             }
+            
+        function validaNumPrest(e, field) {
+            
+            key = e.keyCode ? e.keyCode : e.which
+              // backspace
+              if (key == 8) return true              
+              if (key === 48 && field.value == "") return false
+               // 0-9
+               if (key > 47 && key < 58) {
+               	if (field.value == "") return true
+               	regexp = /.[0-9]{40}$/
+               	return !(regexp.test(field.value))
+               }
+                // .
+               if (key == 46) {
+               	if (field.value == "") return false
+                regexp = /^[0-9]+$/
+                return regexp.test(field.value)
+               }
+              // other key
+              return false
+          }
             </script> 
             
             <apex:form id="theForm" >
@@ -257,6 +279,17 @@
                                                 <apex:outputField rendered="{!OR(caso.status !='Nuevo', case.Aprobado__c)}" value="{!detalleCaso.Es_Refinanciamiento__c }" />
                                             </div>
                                         </div>
+                                        <div class="slds-form-element__row">
+                                            <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" >Tipo de Préstamo</label><br/>
+                                                <apex:inputField styleclass="slds-input" rendered="{!AND(caso.Status != 'Cerrado')}" value="{!detalleCaso.FPC_TipoPrestamo__c}" />
+                                                <apex:outputField rendered="{!AND(caso.Status == 'Cerrado')}" value="{!detalleCaso.FPC_TipoPrestamo__c}" />
+                                            </div>
+                                              <div class="slds-form-element slds-size--1-of-2">
+                                                <label class="slds-form-element__label" ></label><br/>
+                                                  
+                                            </div>
+                                        </div>
                                         <apex:outputPanel rendered="{!!detalleCaso.Es_Refinanciamiento__c}">
                                             <div class="slds-form-element__row">
                                                 <div class="slds-form-element slds-size--1-of-2">
@@ -268,7 +301,7 @@
                                                 </div>
                                                 <div class="slds-form-element slds-size--2-of-2">
                                                     <label class="slds-form-element__label" >Número de Préstamo</label>
-                                                    <apex:inputField styleclass="slds-input"  value="{!detalleCaso.Numero_Prestamo__c}"  />
+                                                    <apex:inputField styleclass="slds-input"  value="{!detalleCaso.Numero_Prestamo__c}" OnKeyPress="return validaNumPrest(event, this)"  />
                                                 </div>
                                             </div>
                                         </apex:outputPanel>

@@ -122,9 +122,9 @@ global class controladorAfiliacionCarga {
     }
     
     public void Enviar(){
+        integer contador = 0;
+        String codigo;
         try{
-            integer contador = 0;
-            String codigo;
             for(Reporte_calidad__C item:listAfiliaciones ){
                 if(item.enviar_sac__c){
                     item.Fecha_Envio_Memo__c =date.today();
@@ -155,6 +155,8 @@ global class controladorAfiliacionCarga {
             //reinicar();
             //ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.confirm, 'Datos guardados exitosamente.'));
         }catch(exception ex){
+            System.debug('codigo: '+codigo);
+            System.debug('Ha ocurrido un error. '+ex.getMessage()+ ', Linea: '+ex.getLineNumber());
             ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.error, 'Ha ocurrido un error. '+ex.getMessage()+ ', Linea: '+ex.getLineNumber()));
         }
         
@@ -410,7 +412,9 @@ global class controladorAfiliacionCarga {
             if(pocisionPN == -1 ||pocisionSN == -1 ||pocisionPA == -1 || pocisionSA == -1 ||pocisionTipoIdentificacion == -1 ||
                pocisionIdentificacion == -1 || pocisionTieneId == -1 ||pocisionRTN == -1 || pocisionFATCA == -1 ||
                pocisionWAIVER == -1 ||pocisionPEP == -1 ||pocisionProcedencia == -1 || pocisionAdendum == -1 ||
-               pocisionSubproducto == -1 ||pocisionCuentaCltv == -1 || pocisionReporteCalidad == -1  ||
+               pocisionSubproducto == -1 ||
+               pocisionCuentaCltv == -1 ||
+               pocisionReporteCalidad == -1  ||
                pocisionFormularioCompleto == -1 || pocisionAplicaCS == -1 ||pocisionComentarios == -1){
                    retorno.error='Faltan algunos campos en la plantilla, por favor digitarlos todos';
                }else{
@@ -556,6 +560,7 @@ global class controladorAfiliacionCarga {
                        afiliacion.Codigo_Asesor_Comercial__c =asesor.codigo_asesor__C;
                        afiliacion.Tipo_Fondo__c = mapSubProducto.get(data[pocisionSubproducto]).tipo_fondo__C;
                        afiliacion.Tipo_Afiliacion__c = 'C';
+                       afiliacion.Cuentas_Colectivas__c = cta.Codigo__c;
                        afiliacion.CurrencyIsoCode = mapSubProducto.get(data[pocisionSubproducto]).producto__r.CurrencyIsoCode;
                        listAfiliaciones.add(afiliacion);
                    }

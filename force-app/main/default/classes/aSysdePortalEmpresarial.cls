@@ -286,12 +286,6 @@ public class aSysdePortalEmpresarial {
         //return null;
     }
     
-    public class tasacambio{
-        public string mensaje;
-        public decimal tasa;
-    }
-   
-    
     @future(callout=true)
     public static void cerrarPlanilla(set<Id> idPlanilla) {
         Http http = new Http();
@@ -432,9 +426,10 @@ public class aSysdePortalEmpresarial {
 		request.setTimeout(120000);
         try
         {
-           system.debug('Error en Enviar Aportes:'+ personas); 
-           list<string> todos= new list<string>();
-           list<string> individual; 
+            Planilla__C planilla = [Select Name, Id, respuesta_desde_sysde_Aportes__C from Planilla__c Where Id = :idpla];
+            system.debug('Error en Enviar Aportes:'+ personas); 
+            list<string> todos= new list<string>();
+            list<string> individual; 
             todos=personas.split('::::');
             list<classAportesPlanilla> claseenvio = new list<classAportesPlanilla>();
             classAportesPlanilla nueva;
@@ -445,11 +440,13 @@ public class aSysdePortalEmpresarial {
                 string gt=todos[i];
                 individual=gt.split(',');
                 nueva = new classAportesPlanilla();
-                nueva.idSalesforce = individual[0];
+                //nueva.idSalesforce = individual[0];
+                nueva.idSalesforce = String.isNotBlank(codigo) ? planilla.Name + '_' + individual[3] + '_' + codigo : null;
                 nueva.identificacion=individual[1];
                 nueva.cuentaColectiva =individual[2];
                 nueva.rezago= rezago;
                 nueva.codigoReferencia = codigo;
+                //nueva.planillaReferencia = String.isNotBlank(codigo) ? planilla.Name + '-' + codigo : null; 
                 nueva.cuenta=individual[3];
                 //nueva.codigoCuenta=integer.valueOf(individual[4]);
                 nueva.codigoMoneda=individual[5];
@@ -510,8 +507,6 @@ public class aSysdePortalEmpresarial {
            
             system.debug(response.getBody());
 	        if (response.getStatusCode() == 200) {
-                planilla__C planilla= new planilla__C();
-                planilla.id=idpla;
                 classRespuestaAportes prueba2= new classRespuestaAportes();
                 prueba2 = (classRespuestaAportes) JSON.deserialize(response.getBody(), classRespuestaAportes.class);
                 integer p=0;
@@ -526,7 +521,6 @@ public class aSysdePortalEmpresarial {
                     }
                 }
                 planilla.respuesta_desde_sysde_Aportes__C='Procesadas '+p+' de '+prueba2.detalle.size()+'.  Codigo:200';
-                planilla.id=idpla;
                 //planilla.Respuesta_desde_Sysde_aportes_completa__c=response.getBody();
                 update planilla;
                if(listErrores.size()>0){
@@ -543,10 +537,6 @@ public class aSysdePortalEmpresarial {
         	system.debug('Error al traer persona: ' + e.getMessage() + ' Linea: ' + e.getLineNumber());	
         }
     }
-    
-    
-    
-    
     
     
     
@@ -1002,6 +992,10 @@ public class aSysdePortalEmpresarial {
     public class classCuentasColectivas{
         public String cuentaColectiva { get; set; }
 	}
+    public class tasacambio{
+        public string mensaje;
+        public decimal tasa;
+    }
     
     public class Person{
         public string mensaje{set;get;}
@@ -1059,12 +1053,11 @@ public class aSysdePortalEmpresarial {
     }
     
     
-    
-    
     public class classAportesPlanilla
     {
         public String rezago { get; set; } 
         public String codigoReferencia{ get; set; } 
+        //public String planillaReferencia{ get; set; } 
         public String idSalesforce { get; set; } //P_TIP_ARCHIVO
         public String identificacion { get; set; } //P_NUM_ID
         public DateTime fechaRecaudo  { get; set; } //P_FEC_RECAUDO

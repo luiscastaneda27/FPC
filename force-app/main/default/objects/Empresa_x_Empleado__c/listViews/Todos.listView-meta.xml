@@ -5,5 +5,10 @@
     <columns>Empleado2__c</columns>
     <columns>Empresa2__c</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Empresa2__c</field>
+        <operation>contains</operation>
+        <value>CASH</value>
+    </filters>
     <label>Todos</label>
 </ListView>

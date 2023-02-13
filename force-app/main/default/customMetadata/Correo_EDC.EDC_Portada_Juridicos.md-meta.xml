@@ -112,7 +112,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                                                                   &lt;td width=&quot;233&quot; scope=&quot;col&quot;&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; float: right; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:17px; font-weight:700;&quot;&gt;&lt;img src=&quot;https://fpc.secure.force.com/estadosCuenta/resource/1578421431000/Descarga_EDC&quot; /&gt;&lt;/span&gt;&lt;/td&gt;
                                                                   &lt;td style=&quot;padding-left: 10px&quot; width=&quot;367&quot; scope=&quot;col&quot;&gt;
                                                                      &lt;p&gt;Descarga aquí &lt;/p&gt;
-                                                                     &lt;a href=&quot;https://stagefpc-fpc.cs43.force.com/estadosCuenta/vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
+                                                                     &lt;a href=&quot;[getSite]vfEstadoCuentaDetalleMovimientos?zyx=[getFPC]&quot; target=&quot;_blank&quot;&gt;
                                                                         &lt;p&gt;&lt;span class=&quot;MsoNormal&quot; style=&quot;color:#005baa; font-family:&apos;Segoe UI&apos;, Helvetica Neue, Arial, Verdana, Trebuchet MS, sans-serif; font-size:20px; font-weight:700;&quot;&gt;                                TU ESTADO DE CUENTA&lt;/span&gt;                            &lt;/p&gt;
                                                                      &lt;/a&gt;
                                                                   &lt;/td&gt;
@@ -211,7 +211,7 @@ a {    font-family: &apos;Open Sans&apos;, Arial, Helvetica Neue, Helvetica, san
                   &lt;tr&gt;
                     &lt;td&gt;
                         &lt;a href=&quot;https://www.tuconcienciafinanciera.com/#/jubilacion&quot; target=&quot;_blank&quot;&gt;
-                            &lt;img src=&quot;https://ficohsafpc--c.na102.content.force.com/servlet/servlet.ImageServer?id=0153Z0000041iwz&amp;oid=00Dj0000001rVac&amp;lastMod=1624315775000&quot; alt=&quot;Imagen no disponible para su nevegador&quot; title=&quot;Promociones&quot; /&gt;
+                            &lt;img src=&quot;[getSite][getCintillo]&quot; alt=&quot;Imagen no disponible para su nevegador&quot; title=&quot;Promociones&quot; /&gt;
                         &lt;/a&gt;
                     &lt;/td&gt;
                   &lt;/tr&gt;
