@@ -3,15 +3,11 @@
     <active>true</active>
     <allowRecall>false</allowRecall>
     <allowedSubmitters>
+        <submitter>EnviarAprobacionCasoSubProducto</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <type>owner</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>astrid.rivera@ficohsa.com</submitter>
-        <type>user</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
-        <submitter>cintya.alcantara@ficohsa.com</submitter>
-        <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>
         <field>Owner</field>

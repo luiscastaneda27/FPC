@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Operaciones</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>TEXT(Status) = &apos;Cerrado&apos;</exitCriteriaFormula>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Operaciones</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Modificación de aportes</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Enviar_aprobacion_AD__c</field>
+            <operation>equals</operation>
+            <value>true</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Aprobado__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Operaciones %2F Aprobación 3</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-288</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-720</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Modificación de aportes / Operaciones - Tercera Aprobación</name>
+    <versionMaster>552540000008PrF</versionMaster>
+    <versionNumber>2</versionNumber>
+</EntitlementProcess>

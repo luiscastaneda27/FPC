@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>AND(IsClosed)</exitCriteriaFormula>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Pendiente segunda aprobación</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.FPC_ContarNumeroPrestamo__c</field>
+            <operation>greaterThan</operation>
+            <value>0.0</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Constancia__c</field>
+            <operation>equals</operation>
+            <value>P1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Supervisor SAC Seg Aprob</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Constancias Pignoración / Segunda Aprobación</name>
+    <versionMaster>55263000001RWFO</versionMaster>
+    <versionNumber>3</versionNumber>
+</EntitlementProcess>

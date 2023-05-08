@@ -102,7 +102,7 @@
         </action>
     </initialSubmissionActions>
     <label>Reversiones</label>
-    <processOrder>6</processOrder>
+    <processOrder>5</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

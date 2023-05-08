@@ -126,7 +126,7 @@
         </action>
     </initialSubmissionActions>
     <label>Retiros sin Exoneración</label>
-    <processOrder>9</processOrder>
+    <processOrder>8</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

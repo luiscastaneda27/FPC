@@ -20,26 +20,11 @@
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>Aprobación Supervisor SAC</label>
-        <name>Aprobacion_Supervisor_SAC</name>
-    </approvalStep>
-    <approvalStep>
-        <allowDelegate>false</allowDelegate>
-        <assignedApprover>
-            <approver>
-                <name>Aprobacion_SubGerencia_SAC</name>
-                <type>queue</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
-        </assignedApprover>
-        <label>Aprobación SubGerencia SAC</label>
-        <name>Aprobacion_SubGerencia_SAC</name>
-        <rejectBehavior>
-            <type>RejectRequest</type>
-        </rejectBehavior>
+        <name>Aprobacion_SupervisorSAC</name>
     </approvalStep>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
         <criteriaItems>
             <field>Case.Enviar_a_aprobacion__c</field>
             <operation>equals</operation>
@@ -65,12 +50,13 @@
             <operation>equals</operation>
             <value>Verdadero</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Case.FPC_ContarNumeroPrestamo__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>
-        <action>
-            <name>Aprobado_verdadero</name>
-            <type>FieldUpdate</type>
-        </action>
         <action>
             <name>Caso_aprobado_interno</name>
             <type>Alert</type>
@@ -99,7 +85,7 @@
         </action>
     </initialSubmissionActions>
     <label>Constancia de Pignoración</label>
-    <processOrder>5</processOrder>
+    <processOrder>10</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

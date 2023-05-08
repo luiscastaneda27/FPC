@@ -78,7 +78,7 @@
         </action>
     </initialSubmissionActions>
     <label>AumentoDisminucion_SAC</label>
-    <processOrder>7</processOrder>
+    <processOrder>6</processOrder>
     <recordEditability>AdminOnly</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>false</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>TEXT(Status) = &apos;Cerrado&apos;</exitCriteriaFormula>
+    <isVersionDefault>false</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Constancia</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Constancia__c</field>
+            <operation>notEqual</operation>
+            <value>P1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>SubGerencia SAC 2</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-240</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_Operaciones</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-96</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Constancia</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Constancia__c</field>
+            <operation>equals</operation>
+            <value>P1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>SubGerencia SAC 2</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Constancias / Subgerencia SAC - Segunda Aprobación</name>
+    <versionMaster>552540000008Ppx</versionMaster>
+    <versionNumber>3</versionNumber>
+</EntitlementProcess>

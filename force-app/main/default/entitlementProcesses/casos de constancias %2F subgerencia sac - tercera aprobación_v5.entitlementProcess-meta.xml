@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>TEXT(Status) = &apos;Cerrado&apos;</exitCriteriaFormula>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Constancia</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Constancia__c</field>
+            <operation>notEqual</operation>
+            <value>P1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>SubGerencia SAC 3</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-96</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-240</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Constancia</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Constancia__c</field>
+            <operation>equals</operation>
+            <value>P1</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>notEqual</operation>
+            <value>Pendiente segunda aprobación</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Supervisor SAC 3</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-2256</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-5640</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Constancias / Subgerencia SAC - Tercera Aprobación</name>
+    <versionMaster>552540000008PrA</versionMaster>
+    <versionNumber>5</versionNumber>
+</EntitlementProcess>

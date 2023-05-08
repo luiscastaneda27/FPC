@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.Status</field>
+        <operation>equals</operation>
+        <value>Pendiente segunda aprobación</value>
+    </exitCriteriaFilterItems>
+    <exitCriteriaFilterItems>
+        <field>Case.Constancia__c</field>
+        <operation>equals</operation>
+        <value>P1</value>
+    </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
+    <name>Casos de Constancias / Supervisor SAC</name>
+    <versionMaster>55263000001RVIS</versionMaster>
+    <versionNumber>1</versionNumber>
+</EntitlementProcess>

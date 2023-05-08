@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>FK_NAME</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.Asunto__c</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.CorreoElectronico__c</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.Telfono__c</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.FechaEnvio__c</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.FechaQueSeAbrio__c</field>
+    </columns>
+    <columns>
+        <field>InformeEDC__c.UltimaFechaQueSeabrio__c</field>
+    </columns>
+    <currency>HNL</currency>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>InformeEDC__c.FPC_Abierto__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Informe EDC (Agrupado Por Abierto)</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$InformeEDC__c@InformeEDC__c.Cliente__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>InformeEDC__c.FechaEnvio__c</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

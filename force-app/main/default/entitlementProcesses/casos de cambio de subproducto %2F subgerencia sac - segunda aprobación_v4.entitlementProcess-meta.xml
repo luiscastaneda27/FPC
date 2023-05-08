@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>TEXT(Status) = &apos;Cerrado&apos;</exitCriteriaFormula>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <criteriaBooleanFilter>(1 AND 2 AND 3) OR (1 AND 3 AND 4)</criteriaBooleanFilter>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cambio de Subproducto</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Cuentas_seleccionada__c</field>
+            <operation>greaterThan</operation>
+            <value>0.0</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Aprobado__c</field>
+            <operation>equals</operation>
+            <value>false</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Enviar_a_aprobacion__c</field>
+            <operation>equals</operation>
+            <value>true</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>SubGerencia SAC 2</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator2</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-192</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_Subgerencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-480</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Cambio de subproducto / Subgerencia SAC - Segunda Aprobación</name>
+    <versionMaster>552540000008Pps</versionMaster>
+    <versionNumber>4</versionNumber>
+</EntitlementProcess>

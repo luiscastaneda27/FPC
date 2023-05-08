@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Horario Oficiales SAC</businessHours>
+    <entryStartDateField>Case.LastModifiedDate</entryStartDateField>
+    <exitCriteriaFormula>TEXT(Status) = &apos;Cerrado&apos;</exitCriteriaFormula>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reversiones</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <value>Gestión, Gestión Usuario Financiero</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Oficiales SAC %2F Devolución 1</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-96</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-240</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <businessHours>Horario Oficiales SAC</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Reversiones</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Type</field>
+            <operation>notEqual</operation>
+            <value>Gestión, Gestión Usuario Financiero</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Oficiales SAC %2F Devolución 1</milestoneName>
+        <minutesCustomClass>myMilestoneTimeCalculator</minutesCustomClass>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Gravedad_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>2</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_Regular_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-240</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>F_Caso_Alerta_de_Urgencia_SAC</name>
+                <type>Alert</type>
+            </actions>
+            <timeLength>-96</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>Casos de Reversiones Devolución 1 / SAC</name>
+    <versionMaster>55254000000CbTj</versionMaster>
+    <versionNumber>2</versionNumber>
+</EntitlementProcess>

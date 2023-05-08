@@ -1,0 +1,28 @@
+<aura:component controller="GetNameFile" implements="flexipage:availableForRecordHome,force:hasRecordId">
+    
+    <aura:attribute name="listFiles" type="Object" access="global" />
+    <aura:attribute name="countFiles" type="Integer" default="0" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+     
+    <lightning:card title="{! 'Archivos (' + v.countFiles + ')'}" iconName="standard:file" >
+        <aura:iteration items="{!v.listFiles}" var="item">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="6">
+                    <lightning:fileCard fileId="{!item.idFile}" description="{!item.nameFile}"/>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="6">
+                     <aura:if isTrue="{!item.idFile2 != null}">
+                        <lightning:fileCard fileId="{!item.idFile2}" description="{!item.nameFile2}"/>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </aura:iteration>
+        <aura:if isTrue="{!v.countFiles == 0}">
+            <div>
+            	No se han encontrado archivos relacionados.
+            </div>
+        </aura:if>
+          </lightning:card>
+     
+	
+</aura:component>
