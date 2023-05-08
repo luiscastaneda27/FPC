@@ -134,6 +134,7 @@
             
             key = e.keyCode ? e.keyCode : e.which
               // backspace
+            console.log('key: '+key)
               if (key == 8) return true              
               if (key === 48 && field.value == "") return false
                // 0-9
@@ -141,12 +142,6 @@
                	if (field.value == "") return true
                	regexp = /.[0-9]{40}$/
                	return !(regexp.test(field.value))
-               }
-                // .
-               if (key == 46) {
-               	if (field.value == "") return false
-                regexp = /^[0-9]+$/
-                return regexp.test(field.value)
                }
               // other key
               return false
@@ -428,11 +423,15 @@
                                                 AND(detalleCaso.Tipo_Operacion__c = 'A4', cuentaCliente.Forma_Aportacion__c == 'TA'), 
                                                 AND(detalleCaso.Tipo_Operacion__c = 'A6', cuentaCliente.Forma_Aportacion__c == 'TA'),
                                                 AND(detalleCaso.Tipo_Operacion__c = 'A7', cuentaCliente.Forma_Aportacion__c == 'TA'))}">
-                                                <label class="slds-form-element__label" >
-                                                    <abbr class="slds-required" title="required">*</abbr>Banco</label>
-                                                <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 
-                                                    <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
-                                                </apex:inputField>    
+                                                <apex:outputPanel rendered="{!NOT(AND(detalleCaso.Banco__c != null, cuentaCliente.POS__c != null,
+                                                                            OR(detalleCaso.Tipo_Operacion__c = 'A1',detalleCaso.Tipo_Operacion__c = 'A2',
+                                                                            detalleCaso.Tipo_Operacion__c = 'A4',detalleCaso.Tipo_Operacion__c = 'A6',detalleCaso.Tipo_Operacion__c = 'A7')))}">
+                                                    <label class="slds-form-element__label" >
+                                                        <abbr class="slds-required" title="required">*</abbr>Banco</label>
+                                                    <apex:inputField styleclass="slds-input removePicklistValue2" value="{!detalleCaso.Banco__c}"> 
+                                                        <apex:actionSupport event="onchange" action="{!accionVacia2}"/>
+                                                    </apex:inputField>   
+                                                </apex:outputPanel>   
                                             </apex:outputPanel>
                                         </div>
                                         <div class="slds-form-element slds-size--2-of-2">

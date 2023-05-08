@@ -109,7 +109,7 @@ public with sharing class NaturalActualizar {
     public string NumeroID_Fiscal_OtroPais{get;set;}
     public String paisNacimiento { get; set; }
     public String pcPaisNacimiento { get; set; }
-
+	public String VE_USUARIO_ACTUALIZA { get; set; }
     
     public List<beneficiario> ListBeneficiarios {get;set;}
     public List<beneficiario> ListBeneficiariosC {get;set;}

@@ -28,12 +28,13 @@ private class testPDFConstancia {
                                                       fecha_aporte__c = date.today(), Nuevo_monto_aporte__c = 5000);
         insert detalle;
         
-        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo',
+        Case casoAumentoD = new Case(AccountId = natural.id, Status = 'Nuevo', DAU_Identidad__c =  '231312',
                                      RecordTypeId = [Select Name 
                                                      From RecordType Where DeveloperName = 'Aumento_Disminucion_Aportes'].id);
         insert casoAumentoD;
         
-        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = casoAumentoD.id,Cuenta__c = cuentaIndi.id, 
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = casoAumentoD.id,Cuenta__c = cuentaIndi.id, Tipo_Operacion__c = 'A6',
+                                                       DAU_Dia_de_pago__c = '14', N_Cuenta_Bancaria__c = '1212',
                                                        fecha_aporte__c = date.today(), Nuevo_monto_aporte__c = 5000);
         insert detalle1;       
         
@@ -55,7 +56,7 @@ insert detalle2;*/
         Test.setCurrentPage(pageRef);
         control = new controllerConstanciaPdf(new ApexPages.StandardController(casoConstancia));
         
-        casoConstancia.Constancia__c = 'A2';
+        casoConstancia.Constancia__c = 'P1';
         update casoConstancia;          
         control = new controllerConstanciaPdf(new ApexPages.StandardController(casoConstancia));
         
@@ -97,6 +98,55 @@ control = new controllerConstanciaPdf(new ApexPages.StandardController(casoConst
         //control = new controllerConstanciaPdf(new ApexPages.StandardController(casoActInfo));
         claseUtil.enviarCorreoCasoAD(casoConstancia.id,'CasoAyD');
         control = new controllerConstanciaPdf();
+        test.stopTest();
+    }
+    
+    static testMethod void myUnitTest2() {
+        MultiStaticResourceCalloutMock mock = new MultiStaticResourceCalloutMock();
+        mock.setStaticResource('http://190.5.68.11:9090/api/constancias','mockAportes');
+        mock.setStatusCode(200);
+        mock.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        Test.setMock(HttpCalloutMock.class, mock);
+        controllerConstanciaPdf.metodoutil();
+        Account natural = new Account(FirstName = 'Juan', LastName = 'Perez', Identificacion__c = '12345999',
+                                      RecordTypeId = [Select id From RecordType Where sObjectType = 'Account' AND DeveloperName = 'Natural'].id);
+        insert natural;
+        
+        Date hoy = date.today();
+        Cuentas__c cuentaIndi = new Cuentas__c(Name = 'Cuenta', Codigo__c = '1239999', Cliente__c = natural.id, currencyIsoCode = 'HNL',
+                                               Fecha_Apertura__c = hoy);
+        insert cuentaIndi;
+        
+        Case caso = new Case(AccountId = natural.id, Status = 'Nuevo' ,Identificacion__c = 'Test',
+                                       RecordTypeId = [Select Name From RecordType Where DeveloperName = 'Actualizacion_informacion'].id,
+                                       Fecha_desde__c = hoy, 
+                                       Fecha_hasta__c = hoy + 10);
+        
+        insert caso;
+        
+         Case casoConstancias = new Case(AccountId = natural.id, Status = 'Nuevo', DAU_Identidad__c =  '231312',Constancia__c = 'P1',
+                                     RecordTypeId = [Select Name 
+                                                     From RecordType Where DeveloperName = 'Constancia'].id, Tasa_Cambio__c = 1.1);
+        insert casoConstancias;
+        
+        Detalle_caso__c detalle1 = new Detalle_Caso__c(Caso__c = casoConstancias.id,Cuenta__c = cuentaIndi.id,
+                                                       DAU_Dia_de_pago__c = '14', N_Cuenta_Bancaria__c = '1212',Cambio_moneda__c = true,
+                                                       fecha_aporte__c = date.today(), Nuevo_monto_aporte__c = 5000);
+        insert detalle1;   
+        
+        test.startTest();
+        
+        PageReference pageRef = Page.vfConstanciaPDFSite;
+        Test.setCurrentPage(pageRef);
+        controllerConstanciaPdf control = new controllerConstanciaPdf(new ApexPages.StandardController(caso));
+        
+        pageRef = Page.vfFormularioPDFSite;
+        Test.setCurrentPage(pageRef);
+        control = new controllerConstanciaPdf(new ApexPages.StandardController(caso));
+        
+        pageRef = Page.vfConstanciaPDFSite;
+        Test.setCurrentPage(pageRef);
+        control = new controllerConstanciaPdf(new ApexPages.StandardController(casoConstancias));
         test.stopTest();
     }
     

@@ -16,14 +16,7 @@ trigger enviarASysde on Case (before update) {
                             (SELECT Id, StepStatus, Actor.Name, ElapsedTimeInDays, ElapsedTimeInMinutes, 
                             CreatedDate, ProcessNodeId, ProcessNode.Name, Comments 
                             FROM StepsAndWorkitems order by CreatedDate) from ProcessInstance 
-                            Where TargetObjectId =: caso2 Order By CreatedDate Desc Limit 1];
-        
-        List<ProcessInstanceNode> nodes = new List<ProcessInstanceNode>{};
-        if(approvalProcess.size() > 0) {
-            nodes = [SELECT Id, NodeStatus, ProcessNodeName, ProcessInstanceId 
-                                                   FROM processinstancenode 
-                                                   WHERE processinstanceid =: approvalProcess[0].Id Order By CreatedDate Desc Limit 1];
-        }        
+                            Where TargetObjectId =: caso2 Order By CreatedDate Desc Limit 1];    
         
         List<Case> lstCase = new List<Case>{};
         List<Case> updatelstCase = new List<Case>{};    
@@ -170,8 +163,8 @@ trigger enviarASysde on Case (before update) {
                     (trigger.oldMap.get(item.id).Status != item.Status && FCsysde < fechaCreacioncaso && tiporetiro=='52'
                      && (item.Status=='Pendiente segunda aprobación' || item.Status=='Cerrado') ) ){
                          if(!test.isRunningTest()){
-                             //item.addError('¡No se puede procesar la solicitud debido a Sysde no está cerrado al día de hoy!');  
-                             casosAprobados.put(item, tipoRnombre);
+                             item.addError('¡No se puede procesar la solicitud debido a Sysde no está cerrado al día de hoy!');  
+                             //casosAprobados.put(item, tipoRnombre);
                          }  
                      }else if(trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Cerrado'){
                          casosAprobados.put(item, tipoRnombre);
@@ -206,7 +199,7 @@ trigger enviarASysde on Case (before update) {
                 if(item.constancia__C == 'P1' && listdetalleCaso.size()>0){
                     detalleCaso = listdetalleCaso[0];
                 } 
-                if(item.enviar_a_aprobacion__C && !item.aprobado__C && item.constancia__C == 'P1' && trigger.oldMap.get(item.id).Status != item.Status && ( item.Status == 'Cerrado' || item.Status =='Esperando Documentación')){
+                if(item.enviar_a_aprobacion__c && !item.aprobado__c && item.constancia__c == 'P1' && trigger.oldMap.get(item.id).Status != item.Status && item.Status == 'Cerrado'){
                        item.addError('¡El caso se tiene que enviar a aprobación!'); 
                    }
                 else if(trigger.oldMap.get(item.id).Status != item.Status &&
@@ -241,7 +234,7 @@ trigger enviarASysde on Case (before update) {
                     aSysdeCallouts.accionSubProducto(item.id);                    
                 } else if(tipoRnombre == 'Actualizacion_informacion'){
                     aSysdeCallouts.actualizacionInformacion(item.id);                    
-                } else if(tipoRnombre == 'Retiros' || test.isRunningTest()){
+                } else if(tipoRnombre == 'Retiros'){
                     aSysdeCallouts.retiros(item.id);      
                 } else if(tipoRnombre == 'Reposicion_Carnet'){
                     aSysdeCallouts.ReposicionCarnet(item.id);

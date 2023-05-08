@@ -15,9 +15,9 @@
         <value>Case.Constancia</value>
     </filters>
     <filters>
-        <field>Viene_Portal_Autogestion__c</field>
+        <field>Constancia__c</field>
         <operation>equals</operation>
-        <value>1</value>
+        <value>P1</value>
     </filters>
     <label>Constancias</label>
 </ListView>

@@ -47,7 +47,7 @@ public class controllerConstanciaPdf{
             //integer u=[select count() from cuentas__C where id=:detallecaso.cuenta__c and cuenta_colectiva2__C !=null];
             
             // Caso
-            camposCaso = 'toLabel(Constancia__c),Monto_compromiso_aporte__c';
+            camposCaso = 'toLabel(Constancia__c),Monto_compromiso_aporte__c,CreatedDate';
             camposCaso += ',Fecha_desde__c,Fecha_Hasta__c,currencyisocode,embajadas__c,Frecuencia__c,DAU_Identidad__c,DAU_No_Cuenta__c';
             camposCaso += ',Telefono_Casa__c,Telefono_Movil__c,Telefono_Trabajo__c,Punto_Referencia_Trabajo__c';
             camposCaso += ',Correo_Electronico__c,Fecha_Nacimiento__c,Lugar_Nacimiento__c,Estado_Civil__c';
@@ -72,7 +72,7 @@ public class controllerConstanciaPdf{
             camposCaso = camposCaso.replace(')','');
             
             // CLIENTE RELACIONADO
-            camposCliente = 'RecordType.DeveloperName, FirstName,Celular__c,Name,Nombre_empresa__c,LastName,toLabel(Tipo_Identificacion__c),Identificacion__c';
+            camposCliente = 'RecordTypeId,FirstName,Celular__c,Name,Nombre_empresa__c,LastName,toLabel(Tipo_Identificacion__c),Identificacion__c';
             camposCliente += ',PersonBirthdate,toLabel(Estado_Civil__pc),Lugar_Nacimiento__c,PersonEmail,PersonMobilePhone';
             queryRelated = 'Select ';
             queryRelated += camposCliente;
@@ -98,7 +98,7 @@ public class controllerConstanciaPdf{
             }
             //detalleCaso.Prestamo_anterior__c
             // DETALLE DEL CASO
-            camposDetalle = 'Nueva_Cuenta_colectiva2__c,Prestamo_anterior__c,No_es_primer_prestamo__c,Cambio_moneda__c,Nuevo_Subproducto__c,Cuenta__c,Detalle_subproducto__c';
+            camposDetalle = 'DAU_Dia_de_pago__c,Nueva_Cuenta_colectiva2__c,Prestamo_anterior__c,No_es_primer_prestamo__c,Cambio_moneda__c,Nuevo_Subproducto__c,Cuenta__c,Detalle_subproducto__c';
             camposDetalle += ',Detalle_Cuenta_colectiva__c,Accion__c,Nueva_fecha_aporte__c,toLabel(Nuevo_canal_aporte__c),Nuevo_monto_aporte__c';
             camposDetalle += ',N_Cuenta_Bancaria__c,toLabel(Tipo_Operacion__c),Tipo_saldo_modificar2__c,Cliente_quiere_capital_semilla__c';
             camposDetalle += ',Cliente_sigue_Laborando__c,Permitir_Retiro_Saldos_Patronales__c,Comision_Retiro_Anticipado__c,Monto_retirar__c';
@@ -200,10 +200,15 @@ public class controllerConstanciaPdf{
                    } else if(casoTratar.RecordType.DeveloperName == 'Aumento_Disminucion_Aportes' 
                              && (detallesCaso[0].Tipo_Operacion__c == 'Afiliación de Débito Automático' || detallesCaso[0].Tipo_Operacion__c == 'Cambio de Canal de Aporte'
                                 || detallesCaso[0].Tipo_Operacion__c == 'Cambio de # Tarjeta')){
+                                    if(detallesCaso[0].Tipo_Operacion__c == 'Cambio de # Tarjeta' && String.isNotBlank(detallesCaso[0].DAU_Dia_de_pago__c)){
+                                        DateTime fechaNueva = DateTime.newInstance(casoTratar.CreatedDate.year(), casoTratar.CreatedDate.month(), Integer.valueOf(detallesCaso[0].DAU_Dia_de_pago__c));
+                                        fechaNueva = Integer.valueOf(detallesCaso[0].DAU_Dia_de_pago__c) > casoTratar.CreatedDate.day() ? fechaNueva : fechaNueva.addMonths(1);
+                                        detallesCaso[0].Nueva_fecha_aporte__c = Date.valueOf(fechaNueva);
+                                    }
                                     esConstancia = false; 
                                     if(String.isNotBlank(casoTratar.DAU_Identidad__c) && casoTratar.DAU_Identidad__c != casoTratar.Account.Identificacion__c){
                                         queryAsig += ' FPC_TipoPersona__c = \'Tercero\'';
-                                        informacionTercero = updateCase.validarIdentidad(casoTratar.Id, detallesCaso[0].N_Cuenta_Bancaria__c, casoTratar.Account.Identificacion__c);
+                                        informacionTercero = updateCase.validarIdentidadFormulario(casoTratar.Id, detallesCaso[0].N_Cuenta_Bancaria__c, casoTratar.Account.Identificacion__c);
                                     }else{
                                          queryAsig += ' FPC_TipoPersona__c = \'Titular\'';
                                     }
@@ -212,7 +217,7 @@ public class controllerConstanciaPdf{
                        esConstancia = false;
                    }                            
                    queryAsig += ' Limit 1';
-                   //system.debug('Tipo de caso--:'+ casoTratar.RecordType.DeveloperName);
+                   system.debug('esConstancia:'+ esConstancia);
                    system.debug(' el query para el html : '+queryAsig);
                    asignacion = dataBase.query(queryAsig);      
                    html = asignacion.Constancia__r.html_espanol__c; 
@@ -223,12 +228,13 @@ public class controllerConstanciaPdf{
                        html=html.substring(152, html.length());
                    }
                    
-                   
-                   if(cliente.RecordType.DeveloperName == 'Juridico' 
+                   if(cliente.RecordTypeId == Schema.SObjectType.Account.getRecordTypeInfosByName().get('Juridico').getRecordTypeId() 
                       && (CasoTratar.Constancia__c == 'Pignoración' || CasoTratar.Constancia__c == 'Saldo' ||
                           CasoTratar.Constancia__c == 'Aportación Extraordinaria' || CasoTratar.Constancia__c == 'Aportación Ordinaria')){
                               html = html.replace('de identidad', 'RTN');
                               html = html.replace('el (la) Señor (a)', 'la Empresa ');
+                              html = html.replace('de pension', 'de cesant&iacute;a ');
+                              html = html.replace('de pensión', 'de cesantía ');
                           }
                    
                    
@@ -306,6 +312,7 @@ public class controllerConstanciaPdf{
             }           
         }
         if(html.contains('[Tercero.Name]')){
+            System.debug('informacionTercero: '+JSON.serialize(informacionTercero));
             informacionTercero.DAU_Name = String.isNotBlank(informacionTercero.DAU_Name) ? informacionTercero.DAU_Name : '';
             informacionTercero.DAU_Identidad = String.isNotBlank(informacionTercero.DAU_Identidad) ? informacionTercero.DAU_Identidad : '';
             html=html.replace('[Tercero.Name]',informacionTercero.DAU_Name);
@@ -398,7 +405,9 @@ public class controllerConstanciaPdf{
                 html=html.replace('[getHoyTS]','');
                 
             }else{
+                System.debug('SaldoDispoible: '+SaldoDispoible);
                 string x = ConvertirNumeros.convertirLetras((integer) SaldoDispoible);
+                System.debug('SaldoDispoible: '+x);
                 string decimalesLetra='Exactos ';
                 if(SaldoDispoible>(integer) SaldoDispoible){
                     if((integer)(((SaldoDispoible- (integer) SaldoDispoible).setscale(2))*100) ==1){
@@ -879,40 +888,39 @@ public class controllerConstanciaPdf{
     
     public void reemplazarCampos(sObject elObjeto, String nombreApi, String camposConsulta){
         try{Map<String,Schema.SObjectType> gd = Schema.getGlobalDescribe();  
-        Schema.SObjectType sobjType = gd.get(nombreApi); 
-        Schema.DescribeSObjectResult r = sobjType.getDescribe();  
-        Map<String,Schema.SObjectField> M = r.fields.getMap();
-        list<String> listCamposObjeto = camposConsulta.split(',');
-        
-        for(String campo: listCamposObjeto){                    
-            if(elObjeto.get(campo) != null){
-                System.debug(nombreApi+' --- '+campo);
-                if(html.contains('['+nombreApi + '.' + campo+']')){                      
-                    Schema.SObjectField field = M.get(campo);                                                      
-                    Schema.DescribeFieldResult fieldDesc = field.getDescribe();
-                    Schema.DisplayType tipoCampo = fieldDesc.getType();
-                    
-                    if(campo == 'N_Cuenta_Bancaria__c'){
-                        html = html.replace('['+nombreApi+'.'+campo+']', String.valueOf(elObjeto.get(campo)));          
-                    }else if(tipoCampo.name() == 'Date'){
-                        Date y = Date.valueOf(elObjeto.get(campo));
-                        html = html.replace('['+nombreApi+'.'+campo+']', y.format());                                
-                    }else if(tipoCampo.name() == 'CURRENCY' || tipoCampo.name() == 'DOUBLE'){
-                        Double esNumero = elObjeto.get(campo) != null ? double.valueOF(elObjeto.get(campo)) : 0;
-                        html = html.replace('['+nombreApi+'.'+campo+']', esNumero.format()); 
-                    }else{                          
-                        html = html.replace('['+nombreApi+'.'+campo+']', String.valueOf(elObjeto.get(campo)));
-                    }                        
+            Schema.SObjectType sobjType = gd.get(nombreApi); 
+            Schema.DescribeSObjectResult r = sobjType.getDescribe();  
+            Map<String,Schema.SObjectField> M = r.fields.getMap();
+            list<String> listCamposObjeto = camposConsulta.split(',');
+            for(String campo: listCamposObjeto){  
+                if(elObjeto.get(campo) != null){
+                    if(html.contains('['+nombreApi + '.' + campo+']')){                      
+                        Schema.SObjectField field = M.get(campo);                                                      
+                        Schema.DescribeFieldResult fieldDesc = field.getDescribe();
+                        Schema.DisplayType tipoCampo = fieldDesc.getType();
+                        
+                        if(campo == 'N_Cuenta_Bancaria__c'){
+                            html = html.replace('['+nombreApi+'.'+campo+']', String.valueOf(elObjeto.get(campo)));          
+                        }else if(tipoCampo.name() == 'Date'){
+                            Date y = Date.valueOf(elObjeto.get(campo));
+                            html = html.replace('['+nombreApi+'.'+campo+']', y.format());                                
+                        }else if(tipoCampo.name() == 'CURRENCY' || tipoCampo.name() == 'DOUBLE'){
+                            Double esNumero = elObjeto.get(campo) != null ? double.valueOF(elObjeto.get(campo)) : 0;
+                            html = html.replace('['+nombreApi+'.'+campo+']', esNumero.format()); 
+                        }else{                          
+                            html = html.replace('['+nombreApi+'.'+campo+']', String.valueOf(elObjeto.get(campo)));
+                        }                        
+                    }
+                }else{
+                    //system.debug(html);
+                    if(html.contains('['+nombreApi + '.' + campo+']')){  
+                        html = html.replace('['+nombreApi+'.'+campo+']', '');                 
+                    }
                 }
-            }else{
-                //system.debug(html);
-                if(html.contains('['+nombreApi + '.' + campo+']')){  
-                    html = html.replace('['+nombreApi+'.'+campo+']', '');                 
-                }
-            }
-        }  
-           }catch(Exception ex)
-           {}
+            }  
+           }catch(Exception ex){
+               System.debug('Error: '+ex.getMessage()+ ', línea: '+ex.getLineNumber());
+           }
     }
     
     public string getAlternativoHoyLetras(){

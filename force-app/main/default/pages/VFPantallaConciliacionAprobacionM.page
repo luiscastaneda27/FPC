@@ -702,7 +702,7 @@
                                 <div class="slds-modal__container">
                                     <header class="slds-modal__header">
                                         <apex:Messages styleClass="slds-notify slds-notify--alert slds-theme_alert-texture slds-theme_warning" style="background:#f78d1c; color:#FFF; font-weight: bold;"/>  
-                                        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Codigos de Rezago</h1>
+                                        <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="color:#999999; font-size:33px;">Códigos de Rezago</h1>
                                         <br/><br/>
                                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" style="font-size:15px;">
                                             <!--apex:inputText value="{!CodRefTest}" html-placeholder="{!CodRef}">
@@ -725,7 +725,8 @@
                                             <br/><br/>
                                             <table style="border: 1px solid black;">
                                                 <tr>
-                                                    <th style="text-align: center; vertical-align: middle;">Rezago Si/No</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Rezago</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Si/No</th>
                                                     <th style="text-align: center; vertical-align: middle;">Moneda</th>
                                                     <th style="text-align: center; vertical-align: middle;">Monto</th>
                                                 </tr>

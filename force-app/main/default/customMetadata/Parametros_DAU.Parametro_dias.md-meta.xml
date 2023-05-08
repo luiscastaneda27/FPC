@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>DAU_Dias__c</field>
-        <value xsi:type="xsd:double">10.0</value>
+        <value xsi:type="xsd:double">28.0</value>
     </values>
     <values>
         <field>DAU_EndPoint__c</field>

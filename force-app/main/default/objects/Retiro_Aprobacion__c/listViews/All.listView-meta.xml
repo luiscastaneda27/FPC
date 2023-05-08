@@ -15,5 +15,10 @@
     <columns>UPDATEDBY_USER</columns>
     <columns>CREATED_DATE</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>Fecha_Sysde__c</field>
+        <operation>equals</operation>
+        <value>3/14/2023</value>
+    </filters>
     <label>Todos</label>
 </ListView>

@@ -8,7 +8,7 @@
     <filters>
         <field>Cliente__c</field>
         <operation>equals</operation>
-        <value>ANDREA IVETTE ROMERO SOTO,GRAZIAMARIA 2 MURILLO CASTRO,STEFFANY ALMENDARES RIVAS,JOSE RAMON BARAHONA ASEJO,ELIAS JACOBO CASTILLO CHAVEZ</value>
+        <value>PAOLA MARIA CRUZ BONILLA,GRAZIAMARIA 28 MURILLO CASTRO</value>
     </filters>
     <label>Todos</label>
 </ListView>

@@ -4,14 +4,14 @@
     <columns>CASES.CASE_NUMBER</columns>
     <columns>NAME</columns>
     <columns>CASES.SUBJECT</columns>
-    <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
+    <columns>CASES.CREATED_DATE</columns>
     <columns>CORE.USERS.ALIAS</columns>
     <columns>CASES.RECORDTYPE</columns>
     <filterScope>Everything</filterScope>
     <filters>
-        <field>CASES.CREATED_DATE</field>
+        <field>CASES.SUBJECT</field>
         <operation>equals</operation>
-        <value>TODAY</value>
+        <value>estado de cuenta</value>
     </filters>
     <label>Todos los casos abiertos</label>
 </ListView>

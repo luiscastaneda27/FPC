@@ -8,7 +8,7 @@ public class EnvioCorreoSLA {
             BusinessDays comercial = new BusinessDays();
             List<FPC_InicioFinSubEstadosSLARC__c> listTiemposSLA = getRecords('');
             Map<String, List<afilaicionSLA>> mapCorreo = getMapaUsuario(listTiemposSLA);
-            Map<String, User> mapUsuarios = getUsuario(mapCorreo);
+            Map<String, Usuarios_de_Pantallas__c> mapUsuarios = getUsuario(mapCorreo);
             Map<String, String> mapEstados = getEstados('FPC_TiemposSLARC__c', 'FPC_EstadoSLA__c');
             Map<String, String> mapTipoAfiliacion = getEstados('Reporte_Calidad__c', 'Tipo_Afiliacion__c');
             
@@ -48,12 +48,12 @@ public class EnvioCorreoSLA {
                        horasTransc -= horasTransc > 0 ? 8 : 0;
                        Integer horasDiaActual = 18 - tiempo.FPC_FechaInicio__c.hour();
                        horasTransc += horasDiaActual > 8 ? 8 : horasDiaActual;
-                       if(tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'V'){
-                           List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c), horasTransc * 60);
-                           mapCorreo.put(tiempo.FPC_ReporteCalidad__r.codigo_oficial_sac__c, listAfilaicion);
-                       }else{
+                       if(tiempo.FPC_EstadoSLA__c == 'N' || tiempo.FPC_EstadoSLA__c == 'D'){
                            List<afilaicionSLA>listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c), horasTransc * 60);
                            mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_Asesor_Comercial__c, listAfilaicion);
+                       }else{
+                           List<afilaicionSLA> listAfilaicion = getTiempoSLA(tiempo, mapCorreo.get(tiempo.FPC_ReporteCalidad__r.Codigo_oficial_sac__c), horasTransc * 60);
+                           mapCorreo.put(tiempo.FPC_ReporteCalidad__r.Codigo_oficial_sac__c, listAfilaicion);
                        }
                    }
             }
@@ -87,12 +87,14 @@ public class EnvioCorreoSLA {
                     cuerpoCorreo += getHtmlCorreogGeneral(body, 'Afiliaciones que estan al 50% para vencer');
                     
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-                    mail.setToAddresses(new String[] {mapUsuarios.get(item).Email});
+                    system.debug('item: '+item);
+                    system.debug('item: '+mapUsuarios.get(item).Email__c);
+                    mail.setToAddresses(new String[] {mapUsuarios.get(item).Email__c});
                     //mail.setToAddresses(new String[] {'ivorcast@gmail.com'});
                     mail.setSubject('Estado de Afiliaciones SLA '+Date.today().format());
                     mail.setHtmlBody(cuerpoCorreo);
                     mail.setOrgWideEmailAddressId(owea.get(0).Id);
-                    MessageList.add(mail); 
+                    MessageList.add(mail);
                 }
             }
             Messaging.sendEmail(MessageList, false);
@@ -133,7 +135,7 @@ public class EnvioCorreoSLA {
         }else if( horasTransc >=tiempo.FPC_TiempoConfigurado__c * 60 * 0.5){
             a.esta50 = true;
         }
-        System.debug(horasTransc+' a: '+a);
+        //System.debug(horasTransc+' a: '+a);
         if(a.estaVencida || a.esta80 || a.esta50){
             listAfilaicion.add(a);
         }
@@ -168,10 +170,10 @@ public class EnvioCorreoSLA {
         return  DataBase.query(query);
     }
     
-    public static Map<String, User> getUsuario(Map<String, List<afilaicionSLA>> mapCorreo){
-        Map<String, User> mapUsuarios = new Map<String, User>();
-        for(User item: [Select Codigo__c, Name, Email from User Where Codigo__c = :mapCorreo.keySet() ]){
-            mapUsuarios.put(item.Codigo__c, item);
+    public static Map<String, Usuarios_de_Pantallas__c> getUsuario(Map<String, List<afilaicionSLA>> mapCorreo){
+        Map<String, Usuarios_de_Pantallas__c> mapUsuarios = new Map<String, Usuarios_de_Pantallas__c>();
+        for(Usuarios_de_Pantallas__c item: [Select Name, Apellido__c, Email__c, Usuario__c from Usuarios_de_Pantallas__c Where Usuario__c = :mapCorreo.keySet() ]){
+            mapUsuarios.put(item.Usuario__c, item);
         }
         return mapUsuarios;
     }

@@ -89,7 +89,7 @@ public class aSysdeReporteCalidad {
            
             HttpRequest request = new HttpRequest();
             String url = claseUtilPlanillas.urlSysde('Test'); 
-           // url='http://190.5.68.49:9090/';
+           //url='http://190.5.68.49:9090/';
             request.setEndpoint(url + 'api/clientes/reportes');
             request.setMethod('POST');
             request.setBody(cons);
@@ -210,6 +210,30 @@ public class aSysdeReporteCalidad {
         }
     }
     
+    public static Date convertirFecha(String fecha){
+        try{
+            Date fechaRturn;
+            List<String> listFechas = fecha.split('-');
+            Integer respuesta;
+            String mes = listFechas[1];
+            if(mes=='JAN' || mes=='ENE'){respuesta = 1;}
+            if(mes=='FEB'){respuesta = 2;}
+            if(mes=='MAR'){respuesta = 3;}
+            if(mes=='APR' || mes=='ABR'){respuesta = 4;}
+            if(mes=='MAY' ){respuesta = 5;}
+            if(mes=='JUN' ){respuesta = 6;}
+            if(mes=='JUL' ){respuesta = 7;}
+            if(mes=='AUG' || mes=='AGO'){respuesta = 8;}
+            if(mes=='SEP' ){respuesta = 9;}
+            if(mes=='OCT' ){respuesta = 10;}
+            if(mes=='NOV' ){respuesta = 11;}
+            if(mes=='DEC' || mes=='DIC'){respuesta = 12;}
+            fechaRturn = date.valueOf(DateTime.newInstance((Integer.valueOf(listFechas[2]) + 2000), respuesta, Integer.valueOf(listFechas[0])));
+            return fechaRturn;
+        }catch(Exception ex){
+            return null;
+        }
+    }
     
     public class InformeReporteCalidad{
         public string accion {get;set;}
@@ -231,9 +255,10 @@ public class aSysdeReporteCalidad {
         
     
     public class ClassReporteCalidad {
-        public string clienteUnicoBanco{get;set;}
-        public string numContrato{get;set;}
-        public string numCuenta{get;set;}
+        public String clienteUnicoBanco{get;set;}
+        public String numContrato{get;set;}
+        public String numCuenta{get;set;}
+        public String fechaIngreso{get;set;}
     }
     
     

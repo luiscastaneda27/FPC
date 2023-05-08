@@ -1,33 +1,18 @@
-/**
-*Class Name: BAT_CallCardServiceFicohsa
-*Description: Clase Batch que llama al servicio de Salesforce Regional para Afiliar, Modificar, Cancelar Aportes. (Se ejecuta cuando el caso de cierra).
-*Created Date: 2/12/2022 04:20 PM
-*Created By: Cloud Code   
-*Last Modified by: Cloud Code 13/04/2023 09:15 AM
-*/
-global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
+public class CTRL_CallCardServiceFicohsa {
     
-    global Boolean enviarSolicitud;
-    global String caseId;
-    global Set<Id> caseIds = new Set<Id>();
-    global String tipoGestion;
+    public static Boolean enviarSolicitud;
+    public static String caseId;
+    public static Set<Id> caseIds = new Set<Id>();
+    public static String tipoGestion;
     
-    global BAT_CallCardServiceFicohsa(List<Detalle_caso__c> lstDetCase, String tipoGestion) {
-        for(Detalle_caso__c dc : lstDetCase) {
-            caseId = dc.Caso__c;
-        }
-        this.tipoGestion = tipoGestion;
-    }
-    
-    global Database.QueryLocator start(Database.BatchableContext bc) {
-        return Database.getQueryLocator([SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
+	@Future(callout=true)
+    public static void callServiceRegional(String caseId, String tipoGestion) {
+        List<Detalle_caso__c> detCaso = [SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
             Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Caso__r.Respuesta_SF_Tarjetas__c,
             Cuenta__r.Seguro_Vida__c,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Cuenta__r.Fecha_Aporte__c,
-            Cuenta__r.Monto_aporte__c,Nueva_fecha_aporte__c,Nuevo_monto_aporte__c,CreatedDate,Caso__r.Account.Pais_Residencia__c,Tipo_Operacion__c
-            From Detalle_caso__c Where Caso__r.Id =: caseId]);
-    }
-    
-    global void execute(Database.BatchableContext bc, List<Detalle_caso__c> scope) {
+            Cuenta__r.Monto_aporte__c,Nueva_fecha_aporte__c,Nuevo_monto_aporte__c,CreatedDate,Caso__r.Account.Pais_Residencia__c,Tipo_Operacion__c,
+            DAU_Borrar_Cuotas__c from Detalle_caso__c Where Caso__r.Id =: caseId];
+            system.debug('tipoGestion: '+tipoGestion);
         String Afiliacion, CodigoError, estadoGestion, Gestion;
         List<Case> searchCase = new List<Case>();
         List<Case> updateCase = new List<Case>();
@@ -61,9 +46,9 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
             
             //Validando la fecha
             Date fechaComparacion, fechaComparacion2;
-            for(Detalle_caso__c dt : scope) {
+            for(Detalle_caso__c dt : detCaso) {
                 if(tipoGestion == 'ALTA') {
-                    if((dt.Tipo_Operacion__c == 'A3' || dt.Tipo_Operacion__c == 'A8') && (dt.Caso__r.Respuesta_SF_Tarjetas__c != Null && dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error'))) {
+                    if((dt.Tipo_Operacion__c == 'A3' || dt.Tipo_Operacion__c == 'A8') && dt.Caso__r.Respuesta_SF_Tarjetas__c != Null) {
                         enviarSolicitud = false;  
                     } else if(dt.Tipo_Operacion__c == 'A6' && dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('Afiliación')) {
                         enviarSolicitud = false;
@@ -79,7 +64,7 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                         }
                     }   
                 } else if(tipoGestion == 'BAJA') {
-                    if(dt.Tipo_Operacion__c == 'A6' && dt.Caso__r.Respuesta_SF_Tarjetas__c != Null && (dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error') || dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('System.DmlException'))) {
+                    if(dt.Tipo_Operacion__c == 'A6' && dt.Caso__r.Respuesta_SF_Tarjetas__c != Null) {
                         enviarSolicitud = false;    
                     } else if(dt.Tipo_Operacion__c == 'A7' && dt.Caso__r.Respuesta_SF_Tarjetas__c != Null && (dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error') || dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('System.ListException') || dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('Class.WS_DAU_Pensiones') || dt.Caso__r.Respuesta_SF_Tarjetas__c.contains('System.DmlException'))) {
                         enviarSolicitud = false;    
@@ -161,7 +146,7 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                     request.setHeader('Content-Type', 'text/xml');
                     request.setHeader('SOAPAction','action');
                     request.setTimeout(120000);
-                       
+                    System.debug('sessionId: '+sessionId); 
                     String SOAPXML = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://soap.sforce.com/schemas/class/WS_DAU_Pensiones">\n';
                     SOAPXML += '<soapenv:Header>\n';
                     SOAPXML += '<ws:SessionHeader>\n';
@@ -176,8 +161,8 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                     //SOAPXML += '<ws:Cuenta>50009531998656</ws:Cuenta>\n';
                     SOAPXML += '<ws:SubProducto>'+tipoSubProducto+moneda+'</ws:SubProducto>\n';
                     //SOAPXML += '<ws:SubProducto>Pensiones y Cesantías - Personal Ordinario L</ws:SubProducto>\n';                                     
-                    //SOAPXML += '<ws:NumReferencia>'+dt.Cuenta__r.Name+'</ws:NumReferencia>\n';
-                    SOAPXML += '<ws:NumReferencia>222353</ws:NumReferencia>\n';
+                    SOAPXML += '<ws:NumReferencia>'+dt.Cuenta__r.Name+'</ws:NumReferencia>\n';
+                    //SOAPXML += '<ws:NumReferencia>222355</ws:NumReferencia>\n';
                     SOAPXML += '<ws:DiaPago>'+diaPago+'</ws:DiaPago>\n';
                     //SOAPXML += '<ws:DiaPago>14</ws:DiaPago>\n';
                     SOAPXML += '<ws:Moneda>'+dt.Cuenta__r.CurrencyIsoCode+'</ws:Moneda>\n';
@@ -271,9 +256,9 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
 
             searchCase = [Select Id, Respuesta_SF_Tarjetas__c, Tipo_de_Operacion__c From Case Where Id In : caseIds limit 1];
 
-            if(caseIds.size() > 0 && CodigoError == 'SUCCESS' && Afiliacion != Null) { 
+            if(caseIds.size() > 0) { 
                 
-                List<Detalle_caso__c> detcaso = [SELECT Id,Caso__c,Caso__r.CaseNumber,DAU_Borrar_Cuotas__c,
+                List<Detalle_caso__c> detcaso2 = [SELECT Id,Caso__c,Caso__r.CaseNumber,DAU_Borrar_Cuotas__c,
                                                          Caso__r.Respuesta_SF_Tarjetas__c,Tipo_Operacion__c 
                                                          From Detalle_caso__c Where Caso__r.Id =: searchCase[0].Id limit 1];
                 for(Case cs : searchCase) { 
@@ -283,8 +268,8 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                     } else if(tipoGestion == 'ALTA' && cs.Tipo_de_Operacion__c == 'A6' && cs.Respuesta_SF_Tarjetas__c != Null && cs.Respuesta_SF_Tarjetas__c.contains('Cancelación')) {
                         cs.Respuesta_SF_Tarjetas__c = cs.Respuesta_SF_Tarjetas__c + '\n \n Afiliación: \n' + Afiliacion + '\n' + CodigoError + '\n' + estadoGestion + '\n' + Gestion;
                         if(cs.Respuesta_SF_Tarjetas__c.contains('Afiliación')) {
-                            if(detcaso[0].DAU_Borrar_Cuotas__c == '2' || detcaso[0].DAU_Borrar_Cuotas__c == '3') { SYstem.debug('Entra 2');
-                                System.debug('detcaso[0].Caso__r.Id: '+detcaso[0].Caso__r.Id);
+                            if(detcaso2[0].DAU_Borrar_Cuotas__c == '2' || detcaso2[0].DAU_Borrar_Cuotas__c == '3') { SYstem.debug('Entra 2');
+                                System.debug('detcaso2[0].Caso__r.Id: '+detcaso2[0].Caso__r.Id);
                                 List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                                 Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detcaso[0].Caso__r.Id, DAU_Borrar_Cuotas_S10__c = true));
                                 // Call method to publish events
@@ -330,6 +315,11 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                                     // Call method to publish events
                                     List<Database.SaveResult> results = EventBus.publish(Logs); 
                                 } 
+                            } else if(tipoGestion == 'Baja' && dt.Tipo_Operacion__c == 'A6') { 
+								List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                                Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detcaso[0].Caso__r.Id, DAU_PrimerServicio__c = true));
+                                // Call method to publish events
+                                List<Database.SaveResult> results = EventBus.publish(Logs);                                
                             } else if(dt.DAU_Borrar_Cuotas__c == '2' || dt.DAU_Borrar_Cuotas__c == '3') {
                                 List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                                 Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = dt.Caso__r.Id, DAU_Borrar_Cuotas_S10__c = true));
@@ -352,13 +342,7 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
                         }
                     }
                 }               
-            } else {
-                for(Case cs : searchCase) {
-                    if(cs.Respuesta_SF_Tarjetas__c == Null)
-                    cs.Respuesta_SF_Tarjetas__c = 'La tarjeta ya se encuentra afiliada o Error devuelto por el servicio: ' + CodigoError;
-                    Update cs;
-                }
-            }
+            } 
         } catch(Exception ex) {
             System.debug('Error en servicio de tarjeta regional: '+ex.getLineNumber()+'---'+ex.getMessage());
             /*for(Case cs : searchCase) {
@@ -367,12 +351,6 @@ global class BAT_CallCardServiceFicohsa implements Database.Batchable<sObject>, 
             }
             update updateCase;*/
         }  
-    }  
-    
-    global void finish(Database.BatchableContext bc) {
-        AsyncApexJob asyncJob = [SELECT ID,Status,NumberOfErrors FROM 
-                                 AsyncApexJob WHERE ID =:bc.getJobId()];       
- 
+        
     }
-    
 }

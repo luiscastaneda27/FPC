@@ -45,17 +45,17 @@ public without sharing class controladorBandejaOperaciones {
             listAsesores.add(new selectOption('', '--Ninguno--'));
             map<string, integer> mapBandera = new map<string, integer>();
             for(Reporte_Calidad__c  item: 
-                [select empresa__r.name, empresa__C from Reporte_Calidad__C where estado__C = 'A' order by empresa__r.name asc]){
-                    if(!mapBandera.containsKey(item.empresa__C) && String.isNotBlank(item.empresa__C)){
-                        mapBandera.put(item.empresa__C, 21);
-                        listEmpresas.add(new selectOption(item.empresa__C, item.empresa__r.name));
+                [select Empresa__r.Name, Empresa__c from Reporte_Calidad__c where Estado__c = 'A' and Empresa__c != null order by Empresa__r.Name asc]){
+                    if(!mapBandera.containsKey(item.Empresa__c)){
+                        mapBandera.put(item.Empresa__c, mapBandera.size());
+                        listEmpresas.add(new selectOption(item.Empresa__c, item.Empresa__r.Name));
                     }
                 }
             mapBandera = new map<string, integer>();
-            for(oficial_x_asesor__C item: [select Oficial_SAC__r.name, Codigo_Oficial_SAC__c from oficial_x_asesor__C
+            for(oficial_x_asesor__C item: [select Oficial_SAC__r.Name, Codigo_Oficial_SAC__c from oficial_x_asesor__C
                                            where Codigo_Oficial_SAC__c != null and Oficial_SAC__c != null   order by Oficial_SAC__r.name asc]){
                 if(!mapBandera.containsKey(item.Codigo_Oficial_SAC__c)){
-                    mapBandera.put(item.Codigo_Oficial_SAC__c, 21);
+                    mapBandera.put(item.Codigo_Oficial_SAC__c, mapBandera.size());
                     listOficiales.add(new selectOption(item.Codigo_Oficial_SAC__c, item.Oficial_SAC__r.name));
                 }
             }
@@ -88,7 +88,9 @@ public without sharing class controladorBandejaOperaciones {
             totalPag = 1;
             database.delete([select id from ConsultasRC__c where usuario__c = :usuario limit 9999], false);
             query += ' Where estado__C = \'A\''; 
-            query += filtroAfilicion == 'M' ? ' and Tipo_Afiliacion__c = \'M\'' : filtroAfilicion == 'F' ? ' and Tipo_Afiliacion__c = \'FC\'' : ' and Tipo_Afiliacion__c not in (\'M\', \'FC\')';
+            query += filtroAfilicion == 'M' ? ' and Tipo_Afiliacion__c = \'M\'' : 
+            filtroAfilicion == 'F' ? ' and Tipo_Afiliacion__c = \'FCS\'' :
+            ' and Tipo_Afiliacion__c not in (\'M\', \'FCS\', \'FCA\', \'TF\',\'TV\')';
             system.debug('Query: '+query);
             if(filtroAsesor != null){query += ' and Codigo_Asesor_Comercial__c = \''+filtroAsesor+'\'';}
             if(filtroOficial != null){query += ' and Codigo_Oficial_SAC__c = \''+filtroOficial+'\'';}
@@ -113,6 +115,7 @@ public without sharing class controladorBandejaOperaciones {
                 item.Numero_Cuenta__c = respuesta.numCuenta;
                 item.Numero_de_Cliente__c = respuesta.clienteUnicoBanco;
                 item.Numero_de_Contrato__c = respuesta.numContrato;
+                item.FechaIngreso__c = aSysdeReporteCalidad.convertirFecha(respuesta.fechaIngreso);
                 haySeleccionado = true;
                 if(item.Numero_de_Cliente__c == null){
                     item.aprobado__C = false;
@@ -236,7 +239,7 @@ public without sharing class controladorBandejaOperaciones {
             'Estado__c, fecha_devolucion__C,Enviar_Afiliacion__C,Cod_Region__C, Cod_Provincia__C, '+
             'CurrencyIsoCode,Nacionalidad__c, sexo__C,fecha_nacimiento__C,Fecha_ingreso_empresa__C,'+
             'profesion__C,estado_civil__C, lugar_nacimiento__C,nombre_conyuge__C,cargo__C,'+
-            ' Cantidad_Afiliaciones__c , Codigo_T24__c,aporte_patrono__C, '+
+            ' Cantidad_Afiliaciones__c , Codigo_T24__c,aporte_patrono__C, FechaIngreso__c,'+
             'Primer_Apellido__c,Enviar_Sac__C,Tipo_Afiliacion__c,Aprueba_SAC__c,id ,'+
             'Subproducto__r.codigo__C,Empresa__r.name, Subproducto__r.producto__r.codigo__C,Espediente_Completo__C,'+
             'Segundo_Apellido__c ,Segundo_Nombre__c , Seguro_HNL__c , Seguro_USD__c ,Subproducto__c ,'+

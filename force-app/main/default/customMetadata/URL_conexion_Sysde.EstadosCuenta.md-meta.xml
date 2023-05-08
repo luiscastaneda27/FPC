@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">https://ficohsafpc--stagefpc.sandbox.my.salesforce-sites.com/estadosCuenta/</value>
+        <value xsi:type="xsd:string">https://fpc.secure.force.com/estadosCuenta/</value>
     </values>
 </CustomMetadata>

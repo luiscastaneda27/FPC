@@ -215,7 +215,7 @@ public class extensionCasoDetalle {
                 cTipoCaso = new claseTipoCaso(Caso.RecordType.DeveloperName);
                 
                 
-                llenarcuentas();
+                llenarCuentas();
                 detalleCaso.Caso__c = Caso.id;                              
                 conteoGeneral = 0;
                 map<string, integer> conteodetalleCaso=new map<string, integer>();
@@ -260,9 +260,12 @@ public class extensionCasoDetalle {
                     detalleCaso = cuentasCaso[0];
                     popRezago = cTipoCaso.reversiones && Caso.Status == 'Pendiente segunda aprobación' ? true : false;
                     idCuenta = detalleCaso.Cuenta__c;
+                    for(String item: mapCuentas.keySet()){
+                        System.debug(mapCuentas.get(item).Codigo__c);
+                    }
                     cuentaCliente = mapCuentas.get(idCuenta);
-                    //MonedaCuenta();
-                     monedaCuenta= cuentaCliente.CurrencyIsoCode;
+                    system.debug(detalleCaso.Cuenta__c +' ----- '+cuentaCliente);
+                    monedaCuenta= cuentaCliente.CurrencyIsoCode;
                     system.debug('Moneda: '+cuentaCliente.CurrencyIsoCode);
                     if(cTipoCaso.subProducto){ cuentaCliente = mapCuentas.get(detalleCaso.Cuenta__c); idCuenta = cuentaCliente.id;  
                     }
@@ -278,8 +281,12 @@ public class extensionCasoDetalle {
                     }
                     
                 } else { 
-                
+                    String POS = mapCuentas.get(idCuenta).POS__c;
                     pagosBT = 'display:none;';
+                    if(String.isNotBlank(POS) && cTipoCaso.aumDisAporte){
+                        detalleCaso.Banco__c = POS == 'Ficohsa' ? '28' : 'Otros Bancos';
+                    }
+                    
                 
                 }
             } else { 
@@ -495,7 +502,7 @@ public class extensionCasoDetalle {
                                    Subproducto__r.Retiro_Saldos_Patronales__c, Subproducto__r.De_01_anos__c,
                                    Subproducto__r.De_12_anos__c, Subproducto__r.De_23_anos__c,
                                    Subproducto__r.De_34_anos__c, Subproducto__r.De_45_anos__c,
-                                   Subproducto__r.Mas_5_anos__c
+                                   Subproducto__r.Mas_5_anos__c, POS__c
                                    From Cuentas__c
                                    Where Cliente__c =: Caso.AccountId //and activo__C=true
                                    Order by Cuenta_colectiva2__c]){
@@ -623,9 +630,7 @@ public class extensionCasoDetalle {
     public void VerificacionMontoPrestamo(){
         try{
             detalleCaso.Monto_Pignorar_Refinanciamiento__c = 0;
-            if(!detalleCaso.Es_Refinanciamiento__c && !detalleCaso.No_es_primer_prestamo__c){
-                caso.enviar_a_aprobacion__C=false;
-            }
+            caso.enviar_a_aprobacion__c = true;
             decimal montoPatronal = 0;
             if(caso.Aplica_Saldo_patronal__c){
                 montoPatronal = detallecaso.Total_Saldo_Patronal__c ;
@@ -661,7 +666,7 @@ public class extensionCasoDetalle {
                    detallecaso.Es_Refinanciamiento__c = false;
                    detallecaso.Es_Primer_Prestamo__c = false;
                    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Solo puede selelccionar una opcion a la vez'));
-               }else if(detalleCaso.Es_Refinanciamiento__c || detallecaso.No_es_primer_prestamo__c){
+               }else if(detalleCaso.Es_Refinanciamiento__c || detallecaso.No_es_primer_prestamo__c || detallecaso.Es_Primer_Prestamo__c){
                    caso.enviar_a_aprobacion__C=true;
                    if(detalleCaso.Es_Refinanciamiento__c){
                        VerificacionMontoPrestamo();
@@ -1097,6 +1102,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
         detalleCaso.Nueva_fecha_aporte__c = null;
         cerrar();    
     }
+    
     public void accionVacia2(){}
     
     public void buscarCuentaC(){
@@ -1564,7 +1570,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             //caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                             caso.Description = wc.Description;
                         }
-                        if((detalleCaso.Tipo_Operacion__c == 'A1' || detalleCaso.Tipo_Operacion__c == 'A2' || detalleCaso.Tipo_Operacion__c == 'A4') && caso.DAU_No_Cuenta__c == Null) {
+                        if(detalleCaso.Tipo_Operacion__c == 'A4' && caso.DAU_No_Cuenta__c == Null) {
                             Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
                             if(Caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
                                 updateCase.wrapperClass wc = new updateCase.wrapperClass();
@@ -1572,9 +1578,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                                 System.debug('validar Identidad: '+wc);
                                 caso.DAU_Identidad__c = wc.DAU_Identidad;
                                 caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;
-                                if(wc.DAU_aprobacion != null) {
-                                    caso.DAU_aprobacion__c = wc.DAU_aprobacion;
-                                }
+                                caso.DAU_aprobacion__c = true;
                                 caso.Respuesta_SF_Tarjetas__c = wc.Respuesta_SF_Tarjetas;
                                 caso.Description = wc.Description;
                             }
@@ -1583,7 +1587,7 @@ system.debug('Tipo de transacción: '+detalleCaso.tipo_transaccion__c );*/
                             Caso.DAU_Tarjeta_de_Sysde__c = DAU_BorrarCuotas.ConsultaInfoClienteC(Caso.Id, mapcuentas.get(idCuenta).Codigo__c);
                             if(Caso.DAU_Tarjeta_de_Sysde__c <> Null || test.isRunningTest()) {
                                 updateCase.wrapperClass wc = new updateCase.wrapperClass();
-                                wc = updateCase.validarIdentidad(Caso.Id, detalleCaso.N_Cuenta_Bancaria__c, Caso.Account.Identificacion__c);
+                                wc = updateCase.validarIdentidad(Caso.Id, Caso.DAU_Tarjeta_de_Sysde__c, Caso.Account.Identificacion__c);
                                 System.debug('validar Identidad: '+wc);
                                 caso.DAU_Identidad__c = wc.DAU_Identidad;
                                 caso.DAU_No_Cuenta__c = wc.DAU_No_Cuenta;

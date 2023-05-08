@@ -3,7 +3,7 @@
 *Description: Clase test del batch BAT_CallCardServiceFicohsaAllCases
 *Created Date: 30/01/2023 09:09 AM
 *Created By: Cloud Code   
-*Last Modified by: Cloud Code 30/01/2023 11:38 AM
+*Last Modified by: Cloud Code 13/02/2023 14:43 PM
 */
 @isTest
 public class BAT_CallCardServiceFicohsaAllCasesTest {
@@ -44,7 +44,7 @@ public class BAT_CallCardServiceFicohsaAllCasesTest {
     	Integer code2 = 200;
         Test.setMock(HttpCalloutMock.class, new UT_SeviceMockRest(body2, code2));
         
-        //Test.startTest();
+        Test.startTest();
             User us = TG_CaseTest.createUser();
             System.runas(us) {
                 String tipOper = UT_TestDataFactory.tipOper = 'A3';
@@ -53,24 +53,13 @@ public class BAT_CallCardServiceFicohsaAllCasesTest {
                 String formaAporte = '';
                 Case newcs = UT_TestDataFactory.createCase(tipOper, tipCase);
             	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                Case closecs = UT_TestDataFactory.closeCaseNoExito(newcs);
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);
-                Case cs = new Case();
-                //
-                set<Id> caseId = new set<Id>();
-                for(Detalle_caso__c dc : lstDetCase) {
-                	caseId.add(dc.Caso__c);	   
-                } 
-                cs = [Select Id,Status,CaseNumber,Archivo_Adjunto__c,Aprobado__c,Segunda_aprobacion__c,DAU_aprobacion__c,Respuesta_SF_Tarjetas__c,Respuesta_desde_Sysde__c From Case Where Id In : caseId];
-                System.debug('Caso a cerrar: '+cs);
-                Case closecs = UT_TestDataFactory.closeCaseNoExito(cs);
-                System.debug('El caso cerrado es: '+closecs);
-                Test.startTest();
                 BAT_CallCardServiceFicohsaAllCases myBatchObject = new BAT_CallCardServiceFicohsaAllCases(); 
         		Id batchId = Database.executeBatch(myBatchObject,200);
-                Test.stopTest();
             }   
-        //Test.stopTest();
+        Test.stopTest();
     }
     
     @isTest
@@ -92,16 +81,9 @@ public class BAT_CallCardServiceFicohsaAllCasesTest {
                 String formaAporte = '';
                 Case newcs = UT_TestDataFactory.createCase(tipOper, tipCase);
             	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                Case closecs = UT_TestDataFactory.closeCaseNoExito(newcs);
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);
-                Case cs = new Case();
-                //
-                set<Id> caseId = new set<Id>();
-                for(Detalle_caso__c dc : lstDetCase) {
-                	caseId.add(dc.Caso__c);	   
-                } 
-                cs = [Select Id,Status,CaseNumber,Archivo_Adjunto__c,Aprobado__c,Segunda_aprobacion__c,DAU_aprobacion__c,Respuesta_SF_Tarjetas__c,Respuesta_desde_Sysde__c From Case Where Id In : caseId];
-                Case closecs = UT_TestDataFactory.closeCaseNoExito(cs);
                 BAT_CallCardServiceFicohsaAllCases myBatchObject = new BAT_CallCardServiceFicohsaAllCases(); 
         		Id batchId = Database.executeBatch(myBatchObject,200);
             }   

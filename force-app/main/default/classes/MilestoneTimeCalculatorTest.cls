@@ -32,7 +32,7 @@ private class MilestoneTimeCalculatorTest {
         // Create case data.
         // Typically, the milestone type is related to the case, 
         // but for simplicity, the case is created separately for this test.
-        Case c = new Case(priority = 'Alta', RecordTypeId = RecordTypeIdCase, AccountId = acc.Id);
+        Case c = new Case(priority = 'Alta', RecordTypeId = RecordTypeIdCase, AccountId = acc.Id, EntitlementId = ent.Id);
         insert c;
         
         /*EntitlementAccount ec = new EntitlementAccount(EntitlementId=ent.Id, AccountId=acc.Id);

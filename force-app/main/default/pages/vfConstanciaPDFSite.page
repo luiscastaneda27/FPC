@@ -57,7 +57,7 @@
     <body>
         
         <apex:form > 
-            <apex:image value="{!URLFOR($Resource.logo1)}" width="175px"  rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
+            <apex:image value="{!URLFOR($Resource.logo1)}" width="175px"  rendered="{!AND(mostrarMenbrete)}"/>
             <!--apex:image styleClass="imagenLado" value="{!URLFOR($Resource.mebreteright)}" rendered="{!AND(case.Embajadas__c == null, mostrarMenbrete)}"/>
             <<apex:image styleClass="imagenFooter" value="{!URLFOR($Resource.mebretefooter )}" rendered="{!case.Embajadas__c == null}"/-->
             <table  style="width:100%; display:{!if(mostrarMenbrete, 'block;','none;')}">

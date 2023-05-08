@@ -1,4 +1,22 @@
+/**
+*Class Name: TG_CaseHelper
+*Description: Clase helper para el la clase de apex: TG_CaseHandler.
+*Created Date: 13/02/2023 03:25 PM
+*Created By: Cloud Code   
+*Last Modified by: Cloud Code 13/04/2023 11:28 AM
+*/
 public class TG_CaseHelper {
+    
+    public static Boolean doNotRunTrigger = false;
+
+    public static void setDoNotRunTrigger(){
+        doNotRunTrigger = true;
+    }
+
+    public static Boolean shouldRunTrigger() {
+        return !doNotRunTrigger;
+    }
+    
     public static void callSalesfoceRegional(List<Case> cs) {
         
         String tipoRnombre;
@@ -15,33 +33,61 @@ public class TG_CaseHelper {
         } 
         
         if(idCases.size() > 0) {
-        	lstDetCase = [SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,Caso__r.Respuesta_SF_Tarjetas__c,
+            lstDetCase = [SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,Caso__r.Respuesta_SF_Tarjetas__c,
                     Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Cuenta__r.Seguro_Vida__c,Caso__r.Description,
                     Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Nueva_fecha_aporte__c, Nuevo_monto_aporte__c,
-                    CreatedDate,Caso__r.Account.Pais_Residencia__c, Tipo_Operacion__c, Cuenta__r.Forma_Aportacion__c,Banco__c,DAU_Borrar_Cuotas__c 
+                    CreatedDate,Caso__r.Account.Pais_Residencia__c, Tipo_Operacion__c, Cuenta__r.Forma_Aportacion__c,Banco__c,DAU_Borrar_Cuotas__c
                     From Detalle_caso__c Where Caso__c In : idCases and Caso__r.Status = 'Cerrado'];
         }     
         
         if(!lstDetCase.isEmpty()) { 
             for(Detalle_caso__c detc : lstDetCase) {
-            	if((detc.Nuevo_canal_aporte__c == 'TA' || detc.Banco__c == '28') && detc.Caso__r.Description != 'Tarjeta dada de baja') {
-                    if((detc.Caso__r.Tipo_de_Operacion__c == 'A3' || detc.Caso__r.Tipo_de_Operacion__c == 'A8') && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null) {
+                if((detc.Nuevo_canal_aporte__c == 'TA' || detc.Banco__c == '28') && detc.Caso__r.Description != 'Tarjeta dada de baja') {
+                    if((detc.Caso__r.Tipo_de_Operacion__c == 'A3' || detc.Caso__r.Tipo_de_Operacion__c == 'A8') && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null && doNotRunTrigger == false) {
                         System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+detc.Caso__r.Tipo_de_Operacion__c); 
-                        String tipoGestion = 'ALTA';
-                        TG_CaseHelper.executeService(detc, tipoGestion);                       
-                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A4' && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null) {
+                        /*List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detc.Caso__r.Id, DAU_PrimerServicio__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs); 
+                        TG_CaseHelper.doNotRunTrigger = true;*/
+                        if(System.IsBatch() == false && System.isFuture() == false) {
+                            CTRL_CallCardServiceFicohsa.callServiceRegional(detc.Caso__r.Id, 'ALTA');
+                        }
+                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A4' && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null && doNotRunTrigger == false) {
                         System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+detc.Caso__r.Tipo_de_Operacion__c); 
-                        String tipoGestion = 'MOD';
-                        TG_CaseHelper.executeService(detc, tipoGestion);
-                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A6' && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null) {
-                        System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+detc.Caso__r.Tipo_de_Operacion__c);
-                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        /*<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                         Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detc.Caso__r.Id, DAU_PrimerServicio__c = true));
                         // Call method to publish events
                         List<Database.SaveResult> results = EventBus.publish(Logs);
-                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A7' && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null) {
-                        String tipoGestion = 'BAJA';
-                      	TG_CaseHelper.executeService(detc, tipoGestion);
+                        TG_CaseHelper.setDoNotRunTrigger();*/
+                        if(System.IsBatch() == false && System.isFuture() == false) {
+                            CTRL_CallCardServiceFicohsa.callServiceRegional(detc.Caso__r.Id, 'MOD');
+                        }
+                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A6' && detc.Caso__r.Respuesta_SF_Tarjetas__c == Null && doNotRunTrigger == false) {
+                        System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+detc.Caso__r.Tipo_de_Operacion__c);
+                        /*if(System.IsBatch() == false) {
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detc.Caso__r.Id, DAU_SegundoServicio__c = true));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs);
+                        }
+                        TG_CaseHelper.doNotRunTrigger = true;*/
+                        if(System.IsBatch() == false && System.isFuture() == false) {
+                            CTRL_CallCardServiceFicohsa.callServiceRegional(detc.Caso__r.Id, 'BAJA');
+                        }
+                    } else if(detc.Caso__r.Tipo_de_Operacion__c == 'A7' && doNotRunTrigger == false) {
+                        System.debug('Entra a llamar a servicios de Tarjeta Ficohsa para: '+detc.Caso__r.Tipo_de_Operacion__c);
+                        /*List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = detc.Caso__r.Id, DAU_PrimerServicio__c = true));
+                        // Call method to publish events
+                        List<Database.SaveResult> results = EventBus.publish(Logs);
+                        TG_CaseHelper.doNotRunTrigger = true;*/
+                        if(System.IsBatch() == false && System.isFuture() == false) {
+                            CTRL_CallCardServiceFicohsa.callServiceRegional(detc.Caso__r.Id, 'BAJA');
+                        }
+                    } else {
+                        if(System.IsBatch() == false && System.isFuture() == false)
+                        aSysdeCallouts.aumentoDisminucion(cs[0].id);
                     }
                 } else if(detc.Nuevo_canal_aporte__c == 'TAOB' || detc.Banco__c == 'Otros Bancos') {
                     System.debug('Entra a llamar al servicio de Otros Bancos'); 
@@ -52,7 +98,9 @@ public class TG_CaseHelper {
                         // Call method to publish events
                         List<Database.SaveResult> results = EventBus.publish(Logs);
                     } else {
-                    	DAU_GestionesBac.execute(detc.Caso__r.id);   
+                        if(System.IsBatch() == false && System.isFuture() == false) { 
+                            DAU_GestionesBac.execute(detc.Caso__r.id);   
+                        }
                     }    
                 } else if((detc.Nuevo_canal_aporte__c == 'AH' || detc.Cuenta__r.Forma_Aportacion__c == 'AH') && detc.Caso__r.Status == 'Cerrado') {
                     System.debug('Entra a llamar a servicios de Cuenta de Ahorro');
@@ -65,17 +113,16 @@ public class TG_CaseHelper {
                     } /*else if(detc.Nuevo_canal_aporte__c == 'AH') {
                         ControllerServiciosCuentaAhorro.execute(detc.Caso__r.id); 
                     }*/ else if(detc.Caso__r.Tipo_de_Operacion__c == 'A1' || detc.Caso__r.Tipo_de_Operacion__c == 'A2' || detc.Caso__r.Tipo_de_Operacion__c == 'A4' || detc.Caso__r.Tipo_de_Operacion__c == 'A7') { 
+                        if(System.IsBatch() == false && System.isFuture() == false)
                         ControllerServiciosCuentaAhorro.execute(detc.Caso__r.id);    
                     } else {
                         if(!detc.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error')) {
-                        	aSysdeCallouts.aumentoDisminucion(detc.Caso__r.id);
+                            if(System.IsBatch() == false && System.isFuture() == false)
+                            aSysdeCallouts.aumentoDisminucion(detc.Caso__r.id);
                         }    
                     }   
-                } /*else {
-                    System.debug('Llama a sysde directamente');
-                    aSysdeCallouts.aumentoDisminucion(detc.Caso__r.id); 
-                }*/
-        	}        
+                } 
+            }        
         }
     }
     
@@ -85,68 +132,70 @@ public class TG_CaseHelper {
         ID jobID = System.enqueueJob(new SCH_CallCardServiceFicohsa(lstDetCase, tipoGestion));
     }
     
-    public static void CompleteResolutionTimeMilestone(List<Case> cs) {
-        if(!System.isFuture()) {             
-            DateTime completionDate = System.now(); 
-            List<Id> updateCases = new List<Id>();
+    public static void CompleteResolutionTimeMilestone(List<Case> cs) {           
+        DateTime completionDate = System.now(); 
+        List<Id> updateCases = new List<Id>();
                     
-            //Obtener id de Caso y proceso de aprobación
-            set<Id> caso = new set<Id>();
-            for(Case c : cs){        
-                caso.add(c.Id);
-            }
-    
-            List<ProcessInstance> approvalProcess = new List<ProcessInstance>{};
-            approvalProcess = [Select Id, LastActorId, ProcessDefinitionId, Status, TargetObjectId from ProcessInstance 
-                                                            Where TargetObjectId =: caso Order By CreatedDate Desc Limit 1];
-            //Fin obtener id de Caso y proceso de aprobación
-                    
-            List<ProcessInstanceNode> nodes = new List<ProcessInstanceNode>{};
-            if(approvalProcess.size() > 0) { nodes = [SELECT Id, NodeStatus, ProcessNodeName, ProcessInstanceId FROM processinstancenode WHERE processinstanceid =: approvalProcess[0].Id Order By CreatedDate Desc Limit 1];
-            }    
-                      
-            Boolean EnAprobacion;
-            if(nodes.size() > 0) { EnAprobacion = Approval.isLocked(approvalProcess[0].TargetObjectId);
-            }    
-    
-            List<ProcessInstanceWorkitem> actor;
-            if(approvalProcess.size() > 0) { actor = [SELECT Id, ActorId, Actor.Name, Actor.Profile.Name, ProcessInstanceId From ProcessInstanceWorkitem Where ProcessInstanceId =: approvalProcess[0].Id and Actor.Name != 'Admin User'];    
-            }     
-                    
-            List<Detalle_caso__c> lstDetCase = new List<Detalle_caso__c>{};
-            lstDetCase = [Select Id, DAU_Borrar_Cuotas__c, Cuenta__r.Forma_Aportacion__c, Nuevo_canal_aporte__c From Detalle_caso__c 
-                           Where Caso__c IN : caso];
-                 
-            for (Case c : cs) {                                                                        
-                //Requiere aprobación de exoneración
-                if((((c.Status == 'Devuelto' && c.Finalizar_SLA__c == false && nodes[0].NodeStatus != 'Rejected') || 
-                     (c.Status == 'Pendiente de aprobación' && c.Finalizar_SLA_Aprobacion__c == false)) && (approvalProcess.size() > 0))
-                     &&((c.SlaStartDate <= completionDate)&&(c.SlaExitDate == null)&&(c.Requiere_aprobacion_exoneracion__c == true))) { 
-                    updateCases.add(c.Id);                   
-                }    
-                //No requiere aprobación de exoneración
-                if((((c.Status == 'Devuelto' && c.Finalizar_SLA__c == false)||(c.Status == 'Pendiente de aprobación' && 
-                      c.Finalizar_SLA_Aprobacion__c == false)||(c.Status == 'Devuelto' && c.N_Veces_Rechazado__c == 2 && 
-                      c.Finalizar_SLA__c == false)||(c.Status == 'Devuelto' && c.N_Veces_Rechazado__c == 3)) && (approvalProcess.size() > 0))
-                      &&((c.SlaStartDate <= completionDate)&&(c.SlaExitDate == null)&&(c.Requiere_aprobacion_exoneracion__c == false))) { 
-                    updateCases.add(c.Id);
-                } 
-                //Caso Pignoración
-                if(c.Status == 'Esperando Documentación' && c.Tiene_numero_Prestamo__c == false && (c.Es_primer_prestamo__c == false && 
-                   c.Es_Refinanciamiento__c == false && c.No_Es_primer_prestamo__c == false)) { 
-                    updateCases.add(c.Id);
-                }
-                //Caso Cerrado
-                if (((c.isClosed == true)||(c.Status == 'Cerrado')||(c.Status == 'No Aplica'))&&((c.SlaStartDate <= completionDate)&& (c.SlaExitDate == null))) { 
-                    updateCases.add(c.Id);     
-                } else if (((c.isClosed == true)||(c.Status == 'Cerrado'))||(c.Status == 'No Aplica')) { 
-                    updateCases.add(c.Id);      
-                }                  
-            }
-            if (updateCases.isEmpty() == false) { 
-                milestoneUtils.completeMilestone(updateCases, 'Resolution Time', completionDate);
-            }                  
+        //Obtener id de Caso y proceso de aprobación
+        set<Id> caso = new set<Id>();
+        for(Case c : cs){        
+            caso.add(c.Id);
         }
+    
+        List<ProcessInstance> approvalProcess = new List<ProcessInstance>{};
+        approvalProcess = [Select Id, LastActorId, ProcessDefinitionId, Status, TargetObjectId from ProcessInstance 
+                                                        Where TargetObjectId =: caso Order By CreatedDate Desc Limit 1];
+        //Fin obtener id de Caso y proceso de aprobación
+                
+        List<ProcessInstanceNode> nodes = new List<ProcessInstanceNode>{};
+        if(approvalProcess.size() > 0) { nodes = [SELECT Id, NodeStatus, ProcessNodeName, ProcessInstanceId FROM processinstancenode WHERE processinstanceid =: approvalProcess[0].Id Order By CreatedDate Desc Limit 1];
+        }    
+                  
+        Boolean EnAprobacion;
+        if(nodes.size() > 0) { EnAprobacion = Approval.isLocked(approvalProcess[0].TargetObjectId);
+        }    
+    
+        List<ProcessInstanceWorkitem> actor;
+        if(approvalProcess.size() > 0) { actor = [SELECT Id, ActorId, Actor.Name, Actor.Profile.Name, ProcessInstanceId From ProcessInstanceWorkitem Where ProcessInstanceId =: approvalProcess[0].Id and Actor.Name != 'Admin User'];    
+        }     
+                    
+        List<Detalle_caso__c> lstDetCase = new List<Detalle_caso__c>{};
+        lstDetCase = [Select Id, DAU_Borrar_Cuotas__c, Cuenta__r.Forma_Aportacion__c, Nuevo_canal_aporte__c From Detalle_caso__c 
+                       Where Caso__c IN : caso];
+             
+        for (Case c : cs) {                                                                        
+            //Requiere aprobación de exoneración
+            if((((c.Status == 'Devuelto' && c.Finalizar_SLA__c == false && nodes[0].NodeStatus != 'Rejected') || 
+                 (c.Status == 'Pendiente de aprobación' && c.Finalizar_SLA_Aprobacion__c == false)) && (approvalProcess.size() > 0))
+                 &&((c.SlaStartDate <= completionDate)&&(c.SlaExitDate == null)&&(c.Requiere_aprobacion_exoneracion__c == true))) { 
+                updateCases.add(c.Id);                   
+            }    
+            //No requiere aprobación de exoneración
+            if((((c.Status == 'Devuelto' && c.Finalizar_SLA__c == false)||(c.Status == 'Pendiente de aprobación' && 
+                  c.Finalizar_SLA_Aprobacion__c == false)||(c.Status == 'Devuelto' && c.N_Veces_Rechazado__c == 2 && 
+                  c.Finalizar_SLA__c == false)||(c.Status == 'Devuelto' && c.N_Veces_Rechazado__c == 3)) && (approvalProcess.size() > 0))
+                  &&((c.SlaStartDate <= completionDate)&&(c.SlaExitDate == null)&&(c.Requiere_aprobacion_exoneracion__c == false))) { 
+                updateCases.add(c.Id);
+            } 
+            //Caso Pignoración
+            if(c.Status == 'Esperando Documentación' && c.Tiene_numero_Prestamo__c == false && (c.Es_primer_prestamo__c == false && 
+               c.Es_Refinanciamiento__c == false && c.No_Es_primer_prestamo__c == false)) { 
+                updateCases.add(c.Id);
+            }
+            if((c.Status == 'Pendiente segunda aprobación' || c.Status == 'Cerrado') && c.Constancia__c == 'P1'){
+                updateCases.add(c.Id);
+            }
+            //Caso Cerrado
+            if (((c.isClosed == true)||(c.Status == 'Cerrado')||(c.Status == 'No Aplica'))&&((c.SlaStartDate <= completionDate)&& (c.SlaExitDate == null))) { 
+                updateCases.add(c.Id);     
+            } else if (((c.isClosed == true)||(c.Status == 'Cerrado'))||(c.Status == 'No Aplica')) { 
+                updateCases.add(c.Id);      
+            }
+            System.debug(c.Status+' ------- '+updateCases.size());
+        }
+        if (updateCases.isEmpty() == false) { 
+            milestoneUtils.completeMilestone(updateCases, 'Resolution Time', completionDate);
+        }                  
     }
     
     public static void sendEmailAssignedCase(List<Case> cs) {
@@ -201,12 +250,12 @@ public class TG_CaseHelper {
             }
         }  
         if(!casoNew.isEmpty()) {
-           	insert casoNew;                   
+            insert casoNew;                   
             List<Id> detail = new List<Id>();
             for(Case csnew: casoNew) {
                 detail.add(csnew.Id);
                 if(detail != null) {
-                	updateCase.createDetail(detail, caso); 
+                    updateCase.createDetail(detail, caso); 
                 }
             }    
         }
@@ -263,14 +312,29 @@ public class TG_CaseHelper {
         mail.setHtmlBody(htmlBody);   
         mail.setOrgWideEmailAddressId(owea.get(0).Id);
         if(suppliedEmail != Null) {
-        	mail.setToAddresses(new String[] {suppliedEmail});
+            mail.setToAddresses(new String[] {suppliedEmail});
         } else {
-        	mail.setToAddresses(new String[] {'admin@fichohsa.org.c'});
+            mail.setToAddresses(new String[] {'admin@fichohsa.org.c'});
         } 
         mail.setCcAddresses(null);
         system.debug('Correo desde trigger: '+mail);
         Messaging.SendEmailResult[] resultMail = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail }); 
         //End send email
+    }
+    
+    public static void listenPlatformEvent(List<Case> cs, Map<Id, Case> mapOldCase) {
+        for(Case c : cs){ 
+            if(c.Status == 'Cerrado' && c.Tipo_de_Operacion__c == 'A6') {
+                if(c.Respuesta_SF_Tarjetas__c != mapOldCase.get(c.Id).Respuesta_SF_Tarjetas__c){
+                    System.debug('Entra a esta validación en el trigger de casos');
+                    /*List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                    Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = c.Id, DAU_TercerServicio__c = true));
+'                    // Call method to publish events
+'                    List<Database.SaveResult> results = EventBus.publish(Logs);*/
+                    //updateCase.validarIdentidad2(c.Id, '4100002773114530', '0801197803020');
+                }
+            }    
+        }
     }
     
 }

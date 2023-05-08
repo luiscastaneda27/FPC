@@ -209,7 +209,7 @@ public class testASYSDECallouts {
         req1.setObjectId(Caso.id); 
         req1.setNextApproverIds(param1);  
         req1.setProcessDefinitionNameOrId('Retiros_sin_Exoneracion');
-        Approval.ProcessResult result = Approval.process(req1);
+        //Approval.ProcessResult result = Approval.process(req1);
             
         List<ProcessInstanceWorkitem> workItems = [SELECT Id, ProcessInstanceId FROM ProcessInstanceWorkitem WHERE ProcessInstance.TargetObjectId =: Caso.Id];
         List<Approval.ProcessWorkitemRequest> requests = new List<Approval.ProcessWorkitemRequest>();

@@ -113,20 +113,20 @@
            <td style="border-left: none;" >
             <div class="SiNo" style="text-align: left;">
                 Si<font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',false,true)}">
+                    <apex:outputPanel rendered="{!if(checkPEP=='S',false,true)}">
                     <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='S',true,false)}">
+                    <apex:outputPanel rendered="{!if(checkPEP=='S',true,false)}">
                     <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
                     <font></font>
                  No<font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',false,true)}">
+                    <apex:outputPanel rendered="{!if(checkPEP=='N',false,true)}">
                     <img src="/img/checkbox_unchecked.gif"/>
                     </apex:outputPanel>
                     <font></font>
-                    <apex:outputPanel rendered="{!if(info.pcEjerce_Cargo_Publico =='N',true,false)}">
+                    <apex:outputPanel rendered="{!if(checkPEP=='N',true,false)}">
                     <img src="/img/checkbox_checked.gif"/>
                     </apex:outputPanel>
                     <font></font>
@@ -136,9 +136,9 @@
           
           </tr>
           <tr style="height: 40; border-left: 0px;">
-            <td style="text-align: center; width: 33%;"> Cargo<br/><br/>{!info.Cargo_Pulbico}<br/> </td> 
-            <td style="text-align: center; width: 34%;"> Institución<br/><br/>{!info.institucionPep}<br/> </td>
-            <td style="text-align: center; width: 33%;"> Periódo<br/><br/>{!info.periodoPep}<br/> </td> 
+            <td style="text-align: center; width: 33%;"> Cargo<br/><br/>{!V_Cargo_Pulbico}<br/> </td> 
+            <td style="text-align: center; width: 34%;"> Institución<br/><br/>{!V_periodoPep}<br/> </td>
+            <td style="text-align: center; width: 33%;"> Periódo<br/><br/>{!V_institucionPep}<br/> </td> 
           </tr>
         </table>
           <br/><br/>

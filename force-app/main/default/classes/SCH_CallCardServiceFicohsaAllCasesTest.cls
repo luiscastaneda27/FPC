@@ -3,7 +3,7 @@
 *Description: Clase test de la clase Schedulable SCH_CallCardServiceFicohsaAllCases
 *Created Date: 30/01/2023 11:22 AM
 *Created By: Cloud Code   
-*Last Modified by: Cloud Code 30/01/2023 11:38 AM
+*Last Modified by: Cloud Code 13/02/2023 14:48 PM
 */
 @istest
 public class SCH_CallCardServiceFicohsaAllCasesTest {
@@ -43,8 +43,9 @@ public class SCH_CallCardServiceFicohsaAllCasesTest {
                 String tipOper = UT_TestDataFactory.tipOper = 'A3';
                 String tipCase = UT_TestDataFactory.tipOper = 'Aumento_Disminucion_Aportes';
                 String canalAporte = 'TA';
+                String formaAporte = '';
                 Case newcs = UT_TestDataFactory.createCase(tipOper, tipCase);
-            	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte);
+            	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
                 Case closecs = UT_TestDataFactory.closeCase(newcs);
                 
                 SCH_CallCardServiceFicohsaAllCases sch = new SCH_CallCardServiceFicohsaAllCases();   

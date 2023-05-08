@@ -219,7 +219,7 @@ global class controladorAfiliacionCarga {
             popEmpresas = false;
         }catch(exception ex){
             popEmpresas = false;
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ' La empresa seleccionada no tiene oficial Asignado '));
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'La empresa seleccionada no tiene oficial Asignado'));
         }
     }
     
@@ -236,7 +236,8 @@ global class controladorAfiliacionCarga {
             buscarempresa = null;
             buscarSubProducto = null;
         }catch(exception ex){
-            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, ' La empresa seleccionada no tiene oficial Asignado '));
+            System.debug('Error: '+ex.getMessage()+', Línea: '+ex.getLineNumber());
+            ApexPages.addMessage(new ApexPages.Message( ApexPages.Severity.ERROR, 'Ha ocurrido un error al guardar la afiliación, consulte a su admin.'));
         }
     }
     

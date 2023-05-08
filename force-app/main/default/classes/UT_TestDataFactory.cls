@@ -1,3 +1,10 @@
+/**
+*Class Name: UT_TestDataFactory
+*Description: Clase utilitaria para crear registros de prueba.
+*Created Date: 10/01/2023 12:05 PM
+*Created By: Cloud Code   
+*Last Modified by: Cloud Code 13/02/2023 15:44 PM
+*/
 public class UT_TestDataFactory {
        
     public static String tipOper = 'A1';
@@ -125,6 +132,33 @@ public class UT_TestDataFactory {
         cs.Type = 'Solicitud';
         cs.Priority = 'Alta';
         cs.Respuesta_desde_Sysde__c = Null;
+        insert cs;
+        return cs;
+    }
+    
+    public static case createCaseInApproval(String tipOper, String tipCase) {
+        //System.debug('Tipo Operación es: '+tipOper + '---' + 'Tipo de Caso: '+tipCase);
+        FechaDC_Sysde__c fc = UT_TestDataFactory.createFechaCierre();
+        Entitlement ent = UT_TestDataFactory.createEnt();
+        Case cs = new Case();
+        cs.AccountId = acc.id;
+        cs.Status = 'Nuevo';
+        cs.RecordTypeId = UT_TestDataFactory.consultRecordTypeCase(tipCase);
+        cs.EntitlementId = ent.id;
+        cs.Tipo_de_Operacion__c = tipOper;
+        cs.DAU_aprobacion__c = false;
+        cs.Constancia__c = 'A4';
+        cs.SuppliedEmail = 'admin@fichohsa.org.com';
+        cs.Caso_Ingresado__c = false;
+        cs.Origin = 'Agencias FPC';
+        cs.Reason = 'Otro';
+        cs.Type = 'Solicitud';
+        cs.Priority = 'Alta';
+        cs.Respuesta_desde_Sysde__c = Null;
+        cs.Enviar_aprobacion_AD__c =  true;
+        cs.Aprobado__c = false;
+        cs.Archivo_Adjunto__c = true;
+        cs.Viene_Portal_Autogestion__c = false;
         insert cs;
         return cs;
     }

@@ -55,7 +55,7 @@ public class ControllerPantallaConsultaRezagos {
             llenartabla();
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Rezago eliminado con exito.'));
         }else{
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ha ocurrido un error al intentar eliminar el reazogo ==>'+respuesta.descripcion));
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Ha ocurrido un error al intentar eliminar el rezago ==>'+respuesta.descripcion));
         }
         cerrar();
     }

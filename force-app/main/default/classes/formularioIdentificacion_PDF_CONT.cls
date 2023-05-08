@@ -25,6 +25,10 @@ public class formularioIdentificacion_PDF_CONT {
     public String fechanacimientoDiaB{get;set;}
     public String fechanacimientoMesB{get;set;}
     public String fechanacimientoAnioB{get;set;}
+    public String checkPEP {get;set;}
+    public String V_Cargo_Pulbico {get;set;}
+	public String V_periodoPep {get;set;}
+	public String V_institucionPep {get;set;}
     
     /*public string pcUsuarioCN {get;set;}
     public string pcAGN {get;set;}
@@ -88,6 +92,34 @@ public class formularioIdentificacion_PDF_CONT {
             JsonString=JsonString.replaceAll('"null"', '" "');
             System.debug('JsonString en PDF: '+JsonString);
             info=(ClienteNaturales)JSON.deserialize(JsonString, ClienteNaturales.class);
+            
+            V_Cargo_Pulbico = '';
+			V_periodoPep = '';
+			V_institucionPep = '';
+            
+            /*Inicio cargo politico**/
+            checkPEP = 'N';
+                IF ((info.pcPEP =='N' || info.pcEjerce_Cargo_Publico =='N')||info.pcPEP == 'null'||info.pcPEP == null 
+                    ||info.pcEjerce_Cargo_Publico == 'null'||info.pcEjerce_Cargo_Publico == null)
+                {
+                    checkPEP = 'N';
+                }
+                else
+                {
+                    checkPEP = 'S';
+                    V_Cargo_Pulbico = info.Cargo_Pulbico;
+                    V_periodoPep = info.institucionPep;
+                    V_institucionPep = info.periodoPep;
+                }  
+                if (info.Cargo_Pulbico != 'null' && info.Cargo_Pulbico != 'N/A' && info.Cargo_Pulbico != null && info.Cargo_Pulbico != ' ')
+                {
+                    checkPEP = 'S';
+                    V_Cargo_Pulbico = info.Cargo_Pulbico;
+                    V_periodoPep = info.institucionPep;
+                    V_institucionPep = info.periodoPep;
+                }
+            /*FIN cargo politico**/
+            System.debug('checkPEP FINN: '+checkPEP);
             
             if(!(info.ListBeneficiarios!=null && info.ListBeneficiarios.size()>0)){
                 List<beneficiario> ltem=new List<beneficiario>();

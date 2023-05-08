@@ -3,7 +3,7 @@
 *Description: Clase Batch que llama al servicio de Salesforce Regional para Afiliar Aportes de forma masiva. (Se ejecuta una vez al día - Tabajo programado).
 *Created Date: 6/01/2023 01:37 PM
 *Created By: Cloud Code   
-*Last Modified by: Cloud Code 01/02/2023 12:13 PM
+*Last Modified by: Cloud Code 30/03/2023 11:26 AM
 */
 global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
     
@@ -11,12 +11,21 @@ global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sO
     global Set<Id> caseIds = new Set<Id>();
         
     global Database.QueryLocator start(Database.BatchableContext bc) {
+        if(!test.isRunningTest()) {
     	return Database.getQueryLocator([SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
             Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Caso__r.Respuesta_SF_Tarjetas__c,
             Cuenta__r.Seguro_Vida__c,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Cuenta__r.Fecha_Aporte__c,
             Cuenta__r.Monto_aporte__c,Nueva_fecha_aporte__c,Nuevo_monto_aporte__c,CreatedDate,Caso__r.Account.Pais_Residencia__c
             From Detalle_caso__c Where Caso__r.Status = 'Cerrado' and Caso__r.RecordType.DeveloperName = 'Aumento_Disminucion_Aportes'
             and (Caso__r.Tipo_de_Operacion__c = 'A3' or Caso__r.Tipo_de_Operacion__c = 'A8')]);
+        } else {
+			return Database.getQueryLocator([SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
+            Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Caso__r.Respuesta_SF_Tarjetas__c,
+            Cuenta__r.Seguro_Vida__c,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Cuenta__r.Fecha_Aporte__c,
+            Cuenta__r.Monto_aporte__c,Nueva_fecha_aporte__c,Nuevo_monto_aporte__c,CreatedDate,Caso__r.Account.Pais_Residencia__c
+            From Detalle_caso__c Where Caso__r.RecordType.DeveloperName = 'Aumento_Disminucion_Aportes'
+            and (Caso__r.Tipo_de_Operacion__c = 'A3' or Caso__r.Tipo_de_Operacion__c = 'A8')]);            
+        }     
     }
 	
 	global void execute(Database.BatchableContext bc, List<Detalle_caso__c> scope) {
@@ -198,7 +207,9 @@ global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sO
                 }    
             }
             if(caseIds.size() > 0) { 
+                
                 searchCase = [Select Id, Respuesta_SF_Tarjetas__c From Case Where Id In : caseIds]; 
+
                 for(Case cs : searchCase) { 
                     if(CodigoError != null && (CodigoError.contains('Error') || CodigoError.contains('System.ListException'))) {
                     	cs.Respuesta_SF_Tarjetas__c = CodigoError;
@@ -213,16 +224,22 @@ global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sO
                 }
                 
                 Database.SaveResult[] srListCase = Database.update(updateCase, false);
+
+                Set<Id> relatedCaseId = new Set<Id>();
+                Map<Id, Detalle_caso__c> relatedDetailCase;
     
                 // Iterate through each returned result
                 for(Database.SaveResult sr : srListCase) {
                     if (sr.isSuccess()) {
                         // Operation was successful, so get the ID of the record that was processed
                         System.debug('Successfully update case. Case ID: ' + sr.getId());
-                        List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
-                        Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = sr.getId(), DAU_EjecutarSYSDE__c = true));
-                        // Call method to publish events
-                        List<Database.SaveResult> results = EventBus.publish(Logs);
+
+                        relatedCaseId.add(sr.getId());
+
+                        relatedDetailCase = new Map<Id, Detalle_caso__c>([
+                            SELECT Id,Caso__c,Caso__r.CaseNumber,DAU_Borrar_Cuotas__c,
+                            Caso__r.Respuesta_SF_Tarjetas__c,Tipo_Operacion__c 
+                            From Detalle_caso__c Where Caso__r.Id IN: relatedCaseId]);
                     }
                     else {
                         // Operation failed, so get all errors                
@@ -232,7 +249,25 @@ global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sO
                             System.debug('Case fields that affected this error: ' + err.getFields());
                         }
                     }
-                }                                                   
+                } 
+                if(relatedDetailCase.Size() > 0) {
+                    for(Detalle_caso__c target : relatedDetailCase.values()) {
+                        if(target.DAU_Borrar_Cuotas__c == '2' || target.DAU_Borrar_Cuotas__c == '3') { 
+                            System.debug('target.Caso__r.Id: '+target.Caso__r.Id);
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = target.Caso__r.Id, DAU_Borrar_Cuotas_S10__c = true));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs);
+                            TG_CaseHelper.setDoNotRunTrigger();
+                        } else {
+                            List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
+                            Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = target.Caso__r.Id, DAU_EjecutarSYSDE__c = true));
+                            // Call method to publish events
+                            List<Database.SaveResult> results = EventBus.publish(Logs); 
+                            TG_CaseHelper.setDoNotRunTrigger();
+                        } 
+                    }
+                }                                                 
             }
         } catch(Exception ex) {
             System.debug('Error en servicio de tarjeta regional: '+ex.getLineNumber()+'---'+ex.getMessage());
@@ -244,6 +279,9 @@ global class BAT_CallCardServiceFicohsaAllCases implements Database.Batchable<sO
         }    
     }  
     
-    global void finish(Database.BatchableContext bc) { }
+    global void finish(Database.BatchableContext bc) { 
+    	AsyncApexJob asyncJob = [SELECT ID,Status,NumberOfErrors FROM 
+                                 AsyncApexJob WHERE ID =:bc.getJobId()];
+    }
     
 }

@@ -51,6 +51,7 @@ public class DAU_BorrarCuotas {
                 System.debug(response.getBody());               
                 Caso.Respuesta_desde_Sysde__c = 'Cuotas Borradas del Saldo: '+tipoSaldo;
                 update Caso;
+                TG_CaseHelper.setDoNotRunTrigger();
                 if(detalle.DAU_Borrar_Cuotas__c == '3') {
                 	List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                     Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = caso.Id, DAU_Borrar_Cuotas_S18__c = true));
@@ -124,6 +125,7 @@ public class DAU_BorrarCuotas {
                 System.debug(response.getBody());               
                 Caso.Respuesta_desde_Sysde__c = Caso.Respuesta_desde_Sysde__c + ', Cuotas Borradas del Saldo: '+tipoSaldo;
                 update Caso;
+                TG_CaseHelper.setDoNotRunTrigger();
                 List<DAU_Salesforce_Tarjetas__e> Logs = new List<DAU_Salesforce_Tarjetas__e>();
                 Logs.add(new DAU_Salesforce_Tarjetas__e(DAU_IdCaso__c = Caso.id, DAU_EjecutarSYSDE__c = true));
                 // Call method to publish events

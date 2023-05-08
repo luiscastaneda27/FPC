@@ -254,10 +254,16 @@ global class testAGN {
         cliente.NumeroID_Fiscal_EEUU = '074000000';
         cliente.enviarPagPro();
         cliente.fechaNacimiento = Date.today().addDays(-100);
+        Double b = 1;
+        cliente.ListBeneficiarios.add(new beneficiario(1221, '','','','','','','','','','','','',100,1,Date.today()));
+        cliente.ListBeneficiariosC.add(new beneficiario(1221, '','','','','','','','','','','','',100,1,Date.today()));
+        cliente.validaTipoTrab();
         cliente.enviarPagPro();
         cliente.pdLugarNacimientoCN = 'cxcx';
         cliente.enviarPagPro();
 		cliente.guardar();
+        cliente.Nueva_fecha_aporte = Date.today();
+        cliente.guardar();
         cliente.pcsubproducto = subp.Codigo__c;
         cliente.checkcorreo = true;
         cliente.obtieneCodSub();

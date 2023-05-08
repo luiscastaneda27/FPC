@@ -22,4 +22,8 @@
         <fullName>Pendiente de aprobación</fullName>
         <default>false</default>
     </values>
+    <values>
+        <fullName>nuevo 2</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

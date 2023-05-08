@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>DAU_Contrasenia__c</field>
-        <value xsi:type="xsd:string">QAFicohsa24</value>
+        <value xsi:type="xsd:string">QAFicohsa2301</value>
     </values>
     <values>
         <field>DAU_Dias__c</field>
@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>DAU_Token__c</field>
-        <value xsi:type="xsd:string">6pgJHFPxWrStofxil8zwMv4cu</value>
+        <value xsi:type="xsd:string">PMGLdIzLUvahOW1AUkAHnBJPq</value>
     </values>
     <values>
         <field>DAU_Usuario__c</field>

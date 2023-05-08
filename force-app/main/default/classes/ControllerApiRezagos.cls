@@ -79,10 +79,10 @@ public class ControllerApiRezagos {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');		
-        request.setMethod('DELETE');
+        request.setMethod('POST');
         request.setHeader('Content-Type', 'application/x-www-form-urlencoded');
         request.setTimeout(120000);
-        request.setEndpoint(url + 'api/rezagos');
+        request.setEndpoint(url + 'api/rezagos/eliminar');
         request.setBody('contenido='+Json.serialize(listRezago));
         ResponseRezago respuesta = new ResponseRezago();
         try{

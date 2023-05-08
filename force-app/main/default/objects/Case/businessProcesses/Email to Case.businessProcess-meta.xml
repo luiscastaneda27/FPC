@@ -15,4 +15,8 @@
         <fullName>Nuevo</fullName>
         <default>true</default>
     </values>
+    <values>
+        <fullName>nuevo 2</fullName>
+        <default>false</default>
+    </values>
 </BusinessProcess>

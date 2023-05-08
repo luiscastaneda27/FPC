@@ -392,7 +392,7 @@
 
                                                             <label class="slds-checkbox">
                                                                 <!--<apex:inputcheckbox disabled="{!disCumplimiento}" onclick="actPEP()" value="{!pcPEP}" id="pcPEP"  styleclass="slds-input"  />-->
-                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" value="{!OcultaCarSI}" id="pcPEP" styleclass="slds-input" />
+                                                                <apex:inputcheckbox disabled="true" value="{!OcultaCarSI}" id="pcPEP" styleclass="slds-input" />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"></span>
                                                             </label>
 
@@ -401,7 +401,7 @@
                                                             </label>
 
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input" />
+                                                                <apex:inputcheckbox disabled="true" onclick="amlPop()" value="{!AML}" id="AML" styleclass="slds-input" />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"></span>
                                                             </label>
 
@@ -410,7 +410,7 @@
                                                             </label>
 
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"
+                                                                <apex:inputcheckbox disabled="true" onclick="FT_Venta()" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"
                                                                 />
                                                                 <!--<apex:inputcheckbox disabled="{!disCumplimiento}" value="{!pcFATCA}" id="pcFATCA" styleclass="slds-input"    />-->
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"></span>
@@ -419,7 +419,7 @@
                                                                 <abbr class="slds-required" style="height:15px; width:15px;"></abbr> FATCA No Consiente
                                                             </label>
                                                             <label class="slds-checkbox">
-                                                                <apex:inputcheckbox disabled="{!disCumplimiento}" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"
+                                                                <apex:inputcheckbox disabled="true" onclick="fatcaNcPop()" value="{!pcFATCANC}" id="pcFATCANC" styleclass="slds-input"
                                                                 />
                                                                 <span class="slds-checkbox--faux" style="height:15px; width:15px;"></span>
 
@@ -2348,6 +2348,7 @@
                                                             <!--apex:inputcheckbox onclick="OcultCargoSI()" disabled="{!OcultaCarSI_1}" value="{!OcultaCarSI}" id="CargoSI" styleclass="slds-input"
                                                             /-->
                                                             <apex:inputcheckbox onclick="OcultCargoSI()" value="{!OcultaCarSI}" id="CargoSI" styleclass="slds-input"
+                                                                                disabled="{!ocultaDatosPepPregunta}"
                                                             />
                                                             <span class="slds-checkbox--faux" style=" width:15px; margin-left:1px"></span>
                                                         </label>
@@ -2359,6 +2360,7 @@
                                                             <!--apex:inputcheckbox onclick="OcultCargoNO()" disabled="{!OcultaCarNO_2}" value="{!OcultaCarNO }" id="CargoNO" styleclass="slds-input"
                                                             /-->
                                                             <apex:inputcheckbox onclick="OcultCargoNO()" value="{!OcultaCarNO }" id="CargoNO" styleclass="slds-input"
+                                                                                disabled="{!ocultaDatosPepPregunta}"
                                                             />
                                                             <span class="slds-checkbox--faux" style=" width:15px; margin-left:1px"></span>
                                                         </label>
@@ -2371,19 +2373,19 @@
                                                         <label class="slds-form-element__label" for="inputSample">
                                                             <abbr class="slds-required" title="required"></abbr> Cargo que ejerce o ha ejercido
                                                         </label>
-                                                        <apex:inputText disabled="{!Cargoo}" value="{!pcCargoEjercido}" id="CargoEjercido" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
+                                                        <apex:inputText disabled="{!ocultaDatosPep}" value="{!pcCargoEjercido}" id="CargoEjercido" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
                                                         />
 
                                                         <label class="slds-form-element__label" for="inputSample">
                                                             <abbr class="slds-required" title="required"></abbr> Periodo
                                                         </label>
-                                                        <apex:inputText disabled="{!Cargoo}" value="{!periodoPep}" id="periodoPEP" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
+                                                        <apex:inputText disabled="{!ocultaDatosPep}" value="{!periodoPep}" id="periodoPep" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
                                                         />
 
                                                         <label class="slds-form-element__label" for="inputSample">
                                                             <abbr class="slds-required" title="required"></abbr> Institución
                                                         </label>
-                                                        <apex:inputText disabled="{!Cargoo}" value="{!institucionPep}" id="institucionPEP" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
+                                                        <apex:inputText disabled="{!ocultaDatosPep}" value="{!institucionPep}" id="institucionPEP" styleclass="slds-input" style="height:10px; width:257px; margin-left:25px;  "
                                                         />
 
 

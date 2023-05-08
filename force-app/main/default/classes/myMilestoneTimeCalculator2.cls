@@ -6,8 +6,8 @@ global class myMilestoneTimeCalculator2 implements Support.MilestoneTriggerTimeC
         List<SLA_gestion__mdt> servicio = [Select Id,MasterLabel,DeveloperName,Tiempo__c From SLA_gestion__mdt Order By MasterLabel]; 
         Integer tiempo;   
         for(SLA_gestion__mdt sla: servicio) {
-            
-           //Actualización de información - Operaciones
+            //System.debug(c.RecordType.Name +' ------ '+c.Constancia__c+' ------ '+ sla.MasterLabel+' ------ '+mt.Name);
+            //Actualización de información - Operaciones
             if(c.RecordType.Name == 'Actualización de Información' && (c.Nombre_Cliente__c != null || c.Segundo_nombre__c != null || c.Apellidos__c != null || c.Segundo_apellido__c != null || c.Tipo_Identificacion__c != null || c.Identificacion__c != null || c.Sexo__c != null || c.Fecha_Nacimiento__c != null || c.Correo_Electronico__c != null || c.AprobacionBeneficiarios__c) && sla.MasterLabel == 'Actualización de información / CCO' && mt.Name != null && mt.Name.equals('Operaciones')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //8 horas - Actualización de información / Campos Críticos Operaciones
             } 
             	//Aprobación 2
@@ -36,15 +36,16 @@ global class myMilestoneTimeCalculator2 implements Support.MilestoneTriggerTimeC
             }
             
             //Constancias - Subgerencia-Pignoración SAC
-            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && mt.Name.equals('SubGerencia SAC')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
+            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && (mt.Name.equals('SubGerencia SAC') || mt.Name.equals('Supervisor SAC')) ) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
             } 
             	//Aprobación 2 Subgerencia-Pignoración SAC
-            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && mt.Name.equals('SubGerencia SAC 2')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
+            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && (mt.Name.equals('SubGerencia SAC 2')|| mt.Name.equals('Supervisor SAC 2')) ) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
             }
             	//Aprobación 3 Subgerencia-Pignoración SAC
-            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && mt.Name.equals('SubGerencia SAC 3')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
+            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Subgerencia Pignoración' && mt.Name != null && (mt.Name.equals('SubGerencia SAC 3')|| mt.Name.equals('Supervisor SAC 3')) ) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
             }
-            
+            else if(c.RecordType.Name == 'Constancia' && c.Constancia__c == 'P1' && sla.MasterLabel == 'Constancias / Supervisor Pignoración' && mt.Name != null &&  mt.Name.contains('Supervisor SAC Seg')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //188 horas - Constancias / Reclamo
+            }
             //Modificación de aportes - Operaciones
             else if(c.RecordType.Name == 'Modificación de aportes' && c.Enviar_aprobacion_AD__c == true && c.Aprobado__c == false && sla.MasterLabel == 'Modificación de aportes / Operaciones' && mt.Name != null && mt.Name.equals('Operaciones')) { tiempo = Integer.valueOf(sla.Tiempo__C)*60; //24 horas - Modificación de aportes / Reclamo
             }      
@@ -77,6 +78,7 @@ global class myMilestoneTimeCalculator2 implements Support.MilestoneTriggerTimeC
             }
         }
         System.debug('tiempo: '+tiempo);
+        //tiempo = 120;
         return tiempo; 
     }
 }

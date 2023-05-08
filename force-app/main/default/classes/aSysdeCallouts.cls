@@ -1,5 +1,15 @@
 public class aSysdeCallouts {
     
+    public static Boolean doNotRunTrigger = false;
+
+    public static void setDoNotRunTrigger(){
+        doNotRunTrigger = true;
+    }
+
+    public static Boolean shouldRunTrigger() {
+        return !doNotRunTrigger;
+    }
+    
     @future(callout=true)
     public static void EjecutarJobEDCMasivo(date fecha) {
         Http http = new Http();
@@ -353,6 +363,7 @@ public class aSysdeCallouts {
     // +++++++++++++++++++++++++++++++++ AUMENTO Y DISMINUNCION ++++++++++++++++++++++
     @future(callout=true)
     public static void aumentoDisminucion(String idCaso) {
+        if(doNotRunTrigger == false) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         String url = claseUtil.urlSysde('Test');
@@ -374,6 +385,7 @@ public class aSysdeCallouts {
                        From Detalle_caso__c Where Caso__c =: Caso.id Limit 1];
             
             system.debug('detalle: '+detalle);  
+            String operacion = detalle.Tipo_Operacion__c;
             //Cuentas__c cuenta = new Cuentas__c();
             if(detalle.Cuenta__r.Monto_aporte__c==null) { detalle.Cuenta__r.Monto_aporte__c=0; 
             }
@@ -462,26 +474,23 @@ public class aSysdeCallouts {
             if (response.getStatusCode() == 200) {
                 System.debug('Respuesta del servicio: '+response.getBody());
                 Cuentas__c cuenta = new Cuentas__c(Id = detalle.Cuenta__c);
-                               
+                System.debug('Tipo_Operacion: '+operacion); 
+                if(operacion == 'A8'){
+                    cuenta.POS__c = detalle.POS__c;
+                }              
                 if(detalle.Tipo_Operacion__c == 'A1' || detalle.Tipo_Operacion__c == 'A2' || detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
                     Cuenta.Monto_aporte__c = detalle.Nuevo_monto_aporte__c; 
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
-                    if(detalle.Tipo_Operacion__c == 'A8'){
-                        cuenta.POS__c = detalle.POS__c;
-                    }
-                    update cuenta;
                 } else if(detalle.Tipo_Operacion__c == 'A4') {
                     Cuenta.Fecha_Aporte__c = detalle.Nueva_fecha_aporte__c;
-                    update cuenta;
                 }      
                 
                 if(detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') {
                     if(detalle.Nuevo_canal_aporte__c != Null) {
-                		Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;
-                    	update cuenta;     
+                		Cuenta.Forma_Aportacion__c = detalle.Nuevo_canal_aporte__c;  
                     }    
                 }
-                
+                update cuenta;
                 if((detalle.Tipo_Operacion__c == 'A3' || detalle.Tipo_Operacion__c == 'A8') && detalle.DAU_Borrar_Cuotas__c == '1') {
                 	caso.Respuesta_desde_Sysde__c = 'Canal de aporte: // ' + response.getBody();	    
                 }
@@ -496,6 +505,15 @@ public class aSysdeCallouts {
                 
                 else if(detalle.Tipo_Operacion__c == 'A1' && caso.Respuesta_desde_Sysde__c != Null && caso.Respuesta_desde_Sysde__c.contains('Canal de aporte:')) {
                 	caso.Respuesta_desde_Sysde__c = caso.Respuesta_desde_Sysde__c + ' --- Monto del aporte: // ' + response.getBody();	    
+                }
+                
+                else if(detalle.Tipo_Operacion__c == 'A6') {
+                    if(Caso.Respuesta_desde_Sysde__c != Null) {
+                    	Caso.Respuesta_desde_Sysde__c = Caso.Respuesta_desde_Sysde__c + '\n \n' + response.getBody();    
+                    } else {
+                        Caso.Respuesta_desde_Sysde__c = response.getBody();
+                    }
+                    
                 }
                 
                 else if(detalle.Tipo_Operacion__c == 'A7' && caso.Respuesta_desde_Sysde__c == Null) {
@@ -523,7 +541,6 @@ public class aSysdeCallouts {
                 }
                 
                 claseUtil.stopTrigger();
-                
                 update Caso;
                 Approval.LockResult lrList = Approval.lock(Caso);
             }
@@ -537,6 +554,7 @@ public class aSysdeCallouts {
             Approval.LockResult lrList = Approval.lock(Caso);   
         }Catch(Exception e){
             system.debug('Clase Futura: ' +e.getMessage() + '---linea: ' + e.getLineNumber());   
+        }    
         }    
     }
     
@@ -624,10 +642,12 @@ public class aSysdeCallouts {
             // caso.CurrencyIsoCode
             claseEnvio.codCuenta = detalle.Cuenta__r.Codigo__c;
             claseEnvio.montoPignorado = (detalle.Monto_Pignorar_Refinanciamiento__c ==null || detalle.Monto_Pignorar_Refinanciamiento__c ==0) ? detalle.monto_a_pignorar__C.setscale(2) : detalle.Monto_Pignorar_Refinanciamiento__c.setscale(2);
-            claseEnvio.numeroPrestamo = detalle.numero_prestamo__C != null ? detalle.numero_prestamo__C : caso.id;
-            claseEnvio.numeroPrestamo = status != 'No Aplica' ? claseEnvio.numeroPrestamo : '01';
-            //claseEnvio.prestamoAterior = detalle.Prestamo_anterior__c ;
-            claseEnvio.accion = 'I';
+            claseEnvio.numeroPrestamo = detalle.numero_prestamo__c != null ? detalle.numero_prestamo__c : caso.id;
+            
+            //claseEnvio.numeroPrestamo = status != 'No Aplica' ? claseEnvio.numeroPrestamo : '01';
+            claseEnvio.numeroPrestamoId = status == 'No Aplica' ? caso.id : claseEnvio.numeroPrestamoId;
+            claseEnvio.accion = status != 'No Aplica' ? 'I' : 'P';
+            
             if(status=='Cerrado'){
                 claseEnvio.numeroPrestamoId = caso.id;
                 claseEnvio.accion = 'A';

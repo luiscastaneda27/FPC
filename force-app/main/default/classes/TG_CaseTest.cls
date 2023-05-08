@@ -1,3 +1,10 @@
+/**
+*Class Name: TG_CaseTest
+*Description: Clase test para el trigger TG_Case y las clases de apex: TG_CaseHandler, TG_CaseHelper.
+*Created Date: 10/01/2023 12:00 PM
+*Created By: Cloud Code   
+*Last Modified by: Cloud Code 14/02/2023 09:59 AM
+*/
 @isTest
 public class TG_CaseTest {
     
@@ -261,5 +268,68 @@ public class TG_CaseTest {
             }   
         Test.stopTest();
     }
-        
+    
+    @isTest
+    static void executeCasoEnAprobacion() {
+        Test.startTest();
+            User us = TG_CaseTest.createUser();
+            System.runas(us) {
+                String tipOper = UT_TestDataFactory.tipOper = 'A3';
+                String tipCase = UT_TestDataFactory.tipOper = 'Aumento_Disminucion_Aportes';
+                String canalAporte = 'TA';
+                String formaAporte = 'TA';
+                Case newcs = UT_TestDataFactory.createCaseInApproval(tipOper, tipCase);
+            	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                
+                Approval.ProcessSubmitRequest req1 = new Approval.ProcessSubmitRequest();
+            	req1.setComments('Aprobación automática por caso desde el portal de afiliación.');
+            	req1.setObjectId(newcs.id);
+                
+            	req1.setNextApproverIds(new Id[] {UserInfo.getUserId()});
+            
+            	//Submit on behalf of a specific submitter
+            	req1.setSubmitterId(us.Id); 
+            
+            	//Submit the record to specific process and skip the criteria evaluation
+            	req1.setProcessDefinitionNameOrId('AumentoDisminucion');
+            
+            	//Submit the approval request for the account
+            	Approval.ProcessResult result = Approval.process(req1);
+                //Case closecs = UT_TestDataFactory.closeCaseNoExito(newcs);
+                
+            }   
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void executeCasoReposicionCarnet() {
+        Test.startTest();
+            User us = TG_CaseTest.createUser();
+            System.runas(us) {
+                String tipOper = UT_TestDataFactory.tipOper = 'A3';
+                String tipCase = UT_TestDataFactory.tipOper = 'Reposicion_Carnet';
+                String canalAporte = 'TA';
+                String formaAporte = 'TA';
+                Case newcs = UT_TestDataFactory.createCaseInApproval(tipOper, tipCase);
+            	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                Case closecs = UT_TestDataFactory.closeCaseNoExito(newcs);
+            }   
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void executeCasoConstancia() {
+        Test.startTest();
+            User us = TG_CaseTest.createUser();
+            System.runas(us) {
+                String tipOper = UT_TestDataFactory.tipOper = 'A3';
+                String tipCase = UT_TestDataFactory.tipOper = 'Constancia';
+                String canalAporte = 'TA';
+                String formaAporte = 'TA';
+                Case newcs = UT_TestDataFactory.createCaseInApproval(tipOper, tipCase);
+            	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                Case closecs = UT_TestDataFactory.closeCaseNoExito(newcs);
+            }   
+        Test.stopTest();
+    }
 }

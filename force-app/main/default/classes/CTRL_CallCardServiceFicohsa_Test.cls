@@ -1,12 +1,12 @@
 /**
-*Class Name: BAT_CallCardServiceFicohsaTest
-*Description: Clase test del batch BAT_CallCardServiceFicohsa
+*Class Name: CTRL_CallCardServiceFicohsa
+*Description: Clase test del batch CTRL_CallCardServiceFicohsa
 *Created Date: 19/01/2023 09:38 AM
 *Created By: Cloud Code   
 *Last Modified by: Cloud Code 13/02/2023 14:44 PM
 */
 @isTest
-private class BAT_CallCardServiceFicohsaTest {
+private class CTRL_CallCardServiceFicohsa_Test {
     
     public static User createUser() {
         Profile profile1 = [Select Id from Profile where name = 'Administrador del Sistema' or name = 'Admin User'];
@@ -82,7 +82,7 @@ private class BAT_CallCardServiceFicohsaTest {
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);
                 Database.executeBatch(new BAT_CallCardServiceFicohsa(lstDetCase, 'ALTA'));
-                CTRL_CallCardServiceFicohsa.callServiceRegional(newcs.Id, 'ALTA');
+                CTRL_CallCardServiceFicohsa.callServiceRegional(closecs.Id, 'ALTA');
             }   
         Test.stopTest();
     }
@@ -110,7 +110,7 @@ private class BAT_CallCardServiceFicohsaTest {
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);
                 Database.executeBatch(new BAT_CallCardServiceFicohsa(lstDetCase, 'MOD'));
-                CTRL_CallCardServiceFicohsa.callServiceRegional(newcs.Id, 'MOD');
+                CTRL_CallCardServiceFicohsa.callServiceRegional(closecs.Id, 'MOD');
             }   
         Test.stopTest();
     }
@@ -138,7 +138,7 @@ private class BAT_CallCardServiceFicohsaTest {
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);
                 Database.executeBatch(new BAT_CallCardServiceFicohsa(lstDetCase, 'BAJA'));
-                CTRL_CallCardServiceFicohsa.callServiceRegional(newcs.Id, 'BAJA');
+                CTRL_CallCardServiceFicohsa.callServiceRegional(closecs.Id, 'BAJA');
             }   
         Test.stopTest();
     }

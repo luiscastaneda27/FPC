@@ -415,7 +415,7 @@ public class aSysdePortalEmpresarial {
     }
     
     @future(callout=true)
-    Public static void EnviarAportesEmpleados(string personas, integer periodoAporte, datetime fecha, string idpla, string rezago, string codigo)
+    Public static void EnviarAportesEmpleados(string personas, integer periodoAporte, datetime fecha, string idpla, string rezago, string codigo, String numeroSolicitud)
     {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -440,8 +440,9 @@ public class aSysdePortalEmpresarial {
                 string gt=todos[i];
                 individual=gt.split(',');
                 nueva = new classAportesPlanilla();
-                //nueva.idSalesforce = individual[0];
-                nueva.idSalesforce = String.isNotBlank(codigo) ? planilla.Name + '_' + individual[3] + '_' + codigo : null;
+                nueva.idSalesforce = individual[0];
+                nueva.numeroSolicitud = numeroSolicitud;
+                //nueva.idSalesforce = String.isNotBlank(codigo) ? planilla.Name + '_' + individual[3] + '_' + codigo : null;
                 nueva.identificacion=individual[1];
                 nueva.cuentaColectiva =individual[2];
                 nueva.rezago= rezago;
@@ -495,7 +496,7 @@ public class aSysdePortalEmpresarial {
 			envio.contenido = JSON.serialize(claseenvio);
             system.debug(claseenvio.size());
 			String cons = 'Contenido= ' + envio.contenido;
-            system.debug('Yo no se mañana dijo Luis Enrique: '+cons);
+            system.debug('Request Body '+cons);
 			request.setBody(cons);
             HttpResponse response = new HttpResponse();
             if(!test.isRunningTest()){
@@ -1058,6 +1059,7 @@ public class aSysdePortalEmpresarial {
         public String rezago { get; set; } 
         public String codigoReferencia{ get; set; } 
         //public String planillaReferencia{ get; set; } 
+        public String numeroSolicitud { get; set; } 
         public String idSalesforce { get; set; } //P_TIP_ARCHIVO
         public String identificacion { get; set; } //P_NUM_ID
         public DateTime fechaRecaudo  { get; set; } //P_FEC_RECAUDO

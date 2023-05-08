@@ -14,10 +14,5 @@
     <columns>Round_Robin_ID_Centro__c</columns>
     <columns>OWNER.ALIAS</columns>
     <filterScope>Everything</filterScope>
-    <filters>
-        <field>CREATED_DATE</field>
-        <operation>greaterOrEqual</operation>
-        <value>6/30/2021 12:00 AM</value>
-    </filters>
     <label>Validación de asignación Rotativa</label>
 </ListView>
