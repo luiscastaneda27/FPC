@@ -3,7 +3,7 @@
     <active>true</active>
     <allowRecall>false</allowRecall>
     <allowedSubmitters>
-        <submitter>EnviarAprobacionCasoSubProducto</submitter>
+        <submitter>FPC_EnviarAprobacionCasoSubProducto</submitter>
         <type>group</type>
     </allowedSubmitters>
     <allowedSubmitters>
