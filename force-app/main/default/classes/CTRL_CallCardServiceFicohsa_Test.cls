@@ -54,6 +54,8 @@ private class CTRL_CallCardServiceFicohsa_Test {
                 String formaAporte = 'TA';
                 Case newcs = UT_TestDataFactory.createCase(tipOper, tipCase);
             	Detalle_caso__c detC = UT_TestDataFactory.createDetailCase(newcs, canalAporte, formaAporte);
+                detC.Tipo_Operacion__c = 'A6';
+                update detC;
                 Case closecs = UT_TestDataFactory.closeCase(newcs);
                 list<Detalle_caso__c> lstDetCase = new list<Detalle_caso__c>(); 
                 lstDetCase.add(detC);

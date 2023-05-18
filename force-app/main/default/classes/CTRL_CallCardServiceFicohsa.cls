@@ -10,6 +10,7 @@ public class CTRL_CallCardServiceFicohsa {
         List<Detalle_caso__c> detCaso = [SELECT Id,Caso__c,Caso__r.CaseNumber,Caso__r.Status,Nuevo_canal_aporte__c,Caso__r.Tipo_de_Operacion__c,
             Caso__r.Account.Name,Caso__r.Account.Identificacion__c,DAU_Dia_de_pago__c,Caso__r.DAU_Identidad__c,Caso__r.Respuesta_SF_Tarjetas__c,
             Cuenta__r.Seguro_Vida__c,Cuenta__r.CurrencyIsoCode,N_Cuenta_Bancaria__c,Caso__r.DAU_No_Cuenta__c,Cuenta__r.Name,Cuenta__r.Fecha_Aporte__c,
+            Cuenta__r.Codigo__c,
             Cuenta__r.Monto_aporte__c,Nueva_fecha_aporte__c,Nuevo_monto_aporte__c,CreatedDate,Caso__r.Account.Pais_Residencia__c,Tipo_Operacion__c,
             DAU_Borrar_Cuotas__c from Detalle_caso__c Where Caso__r.Id =: caseId];
             system.debug('tipoGestion: '+tipoGestion);
@@ -161,7 +162,7 @@ public class CTRL_CallCardServiceFicohsa {
                     //SOAPXML += '<ws:Cuenta>50009531998656</ws:Cuenta>\n';
                     SOAPXML += '<ws:SubProducto>'+tipoSubProducto+moneda+'</ws:SubProducto>\n';
                     //SOAPXML += '<ws:SubProducto>Pensiones y Cesantías - Personal Ordinario L</ws:SubProducto>\n';                                     
-                    SOAPXML += '<ws:NumReferencia>'+dt.Cuenta__r.Name+'</ws:NumReferencia>\n';
+                    SOAPXML += '<ws:NumReferencia>'+dt.Cuenta__r.Codigo__c+'</ws:NumReferencia>\n';
                     //SOAPXML += '<ws:NumReferencia>222355</ws:NumReferencia>\n';
                     SOAPXML += '<ws:DiaPago>'+diaPago+'</ws:DiaPago>\n';
                     //SOAPXML += '<ws:DiaPago>14</ws:DiaPago>\n';

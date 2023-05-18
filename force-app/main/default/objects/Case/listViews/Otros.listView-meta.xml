@@ -8,5 +8,10 @@
     <columns>CORE.USERS.ALIAS</columns>
     <columns>CASES.CREATED_DATE_DATE_ONLY</columns>
     <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.CREATED_DATE</field>
+        <operation>equals</operation>
+        <value>TODAY</value>
+    </filters>
     <label>Otros</label>
 </ListView>
