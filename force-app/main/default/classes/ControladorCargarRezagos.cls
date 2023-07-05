@@ -95,7 +95,7 @@ global class ControladorCargarRezagos {
                 if(clientes2[count].toUpperCase()=='REFERENCIA'){
                     B=count;
                 }
-                if(clientes2[count].toUpperCase()=='FECHA DEL DEPOSITO'){
+                if(clientes2[count].toUpperCase()=='FECHA' || clientes2[count].toUpperCase() == 'FECHA DEL DEPOSITO'){
                     C=count;
                 }
                 if(clientes2[count].toUpperCase()=='MONEDA DEL DEPOSITO'){
@@ -121,8 +121,19 @@ global class ControladorCargarRezagos {
                 }
             }
             //FOR Identificacion de la columna correspondiente END
-            //            
+            //  
+            System.debug('A: '+A);          
+            System.debug('B: '+B);
+            System.debug('C: '+C);
+            System.debug('D: '+D);
+            System.debug('E: '+E);
+            System.debug('G: '+G);
+            System.debug('H: '+H);
+            System.debug('I: '+I);
+            System.debug('J: '+J);
+            System.debug('F: '+F);
             if(A!=15 && B!=15 && C!=15 && D!=15 && E!=15 && F!=15 && G!=15 && H!=15 && I!=15 && J!=15){
+                System.debug('Ingreso a If');
                 //Creo listas donde se guardaran los valores individualmente
                 list<string> fondo = new  list<string>();
                 list<string> referencia = new  list<string>();

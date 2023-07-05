@@ -6500,6 +6500,13 @@ public class ControllerPantJuridProduc {
                 MostrarVentanaFATCA(); 
                 bloqeListEnti= false;
                 
+                system.debug('PC_DEBIDA_DELIGENCIA NO DB: '+PC_DEBIDA_DELIGENCIA);
+                
+                PC_NIVEL_RIESGO = fcsd.PC_NIVEL_RIESGO;
+                PC_DEBIDA_DELIGENCIA = fcsd.PC_DEBIDA_DELIGENCIA;
+                
+                system.debug('PC_DEBIDA_DELIGENCIA DB: '+PC_DEBIDA_DELIGENCIA);
+                
                //pnmontoaporte = fcsd.pnmontoaporte;
                 //pnmontoaporte12 = fcsd.pnmontoaporte12;
                 //Muestra el boton de siguiente pantalla
@@ -7270,8 +7277,12 @@ public class ControllerPantJuridProduc {
                 {
                   PCNumeroAPNFD = fcsd.PCNumeroAPNFD;
                 }
+                
+                system.debug('PC_DEBIDA_DELIGENCIA NO DB: ' + PC_DEBIDA_DELIGENCIA);
                 PC_NIVEL_RIESGO = fcsd.PC_NIVEL_RIESGO;
                 PC_DEBIDA_DELIGENCIA = fcsd.PC_DEBIDA_DELIGENCIA;
+                
+                system.debug('PC_DEBIDA_DELIGENCIA DB: ' + PC_DEBIDA_DELIGENCIA);
                 /*Pantalla Productos*/
                 pcproducto = fcsd.pcproducto;
                 opcionSubproducto = new list <selectOption>();

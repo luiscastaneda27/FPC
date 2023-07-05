@@ -36,6 +36,8 @@ public class controladorPlanillasEnviadas {
     public String MensajeError {get;set;}
     public boolean MensajeErr {get;set;}
     public Map<String,InfoRezagos> mapInfoRezagos {get;set;}
+    public List<Rezago> listRezagos {get;set;}
+    public string codigoRezago{get;set;}
     
     public controladorPlanillasEnviadas() {
         MensajeError='';
@@ -391,11 +393,11 @@ public class controladorPlanillasEnviadas {
             if(estadoPlanilla == null || !estadoplanilla.contains('200')){
                 if(planilla.ServicioEjecutado__c == null || planilla.ServicioEjecutado__c == 1){
                     System.debug('Enviamos aporte a los empleados');
-                    //aSysdePortalEmpresarial.EnviarAportesEmpleados(todosEmpleados, Integer.valueOf(gt), datetime.newInstance(fecha.year(), fecha.month(), fecha.day()), Id_Planilla, planilla.rezago__c, planilla.Cod_Referencia__c, numeroSolicitud);
+                    aSysdePortalEmpresarial.EnviarAportesEmpleados(todosEmpleados, Integer.valueOf(gt), datetime.newInstance(fecha.year(), fecha.month(), fecha.day()), Id_Planilla, planilla.rezago__c, planilla.Cod_Referencia__c, numeroSolicitud);
                 }                                
             }            
             id_planilla = '';
-            
+            numeroSolicitud = null;
             Numerosformularios.Id_Formulario_Sysde__c = abc;
             update Numerosformularios;
             
@@ -407,7 +409,7 @@ public class controladorPlanillasEnviadas {
             MensajeErr = true;
         }
     }
-    
+    public String numeroSolicitud { get; set; } 
     public classDolares.classRespuestaDolares respuesta{get;set;}
     
     public void Aprobarplanilla(){
@@ -450,8 +452,9 @@ public class controladorPlanillasEnviadas {
                         System.debug('Antes de Calcular las cuotas: '+rezago+' - '+codigo);
                         if(rezago == 'S'){
                             InfoRezagos resultado = new InfoRezagos();
-                            if(mapInfoRezagos.containsKey(codigo)){
-                                resultado = mapInfoRezagos.get(codigo); 
+                            String codigoSplit = codigo.split(',')[0];
+                            if(mapInfoRezagos.containsKey(codigoSplit)){
+                                resultado = mapInfoRezagos.get(codigoSplit); 
                             }
                             
                             if(resultado.clientes != null && resultado.clientes.size() == 1){
@@ -477,7 +480,7 @@ public class controladorPlanillasEnviadas {
                             }
                         }
                     }
-                    
+                    System.debug('ValCuoEntrada ==> '+String.valueOf(ValCuoEntrada)+' ------ ValCuoSalida ==>'+String.valueOf(ValCuoSalida));
                     System.debug('01 - rezago :'+rezago+' - codigo :'+codigo+' - tasa :'+tasa);
                     if(Num_CodReferencia_Rez.trim() == 'Sin Informacion' && planillas[i].rezago == 'S'){
                         MensajeError = 'Debe Asignar un codigo de Referencia de Rezago.';
@@ -534,10 +537,14 @@ public class controladorPlanillasEnviadas {
                         PlanillaAprobada.Cod_Referencia__c = codigo;
                         system.debug('Antes de actualizar la planilla: '+rezago+' - '+codigo);
                         String result='OK';
-                        //System.debug('Antes de aplicar el rezago: CodRef:'+PlanillaAprobada.Cod_Referencia__c+' - Planilla:'+num_CodCuenta_Rez+' - MCalc:'+Monto_Calculado+' - MSal:'+Monto_Sal+' - Mone:'+Moneda+' - CDol:'+Compra_Dolar);
                         if(PlanillaAprobada.Cod_Referencia__c != 'NoAplica'){
                             System.debug('Se aplica el rezago a: '+PlanillaAprobada.Cod_Referencia__c);
-                            result = AplicarRezago(PlanillaAprobada.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);//Aplica El Rezago
+                            //List<String> listCodigos = PlanillaAprobada.Cod_Referencia__c.split(',');
+                            for(Integer i=0; i<listRezagos.size(); i++){
+                                result = AplicarRezago(listRezagos[i].codigo, num_CodCuenta_Rez, listRezagos[i].monto, Monto_Sal, '',Moneda, Compra_Dolar);//Aplica El Rezago
+                            }
+                            listRezagos = new List<Rezago>();
+                            //result = AplicarRezago(PlanillaAprobada.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);//Aplica El Rezago                            
                         }
                         if(result == 'OK'){
                             update PlanillaAprobada;
@@ -628,12 +635,15 @@ public class controladorPlanillasEnviadas {
                 planilla.Cod_Referencia__c = codigo;
                 
                 String result='OK';
-                //System.debug('Antes de aplicar el rezago: CodRef:'+planilla.Cod_Referencia__c+' - Planilla:'+num_CodCuenta_Rez+' - MCalc:'+Monto_Calculado+' - MSal:'+Monto_Sal+' - Mone:'+Moneda+' - CDol:'+Compra_Dolar);
                 System.debug('Antes de evaluar el no aplicaXD: '+planilla.Cod_Referencia__c);
                 
                 if(planilla.Cod_Referencia__c != 'NoAplica'){
                     System.debug('Se aplica el rezago a: '+planilla.Cod_Referencia__c);
-                    result = AplicarRezago(planilla.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);
+                    for(Integer i=0; i<listRezagos.size(); i++){
+                        result = AplicarRezago(listRezagos[i].codigo, num_CodCuenta_Rez, listRezagos[i].monto, Monto_Sal, '',Moneda, Compra_Dolar);//Aplica El Rezago
+                    }
+                     listRezagos = new List<Rezago>();
+                    //result = AplicarRezago(planilla.Cod_Referencia__c, num_CodCuenta_Rez, Monto_Calculado, Monto_Sal, '',Moneda, Compra_Dolar);
                 } 
                 if(result == 'OK'){
                     System.debug('Antes de Actualizar la Planilla: '+rezago+'-'+codigo);
@@ -713,6 +723,12 @@ public class controladorPlanillasEnviadas {
             }else{
                 Existe='Datos de Muestra. '+Existe;
                 BTNAplicar=true;
+                Rezago rezag = new Rezago();
+                rezag.aplica = rez;
+                rezag.codigo = consulta;
+                rezag.moneda = mon;
+                rezag.monto = Monto;
+                listRezagos.add(rezag);
             }
         }
         if(Existe==''){
@@ -731,13 +747,48 @@ public class controladorPlanillasEnviadas {
         Moneda='';
         Existe='';
         BTNAplicar=false;
+        
     }
     
-    public PageReference showPopup() {        
+    public PageReference showPopup() { 
+        listRezagos = new List<Rezago>();
         displayPopup = true;
         Existe='';
         BTNAplicar=false;
         return null;
+    }
+    
+    public void aplicarList(){
+        String codigo = '';
+        Integer posic = 0;
+        Monto = '0';
+        
+        for(integer count=0;count<planillas.size();count++){
+            if(planillas[count].Segundo_Nombre == Cod_Planilla){
+                posic = count;
+            }
+        }
+
+       
+        
+        for(Integer i=0; i<listRezagos.size(); i++){
+            codigo += listRezagos[i].codigo + ',';
+            Rezagosn = listRezagos[i].aplica;
+            CodRefTest = listRezagos[i].codigo;
+            Moneda = listRezagos[i].moneda;
+            System.System.debug('Monto Antes => ' + i + ' : ' + Monto + ', monto: ' + listRezagos[i].monto);
+            Monto = String.valueOf(Decimal.valueOf(Monto) + Decimal.valueOf(listRezagos[i].monto));
+            System.System.debug('Monto Despues => ' + i + ' : ' + Monto + ', monto: ' + listRezagos[i].monto);
+        }
+        System.debug('Monto antes de aplicar(): ' + Monto);
+
+        aplicar();
+
+
+        If(codigo.length() > 1){
+            planillas[posic].codigoReferencia = codigo.substring(0, codigo.length()-1);
+        }
+        closePopup();
     }
     
     //Aplicar el codigo seleccionado al Cod Rezago 
@@ -745,14 +796,14 @@ public class controladorPlanillasEnviadas {
         String MontoSTR = '';
         Decimal MontoAp = 0;
         Decimal MontoRez = Decimal.valueOf(Monto);
+        String codigo1 = '';
         system.debug('Variables: '+MontoRez+' - '+Cod_Planilla+' - '+CodRef+' - '+Total);
         for(integer count=0;count<planillas.size();count++){
-            system.debug('Segundo Nombre: '+planillas[count].Segundo_Nombre+' - Salario: '+planillas[count].Salario);
             if(planillas[count].Segundo_Nombre == Cod_Planilla){
                 MontoAp = planillas[count].Salario;
             }
         }
-        
+        System.debug(MontoAp+' -- '+MontoRez);
         if(MontoAp<=MontoRez){
             
             String fond='';
@@ -806,7 +857,6 @@ public class controladorPlanillasEnviadas {
             System.debug('Cod Referencia desde Search: '+CodRefTest);
             for(integer count=0;count<planillas.size();count++){
                 if(planillas[count].Segundo_Nombre == Cod_Planilla){
-                    planillas[count].codigoReferencia=CodRefTest;
                     if(Rezagosn != 'N/A'){
                         planillas[count].Monto_Calculado = MontoSTR;
                         planillas[count].rezago = 'Si';
@@ -818,7 +868,7 @@ public class controladorPlanillasEnviadas {
         }else{
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'El Monto del Rezago NO puede ser inferior al Monto del Aporte '));
         }
-        closePopup();
+        //closePopup();
     }
     
     //@future(callout = true)
@@ -834,8 +884,9 @@ public class controladorPlanillasEnviadas {
             ClassClientesRez rezagoEnvio = new ClassClientesRez();
             String CodRezago = NumCodRez;
             InfoRezagos resultado = new InfoRezagos();
-            if(mapInfoRezagos.containsKey(CodRezago)){
-                resultado = mapInfoRezagos.get(CodRezago);
+            String codigoSpit = CodRezago;//.split(',')[0];
+            if(mapInfoRezagos.containsKey(codigoSpit)){
+                resultado = mapInfoRezagos.get(codigoSpit);
             }
 
             List<ClientesRez> ListClientesRez = new List<ClientesRez>();
@@ -854,6 +905,7 @@ public class controladorPlanillasEnviadas {
             AplicaRez.fondo = fondor;// Añado el Fondo del Rezago
             
             String codrefr = resultado.clientes[0].codReferencia;
+            //codrefr = CodRezago;
             system.debug('Codigo Referencia Rezago: '+codrefr);
             AplicaRez.codReferencia = codrefr;// Añado el Codigo de referencia del Rezago
             
@@ -964,6 +1016,7 @@ public class controladorPlanillasEnviadas {
             if( rezagoEnvio.Tipo == 'AP'){
             	RespuestaRetiro = ControllerApiRezagos.AplicaRetiroRezagos(CuentaOrigen, Mon, valAporteCalculado);
                 if(RespuestaRetiro.contains('Su retiro ha sido registrado')){
+                    numeroSolicitud = respuestaRetiro.contains(':') ? respuestaRetiro.split(':')[0] : null;
                 	RespuestaRetiro='OK';
                 }else{
                     result = RespuestaRetiro;
@@ -1000,7 +1053,15 @@ public class controladorPlanillasEnviadas {
         }
         return result;
     }
-    
+    public void eliminarRezago(){
+        Integer count = 0;
+        for(Integer i=0; i<listRezagos.size(); i++){
+            if(listRezagos[i].codigo == codigoRezago){
+                count = i;
+            }
+        }
+        listRezagos.remove(count);
+    }
     public static String AplicaPartida(String Fon, String Mon, String Cue, String CompDol, String FechD){
         
         String fondo = Fon;
@@ -1074,4 +1135,11 @@ public class controladorPlanillasEnviadas {
         }
         return resultado;
     } 
+    
+    public class Rezago{
+        public String codigo{get;set;}
+        public String moneda{get;set;}
+        public String monto{get;set;}
+        public String aplica{get;set;}
+    }
 }

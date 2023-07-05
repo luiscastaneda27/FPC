@@ -116,7 +116,7 @@ public class TG_CaseHelper {
                         if(System.IsBatch() == false && System.isFuture() == false)
                         ControllerServiciosCuentaAhorro.execute(detc.Caso__r.id);    
                     } else {
-                        if(!detc.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error')) {
+                        if(String.isBlank(detc.Caso__r.Respuesta_SF_Tarjetas__c) || !detc.Caso__r.Respuesta_SF_Tarjetas__c.contains('Error')) {
                             if(System.IsBatch() == false && System.isFuture() == false)
                             aSysdeCallouts.aumentoDisminucion(detc.Caso__r.id);
                         }    
@@ -265,6 +265,7 @@ public class TG_CaseHelper {
     public static void sendMailPortalAutoGestion(List<Case> cs) {
         List<Case> caseUpdate = new List<Case>();
         if(!System.isFuture()) {   
+            Id recordTypeE2C = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('Email_to_Case').getRecordTypeId();
             set<Id> caseId = new set<Id>();
             for(Case c : cs) {
                 caseId.add(c.Id);
@@ -286,7 +287,7 @@ public class TG_CaseHelper {
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                 
             for(Case c : cs) { 
-                if(c.RecordType.DeveloperName == 'Email_to_Case' || test.isRunningTest()) { 
+                if(c.RecordTypeId == recordTypeE2C || test.isRunningTest()) { 
                     TG_CaseHelper.senEmailMessage(c.Id, c.CaseNumber, c.SuppliedEmail); 
                 }
             }

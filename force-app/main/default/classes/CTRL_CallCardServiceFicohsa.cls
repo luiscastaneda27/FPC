@@ -291,6 +291,7 @@ public class CTRL_CallCardServiceFicohsa {
                     } else {
                         cs.Respuesta_SF_Tarjetas__c = Afiliacion + '\n' + CodigoError + '\n' + estadoGestion + '\n' + Gestion;
                     } 
+                    cs.Respuesta_SF_Tarjetas__c = String.isNotBlank(cuenta) ? cs.Respuesta_SF_Tarjetas__c : null; 
                     updateCase.add(cs);
                 }
                 
